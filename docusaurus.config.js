@@ -5,13 +5,13 @@ import rehypeKatex from 'rehype-katex';
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
     title: 'Surogate',
-    tagline: 'Insanely fast LLM pre-training and fine-tuning for modern NVIDIA GPUs',
+    tagline: 'AgentOps Factory',
     url: 'https://docs.surogate.ai',
     baseUrl: '/',
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'throw',
     favicon: 'img/favicon.ico',
-    organizationName: 'surogate', // Usually your GitHub org/user name.
+    organizationName: 'invergent-ai', // Usually your GitHub org/user name.
     projectName: 'surogate-docs', // Usually your repo name.
     deploymentBranch: 'gh-pages',
     trailingSlash: false,
@@ -48,6 +48,16 @@ module.exports = {
                 srcDark: 'img/logo-white.svg',
             },
             items: [
+                {
+                    href: "https://surogate.ai",
+                    position: "right",
+                    label: "About",
+                },
+                {
+                    href: "https://ops.surogate.ai",
+                    position: "right",
+                    label: "Login",
+                },
                 {
                     href: "https://github.com/invergent-ai/surogate",
                     position: "right",
