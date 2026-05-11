@@ -38,7 +38,7 @@ _Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
 
 - **5xx**: the agent's serving endpoint returned an HTTP 500-series error to the proxy.
 - **Timeout**: the agent didn't respond before the proxy timeout. Often correlates with a slow Skill or MCP call — open the session trajectory to confirm.
-- **Guardrail**: either a compute policy refused the workload (see [Compute → Policies](./compute#policies)) or a content guardrail intervened on a response.
+- **Guardrail**: either a compute policy refused the workload (see [Compute → Policies](./compute.md#policies-tab)) or a content guardrail intervened on a response.
 
 ## Reading the heatmap
 

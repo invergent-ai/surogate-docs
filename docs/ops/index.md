@@ -21,17 +21,17 @@ Switch between them with the top-right toggle. Your default lives on `User.persp
 
 ## Reading order
 
-1. [Sign in](./getting-started/sign-in) — authenticate.
-2. [First-run setup](./getting-started/first-run) — the two-screen welcome flow.
-3. [Five-minute tour](./getting-started/tour) — the two perspectives, the navbar groups, the side rails.
-4. [Where to find things](./getting-started/where-to-find-things) — a flat route map.
+1. [Sign in](./getting-started/sign-in.md) — authenticate.
+2. [First-run setup](./getting-started/first-run.md) — the two-screen welcome flow.
+3. [Five-minute tour](./getting-started/tour.md) — the two perspectives, the navbar groups, the side rails.
+4. [Where to find things](./getting-started/where-to-find-things.md) — a flat route map.
 
 From there:
 
-- **End users**: head to [Workflow → Explore as an end user](./workflows/explore-as-end-user). Most of the rest of the manual is for builders.
-- **Builders**: start with [Core objects](./concepts/core-objects), then read the relevant feature page when you need it.
-- **Admins**: [Permissions matrix](./reference/permissions-matrix), then [Admin → Projects & roles](./admin/projects-and-roles).
-- **On-call**: [Monitoring](./features/monitoring), then [Troubleshooting](./troubleshooting).
+- **End users**: head to [Workflow → Explore as an end user](./workflows/explore-as-end-user.md). Most of the rest of the manual is for builders.
+- **Builders**: start with [Core objects](./concepts/core-objects.md), then read the relevant feature page when you need it.
+- **Admins**: [Permissions matrix](./reference/permissions-matrix.md), then [Admin → Projects & roles](./admin/projects-and-roles.md).
+- **On-call**: [Monitoring](./features/monitoring.md), then [Troubleshooting](./troubleshooting.md).
 
 ## What's not in this manual
 
