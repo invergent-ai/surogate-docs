@@ -49,6 +49,12 @@ module.exports = {
             },
             items: [
                 {
+                    type: 'docSidebar',
+                    sidebarId: 'opsSidebar',
+                    position: 'left',
+                    label: 'Ops Manual',
+                },
+                {
                     href: "https://surogate.ai",
                     position: "right",
                     label: "About",
