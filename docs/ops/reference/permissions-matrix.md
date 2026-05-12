@@ -6,7 +6,7 @@ slug: /reference/permissions-matrix
 
 # Permissions
 
-Three project roles, granted on the **+ Invite** dialog at [Admin → Projects & Teams](../admin/projects-and-roles.md):
+Three project roles, granted when an admin invites a member:
 
 - **Viewer** — read-only.
 - **Editor** — read plus create / edit on the project's resources.

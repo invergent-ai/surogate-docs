@@ -22,9 +22,8 @@ Operate → Playground. Pick a model from the dropdown (or arrive via `?modelId=
 
 - **No skills, no KB.** The model gets only what you type. Use this to isolate "is it the model, or is it the wrapping?"
 - **Ephemeral sessions.** Playground sessions aren't stored under Sessions. Useful for quick iteration; not useful for audit.
-- **Token usage counts.** What you do here shows up in Monitoring's Token Usage panel under the chosen model.
+- **Token usage counts.** What you do here counts toward the chosen model's usage.
 
 ## Where to go next
 
 - **[Models](./models.md)** — to deploy or proxy a model.
-- **[Monitoring](./monitoring.md)** — to see token-usage impact.

@@ -37,5 +37,4 @@ Sessions are kept after the agent that produced them is deleted. They drop into 
 ## Where to go next
 
 - **[Agents](./agents.md)** — where sessions originate.
-- **[Monitoring](./monitoring.md)** — the alerts that point at problem sessions.
 - **[Datasets](./datasets.md)** — to turn sessions into training data.

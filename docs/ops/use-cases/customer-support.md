@@ -33,7 +33,7 @@ If it doesn't work the first time, the chat's session is visible to you under Op
 
 ## Iterate
 
-Look at Operate → Monitoring after a few real conversations. Two things matter early:
+Open a few sessions after the agent's been running for a couple of days. Two things matter early:
 
 - **Refusals.** The agent declines to answer questions it should have answered — usually because the KB doesn't cover that topic. Add the missing doc and recompile the KB.
 - **Hallucinations.** The agent makes up product behavior. Open the session, flag the bad message, and the flagged session goes into your dataset of "things to fix".

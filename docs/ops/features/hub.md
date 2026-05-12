@@ -58,4 +58,3 @@ Submit. The repo lands in the Hub with a snapshot of the chosen branch.
 
 - **[Models](./models.md)** — where Hub model repos get served.
 - **[Datasets](./datasets.md)** — where Hub dataset repos get imported.
-- **[Admin → Integrations](../admin/integrations.md)** — Hub auth.

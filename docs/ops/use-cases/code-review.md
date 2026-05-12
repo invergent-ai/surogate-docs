@@ -20,7 +20,7 @@ A GitHub-aware assistant that reads a pull request, surfaces risk, suggests revi
 
 ## Set it up
 
-1. **Connect GitHub.** Admin → Integrations → connect a GitHub credential with `repo` and `read:org` scopes.
+1. **Connect GitHub.** From Settings, connect a GitHub credential with `repo` and `read:org` scopes.
 2. **Write or import the GitHub skills.** Templates library has GitHub starters; *get_pr* and *post_review_comment* are usually one-clicks from there.
 3. **(Optional) connect your CI's MCP.** Build → Skills & Tools → MCP Servers tab → **Add Server**.
 4. **(Optional) build the style-guide KB.** Build → Knowledge Bases → **+ New Knowledge Base**, point at the repo path containing your engineering guidelines.

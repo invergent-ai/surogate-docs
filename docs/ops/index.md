@@ -47,6 +47,5 @@ The rest of this manual walks you through each step.
 - **[Quickstart](./getting-started/quickstart.md)** — the welcome screen, the two surfaces, your first agent in five minutes.
 - **[Build](./features/agents.md)** — Agents, Skills, Knowledge Bases, Models.
 - **[Train](./features/datasets.md)** — Datasets, Training Runs, Evaluations, Arenas.
-- **[Operate](./features/monitoring.md)** — Monitoring, Sessions, Compute, Playground.
+- **[Operate](./features/sessions.md)** — Sessions, Compute, Playground.
 - **[Distribute](./features/hub.md)** — Data Hub for sharing across teams.
-- **[Admin](./admin/projects-and-roles.md)** — Teams, integrations.

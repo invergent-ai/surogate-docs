@@ -6,6 +6,14 @@ slug: /changelog
 
 # Changelog
 
+## v2.2 — 2026-05-12
+
+Scope trim:
+
+- **Admin chapter removed.** The three Admin pages (Projects & Teams, Integrations, Notifications) are gone. Admin-only features still get a mention from the Reference → Permissions table; the chapter itself isn't documented.
+- **Monitoring page removed.** Inbound references in Sessions, Playground, and the Customer support use case updated to talk about sessions instead.
+- Sidebar tightened: Operate chapter now contains Sessions, Compute, Playground (Monitoring dropped). Admin chapter dropped entirely.
+
 ## v2.1 — 2026-05-12
 
 Audit pass. Removed every UI claim that wasn't directly observable on a project-`viewer` account:

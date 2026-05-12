@@ -50,7 +50,6 @@ module.exports = {
       label: 'Operate',
       collapsed: true,
       items: [
-        'ops/features/monitoring',
         'ops/features/sessions',
         'ops/features/compute',
         'ops/features/playground',
@@ -62,16 +61,6 @@ module.exports = {
       collapsed: true,
       items: [
         'ops/features/hub',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Admin',
-      collapsed: true,
-      items: [
-        'ops/admin/projects-and-roles',
-        'ops/admin/integrations',
-        'ops/admin/notifications',
       ],
     },
     {
