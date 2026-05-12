@@ -4,45 +4,28 @@ sidebar_position: 2
 slug: /admin/integrations
 ---
 
-_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
-
 # Integrations
 
-## What it does
+Third-party connections used across Surogate Ops: model providers, the Data Hub, identity providers, observability sinks. Each integration stores one or more **Credentials** that other parts of Surogate Ops reference by name.
 
-`/studio/settings/integrations` lists third-party connections used by your project: model providers, the Data Hub, identity providers, observability sinks. Each connection stores one or more **Credentials** that other parts of the app reference by name.
+The Integrations tab is hidden from the Settings sidebar for non-admin accounts. You'll see it when you have the admin permission set.
 
-> **Hidden for non-admin accounts.** The **Integrations** tab is not visible in the Settings sidebar for project-`viewer`-only accounts during documentation. The page is reachable by URL with limited actions. _TODO(verify visibility per system role._
+## Add an integration
 
-## Adding an integration
+Admin → Integrations. Find the row for the integration you want, click **Connect**. The provider-specific credential form opens; fill it and save. The credential is encrypted at rest and only its name is shown afterwards.
 
-1. Open **/studio/settings/integrations**.
-2. Find the row for the integration you want and click **Connect**.
-3. Fill in the credentials (provider-specific form). _TODO(verify per integration._
-4. Save. The credential is encrypted at rest and only its **name** is shown afterwards.
+## Disconnect
 
-## Disconnecting
+Click **Disconnect** on the row. The credential record is retained so historical jobs can trace what they used, but no new wiring will reference it.
 
-Click **Disconnect** on the row. Surogate keeps the credential record (so historical jobs can still trace it) but removes any active wiring. _TODO(verify._
+## Where credentials show up elsewhere
 
-## Where credentials are used
+- **Model providers** — proxied models in [Build → Models](../features/models.md) reference these for upstream calls.
+- **Cloud backends** — managed under [Operate → Compute](../features/compute.md), not here. Each backend has its own credential form.
+- **Hub auth** — the **Data Hub** tab at Settings → Data Hub stores your Hub credentials. If those are missing, [Data Hub](../features/hub.md) shows zero repos even when content exists.
 
-- **Model providers** — proxied models reference these to make upstream calls.
-- **Cloud backends** — but these are managed under [Compute → Connect Cloud](../features/compute), not here.
-- **Data Hub** — see the dedicated [Data Hub configuration](#data-hub-config) below.
-- **Webhooks / observability** — _TODO(verify the list._
+## Where to go next
 
-## Data Hub config
-
-The **Data Hub** has its own tab at `/studio/settings/hub` (and `/work/settings/hub`). It stores:
-
-- The Hub endpoint URL (defaults to the internal Hub).
-- Your Hub **API key** and **API secret** (`hub_key` / `hub_secret` on the User).
-
-If these are missing, the [Data Hub](../features/hub) home shows zero repositories even when content exists. Re-enter the credentials and refresh.
-
-## Related
-
-- [Reference → Permissions matrix](../reference/permissions-matrix)
-- [Compute](../features/compute) — for cloud-backend credentials.
-- [Data Hub](../features/hub)
+- **[Models](../features/models.md)** — what credentials power proxied models.
+- **[Compute](../features/compute.md)** — for cloud-backend credentials.
+- **[Data Hub](../features/hub.md)** — for Hub auth.

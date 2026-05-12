@@ -4,89 +4,55 @@ sidebar_position: 1
 slug: /features/agents
 ---
 
-_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
-
 # Agents
 
-An Agent is a deployed conversational workflow that pairs a Model with a fixed set of Skills, MCP servers, and Knowledge Bases. It exposes a chat surface in Work mode and (optionally) an API surface through the `sk-agent-*` proxy.
+An Agent is a deployed conversational workflow. It pairs a model with the skills, knowledge bases, and tools your team needs, and exposes a chat surface your end users can talk to.
 
-## Where it lives
+You build agents from the Agents page. End users run them from the Work dashboard.
 
-| URL | Audience |
-|---|---|
-| `/work` | Operators. Card grid of agents you can run. |
-| `/work/agents/<id>` | Operator agent detail. Tabs: Overview, Chat, Settings. |
-| `/work/agents/<id>/chat/<sessionId>` | Resume an earlier session. |
-| `/studio/agents` | Builders. Full list with status filters and Deploy Agent. |
-| `/studio/agents/<id>` | Builder agent detail (TODO(verify) — not reachable without an agent on the test account). |
+![Agents list with status pills and the Deploy Agent action](../assets/screenshots/agents/list.png)
 
-## The Studio list
+## Deploy your first agent
 
-![Agents list with annotations](../assets/screenshots/agents/list-annotated.png)
+Click **Deploy Agent**. Fill in four things:
 
-1. **Agents** header.
-2. **Status filter pills**: `All · Running · Deploying · Error`. Each pill has its own count badge. Clicking a non-active pill applies the filter without leaving the page.
-3. **Filter agents…** input. Full-text search by agent name. Case-insensitive.
-4. **Deploy Agent** button (top-right). Opens the deploy dialog covered below.
+- **Display Name** — what users will see.
+- **Slug** — a short, URL-safe identifier. Pick it carefully; it's permanent.
+- **Description** — one sentence about what the agent does.
+- **Model** — pick one of your available models. (No model yet? See [Models](./models.md).)
 
-The empty state ("No agents") is reached when you've never deployed one. The dashboard at `/studio` will redirect you to `/onboarding` until either the welcome flow is acknowledged or at least one agent exists.
+Hit **Create Agent**. The first deploy of a model takes a couple of minutes while the serving container comes up. Subsequent deploys reuse cached layers and land in seconds.
 
-## Deploy flow
+## Attach skills and knowledge
 
-The dialog header reads **Deploy New Agent**. The base form has four controls; the **Cancel** and **Create Agent** buttons stay at the bottom. The video in [Workflow → Deploy an agent](../workflows/deploy-an-agent.md) shows the flow.
+The deploy dialog keeps things light. Once the agent exists, open its **Settings** tab to attach **Skills**, **MCP Servers**, and **Knowledge Bases**. Each one is a multi-select; pick as many as you need.
 
-| Field | Type | Notes |
-|---|---|---|
-| **Display Name** | text | The agent's label across `/work`, `/studio`, and Monitoring. |
-| **Slug** | text | Help text in the dialog: _"unique within project"_. Becomes the agent's stable identifier and the URL segment under `/studio/agents/<slug>`. Cannot be changed once set. |
-| **Description** | text | Shown on the agent card and in tooltips. |
-| **Model** | combobox | Picker scoped to Models in this project. Models in non-Serving state still appear in the list but the agent will fail to deploy against them. |
+A few things to know:
 
-Submit with **Create Agent**. The agent appears in the **Deploying** filter and transitions to **Running** once the serving container is healthy. The first deploy of a given Model can take several minutes; subsequent deploys reuse cached layers.
+- Agents **pin** to the version of each skill that exists at deploy time. Editing a skill won't change deployed agents until you redeploy.
+- A knowledge base in **Compiling** or **Error** state can still be attached. The agent just returns no retrieval results until the KB reaches **Active**.
 
-> The Skills, MCP Servers, and Knowledge Bases multi-selects are surfaced after the agent exists — open the agent's Settings tab to attach them. The deploy dialog itself does not include them.
+## Run the agent
 
-## Status reference
+End users find their agents on the Work dashboard. Each card has a chat entry point. New sessions start fresh; existing sessions resume on a stable id, so anyone with the link can pick up a chat where they left it.
 
-| Status | What it means | Common cause |
-|---|---|---|
-| Deploying | Serving container being built or started. | Normal during a first-time deploy. |
-| Running | Healthy and accepting traffic. | — |
-| Error | The serving container or model is unhealthy. | Underlying Model in Error or Stopped, or a Skill failed to load. |
-| Stopped | You manually stopped it. | Agent stays in the list but won't serve. TODO(verify the exact stop control). |
+Builders see the same sessions in Sessions, with the agent's full step-by-step run attached. See [Sessions](./sessions.md) for the loop from "user reports a bad answer" to "fix the prompt and redeploy".
 
-## Reading an agent's runtime
+## Iterate
 
-From a deployed agent you can:
+After a few real chats, look at Monitoring for RPS, latency, error rate, and the alerts feed. Flag any session that shouldn't have happened (a hallucinated answer, a refused request that should have gone through), and the rest of the loop kicks in: those flags feed datasets, datasets feed training, training produces a better model, and you redeploy the agent on top of it.
 
-- See its **live metrics** at `/studio/monitoring` (RPS, P50/P95/P99, errors, CPU/MEM per agent).
-- Browse its **sessions** at `/studio/sessions?agentId=<id>`. Each session has a **Thread** view (messages) and a **Trajectory** view (reasoning + tool calls).
-- Run an **evaluation** against it from `/studio/evaluations` → **New Evaluation**.
+The full loop is described in [Train](./datasets.md).
 
-## API surface
+## When it goes wrong
 
-Agents are reachable through the Surogate proxy when their Model has an `sk-agent-*` API key. The key authorizes calls scoped to `model:<model_id>`, not `agent:<id>`. Multiple agents that share a Model share the same key.
+- Stuck in **Deploying** beyond ten minutes — the compute scheduler can't find a GPU. Check the related job in the Workload Queue.
+- Transitions to **Error** — the underlying model is in **Stopped** or **Error**. Fix the model first, then re-deploy the agent.
+- Runs but every chat returns an error — a required skill failed to initialize. Open the agent's settings, untick the failing skill, redeploy.
 
-Failed auth (401/403) on the proxy hot path is negative-cached for a short interval to protect the upstream — fixing a wrong key takes effect after the cache clears or on a key change.
+## Where to go next
 
-## Deletion
-
-Deleting an agent stops it from serving and removes it from `/work` and `/studio/agents`. Sessions it produced remain at `/studio/sessions` in read-only form. The agent's row drops out of Monitoring on the next refresh. TODO(verify whether deletion is hard or soft).
-
-## Permissions
-
-| Action | Project role |
-|---|---|
-| List, open, chat with an agent | `viewer` and above |
-| Deploy / edit / stop / delete | `editor` or `owner` (TODO(verify)) |
-
-System role `admin` overrides project-level limits. See [Reference → Permissions matrix](../reference/permissions-matrix).
-
-## Related
-
-- [Workflow — Deploy an agent](../workflows/deploy-an-agent)
-- [Models](./models)
-- [Skills & Tools](./skills)
-- [Knowledge Bases](./knowledge-bases)
-- [Monitoring](./monitoring)
-- [Sessions](./sessions)
+- **[Skills & Tools](./skills.md)** — the things your agent can call.
+- **[Knowledge Bases](./knowledge-bases.md)** — what your agent can read.
+- **[Models](./models.md)** — what your agent thinks with.
+- **[Sessions](./sessions.md)** — what your agent did.

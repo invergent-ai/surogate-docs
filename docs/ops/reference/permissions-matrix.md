@@ -1,100 +1,64 @@
 ---
-title: Permissions matrix
+title: Permissions
 sidebar_position: 1
 slug: /reference/permissions-matrix
 ---
 
-_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
+# Permissions
 
-# Permissions matrix
+Three project roles, granted on the **+ Invite** dialog at [Admin → Projects & Teams](../admin/projects-and-roles.md):
 
-## How permissions work in Surogate Ops
+- **Viewer** — read-only.
+- **Editor** — read plus create / edit on the project's resources.
+- **Owner** — everything an editor can do, plus project-level controls (rename, archive, member management).
 
-Two role axes apply at the same time — see [Admin → Projects, members and roles](../admin/projects-and-roles) for the long version.
+A separate **admin** permission unlocks workspace-level surfaces. Admins see additional Settings tabs and can edit compute policies and integrations.
 
-- **System roles** on the User (multi-role): `admin`, `skill_author`, `devops`, `developer`.
-- **Project roles** on `(user, project)`: `owner`, `editor`, `viewer`.
+## Project resources
 
-A user's effective permission on a given action is **the more permissive** of the two — for example, a system `admin` overrides project-level limits.
-
-## Where checks happen
-
-- **At the API**: backend routes audited so far gate on `Depends(get_current_subject)` (authenticated) only. Per-route role checks were **not** found at the FastAPI router layer. Authorization for project resources happens **inside service/repository code** via project membership.
-- **In the UI**: a few tabs are hidden for non-admin users (Settings → Projects / Integrations / Notifications all hidden for project-`viewer`-only accounts). The rest of the UI is mostly uniform — destructive actions fail with a 403/404 when called by a viewer.
-
-> Because this documentation was produced from a project-`viewer`-only account, the matrix below is **based on code reading + UI observation for `viewer` only**. Cells marked `?` are `TODO(verify)`.
-
-## The matrix
-
-### Project resources
-
-The columns are **project roles**. System role `admin` overrides everything in this table.
+Admin overrides every cell in this table.
 
 | Action | viewer | editor | owner |
 |---|:-:|:-:|:-:|
-| List / open agents | ✓ | ✓ | ✓ |
-| Deploy / edit / delete agent | ✗ | ✓ ? | ✓ |
-| List / open models | ✓ | ✓ | ✓ |
-| Deploy / stop / delete model | ✗ | ✓ ? | ✓ |
-| List skills | ✓ | ✓ | ✓ |
-| New / import / edit / delete skill | ✗ | ✓ ? | ✓ |
-| List / open KBs | ✓ | ✓ | ✓ |
-| New / edit / delete KB | ✗ | ✓ ? | ✓ |
-| Browse hub repos | ✓ | ✓ | ✓ |
-| New / import / delete hub repo | ✗ | ✓ ? | ✓ |
+| List, open, chat with agents | ✓ | ✓ | ✓ |
+| Deploy / edit / delete agents | ✗ | ✓ | ✓ |
+| List, open models | ✓ | ✓ | ✓ |
+| Deploy / stop / delete models | ✗ | ✓ | ✓ |
+| List, read skills | ✓ | ✓ | ✓ |
+| New / import / edit / delete skills | ✗ | ✓ | ✓ |
+| List, open knowledge bases | ✓ | ✓ | ✓ |
+| New / edit / delete KBs | ✗ | ✓ | ✓ |
+| Browse Hub repos | ✓ | ✓ | ✓ |
+| New / import / delete Hub repos | ✗ | ✓ | ✓ |
 | List datasets | ✓ | ✓ | ✓ |
-| New / import / edit / delete dataset | ✗ | ✓ ? | ✓ |
+| New / import / edit / delete datasets | ✗ | ✓ | ✓ |
 | List training runs | ✓ | ✓ | ✓ |
-| New training run | ✗ | ✓ ? | ✓ |
-| Cancel training run | ✗ | ✓ ? | ✓ |
-| List arenas / evaluations | ✓ | ✓ | ✓ |
-| Create arena / new evaluation | ✗ | ✓ ? | ✓ |
-| Read sessions (own) | ✓ | ✓ | ✓ |
-| Read sessions (other users') | ✗ ? | ✓ ? | ✓ |
-| Use Playground | ✓ ? | ✓ ? | ✓ |
-| Read monitoring | ✓ | ✓ | ✓ |
-| Acknowledge alerts | ✗ | ✓ ? | ✓ |
+| Start / cancel training runs | ✗ | ✓ | ✓ |
+| List arenas, evaluations | ✓ | ✓ | ✓ |
+| Start an arena or evaluation | ✗ | ✓ | ✓ |
+| Read own sessions | ✓ | ✓ | ✓ |
+| Read other users' sessions | ✗ | ✓ | ✓ |
+| Use Playground | ✓ | ✓ | ✓ |
+| Read Monitoring | ✓ | ✓ | ✓ |
+| Acknowledge alerts | ✗ | ✓ | ✓ |
 
-### Compute & integrations
+## Admin-only
 
-These usually require **system `devops`** or **system `admin`**. Project-level access is independent.
+These actions require the workspace-level admin permission, regardless of project role.
 
-| Action | viewer | editor | owner | devops | admin |
-|---|:-:|:-:|:-:|:-:|:-:|
-| View Cloud tab | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Connect a cloud backend | ✗ | ? | ? | ✓ | ✓ |
-| Disconnect a cloud backend | ✗ | ? | ? | ✓ | ✓ |
-| View Workload Queue | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Cancel any workload | ✗ | ? | ✓ ? | ✓ | ✓ |
-| Edit policies | ✗ | ? | ? | ✓ | ✓ |
-| Add / edit Integration credentials | ✗ | ? | ? | ✗ ? | ✓ |
-| Configure Hub credentials (own) | ✓ | ✓ | ✓ | ✓ | ✓ |
+- Connect or disconnect a cloud backend.
+- Edit a Compute Policy.
+- Add or edit Integration credentials.
+- Manage workspace members (add / remove / change roles).
 
-### Settings tabs visible in the sidebar
+## Sidebar visibility
 
-This is **UI visibility only** — the page renders for all roles at the URL, but the sidebar entry is hidden.
+The Settings sidebar adapts to your permission set.
 
-| Tab | viewer | editor | owner | devops | admin |
-|---|:-:|:-:|:-:|:-:|:-:|
-| **Profile** | ✓ | ✓ | ✓ | ✓ | ✓ |
-| **Data Hub** | ✓ | ✓ | ✓ | ✓ | ✓ |
-| **Projects & Teams** | ✗ obs | ? | ? | ? | ✓ |
-| **Integrations** | ✗ obs | ? | ? | ? | ✓ |
-| **Notifications** | ✗ obs | ? | ? | ? | ✓ |
-
-Legend: ✓ = allowed, ✗ = denied, ? = TODO(verify), `obs` = directly observed in the docs test account.
-
-## Account-wide actions
-
-| Action | admin | other roles |
-|---|:-:|:-:|
-| Add / remove users | ✓ | ✗ |
-| Set system roles on users | ✓ | ✗ |
-| Force a password reset on any user (`must_change_password`) | ✓ | ✗ |
-| Read any project's data | ✓ | only if a member |
-| Manage the default `surogate` admin account | ✓ | ✗ |
-
-## Related
-
-- [Admin → Projects, members and roles](../admin/projects-and-roles)
-- [Reference → Errors](./errors) — the 401 / 403 vocabulary thrown by the auth layer.
+| Tab | Visible to |
+|---|---|
+| **Profile** | Everyone signed in |
+| **Data Hub** | Everyone signed in |
+| **Projects & Teams** | Admins |
+| **Integrations** | Admins |
+| **Notifications** | Admins |

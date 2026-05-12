@@ -4,56 +4,38 @@ sidebar_position: 2
 slug: /features/sessions
 ---
 
-_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
-
 # Sessions
 
-## What it does
+A Session is one chat thread between a user and an agent. Sessions live in two places — the Work side shows your own sessions, the Studio side shows every session you can see.
 
-A **Session** is one chat thread between a user and an agent. The same session list shows up in two places:
+## When to open a session
 
-- **Work side** at `/work/sessions` — your own sessions across all agents you can run.
-- **Studio side** at `/studio/sessions` — every session visible to you (across agents, useful for debugging and review).
+- A user reports a bad answer. Open the session to see what the agent actually said.
+- After a deploy, to sample-check that the new version of an agent behaves the way you intended.
+- To flag good and bad sessions for the next training dataset.
 
-Each session has a stable `sessionId`. You can deep-link to one with `?agentId=…&sessionId=…`.
+## What a session shows
 
-## When to use it
+Opening a session in Studio reveals the agent's full step-by-step run, not just the messages:
 
-- Resume a chat you started earlier.
-- Audit what an agent said to a user.
-- Debug an agent's reasoning trace (Studio view exposes the trajectory tab).
+- Every message the user sent.
+- Every model call.
+- Every skill invocation, with what the skill returned.
+- Every retrieval call against a knowledge base, with the documents it pulled.
+- Every error along the way.
 
-## Prerequisites and permissions
+This is where you debug. "Why did the agent say X?" is answered by reading backwards from X to the prompt that produced it.
 
-- **Read your own**: any signed-in user (you always see your own sessions).
-- **Read other users' sessions**: project `editor` or higher. _TODO(verify)._
-- **Delete / export**: project `editor` or higher. _TODO(verify)._
+## Flag a session
 
-## Step-by-step — open a session
+Sessions can be flagged for review. Flagged sessions form the pool you later turn into a training dataset (see [Use cases → Training your own expert](../use-cases/training-your-own-expert.md)). Flag liberally — quality matters more than quantity for training.
 
-1. Switch to **Work** mode.
-2. Open **/work/sessions**.
-3. Pick a session from the list. You'll be navigated to `/work/agents/<agent-id>/chat/<session-id>` and the chat resumes from where you left off.
+## Retention
 
-To browse all sessions (builder view):
+Sessions are kept after the agent that produced them is deleted. They drop into a read-only state but remain queryable for audit.
 
-1. Switch to **Develop** mode.
-2. Open **/studio/sessions**.
-3. Filter by agent with **Agent** dropdown (or by URL: `?agentId=<id>`).
-4. Open a session — Studio sessions expose tabs for **Thread** (messages), **Trajectory** (agent reasoning + tool calls), and others depending on the agent type. _TODO(verify) — tab list._
+## Where to go next
 
-## Field reference
-
-The session row shows the agent name, the start time, the message count, and a status indicator. _TODO(verify) — exact columns on a populated account._
-
-## Edge cases and gotchas
-
-- Sessions are tied to the **agent version active when the session started**. Updating the agent doesn't rewrite history — but new messages may behave differently.
-- A session can be **flagged** for review (see [Monitoring](./monitoring) → Alerts). Flagged sessions show up in the Recent Conversations panel of the Studio Dashboard.
-- Deleting an agent does not delete its sessions. _TODO(verify)._
-
-## Related
-
-- [Agents](./agents)
-- [Monitoring](./monitoring)
-- [Workflow — Explore as an end user](../workflows/explore-as-end-user)
+- **[Agents](./agents.md)** — where sessions originate.
+- **[Monitoring](./monitoring.md)** — the alerts that point at problem sessions.
+- **[Datasets](./datasets.md)** — to turn sessions into training data.

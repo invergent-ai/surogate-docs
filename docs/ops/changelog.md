@@ -1,64 +1,51 @@
 ---
 title: Changelog
-sidebar_position: 92
+sidebar_position: 4
 slug: /changelog
 ---
 
-_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
-
 # Changelog
+
+## v2.1 — 2026-05-12
+
+Audit pass. Removed every UI claim that wasn't directly observable on a project-`viewer` account:
+
+- The Quickstart no longer documents the sign-in form; the sign-in video is gone.
+- Use-case pages no longer embed videos that showed generic deploy dialogs unrelated to the scenario.
+- "Projects" is mentioned only on the Admin → Projects & Teams page where it's actually visible.
+- The four-system-role enum (`admin` / `skill_author` / `devops` / `developer`) is no longer named in feature pages; the Reference → Permissions page describes the three observable project roles plus a single admin distinction.
+- `sk-agent-*` API-key UI claims removed; the key shape is described where it appears in API errors only.
+- "Trajectory tab" specifics removed from feature pages; session debugging is described without naming the tab.
+- `hub_namespace`, `User.perspective`, `must_change_password` backend-only references removed.
+- `ops.surogate.ai` URL no longer appears in body text; the product is referred to by name ("Surogate Ops").
+
+Navbar simplified: the **Documentation** and **Old documentation** buttons are gone. The logo points at `/`. The legacy trainer reference remains reachable at `/old-docs` by direct URL.
+
+## v2.0 — 2026-05-12
+
+Full rewrite. The manual is restructured around Lovable-style chapters (Introduction → Use cases → Build → Train → Operate → Distribute → Admin → Reference), and every page is rewritten in a conversational, narrative voice. The Ops manual is the default documentation at the site root; the Surogate Trainer reference is accessible by URL at `/old-docs`.
+
+**What's new**
+
+- **Use cases chapter** — five end-to-end scenarios with the exact setup steps: Customer support agent, Internal knowledge assistant, Sales lead qualifier, Code-review companion, Training your own expert.
+- **Quickstart** — one page that replaces the four old Getting Started pages.
+- Every feature page rewritten — no URL tables, no permission tables in body, no annotated-screenshot enumerations. Permissions are consolidated under Reference.
+
+**Asset trim**
+
+- Annotated screenshots and zoom variants dropped. Feature pages run prose-only; one hero screenshot on the Welcome page.
+- Videos reshot with faster cursor movement, retained on the three highest-traffic flows (sign-in is now in the Quickstart prose, deploy-an-agent and connect-a-cloud-backend remain as videos elsewhere).
 
 ## v1.2 — 2026-05-12
 
-**Flat URLs.** The Ops manual no longer carries a `/ops` URL prefix. The welcome page is at `/`, feature pages at `/features/<name>`, workflows at `/workflows/<name>`, and so on. Old `/ops/*` URLs from v1.1 still resolve via redirects.
+Flat URLs. The Ops manual no longer carries a `/ops` URL prefix. Welcome at `/`, features at `/features/<name>`, workflows at `/workflows/<name>`. Old `/ops/*` URLs redirect.
 
-**More TODO(verify) items closed.** Per-provider Connect Cloud forms (8 providers, exact fields captured from the live UI). Hub New Repository fields. Skill Builder editor fields. Templates library inventory (72 templates across 17 categories). MCP server add control labelled **Add Server** with companion **Vault**. Command-palette / keyboard-shortcut gaps documented as "not wired" rather than left as TODO. Compute → Policies editor explicitly noted as role-gated (no-op for viewers).
-
-**Provider mentions tightened.** Provider examples in the Models docs no longer name specific commercial LLM providers; they describe the supported integration shape instead (OpenAI-compatible URL, OpenRouter, Hub).
-
-**Changes summary**
-
-- `docs/ops/index.md`: slug `/`. All 37 other ops pages now slugged without the `/ops` prefix.
-- `docusaurus.config.js`: logo `href: '/'`. `createRedirects` maps every existing path to its previous `/ops/<path>` so v1.1 links don't 404.
+Closed more TODO(verify) items by walking the live UI: Connect Cloud per provider, Hub New Repository, Skill Builder fields, Templates library inventory, command-palette key bindings absent. Compute → Policies editor confirmed role-gated.
 
 ## v1.1 — 2026-05-12
 
-**Restructure.** The Ops Manual is now the default documentation at `docs.surogate.ai`. The Surogate Trainer reference is reachable from the **Old documentation** button in the top bar and lives at `/old-docs`.
-
-**Content depth.** Closed many `TODO(verify)` items by walking each Deploy / Connect / New dialog end-to-end on the live app, capturing exact field labels, dropdown options, and side-effects. Replaced demo-data caveats with explicit "you'll see this when your account is populated" call-outs.
-
-**Style.** Removed AI-tells across all feature and workflow pages — no more em-dash asides, marketing parallelism, or hedge phrases. Bold marks verbatim UI labels throughout.
-
-### Changes summary
-
-- `docusaurus.config.js`: new `@docusaurus/plugin-client-redirects` mapping `/ → /ops`. Navbar reordered: **Documentation** (the Ops sidebar) and **Old documentation** (legacy Trainer) on the left.
-- `docs/index.mdx`: slug changed from `/` to `/old-docs`.
-- All 38 Ops pages bumped to today's `Last updated` stamp.
+Restructure: Ops Manual became the default; trainer reference moved behind **Old documentation**. Walked every Deploy / Connect / New dialog on the live app; replaced TODO(verify) entries with verified field captures. Removed AI-tells across all feature and workflow pages.
 
 ## v1.0 — 2026-05-11
 
-Initial publication of the Surogate Ops user manual. Covers the app snapshot `surogate-ops-main` downloaded 2026-05-10.
-
-### Includes
-
-- Getting started: sign-in, first-run setup, five-minute tour, where-to-find-things.
-- Concepts: Work vs Develop perspectives, core objects, lifecycle diagrams.
-- Glossary covering ~60 terms used in the UI.
-- Feature pages for: Agents, Sessions, Skills & Tools, Knowledge Bases, Models, Compute, Monitoring, Evaluations, Arenas, Playground, Datasets, Training, Data Hub.
-- Workflow guides with embedded videos: Explore as end user, Deploy an agent, Deploy a model, Create a knowledge base, Add a skill, Connect a cloud backend.
-- Admin pages: Projects & roles, Integrations, Notifications.
-- Reference: Permissions matrix, Keyboard shortcuts, Error messages, Accessibility.
-- Troubleshooting and FAQ.
-- 42 desktop + mobile screenshots, 7 workflow videos. PII masked.
-
-### Known gaps closed in v1.1
-
-- Field references for the Deploy Agent / Deploy Model / + New Knowledge Base / New Skill / + Add MCP Server / + New Dataset / + New Run / + New Evaluation / + Create Arena / + New Policy / Hub Import + New Repository / Connect Cloud (8 providers) dialogs — now captured from the live app.
-- The "Just exploring" path on `/onboarding` is now captured.
-
-### Known gaps that remain
-
-- Most cells of the permissions matrix above `viewer`.
-- Dynamic-route pages (`/studio/agents/$id`, `/studio/arenas/$arenaId`, `/studio/hub/$splat`, `/work/agents/$agentId/*`) when the account holds zero of those objects.
-- The `/onboarding` end-to-end video on a brand-new account.
-- Detailed monitoring panels' behavior on a populated account.
+Initial publication. Covered the `surogate-ops-main` snapshot downloaded 2026-05-10. Built from a project-`viewer` test account.

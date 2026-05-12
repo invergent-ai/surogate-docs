@@ -1,72 +1,46 @@
 ---
 title: Monitoring
-sidebar_position: 7
+sidebar_position: 1
 slug: /features/monitoring
 ---
 
-_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
-
 # Monitoring
 
-`/studio/monitoring` is the live ops view. It draws data over a WebSocket the app opens at sign-in (`useMonitorSocket` in `__root.tsx`). Counters update without polling; closing the tab and reopening reconnects.
+The live ops view for your deployed agents. Counters update via a WebSocket the app opens at sign-in; you don't have to refresh. Open it when you want to know what's happening *right now*.
 
-> The screenshot below uses example data so the layout is visible — your account renders the same panels populated by your own traffic.
+## What the page shows
 
-![Monitoring dashboard with annotations](../assets/screenshots/monitoring/dashboard-annotated.png)
+- **Top counters.** Total RPS, P95 latency, error rate, token usage rate.
+- **Request Rate chart.** RPS over the chosen time window, stacked by agent.
+- **Agent Health table.** One row per agent — RPS, P50/P95/P99, error count, CPU, MEM, sparkline. Static columns; no click-to-sort in this snapshot.
+- **Alerts feed.** Live. Each alert is severity, agent or model, one-line reason. Click an alert to jump into the offending session.
+- **Latency Distribution heatmap.** Rows are latency buckets, columns are time slices. Useful for spotting tail spikes.
+- **Model Serving panel.** Per-model aggregates — useful when one model degrades across many agents.
+- **Token Usage (24h).** Tokens per model. Quick budget check.
 
 ## Controls
 
-1. **Time-range tabs**: `5m · 15m · 1h · 6h · 24h · 7d`. The whole page (counters, table, panels) re-aggregates on click.
-2. **Auto-refresh** toggle. On by default. Off freezes the view at the current window.
-3. **⏸ Pause** halts the live stream without flipping Auto-refresh — useful while writing an incident note.
-4. **Severity filter**: `All · 5xx · Timeout · Guardrail`. Limits both the agent table and the alerts feed.
-5. **Per-agent table**, columns: `Agent · Status · RPS · P50 · P95 · P99 · Errors · CPU · MEM · Trend`. Headers are static — click-to-sort is not exposed in this snapshot. Filter to a subset of agents through the severity pills (4) or by entering an agent name in the page-level search.
-6. **Acknowledge** on each alert row — silences re-fire for the same root cause until manually re-armed.
-
-## Panels
-
-| Panel | What it shows |
-|---|---|
-| Top counters | Headline numbers: total RPS, P95, error rate, token usage rate. |
-| Request Rate chart | RPS over the time window, stacked by agent. |
-| Agent Health table | One row per agent. Columns above. |
-| Alerts | Live feed. Each entry: severity, agent/model, one-line reason. Click an entry to open the offending session. |
-| Latency Distribution | Heatmap. Rows are latency buckets, columns are time slices. Spot tail spikes. |
-| Model Serving | Aggregate per Model. Useful when one model degrades across many agents. |
-| Token Usage (24h) | Tokens per Model. Quick budget check. |
+- **Time range:** `5m · 15m · 1h · 6h · 24h · 7d`. The whole page re-aggregates on click.
+- **Auto-refresh** toggle. On by default; off freezes the view at the current window.
+- **⏸ Pause** halts the live stream without flipping Auto-refresh. Use it while writing an incident note.
+- **Severity filter:** `All · 5xx · Timeout · Guardrail`. Narrows the agent table and the alerts feed.
+- **Acknowledge** on each alert row — silences re-fire for the same root cause.
 
 ## Severity meanings
 
-- **5xx**: the agent's serving endpoint returned an HTTP 500-series error to the proxy.
-- **Timeout**: the agent didn't respond before the proxy timeout. Often correlates with a slow Skill or MCP call — open the session trajectory to confirm.
-- **Guardrail**: either a compute policy refused the workload (see [Compute → Policies](./compute.md#policies-tab)) or a content guardrail intervened on a response.
+- **5xx** — the agent's serving endpoint returned an HTTP 500-series error to the proxy.
+- **Timeout** — the agent didn't respond before the proxy timeout. Often a slow skill or MCP call; check the session trajectory.
+- **Guardrail** — either a compute policy refused the workload, or a content guardrail intervened on a response.
 
-## Reading the heatmap
+## Read the heatmap
 
-The Latency Distribution heatmap is normalized per-column. A dark cell at the top-right means a tail spike in the most recent slice for the highest-latency bucket. Cross-reference with the Alerts feed to find the offending agent.
+Latency Distribution is normalized per column. A dark cell at the top-right means a tail spike in the most recent slice for the highest-latency bucket. Cross-reference with the Alerts feed to find the offending agent.
 
-## Permissions
+## When the page stops updating
 
-| Action | Role |
-|---|---|
-| View Monitoring | Project `viewer` and above |
-| Acknowledge alert | Project `editor` or `owner` (TODO(verify)) |
+The WebSocket dropped. Counters freeze at the last value; new alerts don't appear. Refresh the tab — the socket reconnects on page load.
 
-## When Monitoring stops updating
+## Where to go next
 
-The page connects to a WebSocket. Symptoms of a dropped socket:
-
-- Counters freeze at the value they had when you lost connectivity.
-- Newly running jobs don't appear in **/studio/compute/workload-queue** until you refresh.
-
-Reload the tab. The socket re-establishes on page load.
-
-## Demo data caveat
-
-A fresh account renders the page with example agents (CX, DeepSeek R1, etc.) so the layout is visible. The data is not stored on your account — clicking an agent in the demo set will not open a real session. Once you deploy your own agents, the seed data is replaced.
-
-## Related
-
-- [Agents](./agents)
-- [Sessions](./sessions) — the trajectory view for a single chat.
-- [Reference → Errors](../reference/errors) — the alert categories and their meanings.
+- **[Sessions](./sessions.md)** — drill into a specific conversation that an alert points to.
+- **[Reference → Errors](../reference/errors.md)** — the full error vocabulary.

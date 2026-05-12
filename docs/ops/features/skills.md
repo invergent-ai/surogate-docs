@@ -1,127 +1,65 @@
 ---
 title: Skills & Tools
-sidebar_position: 3
+sidebar_position: 2
 slug: /features/skills
 ---
 
-_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
-
 # Skills & Tools
 
-Two related concepts live under one page:
+Skills are how your agents do work outside of generating text. Read a database, write to a ticket tracker, call an API, run a saved workflow. A skill is a small, typed function with a description; the agent picks when to call it based on the conversation.
 
-- **Skills** — functions or workflows defined inside Surogate. The Skill Builder is the visual editor. Skills live in your project, version on save, and ship to the Hub when published.
-- **MCP Servers** — external services that speak [Model Context Protocol](https://modelcontextprotocol.io). Surogate doesn't host them; it routes tool calls to the URL you register.
+**MCP Servers** are the externally-hosted alternative. If a vendor (or another team) already exposes a Model Context Protocol endpoint, you register the URL and the agent can call any tool the server offers. You don't host anything.
 
-The page header switches between them with two tabs: **Skills** and **MCP Servers**.
-
-## When to choose which
+## When to write a skill vs use an MCP server
 
 | You have… | Use |
 |---|---|
-| A specific function ("look up customer by ID", "create a Jira ticket") | Skill |
-| A microservice that already speaks MCP | MCP Server |
-| A bundle of tools from a vendor that publishes an MCP endpoint | MCP Server |
-| A multi-step workflow with branching | Skill (it's easier to read in the editor) |
+| A narrow function ("get_customer", "create_ticket") | **Skill** — fast to write, type-safe, stays in Surogate Ops. |
+| A vendor that already exposes an MCP endpoint | **MCP Server** — register once, use everywhere. |
+| An internal service you'd like to expose to multiple agents | **MCP Server** — host one and connect to it from every agent. |
 
-## Page layout
+## Write a skill
 
-Common across both tabs:
+1. Build → Skills & Tools → **New Skill**.
+2. The Skill Builder opens inline. Fill the five top-level fields:
+   - **Name** — internal id, URL-safe, referenced from agent configs.
+   - **Display Name** — what users see in lists.
+   - **Description** — what the skill does, in one or two sentences. **Agents read this to decide when to call.** Be precise.
+   - **Trigger** — optional natural-language hint ("when the user asks about pricing").
+   - **Tags** — space-separated; used by the filter on the Skills list.
+3. Write the body in the markdown editor below. The editor supports `Ctrl/⌘ + B` and `Ctrl/⌘ + I`.
+4. Save & publish.
 
-- **Filter skills…** input. Case-insensitive substring match, scoped to the active tab.
-- Tab strip: `Skills · MCP Servers`. Counts in the tab labels (e.g. `MCP Servers 0`).
-- Two header actions: **Import skill** (opens the Templates library) and **New Skill** (opens the builder).
+## Start from a template
 
-The **MCP Servers** tab replaces these with two actions: **Vault** (manage stored MCP credentials) and **Add Server** (register a new MCP endpoint).
+If you don't know where to begin, hit **Import skill**. The Templates library lists 72 starter skills across 17 categories — `autonomous-ai-agents`, `blockchain`, `creative`, `devops`, `email`, `finance`, `health`, `mcp`, `mlops`, `productivity`, `research`, `security`, `web-development`, and more. Pick the card closest to your need; the Skill Builder opens with the template pre-filled. Edit name, description, and body, then save.
 
-## Skill model
+The full category breakdown:
 
-Backend field set (`surogate_ops/core/db/models/`): name, description, kind, version, schema (typed I/O), implementation, status. Editing a skill creates a new version row; older versions stay so deployed agents keep working until you re-deploy them.
+- `mlops` ships the most (25 templates) — vector DBs, embeddings, fine-tuning helpers, FAISS, Pinecone, Qdrant, Whisper, PyTorch Lightning.
+- `research` has 9 — web search, OSINT, drug discovery, bioinformatics.
+- `finance` has 7 — DCF, LBO, comps, merger models, Excel and PowerPoint authors.
+- `productivity` has 7 — Shopify, SiYuan notes, Telegram, telephony.
+- `creative` has 5 — Blender, hyperframes, kanban video orchestration, meme generation.
 
-## Templates library
+## Connect an MCP server
 
-The **Import skill** action opens the Templates library (header `H2: Templates`). The left rail groups templates by category. The current snapshot ships **72 templates** across 17 categories:
+Build → Skills & Tools → **MCP Servers** tab → **Add Server**. Provide the endpoint URL and any auth (a credential reference, headers, or a token from the **Vault**). Save. The server's tools become selectable on every agent's settings page.
 
-| Category | Count |
-|---|---|
-| autonomous-ai-agents | 2 |
-| blockchain | 2 |
-| communication | 1 |
-| creative | 5 |
-| devops | 3 |
-| dogfood | 1 |
-| email | 1 |
-| finance | 7 |
-| health | 2 |
-| mcp | 2 |
-| migration | 1 |
-| mlops | 25 |
-| productivity | 7 |
-| research | 9 |
-| security | 3 |
-| web-development | 1 |
+## Attach to an agent
 
-(`All categories 72` is the top selector that shows everything.) A **Search templates…** input filters across the full set. Each card carries the template's short description and tags. Picking a card opens the builder with the template's body pre-filled.
+Open the agent → **Settings** → multi-select your skills and MCP servers → redeploy.
 
-## New Skill flow
+**Agents pin to the version of each skill that exists at deploy time.** Editing a skill creates a new version row but does not propagate to deployed agents. To push an update: save the new version, open each agent that uses the skill, re-select it from the dropdown (the new version is now top of the list), and redeploy.
 
-The **New Skill** action opens the Skill Builder inline (not as a modal — the page switches to the editor). The form has five top-level fields and a markdown body editor below them.
+## When something fails
 
-| Field | Type | Notes |
-|---|---|---|
-| **Name** | text | The internal id. URL-safe. Used in references from agent configs. |
-| **Display Name** | text | Shown in lists and agent settings. |
-| **Description** | textarea | What the skill does, in one or two lines. Agents read this to decide when to call. Precision pays off here. |
-| **Trigger** | text | Optional. Natural-language hint for when an agent should invoke this skill (`when the user asks about pricing`). |
-| **Tags** | text | Space-separated. Used by the filter on the Skills list and to group skills in agent settings. |
+- **Agent doesn't call the skill it should.** The Description isn't specific enough. Rewrite it to say exactly when the skill applies; agents are good at following precise descriptions.
+- **MCP server times out.** Open a session that called it — the timeout shows up there with the URL it tried.
+- **Schema rejects valid inputs.** Mismatched types in the Skill Builder. Common cause: a `string` field that should be a number, or vice versa.
 
-The body editor is a full markdown editor with the standard formatting shortcuts (`Ctrl+B` bold, `Ctrl+I` italic). It carries the implementation — depending on the kind the skill is, this is a prompt template, a script, or a tool-call definition.
+## Where to go next
 
-Cancel the form with the **✕** button in the top-right of the editor; the skill is not created until you save.
-
-## Import flow
-
-1. Open `/studio/skills`.
-2. Click **Import skill**. The Templates library opens.
-3. Browse by category (left rail) or search by name (top input).
-4. Pick a template card. The Skill Builder opens with the template pre-filled. Edit name / display name / description if needed, then save.
-
-The skill arrives as a new entry pinned to the version current at import time. To bring in a skill from outside the Templates library (e.g. a `.skill` bundle), use the Data Hub: push the bundle to a `Skill`-kind Hub repo, then import from there.
-
-## MCP Server flow
-
-1. Switch to the **MCP Servers** tab at `/studio/skills/mcp`.
-2. Click **Add Server**. (The companion **Vault** action lists stored MCP credentials.)
-3. Provide the server's **Endpoint URL** and any auth — credential reference, headers, or a token from the Vault.
-4. Save. The server's tools become available in the multi-select on agent settings.
-
-## Versions and pinning
-
-Agents pin to a Skill version at deploy time. Saving a Skill bumps its version row but does not propagate to deployed agents. To push an update:
-
-1. Save the new version.
-2. Open each affected agent's settings (`/studio/agents/<id>` → Settings).
-3. Re-pick the skill (the dropdown now shows the new version).
-4. Re-deploy the agent.
-
-The agent's running sessions complete on the old version. New sessions start on the new one.
-
-## Permissions
-
-| Action | Role |
-|---|---|
-| List, read | Project `viewer` and above |
-| New Skill / Import / Edit / Delete | Project `editor` or `owner`, **or** system `skill_author` |
-| New MCP Server / Edit / Delete | Project `editor` or `owner` (TODO(verify whether `skill_author` covers MCP)) |
-
-## Troubleshooting
-
-- **Agent fails after a skill edit.** The agent is pinned to the previous version. Re-deploy the agent to pick up the new one.
-- **MCP server timing out.** Open a session that calls it and read the Trajectory tab — the timeout shows there with the offending URL.
-- **Skill compiles but the schema rejects inputs.** Re-check the typed schema; common mistake is `string` where the agent sends a number.
-
-## Related
-
-- [Workflow — Add a skill](../workflows/add-a-skill)
-- [Agents](./agents)
-- [Data Hub](./hub) — Skills publish there.
+- **[Agents](./agents.md)** — to attach skills.
+- **[Sessions](./sessions.md)** — to inspect tool calls.
+- **[Data Hub](./hub.md)** — to publish a skill for reuse.

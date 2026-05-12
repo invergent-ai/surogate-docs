@@ -1,82 +1,62 @@
 ---
 title: Models
-sidebar_position: 5
+sidebar_position: 4
 slug: /features/models
 ---
 
-_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
-
 # Models
 
-`/studio/models` lists the LLMs available to your project. Each Model is either **served by Surogate** on cloud compute you have connected, or **proxied** to an upstream provider behind an OpenAI-compatible URL. Agents reference Models by id; the proxy uses `sk-agent-*` API keys scoped to a single Model.
+A Model is the LLM your agents call. Surogate Ops either serves it for you on your connected cloud compute, or proxies it to an upstream provider. Either way your agents reference the model by id, and external callers can reach it through Surogate's API.
 
-## The list
+## Where models come from
 
-The page header has the **Models** title and a **Filter models…** search input. Status pills filter by lifecycle: `All · Serving · Error · Stopped`. The primary action is **Deploy Model** (top-right).
+Models page → **Deploy Model**. Pick one of four sources:
 
-Deep links:
+- **Local Hub** — pull weights from a Hub repo. This is what you use to serve a model your team has trained. Default option.
+- **🤗 Hugging Face** — paste an HF model id (e.g. `meta-llama/Llama-3.1-8B`). Requires a HF token in Integrations for gated repos.
+- **OpenRouter** — proxied through OpenRouter's catalog. Requires an OpenRouter credential.
+- **URL** — any OpenAI-compatible endpoint. Paste a base URL and a credential id. Works with self-hosted vLLM, Ollama, internal inference services.
 
-- `/studio/models?modelId=<id>` selects a Model on load.
-- `/studio/playground?modelId=<id>` opens the Playground bound to that Model.
+The form adapts to the source. For served models, you pick a backend, a GPU offer, replicas, and (optionally) quantization. For proxied models, you point at the endpoint and the credential.
 
-## Deploy flow
+Submit. Served models land in **Deploying** while the container comes up; proxied models go straight to **Serving**.
 
-The dialog header reads **Add Model**. The first screen is a source picker — four cards, exactly these labels:
-
-| Source | What it expects |
-|---|---|
-| **Local Hub** | "From your registry". Pulls weights from a Hub repo in this project's namespace. The default option, and what serving from your own training output uses. |
-| **🤗 Hugging Face** | "From HF Hub". Paste an HF model id (e.g. `meta-llama/Llama-3.1-8B`). Requires a HF token configured in [Integrations](../admin/integrations.md) for gated models. |
-| **OpenRouter** | "From OpenRouter". Proxied through OpenRouter's catalog. Requires an OpenRouter credential. |
-| **URL** | "From OpenAI-compatible provider". Paste a base URL and a credential id. Lets you route to any provider that speaks the OpenAI chat-completions schema (vLLM, Ollama, internal services). |
-
-The empty state shows _"No models in Data Hub yet"_ when **Local Hub** is selected and the project's hub has zero model repos.
-
-Picking a source unlocks the source-specific form (model id, name, deployment target, credential, replicas, quantization). The remaining buttons are **Cancel** (bottom-left) and **Add Model** (primary).
-
-After submit, the Model lands in **Deploying** for served Models, and immediately in **Serving** for proxied ones (the proxy doesn't run a container).
-
-## Lifecycle
+## Status
 
 | Status | Meaning |
 |---|---|
-| Deploying | Container being built and scheduled. |
-| Serving | Healthy. Accepting traffic from agents and the Playground. |
-| Stopped | You stopped it. Re-deploy to serve again. |
-| Error | Container or upstream provider returning failures. |
+| **Deploying** | Container being built and scheduled. Normal during first deploy. |
+| **Serving** | Healthy, accepting traffic from agents and the Playground. |
+| **Stopped** | You manually stopped it. Re-deploy to serve again. |
+| **Error** | Container or upstream provider returning failures. |
 
-A Model that flips from Serving → Error invalidates calls from every Agent that uses it — those Agents show errors in Monitoring until either the Model recovers or the Agents are re-pointed.
+A Model that flips from Serving to Error invalidates every agent calling it. Agents show errors in Monitoring until the model is back.
 
 ## API keys
 
-Each Model has its own set of `sk-agent-*` keys. Keys are created from the Model detail page (TODO(verify the UI location)). The key authorizes calls to that model id only; an Agent built on the Model inherits its key implicitly.
+Each model can have one or more API keys for external callers. A key is scoped to that one model — your own services, third-party tools, anything outside Surogate Ops uses it to hit the model through Surogate's API. Agents built on the model don't need a key; they call internally.
 
-Failed authentications (`401`/`403`) at the proxy are **negative-cached**. A wrong or revoked key keeps failing for up to a minute after the fix. Rotating a key: create the new key, point clients at it, then revoke the old one — never delete first.
+Failed authentications are negative-cached briefly to protect the upstream. A wrong key keeps failing for up to about a minute after the fix. The rotation rule: create the new key first, point clients at it, **then** revoke the old. Never delete first.
 
-## Stopping a Model
+## Quantization
 
-Stopping a served Model releases its compute reservation. Stopping a proxied Model just blocks calls to it through the Surogate proxy; the upstream provider is unaffected.
+Served models accept several quantization options: `bf16`, `fp8`, `nvfp4`, `qfp4`, `qfp8`, `qlora`. The matrix of legal pairs depends on the GPU. Pick `bf16` if you're unsure; pick `qlora` if you're optimizing for GPU hours. The Surogate Trainer's [Precision and recipes](/guides/precision-and-recipes) guide has the full matrix.
 
-Coordinate stops in the [Monitoring](./monitoring) view — Agents pointing at the Model show errors until the Model is back. If your team uses the same Model across multiple Agents, flag the stop in Notifications first.
+## Cost shape
 
-## Permissions
+Served models reserve compute for the lifetime of the container. Stopping releases the reservation immediately. Proxied models cost nothing on Surogate's side; you pay the upstream provider directly.
 
-| Action | Role |
-|---|---|
-| List, open a Model | Project `viewer` and above |
-| Deploy / Stop / Delete a served Model | System `devops` (or project `owner`, TODO(verify)) |
-| Deploy a proxied Model | Project `editor` or above (TODO(verify)) |
-| Manage API keys on a Model | Project `editor` or above (TODO(verify)) |
+The Studio dashboard's Serving Models and Training Jobs panels show coarse spend. For per-model details, use your cloud backend's own billing.
 
-## Troubleshooting
+## When something fails
 
-- **Deploy stuck at Deploying.** Find the related `serving` workload at `/studio/compute/workload-queue?filter=serving`. Click the row to see logs.
-- **`sk-agent-*` returns 403 "API key not scoped for this model".** The key was created for a different Model. Mint a new key on the right Model.
-- **Quantization choice rejected.** GPU type doesn't support the chosen quantization. Pick a different GPU or a different quantization (see [Surogate Trainer → Precision and recipes](/guides/precision-and-recipes)).
+- **Stuck in Deploying.** Find the related `serving` workload at [Compute → Workload Queue](./compute.md) filtered to `serving`. Open the row for logs.
+- **API call returns "API key not scoped for this model".** The key was created for a different model. Create a new key on this model.
+- **Quantization choice rejected.** GPU type doesn't support that quantization. Pick a different GPU or a different quantization.
 
-## Related
+## Where to go next
 
-- [Workflow — Deploy a model](../workflows/deploy-a-model)
-- [Compute](./compute)
-- [Playground](./playground)
-- [Data Hub](./hub) — where the Model's weights live.
+- **[Agents](./agents.md)** — what your model powers.
+- **[Compute](./compute.md)** — where served models actually run.
+- **[Playground](./playground.md)** — to sanity-check a model without an agent wrapping it.
+- **[Training Runs](./training.md)** — to produce the weights you serve here.

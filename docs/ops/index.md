@@ -1,49 +1,52 @@
 ---
-title: Surogate Ops — User Manual
+title: Welcome to Surogate Ops
 sidebar_label: Welcome
 slug: /
 ---
 
-_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
+# Welcome to Surogate Ops
 
-# Surogate Ops
+Surogate Ops is where you put autonomous agents to work. Build one once, deploy it to your team, then watch what it does and make it better. The whole loop — build, run, monitor, train, redeploy — happens inside the same app.
 
-The web application at **ops.surogate.ai**. It hosts the lifecycle of an autonomous agent: build, deploy, run, observe, evaluate, retire. Two user-facing surfaces share one backend and one project graph.
+![The Studio dashboard](./assets/screenshots/studio-dashboard/dashboard.png)
 
-| Surface | URL prefix | For |
-|---|---|---|
-| **Work** | `/work/*` | Operators running existing agents. Chat, sessions, attached skills and knowledge bases. |
-| **Develop** (Studio) | `/studio/*` | Builders. Agents, Models, Skills, Knowledge Bases, Datasets, Training, Hub, Compute, Monitoring, Evaluations. |
+## Why use Surogate Ops
 
-Switch between them with the top-right toggle. Your default lives on `User.perspective`.
+You bring a problem worth automating; Surogate brings the surface to do it on. Pair an LLM with your skills and your knowledge bases, drop the result into a chat window your team already trusts, and capture every interaction so the next version is better than this one.
 
-![Studio dashboard](./assets/screenshots/studio-dashboard/dashboard.png)
+- **Build with what you have.** Skills you write once, knowledge bases that index whatever you upload, models you either host or proxy.
+- **Ship in minutes, not days.** First deploy of a new agent takes a couple of minutes for the container to come up. Iterations are seconds.
+- **Improve from real traffic.** Sessions feed back into datasets, datasets feed back into training, the trained model feeds back into the next deploy.
 
-## Reading order
+## Who Surogate Ops is for
 
-1. [Sign in](./getting-started/sign-in.md) — authenticate.
-2. [First-run setup](./getting-started/first-run.md) — the two-screen welcome flow.
-3. [Five-minute tour](./getting-started/tour.md) — the two perspectives, the navbar groups, the side rails.
-4. [Where to find things](./getting-started/where-to-find-things.md) — a flat route map.
+- **Operators** who need an agent to do a specific job and don't care how the model gets there.
+- **Builders** who want to compose models, skills, and knowledge bases without standing up the plumbing.
+- **ML teams** who need to fine-tune their own model on real interaction data, evaluate it, and serve it.
+- **Admins** who need to manage teams, integrations, and who gets to do what.
 
-From there:
+## What you can build
 
-- **End users**: head to [Workflow → Explore as an end user](./workflows/explore-as-end-user.md). Most of the rest of the manual is for builders.
-- **Builders**: start with [Core objects](./concepts/core-objects.md), then read the relevant feature page when you need it.
-- **Admins**: [Permissions matrix](./reference/permissions-matrix.md), then [Admin → Projects & roles](./admin/projects-and-roles.md).
-- **On-call**: [Monitoring](./features/monitoring.md), then [Troubleshooting](./troubleshooting.md).
+- A customer-support agent that pulls from your product docs and writes tickets to your tracker.
+- A coding assistant tuned on your own codebase, served behind a stable API key your other tools call.
+- A pipeline that captures conversations, distills them into a dataset, and re-trains an expert model overnight.
+- A controlled evaluation tournament that compares two candidate models on the work you actually do.
 
-## What's not in this manual
+## How Surogate Ops fits into your workflow
 
-- The Surogate Trainer library reference — see the rest of [docs.surogate.ai](/old-docs) for that.
-- HTTP API reference — `surogate_ops/server/routes/*.py` is canonical; the OpenAPI schema (when exposed) is generated from it.
-- On-prem deployment — the `surogate-ops` repo has the Dockerfiles and k8s manifests.
+1. **Sign in** and pick an agent template, or build from scratch.
+2. **Wire it up** with the skills, knowledge bases, and model your team needs.
+3. **Deploy** and share the agent with end users.
+4. **Watch the sessions** that come back, flag the bad ones, turn the good ones into training data.
+5. **Train and redeploy** when you have enough signal.
 
-## Conventions
+The rest of this manual walks you through each step.
 
-- **Bold** marks verbatim UI labels (button text, tab names, headings as rendered).
-- `code` marks URLs, paths, identifiers, config keys.
-- Screenshots are at 1440×900 desktop and 390×844 mobile. Personal data is masked (`user@example.com`, `Test User`).
-- Annotated screenshots end in `-annotated.png` — numbered red circles pin specific UI elements. Cropped close-ups end in `-zoom-<name>.png`.
-- `TODO(verify):` flags marks behavior we could not confirm against the test account. The list is tracked at the docs repo root in `OPEN_QUESTIONS.md`.
-- This manual was produced from app snapshot `surogate-ops-main` downloaded 2026-05-10. Every page footer carries that stamp.
+## Where to go next
+
+- **[Quickstart](./getting-started/quickstart.md)** — the welcome screen, the two surfaces, your first agent in five minutes.
+- **[Build](./features/agents.md)** — Agents, Skills, Knowledge Bases, Models.
+- **[Train](./features/datasets.md)** — Datasets, Training Runs, Evaluations, Arenas.
+- **[Operate](./features/monitoring.md)** — Monitoring, Sessions, Compute, Playground.
+- **[Distribute](./features/hub.md)** — Data Hub for sharing across teams.
+- **[Admin](./admin/projects-and-roles.md)** — Teams, integrations.

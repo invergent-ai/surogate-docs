@@ -1,77 +1,60 @@
 ---
 title: Knowledge Bases
-sidebar_position: 4
+sidebar_position: 3
 slug: /features/knowledge-bases
 ---
 
-_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
-
 # Knowledge Bases
 
-A Knowledge Base (KB) is an indexed document store an agent reads at runtime. Surogate compiles documents into an embedding index, exposes it via retrieval calls inside an agent's loop, and tracks compilation status so you know whether the KB is ready.
+A Knowledge Base (KB) is an indexed document store that agents read at runtime. You point it at a source — your help center, your wiki, a folder of PDFs — and Surogate compiles it into an embedding index. Agents then query the KB during a conversation to ground their answers in your content.
 
-## Lifecycle
+## When to use a KB
 
-| Status | Meaning |
-|---|---|
-| Compiling | Surogate is pulling sources and building the embedding index. |
-| Active | Index ready. Agents using the KB get retrieval results. |
-| Error | A source fetch or the indexing job failed. Per-document errors are visible inside the KB detail. |
+- Your agent should answer from your own docs, not from whatever the model learned in pretraining.
+- The source content changes — a wiki, a help center, a product spec — and you want answers to track edits.
+- You need retrieval calls to be visible: opening a session shows which documents the agent pulled from, which makes debugging answers tractable.
 
-Status filter tabs on the list page: `All · Active · Compiling · Error` with live counts.
+## Create one
 
-## Where it lives
+Build → Knowledge Bases → **+ New Knowledge Base**. Fill four fields:
 
-- `/studio/knowledge-bases` (builder view, full controls). Status filter, **Filter knowledge bases…** input, **+ New Knowledge Base** action.
-- `/work/knowledge-bases` (operator view, browse-only). Same components, no Edit / Delete.
-- Per-KB detail at `/studio/knowledge-bases/<kb-id>` (TODO(verify the route slug) — not reachable on the test account).
+- **Display Name** — what users see in lists and on agent settings.
+- **Slug** — permanent identifier; can't be changed later.
+- **Description** *(optional)* — shown on the KB card.
+- **Source** — pick where the documents come from: file upload, URL, Git, S3, an existing Hub repo.
 
-## New Knowledge Base flow
+Submit. The KB lands in **Compiling** while Surogate fetches and embeds the source. When the compile finishes it flips to **Active** and is attachable to agents.
 
-1. Open `/studio/knowledge-bases`.
-2. Click **+ New Knowledge Base**. The dialog header reads **New Knowledge Base**.
-3. Fill the dialog. Exactly these fields:
+A compile workload appears in [Compute → Workload Queue](./compute.md) with kind `task`. Big sources (thousands of documents) can take minutes to compile.
 
-   | Field | Type | Notes |
-   |---|---|---|
-   | **Display Name** | text | The label across `/work` and `/studio` and on agent settings. |
-   | **Slug** | text | Help text: _"unique within project"_. Stable identifier and URL segment. Cannot be changed once set. |
-   | **Description (optional)** | textarea | Shown on the KB card and in tooltips. |
-   | _Source picker_ | combobox | Unlabeled but required. Pick where the documents come from. |
+## Attach to an agent
 
-4. Submit with **Create**. The KB lands in **Compiling** while Surogate fetches and embeds the source. The dialog has **Cancel** and **Close** controls; both abandon without saving.
-5. When the compile finishes, status flips to **Active** and the KB becomes attachable to agents.
+Open the agent → **Settings** → **Knowledge bases** multi-select → redeploy. Multi-select means an agent can read from several KBs at once; the agent decides which to query for each turn.
 
-## Attaching to an Agent
-
-1. Open the agent's settings (`/studio/agents/<id>` → Settings).
-2. In **Knowledge bases**, pick the KB. Multi-select is supported.
-3. Save and re-deploy. Sessions started after redeploy will have retrieval available.
-
-A KB in **Compiling** or **Error** can be attached. The agent will simply return zero retrieval results until the KB reaches **Active**.
+A KB in **Compiling** or **Error** state can be attached. The agent returns no retrieval results until the KB reaches **Active**.
 
 ## Re-indexing
 
-Saving a KB triggers re-index. On large KBs (thousands of docs) this can take minutes. The status badge updates live via the monitor socket (see [Monitoring](./monitoring) — the same channel powers both surfaces).
+Saving a KB triggers re-index. While the new index builds, the agent keeps hitting the previous index — there's no read-time gap. The new index swaps in atomically when the compile completes.
 
-While re-indexing, queries continue to hit the previous index. The new index swaps in atomically on completion.
+For sources that change frequently (a wiki on a daily edit cadence), set the compile to run on a schedule rather than re-saving by hand.
 
-## Permissions
+## Status
 
-| Action | Role |
+| Status | Meaning |
 |---|---|
-| List, browse | Project `viewer` and above |
-| New / Edit / Delete | Project `editor` or `owner` (TODO(verify)) |
-| Attach to an agent | Same role required to edit the agent |
+| **Compiling** | Surogate is pulling the source and building the embedding index. |
+| **Active** | Index ready; queries return results. |
+| **Error** | A document fetch or the indexing step failed. Open the KB to see per-document errors. |
 
-## Troubleshooting
+## When something fails
 
-- **Stuck in Compiling for too long.** Open `/studio/compute/workload-queue?filter=task` and find the related job. If it's **Queued**, no compute is available. If it's **Failed**, click the row for logs.
-- **Error with a 401/403 source error.** A source credential expired or was rotated. Re-enter under [Integrations](../admin/integrations) or in the KB's settings.
-- **Active but retrieval returns nothing.** The agent isn't pinned to this KB version, or the query is outside the KB's embedding distribution. Re-deploy the agent and check the Trajectory tab in a session to see the retrieval call.
+- **Stuck in Compiling longer than expected.** Open [Compute → Workload Queue](./compute.md) and filter to `task`. Find the related job. If **Queued**, no compute is available. If **Failed**, click the row for logs.
+- **Active but retrieval returns nothing.** Two possibilities. Either the agent isn't pinned to this KB version (redeploy), or your query is outside the KB's embedding distribution (the topic is genuinely not in the source). Open a session and look at the retrieval step to confirm.
+- **Error with a 401/403 source.** A source credential expired upstream. Re-enter in the KB's settings.
 
-## Related
+## Where to go next
 
-- [Agents](./agents) — to attach a KB.
-- [Data Hub](./hub) — publish a KB for reuse across projects.
-- [Workflow — Create a knowledge base](../workflows/create-a-knowledge-base)
+- **[Agents](./agents.md)** — to attach a KB.
+- **[Sessions](./sessions.md)** — to read the retrieval trajectory.
+- **[Data Hub](./hub.md)** — to share a KB across projects.

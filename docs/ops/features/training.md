@@ -1,78 +1,65 @@
 ---
-title: Training
-sidebar_position: 12
+title: Training Runs
+sidebar_position: 2
 slug: /features/training
 ---
 
-_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
+# Training Runs
 
-# Training
+A Training Run is a model fine-tune scheduled on your compute. Surogate orchestrates the run via the [Surogate Trainer](/old-docs) — the LLM training library at the platform's core. When the run completes, the weights land in your Hub and you can promote them to a deployable Model.
 
-`/studio/training` lists training runs (also called **experiments**) and is where you start a new one. Surogate Ops orchestrates the run on your connected compute via the [Surogate Trainer](/old-docs), the LLM training library at the platform's core. When a run completes, its resulting weights can be promoted to [Models](./models.md) or pushed to the [Hub](./hub.md).
+## When to run training
 
-## When to use it
+- You've captured a few hundred clean sessions and want a model that does that specific job better than a generalist.
+- Your inference bill on a frontier model is high enough that a smaller fine-tuned model would pay for itself.
+- You need a specific capability (math reasoning, code review, an internal style) that a generalist doesn't reliably deliver.
 
-- Fine-tuning an open-weights LLM (SFT, LoRA, QLoRA).
-- Running RL training (GRPO) against a reward model or environment.
-- Pretraining from scratch.
+## Start a run
 
-## Prerequisites
+Train → Training Runs → **New Run**. Pick the kind first:
 
-- A [Dataset](./datasets.md) (for SFT) or an environment-kind [Hub Repo](./hub.md) (for RL).
-- A connected [Cloud Backend](./compute.md) with GPU capacity matching what you'll request.
-- Project role `editor` or `owner`, or system `developer` / `devops`.
+- **SFT** — supervised fine-tuning. Pair `(prompt, completion)` examples; the model learns to produce the completion. Use when you have a labeled dataset.
+- **GRPO** — group relative policy optimization. RL training against a reward model or environment. Use when you have a clear reward signal but no labeled outputs.
 
-## Page layout
+Fill in three text fields:
 
-`/studio/training` — list + **Filter experiments…** input + **New Run** action (top-right).
+- **Name** — display label and `runId` prefix.
+- **Short description** — one-liner shown in the runs list.
+- **Long description** — the hypothesis, the dataset, what success looks like. Free-form notes for your future self.
 
-Deep-link a specific run: `/studio/training?runId=<run-id>`.
+Below those, the per-kind config: base model, dataset (SFT) or environment (GRPO), precision (`bf16`, `fp8`, `nvfp4`, `qlora`), batch size, learning rate, sequence length. Defaults are sensible; the [Trainer's precision and recipes](/guides/precision-and-recipes) guide explains when to deviate.
 
-## Start a training run
+Pick a GPU offer from a connected backend. Submit.
 
-1. Open **/studio/training**.
-2. Click **New Run**. The dialog header reads **New Training Run**.
-3. The top row of the dialog is the **kind picker**, exactly two cards:
+## What happens next
 
-   | Kind | Description as shown in the UI |
-   |---|---|
-   | **SFT** | _Supervised Fine-tuning._ Pair (prompt, completion) examples become weight updates. |
-   | **GRPO** | _Group Relative Policy Optimization._ RL training against a reward model or environment. |
+The run lands in [Compute → Workload Queue](./compute.md) under kind `sft` or `grpo`. The detail panel shows:
 
-4. Below the kind picker, three text fields:
-
-   | Field | Type | Notes |
-   |---|---|---|
-   | **Name** | text | Placeholder: `CX SFT Round 5`. Becomes the run's display label and `runId` prefix. |
-   | **Short description** | text | Placeholder: `CX Quality Improvement`. One-liner shown in the list. |
-   | **Long description** | textarea | Placeholder: `Fine-tuning on curated CX dialogs will improve…`. Free-form notes — hypothesis, dataset, success criteria. |
-
-5. Below that, the per-kind config: base Model picker, Dataset (SFT) or Environment (GRPO) picker, precision (bf16 / fp8 / nvfp4 / qlora), batch size, learning rate, sequence length. Trainer defaults are usually fine; see [Surogate Trainer → Precision and recipes](/guides/precision-and-recipes) for the long version.
-6. Pick a GPU offer from a connected backend.
-7. Submit with **Create**. The run appears under [Compute → Workload Queue](./compute.md) with kind `sft` or `grpo`. Cancel and Close abandon the dialog.
-
-## Lifecycle
-
-A run progresses through the standard Workload states: `Queued → Provisioning → Running → Completed / Failed / Cancelled`. The run-detail panel (right side of `/studio/training`) shows:
-
-- **Logs** — the trainer's stdout/stderr.
+- **Logs** — the trainer's stdout/stderr in real time.
 - **Metrics** — loss curves, learning rate, throughput.
-- **Artifacts** — the produced weights, ready to promote to a Model.
+- **Artifacts** — the weights, ready to promote.
+
+## Promote the result
+
+When the run completes, open its detail and promote the weights to a Model. Then open your Agent → Settings → swap the Model. Redeploy. Your agent now runs on the model you just trained.
 
 ## Cancelling
 
-From `/studio/compute/workload-queue?filter=sft` (or `grpo`), open the run's row menu and pick Cancel. The compute reservation releases immediately; partial weights are kept.
+From [Compute → Workload Queue](./compute.md) filtered to `sft` or `grpo`, open the row menu → Cancel. Partial weights are kept; the compute reservation releases.
 
-## Gotchas
+## When something fails
 
-- Promoting a finished run's weights to a deployed Model is a **separate explicit action** from the run detail page. Completion is not deployment.
-- A failed run keeps its logs — click the row to read them.
-- Multi-node runs (`multi-node` precision recipes) reserve every node before starting. If any node fails to provision, the whole run waits.
-- Stacked LoRA training (LoRA on top of a LoRA adapter) is supported — see [Surogate Trainer → QLoRA](/guides/qlora) for the precise recipe.
+- **Stuck in Provisioning.** No GPU available in the chosen backend / region. Loosen the GPU requirement or connect a different backend.
+- **Loss diverges.** Most often a too-large learning rate. Lower it and re-run from a checkpoint if the trainer supports it.
+- **Multi-node run hangs.** One node failed to provision; the run waits for the full group. Cancel and resubmit.
 
-## Related
+## Stacked LoRA, MoE, multi-node
 
-- [Compute](./compute)
-- [Datasets](./datasets)
-- [Models](./models)
-- [Surogate Trainer documentation](/old-docs)
+The Surogate Trainer handles stacked LoRA training (LoRA on top of a LoRA adapter), MoE imbalance detection, and multi-node DDP via Ray. The Ops UI surfaces these as advanced fields on the run config; the [Trainer docs](/old-docs) cover the math.
+
+## Where to go next
+
+- **[Datasets](./datasets.md)** — where SFT inputs come from.
+- **[Models](./models.md)** — where the trained weights end up.
+- **[Evaluations](./evaluations.md)** and **[Arenas](./arenas.md)** — to verify before you cut over.
+- **[Use cases → Training your own expert](../use-cases/training-your-own-expert.md)** — the full loop.

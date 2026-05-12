@@ -1,47 +1,30 @@
 ---
 title: Playground
-sidebar_position: 10
+sidebar_position: 4
 slug: /features/playground
 ---
 
-_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
-
 # Playground
 
-## What it does
-
-`/studio/playground` is an ad-hoc testing surface for a single Model. Talk to the model directly, tweak sampling parameters, paste in prompts. No agent wrapper — just the bare model behind your Surogate proxy.
+The Playground is an ad-hoc testing surface for a single Model. No agent wrapper, no skills, no knowledge base — just the bare model behind your Surogate proxy. Use it to sanity-check a model after deploying it, or to tune a system prompt before wiring it into an agent.
 
 ## When to use it
 
-- Sanity-check that a freshly deployed Model responds at all.
-- Tune a system prompt or a few-shot block before wiring it into an Agent.
-- Compare two model versions head-to-head on the same prompt (open two browser tabs).
+- You deployed a model and want to confirm it responds at all.
+- You're crafting a system prompt and want to iterate without redeploying an agent each time.
+- You want a quick head-to-head between two model versions — open two browser tabs, point each at one model, ask the same question.
 
-## Prerequisites and permissions
+## How to use it
 
-- **Read**: any project member.
-- At least one deployed or proxied Model. With zero models the page shows **No models** — pick a model in [Models](./models) first.
+Operate → Playground. Pick a model from the dropdown (or arrive via `?modelId=<id>`). Type into the input, adjust sampling parameters (temperature, top-p, max tokens), hit send. The response streams back.
 
-## Where to find it
+## Differences from agent chat
 
-`/studio/playground` — empty unless you deep-link `?modelId=<id>` or pick one from the Model picker on the page.
+- **No skills, no KB.** The model gets only what you type. Use this to isolate "is it the model, or is it the wrapping?"
+- **Ephemeral sessions.** Playground sessions aren't stored under Sessions. Useful for quick iteration; not useful for audit.
+- **Token usage counts.** What you do here shows up in Monitoring's Token Usage panel under the chosen model.
 
-## Step-by-step — Use the playground
+## Where to go next
 
-1. Deploy or proxy a Model first ([Models](./models)).
-2. Open **/studio/playground**.
-3. Pick a model from the **Model** dropdown _TODO(verify) — or arrive via `?modelId=…`._
-4. Type into the input. Adjust sampling parameters (temperature, top-p, max tokens). _TODO(verify exact controls._
-5. Hit **Send**. The response streams back.
-
-## Edge cases and gotchas
-
-- Sessions in the Playground are **not** stored in `/studio/sessions` — they're ephemeral. _TODO(verify._
-- The Playground uses the Model's API key automatically — you don't paste an `sk-agent-...` here.
-- Token usage in the Playground is counted toward the Model's totals (visible in [Monitoring](./monitoring) → Token Usage).
-
-## Related
-
-- [Models](./models)
-- [Monitoring](./monitoring)
+- **[Models](./models.md)** — to deploy or proxy a model.
+- **[Monitoring](./monitoring.md)** — to see token-usage impact.
