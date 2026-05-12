@@ -1,9 +1,10 @@
 ---
 title: Data Hub
 sidebar_position: 13
+slug: /features/hub
 ---
 
-_Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
+_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
 
 # Data Hub
 
@@ -38,21 +39,38 @@ The Hub home has:
 - An **Import** button (pull an external repo into your Hub namespace).
 - A **+ New Repository** button (create an empty repo).
 
-## Step-by-step — Import an existing HuggingFace repo
+## Import an existing repo
 
 1. Open **/studio/hub**.
-2. Click **Import**.
-3. Paste the source URL (e.g. `https://huggingface.co/org/repo`). _TODO(verify exact input format._
-4. Pick a destination namespace and (optional) new name.
-5. Submit.
+2. Click **Import**. The dialog header reads **Import Repository**.
+3. Pick a source provider — two cards: **HuggingFace** and **ModelScope**.
+4. Pick the kind — currently `model` selected by default.
+5. Type a repo id. The example shown in the picker is `meta-llama/Llama-3.1-8B`.
+6. Optional fields:
 
-## Step-by-step — Create a new repository
+   | Field | Type | Notes |
+   |---|---|---|
+   | **Token** | password | Placeholder `hf_…`. Required for gated repos. |
+   | **Branch** | text | Defaults to `main`. Toggle the branch-suggestions chip for autocomplete. |
+   | **Sub-path** | text | Placeholder `e.g. variant-a/`. Restrict import to a subfolder. |
 
-1. Click **+ New Repository**.
-2. Choose a **kind** (Model / Dataset / Skill / Experiment / Environment).
-3. Name the repo.
-4. Pick visibility (public / private within the project). _TODO(verify._
-5. Submit. The repo opens at `/studio/hub/<namespace>/<repo>`.
+7. Submit with **Import**. The repo lands at `/studio/hub/<namespace>/<repo>` with a snapshot of the specified branch.
+
+## Create a new repo
+
+1. Click **+ New Repository**. The dialog header reads **New Repository**.
+2. Fill the fields, in order:
+
+   | Field | Type | Notes |
+   |---|---|---|
+   | **Name** | text | Placeholder `my-model`. Becomes the repo slug under `/studio/hub/<namespace>/<name>`. |
+   | **Kind** | combobox / select | Five options: `Model`, `Dataset`, `Skill`, `Experiment`, `Environment`. Defaults to `Model`. |
+   | **Description** | text | Placeholder `A short description of this repository`. Shown on the repo card. |
+   | **Tags** | text | Placeholder `llama fine-tuned production`. Space-separated. Used by the **Tags** filter on the Hub home. |
+
+3. Submit with **Create**. The dialog has **Cancel** and **Close** affordances; both abandon without saving. The empty repo opens at `/studio/hub/<namespace>/<repo>`.
+
+Repository visibility is implicit — all repos created here are scoped to the project's `hub_namespace`. There is no separate public-vs-private control in the dialog. Inter-project sharing happens by adding members to the project, not by toggling repo visibility.
 
 ## The repo detail page
 

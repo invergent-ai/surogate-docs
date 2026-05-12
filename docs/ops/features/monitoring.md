@@ -1,9 +1,10 @@
 ---
 title: Monitoring
 sidebar_position: 7
+slug: /features/monitoring
 ---
 
-_Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
+_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
 
 # Monitoring
 
@@ -19,7 +20,7 @@ _Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
 2. **Auto-refresh** toggle. On by default. Off freezes the view at the current window.
 3. **⏸ Pause** halts the live stream without flipping Auto-refresh — useful while writing an incident note.
 4. **Severity filter**: `All · 5xx · Timeout · Guardrail`. Limits both the agent table and the alerts feed.
-5. **Per-agent table**, columns: `Agent · Status · RPS · P50 · P95 · P99 · Errors · CPU · MEM · Trend`. Sortable by clicking a column header (TODO(verify which columns sort)).
+5. **Per-agent table**, columns: `Agent · Status · RPS · P50 · P95 · P99 · Errors · CPU · MEM · Trend`. Headers are static — click-to-sort is not exposed in this snapshot. Filter to a subset of agents through the severity pills (4) or by entering an agent name in the page-level search.
 6. **Acknowledge** on each alert row — silences re-fire for the same root cause until manually re-armed.
 
 ## Panels

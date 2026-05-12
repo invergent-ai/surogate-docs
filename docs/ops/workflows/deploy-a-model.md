@@ -1,9 +1,10 @@
 ---
 title: Deploy a model
 sidebar_position: 3
+slug: /workflows/deploy-a-model
 ---
 
-_Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
+_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
 
 # Workflow — Deploy a model
 
@@ -18,7 +19,7 @@ Bring an LLM into your project so agents can call it.
 ## Prerequisites
 
 - For a **Surogate-served** model: at least one connected [Cloud Backend](../features/compute) with GPU capacity.
-- For a **proxied** model: a [Credential](../concepts/core-objects#credential) for the upstream provider (e.g. OpenAI, Anthropic) saved under [Admin → Integrations](../admin/integrations).
+- For a **proxied** model: a [Credential](../concepts/core-objects.md#credential) for the upstream provider (an OpenAI-compatible endpoint, an OpenRouter API key, or a HuggingFace token for gated repos) saved under [Admin → Integrations](../admin/integrations.md).
 - Project role: `editor` or `owner`, or system `devops` for cloud-served models. _TODO(verify._
 
 ## Steps

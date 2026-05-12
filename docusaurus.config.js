@@ -46,13 +46,19 @@ module.exports = {
                 alt: 'logo',
                 src: 'img/logo-black.svg',
                 srcDark: 'img/logo-white.svg',
+                href: '/',
             },
             items: [
                 {
                     type: 'docSidebar',
                     sidebarId: 'opsSidebar',
                     position: 'left',
-                    label: 'Ops Manual',
+                    label: 'Documentation',
+                },
+                {
+                    to: '/old-docs',
+                    position: 'left',
+                    label: 'Old documentation',
                 },
                 {
                     href: "https://surogate.ai",
@@ -199,6 +205,17 @@ module.exports = {
         },
     ],
     plugins: [
+        [
+            '@docusaurus/plugin-client-redirects',
+            {
+                // Old `/ops/*` URLs (from the v1.0/v1.1 push) keep working
+                // — they redirect to the now-flat `/*` URLs.
+                createRedirects(existingPath) {
+                    if (existingPath === '/') return ['/ops'];
+                    return [`/ops${existingPath}`];
+                },
+            },
+        ],
     ],
     markdown: {
         format: 'detect',

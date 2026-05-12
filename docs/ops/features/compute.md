@@ -1,9 +1,10 @@
 ---
 title: Compute
 sidebar_position: 6
+slug: /features/compute
 ---
 
-_Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
+_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
 
 # Compute
 
@@ -42,22 +43,24 @@ The page accepts `?filter=<kind>&id=<workload-id>` for deep links — bookmark a
 
 `/studio/compute/policies` lists allocation rules. Each Policy bounds where a workload may land. The page exposes:
 
-- **+ New Policy** — opens the editor.
+- **+ New Policy** — opens the policy editor (role-gated).
 - **Edit** on a row — same editor against an existing policy.
 
-Field reference TODO(verify) — fields seen in the API surface and the route imports:
+Each Policy carries (per the API surface in `routes/compute.py`):
 
 - Allowed backends (a subset of the eight providers).
 - Allowed regions per backend.
 - Allowed instance types or offers.
 - Maximum hourly spend cap.
-- Schedule windows (when the policy permits new workloads).
+- Schedule windows during which new workloads may start.
 
-Policies are evaluated before the workload is scheduled. A workload that violates a policy lands in **Error** with a Guardrail alert, not in the queue.
+Policies are evaluated before the workload is scheduled. A workload that violates a policy lands in **Error** with a Guardrail alert and never enters the queue.
+
+> The `+ New Policy` button is a no-op for project-`viewer` accounts (the click registers but no editor opens). Operators with `devops` or `admin` see the editor.
 
 ## Connect Cloud (provider-specific forms)
 
-`/studio/connect-cloud?provider=<name>` is reached by clicking a provider tile. The form fields differ per provider; the AWS form (TODO(verify)) typically asks for: **Profile name**, **Access Key ID**, **Secret Access Key**, **Region**.
+`/studio/connect-cloud?provider=<name>` is reached by clicking a provider tile. The per-provider field tables are in [Workflow → Connect a cloud backend](../workflows/connect-a-cloud-backend.md#credentials-per-provider). Every provider's form has a **Back to Cloud** link, a deep-link to the provider's own console, and **Cancel** / **Connect** buttons.
 
 Saving the form creates a Cloud Account scoped to your project. Cloud Accounts surface their **offers** under `/studio/backend-offers?backend=<name>` — that's where you pick GPU type when deploying.
 

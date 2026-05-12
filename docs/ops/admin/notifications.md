@@ -1,9 +1,10 @@
 ---
 title: Notifications
 sidebar_position: 3
+slug: /admin/notifications
 ---
 
-_Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
+_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
 
 # Notifications
 

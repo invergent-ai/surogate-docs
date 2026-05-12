@@ -1,10 +1,10 @@
 ---
 title: Surogate Ops — User Manual
 sidebar_label: Welcome
-slug: /ops
+slug: /
 ---
 
-_Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
+_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
 
 # Surogate Ops
 
@@ -35,7 +35,7 @@ From there:
 
 ## What's not in this manual
 
-- The Surogate Trainer library reference — see the rest of [docs.surogate.ai](/) for that.
+- The Surogate Trainer library reference — see the rest of [docs.surogate.ai](/old-docs) for that.
 - HTTP API reference — `surogate_ops/server/routes/*.py` is canonical; the OpenAPI schema (when exposed) is generated from it.
 - On-prem deployment — the `surogate-ops` repo has the Dockerfiles and k8s manifests.
 

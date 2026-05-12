@@ -1,9 +1,10 @@
 ---
 title: Agents
 sidebar_position: 1
+slug: /features/agents
 ---
 
-_Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
+_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
 
 # Agents
 
@@ -32,19 +33,18 @@ The empty state ("No agents") is reached when you've never deployed one. The das
 
 ## Deploy flow
 
-The Deploy Agent dialog walks four sections. The video in [Workflow → Deploy an agent](../workflows/deploy-an-agent) shows them in order.
+The dialog header reads **Deploy New Agent**. The base form has four controls; the **Cancel** and **Create Agent** buttons stay at the bottom. The video in [Workflow → Deploy an agent](../workflows/deploy-an-agent.md) shows the flow.
 
-| Section | Required | Notes |
+| Field | Type | Notes |
 |---|---|---|
-| Name | Yes | Becomes the agent's display label across `/work`, `/studio`, and Monitoring. |
-| Model | Yes | Pulled from `/studio/models`. Only Models in **Serving** state are useful. |
-| Skills + MCP servers | No | Multi-select. Agent pins to the version available at deploy time. |
-| Knowledge Bases | No | Multi-select. KBs in **Compiling** or **Error** state can be attached but won't return retrieval results. |
-| System prompt | Depends on template | Most templates pre-fill it. |
-| Greeting | No | First message shown to end users. Defaults to "How can I help?" if blank. TODO(verify). |
-| Channels | No | Per-channel configs (web chat, API). TODO(verify the panel structure). |
+| **Display Name** | text | The agent's label across `/work`, `/studio`, and Monitoring. |
+| **Slug** | text | Help text in the dialog: _"unique within project"_. Becomes the agent's stable identifier and the URL segment under `/studio/agents/<slug>`. Cannot be changed once set. |
+| **Description** | text | Shown on the agent card and in tooltips. |
+| **Model** | combobox | Picker scoped to Models in this project. Models in non-Serving state still appear in the list but the agent will fail to deploy against them. |
 
-Once you click the final **Deploy** action, the agent appears in the **Deploying** filter and moves to **Running** after the serving container is healthy. The first deploy of a given Model can take several minutes; subsequent deploys reuse cached layers.
+Submit with **Create Agent**. The agent appears in the **Deploying** filter and transitions to **Running** once the serving container is healthy. The first deploy of a given Model can take several minutes; subsequent deploys reuse cached layers.
+
+> The Skills, MCP Servers, and Knowledge Bases multi-selects are surfaced after the agent exists — open the agent's Settings tab to attach them. The deploy dialog itself does not include them.
 
 ## Status reference
 

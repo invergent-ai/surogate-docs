@@ -1,9 +1,10 @@
 ---
 title: FAQ
 sidebar_position: 91
+slug: /faq
 ---
 
-_Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
+_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
 
 # Frequently asked questions
 
@@ -13,7 +14,7 @@ The web app at **ops.surogate.ai**. It hosts the **AgentOps Factory** — a plac
 
 ## How does Surogate Ops differ from the Surogate Trainer?
 
-Surogate Ops is the **product surface**. The Surogate Trainer is the **library** underneath that runs the actual training jobs ([trainer docs](/)). They share a hub and a name but are distinct.
+Surogate Ops is the **product surface**. The Surogate Trainer is the **library** underneath that runs the actual training jobs ([trainer docs](/old-docs)). They share a hub and a name but are distinct.
 
 ## Why are there two sidebars?
 

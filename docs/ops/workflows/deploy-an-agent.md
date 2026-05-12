@@ -1,9 +1,10 @@
 ---
 title: Deploy an agent
 sidebar_position: 2
+slug: /workflows/deploy-an-agent
 ---
 
-_Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
+_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
 
 # Deploy an agent
 

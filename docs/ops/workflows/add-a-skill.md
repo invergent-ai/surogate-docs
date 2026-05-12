@@ -1,9 +1,10 @@
 ---
 title: Add a skill
 sidebar_position: 5
+slug: /workflows/add-a-skill
 ---
 
-_Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
+_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
 
 # Workflow — Add a skill (or MCP server)
 

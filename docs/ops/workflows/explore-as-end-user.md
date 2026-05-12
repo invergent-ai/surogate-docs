@@ -1,9 +1,10 @@
 ---
 title: Explore as an end user
 sidebar_position: 1
+slug: /workflows/explore-as-end-user
 ---
 
-_Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
+_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
 
 # Workflow — Explore as an end user
 

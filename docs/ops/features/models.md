@@ -1,13 +1,14 @@
 ---
 title: Models
 sidebar_position: 5
+slug: /features/models
 ---
 
-_Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
+_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
 
 # Models
 
-`/studio/models` lists the LLMs available to your project. Each Model is either **served by Surogate** on cloud compute you have connected, or **proxied** to an upstream provider (OpenAI, Anthropic, Together, etc.). Agents reference Models by id; the proxy uses `sk-agent-*` API keys scoped to a single Model.
+`/studio/models` lists the LLMs available to your project. Each Model is either **served by Surogate** on cloud compute you have connected, or **proxied** to an upstream provider behind an OpenAI-compatible URL. Agents reference Models by id; the proxy uses `sk-agent-*` API keys scoped to a single Model.
 
 ## The list
 
@@ -20,17 +21,18 @@ Deep links:
 
 ## Deploy flow
 
-The Deploy Model dialog walks these sections. The exact order depends on the source you pick.
+The dialog header reads **Add Model**. The first screen is a source picker — four cards, exactly these labels:
 
-| Section | Required | Notes |
-|---|---|---|
-| Source | Yes | Hub repo, external HuggingFace ID, OpenAI-compatible URL, Anthropic, etc. TODO(verify the full enum). |
-| Name | Yes | Display label across `/studio/models`, agent settings, and Playground. |
-| Backend | Conditional | Required for served Models, not for proxied ones. One of the connected backends from [Compute](./compute). |
-| GPU | Conditional | Choose from the offers under `/studio/backend-offers?backend=<name>`. |
-| Replicas | No | Integer count. Default 1. TODO(verify). |
-| Quantization | Conditional | bf16, fp8, nvfp4, qfp4, qfp8, qlora. The matrix of legal pairs depends on GPU. See [Surogate Trainer → Precision and recipes](/guides/precision-and-recipes). |
-| Credential | Conditional | Required when the source is a proxied provider. Pulled from [Settings → Integrations](../admin/integrations). |
+| Source | What it expects |
+|---|---|
+| **Local Hub** | "From your registry". Pulls weights from a Hub repo in this project's namespace. The default option, and what serving from your own training output uses. |
+| **🤗 Hugging Face** | "From HF Hub". Paste an HF model id (e.g. `meta-llama/Llama-3.1-8B`). Requires a HF token configured in [Integrations](../admin/integrations.md) for gated models. |
+| **OpenRouter** | "From OpenRouter". Proxied through OpenRouter's catalog. Requires an OpenRouter credential. |
+| **URL** | "From OpenAI-compatible provider". Paste a base URL and a credential id. Lets you route to any provider that speaks the OpenAI chat-completions schema (vLLM, Ollama, internal services). |
+
+The empty state shows _"No models in Data Hub yet"_ when **Local Hub** is selected and the project's hub has zero model repos.
+
+Picking a source unlocks the source-specific form (model id, name, deployment target, credential, replicas, quantization). The remaining buttons are **Cancel** (bottom-left) and **Add Model** (primary).
 
 After submit, the Model lands in **Deploying** for served Models, and immediately in **Serving** for proxied ones (the proxy doesn't run a container).
 

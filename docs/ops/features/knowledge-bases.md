@@ -1,9 +1,10 @@
 ---
 title: Knowledge Bases
 sidebar_position: 4
+slug: /features/knowledge-bases
 ---
 
-_Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
+_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
 
 # Knowledge Bases
 
@@ -28,15 +29,18 @@ Status filter tabs on the list page: `All · Active · Compiling · Error` with 
 ## New Knowledge Base flow
 
 1. Open `/studio/knowledge-bases`.
-2. Click **+ New Knowledge Base**.
-3. Fields (TODO(verify the full list from a populated account)):
-   - **Name** (required). Unique within the project.
-   - **Source type** — file upload, URL, Git, Hub repo, S3 bucket.
-   - **Source-specific config** — auth, branch, path prefix.
-   - **Embedding model** — pick from the project's Models or accept the default.
-   - **Compile schedule** — manual / on-change / cron.
-4. Submit. The KB lands in **Compiling**. A compile workload appears in `/studio/compute/workload-queue?filter=task` (TODO(verify the kind)).
-5. When the compile completes, status flips to **Active**.
+2. Click **+ New Knowledge Base**. The dialog header reads **New Knowledge Base**.
+3. Fill the dialog. Exactly these fields:
+
+   | Field | Type | Notes |
+   |---|---|---|
+   | **Display Name** | text | The label across `/work` and `/studio` and on agent settings. |
+   | **Slug** | text | Help text: _"unique within project"_. Stable identifier and URL segment. Cannot be changed once set. |
+   | **Description (optional)** | textarea | Shown on the KB card and in tooltips. |
+   | _Source picker_ | combobox | Unlabeled but required. Pick where the documents come from. |
+
+4. Submit with **Create**. The KB lands in **Compiling** while Surogate fetches and embeds the source. The dialog has **Cancel** and **Close** controls; both abandon without saving.
+5. When the compile finishes, status flips to **Active** and the KB becomes attachable to agents.
 
 ## Attaching to an Agent
 

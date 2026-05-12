@@ -1,9 +1,10 @@
 ---
 title: Work vs Develop perspectives
 sidebar_position: 1
+slug: /concepts/work-vs-develop
 ---
 
-_Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
+_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
 
 # Work vs Develop perspectives
 

@@ -1,9 +1,10 @@
 ---
 title: Where to find things
 sidebar_position: 4
+slug: /getting-started/where-to-find-things
 ---
 
-_Last updated: 2026-05-11 · App snapshot: surogate-ops-main (2026-05-10)_
+_Last updated: 2026-05-12 · App snapshot: surogate-ops-main (2026-05-10)_
 
 # Where to find things
 
