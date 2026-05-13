@@ -1,0 +1,199 @@
+---
+title: Templates catalog
+sidebar_position: 0
+slug: /features/templates
+description: All thirty Surogate Ops templates across eight categories. What each one ships with and when to pick it.
+---
+
+# Templates catalog
+
+A template is a pre-configured agent — a model, a system prompt, a starter set of skills, and (in most cases) a starter knowledge base shape — that you can deploy with two clicks instead of building from scratch. Pick one, name your version of it, and you have a working agent in under a minute.
+
+This page is the catalog. Thirty templates organised into eight categories, each one a job your team can hand off to an agent on day one.
+
+<Figure
+  src="/img/screenshots/templates-catalog.png"
+  alt="Work dashboard with the Find Templates result open, showing the eight category headers and the grid of template cards"
+  caption="Find Templates — the search returns the closest matches; the catalog page shows the full grid."
+/>
+
+## How templates work
+
+The path from template to running agent:
+
+1. **Find** — Work dashboard → *Describe what you need* → **Find Templates**. The semantic search ranks the catalog against your description. You can also browse the catalog directly.
+2. **Preview** — click a template card. You see the default name, the description, the skills it ships with, the default model, and the knowledge base shape (if any).
+3. **Deploy** — **Use this template**. The agent is created, configured, and deployed. About thirty seconds for the first deploy of a fresh model; seconds on subsequent deploys.
+4. **Customise** — open the agent's **Settings**. Swap the model, attach your own knowledge base, replace any placeholder skills with the real ones. This is where templates pay off: the structure is correct from the start; you just fill in your team's specifics.
+
+Every template's underlying model is configurable. The defaults skew toward general-purpose chat models that handle the category's typical traffic well; pick a different model if you have specific cost or capability needs.
+
+## Sales (7)
+
+Templates that handle the lead-to-revenue surface. All seven assume an outbound or inbound chat channel and integration with a CRM through a skill you wire up.
+
+### Lead Qualification
+
+Triages inbound contact-form submissions: enriches the company through a data provider, scores against your ICP, drops the qualified ones into your CRM with a suggested rep. Out of the box: a `lookup_company` placeholder skill, a `create_opportunity` placeholder, and a single-document ICP knowledge base you fill in with your team's qualification criteria.
+
+### Sales Assistant
+
+A general-purpose chat surface for an account executive — surfaces relevant deals, answers questions about the product, drafts follow-up emails. Pairs well with CRM read skills and your product's documentation as a knowledge base.
+
+### Renewals
+
+Watches the renewal pipeline, flags accounts at risk based on usage signals, drafts personalised outreach. Ships with a `get_account_health` placeholder and a renewal playbook knowledge base shape.
+
+### Account Research
+
+Pulled before an account-executive call. Given a company name, the agent gathers context — recent news, headcount changes, technology stack hints, mentions in your product's logs. Outputs a one-page brief. The template ships with placeholder skills for the data sources you'll wire it to.
+
+### Real Estate Concierge
+
+A property-search assistant for real-estate teams. Translates natural-language buyer requests into MLS-style queries, surfaces matching listings, schedules viewings. Placeholder skills for MLS / Zillow / your CRM.
+
+### Ecommerce Advisor
+
+Product-recommendation chat for an online store. Given a shopper's request, it queries your catalog, narrows by attributes, and presents three options with a justification each. Pairs with your store's product knowledge base.
+
+### Travel Planning
+
+Itinerary-builder for a travel agency or a corporate travel desk. Takes a brief (dates, budget, preferences), produces a draft itinerary with bookable options. Placeholder skills for flight / hotel / ground APIs.
+
+## Support (6)
+
+Templates for first-line response and escalation in support orgs.
+
+### Customer Support
+
+The starter for most teams. Answers product questions from your help-centre knowledge base, escalates cleanly when it can't, writes a ticket through a `create_ticket` placeholder. The default deploy target in [Tutorial: Build a support bot](../tutorials/build-a-support-bot.md).
+
+### Knowledge Base
+
+A pure RAG assistant — answers from your docs and only your docs. No tools, no ticket creation. Useful for internal Q&A surfaces where escalation isn't the goal.
+
+### IT Helpdesk
+
+First-line IT support: password resets, software install requests, status of in-flight tickets. Placeholder skills for your ticketing system; a knowledge base of your IT runbooks.
+
+### Patient Access
+
+A healthcare-domain template for patient-facing scheduling, intake, and triage. Designed for HIPAA-mode operation; the template includes guardrails on PHI handling and an explicit escalation-to-human path.
+
+### Field Technician
+
+In-the-field reference assistant for service technicians: equipment manuals, troubleshooting trees, parts lookups. Optimised for short questions and source-anchored answers.
+
+### Partner Support
+
+Channel-partner-facing support — handles questions from resellers and integrators against a curated subset of your internal docs.
+
+## Success (3)
+
+Templates for the customer-success surface: onboarding, training, education.
+
+### Onboarding
+
+Welcomes new users, walks them through first-run setup, answers setup questions, hands off to a human only when it can't. Pairs with your onboarding documentation as a KB and a skill to schedule a follow-up call.
+
+### Training Coach
+
+A persistent training assistant for a workforce — quizzes, scenario walkthroughs, knowledge-check loops. Backs onto a curriculum knowledge base and a `record_progress` placeholder skill for your LMS.
+
+### Education Tutor
+
+A subject-matter tutor for an educational product. Adaptive difficulty, encouraging tone, citation discipline (every answer points at the source material). Pairs with the course's content as a KB.
+
+## HR (2)
+
+Templates for human-resources-facing chat.
+
+### HR Policy
+
+Answers employee questions about benefits, leave policy, expense rules — anything in your employee handbook. Single-KB template; no external tool calls by default.
+
+### Recruiting Coordinator
+
+Candidate-facing chat for a recruiting funnel. Schedules interviews against your calendar, answers FAQs about the role and the company, captures candidate info into your ATS. Placeholder skills for the calendar and the ATS.
+
+## IT (2)
+
+Internal IT-facing templates beyond the Support → IT Helpdesk template.
+
+### Incident Triage
+
+Reads an inbound incident description, classifies severity, suggests a runbook, and creates the incident ticket with the right tags. Placeholder skills for your monitoring and incident-management systems.
+
+### Data Request
+
+Handles "can I get access to / a report on" requests from across the company. Reads the request, looks up the user's role in your IAM, decides whether to auto-approve, escalates if not. Placeholder skills for IAM and the analytics platform.
+
+## Productivity (3)
+
+Templates that compress recurring information-gathering work.
+
+### Meeting Prep
+
+Given a calendar event, the agent assembles a prep brief: attendees, their roles, recent context (relevant CRM notes, recent ticket activity, recent emails). Output is a paragraph or two you read on the way into the meeting.
+
+### Executive Briefing
+
+A daily or weekly digest for an executive: top metrics, anomalies, top deals, top tickets, calendar for the day. Built around scheduled invocation through the API rather than chat.
+
+### Bug Intake
+
+Engineering-facing chat for bug reports. Asks the right questions to produce a high-quality ticket — repro steps, expected vs actual, environment — then files the ticket in your tracker.
+
+## Finance (3)
+
+Templates for finance-team workflows.
+
+### Procurement
+
+Vendor-spend lookup, PO status, approval routing. Reads from your procurement system and writes routing decisions back.
+
+### Finance Ops
+
+Month-end close assistant: cash-flow reconciliation walks, expense categorisation, anomaly flagging. Pairs with your accounting system through skills.
+
+### Claims Intake
+
+Insurance-claim intake chat. Walks the claimant through the required information, files the claim, schedules adjuster follow-up. Designed for forms-heavy domains; placeholder skills for the claims platform.
+
+## Operations (4)
+
+Operations-team templates for dispatch, compliance, and intake.
+
+### Operations Dispatcher
+
+Real-time dispatch for a field operation — drivers, technicians, couriers. Reads inbound requests, matches against available resources, updates the dispatch board. Placeholder skills for your fleet-management platform.
+
+### Compliance Intake
+
+Captures compliance-relevant reports (whistleblower, ethics, conflict-of-interest) with the right confidentiality controls, files them into your case-management system. Designed for sensitive intake patterns.
+
+### Legal Intake
+
+First-line legal-team chat: triages requests, routes to the right counsel, captures the necessary context. Pairs with your matter-management system.
+
+### Product Feedback
+
+Reads inbound product feedback (from chat, support, social, in-app) and classifies it: bug vs request vs general sentiment, severity, the affected feature area. Writes structured records into your feedback aggregation system.
+
+## When templates aren't the right starting point
+
+Three situations where you should skip templates and build from scratch:
+
+- **The shape of your agent doesn't match any template.** None of the thirty fits if your agent's primary surface is, say, a Slack-only audit assistant for a specific compliance regime. Start from a blank agent and wire it directly.
+- **You'll throw away most of the template.** If you'd replace the model, the system prompt, all the skills, and the knowledge base, you didn't gain anything from picking a template. Just build it.
+- **Your customisation will conflict with the template's defaults.** Templates set system-prompt language that's hard to override completely. If your tone or your behavioural constraints fight the template, start clean.
+
+For the other 95% of cases, picking the closest template and customising is the fastest path to a working agent.
+
+## Where to go next
+
+- **[Quickstart](../getting-started/quickstart.mdx)** — the welcome screen and the Work / Develop split.
+- **[Tutorial: Build a support bot](../tutorials/build-a-support-bot.md)** — the end-to-end customer-support template, walked through.
+- **[Agents](./agents.mdx)** — the deep reference for the agent object.
+- **[Skills & Tools](./skills.mdx)** — to replace placeholder skills with real ones.
+- **[Knowledge Bases](./knowledge-bases.mdx)** — to wire your real docs into a template.

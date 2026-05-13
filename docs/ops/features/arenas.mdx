@@ -1,0 +1,260 @@
+---
+title: Arenas
+sidebar_position: 4
+slug: /features/arenas
+description: Tournaments across multiple evals. A Coordinator agent drives rounds, scores them, and decides outcomes.
+---
+
+# Arenas
+
+An Arena is a tournament across multiple evaluations. Where a single [evaluation](./evaluations.mdx) answers "is X better than Y on this benchmark?", an Arena answers "let many agents play many rounds against an objective, score each round, declare an outcome." A dedicated **Coordinator** agent drives the run end-to-end — activating participants, steering them, promoting findings, gating budget approvals.
+
+Arenas are how Surogate Ops produces meaningful comparisons when a one-shot eval isn't enough. They're also the surface where dataset curation, adversarial probing, and convergence studies live.
+
+<Figure
+  src="/img/screenshots/arenas-list.png"
+  alt="Arenas list with status pills (All / Running / Paused / Won / Failed / Terminated) and the Create Arena action"
+  caption="Arenas — list view. Status carries through the run's lifecycle."
+/>
+
+## Where to find the page
+
+Arenas lives at `/studio/arenas`. Like Evaluations, the page is reachable but not currently linked from the main Studio sidebar. Use the URL directly or the Studio dashboard's quick action.
+
+## When to run an Arena
+
+Five concrete situations where the Arena is the right tool, not Evaluations and not Sessions:
+
+- **Two candidate model versions you're not ready to commit to.** Run them as adversarial contestants over many rounds. The Coordinator's verdicts plus the per-round eval scores give you a defensible decision.
+- **An automated curriculum where each round seeds the next.** A Dataset Generation arena writes accepted examples to a Hub dataset row-by-row as the rounds resolve.
+- **Convergence studies** — does a new training recipe still produce models that beat the previous one after N rounds of self-play?
+- **Capability probing.** A Collaborative arena where many agents attack a problem together produces shared findings that single-agent runs miss.
+- **Curating expert-quality data** through collaborative or adversarial play between specialised agents.
+
+If the answer is "I just want one number," reach for [Evaluations](./evaluations.mdx) instead. Arenas are heavier — they reserve compute, run a Coordinator, accumulate event logs, and produce a much richer verdict.
+
+## The objective decides everything
+
+<Figure
+  src="/img/screenshots/arenas-objective.png"
+  alt="Create Arena wizard on the Objective step with four cards: Dataset generation, Collaborative, Adversarial, Other"
+  caption="Create Arena → Objective — four cards. The objective constrains the rest of the wizard."
+/>
+
+Train → Arenas → **+ Create Arena**. The wizard opens to an **Objective** step. Four cards:
+
+- **Dataset generation** — *Curate expert-grade synthetic datasets. Coordinator applies acceptance policy and promotes accepted examples.* Use when the goal is a row count, not a winner. Output is a growing Hub dataset.
+- **Collaborative** — *Participants work together toward a shared goal. Coordinator promotes cross-cutting findings.* Use for capability probing, exploration, and any "all hands on this problem" pattern. Output is a stream of shared findings, often tagged.
+- **Adversarial** — *Participants compete. Coordinator judges rounds and declares a winner.* Use for head-to-head model comparison or red-teaming. Output is a winner plus the round-by-round scoring.
+- **Other** — *Hybrid or custom objective. Coordinator decides outcome.* Use when the objective doesn't fit the three above; the Coordinator's verdict logic stays open.
+
+The objective drives everything downstream: which Coordinator template the wizard suggests, which event types are most relevant, what the success predicate looks like, and which fields are required in the budget step.
+
+## The five-step wizard
+
+The wizard has five steps, each enforced before the next becomes active:
+
+1. **Type & name.** Confirm the objective from above. Name the arena — the placeholder text is `e.g. Qwen3 convergence study`, which is a fine pattern (a few words, the thing you're studying, optionally the version). Names are permanent and show up in event logs and exported reports.
+2. **Objective.** A free-text restatement of the goal in your own words. The Coordinator agent reads this verbatim; vague goals produce vague verdicts.
+3. **Coordinator.** Pick the Coordinator agent (see *Coordinator* below). Most teams use the default `COORD` template; advanced setups deploy a custom Coordinator with a domain-specific system prompt.
+4. **Participants & authorized set.** The participants are the agents that play. The **authorized set** is a (usually larger) pool the Coordinator can draw from to **activate** more participants mid-run if a round needs additional capacity. Each participant has a **max-participants** cap — the Coordinator can never run more than that many at once.
+5. **Budget & caps.** Time, compute, cost. See *Budget caps* below. Save submits the arena; status flips to **Running**.
+
+A submitted arena is editable in two narrow ways: you can pause it, and you can edit the authorized set. The objective, Coordinator, and budget caps are immutable once running.
+
+## The Coordinator agent
+
+Every arena has exactly one Coordinator. The Coordinator is itself an agent — usually one called `COORD` or similar — just with a special role: it doesn't play, it drives the play.
+
+Concretely, the Coordinator:
+
+- **Activates participants** from the authorized set when rounds need more capacity. Activation is logged as an `activate` event.
+- **Steers participants** to keep them on objective. Three steering modes exist:
+  - **Advisory** — the Coordinator suggests; participants may ignore. Used when participants are themselves capable agents you don't want to override.
+  - **Mandatory** — the Coordinator's steering blocks the participant until acknowledged. Used in tight runs where drifting off-objective wastes compute.
+  - **User-override** — the operator can override either direction through the Pending Approvals queue. Use sparingly; over-overriding undermines the Coordinator's authority.
+- **Promotes findings** that look cross-cutting (in Collaborative arenas) or decisive (in Adversarial arenas). Promoted findings land in the Shared Findings panel and become referenceable in later rounds.
+- **Requests human approval** when budget caps approach. Crossing the soft threshold (80% of any cap) triggers a `request-approval` event into the Pending Approvals queue.
+- **Decides round outcomes** — `accepted` or `rejected` in Dataset Generation arenas; round-winner judging in Adversarial; finding-quality verdicts in Collaborative.
+
+Custom Coordinators are agents like any other — written in the Skill Builder with a Coordinator-specific system prompt, deployed once, and selectable in the wizard's Coordinator step.
+
+## Authorized agents and the max-participants cap
+
+The authorized set is the pool the Coordinator can pull from. It's bigger than the active participant list, usually by a healthy margin. Two reasons to size it deliberately:
+
+- **Too small** — the Coordinator can't activate when a round needs more capacity, and the arena stalls.
+- **Too large** — the Coordinator may activate marginal-quality agents, dragging the average down. Curate the authorized set to agents you trust to be in the room.
+
+The **max-participants** cap bounds simultaneous play. The Coordinator can activate, deactivate, and re-activate within that cap; the trace lives in the event log.
+
+## Event types
+
+The arena timeline filters by event type. The full set:
+
+| Event | Meaning |
+|---|---|
+| **commit** | A participant committed work — a code change, an answer, a generated row. |
+| **milestone** | A participant or the Coordinator crossed a structural checkpoint in the run. |
+| **steering** | The Coordinator issued a steering action to a participant (advisory / mandatory / user-override). |
+| **finding** | A participant emitted a candidate finding. Promoted findings become Shared Findings. |
+| **blocked** | A participant blocked itself waiting on another participant or on Coordinator approval. |
+| **approval** | A human approved or denied a pending-approval request. |
+| **activate** | The Coordinator activated a new participant from the authorized set. |
+| **accepted** | The Coordinator accepted a candidate (a row, a finding, a round outcome). |
+| **rejected** | The Coordinator rejected a candidate. |
+| **policy** | A compute or budget policy was triggered. |
+| **policy edit** | A policy was edited mid-run by an operator. |
+| **coverage gap** | The Coordinator detected an under-explored region of the objective space. |
+| **breaker** | A circuit-breaker tripped — usually budget-related — pausing the offending participant. |
+| **decision** | The Coordinator emitted a decision. Decisions show up in the Recent Decisions panel. |
+| **system** | Platform-level event (Redis stream blip, lease renewal, lakefs snapshot). |
+
+Filter the timeline by one or more event types to focus on what matters. For a long-running arena, the `decision` and `finding` filters give you the executive view; `system` gives you the operations view.
+
+## Success predicate
+
+A success predicate is the formal condition for a clean **Won** outcome. It's a small expression evaluated against the running run's metrics — for example:
+
+```
+best_speedup >= 1.100
+```
+
+— meaning *declare Won the first round where any participant achieves at least 1.1× speedup over the baseline*. Other common shapes:
+
+```
+average_score >= 4.0
+acceptance_rate >= 0.85 AND rounds >= 200
+worst_participant_score >= 0.5
+```
+
+The predicate is optional. Without one, the arena runs until budget exhaustion or operator termination, and the outcome is decided by the Coordinator on the final round.
+
+## Budget caps and the 80% threshold
+
+Every arena ships with three budget caps:
+
+| Cap | Unit | Typical default | What hits it |
+|---|---|---|---|
+| **Time** | hours | 24 | Wall-clock from start. Pauses don't count. |
+| **Compute** | H100-hours | 8 | Sum of every workload the arena spawned. |
+| **Cost** | USD | 100 | Cloud-billed cost summed across participants and Coordinator. |
+
+The escalation policy is the same for all three:
+
+- **Crossing 80% of any cap** triggers a `request-approval` event into Pending Approvals. The arena keeps running while the request is pending.
+- **Crossing 100% without an approval** flips the arena into **POLICY PAUSED**. No participant runs; no compute is reserved; the run waits for a human to either approve continuation or terminate.
+- **Approving** an over-cap arena bumps the cap by the requested amount and resumes. The approval is logged as an `approval` event.
+- **Denying** terminates the arena; status becomes **Terminated**.
+
+:::warning Hard-edge gate
+This isn't a soft warning. An arena that crosses 100% on any cap stops *all* participant work until a human acts. Surogate would rather pause a run that's about to overshoot than discover the bill on Monday.
+:::
+
+## Pending Approvals (human-in-the-loop)
+
+The Pending Approvals queue is where the human-in-the-loop side of an arena lives. Two kinds of approvals show up:
+
+- **Budget approvals.** Triggered automatically when a cap crosses 80% (see above). Each row shows the cap, the spent percentage, the soft threshold, and **Approve** / **Deny** buttons.
+- **Steering approvals.** When the Coordinator's steering mode is **user-override**, the operator confirms each steering action before it's applied to the participant.
+
+Approvals are first-come, first-served — the first human to click decides. The action is logged with the user id; audit trails make it possible to reconstruct who approved what.
+
+A note on cadence: for arenas that run overnight, set a **Slack / Teams escalation** integration on the project so Pending Approvals page someone instead of stalling silently.
+
+## Shared Findings, Authorized Agents, Recent Decisions
+
+The arena detail carries three panels on the right side:
+
+- **Authorized Agents** — the full set with their activation state. Lets you re-curate mid-run by removing an agent that's underperforming.
+- **Shared Findings** — Coordinator-promoted findings, often tagged by topic or by participant. Click a finding to open its full text and the chain of commits that produced it.
+- **Recent Decisions** — the Coordinator's most recent `decision` events with the verdict and the reasoning. Useful for spot-checking whether the Coordinator is actually doing the job you expect.
+
+## Heartbeat and lease
+
+Each participant publishes a heartbeat (`♥`) at a regular interval and holds a lease while running. Both are visible on the participant's row in the arena detail:
+
+- **Heartbeat** — last received timestamp. Missing heartbeats for longer than the heartbeat interval mark the participant as **unhealthy**; the Coordinator can elect to deactivate and re-activate.
+- **Lease** — how long the participant is allowed to hold its current task. Leases expire automatically; expired leases without a renewal release the slot back to the Coordinator.
+
+These exist to keep an arena healthy under the realistic case where one participant gets stuck. Without them, a stalled participant could hold a slot indefinitely.
+
+## Infrastructure under the hood
+
+For operators who need to know:
+
+- **LakeFS per arena.** Each arena has its own LakeFS repository, typically named `lakefs://arena-<arena-id>`. Commits to the repository are the auditable trail of every change a participant made. Dataset Generation arenas write rows here as commits.
+- **Redis streams** back the event log. The timeline you see in the UI is a tailing read against the arena's stream. Stream lag (rare) shows up as a `system` event.
+- **Workloads are normal scheduler workloads.** Participant compute, Coordinator compute, and any judge models all go through the same Workload Queue you use elsewhere. Filter the queue by the arena's tag to see everything one arena consumed.
+
+You don't need to interact with these directly — Studio exposes everything through the arena detail — but the names are worth knowing when you're triaging a stuck run.
+
+## Status
+
+| Status | Meaning |
+|---|---|
+| **Running** | Rounds executing or queued. Compute reserved. The Coordinator is alive. |
+| **Paused** | No active rounds. Compute released. Resumable from the same point. |
+| **POLICY PAUSED** | A budget cap was crossed without an approval. Operator action required to resume or terminate. |
+| **Won** | A contestant met the success predicate (or, predicate-less, the Coordinator declared a winner on the final round). |
+| **Failed** | Eval failures pushed the arena past its tolerance. The detail's failure panel shows which participants caused it. |
+| **Terminated** | Operator stopped the arena early. Not resumable. |
+
+The bright line is between **Paused** and **POLICY PAUSED**: a Paused arena is operator-paused (your choice); a POLICY PAUSED arena is system-paused on a cap and waits on you.
+
+## Read the result
+
+<Figure
+  src="/img/screenshots/arenas-detail.png"
+  alt="Arena detail with the round-by-round table per contestant, Coordinator verdict column, and the event stream panel"
+  caption="Arena detail — round-by-round scores, Coordinator verdicts, and the live event stream."
+/>
+
+The arena detail shows:
+
+- **Round-by-round scores per contestant** — the table you read first. Columns vary by objective; Adversarial arenas show winners per round, Collaborative arenas show findings per round, Dataset Generation arenas show accepted / rejected counts.
+- **Coordinator's verdict on each round** — the rationale, the steering applied, the activation decisions. This is where you sanity-check that the Coordinator is doing the job you wanted.
+- **Links to every eval run the arena spawned** — Adversarial and Collaborative arenas often spin up evals as sub-workloads. Each one is clickable and lands on the Evaluations page.
+- **Growing dataset row count and rejection rate** — Dataset Generation only. The acceptance rate is a leading indicator of objective fit: under 10% means the acceptance policy is too tight (or the participants are too weak); over 95% means the policy is too loose.
+
+**Won is decided on the headline metric** declared in the success predicate. The per-contestant table tells you whether other metrics align — a Won arena where the secondary metrics drifted in the wrong direction is worth a closer look before promoting the winner.
+
+## A worked example — Dataset Generation arena
+
+A concrete shape, end to end, to make the abstract pieces land.
+
+You want a fine-tuning dataset of clean *SQL query → answer* pairs against your data warehouse. Hand-writing 500 pairs would take a junior data analyst two weeks. A Dataset Generation arena writes them in a few hours.
+
+1. **Authorized set.** Five agents you've built — three variants of your SQL generator at different temperatures, one critique agent that reads a query and rates its quality, one validator agent that runs the query against a sandboxed copy of the warehouse and checks the result against a known answer.
+2. **Coordinator.** Default `COORD` with the system prompt set to *"Accept only queries that the validator marks as correct AND the critique agent rates 4/5 or higher. Promote validated, high-quality queries to the dataset. Reject everything else and log the failure mode."*
+3. **Participants.** Two SQL generators active at any moment; max-participants set to 2 so the Coordinator can rotate temperatures across the run without blowing compute.
+4. **Objective text** — *"Generate at least 500 high-quality `(natural language question, SQL query, expected answer)` rows over the company's analytics schema, balanced across the eight named subject areas."*
+5. **Success predicate** — `dataset_rows >= 500 AND acceptance_rate >= 0.40 AND coverage_per_area >= 0.7`.
+6. **Budget caps** — 6 hours, 4 H100-hours, $25.
+
+Run starts. Every minute or so a `commit` event fires (a generator wrote a candidate row), a `decision` event fires (the critique + validator weighed in), and an `accepted` or `rejected` event closes the round. Every few rounds the Coordinator emits `coverage gap` against an under-served subject area, and the generators retarget. Two hours in, an automated 80% budget-approaching event appears; you approve. Six hours in, the success predicate flips. Status: **Won**. The dataset has 540 rows, an acceptance rate around 47%, and even coverage across the eight subjects. You publish it to the Hub and start a Training Run against it the same day.
+
+That same shape — authorized set, Coordinator, participants, objective, predicate, budget — works just as well for Adversarial (swap "promote rows" for "decide round winners") and for Collaborative (swap for "promote shared findings"). The arena machinery is general; the objective specialises it.
+
+## When this isn't worth doing
+
+- **Cheap to answer with one eval.** If a single evaluation against a single benchmark answers your question, run the eval. An arena's overhead — Coordinator, event stream, budget machinery — only pays off when the question is genuinely tournament-shaped.
+- **You don't have a success predicate.** Without one, the arena runs to budget exhaustion. That's fine for exploration but expensive for decision-making.
+- **The objective is vague.** A Coordinator can only judge against the objective text you wrote. *"Find the best agent"* produces meandering verdicts. Pin the objective to a measurable target before the wizard's second step.
+
+## When something fails
+
+- **One contestant's rounds keep erroring.** That model is unhealthy — open the contestant's recent rounds in the event log, find the error pattern, fix the underlying model or skill, then resume. The Coordinator won't produce a clean verdict while one participant is consistently breaking.
+- **Arena stuck in a status that doesn't change.** Most often the compute reservation expired. Pause and resume; the Coordinator will reacquire its workloads.
+- **POLICY PAUSED out of nowhere.** A budget cap was crossed. Open Pending Approvals, decide whether to extend the cap or terminate.
+- **Coordinator looping on the same steering action.** Either the participant isn't acknowledging mandatory steering (a participant-side issue), or the Coordinator's logic is genuinely stuck (rare — check the `coverage gap` events, which often precede a Coordinator loop). Pause, switch to **advisory** steering, and resume; that usually breaks the loop without losing progress.
+- **Heartbeats green but no work happening.** The participant is alive but blocked. Look for `blocked` events on its row to find what it's waiting on — usually another participant's commit or a Coordinator approval.
+- **Event log shows stream lag.** A `system` event saying the Redis stream is lagging. Almost always self-clears. If it doesn't, pause and resume; the stream pointer resets.
+
+## Where to go next
+
+- **[Evaluations](./evaluations.mdx)** — single-run scoring that feeds arenas, and the place to debug a participant's individual scores.
+- **[Datasets](./datasets.mdx)** — destination for Dataset-generation arenas; source of fixtures for Adversarial arenas.
+- **[Models](./models.mdx)** — the contestants behind each agent.
+- **[Compute](./compute.mdx)** — the Workload Queue where the arena's underlying compute shows up.
+- **[Agents](./agents.mdx)** — what participants and the Coordinator are built from.

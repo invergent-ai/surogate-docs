@@ -33,7 +33,7 @@ Terms used in Surogate Ops, alphabetical.
 - **Perspective** — Work or Develop. Toggle in the top bar switches between them.
 - **Playground** — an ad-hoc model testing surface.
 - **Project role** — `owner` / `editor` / `viewer`, picked when an admin invites a member.
-- **Quickstart** — the first-time setup walkthrough; see [Quickstart](./getting-started/quickstart.md).
+- **Quickstart** — the first-time setup walkthrough; see [Quickstart](./getting-started/quickstart.mdx).
 - **Run** (training) — a single training job.
 - **Session** — a chat session with an agent.
 - **SFT** — Supervised Fine-Tuning.

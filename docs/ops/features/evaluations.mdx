@@ -1,0 +1,188 @@
+---
+title: Evaluations
+sidebar_position: 3
+slug: /features/evaluations
+description: Score agents and models against benchmarks. Compare runs, build suites, watch the leaderboard.
+---
+
+# Evaluations
+
+An Evaluation is a scored run of an agent or a model against a benchmark or a fixture set. Use it to answer the question every model-swap raises: *is the new version better than the old one on the work we actually do?*
+
+The Evaluations page is a two-pane layout — runs list on the left, detail of the selected run on the right. The same compute the rest of Surogate Ops uses, the same Workload Queue, just with a scoring rubric on top.
+
+<Figure
+  src="/img/screenshots/evals-runs.png"
+  alt="Evaluations page with two-pane layout — Eval Runs list on the left, run detail on the right, with Eval Runs / Benchmark Suite / Leaderboard tabs across the top"
+  caption="Evaluations — two-pane layout. Tabs at the top switch between runs, suites, and the leaderboard."
+/>
+
+## When to run an evaluation
+
+Three moments justify one:
+
+- **Before promoting a model.** You finished a training run. The loss curve looks fine. That's not the same as *better*. An eval against your suite is the difference between "the math worked" and "this is shipping".
+- **Before flipping an agent.** You're considering swapping the model an agent uses. Eval both, side-by-side, on a representative benchmark.
+- **As a regression test.** You've shipped a Surogate-trained model into production. Re-run the eval suite on every new candidate, gate cut-overs on it.
+
+Evals don't replace [Arenas](./arenas.mdx). An eval is one run against one benchmark; an arena is many rounds across many evals with a Coordinator agent deciding. Use the eval when one number is enough; reach for the arena when one isn't.
+
+## Where to find the page
+
+Evaluations lives at `/studio/evaluations`. The page is reachable but the link is not on the main Studio sidebar today; if you can't find it, type the URL or use the Studio dashboard's quick-action row.
+
+## The three tabs
+
+The page header carries three tabs:
+
+- **Eval Runs** — the default. Reverse-chronological list of every run, regardless of whether it came from a benchmark suite or a one-off configuration. New runs land at the top.
+- **Benchmark Suite** — reusable suites you compose runs from. A suite is a named collection of test cases with a scoring rubric (LLM judge, exact match, regex, numeric tolerance). Suites are the right unit for regression testing — point them at every new candidate model and read the diff.
+- **Leaderboard** — cross-eval ranking. Pick a metric, the table sorts models or agents by that score. Only completed runs contribute; running and failed runs are skipped. Useful for "what's my best model on coding?" or "which agent ships the lowest refusal rate?".
+
+## Built-in benchmarks
+
+Surogate Ops ships twelve named benchmarks out of the box. Each has a category, a fixed sample count, and a scoring metric the suite knows how to compute.
+
+| Benchmark | Category | Samples | Metric |
+|---|---|---|---|
+| **GSM8K** | Reasoning | 1,319 | accuracy |
+| **ARC-AGI** | Reasoning | 400 | accuracy |
+| **HellaSwag** | Language | 10,042 | accuracy |
+| **MMLU** | Knowledge | 14,042 | accuracy |
+| **HumanEval** | Coding | 164 | pass@1 |
+| **MBPP** | Coding | 500 | pass@1 |
+| **TruthfulQA** | Safety | 817 | accuracy |
+| **MT-Bench** | Chat | 80 | score / 10 |
+| **IFEval** | Instruction | 541 | accuracy |
+| **ToxiGen** | Safety | 6,541 | safety % |
+| **CX Quality** | Custom | 200 | score / 5 |
+| **SQL Accuracy** | Custom | 150 | exec_match |
+
+A few notes worth carrying around:
+
+- **Sample counts are fixed.** The suite always runs the same fixture set, so two runs are directly comparable. If you want a faster smoke test, sample the suite down by writing a custom benchmark over a slice — don't randomly drop rows on a real run.
+- **Metric per benchmark is fixed too.** GSM8K is accuracy because the answer is a number; MT-Bench is `score/10` because a judge model rates each chat. You can't ask the eval to score GSM8K with a different metric — it's part of the suite.
+- **The two Custom benchmarks** (`CX Quality`, `SQL Accuracy`) are illustrative starting points for the **+ Custom Benchmark** flow. They're not meant to be authoritative; treat them as templates.
+
+## Benchmark categories
+
+Categories let you read the **Radar Overview** at a glance — strong on coding, weak on safety, decent on chat. The category set:
+
+- **Reasoning** — math word problems, chain-of-thought reliability, abstract reasoning. GSM8K and ARC-AGI here.
+- **Language** — sentence-completion plausibility, narrative coherence. HellaSwag.
+- **Knowledge** — factual recall across the academic taxonomy. MMLU.
+- **Coding** — code generation that passes given tests. HumanEval and MBPP.
+- **Safety** — refusal of harmful prompts, factual reliability under adversarial framing. TruthfulQA and ToxiGen.
+- **Chat** — multi-turn dialogue rated by an LLM judge against a rubric. MT-Bench.
+- **Instruction** — strict instruction-following with no hedging. IFEval.
+- **Custom** — anything you author yourself via **+ Custom Benchmark**.
+
+The radar overview puts one axis per category and plots the model's normalised score on each. Two-model overlays make the trade-off visible — *this model is better at coding but worse at safety*.
+
+## Start an evaluation
+
+<Figure
+  src="/img/screenshots/evals-new-eval.png"
+  alt="New Evaluation dialog with Target Model, Compare to, Cluster, and GPU fields"
+  caption="New Evaluation — four fields. Compare to is optional; leave empty for a standalone run."
+/>
+
+Click **◈ New Evaluation**. The dialog asks four things:
+
+- **Target Model** — which model to call. The dropdown lists every model that's currently **Serving**. Stopped and Error models aren't eligible — promote or redeploy first.
+- **Compare to** — pick a previous run to power the **Comparison** tab, or leave as *— none —* for a standalone eval. The dropdown shows recent runs on the same model first, then everything else. Comparing across different base models is allowed; the Comparison tab handles the mismatch by reporting deltas only on shared metrics.
+- **Cluster** — which compute pool runs the eval. Lists your connected backends ([Compute → Cloud](./compute.mdx)) plus the project-local cluster (the small pool reserved for short, cheap evals that don't need full GPUs).
+- **GPU** — drawn from the chosen cluster's offers. Smaller models can run an eval on a T4; large 70B+ models want at least an A100.
+
+Hit **Run Evaluation**. The run lands at the top of Eval Runs with status `Running`. It also appears in the Workload Queue under kind `eval` — cancel from there if you need to abort.
+
+The run takes roughly *samples × per-sample latency / batch*. GSM8K on an 8B model at A100 throughput is a few minutes; MMLU is closer to half an hour because of the sheer fixture count.
+
+## The detail pane
+
+<Figure
+  src="/img/screenshots/evals-detail-samples.png"
+  alt="Run detail showing the Samples sub-tab with per-case rows (input, output, expected, judge verdict) and filter pills for wins / losses / errors"
+  caption="Run detail → Samples — per-case drill-down. Filter to losses to find what to improve."
+/>
+
+Selecting a run loads four sub-tabs:
+
+| Tab | Contents |
+|---|---|
+| **Results** | Headline scores per metric. Bars + numbers. The Radar Overview lives here for runs that touched multiple categories. |
+| **Comparison** | Side-by-side scores against the run you set in *Compare to*. Each metric shows the absolute scores plus a signed delta. Significance is **not** computed here — small wiggles within seed-to-seed variance can look like wins. Re-run with a different seed if you need a quick variance estimate. |
+| **Samples** | Per-case drill-down: input → output → expected → judge verdict. Filter to **wins**, **losses**, or **errors**. Click a row to expand the full text. This is the most useful tab in practice — looking at twenty failing samples tells you what to fix in a way the headline score never does. |
+| **Details** | The run's full configuration: target, suite, suite version, dataset version, runtime params, seed. The version pins are why an old run is reproducible even after you've edited the suite. |
+
+The toolbar above the detail carries two row-actions:
+
+- **Re-run** repeats the same suite and target with a fresh seed. The new run lands above the original in Eval Runs. The first re-run after a real win is the fastest variance estimate you can get.
+- **Export** downloads the run's results as a JSON bundle (config + per-sample rows + headline scores). Drop the file into a notebook or share it with someone who doesn't have Studio access.
+
+## Custom benchmarks
+
+The benchmarks above are starting points. For domain-specific work — your team's coding style, your product's tone, an internal rubric your QA team uses — write a custom benchmark.
+
+**Benchmark Suite** tab → **+ Custom Benchmark**. The wizard asks for:
+
+- **Name** — short, used in the suite picker.
+- **Category** — pick one of the eight categories above, or `Custom`. Categories drive the Radar Overview only; functionally it makes no difference.
+- **Sample source** — a Hub dataset of kind `eval`, or an inline CSV. Schema must include the input column and the expected-output column the metric needs.
+- **Metric** — `accuracy` (exact match against expected), `pass@1` (run the output through a sandboxed scorer that returns pass/fail per row), `score/N` (an LLM judge with a rubric), `safety%` (refusal-rate-style metric), `exec_match` (run the output as a query and compare results), or `regex` (the output must match a regex you supply).
+- **Judge model** — only required when the metric is `score/N`. Pick a model strong enough to judge the task; the default Surogate judge works for short rubrics, but a domain-specific score wants a domain-strong judge.
+
+Save. The benchmark appears in the suite picker on the next **New Evaluation** and is selectable as a target for the **Leaderboard** tab too.
+
+## Leaderboard
+
+The Leaderboard tab is a sortable table across all completed runs. Two controls drive it:
+
+- **Metric** — the score column to sort by. Restricted to metrics that are comparable across rows; benchmark-specific metrics (like `pass@1` for code) don't appear unless every row has that metric.
+- **Group by** — `Model` or `Agent`. Choose `Model` for "which weights are best", `Agent` for "which deployed assembly (model + skills + KB) is best".
+
+The leaderboard updates as new runs complete. A row only enters if the run has the metric you're sorting on; a failed run never enters.
+
+## Suite vs ad-hoc
+
+A rule of thumb:
+
+- **Use a suite** when you'll run the same evaluation repeatedly — every release, every fine-tune, every prompt change. Treat suites as your team's regression tests. The Comparison tab is far more useful when both runs share a suite.
+- **Use ad-hoc** for one-off questions: *does the new model handle SQL better?* *Does enabling this skill change anything?* Ad-hoc runs are cheap to start and easy to abandon. Don't try to retrofit them into your suite library after the fact — make a real suite if it's worth keeping.
+
+## Re-run discipline
+
+A single eval run is a noisy estimate. Two practices help:
+
+1. **Always re-run** the headline result with a different seed before flipping a model into production.
+
+:::tip Two runs minimum
+A single eval is a noisy estimate. Re-running with a fresh seed catches the cases where you got lucky on a benchmark — way cheaper than discovering it after the production cut-over. Three runs is better when the metric is close.
+:::
+2. **Stop comparing scores that disagree on suite version.** When you edit a suite, the version pin changes. Old runs against the old version aren't directly comparable to new runs against the new version — the Comparison tab will warn you, but it's easy to miss. Re-run the old model against the new suite before drawing conclusions.
+
+:::info Suite versioning is automatic
+Every save of a suite bumps the version pin. The Details tab on every run shows the pinned version — that's how reproducibility survives suite edits.
+:::
+
+## When this isn't worth doing
+
+- **The metric isn't the goal.** Evals score what they're told to score. If your product success metric is human satisfaction in production chats, MT-Bench is a proxy at best. Pair the eval with an arena or with real-traffic flagged-session analysis.
+- **You don't have a baseline.** A single number means little. Compare against the previous model or a known reference, or don't bother.
+- **The fixture set is too small.** GSM8K has 1,319 samples for a reason. A custom benchmark with 12 rows is a smoke test, not an evaluation.
+
+## When something fails
+
+- **Run stays Queued forever.** No backend in the chosen cluster has capacity for the requested GPU. Cancel from the [Workload Queue](./compute.mdx), pick a smaller GPU or a different cluster, and resubmit.
+- **Run completes but every row is an error.** Usually the model returned an unexpected output shape — empty strings, refusals on every prompt, or a server error from the upstream. Open the Samples tab and read a few rows; the verdict column shows the underlying error.
+- **Two runs of the same config give very different scores.** Likely seed variance. Increase the sample count if your custom benchmark is small, or re-run twice and average.
+- **Comparison tab shows "metric not available".** The two runs targeted different benchmarks; only shared metrics show deltas. Drop one of the unique metrics or re-run both on the same suite.
+- **Judge model running out of budget mid-run.** Score-based metrics call the judge model per row. A huge fixture set against a paid judge can run up unexpected cost. Cap the run via the cluster's compute policy, or switch to a self-served judge.
+
+## Where to go next
+
+- **[Arenas](./arenas.mdx)** — when one eval isn't enough and you want a tournament with a Coordinator deciding rounds.
+- **[Datasets](./datasets.mdx)** — where eval fixtures live (a benchmark's `Sample source` points to a `kind: eval` dataset).
+- **[Compute → Workload Queue](./compute.mdx)** — to watch or cancel a running eval.
+- **[Models](./models.mdx)** — the targets every eval calls.
+- **[Training Runs](./training.mdx)** — what eval scores often gate.

@@ -13,21 +13,10 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Use cases',
-      collapsed: false,
-      items: [
-        'ops/use-cases/customer-support',
-        'ops/use-cases/internal-knowledge',
-        'ops/use-cases/sales-lead-qualifier',
-        'ops/use-cases/code-review',
-        'ops/use-cases/training-your-own-expert',
-      ],
-    },
-    {
-      type: 'category',
       label: 'Build',
-      collapsed: false,
+      collapsed: true,
       items: [
+        'ops/features/templates',
         'ops/features/agents',
         'ops/features/skills',
         'ops/features/knowledge-bases',
@@ -41,6 +30,7 @@ module.exports = {
       items: [
         'ops/features/datasets',
         'ops/features/training',
+        'ops/features/rl-environments',
         'ops/features/evaluations',
         'ops/features/arenas',
       ],
@@ -52,6 +42,21 @@ module.exports = {
       items: [
         'ops/features/sessions',
         'ops/features/compute',
+        {
+          type: 'category',
+          label: 'Compute providers',
+          collapsed: true,
+          items: [
+            'ops/compute-providers/aws',
+            'ops/compute-providers/azure',
+            'ops/compute-providers/gcp',
+            'ops/compute-providers/runpod',
+            'ops/compute-providers/modal',
+            'ops/compute-providers/nebius',
+            'ops/compute-providers/oci',
+            'ops/compute-providers/vast-ai',
+          ],
+        },
         'ops/features/playground',
       ],
     },
@@ -65,11 +70,73 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'Deployment',
+      collapsed: true,
+      items: [
+        'ops/deployment/self-host',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Concepts',
+      collapsed: true,
+      items: [
+        'ops/concepts/architecture',
+        'ops/concepts/studio-dashboard',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Use cases',
+      collapsed: true,
+      items: [
+        'ops/use-cases/customer-support',
+        'ops/use-cases/internal-knowledge',
+        'ops/use-cases/sales-lead-qualifier',
+        'ops/use-cases/code-review',
+        'ops/use-cases/training-your-own-expert',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Tutorials',
+      collapsed: true,
+      items: [
+        'ops/tutorials/build-a-support-bot',
+        'ops/tutorials/connect-cloud-and-serve-a-model',
+        'ops/tutorials/train-and-promote-an-expert',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Reference',
       collapsed: true,
       items: [
+        {
+          type: 'category',
+          label: 'API Reference',
+          collapsed: true,
+          items: [
+            'ops/api/overview',
+            'ops/api/inference',
+            'ops/api/hub',
+            'ops/api/errors-and-rate-limits',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Admin Guide',
+          collapsed: true,
+          items: [
+            'ops/admin/overview',
+            'ops/admin/teams-and-roles',
+            'ops/admin/credential-vault',
+            'ops/admin/data-hub-config',
+          ],
+        },
         'ops/reference/permissions-matrix',
         'ops/reference/errors',
+        'ops/reference/troubleshooting',
         'ops/glossary',
         'ops/changelog',
       ],

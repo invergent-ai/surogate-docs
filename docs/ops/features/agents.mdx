@@ -1,0 +1,145 @@
+---
+title: Agents
+sidebar_position: 1
+slug: /features/agents
+description: Deploy, attach, and operate the conversational workflows users actually talk to.
+---
+
+# Agents
+
+An Agent is a deployed conversational workflow. It pairs a model with the skills, knowledge bases, and tools your team needs, and exposes a chat surface your end users can talk to.
+
+You build agents from the Agents page in Studio. End users run them from the Work dashboard. Both surfaces look at the same agent object — the same skills, the same KB attachments, the same model — but expose different operations on it. Builders see settings, version history, and traces; end users see chat.
+
+<Figure
+  src="/img/screenshots/agents-list.png"
+  alt="Studio Agents list with status filter pills (All / Running / Deploying / Error) and the Deploy Agent action in the top-right"
+  caption="Agents — Studio list view. Status filter pills carry live counts; Deploy Agent opens the deploy dialog."
+/>
+
+## The Agents list
+
+The Agents page is a single sortable list with four status filter pills:
+
+| Status | Meaning |
+|---|---|
+| **All** | Default. Every agent regardless of state. |
+| **Running** | Healthy, accepting traffic from Work and from the [Inference API](../api/inference.md). |
+| **Deploying** | Deploy in progress. First deploy of a new model can take a couple of minutes. |
+| **Error** | The agent transitioned to an unhealthy state. See *When it goes wrong* below. |
+
+Each pill carries a live count. The default sort is most-recently-deployed; columns are clickable to re-sort by name, status, or owner.
+
+## Deploy your first agent
+
+<Figure
+  src="/img/screenshots/agents-deploy-dialog.png"
+  alt="Deploy New Agent dialog with Display Name, Slug, Description, and Model fields plus Cancel and Create Agent buttons"
+  caption="Deploy New Agent — the four-field dialog you fill in to stand a new agent up."
+/>
+
+Click **Deploy Agent**. Fill in four things:
+
+- **Display Name** — what users will see in agent lists and on the chat header.
+- **Slug** — a short, URL-safe identifier. Pick carefully; it's permanent and becomes part of the end-user URL (`/work/<slug>`). Slugs are install-scoped: you can't have two agents with the same slug.
+- **Description** — one sentence about what the agent does. Shown on cards in Work mode; also injected into the agent's effective system prompt as a behavioural hint.
+- **Model** — pick one of your available models. (No model yet? See [Models](./models.mdx).)
+
+Hit **Create Agent**. The first deploy of a model takes a couple of minutes while the serving container comes up. Subsequent deploys reuse cached layers and land in single-digit seconds.
+
+The dialog doesn't carry every field — there's no skill or KB attachment here, no system prompt override, no per-agent model parameters. Those all live on the agent's **Settings** tab post-create.
+
+## Attach skills and knowledge
+
+<Figure
+  src="/img/screenshots/agent-settings-attachments.png"
+  alt="Agent Settings tab with Skills, MCP Servers, and Knowledge Bases multi-selects expanded"
+  caption="Agent Settings — Skills, MCP Servers, Knowledge Bases. Each is a multi-select."
+/>
+
+Once the agent exists, open its **Settings** tab to attach **Skills**, **MCP Servers**, and **Knowledge Bases**. Each one is a multi-select; pick as many as you need.
+
+The Settings tab also exposes:
+
+- **System prompt** — your override for the model's default. Inherits the agent's Description as a baseline; you customise from there.
+- **Model parameters** — temperature, top-p, max-tokens overrides. Defaults inherit from the model's serving config.
+- **Visibility** — who can see and chat with the agent (project members at certain roles, all signed-in users, public).
+- **Welcome message** — what the chat shows when a new session opens.
+
+Save the changes; the agent redeploys. The redeploy is incremental — only changed fields rewire — and lands in seconds.
+
+## How attachments pin to versions
+
+A subtle but important rule: agents **pin** to the version of each skill, MCP server, and KB that exists at deploy time. Editing a skill's body, adding a new MCP server tool, or recompiling a KB does **not** propagate to deployed agents until you redeploy.
+
+The version pin is what lets you ship safely: a skill edit doesn't accidentally change the behaviour of every production agent that referenced it. The cost is that you have to remember to redeploy after a skill change.
+
+Two practical workflows:
+
+- **For a single agent**, edit the skill, open the agent's Settings, click into the skill, re-select the latest version from the dropdown (the top entry), save. Redeploy happens automatically.
+- **For many agents**, deploy the skill change with a clear version note, then sweep the affected agents in the agents list. The bulk redeploy action under the list's row-menu reruns each agent's deploy with the latest pinned versions.
+
+## How knowledge-base state affects the agent
+
+A knowledge base in **Compiling** or **Error** state can still be attached. The agent just returns no retrieval results until the KB reaches **Active**. This is by design — it lets you stage the KB attachment ahead of a content update without having to coordinate timing.
+
+The flip side: an agent attached to a long-Compiling KB will produce ungrounded answers until the KB lands. If that's a problem, don't attach the KB until it's Active.
+
+## Run the agent
+
+End users find their agents on the Work dashboard. Each card has a chat entry point. New sessions start fresh; existing sessions resume on a stable id, so anyone with the link can pick up a chat where they left it.
+
+The URL pattern: `/work/<agent-slug>` for the agent's default-session entry, `/work/<agent-slug>/sessions/<session-id>` for a specific session.
+
+Builders see the same sessions in **[Sessions](./sessions.mdx)**, with the agent's full step-by-step run attached. The loop from "user reports a bad answer" to "fix the prompt and redeploy" is the iteration loop the rest of Surogate Ops is built around.
+
+## Version history and redeploy
+
+Every deploy creates a version row on the agent's detail page. The version carries the deploy timestamp, the operator who triggered it, and a snapshot of the resolved attachments (which skill versions, which KB versions, which model version).
+
+Two operations:
+
+- **Compare versions.** Pick two version rows; the diff view shows what changed (system prompt, attachments, model).
+- **Rollback.** Pick an earlier version; click **Redeploy this version**. The current version becomes a new version row (no destruction); end users hit the rolled-back behaviour.
+
+Rollbacks are an emergency lever, not a routine workflow. If you find yourself rolling back regularly, your deploy gate is too loose — add an evaluation step before flipping agents.
+
+## Iterate
+
+After a few real chats, look at the dashboard's Agent metrics table for RPS, latency, error rate. Flag any session that shouldn't have happened (a hallucinated answer, a refused request that should have gone through), and the rest of the loop kicks in: those flags feed datasets, datasets feed training, training produces a better model, and you redeploy the agent on top of it.
+
+The full loop is described in [Tutorial: Train and promote an expert](../tutorials/train-and-promote-an-expert.md) and in [Architecture](../concepts/architecture.md).
+
+## Agent lifecycle states in depth
+
+State machine: `Created → Deploying → Running ⇄ Stopped → (Error?)`.
+
+- **Created** — the agent record exists, but no deploy has been triggered. Rare in normal use; you usually deploy at create time.
+- **Deploying** — the serving plumbing is being built. The model's container is warming, skills are loading, the proxy is wiring.
+- **Running** — accepting traffic. The Quick Actions toolbar exposes Stop / Redeploy / Edit settings.
+- **Stopped** — you explicitly stopped the agent. Chat returns an explicit error; sessions don't accept new messages. Re-deploy to resume.
+- **Error** — terminal unhealthy. The trigger could be the underlying model going to Error, a required skill failing to init, or a guardrail tripping. Read the agent's detail; the error message names the root cause.
+
+## When it goes wrong
+
+- **Stuck in Deploying beyond ten minutes.** The compute scheduler can't find a GPU. Open [Compute → Workload Queue](./compute.mdx) and filter to `serving`; the related job will show the failure.
+- **Transitions to Error.** Most often the underlying model is in **Stopped** or **Error**. Fix the model first, then redeploy the agent.
+- **Runs but every chat returns an error.** A required skill failed to initialize. Open the agent's settings, untick the failing skill, redeploy. Then debug the skill separately.
+- **Chat returns instantly with no content.** The model produced an empty completion; usually a system-prompt issue (you've told the model to refuse, or the stop sequences are too eager). Tune in the [Playground](./playground.mdx).
+- **API callers get `404 agent_not_found`.** The agent slug is wrong, or the agent is Stopped/Error. The inference proxy treats unhealthy agents as not-found.
+- **Sessions show but the trace is empty.** The agent ran on a fast path that didn't engage skills or KBs — probably a single-turn answer the model handled directly. Not an error.
+
+## When this isn't worth doing
+
+- **The use case isn't conversational.** If you want a one-shot API call without chat semantics, hit the [Inference API](../api/inference.md) directly with a model key. You don't need an agent wrapping it.
+- **You don't have skills or a KB to attach.** A bare-model agent is mostly a system-prompt wrapper. Use the [Playground](./playground.mdx) for system-prompt iteration; build an agent when you have skills or knowledge to wire in.
+- **You'll redeploy on every request.** Agents are deploy-once-serve-many. If your config genuinely changes per request, build the routing layer outside Surogate.
+
+## Where to go next
+
+- **[Skills & Tools](./skills.mdx)** — the things your agent can call.
+- **[Knowledge Bases](./knowledge-bases.mdx)** — what your agent can read.
+- **[Models](./models.mdx)** — what your agent thinks with.
+- **[Sessions](./sessions.mdx)** — what your agent did.
+- **[Templates catalog](./templates.mdx)** — pre-configured starter agents.
+- **[Inference API](../api/inference.md)** — to call an agent from outside Studio.

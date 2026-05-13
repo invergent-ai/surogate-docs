@@ -1,0 +1,177 @@
+---
+title: Data Hub
+sidebar_position: 1
+slug: /features/hub
+description: HuggingFace-compatible registry for Models, Datasets, Skills, Experiments, and Environments. Git/S3/API endpoints exposed.
+---
+
+# Data Hub
+
+The Hub is Surogate's HuggingFace-compatible registry. Models, datasets, skills, experiments (training runs), and environments all live here as versioned Git-like repositories with branches and tags. The rest of Surogate Ops reads and writes the Hub under the hood — your training run's weights end up here, your datasets push here, your skills publish here.
+
+This page is the Hub UI reference. For the programmatic surfaces (Git, S3, REST), see [API → Hub](../api/hub.md). For admin configuration (quotas, LFS, endpoints), see [Admin → Data Hub config](../admin/data-hub-config.md).
+
+<Figure
+  src="/img/screenshots/hub-list.png"
+  alt="Data Hub home with kind tabs (All / Models / Datasets / Skills / Experiments / Environments / Tags), Search repositories input, Refresh / Import / + New Repository actions"
+  caption="Data Hub — kind tabs across the top, search and bulk actions on the right."
+/>
+
+## When the Hub matters
+
+- You want to share a model, dataset, or skill across teams.
+- You want versioned artifacts for reproducibility (which dataset trained which model on which date).
+- You want to mirror an external HuggingFace repo into your registry.
+- You want a programmatic surface (`git clone`, `aws s3 cp`, REST) that your CI / CD pipelines can hit.
+
+## Repository kinds
+
+A Hub repo is one of five kinds. The kind drives the UI's filter tabs and the integrations that read or write the repo.
+
+| Kind | UI filter tab | Where it's read | Where it's written |
+|---|---|---|---|
+| **Model** | Models | [Models → Deploy → Local Hub](./models.mdx), Training Runs (load base) | Training Runs (publish weights), manual push |
+| **Dataset** | Datasets | [Training Runs](./training.mdx), [Evaluations](./evaluations.mdx), [Datasets → Import](./datasets.mdx) | Datasets page (Push to Hub), manual push |
+| **Skill** | Skills | [Skills → Import](./skills.mdx) | Skills page (Publish), manual push |
+| **Experiment** | Experiments | Training Run detail (re-attach lineage) | Training Runs (auto-publish run state) |
+| **Environment** | Environments | [RL Environments](./rl-environments.md), GRPO Training Runs | Environment editor (auto-commit on save) |
+
+The Hub home's tabs filter the repo list to one kind; the **Tags** tab cuts across all kinds by tag.
+
+## Search and filter
+
+The Search input on the Hub home does full-text search across repo names, descriptions, and tags. Two qualifier prefixes:
+
+- `kind:<kind>` — restrict to a kind.
+- `owner:<slug>` — restrict to an owner namespace.
+
+Combine: `kind:model owner:your-team support` finds every model in your team's namespace whose name or description matches "support".
+
+The list view also supports column sort (name, kind, owner, last-modified, size).
+
+## Create a repo
+
+Distribute → Data Hub → **+ New Repository**. Fields:
+
+- **Name** — becomes the repo slug. Permanent.
+- **Kind** — Model / Dataset / Skill / Experiment / Environment. Defaults to Model.
+- **Description** — short, shown on the repo card.
+- **Tags** — space-separated, used by the **Tags** filter on the Hub home and by search.
+
+Submit. The empty repo opens with a file tree.
+
+<Figure
+  src="/img/screenshots/hub-new-repo.png"
+  alt="New Repository dialog with Name, Kind dropdown, Description, and Tags fields"
+  caption="New Repository — four-field dialog. Kind defaults to Model."
+/>
+
+The dialog has no public-vs-private toggle. Sharing happens by adding members at one of three roles (owner, editor, viewer). See [Admin → Data Hub config](../admin/data-hub-config.md) for membership and access control.
+
+## Import an external repo
+
+<Figure
+  src="/img/screenshots/hub-import.png"
+  alt="Import dialog with provider tabs (HuggingFace / ModelScope), Kind selector, repo id input, Token, Branch, and Sub-path fields"
+  caption="Import — mirror a HuggingFace or ModelScope repo into your Hub."
+/>
+
+Distribute → Data Hub → **Import**. Pick **HuggingFace** or **ModelScope**, pick the kind (Model / Dataset / Skill / Experiment / Environment), type the repo id (e.g. `meta-llama/Llama-3.1-8B`), then optionally:
+
+- **Token** — for gated repos. Use a [Credential Vault](../admin/credential-vault.md) reference rather than pasting.
+- **Branch** — defaults to `main`.
+- **Sub-path** — restrict the import to a subfolder.
+
+Submit. The repo lands in the Hub with a snapshot of the chosen branch.
+
+By default, imports are one-shot snapshots. To keep an imported repo in sync with the upstream, set a scheduled re-sync on the repo's settings.
+
+## File tree and content
+
+The repo's detail page shows a file tree (Git-shaped — branches, paths, blobs). Each file has:
+
+- **Preview** — text files render inline; images and PDFs preview where supported; large binaries (weights, LFS pointers) show file size and download link.
+- **History** — every commit that touched the file, with author and timestamp.
+- **Download** — direct download URL, gated by the same auth as the rest of the Hub.
+
+Click into a file to read it; click into a directory to descend.
+
+## Branches and tags
+
+The branch dropdown above the file tree lists every branch. The Tags tab on the repo lists every tag with its commit hash.
+
+Branches and tags work exactly like Git's. Push them via `git push origin <name>`; create / delete tags via the UI or via Git.
+
+Practical patterns:
+
+- **Use `main` for current.** Most consumers default to `main`.
+- **Use tags for releases.** `v1.0`, `v1.1`, `v2-experimental`. Tags are immutable on creation (you can delete and re-create, but the platform warns when consumers are pinned to it).
+- **Use branches for experiments.** `experiments/lora-r64`, `bug-fix/tokenization`. Merge into `main` when ready.
+
+## Members
+
+The **Members** tab lists every user (and every team) with access to the repo, with their role. Three roles:
+
+- **owner** — full rights including delete.
+- **editor** — push and edit; can't change membership.
+- **viewer** — read-only.
+
+Adding a member: **+ Add member** → pick user or team → pick role. The change applies immediately on the platform's identity check.
+
+## How other parts of Surogate Ops use the Hub
+
+- **Models page** → **Deploy Model** → source **Local Hub** picks a model repo from here.
+- **Training Runs** publish their resulting weights as an Experiment-kind repo and a Model-kind repo.
+- **Datasets** push to a Dataset-kind repo.
+- **Skills** published from the Skill Builder land in a Skill-kind repo.
+- **RL Environments** are LakeFS-backed but commit metadata into Environment-kind Hub repos.
+
+This is the connecting tissue — most everyday workflows write to the Hub without you thinking about the Hub directly.
+
+## File editor
+
+For small text-shaped files (markdown, JSON config, dataset card, model card), the file detail's **Edit** button opens an inline editor. The pattern:
+
+1. Click into the file from the tree.
+2. **Edit** in the toolbar.
+3. The editor opens with syntax highlighting and a side-by-side preview for markdown.
+4. Make changes, write a one-line commit message, click **Commit**.
+
+A new commit lands on the current branch. For binary files (model weights, parquet shards) the editor is read-only — push edits via Git instead.
+
+This is the right surface for fixing a model card typo or updating a dataset's tags without leaving the browser. For anything more involved, clone the repo locally and push.
+
+## Programmatic access
+
+The Hub exposes three programmatic surfaces:
+
+- **Git** — `git.studio.internal:3000`. Clone, push, fetch.
+- **S3** — `s3.studio.internal:9000`. Direct blob upload / download.
+- **REST** — `https://hub.studio.internal/api/v1`. Metadata, repo create / delete, member management.
+
+See [API → Hub](../api/hub.md) for the full programmatic reference.
+
+The Hub also speaks the [HuggingFace Hub protocol](https://huggingface.co/docs/huggingface_hub) — `huggingface_hub` clients pointed at Surogate's Hub work without code changes, just by changing the base URL.
+
+## When this isn't worth doing
+
+- **A one-shot artifact you'll never reuse.** Push it to local storage and skip the Hub. Versioning, search, and access control are overhead if nobody else will touch it.
+- **You don't have a team to share with.** Single-user installs can still use the Hub for versioning, but most of the value is in cross-team sharing.
+- **The artifact is enormous and only used in-cluster.** A multi-terabyte dataset that only the training scheduler ever reads can live on the cluster's object store directly; the Hub's overhead pays off when the artifact crosses organisational boundaries.
+
+## When something fails
+
+- **`git push` returns 401.** Hub access token invalid or expired. Create a fresh token in Settings → Hub access tokens.
+- **`git push` returns 403.** Your token doesn't have write rights on this repo, or your project role is too low. Ask the repo owner to grant editor or owner.
+- **Push hangs at LFS upload.** S3 endpoint unreachable from your network. Firewall / VPN issue.
+- **Import from HuggingFace returns 403.** Repo is gated and your token wasn't accepted, or your token isn't set in Integrations.
+- **Repo's file tree shows everything but a specific path is missing.** Sub-path import excluded it, or `.gitignore` excluded it on push.
+- **Two teams pushed the same branch and one overwrote the other.** Normal Git non-fast-forward conflict; push is rejected until you pull and merge. The Hub doesn't change Git's defaults here.
+
+## Where to go next
+
+- **[API → Hub](../api/hub.md)** — Git / S3 / REST in full.
+- **[Admin → Data Hub config](../admin/data-hub-config.md)** — quotas, LFS, endpoints.
+- **[Models](./models.mdx)** — where Hub model repos get served.
+- **[Datasets](./datasets.mdx)** — where Hub dataset repos get imported.
+- **[Skills](./skills.mdx)** — where Hub skill repos get imported.

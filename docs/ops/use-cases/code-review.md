@@ -2,11 +2,26 @@
 title: Code-review companion
 sidebar_position: 4
 slug: /use-cases/code-review
+description: GitHub-aware assistant that reads a PR, surfaces risk, suggests reviewers, and drafts release notes.
 ---
 
 # Code-review companion
 
 A GitHub-aware assistant that reads a pull request, surfaces risk, suggests reviewers based on file ownership, and drafts release notes from the diff. Sits beside your human reviewers; doesn't replace them.
+
+The agent's output, posted as a regular PR comment, looks like:
+
+> **🔍 Surogate review · PR #1284**
+>
+> **Risk** — *medium*. Touches `payments/charge.py` (CODEOWNERS: @billing-team). New `null`-able column added to a 50M-row table without a migration plan.
+>
+> **Suggested reviewers** — @alex-payments (last touched this file), @maria-data (owns the migrations runbook).
+>
+> **Drafted release note** — *Add idempotency key to charge endpoint; rejects duplicate retries within a 60-second window.*
+>
+> **Concerns**
+> - `charge.py:312` — exception is swallowed silently. Consider re-raising or logging.
+> - Missing test for the case where the idempotency key collides across users.
 
 ## What you need
 
@@ -42,6 +57,6 @@ Once you have a few hundred PR reviews of varying quality, the captured-conversa
 
 ## Where to go next
 
-- **[Skills & Tools](../features/skills.md)** — GitHub templates, MCP servers.
-- **[Knowledge Bases](../features/knowledge-bases.md)** — for the style guide.
-- **[Sessions](../features/sessions.md)** — to read why the agent said what it said.
+- **[Skills & Tools](../features/skills.mdx)** — GitHub templates, MCP servers.
+- **[Knowledge Bases](../features/knowledge-bases.mdx)** — for the style guide.
+- **[Sessions](../features/sessions.mdx)** — to read why the agent said what it said.

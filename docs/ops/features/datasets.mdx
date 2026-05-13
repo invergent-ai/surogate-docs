@@ -1,0 +1,171 @@
+---
+title: Datasets
+sidebar_position: 1
+slug: /features/datasets
+description: Build SFT, eval, synthetic, and environment datasets from sessions, files, or generators. Pushed to the Hub.
+---
+
+# Datasets
+
+A Dataset is a collection of training, evaluation, or fine-tuning examples. Datasets feed [Training Runs](./training.mdx) and [Evaluations](./evaluations.mdx) and live in the [Hub](./hub.mdx) once you push them.
+
+Every dataset carries a `kind` that constrains its schema. Every dataset is versioned on a LakeFS-backed store, so a training run's lineage points at a specific commit of a specific dataset — reproducibility is built in, not added on.
+
+<Figure
+  src="/img/screenshots/datasets-list.png"
+  alt="Datasets list with kind filter pills (All / SFT / Eval / Synthetic / Environment), row count, and New Dataset / Import actions"
+  caption="Datasets — kind filter pills carry live counts; row actions include Preview, Push to Hub, Archive."
+/>
+
+## Where datasets come from
+
+<Figure
+  src="/img/screenshots/datasets-source-picker.png"
+  alt="New Dataset dialog with the four source cards: From Conversations, Expert Training, Upload File, Synthetic Generation"
+  caption="New Dataset — four sources. From Conversations closes the agent → dataset loop."
+/>
+
+Train → Datasets → **New Dataset**. Pick one of four sources.
+
+### From Conversations
+
+Export sessions captured from your existing agents as supervised fine-tuning examples. This is the loop that closes the rest of Surogate: real traffic becomes training data.
+
+The form asks for:
+
+- **Agent** — pick from your deployed agents.
+- **Date range** — typically *last 30 days* or *last 90 days*.
+- **Quality filter** — *flagged 👍 only*, *flagged 👎 excluded*, *all sessions*, or a custom rule.
+- **Format** — defaults to `prompt + completion`. The dataset's kind becomes `sft`.
+
+Submit. Surogate exports the matching sessions, formats them as `(prompt, completion)` pairs, and writes a new dataset to your Hub. A few hundred sessions takes under a minute; a few thousand takes a few minutes.
+
+This is the most-used source. Most teams' first real dataset is From Conversations.
+
+### Expert Training
+
+Generate curated examples for a specific capability. The form opens an authoring surface where you (or an internal SME) write `(prompt, completion)` pairs directly.
+
+Used as the seed for an expert-model run, often paired with synthetic generation that amplifies the hand-written examples.
+
+The authoring surface supports CSV import, side-by-side preview, and inline notes per row.
+
+### Upload File
+
+JSONL, CSV, or Parquet from local. Format inferred from extension; map columns on the next screen.
+
+The mapping step shows the file's columns and asks which one is the prompt, which is the completion (or expected answer for eval), and which (if any) is a system message. Mismatches at map time are easier to fix than at training time.
+
+Maximum file size is bounded by the [Hub LFS quota](../admin/data-hub-config.md); for very large uploads, push directly via the S3 surface.
+
+### Synthetic Generation
+
+Schedule a workload of kind `synthetic` that produces examples by sampling from a prompt template. Generated rows merge into the dataset when the job completes.
+
+The form asks for:
+
+- **Prompt template** — the seed prompt; supports placeholders that the generator fills with sampled values.
+- **Generator model** — which model produces the examples. Pick a strong general-purpose model for prompts; a domain model for completions.
+- **Sample count** — how many rows to generate.
+- **Quality filter** — optional verifier (a separate model) that scores each generated row; rows below threshold are dropped.
+
+Synthetic generation is what makes Dataset Generation [Arenas](./arenas.mdx) and Expert Training datasets tractable. The job runs on the Workload Queue; you can monitor and cancel from there.
+
+## The Import flow
+
+Alongside the four sources, the Datasets page has an **Import** action that pulls an existing dataset from a Hub repo. Pick a Dataset-kind repo, pick a branch or tag, submit. The dataset lands in your Datasets list referencing the Hub repo as its source-of-truth.
+
+Use for datasets your team has already published, or for upstream datasets pulled from HuggingFace via the Hub's import.
+
+## Dataset kinds
+
+A dataset carries a `kind` that constrains its schema:
+
+| Kind | Used by | Shape |
+|---|---|---|
+| `sft` | Supervised fine-tuning runs | `{prompt, completion}` pairs, optionally with a system message |
+| `eval` | Evaluations | Test cases with expected outputs or judge rubrics |
+| `synthetic` | Output of synthetic generators; can feed SFT | Generator-dependent |
+| `environment` | RL training | Bound to a Hub Environment repo; inherits the env's observation/action schema |
+
+The schema is validated at write time. A dataset bound to an `environment` rejects rows that don't match the env's action space — no surprises at training time.
+
+## Preview and inspect
+
+Every dataset detail has a **Preview** tab that pages through rows. Useful for:
+
+- **Sanity-checking right after creation.** Read ten rows; if they look right, the dataset is right.
+- **Spot-checking a filter outcome.** "Did the *flagged 👍 only* filter actually exclude the 👎s?" Read a sample.
+- **Catching schema mismatches early.** A row with the wrong field types shows visibly in preview before training surfaces the issue.
+
+The Preview tab supports searching within the dataset and filtering by tags (for datasets that carry per-row tags).
+
+## Versioning and LakeFS
+
+Each dataset is backed by a LakeFS repository — typically named `lakefs://dataset-<slug>`. Every write to the dataset creates a commit; you can branch, merge, and revert at the LakeFS level.
+
+The Surogate Ops UI surfaces a simplified version of this: the dataset's **Versions** tab lists commits with their timestamps and the operator who created them. Click a version to:
+
+- **Preview** the rows as of that version.
+- **Pin a training run** to this version — useful when re-running a historic experiment.
+- **Diff** against another version.
+
+The training-run lineage records the dataset commit hash. Two runs on the "same dataset" are only really the same if the commit hash matches.
+
+## Transforms
+
+The dataset's **Transforms** tab applies row-level functions: trim long completions, normalise whitespace, drop rows matching a regex, downsample to a row count. Transforms produce a new commit; the original rows are preserved.
+
+Use transforms to clean a noisy dataset without losing the source.
+
+## Push to the Hub
+
+The Datasets page stores datasets on the install's storage by default. To share across teams or installs, push the dataset to a Dataset-kind Hub repo.
+
+Dataset detail → row menu → **Push to Hub**. Pick the repo (autocomplete against your Dataset-kind repos), pick the branch. The push happens in the background; the dataset's status flips to **Synced** when complete.
+
+After push, the dataset is reachable via `git clone` of the Hub repo, the Hub's REST API, or another Surogate install's Import.
+
+## Workflow
+
+The end-to-end pattern most teams use:
+
+1. Run an agent for a couple of weeks.
+2. Flag the sessions you want the next model to imitate (and ignore the rest).
+3. Train → Datasets → **New Dataset** → **From Conversations** → pick the agent, set the date range, set a quality filter.
+4. Preview the result; tighten the filter or augment with Expert Training rows if needed.
+5. The dataset is ready to feed a [Training Run](./training.mdx).
+6. (Optional) Push to the Hub if other teams will use it.
+
+See [Tutorial: Train and promote an expert](../tutorials/train-and-promote-an-expert.md) for the loop walked through end-to-end.
+
+## Archive and delete
+
+Two ways to retire a dataset:
+
+- **Archive** — moves the dataset out of the default list. Still queryable through the **Archived** filter; still usable as a training-run input if pinned to a specific version. The right move for "we're done with this for now but might come back".
+- **Delete** — purges the dataset record from the install. The LakeFS history goes with it; previous training runs that referenced this dataset will show a broken lineage link. Don't delete unless you're sure.
+
+The platform refuses delete if a current training run or eval run is reading from the dataset. Wait for those to complete or cancel them first.
+
+## When this isn't worth doing
+
+- **Fewer than a hundred captured sessions.** Garbage in, garbage out — a tiny dataset trains worse than the base model. Capture more before training.
+- **A one-off eval.** You don't always need a Dataset record — a one-shot evaluation can run against an inline fixture set without going through the Datasets page. Use Evaluations directly.
+- **The dataset is genuinely one-time.** If you'll never re-use it, you may not need versioning, transforms, or Hub publish. The dataset can stay simple.
+
+## When something fails
+
+- **Large upload stalls.** The upload happens in the browser. Closing the dialog cancels it. Re-open and re-pick the file to retry. For very large files (multiple GB), push via the [Hub S3 surface](../api/hub.md) instead.
+- **Schema rejects rows.** The dataset's kind doesn't match the row format. Either re-pick the kind or reshape the rows. Common cause: uploading an eval-shaped CSV into an `sft` dataset.
+- **Synthetic job stays Queued.** No compute available. Loosen the synthetic recipe's GPU requirement or connect a backend with stock.
+- **Push to Hub fails with 413.** A non-LFS file in the dataset exceeds 100 MB. Either re-shard or push via S3.
+- **Two training runs on the "same dataset" produce different models.** The dataset commit hash differs. Pin both runs to the same version.
+
+## Where to go next
+
+- **[Training Runs](./training.mdx)** — where datasets get consumed.
+- **[Evaluations](./evaluations.mdx)** — `eval`-kind datasets feed here.
+- **[RL Environments](./rl-environments.md)** — `environment`-kind datasets bind here.
+- **[Data Hub](./hub.mdx)** — to publish a dataset for reuse.
+- **[Tutorial: Train and promote an expert](../tutorials/train-and-promote-an-expert.md)** — the end-to-end loop.

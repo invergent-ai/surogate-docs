@@ -17,6 +17,7 @@ module.exports = {
     trailingSlash: false,
     markdown: {
         mermaid: true,
+        format: 'detect',
     },
     themes: [
         '@docusaurus/theme-mermaid',
@@ -206,7 +207,4 @@ module.exports = {
             },
         ],
     ],
-    markdown: {
-        format: 'detect',
-    }
 };
