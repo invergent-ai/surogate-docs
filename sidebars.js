@@ -32,7 +32,6 @@ module.exports = {
         'ops/features/training',
         'ops/features/rl-environments',
         'ops/features/evaluations',
-        'ops/features/arenas',
       ],
     },
     {
@@ -66,14 +65,6 @@ module.exports = {
       collapsed: true,
       items: [
         'ops/features/hub',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Deployment',
-      collapsed: true,
-      items: [
-        'ops/deployment/self-host',
       ],
     },
     {
