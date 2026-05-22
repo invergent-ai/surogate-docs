@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-develop/features/mcp-and-vault" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">MCP &amp; Vault | Surogate</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.surogate.ai/develop/features/mcp-and-vault"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="MCP &amp; Vault | Surogate"><meta data-rh="true" name="description" content="The Model Context Protocol (MCP) is an open standard for connecting LLMs to external tools and data. Surogate ships a full MCP client + a credential-injecting proxy + security scanning."><meta data-rh="true" property="og:description" content="The Model Context Protocol (MCP) is an open standard for connecting LLMs to external tools and data. Surogate ships a full MCP client + a credential-injecting proxy + security scanning."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.surogate.ai/develop/features/mcp-and-vault"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/develop/features/mcp-and-vault" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/develop/features/mcp-and-vault" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://K46M9C3QXR-dsn.algolia.net" crossorigin="anonymous"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"MCP & Vault","item":"https://docs.surogate.ai/develop/features/mcp-and-vault"}]}</script><link rel="preconnect" href="https://www.google-analytics.com">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7YRDGYZN0R"></script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-7YRDGYZN0R",{})</script>
+
+
+
+<link rel="search" type="application/opensearchdescription+xml" title="Surogate" href="/opensearch.xml">
+
+
+<meta name="keywords" content="Surogate, AgentOps, agents, LLM, MCP, training, fine-tuning, RL, evaluations">
+<meta name="description" content="Documentation for Surogate Ops — operator and builder tracks. Build reliable autonomous agents.">
+<meta name="og:type" content="website">
+<meta name="og:url" content="https://docs.surogate.ai">
+<meta name="og:title" content="Surogate Documentation">
+<meta name="og:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="og:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:secure_url" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:alt" content="Surogate">
+<meta name="og:locale" content="en_US">
+<meta name="og:image:type" content="image/jpeg">
+<meta name="twitter:site" content="surogate_ai">
+<meta name="twitter:creator" content="surogate_ai">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://docs.surogate.ai">
+<meta name="twitter:title" content="Surogate Documentation">
+<meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
+<script src="/assets/js/runtime~main.6492ae8e.js" defer="defer"></script>
+<script src="/assets/js/main.661645df.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo-black.svg" alt="logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo-white.svg" alt="logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Documentation</b></a><div class="toggle_mBnC" role="group" aria-label="Documentation mode"><button type="button" class="option_jJ1x active_xCPe" aria-pressed="true">Work</button><button type="button" class="option_jJ1x" aria-pressed="false">Develop</button></div></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">About<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://ops.surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Login<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://x.com/surogate_ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Follow us on X<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="navbarSearchContainer_Bca1"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search (Meta+k)" aria-keyshortcuts="Meta+k"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" fill="none" stroke-width="1.4"></circle><path d="m21 21-4.3-4.3" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop"><span title="Welcome" class="linkLabel_WmDU">Welcome</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/quickstart"><span title="Quickstart" class="linkLabel_WmDU">Quickstart</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/develop/loop/overview"><span title="The builder loop" class="categoryLinkLabel_W154">The builder loop</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/loop/overview"><span title="The builder loop (overview)" class="linkLabel_WmDU">The builder loop (overview)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/loop/build"><span title="Build phase" class="linkLabel_WmDU">Build phase</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/loop/observe"><span title="Observe phase" class="linkLabel_WmDU">Observe phase</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/loop/train"><span title="Train phase" class="linkLabel_WmDU">Train phase</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/loop/redeploy"><span title="Redeploy phase" class="linkLabel_WmDU">Redeploy phase</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/develop/features/agents"><span title="Operate" class="categoryLinkLabel_W154">Operate</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/agents"><span title="Agents" class="linkLabel_WmDU">Agents</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/sessions"><span title="Sessions" class="linkLabel_WmDU">Sessions</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/compute"><span title="Compute" class="linkLabel_WmDU">Compute</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/develop/features/models"><span title="Library" class="categoryLinkLabel_W154">Library</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/models"><span title="Models" class="linkLabel_WmDU">Models</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/skills-and-experts"><span title="Skills &amp; Experts" class="linkLabel_WmDU">Skills &amp; Experts</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/knowledge-bases"><span title="Knowledge Bases" class="linkLabel_WmDU">Knowledge Bases</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/develop/features/mcp-and-vault"><span title="MCP &amp; Vault" class="linkLabel_WmDU">MCP &amp; Vault</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/hub"><span title="Hub" class="linkLabel_WmDU">Hub</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/byo-llm"><span title="BYO LLM" class="linkLabel_WmDU">BYO LLM</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/develop/features/datasets"><span title="Train" class="categoryLinkLabel_W154">Train</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/datasets"><span title="Datasets" class="linkLabel_WmDU">Datasets</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/training"><span title="Training" class="linkLabel_WmDU">Training</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/evaluations"><span title="Evaluations" class="linkLabel_WmDU">Evaluations</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/tools/dashboard"><span title="Tools &amp; dashboard" class="categoryLinkLabel_W154">Tools &amp; dashboard</span></a></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/use-cases"><span title="Use cases" class="linkLabel_WmDU">Use cases</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/reference/runtime-architecture"><span title="Reference" class="categoryLinkLabel_W154">Reference</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Library</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">MCP &amp; Vault</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>MCP &amp; Vault</h1></header>
+<p>The <strong>Model Context Protocol</strong> (MCP) is an open standard for connecting LLMs to external tools and data. Surogate ships a full MCP client + a credential-injecting proxy + security scanning.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="architecture">Architecture<a href="#architecture" class="hash-link" aria-label="Direct link to Architecture" title="Direct link to Architecture" translate="no">​</a></h2>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">Sandbox / Worker</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    │</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    │  MCP tool call</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    ▼</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">MCP Proxy (separate K8s service)</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    │</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    │  injects credentials from vault</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    ▼</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">External MCP Server (stdio or HTTP)</span><br></span></code></pre></div></div>
+<p>The proxy is the trusted credential broker:</p>
+<ul>
+<li class="">Sandboxes can only reach the MCP proxy (K8s NetworkPolicy enforces this)</li>
+<li class="">The proxy holds credentials in memory (fetched from the Vault on connection)</li>
+<li class="">Outbound calls to MCP servers carry injected headers/args without the sandbox ever seeing secrets</li>
+</ul>
+<p>This is the structural fix for &quot;what if my agent leaks an API key&quot; — the agent literally cannot access keys, even if fully prompt-injected.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="two-transports">Two transports<a href="#two-transports" class="hash-link" aria-label="Direct link to Two transports" title="Direct link to Two transports" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="stdio">Stdio<a href="#stdio" class="hash-link" aria-label="Direct link to Stdio" title="Direct link to Stdio" translate="no">​</a></h3>
+<p>Launch the MCP server as a subprocess; communicate via stdin/stdout. Configuration:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">mcp_servers</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token key atrule">github</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">transport</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> stdio</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">command</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> npx</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">args</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token string" style="color:rgb(195, 232, 141)">&quot;-y&quot;</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;@modelcontextprotocol/server-github&quot;</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">env</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token key atrule">GITHUB_TOKEN_REF</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> github_token   </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># resolved from Vault</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">timeout</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">120</span><br></span></code></pre></div></div>
+<p>Best for: locally-installable CLI-like tools, MCP servers shipped as npm packages.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="http--streamablehttp">HTTP / StreamableHTTP<a href="#http--streamablehttp" class="hash-link" aria-label="Direct link to HTTP / StreamableHTTP" title="Direct link to HTTP / StreamableHTTP" translate="no">​</a></h3>
+<p>Connect to a remote MCP server over HTTP:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">mcp_servers</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token key atrule">jira</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">transport</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> http</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">url</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;https://mcp.acme.com/jira&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">auth</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> oauth</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">oauth</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token key atrule">client_id</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;surogates-agent&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token key atrule">scope</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;read write&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">timeout</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">120</span><br></span></code></pre></div></div>
+<p>Best for: cloud-hosted MCP servers, shared infrastructure across tenants.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="mcp-client-features">MCP client features<a href="#mcp-client-features" class="hash-link" aria-label="Direct link to MCP client features" title="Direct link to MCP client features" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Feature</th><th>Description</th></tr></thead><tbody><tr><td><strong>Auto-reconnect</strong></td><td>Exponential backoff with up to 5 retries on connection loss</td></tr><tr><td><strong>Sampling</strong></td><td>MCP servers can request LLM completions back through the client</td></tr><tr><td><strong>Environment filtering</strong></td><td>Only explicitly allowed env vars passed to stdio servers</td></tr><tr><td><strong>Credential stripping</strong></td><td>Secrets scrubbed from error messages</td></tr><tr><td><strong>Per-server timeout</strong></td><td>Configurable per server</td></tr><tr><td><strong>Thread safety</strong></td><td>Dedicated background event loop for MCP connections</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="oauth-21-pkce-for-protected-servers">OAuth 2.1 PKCE for protected servers<a href="#oauth-21-pkce-for-protected-servers" class="hash-link" aria-label="Direct link to OAuth 2.1 PKCE for protected servers" title="Direct link to OAuth 2.1 PKCE for protected servers" translate="no">​</a></h2>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">1. Agent needs to call an OAuth-protected MCP tool</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">2. MCP client checks for cached tokens (on disk)</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">3. If no valid token:</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   a. Start ephemeral localhost HTTP server for redirect</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   b. Open browser to authorization URL with PKCE challenge</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   c. User approves in browser</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   d. Callback server receives authorization code</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   e. Exchange code for access + refresh tokens</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   f. Store tokens on disk for reuse</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">4. Attach access token to MCP requests</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">5. Auto-refresh when token expires</span><br></span></code></pre></div></div>
+<p>Configuration:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">mcp_servers</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token key atrule">salesforce</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">url</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;https://mcp.salesforce.com/mcp&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">auth</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> oauth</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">oauth</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token key atrule">client_id</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;pre-registered-id&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token key atrule">client_secret</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;secret&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token key atrule">scope</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;api refresh_token&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token key atrule">redirect_port</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0</span><span class="token plain">                </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># auto-pick available port</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token key atrule">client_name</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;Surogates Agent&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token key atrule">token_dir</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;/var/lib/surogates/tokens&quot;</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-credential-vault">The credential vault<a href="#the-credential-vault" class="hash-link" aria-label="Direct link to The credential vault" title="Direct link to The credential vault" translate="no">​</a></h2>
+<p>The <strong>VAULT</strong> button on the MCP Servers tab opens the credential store:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Notes</th></tr></thead><tbody><tr><td><strong>Name</strong></td><td>Reference name (e.g. <code>github_token</code>) — used in MCP server configs as <code>&lt;NAME&gt;_REF: name</code></td></tr><tr><td><strong>Value</strong></td><td>Masked. SHOW to reveal, COPY, ROTATE to replace, DELETE</td></tr><tr><td><strong>Scope</strong></td><td>Org-wide (default) or user-specific</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-references-work">How references work<a href="#how-references-work" class="hash-link" aria-label="Direct link to How references work" title="Direct link to How references work" translate="no">​</a></h3>
+<p>In an MCP server config:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">mcp_servers</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token key atrule">github</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">env</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">      </span><span class="token key atrule">GITHUB_TOKEN_REF</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> github_token       </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># ← reference</span><br></span></code></pre></div></div>
+<p>At runtime, the MCP proxy:</p>
+<ol>
+<li class="">Sees <code>GITHUB_TOKEN_REF: github_token</code></li>
+<li class="">Resolves <code>github_token</code> from the Vault</li>
+<li class="">Substitutes the actual value in the outbound request</li>
+</ol>
+<p>The sandbox never sees the value. Credentials don&#x27;t appear in logs, error messages, or agent contexts.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="encryption">Encryption<a href="#encryption" class="hash-link" aria-label="Direct link to Encryption" title="Direct link to Encryption" translate="no">​</a></h3>
+<p>Vault credentials are encrypted at rest with Fernet (AES-128-CBC + HMAC-SHA256). The symmetric key lives in a K8s cluster secret.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="mcp-server-config-layers">MCP server config layers<a href="#mcp-server-config-layers" class="hash-link" aria-label="Direct link to MCP server config layers" title="Direct link to MCP server config layers" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Layer</th><th>Location</th><th>Managed by</th></tr></thead><tbody><tr><td>Platform</td><td><code>/etc/surogates/mcp/servers.json</code></td><td>Platform operator</td></tr><tr><td>Org</td><td><code>tenant-{org_id}/shared/mcp/servers.json</code></td><td>Org admin</td></tr><tr><td>User</td><td><code>tenant-{org_id}/users/{uid}/mcp/servers.json</code></td><td>End user</td></tr></tbody></table>
+<p>Last-wins precedence by server name.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="security-scanning">Security scanning<a href="#security-scanning" class="hash-link" aria-label="Direct link to Security scanning" title="Direct link to Security scanning" translate="no">​</a></h2>
+<p>Every MCP tool definition is scanned before registration:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Threat</th><th>What it catches</th></tr></thead><tbody><tr><td><strong>Invisible Unicode</strong></td><td>Zero-width chars, bidi marks in tool names/descriptions</td></tr><tr><td><strong>Prompt injection</strong></td><td>Deceptive descriptions that trick the LLM</td></tr><tr><td><strong>Hidden HTML</strong></td><td>HTML comments with invisible instructions</td></tr><tr><td><strong>Tool poisoning</strong></td><td>Descriptions that manipulate the LLM into dangerous behaviour</td></tr><tr><td><strong>Rug-pull</strong></td><td>Tool definitions that change between connections (SHA-256 fingerprinting)</td></tr></tbody></table>
+<p>Tools failing scanning are not registered. Scan results land in the tenant audit log:</p>
+<div class="language-sql codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-sql codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token keyword" style="font-style:italic">SELECT</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">*</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">FROM</span><span class="token plain"> audit_log</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token keyword" style="font-style:italic">WHERE</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">type</span><span class="token plain"> </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&#x27;mcp.tool_scan&#x27;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token operator" style="color:rgb(137, 221, 255)">AND</span><span class="token plain"> org_id </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> $</span><span class="token number" style="color:rgb(247, 140, 108)">1</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token keyword" style="font-style:italic">ORDER</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">BY</span><span class="token plain"> created_at </span><span class="token keyword" style="font-style:italic">DESC</span><span class="token punctuation" style="color:rgb(199, 146, 234)">;</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="rug-pull-detection">Rug-pull detection<a href="#rug-pull-detection" class="hash-link" aria-label="Direct link to Rug-pull detection" title="Direct link to Rug-pull detection" translate="no">​</a></h2>
+<p>If a server returns a different tool definition on reconnect (different fingerprint), the scanner emits a warning. Common cause: the upstream MCP server got updated. Review the diff before re-enabling.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="rest-api">REST API<a href="#rest-api" class="hash-link" aria-label="Direct link to REST API" title="Direct link to REST API" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Method</th><th>Endpoint</th><th>Purpose</th></tr></thead><tbody><tr><td><code>GET</code></td><td><code>/v1/mcp-servers</code></td><td>List</td></tr><tr><td><code>GET</code></td><td><code>/v1/mcp-servers/{id}</code></td><td>Detail with connected tools</td></tr><tr><td><code>POST</code></td><td><code>/v1/mcp-servers</code></td><td>Add server</td></tr><tr><td><code>PUT</code></td><td><code>/v1/mcp-servers/{id}</code></td><td>Update config</td></tr><tr><td><code>DELETE</code></td><td><code>/v1/mcp-servers/{id}</code></td><td>Remove server</td></tr><tr><td><code>POST</code></td><td><code>/v1/mcp-servers/{id}/enable</code></td><td>Trigger security scan + activate</td></tr><tr><td><code>POST</code></td><td><code>/v1/mcp-servers/{id}/disable</code></td><td>Deactivate</td></tr><tr><td><code>GET</code></td><td><code>/v1/credentials</code></td><td>List Vault entries (names only)</td></tr><tr><td><code>POST</code></td><td><code>/v1/credentials</code></td><td>Store credential</td></tr><tr><td><code>PUT</code></td><td><code>/v1/credentials/{name}</code></td><td>Replace value</td></tr><tr><td><code>DELETE</code></td><td><code>/v1/credentials/{name}</code></td><td>Remove</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-next">What&#x27;s next<a href="#whats-next" class="hash-link" aria-label="Direct link to What&#x27;s next" title="Direct link to What&#x27;s next" translate="no">​</a></h2>
+<p><a class="" href="/develop/features/hub">Hub</a> for the artifact versioning layer. <a class="" href="/develop/features/datasets">Datasets</a> and <a class="" href="/develop/features/training">Training</a> for the training pipeline. <a class="" href="/develop/use-cases">Use cases</a> → &quot;Build an MCP server with OAuth.&quot;</p></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/develop/features/knowledge-bases"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Knowledge Bases</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/develop/features/hub"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Hub</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#architecture" class="table-of-contents__link toc-highlight">Architecture</a></li><li><a href="#two-transports" class="table-of-contents__link toc-highlight">Two transports</a><ul><li><a href="#stdio" class="table-of-contents__link toc-highlight">Stdio</a></li><li><a href="#http--streamablehttp" class="table-of-contents__link toc-highlight">HTTP / StreamableHTTP</a></li></ul></li><li><a href="#mcp-client-features" class="table-of-contents__link toc-highlight">MCP client features</a></li><li><a href="#oauth-21-pkce-for-protected-servers" class="table-of-contents__link toc-highlight">OAuth 2.1 PKCE for protected servers</a></li><li><a href="#the-credential-vault" class="table-of-contents__link toc-highlight">The credential vault</a><ul><li><a href="#how-references-work" class="table-of-contents__link toc-highlight">How references work</a></li><li><a href="#encryption" class="table-of-contents__link toc-highlight">Encryption</a></li></ul></li><li><a href="#mcp-server-config-layers" class="table-of-contents__link toc-highlight">MCP server config layers</a></li><li><a href="#security-scanning" class="table-of-contents__link toc-highlight">Security scanning</a></li><li><a href="#rug-pull-detection" class="table-of-contents__link toc-highlight">Rug-pull detection</a></li><li><a href="#rest-api" class="table-of-contents__link toc-highlight">REST API</a></li><li><a href="#whats-next" class="table-of-contents__link toc-highlight">What&#39;s next</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Work mode (operators)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/work">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/run-agent">Run an agent</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/review-sessions">Review sessions</a></li><li class="footer__item"><a class="footer__link-item" href="/work/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Develop mode (builders)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/develop">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/loop/overview">The builder loop</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/features/skills-and-experts">Skills &amp; Experts</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Repos</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/invergent-ai/surogates" target="_blank" rel="noopener noreferrer" class="footer__link-item">Runtime (surogates)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate-ops" target="_blank" rel="noopener noreferrer" class="footer__link-item">Ops platform<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 Invergent. All rights reserved.</div></div></div></footer></div>
+</body>
+</html>

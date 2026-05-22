@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-develop/features/skills-and-experts" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Skills &amp; Experts | Surogate</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.surogate.ai/develop/features/skills-and-experts"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Skills &amp; Experts | Surogate"><meta data-rh="true" name="description" content="A skill is a markdown file (SKILL.md) the agent loads into its prompt. An expert is a skill whose type is expert — backed by a fine-tuned model that runs in a bounded mini-loop."><meta data-rh="true" property="og:description" content="A skill is a markdown file (SKILL.md) the agent loads into its prompt. An expert is a skill whose type is expert — backed by a fine-tuned model that runs in a bounded mini-loop."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.surogate.ai/develop/features/skills-and-experts"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/develop/features/skills-and-experts" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/develop/features/skills-and-experts" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://K46M9C3QXR-dsn.algolia.net" crossorigin="anonymous"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Skills & Experts","item":"https://docs.surogate.ai/develop/features/skills-and-experts"}]}</script><link rel="preconnect" href="https://www.google-analytics.com">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7YRDGYZN0R"></script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-7YRDGYZN0R",{})</script>
+
+
+
+<link rel="search" type="application/opensearchdescription+xml" title="Surogate" href="/opensearch.xml">
+
+
+<meta name="keywords" content="Surogate, AgentOps, agents, LLM, MCP, training, fine-tuning, RL, evaluations">
+<meta name="description" content="Documentation for Surogate Ops — operator and builder tracks. Build reliable autonomous agents.">
+<meta name="og:type" content="website">
+<meta name="og:url" content="https://docs.surogate.ai">
+<meta name="og:title" content="Surogate Documentation">
+<meta name="og:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="og:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:secure_url" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:alt" content="Surogate">
+<meta name="og:locale" content="en_US">
+<meta name="og:image:type" content="image/jpeg">
+<meta name="twitter:site" content="surogate_ai">
+<meta name="twitter:creator" content="surogate_ai">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://docs.surogate.ai">
+<meta name="twitter:title" content="Surogate Documentation">
+<meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
+<script src="/assets/js/runtime~main.6492ae8e.js" defer="defer"></script>
+<script src="/assets/js/main.661645df.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo-black.svg" alt="logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo-white.svg" alt="logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Documentation</b></a><div class="toggle_mBnC" role="group" aria-label="Documentation mode"><button type="button" class="option_jJ1x active_xCPe" aria-pressed="true">Work</button><button type="button" class="option_jJ1x" aria-pressed="false">Develop</button></div></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">About<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://ops.surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Login<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://x.com/surogate_ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Follow us on X<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="navbarSearchContainer_Bca1"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search (Meta+k)" aria-keyshortcuts="Meta+k"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" fill="none" stroke-width="1.4"></circle><path d="m21 21-4.3-4.3" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop"><span title="Welcome" class="linkLabel_WmDU">Welcome</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/quickstart"><span title="Quickstart" class="linkLabel_WmDU">Quickstart</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/develop/loop/overview"><span title="The builder loop" class="categoryLinkLabel_W154">The builder loop</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/loop/overview"><span title="The builder loop (overview)" class="linkLabel_WmDU">The builder loop (overview)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/loop/build"><span title="Build phase" class="linkLabel_WmDU">Build phase</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/loop/observe"><span title="Observe phase" class="linkLabel_WmDU">Observe phase</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/loop/train"><span title="Train phase" class="linkLabel_WmDU">Train phase</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/loop/redeploy"><span title="Redeploy phase" class="linkLabel_WmDU">Redeploy phase</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/develop/features/agents"><span title="Operate" class="categoryLinkLabel_W154">Operate</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/agents"><span title="Agents" class="linkLabel_WmDU">Agents</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/sessions"><span title="Sessions" class="linkLabel_WmDU">Sessions</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/compute"><span title="Compute" class="linkLabel_WmDU">Compute</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/develop/features/models"><span title="Library" class="categoryLinkLabel_W154">Library</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/models"><span title="Models" class="linkLabel_WmDU">Models</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/develop/features/skills-and-experts"><span title="Skills &amp; Experts" class="linkLabel_WmDU">Skills &amp; Experts</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/knowledge-bases"><span title="Knowledge Bases" class="linkLabel_WmDU">Knowledge Bases</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/mcp-and-vault"><span title="MCP &amp; Vault" class="linkLabel_WmDU">MCP &amp; Vault</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/hub"><span title="Hub" class="linkLabel_WmDU">Hub</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/byo-llm"><span title="BYO LLM" class="linkLabel_WmDU">BYO LLM</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/develop/features/datasets"><span title="Train" class="categoryLinkLabel_W154">Train</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/datasets"><span title="Datasets" class="linkLabel_WmDU">Datasets</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/training"><span title="Training" class="linkLabel_WmDU">Training</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/evaluations"><span title="Evaluations" class="linkLabel_WmDU">Evaluations</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/tools/dashboard"><span title="Tools &amp; dashboard" class="categoryLinkLabel_W154">Tools &amp; dashboard</span></a></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/use-cases"><span title="Use cases" class="linkLabel_WmDU">Use cases</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/reference/runtime-architecture"><span title="Reference" class="categoryLinkLabel_W154">Reference</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Library</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Skills &amp; Experts</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Skills &amp; Experts</h1></header>
+<p>A <strong>skill</strong> is a markdown file (<code>SKILL.md</code>) the agent loads into its prompt. An <strong>expert</strong> is a skill whose <code>type</code> is <code>expert</code> — backed by a fine-tuned model that runs in a bounded mini-loop.</p>
+<p>This chapter covers both. For the operator&#x27;s walk-through of writing a skill in the UI, see <a class="" href="/work/library/skills">Work mode → Skills</a>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="skillmd-format"><code>SKILL.md</code> format<a href="#skillmd-format" class="hash-link" aria-label="Direct link to skillmd-format" title="Direct link to skillmd-format" translate="no">​</a></h2>
+<p>Markdown with YAML frontmatter:</p>
+<div class="language-markdown codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-markdown codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block punctuation" style="color:rgb(199, 146, 234)">---</span><span class="token front-matter-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">name</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> code_reviewer</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">description</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> Reviews code for quality</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token front-matter-block front-matter yaml language-yaml"> security</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token front-matter-block front-matter yaml language-yaml"> and best practices</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">trigger</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> review code</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token front-matter-block front-matter yaml language-yaml"> code review</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token front-matter-block front-matter yaml language-yaml"> check this code</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">tools</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> </span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token front-matter-block front-matter yaml language-yaml">read_file</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token front-matter-block front-matter yaml language-yaml"> search_files</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token front-matter-block front-matter yaml language-yaml"> write_file</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token front-matter-block front-matter yaml language-yaml"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">type</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> skill                    </span><span class="token front-matter-block front-matter yaml language-yaml comment" style="color:rgb(105, 112, 152);font-style:italic"># default; use &#x27;expert&#x27; for model-backed</span><span class="token front-matter-block front-matter yaml language-yaml"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">tags</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> </span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token front-matter-block front-matter yaml language-yaml">security</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token front-matter-block front-matter yaml language-yaml"> quality</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token front-matter-block front-matter yaml language-yaml"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">platforms</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> </span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token front-matter-block front-matter yaml language-yaml string" style="color:rgb(195, 232, 141)">&quot;linux&quot;</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token front-matter-block front-matter yaml language-yaml"> </span><span class="token front-matter-block front-matter yaml language-yaml string" style="color:rgb(195, 232, 141)">&quot;macos&quot;</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token front-matter-block front-matter yaml language-yaml"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">requires_tools</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> </span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token front-matter-block front-matter yaml language-yaml">read_file</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token front-matter-block front-matter yaml language-yaml"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">fallback_for_tools</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> </span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token front-matter-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block"></span><span class="token front-matter-block punctuation" style="color:rgb(199, 146, 234)">---</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">You are a code reviewer. When asked to review code:</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token list punctuation" style="color:rgb(199, 146, 234)">1.</span><span class="token plain"> Read the files specified by the user.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token list punctuation" style="color:rgb(199, 146, 234)">2.</span><span class="token plain"> Check for:</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   </span><span class="token list punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> Security vulnerabilities (OWASP top 10)</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   </span><span class="token list punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> Performance issues</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   </span><span class="token list punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> Code style and readability</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   </span><span class="token list punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> Missing error handling</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token list punctuation" style="color:rgb(199, 146, 234)">3.</span><span class="token plain"> Provide specific, actionable feedback with line references.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token list punctuation" style="color:rgb(199, 146, 234)">4.</span><span class="token plain"> Suggest concrete fixes, not just descriptions of problems.</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="frontmatter">Frontmatter<a href="#frontmatter" class="hash-link" aria-label="Direct link to Frontmatter" title="Direct link to Frontmatter" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code>name</code></td><td>string</td><td>yes</td><td>Lowercase, alphanumeric + hyphens, 1-64 chars</td></tr><tr><td><code>description</code></td><td>string</td><td>yes</td><td>Shown to the LLM in <code>skills_list</code></td></tr><tr><td><code>trigger</code></td><td>string | list</td><td>recommended</td><td>Keywords/phrases matched against the user message</td></tr><tr><td><code>tools</code></td><td>list</td><td>no</td><td>Tools this skill uses (for progressive disclosure)</td></tr><tr><td><code>type</code></td><td>string</td><td>no</td><td><code>skill</code> (default) or <code>expert</code></td></tr><tr><td><code>tags</code></td><td>list</td><td>no</td><td>Metadata for categorisation</td></tr><tr><td><code>platforms</code></td><td>list</td><td>no</td><td>Restrict to OSes <code>[&quot;linux&quot;, &quot;macos&quot;, &quot;windows&quot;]</code></td></tr><tr><td><code>requires_tools</code></td><td>list</td><td>no</td><td>Hidden unless ALL listed tools are available</td></tr><tr><td><code>fallback_for_tools</code></td><td>list</td><td>no</td><td>Hidden when ALL listed tools are available</td></tr><tr><td><code>enabled</code></td><td>bool</td><td>no</td><td>Default <code>true</code></td></tr></tbody></table>
+<p>Body text after the frontmatter is the skill&#x27;s prompt content — inlined into the system prompt when the skill triggers, or returned by <code>skill_view</code> when explicitly invoked.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-4-layer-loading-model">The 4-layer loading model<a href="#the-4-layer-loading-model" class="hash-link" aria-label="Direct link to The 4-layer loading model" title="Direct link to The 4-layer loading model" translate="no">​</a></h2>
+<p>Skills load from four layers in increasing precedence:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">Layer 1: Platform      /etc/surogates/skills/                       (lowest)</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">Layer 2: User files    tenant-{org_id}/users/{user_id}/skills/</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">Layer 3: Org (DB)      skills table, org-wide (user_id IS NULL)</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">Layer 4: User (DB)     skills table, user-specific                  (highest)</span><br></span></code></pre></div></div>
+<p>Higher layers override by name. Org admins always win — an end user cannot override a skill the org admin has set. Setting <code>enabled: false</code> in a higher layer disables the skill entirely.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="conditional-activation">Conditional activation<a href="#conditional-activation" class="hash-link" aria-label="Direct link to Conditional activation" title="Direct link to Conditional activation" translate="no">​</a></h2>
+<p>Two fields:</p>
+<ul>
+<li class=""><code>requires_tools</code> — skill included only if <strong>all</strong> listed tools are available in the agent&#x27;s allowlist</li>
+<li class=""><code>fallback_for_tools</code> — skill excluded when <strong>all</strong> listed tools are available; only appears when at least one is missing</li>
+</ul>
+<p>Use <code>fallback_for_tools</code> for graceful degradation. Example:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">---</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">name</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> manual</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">web</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">search</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">description</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> Guides the user through manual web research</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">fallback_for_tools</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token plain">web_search</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">---</span><br></span></code></pre></div></div>
+<p>Only loads when the agent&#x27;s <code>web_search</code> tool is denied.</p>
+<p>Use <code>requires_tools</code> to gate skills that depend on specific tools:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">---</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">name</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> container</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">debug</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">description</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> Diagnoses issues inside running containers</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">requires_tools</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token plain">bash</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> docker</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">---</span><br></span></code></pre></div></div>
+<p>The loader evaluates conditional activation after merging all four layers.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="agentskillsio--hermes-compatibility">agentskills.io / Hermes compatibility<a href="#agentskillsio--hermes-compatibility" class="hash-link" aria-label="Direct link to agentskills.io / Hermes compatibility" title="Direct link to agentskills.io / Hermes compatibility" translate="no">​</a></h2>
+<p>Skills authored in the <a href="https://agentskills.io" target="_blank" rel="noopener noreferrer" class="">agentskills.io</a> format are loaded without modification. The loader reads conditional fields and tags from the <code>metadata.hermes</code> namespace:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">---</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">name</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> hermes</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">skill</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">description</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> A skill using the Hermes frontmatter convention</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">metadata</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token key atrule">hermes</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">requires_tools</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token plain">bash</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">fallback_for_toolsets</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token plain">web_search</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">tags</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token plain">devops</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"> ci</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">---</span><br></span></code></pre></div></div>
+<p>Recognised hermes keys:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Hermes key</th><th>Maps to</th></tr></thead><tbody><tr><td><code>requires_tools</code></td><td><code>requires_tools</code></td></tr><tr><td><code>requires_toolsets</code></td><td><code>requires_tools</code></td></tr><tr><td><code>fallback_for_tools</code></td><td><code>fallback_for_tools</code></td></tr><tr><td><code>fallback_for_toolsets</code></td><td><code>fallback_for_tools</code></td></tr><tr><td><code>tags</code></td><td><code>tags</code></td></tr></tbody></table>
+<p>Top-level keys win when both are set.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="dynamic-skill-commands">Dynamic skill commands<a href="#dynamic-skill-commands" class="hash-link" aria-label="Direct link to Dynamic skill commands" title="Direct link to Dynamic skill commands" translate="no">​</a></h2>
+<p>Users invoke a skill explicitly via <code>/&lt;skill-name&gt; [args...]</code>:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">/research vector databases</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">/babysit-prs</span><br></span></code></pre></div></div>
+<p>Resolution order in the harness:</p>
+<ol>
+<li class="">Builtin commands (<code>/clear</code>, <code>/compress</code>, <code>/goal</code>, <code>/loop</code>, <code>/mission</code>)</li>
+<li class="">Dynamic skill resolution</li>
+<li class="">Plain user message if no match</li>
+</ol>
+<p>For dynamic invocation, the harness calls <code>skill_view</code> server-side and inlines the body into the user message.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="skill-rest-api">Skill REST API<a href="#skill-rest-api" class="hash-link" aria-label="Direct link to Skill REST API" title="Direct link to Skill REST API" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead><tbody><tr><td><code>GET</code></td><td><code>/v1/skills?type=skill|expert&amp;enabled=true</code></td><td>List</td></tr><tr><td><code>POST</code></td><td><code>/v1/skills</code></td><td>Create. Body: <code>{name, content, category?, user_id?}</code></td></tr><tr><td><code>GET</code></td><td><code>/v1/skills/{name}</code></td><td>Detail</td></tr><tr><td><code>PUT</code></td><td><code>/v1/skills/{name}</code></td><td>Update. Body: <code>{content}</code></td></tr><tr><td><code>DELETE</code></td><td><code>/v1/skills/{name}</code></td><td>Delete</td></tr></tbody></table>
+<p>API-created skills land in the database (layer 3 or 4 depending on <code>user_id</code>). Agent-created skills (via the <code>skill_manage</code> tool) go to the tenant bucket (layer 2).</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="validation-rules">Validation rules<a href="#validation-rules" class="hash-link" aria-label="Direct link to Validation rules" title="Direct link to Validation rules" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Rule</th><th>Constraint</th></tr></thead><tbody><tr><td>Name</td><td>Lowercase, alphanumeric + hyphens, 1-64 chars</td></tr><tr><td>Name uniqueness</td><td>No duplicates within scope (user or org)</td></tr><tr><td>Frontmatter</td><td>Must include <code>name</code> and <code>description</code></td></tr><tr><td>Content size</td><td>Body ≤ configured limit (default 100 KB)</td></tr><tr><td>File path</td><td>Must be within tenant&#x27;s skill directory</td></tr></tbody></table>
+<p>Validation errors return <code>422 Unprocessable Entity</code>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="publishing--versioning">Publishing — versioning<a href="#publishing--versioning" class="hash-link" aria-label="Direct link to Publishing — versioning" title="Direct link to Publishing — versioning" translate="no">​</a></h2>
+<p>When you PUBLISH a skill, you tag a version in the underlying lakeFS repo. Tags are immutable. Editing creates a new draft; the next PUBLISH creates <code>v0.1.1</code>, <code>v0.2.0</code>, etc.</p>
+<p>Sessions record which version of each skill they used. You can:</p>
+<ul>
+<li class="">Roll back to a previous tag</li>
+<li class="">Replay sessions against a different skill version (regression testing)</li>
+<li class="">Audit &quot;which skill version was active for session X&quot;</li>
+</ul>
+<hr>
+<h1>Experts — model-backed skills</h1>
+<p>When you set <code>type: expert</code> on a skill, you turn it into something different. The body becomes the <strong>expert&#x27;s system prompt</strong> (not the agent&#x27;s), and you specify a model + endpoint.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="example">Example<a href="#example" class="hash-link" aria-label="Direct link to Example" title="Direct link to Example" translate="no">​</a></h2>
+<div class="language-markdown codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-markdown codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block punctuation" style="color:rgb(199, 146, 234)">---</span><span class="token front-matter-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">name</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> sql_writer</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">description</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> Writes PostgreSQL queries from natural language descriptions</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">type</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> expert</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">model</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> qwen2.5</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token front-matter-block front-matter yaml language-yaml">coder</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token front-matter-block front-matter yaml language-yaml">7b</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">endpoint</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> http</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml">//expert</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token front-matter-block front-matter yaml language-yaml">pool.your</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token front-matter-block front-matter yaml language-yaml">cluster.svc</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml">8000/v1</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">trigger</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> SQL queries</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token front-matter-block front-matter yaml language-yaml"> database schemas</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token front-matter-block front-matter yaml language-yaml"> PostgreSQL</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token front-matter-block front-matter yaml language-yaml"> data analysis</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">tools</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> </span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token front-matter-block front-matter yaml language-yaml">terminal</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token front-matter-block front-matter yaml language-yaml"> read_file</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token front-matter-block front-matter yaml language-yaml"> search_files</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token front-matter-block front-matter yaml language-yaml"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">max_iterations</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> </span><span class="token front-matter-block front-matter yaml language-yaml number" style="color:rgb(247, 140, 108)">10</span><span class="token front-matter-block front-matter yaml language-yaml"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block front-matter yaml language-yaml"></span><span class="token front-matter-block front-matter yaml language-yaml key atrule">expert_status</span><span class="token front-matter-block front-matter yaml language-yaml punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token front-matter-block front-matter yaml language-yaml"> draft</span><span class="token front-matter-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token front-matter-block"></span><span class="token front-matter-block punctuation" style="color:rgb(199, 146, 234)">---</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">You are a PostgreSQL expert for this organisation. When given a natural</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">language description, write a correct, efficient query.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">Rules:</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token list punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> Always use explicit column names (never SELECT *)</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token list punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> Use CTEs for complex queries</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token list punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> Include comments explaining non-obvious joins</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token list punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> Validate against the schema before returning</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="frontmatter-for-experts">Frontmatter for experts<a href="#frontmatter-for-experts" class="hash-link" aria-label="Direct link to Frontmatter for experts" title="Direct link to Frontmatter for experts" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Required</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>name</code></td><td>yes</td><td>—</td><td>Expert name</td></tr><tr><td><code>description</code></td><td>yes</td><td>—</td><td>Shown to the base LLM</td></tr><tr><td><code>type</code></td><td>yes</td><td><code>skill</code></td><td>Must be <code>expert</code></td></tr><tr><td><code>model</code></td><td>yes</td><td>—</td><td>Model name passed to the inference endpoint</td></tr><tr><td><code>endpoint</code></td><td>no</td><td>—</td><td>OpenAI-compatible URL (can be set at activation)</td></tr><tr><td><code>trigger</code></td><td>yes for routing</td><td>—</td><td>Phrases describing when to select this expert</td></tr><tr><td><code>adapter</code></td><td>no</td><td>—</td><td>LoRA adapter path in tenant storage</td></tr><tr><td><code>tools</code></td><td>no</td><td><code>[]</code></td><td>Tools the expert can use in its mini-loop</td></tr><tr><td><code>max_iterations</code></td><td>no</td><td><code>10</code></td><td>Max tool-call rounds before budget exceeded</td></tr><tr><td><code>expert_status</code></td><td>no</td><td><code>draft</code></td><td><code>draft</code> / <code>collecting</code> / <code>active</code> / <code>retired</code></td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-expert-lifecycle">The expert lifecycle<a href="#the-expert-lifecycle" class="hash-link" aria-label="Direct link to The expert lifecycle" title="Direct link to The expert lifecycle" translate="no">​</a></h2>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">1. Define     SKILL.md with type: expert            expert_status: draft</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">2. Collect    POST /v1/skills/{name}/collect         expert_status: collecting</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">3. Train      Externally (your fine-tuning pipeline)</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">4. Activate   POST /v1/skills/{name}/activate        expert_status: active</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">5. Monitor    GET /v1/skills/{name} → expert_stats   (auto-retire if &lt; 60%)</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">6. Retrain    Collect → train → activate             (loop)</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-define">1. Define<a href="#1-define" class="hash-link" aria-label="Direct link to 1. Define" title="Direct link to 1. Define" translate="no">​</a></h3>
+<p>Create the SKILL.md with <code>type: expert, expert_status: draft</code>. Place in <code>tenant-{org_id}/shared/skills/&lt;name&gt;/SKILL.md</code> or via REST.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-collect-training-data">2. Collect training data<a href="#2-collect-training-data" class="hash-link" aria-label="Direct link to 2. Collect training data" title="Direct link to 2. Collect training data" translate="no">​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">curl -X POST http://localhost:8000/v1/skills/sql_writer/collect \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  -H &quot;Authorization: Bearer $TOKEN&quot;</span><br></span></code></pre></div></div>
+<p>The platform walks the events table and exports successful trajectories as OpenAI fine-tuning JSONL. Two modes:</p>
+<ul>
+<li class=""><strong>Bootstrap</strong> (<code>collect_for_skill</code>) — walks <code>skill.invoked</code> events for this skill name. Use to train an expert from an existing prompt-based skill.</li>
+<li class=""><strong>Improve</strong> (<code>collect_for_expert</code>) — walks <code>expert.delegation → tool.call → expert.result</code> chains. Use once the expert is active to train on fresh successful trajectories.</li>
+</ul>
+<p>Both filter tainted sessions by default (<code>policy.denied</code>, <code>harness.crash</code>, <code>saga.compensated</code>, <code>expert.override</code>).</p>
+<p>Export lands at <code>tenant-{org_id}/shared/skills/{name}/training/dataset_YYYYMMDD_HHMMSS.jsonl</code>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-train-external">3. Train (external)<a href="#3-train-external" class="hash-link" aria-label="Direct link to 3. Train (external)" title="Direct link to 3. Train (external)" translate="no">​</a></h3>
+<p>Your fine-tuning pipeline reads the JSONL. Compatible with:</p>
+<ul>
+<li class="">OpenAI fine-tuning API</li>
+<li class="">Anthropic fine-tuning (when available)</li>
+<li class="">Unsloth (local LoRA)</li>
+<li class="">Axolotl (config-driven)</li>
+<li class="">Custom training scripts using <code>transformers</code> + <code>peft</code></li>
+</ul>
+<p>Output: a fine-tuned model with an OpenAI-compatible serving endpoint.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-activate">4. Activate<a href="#4-activate" class="hash-link" aria-label="Direct link to 4. Activate" title="Direct link to 4. Activate" translate="no">​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">curl -X POST http://localhost:8000/v1/skills/sql_writer/activate \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  -H &quot;Authorization: Bearer $TOKEN&quot; \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  -H &quot;Content-Type: application/json&quot; \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  -d &#x27;{&quot;endpoint&quot;: &quot;http://expert-pool:8000/v1&quot;}&#x27;</span><br></span></code></pre></div></div>
+<p>After activation, the base LLM sees the expert in its system prompt under <code># Available Experts</code>. The harness routes hard tasks matching the expert&#x27;s triggers; the base LLM can also explicitly call <code>consult_expert(&quot;sql_writer&quot;, task=&quot;...&quot;)</code>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="5-monitor">5. Monitor<a href="#5-monitor" class="hash-link" aria-label="Direct link to 5. Monitor" title="Direct link to 5. Monitor" translate="no">​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">curl http://localhost:8000/v1/skills/sql_writer \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  -H &quot;Authorization: Bearer $TOKEN&quot;</span><br></span></code></pre></div></div>
+<p>Response includes <code>expert_stats</code>:</p>
+<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token property">&quot;name&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;sql_writer&quot;</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token property">&quot;type&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;expert&quot;</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token property">&quot;expert_status&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;active&quot;</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token property">&quot;expert_stats&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token property">&quot;total_uses&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">47</span><span class="token punctuation" style="color:rgb(199, 146, 234)">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token property">&quot;total_successes&quot;</span><span class="token operator" style="color:rgb(137, 221, 255)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">44</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token punctuation" style="color:rgb(199, 146, 234)">}</span><br></span></code></pre></div></div>
+<p>After ≥20 invocations, the platform monitors success rate. Below the threshold (default 60%), the expert is auto-retired.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="6-retire--retrain">6. Retire / retrain<a href="#6-retire--retrain" class="hash-link" aria-label="Direct link to 6. Retire / retrain" title="Direct link to 6. Retire / retrain" translate="no">​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">curl -X POST http://localhost:8000/v1/skills/sql_writer/retire \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  -H &quot;Authorization: Bearer $TOKEN&quot;</span><br></span></code></pre></div></div>
+<p>To retrain: collect fresh data → train → activate with new endpoint.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-expert-mini-loop">The expert mini-loop<a href="#the-expert-mini-loop" class="hash-link" aria-label="Direct link to The expert mini-loop" title="Direct link to The expert mini-loop" translate="no">​</a></h2>
+<p>When <code>consult_expert(name, task, context)</code> is called:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">1. Load the expert&#x27;s SKILL.md</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">2. Make an OpenAI-compatible request to the expert&#x27;s endpoint</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   with model = expert.model</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">3. The expert can call tools from its restricted set (expert.tools)</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">4. Iterate up to max_iterations</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">5. Return the expert&#x27;s final assistant message to the base LLM</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">6. Base LLM reviews and either accepts, modifies, or rejects</span><br></span></code></pre></div></div>
+<p>Bounded — can&#x27;t go forever, can&#x27;t escalate its tool surface, can&#x27;t keep the conversation going. Just answer the delegated question.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="rest-api-for-experts">REST API for experts<a href="#rest-api-for-experts" class="hash-link" aria-label="Direct link to REST API for experts" title="Direct link to REST API for experts" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead><tbody><tr><td><code>GET</code></td><td><code>/v1/skills?type=expert</code></td><td>List experts</td></tr><tr><td><code>POST</code></td><td><code>/v1/skills/{name}/collect</code></td><td>Export training JSONL</td></tr><tr><td><code>GET</code></td><td><code>/v1/skills/{name}/training-data</code></td><td>List exported datasets</td></tr><tr><td><code>POST</code></td><td><code>/v1/skills/{name}/activate</code></td><td>Set status to active</td></tr><tr><td><code>POST</code></td><td><code>/v1/skills/{name}/retire</code></td><td>Set status to retired</td></tr><tr><td><code>GET</code></td><td><code>/v1/skills/{name}/file?path=training/dataset_XYZ.jsonl</code></td><td>Download a specific export</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-next">What&#x27;s next<a href="#whats-next" class="hash-link" aria-label="Direct link to What&#x27;s next" title="Direct link to What&#x27;s next" translate="no">​</a></h2>
+<p><a class="" href="/develop/features/knowledge-bases">Knowledge Bases</a> for the other half of &quot;agent&#x27;s knowledge.&quot; <a class="" href="/develop/features/mcp-and-vault">MCP &amp; Vault</a> for external tool integration. <a class="" href="/develop/features/datasets">Datasets</a> and <a class="" href="/develop/features/training">Training</a> for the training pipeline.</p></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/develop/features/models"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Models</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/develop/features/knowledge-bases"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Knowledge Bases</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#skillmd-format" class="table-of-contents__link toc-highlight"><code>SKILL.md</code> format</a><ul><li><a href="#frontmatter" class="table-of-contents__link toc-highlight">Frontmatter</a></li></ul></li><li><a href="#the-4-layer-loading-model" class="table-of-contents__link toc-highlight">The 4-layer loading model</a></li><li><a href="#conditional-activation" class="table-of-contents__link toc-highlight">Conditional activation</a></li><li><a href="#agentskillsio--hermes-compatibility" class="table-of-contents__link toc-highlight">agentskills.io / Hermes compatibility</a></li><li><a href="#dynamic-skill-commands" class="table-of-contents__link toc-highlight">Dynamic skill commands</a></li><li><a href="#skill-rest-api" class="table-of-contents__link toc-highlight">Skill REST API</a></li><li><a href="#validation-rules" class="table-of-contents__link toc-highlight">Validation rules</a></li><li><a href="#publishing--versioning" class="table-of-contents__link toc-highlight">Publishing — versioning</a></li><li><a href="#example" class="table-of-contents__link toc-highlight">Example</a><ul><li><a href="#frontmatter-for-experts" class="table-of-contents__link toc-highlight">Frontmatter for experts</a></li></ul></li><li><a href="#the-expert-lifecycle" class="table-of-contents__link toc-highlight">The expert lifecycle</a><ul><li><a href="#1-define" class="table-of-contents__link toc-highlight">1. Define</a></li><li><a href="#2-collect-training-data" class="table-of-contents__link toc-highlight">2. Collect training data</a></li><li><a href="#3-train-external" class="table-of-contents__link toc-highlight">3. Train (external)</a></li><li><a href="#4-activate" class="table-of-contents__link toc-highlight">4. Activate</a></li><li><a href="#5-monitor" class="table-of-contents__link toc-highlight">5. Monitor</a></li><li><a href="#6-retire--retrain" class="table-of-contents__link toc-highlight">6. Retire / retrain</a></li></ul></li><li><a href="#the-expert-mini-loop" class="table-of-contents__link toc-highlight">The expert mini-loop</a></li><li><a href="#rest-api-for-experts" class="table-of-contents__link toc-highlight">REST API for experts</a></li><li><a href="#whats-next" class="table-of-contents__link toc-highlight">What&#39;s next</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Work mode (operators)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/work">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/run-agent">Run an agent</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/review-sessions">Review sessions</a></li><li class="footer__item"><a class="footer__link-item" href="/work/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Develop mode (builders)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/develop">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/loop/overview">The builder loop</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/features/skills-and-experts">Skills &amp; Experts</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Repos</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/invergent-ai/surogates" target="_blank" rel="noopener noreferrer" class="footer__link-item">Runtime (surogates)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate-ops" target="_blank" rel="noopener noreferrer" class="footer__link-item">Ops platform<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 Invergent. All rights reserved.</div></div></div></footer></div>
+</body>
+</html>

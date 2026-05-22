@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-about/adaptive-training" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Adaptive Training System | Surogate</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.surogate.ai/about/adaptive-training"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Adaptive Training System | Surogate"><meta data-rh="true" name="description" content="Surogate includes a built-in adaptive training system that monitors your training run in real time and provides actionable diagnostics. It detects problems like loss plateaus, gradient explosions, MoE routing collapse, and inefficient compute usage — then tells you exactly what to fix."><meta data-rh="true" property="og:description" content="Surogate includes a built-in adaptive training system that monitors your training run in real time and provides actionable diagnostics. It detects problems like loss plateaus, gradient explosions, MoE routing collapse, and inefficient compute usage — then tells you exactly what to fix."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.surogate.ai/about/adaptive-training"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/about/adaptive-training" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/about/adaptive-training" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://K46M9C3QXR-dsn.algolia.net" crossorigin="anonymous"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Adaptive Training System","item":"https://docs.surogate.ai/about/adaptive-training"}]}</script><link rel="preconnect" href="https://www.google-analytics.com">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7YRDGYZN0R"></script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-7YRDGYZN0R",{})</script>
+
+
+
+<link rel="search" type="application/opensearchdescription+xml" title="Surogate" href="/opensearch.xml">
+
+
+<meta name="keywords" content="Surogate, AgentOps, agents, LLM, MCP, training, fine-tuning, RL, evaluations">
+<meta name="description" content="Documentation for Surogate Ops — operator and builder tracks. Build reliable autonomous agents.">
+<meta name="og:type" content="website">
+<meta name="og:url" content="https://docs.surogate.ai">
+<meta name="og:title" content="Surogate Documentation">
+<meta name="og:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="og:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:secure_url" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:alt" content="Surogate">
+<meta name="og:locale" content="en_US">
+<meta name="og:image:type" content="image/jpeg">
+<meta name="twitter:site" content="surogate_ai">
+<meta name="twitter:creator" content="surogate_ai">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://docs.surogate.ai">
+<meta name="twitter:title" content="Surogate Documentation">
+<meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
+<script src="/assets/js/runtime~main.6492ae8e.js" defer="defer"></script>
+<script src="/assets/js/main.661645df.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo-black.svg" alt="logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo-white.svg" alt="logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Documentation</b></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">About<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://ops.surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Login<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://x.com/surogate_ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Follow us on X<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="navbarSearchContainer_Bca1"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search (Meta+k)" aria-keyshortcuts="Meta+k"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" fill="none" stroke-width="1.4"></circle><path d="m21 21-4.3-4.3" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/old-docs"><span title="Welcome" class="linkLabel_WmDU">Welcome</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/about/how-it-works"><span title="About Surogate" class="categoryLinkLabel_W154">About Surogate</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/how-it-works"><span title="How Surogate Works" class="linkLabel_WmDU">How Surogate Works</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/about/adaptive-training"><span title="Adaptive Training System" class="linkLabel_WmDU">Adaptive Training System</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/dsl"><span title="DSL Language" class="linkLabel_WmDU">DSL Language</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/automatic-differentiation"><span title="Automatic Differentiation" class="linkLabel_WmDU">Automatic Differentiation</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/getting-started/installation"><span title="Getting Started" class="categoryLinkLabel_W154">Getting Started</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/installation"><span title="Installation" class="linkLabel_WmDU">Installation</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/training-modes"><span title="Training Modes" class="linkLabel_WmDU">Training Modes</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-pretraining"><span title="Quickstart: Pretraining (PT)" class="linkLabel_WmDU">Quickstart: Pretraining (PT)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-sft"><span title="Quickstart: Supervised Fine-Tuning (SFT)" class="linkLabel_WmDU">Quickstart: Supervised Fine-Tuning (SFT)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-grpo"><span title="Quickstart: RL Training (GRPO)" class="linkLabel_WmDU">Quickstart: RL Training (GRPO)</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/examples"><span title="Examples Library" class="categoryLinkLabel_W154">Examples Library</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/examples"><span title="Examples Library" class="linkLabel_WmDU">Examples Library</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/examples/pt/qwen3"><span title="Pre-training (PT)" class="categoryLinkLabel_W154">Pre-training (PT)</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/examples/sft/qwen3-lora"><span title="Fine-tuning (SFT)" class="categoryLinkLabel_W154">Fine-tuning (SFT)</span></a></div></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/guides/configuration"><span title="User Guides" class="categoryLinkLabel_W154">User Guides</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/reference/benchmarks"><span title="Technical Reference" class="categoryLinkLabel_W154">Technical Reference</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/appendix/release-notes"><span title="Appendix" class="categoryLinkLabel_W154">Appendix</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">About Surogate</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Adaptive Training System</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Adaptive Training System</h1></header>
+<p>Surogate includes a built-in adaptive training system that monitors your training run in real time and provides actionable diagnostics. It detects problems like loss plateaus, gradient explosions, MoE routing collapse, and inefficient compute usage — then tells you exactly what to fix.</p>
+<p>Most components are <strong>always-on</strong> with zero configuration. Three optional features can be enabled with a single flag each.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="quick-start">Quick Start<a href="#quick-start" class="hash-link" aria-label="Direct link to Quick Start" title="Direct link to Quick Start" translate="no">​</a></h2>
+<p>Add these flags to your training YAML to enable the full adaptive system:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Optional features (always-on components need no config)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">auto_lr_reduction</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain">   </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Auto-fix loss spikes and gradient explosions</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">early_stop</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain">           </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Stop when training converges or diverges</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">epoch_adjustment</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain">     </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Scale epochs to Chinchilla-optimal token budget</span><br></span></code></pre></div></div>
+<p>That&#x27;s it. The rest of the system (phase detection, plateau detection, gradient tracking, MoE monitoring, and cross-component intelligence) runs automatically.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="training-advisor">Training Advisor<a href="#training-advisor" class="hash-link" aria-label="Direct link to Training Advisor" title="Direct link to Training Advisor" translate="no">​</a></h2>
+<p>The <strong>TrainingAdvisor</strong> is the centerpiece of the adaptive system. It correlates signals from all other components to produce recommendations that no single component could generate alone.</p>
+<p>For example: LossGuard detects a loss spike and cuts LR. But if MoEMonitor simultaneously shows routing collapse, the real fix is <code>router_aux_loss_coef</code>, not LR. The TrainingAdvisor catches this.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="advisory-rules">Advisory Rules<a href="#advisory-rules" class="hash-link" aria-label="Direct link to Advisory Rules" title="Direct link to Advisory Rules" translate="no">​</a></h3>
+<p>The advisor runs 6 cross-signal checks every training step:</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="rule-1-plateau-with-high-lr">Rule 1: Plateau with High LR<a href="#rule-1-plateau-with-high-lr" class="hash-link" aria-label="Direct link to Rule 1: Plateau with High LR" title="Direct link to Rule 1: Plateau with High LR" translate="no">​</a></h4>
+<p><strong>Detects:</strong> Loss is plateaued, gradients are flat, but LR is still high.</p>
+<p><strong>What you&#x27;ll see:</strong></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">[Advisor] Plateau with flat gradients at step 5000: loss stalled for 50 steps</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">while LR=2.00e-04 is still high. Consider reducing learning rate or adjusting schedule.</span><br></span></code></pre></div></div>
+<p><strong>What to do:</strong> Reduce <code>learning_rate</code> or switch to a more aggressive schedule decay.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="rule-2-divergence-from-moe-routing-collapse">Rule 2: Divergence from MoE Routing Collapse<a href="#rule-2-divergence-from-moe-routing-collapse" class="hash-link" aria-label="Direct link to Rule 2: Divergence from MoE Routing Collapse" title="Direct link to Rule 2: Divergence from MoE Routing Collapse" translate="no">​</a></h4>
+<p><strong>Detects:</strong> Training is diverging with rising gradients AND MoE routing is unhealthy.</p>
+<p><strong>What you&#x27;ll see:</strong></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">[Advisor] MoE routing collapse driving divergence at step 3200: loss is diverging</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">with rising gradients (trend=+25.00%) AND routing is unhealthy (balance=0.15,</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">utilization=40%). Fix routing first — increase router_aux_loss_coef rather than reducing LR.</span><br></span></code></pre></div></div>
+<p><strong>What to do:</strong> Increase <code>router_aux_loss_coef</code> (e.g. 0.01 → 0.05). Do NOT reduce LR first.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="rule-3-gradient-vanishing">Rule 3: Gradient Vanishing<a href="#rule-3-gradient-vanishing" class="hash-link" aria-label="Direct link to Rule 3: Gradient Vanishing" title="Direct link to Rule 3: Gradient Vanishing" translate="no">​</a></h4>
+<p><strong>Detects:</strong> Training appears to be converging but gradients are shrinking and loss improvement is stalling.</p>
+<p><strong>What you&#x27;ll see:</strong></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">[Advisor] Gradient vanishing at step 8000: gradients shrinking (trend=-3.50%)</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">for 20 steps while loss improvement stalls.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">Consider increasing learning rate or reducing weight decay.</span><br></span></code></pre></div></div>
+<p><strong>What to do:</strong> Try increasing <code>learning_rate</code> slightly, or reduce <code>weight_decay</code>.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="rule-4-loss-spike-correlated-with-moe-issues">Rule 4: Loss Spike Correlated with MoE Issues<a href="#rule-4-loss-spike-correlated-with-moe-issues" class="hash-link" aria-label="Direct link to Rule 4: Loss Spike Correlated with MoE Issues" title="Direct link to Rule 4: Loss Spike Correlated with MoE Issues" translate="no">​</a></h4>
+<p><strong>Detects:</strong> LossGuard triggered recently AND MoE expert utilization dropped.</p>
+<p><strong>What you&#x27;ll see:</strong></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">[Advisor] Loss spike correlates with MoE routing issues at step 4100: LossGuard</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">triggered at step 4095 and expert utilization is low (35%).</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">Routing instability is likely the root cause — increase router_aux_loss_coef before adjusting LR.</span><br></span></code></pre></div></div>
+<p><strong>What to do:</strong> Increase <code>router_aux_loss_coef</code> before trying LR changes.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="rule-5-lr-reductions-not-helping">Rule 5: LR Reductions Not Helping<a href="#rule-5-lr-reductions-not-helping" class="hash-link" aria-label="Direct link to Rule 5: LR Reductions Not Helping" title="Direct link to Rule 5: LR Reductions Not Helping" translate="no">​</a></h4>
+<p><strong>Detects:</strong> LossGuard has applied 2+ permanent LR reductions but training still isn&#x27;t converging.</p>
+<p><strong>What you&#x27;ll see:</strong></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">[Advisor] LR reductions not helping at step 6000: 2 permanent LR reductions applied</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">but training is still in plateau phase. The problem may not be learning rate —</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">check data quality, batch size, or model architecture.</span><br></span></code></pre></div></div>
+<p><strong>What to do:</strong> The issue is likely not LR. Check your dataset for quality issues, try a different batch size, or reconsider the model architecture.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="rule-6-warmup-too-short">Rule 6: Warmup Too Short<a href="#rule-6-warmup-too-short" class="hash-link" aria-label="Direct link to Rule 6: Warmup Too Short" title="Direct link to Rule 6: Warmup Too Short" translate="no">​</a></h4>
+<p><strong>Detects:</strong> Loss is still dropping steeply when warmup ends (one-shot check).</p>
+<p><strong>What you&#x27;ll see:</strong></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">[Advisor] Warmup may be too short: loss still dropping steeply (8.5% over last 10 steps)</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">as warmup ends at step 200. Consider increasing warmup_steps from 200 to ~300.</span><br></span></code></pre></div></div>
+<p><strong>What to do:</strong> Increase <code>warmup_ratio</code> or <code>warmup_steps</code>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="cooldown">Cooldown<a href="#cooldown" class="hash-link" aria-label="Direct link to Cooldown" title="Direct link to Cooldown" translate="no">​</a></h3>
+<p>All advisor rules respect a per-category cooldown (default: 200 steps) to prevent log spam. Each rule can only fire once per cooldown period.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="training-phases">Training Phases<a href="#training-phases" class="hash-link" aria-label="Direct link to Training Phases" title="Direct link to Training Phases" translate="no">​</a></h2>
+<p>The <strong>PhaseDetector</strong> classifies your training run into one of five phases by comparing older and recent halves of a rolling loss window:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Phase</th><th>Meaning</th><th>What Happens</th></tr></thead><tbody><tr><td><strong>WARMUP</strong></td><td>First 50 steps</td><td>Statistics unreliable, no classification</td></tr><tr><td><strong>CONVERGING</strong></td><td>Loss steadily decreasing</td><td>Normal healthy training</td></tr><tr><td><strong>PLATEAU</strong></td><td>Loss improvement &lt; 0.1%</td><td>Training may be stalled</td></tr><tr><td><strong>UNSTABLE</strong></td><td>High loss variance (CV &gt; 15%)</td><td>Loss is erratic</td></tr><tr><td><strong>DIVERGING</strong></td><td>Loss trending upward</td><td>Training is failing</td></tr></tbody></table>
+<p>Phase transitions are logged automatically:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">Training phase: converging -&gt; plateau at step 5000 (previous phase lasted 3200 steps)</span><br></span></code></pre></div></div>
+<p>The current phase is also included in the <code>StepMetrics</code> logged to wandb/Aim as the <code>phase</code> field.</p>
+<p><strong>How classification works:</strong> The detector maintains a rolling window (default: 100 steps). It splits the window in half and compares the mean loss of the older half to the recent half:</p>
+<ul>
+<li class="">Relative improvement &gt; 0.1% → CONVERGING</li>
+<li class="">Improvement between -1% and 0.1% → PLATEAU</li>
+<li class="">Improvement &lt; -1% (loss increasing) → DIVERGING</li>
+<li class="">Coefficient of variation &gt; 15% → UNSTABLE</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="plateau-detection">Plateau Detection<a href="#plateau-detection" class="hash-link" aria-label="Direct link to Plateau Detection" title="Direct link to Plateau Detection" translate="no">​</a></h2>
+<p>The <strong>PlateauDetector</strong> specifically watches for loss stagnation and logs a warning when it persists:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">Plateau detected at step 5000: loss barely improving over last 200 steps</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">(older_mean=2.3456, recent_mean=2.3412, improvement=0.0019%).</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">Consider adjusting learning rate or stopping early.</span><br></span></code></pre></div></div>
+<p>It uses patience (3 consecutive checks) and cooldown (200 steps between warnings) to avoid noise. No automatic action is taken.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="gradient-tracking">Gradient Tracking<a href="#gradient-tracking" class="hash-link" aria-label="Direct link to Gradient Tracking" title="Direct link to Gradient Tracking" translate="no">​</a></h2>
+<p>The <strong>GradientTracker</strong> maintains a short rolling window (default: 20 steps) of gradient norms and computes:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Statistic</th><th>Description</th></tr></thead><tbody><tr><td><code>grad_norm_mean</code></td><td>Rolling mean of recent gradient norms</td></tr><tr><td><code>grad_norm_max</code></td><td>Rolling maximum</td></tr><tr><td><code>grad_norm_trend</code></td><td>Slope of linear regression over the window</td></tr></tbody></table>
+<p>These are included in every <code>StepMetrics</code> and logged to wandb/Aim.</p>
+<p>The tracker warns when gradients are <strong>accelerating</strong> — a sustained upward trend that predicts an explosion before any single step exceeds a threshold:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">Gradient acceleration at step 3200: grad norms trending upward over last 20 steps</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">(mean=0.4523, max=0.8901, trend=0.2341, relative=51.77%).</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">Consider reducing learning rate.</span><br></span></code></pre></div></div>
+<p>The relative trend (trend / mean) makes the threshold scale-independent — it works the same whether your gradient norms are 0.01 or 100.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="loss-guard-auto-lr-reduction">Loss Guard (Auto LR Reduction)<a href="#loss-guard-auto-lr-reduction" class="hash-link" aria-label="Direct link to Loss Guard (Auto LR Reduction)" title="Direct link to Loss Guard (Auto LR Reduction)" translate="no">​</a></h2>
+<p><strong>Config:</strong> <code>auto_lr_reduction: true</code></p>
+<p>The <strong>LossGuard</strong> detects loss spikes and gradient explosions, then automatically reduces the learning rate using a two-stage escalation:</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="detection-criteria">Detection Criteria<a href="#detection-criteria" class="hash-link" aria-label="Direct link to Detection Criteria" title="Direct link to Detection Criteria" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Anomaly</th><th>Trigger</th></tr></thead><tbody><tr><td>Loss spike</td><td>Loss &gt; rolling mean + 3σ AND absolute change &gt; 0.5</td></tr><tr><td>Gradient explosion</td><td>Gradient norm &gt; 10× rolling mean OR &gt; 100 (absolute)</td></tr><tr><td>Non-finite values</td><td><code>inf</code> or <code>nan</code> in loss or gradient norm</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="escalation-policy">Escalation Policy<a href="#escalation-policy" class="hash-link" aria-label="Direct link to Escalation Policy" title="Direct link to Escalation Policy" translate="no">​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">Normal → Temporary Override → Temporary Override → Permanent Reduction</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">         (1st anomaly)        (2nd anomaly)         (3rd anomaly)</span><br></span></code></pre></div></div>
+<ol>
+<li class=""><strong>Temporary override</strong> (first 2 anomalies): LR is cut to 50% of scheduled value, then linearly blends back to the schedule over 50 steps (grace period).</li>
+<li class=""><strong>Permanent reduction</strong> (after 2 temporary overrides without recovery): Base LR is permanently scaled by 0.5×. Up to 5 permanent reductions total.</li>
+</ol>
+<p>Log output:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">Auto LR override: loss spike at step 1200 (loss=4.5678, grad_norm=0.89).</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">LR: 2.00e-04 -&gt; 1.00e-04 (temporary, 50 step grace) [override 1/2]</span><br></span></code></pre></div></div>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">Auto LR reduction: gradient explosion at step 2400 (loss=3.2100, grad_norm=145.23).</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">LR: 2.00e-04 -&gt; 1.00e-04 (permanent) [reduction 1/5]</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-the-temporary-override-works">How the Temporary Override Works<a href="#how-the-temporary-override-works" class="hash-link" aria-label="Direct link to How the Temporary Override Works" title="Direct link to How the Temporary Override Works" translate="no">​</a></h3>
+<p>The LR schedule supports temporary overrides that blend back smoothly:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">LR ─────────┐</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">             │  ← spike detected, LR cut to 50%</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">             └──────────────── gradually blend back to schedule</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">                 50 steps (grace period)</span><br></span></code></pre></div></div>
+<p>This avoids the jarring effect of permanent reductions for transient anomalies.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="moe-routing-health">MoE Routing Health<a href="#moe-routing-health" class="hash-link" aria-label="Direct link to MoE Routing Health" title="Direct link to MoE Routing Health" translate="no">​</a></h2>
+<p>The <strong>MoEMonitor</strong> tracks MoE routing metrics over a rolling window and warns when routing degrades. It is always-on but no-ops for dense (non-MoE) models.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="warning-types">Warning Types<a href="#warning-types" class="hash-link" aria-label="Direct link to Warning Types" title="Direct link to Warning Types" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Warning</th><th>Trigger</th><th>Log Prefix</th></tr></thead><tbody><tr><td>Routing imbalance</td><td><code>load_imbalance</code> &gt; 3×</td><td><code>[MoE] Routing imbalance</code></td></tr><tr><td>Severe imbalance</td><td><code>load_imbalance</code> &gt; 10×</td><td><code>[MoE] Severe routing imbalance</code></td></tr><tr><td>Low utilization</td><td><code>expert_utilization</code> &lt; 80%</td><td><code>[MoE] Low expert utilization</code></td></tr><tr><td>Expert collapse</td><td><code>expert_utilization</code> &lt; 50%</td><td><code>[MoE] Expert collapse risk</code></td></tr><tr><td>Aux-loss spike</td><td><code>aux_loss</code> &gt; mean + 3σ</td><td><code>[MoE] Aux-loss spike</code></td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="routing-diagnostics">Routing Diagnostics<a href="#routing-diagnostics" class="hash-link" aria-label="Direct link to Routing Diagnostics" title="Direct link to Routing Diagnostics" translate="no">​</a></h3>
+<p>The monitor provides a structured health report via <code>get_routing_diagnostics()</code>, which the TrainingAdvisor uses for cross-correlation:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Range</th><th>Meaning</th></tr></thead><tbody><tr><td><code>healthy</code></td><td>bool</td><td>True if no issues detected</td></tr><tr><td><code>balance_score</code></td><td>0–1</td><td>1.0 = perfect balance, lower = worse</td></tr><tr><td><code>utilization_score</code></td><td>0–1</td><td>Fraction of experts receiving tokens</td></tr><tr><td><code>aux_loss_trend</code></td><td>float</td><td>Positive = aux-loss increasing (bad)</td></tr><tr><td><code>recommendations</code></td><td>list</td><td>Actionable fix suggestions</td></tr></tbody></table>
+<p>For more details on MoE metrics and tuning, see <a class="" href="/guides/moe">Mixture-of-Experts Models</a>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="least-loaded-expert-parallelism-llep">Least-Loaded Expert Parallelism (LLEP)<a href="#least-loaded-expert-parallelism-llep" class="hash-link" aria-label="Direct link to Least-Loaded Expert Parallelism (LLEP)" title="Direct link to Least-Loaded Expert Parallelism (LLEP)" translate="no">​</a></h2>
+<p>Well-trained MoE models naturally develop imbalanced expert routing — certain experts specialise in specific domains and receive far more tokens than others. This is desirable from a model-quality perspective, but standard Expert Parallelism (EP) is designed around the assumption of balanced load. When routing is skewed, the GPU hosting the busiest experts becomes a bottleneck: latency spikes, memory usage grows, and in extreme cases the overloaded GPU runs out of memory entirely.</p>
+<p><strong>Least-Loaded Expert Parallelism (LLEP)</strong> is Surogate&#x27;s dynamic load-balancing algorithm for EP training and inference. Instead of altering the model&#x27;s routing logic (which would change its behaviour), LLEP reroutes <em>excess tokens</em> — along with their associated expert weights — from overloaded GPUs to underloaded ones at runtime. The mathematical result is identical to standard EP; only the execution schedule changes.</p>
+<p>LLEP activates automatically when <code>ep_size &gt; 1</code> and routing imbalance crosses a configurable threshold.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-llep-works">How LLEP Works<a href="#how-llep-works" class="hash-link" aria-label="Direct link to How LLEP Works" title="Direct link to How LLEP Works" translate="no">​</a></h3>
+<p>At each MoE layer, LLEP measures the per-GPU token load across the EP group:</p>
+<ol>
+<li class=""><strong>Measure</strong>: global expert token counts are collected across all EP ranks.</li>
+<li class=""><strong>Check threshold</strong>: if <code>max_gpu_load / mean_gpu_load</code> is below <code>ep_load_balance_threshold</code>, standard EP runs unchanged (no overhead).</li>
+<li class=""><strong>Assign</strong>: the Least-Loaded Assignment (LLA) algorithm redistributes excess tokens from overloaded GPUs to underloaded ones, subject to a per-GPU capacity limit (the <code>α</code> factor).</li>
+<li class=""><strong>Transfer</strong>: both the token batches and the corresponding expert weight slices are transferred peer-to-peer to the receiving GPU.</li>
+<li class=""><strong>Compute</strong>: each GPU runs grouped GEMMs for its native experts plus any spilled experts it received.</li>
+<li class=""><strong>Combine</strong>: outputs and gradients are routed back to the originating GPU and accumulated.</li>
+</ol>
+<p>LLEP computes the exact MoE forward pass — no approximations, no changes to routing probabilities. Gradient flow is fully supported, making it equally applicable to training and inference.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="configuration">Configuration<a href="#configuration" class="hash-link" aria-label="Direct link to Configuration" title="Direct link to Configuration" translate="no">​</a></h3>
+<p>LLEP is enabled by setting <code>ep_size &gt; 1</code>. The threshold controls how aggressively it activates:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">gpus</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">8</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">ep_size</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">4</span><span class="token plain">                       </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># 4-way expert parallelism</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">ep_load_balance_threshold</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1.3</span><span class="token plain">   </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># activate LLEP when max/mean &gt; 1.3 (default)</span><br></span></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Effect</th></tr></thead><tbody><tr><td><code>ep_size</code></td><td>int</td><td>1</td><td>Number of GPUs per EP group. Must divide <code>gpus</code> and <code>num_experts</code>.</td></tr><tr><td><code>ep_load_balance_threshold</code></td><td>float</td><td>1.3</td><td>Imbalance ratio above which LLEP activates. Lower = more aggressive rebalancing.</td></tr></tbody></table>
+<p><strong>Threshold guidance:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Value</th><th>Behaviour</th></tr></thead><tbody><tr><td><code>1.0</code></td><td>Always active — LPT scheduling runs every layer regardless of balance</td></tr><tr><td><code>1.3</code></td><td>Default — activates only when meaningful imbalance is present</td></tr><tr><td><code>2.0+</code></td><td>Conservative — only triggers under severe imbalance</td></tr></tbody></table>
+<p>For post-training and fine-tuning on domain-specific data (where expert specialisation is strongest), <code>1.0</code> or <code>1.3</code> are recommended. For pre-training where routing is more uniform, <code>1.3</code> is a safe default.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="performance-characteristics">Performance Characteristics<a href="#performance-characteristics" class="hash-link" aria-label="Direct link to Performance Characteristics" title="Direct link to Performance Characteristics" translate="no">​</a></h3>
+<p>LLEP is most effective when:</p>
+<ul>
+<li class=""><strong>Imbalance is high</strong>: under 80–95% token concentration into a small number of experts, LLEP achieves 4–6× speedup over standard EP with stable memory usage.</li>
+<li class=""><strong>Batch size is large</strong>: larger batches saturate per-GPU capacity, making even load distribution more valuable. With smaller batches the communication overhead may outweigh the benefit.</li>
+<li class=""><strong>Model hidden size is large</strong>: larger GEMMs are more compute-efficient, so the cost of weight transfers is more easily amortised.</li>
+</ul>
+<p>Under perfectly balanced routing, LLEP adds minimal overhead and falls back to standard EP automatically when the threshold is not exceeded.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="relationship-to-moemonitor-warnings">Relationship to MoEMonitor Warnings<a href="#relationship-to-moemonitor-warnings" class="hash-link" aria-label="Direct link to Relationship to MoEMonitor Warnings" title="Direct link to Relationship to MoEMonitor Warnings" translate="no">​</a></h3>
+<p>The MoEMonitor and LLEP are complementary: MoEMonitor detects <em>training-level</em> routing health issues (collapse, instability), while LLEP handles <em>system-level</em> load imbalance transparently.</p>
+<p>If you see MoEMonitor warnings while using EP, LLEP context matters:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Warning</th><th>With LLEP active</th><th>Recommended action</th></tr></thead><tbody><tr><td><code>[MoE] Routing imbalance</code></td><td>Normal — LLEP is redistributing work</td><td>No action needed; monitor if imbalance grows</td></tr><tr><td><code>[MoE] Severe routing imbalance</code></td><td>LLEP may be saturated; very extreme skew</td><td>Lower <code>ep_load_balance_threshold</code> to <code>1.0</code>, check <code>router_aux_loss_coef</code></td></tr><tr><td><code>[MoE] Expert collapse risk</code></td><td>Routing collapse, not a load problem</td><td>Increase <code>router_aux_loss_coef</code>; LLEP cannot fix collapse</td></tr><tr><td><code>[Advisor] MoE routing collapse driving divergence</code></td><td>Training instability</td><td>Fix <code>router_aux_loss_coef</code> first; LLEP is a throughput tool, not a stability fix</td></tr></tbody></table>
+<p>LLEP is designed to tolerate and exploit natural expert specialisation. It is not a substitute for fixing genuine router collapse — use <code>router_aux_loss_coef</code> and <code>router_z_loss_coef</code> for that.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="llep-with-qlora-and-expert-offloading">LLEP with QLoRA and Expert Offloading<a href="#llep-with-qlora-and-expert-offloading" class="hash-link" aria-label="Direct link to LLEP with QLoRA and Expert Offloading" title="Direct link to LLEP with QLoRA and Expert Offloading" translate="no">​</a></h3>
+<p>LLEP is compatible with all QLoRA variants. When combined with <code>qlora_offload_experts: true</code>, each GPU offloads only its local expert shard to CPU. Spilled experts are fetched on demand during LLEP redistribution:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">model</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> Qwen/Qwen3</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">30B</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">A3B</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">gpus</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">4</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">ep_size</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">ep_load_balance_threshold</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1.0</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_rank</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">16</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">qlora_fp8</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">qlora_offload_experts</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><br></span></code></pre></div></div>
+<p>See <a class="" href="/guides/moe#expert-parallelism-ep">Expert Parallelism</a> for the full EP configuration reference.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="early-stopping">Early Stopping<a href="#early-stopping" class="hash-link" aria-label="Direct link to Early Stopping" title="Direct link to Early Stopping" translate="no">​</a></h2>
+<p><strong>Config:</strong> <code>early_stop: true</code></p>
+<p>The <strong>EarlyStopping</strong> module monitors four independent criteria and stops training when ANY of them fires:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Criterion</th><th>Check Frequency</th><th>Trigger</th></tr></thead><tbody><tr><td>Convergence score</td><td>Every eval</td><td>Score &gt; 0.85 for 5 consecutive evals</td></tr><tr><td>Compute efficiency</td><td>Every step</td><td>Loss reduction per FLOP drops below 50% of peak</td></tr><tr><td>Sustained divergence</td><td>Every step</td><td>DIVERGING phase for 200+ consecutive steps</td></tr><tr><td>Sustained plateau</td><td>Every step</td><td>PLATEAU phase for 500+ consecutive steps</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="convergence-score">Convergence Score<a href="#convergence-score" class="hash-link" aria-label="Direct link to Convergence Score" title="Direct link to Convergence Score" translate="no">​</a></h3>
+<p>The convergence score combines two signals:</p>
+<ul>
+<li class=""><strong>Stability</strong> (60% weight): 1 minus the coefficient of variation of the last 5 eval losses. High stability = loss has settled.</li>
+<li class=""><strong>Improvement rate</strong> (40% weight): How much eval loss improved from the previous eval. No improvement = score goes up.</li>
+</ul>
+<p>A score &gt; 0.85 means the model is no longer learning meaningfully. When this persists for 5 consecutive evals, training stops.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="compute-efficiency">Compute Efficiency<a href="#compute-efficiency" class="hash-link" aria-label="Direct link to Compute Efficiency" title="Direct link to Compute Efficiency" translate="no">​</a></h3>
+<p>Uses the Chinchilla <code>6N</code> approximation (FLOPs/token = 6 × model parameters) to estimate loss reduction per FLOP. When this drops below 50% of the peak efficiency observed during training, further compute is unlikely to help.</p>
+<p>Log output:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">Early stopping at step 15000: compute efficiency collapsed</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">(current 1.23e-15 &lt; 50% of peak 4.56e-15)</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="recommended-corrective-actions">Recommended Corrective Actions<a href="#recommended-corrective-actions" class="hash-link" aria-label="Direct link to Recommended Corrective Actions" title="Direct link to Recommended Corrective Actions" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Log Message</th><th>Meaning</th><th>Recommended Action</th></tr></thead><tbody><tr><td><code>Training phase: converging -&gt; plateau</code></td><td>Loss stopped improving</td><td>Check if LR is too low or if model has converged</td></tr><tr><td><code>Training phase: converging -&gt; diverging</code></td><td>Loss is increasing</td><td>Reduce LR, check for data issues</td></tr><tr><td><code>Training phase: converging -&gt; unstable</code></td><td>Loss is erratic</td><td>Reduce LR, increase batch size, check gradient clipping</td></tr><tr><td><code>Plateau detected at step N</code></td><td>Sustained stagnation</td><td>Consider reducing LR, adjusting schedule, or stopping</td></tr><tr><td><code>Gradient acceleration at step N</code></td><td>Gradients growing fast</td><td>Reduce LR before explosion occurs</td></tr><tr><td><code>Auto LR override: loss spike</code></td><td>Transient anomaly</td><td>Usually self-resolves with the temporary override</td></tr><tr><td><code>Auto LR reduction: ... (permanent)</code></td><td>Repeated anomalies</td><td>Training may need fundamental changes</td></tr><tr><td><code>[MoE] Expert collapse risk</code></td><td>Most tokens to few experts</td><td>Increase <code>router_aux_loss_coef</code>, enable <code>train_router</code></td></tr><tr><td><code>[MoE] Severe routing imbalance</code></td><td>Very uneven expert load</td><td>Increase <code>router_aux_loss_coef</code></td></tr><tr><td><code>[MoE] Aux-loss spike</code></td><td>Router destabilising</td><td>Increase <code>router_z_loss_coef</code></td></tr><tr><td><code>[Advisor] Plateau with flat gradients</code></td><td>LR too high for plateau</td><td>Reduce <code>learning_rate</code></td></tr><tr><td><code>[Advisor] MoE routing collapse driving divergence</code></td><td>Routing is the root cause</td><td>Fix <code>router_aux_loss_coef</code> before LR</td></tr><tr><td><code>[Advisor] Gradient vanishing</code></td><td>Gradients shrinking</td><td>Increase LR or reduce <code>weight_decay</code></td></tr><tr><td><code>[Advisor] Loss spike correlates with MoE</code></td><td>Routing caused the spike</td><td>Fix routing before LR</td></tr><tr><td><code>[Advisor] LR reductions not helping</code></td><td>Problem is not LR</td><td>Check data quality, batch size, architecture</td></tr><tr><td><code>[Advisor] Warmup may be too short</code></td><td>Loss still dropping at warmup end</td><td>Increase <code>warmup_ratio</code></td></tr><tr><td><code>Early stopping at step N: convergence</code></td><td>Model converged</td><td>Training complete</td></tr><tr><td><code>Early stopping at step N: compute efficiency</code></td><td>Diminishing returns</td><td>Further training unlikely to help</td></tr><tr><td><code>Early stopping at step N: sustained divergence</code></td><td>Unrecoverable failure</td><td>Fix hyperparameters and restart</td></tr><tr><td><code>Early stopping at step N: sustained plateau</code></td><td>Permanently stalled</td><td>Training has stalled, stop and evaluate</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="chinchilla-token-budget-only-for-pre-training">Chinchilla Token Budget (only for Pre-Training)<a href="#chinchilla-token-budget-only-for-pre-training" class="hash-link" aria-label="Direct link to Chinchilla Token Budget (only for Pre-Training)" title="Direct link to Chinchilla Token Budget (only for Pre-Training)" translate="no">​</a></h2>
+<p><strong>Config:</strong> <code>epoch_adjustment: true</code></p>
+<p>At training start, Surogate computes the Chinchilla-optimal token budget:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">tokens_optimal = 20 × model_parameters</span><br></span></code></pre></div></div>
+<p>This is always logged for reference:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">Chinchilla budget: 12.0B tokens (20 × 600.0M params) | Planned: 8.4B tokens (70.0% of budget)</span><br></span></code></pre></div></div>
+<p>When <code>epoch_adjustment: true</code>, Surogate automatically adjusts <code>num_epochs</code> so the total tokens match the Chinchilla budget:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">Epoch adjustment: 3 -&gt; 5 epochs (Chinchilla budget 12.0B tokens, dataset 2.4B tokens)</span><br></span></code></pre></div></div>
+<p>This only applies when <code>max_steps</code> is not explicitly set.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="configuration-reference">Configuration Reference<a href="#configuration-reference" class="hash-link" aria-label="Direct link to Configuration Reference" title="Direct link to Configuration Reference" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="config-flags">Config Flags<a href="#config-flags" class="hash-link" aria-label="Direct link to Config Flags" title="Direct link to Config Flags" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>auto_lr_reduction</code></td><td>bool</td><td><code>false</code></td><td>Enable LossGuard (automatic LR reduction on spikes)</td></tr><tr><td><code>early_stop</code></td><td>bool</td><td><code>false</code></td><td>Enable multi-criteria early stopping</td></tr><tr><td><code>epoch_adjustment</code></td><td>bool</td><td><code>false</code></td><td>Adjust epochs to Chinchilla-optimal token budget</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="see-also">See Also<a href="#see-also" class="hash-link" aria-label="Direct link to See Also" title="Direct link to See Also" translate="no">​</a></h2>
+<ul>
+<li class=""><a class="" href="/guides/metrics">Training Metrics &amp; Monitoring</a> — All metrics logged during training</li>
+<li class=""><a class="" href="/guides/moe">Mixture-of-Experts Models</a> — MoE-specific configuration and tuning</li>
+<li class=""><a class="" href="/reference/config">Configuration Reference</a> — Complete YAML config options</li>
+</ul></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/about/how-it-works"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">How Surogate Works</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/about/dsl"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">DSL Language</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#quick-start" class="table-of-contents__link toc-highlight">Quick Start</a></li><li><a href="#training-advisor" class="table-of-contents__link toc-highlight">Training Advisor</a><ul><li><a href="#advisory-rules" class="table-of-contents__link toc-highlight">Advisory Rules</a></li><li><a href="#cooldown" class="table-of-contents__link toc-highlight">Cooldown</a></li></ul></li><li><a href="#training-phases" class="table-of-contents__link toc-highlight">Training Phases</a></li><li><a href="#plateau-detection" class="table-of-contents__link toc-highlight">Plateau Detection</a></li><li><a href="#gradient-tracking" class="table-of-contents__link toc-highlight">Gradient Tracking</a></li><li><a href="#loss-guard-auto-lr-reduction" class="table-of-contents__link toc-highlight">Loss Guard (Auto LR Reduction)</a><ul><li><a href="#detection-criteria" class="table-of-contents__link toc-highlight">Detection Criteria</a></li><li><a href="#escalation-policy" class="table-of-contents__link toc-highlight">Escalation Policy</a></li><li><a href="#how-the-temporary-override-works" class="table-of-contents__link toc-highlight">How the Temporary Override Works</a></li></ul></li><li><a href="#moe-routing-health" class="table-of-contents__link toc-highlight">MoE Routing Health</a><ul><li><a href="#warning-types" class="table-of-contents__link toc-highlight">Warning Types</a></li><li><a href="#routing-diagnostics" class="table-of-contents__link toc-highlight">Routing Diagnostics</a></li></ul></li><li><a href="#least-loaded-expert-parallelism-llep" class="table-of-contents__link toc-highlight">Least-Loaded Expert Parallelism (LLEP)</a><ul><li><a href="#how-llep-works" class="table-of-contents__link toc-highlight">How LLEP Works</a></li><li><a href="#configuration" class="table-of-contents__link toc-highlight">Configuration</a></li><li><a href="#performance-characteristics" class="table-of-contents__link toc-highlight">Performance Characteristics</a></li><li><a href="#relationship-to-moemonitor-warnings" class="table-of-contents__link toc-highlight">Relationship to MoEMonitor Warnings</a></li><li><a href="#llep-with-qlora-and-expert-offloading" class="table-of-contents__link toc-highlight">LLEP with QLoRA and Expert Offloading</a></li></ul></li><li><a href="#early-stopping" class="table-of-contents__link toc-highlight">Early Stopping</a><ul><li><a href="#convergence-score" class="table-of-contents__link toc-highlight">Convergence Score</a></li><li><a href="#compute-efficiency" class="table-of-contents__link toc-highlight">Compute Efficiency</a></li></ul></li><li><a href="#recommended-corrective-actions" class="table-of-contents__link toc-highlight">Recommended Corrective Actions</a></li><li><a href="#chinchilla-token-budget-only-for-pre-training" class="table-of-contents__link toc-highlight">Chinchilla Token Budget (only for Pre-Training)</a></li><li><a href="#configuration-reference" class="table-of-contents__link toc-highlight">Configuration Reference</a><ul><li><a href="#config-flags" class="table-of-contents__link toc-highlight">Config Flags</a></li></ul></li><li><a href="#see-also" class="table-of-contents__link toc-highlight">See Also</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Work mode (operators)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/work">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/run-agent">Run an agent</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/review-sessions">Review sessions</a></li><li class="footer__item"><a class="footer__link-item" href="/work/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Develop mode (builders)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/develop">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/loop/overview">The builder loop</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/features/skills-and-experts">Skills &amp; Experts</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Repos</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/invergent-ai/surogates" target="_blank" rel="noopener noreferrer" class="footer__link-item">Runtime (surogates)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate-ops" target="_blank" rel="noopener noreferrer" class="footer__link-item">Ops platform<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 Invergent. All rights reserved.</div></div></div></footer></div>
+</body>
+</html>
