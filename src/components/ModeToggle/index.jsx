@@ -14,6 +14,7 @@ import styles from './styles.module.css';
 const EQUIVALENCE = {
   // Work → Develop
   '/work': '/develop',
+  '/work/quickstart': '/develop/quickstart',
   '/work/workflow/run-agent': '/develop/loop/build',
   '/work/workflow/review-sessions': '/develop/loop/observe',
   '/work/workflow/improve-agent': '/develop/loop/train',
@@ -37,6 +38,7 @@ const EQUIVALENCE = {
 
   // Develop → Work
   '/develop': '/work',
+  '/develop/quickstart': '/work/quickstart',
   '/develop/loop/overview': '/work/workflow/run-agent',
   '/develop/loop/build': '/work/workflow/run-agent',
   '/develop/loop/observe': '/work/workflow/review-sessions',

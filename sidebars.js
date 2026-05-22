@@ -3,6 +3,7 @@ module.exports = {
   // Maps to docs/work/* — every entry is a path relative to docs/work/
   workSidebar: [
     'work/intro',
+    'work/quickstart',
     {
       type: 'category',
       label: 'Workflow',
@@ -70,6 +71,7 @@ module.exports = {
   // Develop-mode sidebar — builder-facing
   developSidebar: [
     'develop/intro',
+    'develop/quickstart',
     {
       type: 'category',
       label: 'The builder loop',
