@@ -34,36 +34,18 @@ Source files (markdown, PDF, CSV)
 
 The curator does the work of distilling, structuring, cross-referencing — agents don't read raw documents at runtime, they search the curated wiki.
 
-## KB metadata model
+## What a KB carries
 
-```sql
-knowledge_bases (
-  id UUID PRIMARY KEY,
-  org_id UUID NOT NULL,
-  name TEXT NOT NULL UNIQUE per org,
-  description TEXT,
-  curator_model TEXT NOT NULL,        -- locked at creation
-  hub_ref TEXT NOT NULL,              -- p-{project_id}/kb-{slug}-{uuid}
-  status TEXT,                        -- error | compiling | ready
-  sources_count INT,
-  wiki_pages_count INT,
-  attached_agents_count INT,
-  created_at TIMESTAMPTZ,
-  updated_at TIMESTAMPTZ
-)
+| Field | Notes |
+|---|---|
+| **Name** | Unique within your org |
+| **Description** | Free-form |
+| **Curator model** | Locked at creation — can't be changed later. Default works for most cases; pick a smarter model (Claude Sonnet 4.6, GPT-5) at creation for highly technical content. |
+| **Sources** | List of files / S3 prefixes / GitHub repos / Notion pages / URLs (only File works in current builds) |
+| **Status** | `error` (no successful compile yet) → `compiling` → `active` |
+| **Counters** | sources, wiki pages, attached agents |
 
-kb_sources (
-  id UUID PRIMARY KEY,
-  kb_id UUID NOT NULL,
-  type TEXT NOT NULL,                 -- file | s3 | github | notion | url
-  config JSONB NOT NULL,              -- source-specific
-  status TEXT,                        -- queued | compiled | failed
-  size_bytes INT,
-  last_compiled_at TIMESTAMPTZ
-)
-```
-
-The wiki is stored as lakeFS artifacts under `p-{project}/kb-{slug}-{uuid}/main`.
+The compiled wiki is versioned in the Hub — every COMPILE produces a new commit you can roll back to.
 
 ## Five source types
 
