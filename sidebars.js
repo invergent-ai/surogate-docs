@@ -1,139 +1,145 @@
 module.exports = {
-  // Surogate Ops user manual.
-  opsSidebar: [
-    {
-      type: 'doc',
-      id: 'ops/index',
-      label: 'Welcome',
-    },
-    {
-      type: 'doc',
-      id: 'ops/getting-started/quickstart',
-      label: 'Quickstart',
-    },
+  // Work-mode sidebar — operator-facing
+  // Maps to docs/work/* — every entry is a path relative to docs/work/
+  workSidebar: [
+    'work/intro',
     {
       type: 'category',
-      label: 'Build',
-      collapsed: true,
+      label: 'Workflow',
+      collapsed: false,
       items: [
-        'ops/features/templates',
-        'ops/features/agents',
-        'ops/features/skills',
-        'ops/features/knowledge-bases',
-        'ops/features/models',
+        'work/workflow/run-agent',
+        'work/workflow/review-sessions',
+        'work/workflow/improve-agent',
       ],
     },
     {
       type: 'category',
-      label: 'Train',
-      collapsed: true,
+      label: 'Library',
+      collapsed: false,
       items: [
-        'ops/features/datasets',
-        'ops/features/training',
-        'ops/features/rl-environments',
-        'ops/features/evaluations',
+        'work/library/skills',
+        'work/library/knowledge-bases',
+        'work/library/mcp-servers',
       ],
     },
     {
       type: 'category',
-      label: 'Operate',
+      label: 'Channels & users',
       collapsed: true,
       items: [
-        'ops/features/sessions',
-        'ops/features/compute',
-        {
-          type: 'category',
-          label: 'Compute providers',
-          collapsed: true,
-          items: [
-            'ops/compute-providers/aws',
-            'ops/compute-providers/azure',
-            'ops/compute-providers/gcp',
-            'ops/compute-providers/runpod',
-            'ops/compute-providers/modal',
-            'ops/compute-providers/nebius',
-            'ops/compute-providers/oci',
-            'ops/compute-providers/vast-ai',
-          ],
-        },
-        'ops/features/playground',
+        'work/channels/web',
+        'work/channels/slack',
+        'work/channels/telegram',
+        'work/channels/website-widget',
+        'work/channels/users',
       ],
     },
     {
       type: 'category',
-      label: 'Distribute',
+      label: 'Conversation tools',
       collapsed: true,
       items: [
-        'ops/features/hub',
+        'work/tools/goals',
+        'work/tools/copilot',
+        'work/tools/inbox',
       ],
     },
     {
       type: 'category',
-      label: 'Concepts',
+      label: 'Settings',
       collapsed: true,
       items: [
-        'ops/concepts/architecture',
-        'ops/concepts/studio-dashboard',
+        'work/settings/profile',
+        'work/settings/usage',
+        'work/settings/billing',
       ],
     },
-    {
-      type: 'category',
-      label: 'Use cases',
-      collapsed: true,
-      items: [
-        'ops/use-cases/customer-support',
-        'ops/use-cases/internal-knowledge',
-        'ops/use-cases/sales-lead-qualifier',
-        'ops/use-cases/code-review',
-        'ops/use-cases/training-your-own-expert',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Tutorials',
-      collapsed: true,
-      items: [
-        'ops/tutorials/build-a-support-bot',
-        'ops/tutorials/connect-cloud-and-serve-a-model',
-        'ops/tutorials/train-and-promote-an-expert',
-      ],
-    },
+    'work/use-cases',
     {
       type: 'category',
       label: 'Reference',
       collapsed: true,
       items: [
-        {
-          type: 'category',
-          label: 'API Reference',
-          collapsed: true,
-          items: [
-            'ops/api/overview',
-            'ops/api/inference',
-            'ops/api/hub',
-            'ops/api/errors-and-rate-limits',
-          ],
-        },
-        {
-          type: 'category',
-          label: 'Admin Guide',
-          collapsed: true,
-          items: [
-            'ops/admin/overview',
-            'ops/admin/teams-and-roles',
-            'ops/admin/credential-vault',
-            'ops/admin/data-hub-config',
-          ],
-        },
-        'ops/reference/permissions-matrix',
-        'ops/reference/errors',
-        'ops/reference/troubleshooting',
-        'ops/glossary',
-        'ops/changelog',
+        'work/reference/glossary',
+        'work/reference/faq',
       ],
     },
   ],
 
+  // Develop-mode sidebar — builder-facing
+  developSidebar: [
+    'develop/intro',
+    {
+      type: 'category',
+      label: 'The builder loop',
+      collapsed: false,
+      items: [
+        'develop/loop/overview',
+        'develop/loop/build',
+        'develop/loop/observe',
+        'develop/loop/train',
+        'develop/loop/redeploy',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Operate',
+      collapsed: false,
+      items: [
+        'develop/features/agents',
+        'develop/features/sessions',
+        'develop/features/compute',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Library',
+      collapsed: false,
+      items: [
+        'develop/features/models',
+        'develop/features/skills-and-experts',
+        'develop/features/knowledge-bases',
+        'develop/features/mcp-and-vault',
+        'develop/features/hub',
+        'develop/features/byo-llm',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Train',
+      collapsed: false,
+      items: [
+        'develop/features/datasets',
+        'develop/features/training',
+        'develop/features/evaluations',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Tools & dashboard',
+      collapsed: true,
+      items: [
+        'develop/tools/dashboard',
+        'develop/tools/copilot',
+        'develop/tools/templates',
+      ],
+    },
+    'develop/use-cases',
+    {
+      type: 'category',
+      label: 'Reference',
+      collapsed: true,
+      items: [
+        'develop/reference/runtime-architecture',
+        'develop/reference/tool-catalog',
+        'develop/reference/event-types',
+        'develop/reference/glossary',
+      ],
+    },
+  ],
+
+  // Training-framework sidebar (existing, untouched)
   mySidebar: [
     {
       type: 'doc',
@@ -148,7 +154,7 @@ module.exports = {
         'about/how-it-works',
         'about/adaptive-training',
         'about/dsl',
-        'about/automatic-differentiation'
+        'about/automatic-differentiation',
       ],
     },
     {
@@ -172,9 +178,7 @@ module.exports = {
         {
           type: 'category',
           label: 'Pre-training (PT)',
-          items: [
-            'examples/pt/qwen3',
-          ],
+          items: ['examples/pt/qwen3'],
         },
         {
           type: 'category',
@@ -217,7 +221,7 @@ module.exports = {
         'reference/benchmarks',
         'reference/python-api',
         'reference/cli',
-        'reference/config'
+        'reference/config',
       ],
     },
     {
