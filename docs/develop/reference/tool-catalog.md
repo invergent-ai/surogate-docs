@@ -5,182 +5,125 @@ sidebar_position: 2
 
 # Tool catalog
 
-Every built-in tool the runtime ships with. Grouped by **runtime location**.
+Every built-in tool an agent can call. These are the names you set in an agent's CONFIG → Allowed Tools / Denied Tools.
 
-For full schemas, see the [`surogates/docs/tools/index.md`](https://github.com/invergent-ai/surogates/blob/main/docs/tools/index.md).
+You don't pick which tool the agent uses for a given turn — the agent does. You decide which tools to **expose**.
 
-## Worker-local tools (no sandbox)
+## File I/O
 
-### Memory
-
-| Tool | Purpose |
+| Tool | Use for |
 |---|---|
-| `memory` | add/replace/remove against `MEMORY.md` or `USER.md`. Per-session memory updates that persist between sessions. |
+| `read_file` | Read workspace files (with optional offset/limit) |
+| `write_file` | Write a file (sensitive paths denied — SSH keys, shell rc, credentials) |
+| `patch` | Apply a unified diff or V4A patch |
+| `search_files` | Regex across workspace files |
+| `list_files` | Directory listing, optionally recursive |
 
-### Skills
+## Shell + code
 
-| Tool | Purpose |
+| Tool | Use for |
 |---|---|
-| `skills_list` | List available skills (visible to the LLM as the catalog) |
-| `skill_view` | Read a specific skill's content |
-| `skill_manage` | Create/update/delete skills from within a session |
+| `terminal` | Shell command in the sandbox (180s default timeout, 50K-char output cap) |
+| `execute_code` | Run agent-generated code that itself calls other tools |
 
-### Experts
+## Web
 
-| Tool | Purpose |
+| Tool | Use for |
 |---|---|
-| `consult_expert` | Delegate a task to an active expert. Returns the expert's final response. |
+| `web_search` | Public-web search (Tavily / Exa backends) |
+| `web_extract` | Fetch and extract a single URL |
+| `web_crawl` | Crawl multiple URLs |
 
-### Sub-agents (fire-and-forget)
+## Browser (Chromium)
 
-| Tool | Purpose |
+Session-scoped browser. Supports **user-control handoff** for login / MFA / CAPTCHA.
+
+| Tool | Use for |
 |---|---|
-| `spawn_worker` | Spawn a child session with an optional `agent_type` preset. Returns worker_id immediately. |
-| `send_worker_message` | Send a message to a running spawned worker. |
-| `stop_worker` | Stop a running spawned worker. |
+| `browser_navigate` | Open a URL |
+| `browser_get_state` | Page's accessibility tree with stable element refs |
+| `browser_click`, `browser_type`, `browser_press_key` | Interact |
+| `browser_scroll`, `browser_drag`, `browser_wait` | Navigate / wait |
+| `browser_screenshot` | Save PNG to workspace |
+| `browser_close` | Close the session's browser |
 
-### Sub-agents (synchronous)
+## Vision
 
-| Tool | Purpose |
+| Tool | Use for |
 |---|---|
-| `delegate_task` | Spawn a child session and block until it completes. Supports batched `goals=[...]` for parallel fan-out. Hard depth limit = 2. |
+| `vision_analyze` | Analyse a workspace image, HTTPS URL, or `data:image` base64 |
 
-### Tasks (DAG-aware durable layer)
+## Memory
 
-| Tool | Purpose |
+| Tool | Use for |
 |---|---|
-| `spawn_task` | Create a durable task. Supports DAG `parents=[...]` for fan-in. Auto-retries on crash. |
-| `unblock_task` | Resume a blocked task with optional `additional_context`. |
-| `cancel_task` | Abort a non-terminal task. |
-| `task_complete` | (Self-tool, only visible when `Session.task_id is not None`) — mark own task `done` with structured `summary` + `metadata`. |
-| `task_block` | (Self-tool) — pause without consuming a retry attempt. |
-| `task_show` | (Self-tool) — read own task + parents + prior attempt summaries. |
+| `memory` | add / replace / remove entries in `MEMORY.md` (agent's notes) or `USER.md` (user facts) |
 
-### Scheduling
+## Skills & experts
 
-| Tool | Purpose |
+| Tool | Use for |
 |---|---|
-| `cron_create` | Create a recurring scheduled prompt. Cron expression, prompt, recurring/durable, name, timezone. |
-| `cron_delete` | Cancel a schedule. |
-| `cron_list` | List active schedules for the current user + agent. |
-| `loop_wait` | (Dynamic-loop-only) — set next delay in seconds (60-3600). Can also signal `completed: true`. |
-| `loop_complete` | (Fixed-cron-loop-only) — mark the loop finished from inside a run. |
+| `skills_list` | List skills attached to this agent (the LLM uses this implicitly) |
+| `skill_view` | Read a specific skill's body |
+| `skill_manage` | Create / update / delete skills from inside a session |
+| `consult_expert` | Delegate to a configured expert (model-backed skill) |
 
-### Web & Research
+## Sub-agents
 
-| Tool | Purpose |
+| Tool | Use for |
 |---|---|
-| `web_search` | Web search via Tavily / Exa. Respects robots.txt. |
-| `web_extract` | Fetch and extract a URL's content. |
-| `web_crawl` | Crawl multiple URLs. |
+| `spawn_worker` | Fire-and-forget child session. Returns immediately. |
+| `delegate_task` | Synchronous child session — parent blocks for the result. Supports parallel fan-out via `goals=[...]`. |
+| `spawn_task` | Durable child with DAG dependencies, retries, and mid-run pause. |
+| `task_complete`, `task_block`, `task_show` | Self-tools the child uses to report back |
+| `unblock_task`, `cancel_task` | Coordinator-side task management |
 
-### Vision
+Hard depth limit: 2 levels of orchestration beneath the root coordinator.
 
-| Tool | Purpose |
+## Scheduling
+
+| Tool | Use for |
 |---|---|
-| `vision_analyze` | Analyze an image (workspace path, HTTPS URL, or `data:image` base64). Returns text describing the image. |
+| `cron_create` | Create a recurring scheduled prompt (5-field cron expression) |
+| `cron_delete`, `cron_list` | Manage schedules |
+| `loop_wait` | (Dynamic-loop only) set the next delay in 60-3600s, or signal completion |
+| `loop_complete` | (Fixed-cron loop only) mark loop finished from inside a run |
 
-### Session history
+## User interaction
 
-| Tool | Purpose |
+| Tool | Use for |
 |---|---|
-| `session_search` | Full-text search the session's event history. Filterable by event type. |
+| `clarify` | Ask the user up to 5 multiple-choice questions in a tabbed widget. 30-min wait cap. |
 
-### User dialogue
+## Inline output
 
-| Tool | Purpose |
+| Tool | Use for |
 |---|---|
-| `clarify` | Show the user a tabbed widget with 1-5 questions and up to 4 multiple-choice answers each. Returns the user's selections. 30-min wait cap. |
+| `create_artifact` | Render a markdown / table / chart / HTML / SVG artifact inline in the chat (500KB max per artifact, 200 per session) |
 
-### Inline output
+## Other
 
-| Tool | Purpose |
+| Tool | Use for |
 |---|---|
-| `create_artifact` | Render a named, versioned artifact inline in the chat. 5 kinds: markdown, table, chart (Chart.js), html (iframe-sandboxed), svg. Max 500 KB / artifact, 200 artifacts / session. |
-
-### Todo
-
-| Tool | Purpose |
-|---|---|
-| `todo` | Per-session todo list for tracking multi-step tasks. |
-
-### Browser (session-scoped Chromium)
-
-| Tool | Purpose |
-|---|---|
-| `browser_navigate` | Navigate to a URL |
-| `browser_get_state` | Return the page's accessibility tree with stable `@eN` refs |
-| `browser_click` | Click an `@eN` ref or viewport coordinates |
-| `browser_type` | Type text at the current focus |
-| `browser_press_key` | Press a key or chord (e.g. `Enter`, `Control+L`) |
-| `browser_scroll` | Scroll at viewport coordinates |
-| `browser_drag` | Drag along coordinates |
-| `browser_wait` | Wait up to 30s for transitions |
-| `browser_screenshot` | Capture PNG to the workspace, optionally with annotations |
-| `browser_close` | Close the browser for this session |
-
-Browser tools support **user control handoff** — the user can take over for login/MFA/CAPTCHA, then return control.
-
-## Sandbox-bound tools
-
-### `terminal`
-
-Shell command execution.
-
-| Parameter | Type | Description |
-|---|---|---|
-| `command` | string | Shell command |
-| `workdir` | string | Default `/workspace` |
-| `timeout` | integer | Default 180s, max 600 |
-
-Output truncated at 50,000 characters; ANSI escape codes stripped.
-
-### `read_file` / `write_file` / `patch`
-
-| Tool | Purpose |
-|---|---|
-| `read_file` | Read with optional `offset` and `limit` line ranges |
-| `write_file` | Write contents to a path. Denies writes to sensitive paths (SSH keys, shell rc, credential files). |
-| `patch` | Apply unified diff or V4A patch format. Fuzzy matching for context lines. |
-
-### `search_files` / `list_files`
-
-| Tool | Purpose |
-|---|---|
-| `search_files` | Regex search across files. Filter by `include` glob pattern. |
-| `list_files` | List directory contents. Optional `recursive`. |
-
-### `execute_code`
-
-Programmatic code execution. Lets the agent call other tools from inside generated code:
-
-| Parameter | Type |
-|---|---|
-| `language` | `python` / `javascript` / ... |
-| `code` | The code to execute |
-
-The code runs inside the sandbox with access to all sandbox-bound tools.
+| `todo` | Per-session multi-step task tracker |
+| `session_search` | Full-text search the session's event history |
 
 ## MCP-proxied tools
 
-Anything registered by an MCP server is forwarded through the MCP proxy. Tools are passed-through to the LLM by name + description, but credentials are injected at the proxy boundary — the sandbox never sees them.
+Any tool an MCP server registers becomes available to attached agents. The MCP proxy injects credentials from the Vault — the agent's sandbox never sees secrets. See [MCP & Vault](../features/mcp-and-vault.md) for setup.
 
-For setting up MCP servers, see [MCP & Vault](../features/mcp-and-vault.md).
+## Allowed vs denied
 
-## Tool governance
+Configure per-agent in CONFIG → Tool Access:
 
-Every tool call passes through the `GovernanceGate` before execution. Three outcomes:
+- **Allowlist** — only these tools are visible to the LLM. Empty allowlist = all tools (subject to denylist).
+- **Denylist** — always blocked. Deny beats allow.
 
-| Outcome | Effect |
+Common patterns:
+
+| Agent type | Suggested |
 |---|---|
-| `allow` | Tool executes |
-| `deny` | Returns error to LLM; emit `policy.denied` event |
-| `escalate` | Pause and ask user; emit `policy.escalated` event + inbox `governance_gate` item |
-
-Tools can be allowlisted/denylisted per-agent in CONFIG. ABAC rules allow fine-grained control (e.g. "allow `refund_user` only if `amount < 1000`").
-
-Read-only tools (`read_file`, `search_files`, `web_search`) are usually safe to allow broadly. Mutating tools (`write_file`, `patch`, `terminal`, MCP tools that create external resources) need careful policy.
-
-## What's next
-
-[Event types](./event-types.md) for what tool calls produce in the log. [Runtime architecture](./runtime-architecture.md) for the bigger picture.
+| Customer support | Allow: `kb_*`, `web_search`, `clarify`, `create_artifact`, `memory`. Deny: `terminal`, `execute_code`, `write_file`, `patch` |
+| Code assistant | Allow: read tools + `web_search`. Deny: `write_file`, `patch`, `terminal` |
+| Data analyst | Allow everything. Deny: `cron_*` if no scheduling |
+| Internal automation bot | Start with denylist only, gate the dangerous ones explicitly |

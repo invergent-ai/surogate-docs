@@ -5,190 +5,83 @@ sidebar_position: 2
 
 # Sessions
 
-Every conversation is a session. Sessions are the **source of truth** for what the agent did. This chapter is about reading sessions with intent.
+Every conversation is a session, fully recorded and inspectable. This chapter is about reading and using session data deliberately — what to look at, what to filter on, what to extract for training and evaluation.
 
-## The data model
+For the operator's lighter walk-through, see [Work mode → Review what your agent did](/work/workflow/review-sessions).
 
-```
-sessions (
-  id UUID PRIMARY KEY,
-  org_id UUID NOT NULL,
-  user_id UUID,                    -- nullable for API channel
-  agent_id UUID NOT NULL,
-  channel TEXT NOT NULL,           -- web | slack | telegram | website | api | scheduled | worker | task
-  parent_id UUID,                  -- for sub-agent/task children
-  task_id UUID,                    -- for task-layer-backed sessions
-  status session_status,           -- active | completed | failed | archived
-  config JSONB,                    -- snapshot of agent config at session start
-  cursor_event_id BIGINT,          -- last fully-processed event
-  storage_bucket TEXT,
-  workspace_path TEXT,
-  created_at TIMESTAMPTZ,
-  completed_at TIMESTAMPTZ
-)
+## The six detail tabs
 
-events (
-  id BIGSERIAL PRIMARY KEY,
-  session_id UUID NOT NULL,
-  org_id UUID NOT NULL,
-  user_id UUID,
-  type event_type NOT NULL,        -- ~50 enum values
-  data JSONB NOT NULL,
-  trace_id UUID, span_id UUID,
-  created_at TIMESTAMPTZ
-)
-```
-
-`org_id` and `user_id` on `events` are populated by an `events_populate_tenant` trigger from the session row — callers never set them. Lets tenant-scoped audit queries filter `events` directly without joining `sessions`.
-
-`config` JSONB captures the agent's configuration at the moment the session started — frozen for the lifetime of the session. This is the **session-start freeze** that makes mid-session prompt injection unable to weaken governance.
-
-## The session detail page
-
-Six tabs:
-
-| Tab | What it shows |
+| Tab | Use it for |
 |---|---|
-| **THREAD** | Clean chat view of user / assistant messages, inline artifacts, file references |
-| **EVENTS** | Full ordered event log |
-| **TOOLS** | Filtered events for `tool.call` + `tool.result` only |
-| **SKILLS** | Which skills loaded, which the LLM actually invoked |
-| **POLICIES** | Governance decisions (denied / escalated / allowed) |
-| **METADATA** | Counters, quality flags, attached agent config |
+| **THREAD** | The conversation as the user saw it. Markdown renders; artifacts display inline; files are downloadable. |
+| **EVENTS** | Full ordered log of every event — user messages, LLM responses, tool calls, governance decisions. Your primary debugging surface. |
+| **TOOLS** | Filtered to `tool.call` + `tool.result`. Fastest way to answer "what did the agent actually do?" |
+| **SKILLS** | Which skills loaded into context, which the LLM invoked. Drift between the two is a signal: the skill loaded but didn't fire = `trigger` keywords don't match, or `description` is wrong. |
+| **POLICIES** | Governance decisions — denied / escalated / allowed. Includes prompt-injection-guard hits. |
+| **METADATA** | Counters (turns, tokens, cost, duration), the 7 quality flags, the agent's frozen config snapshot at session start. |
 
-## EVENTS in depth
+The Sessions list page has filters for: agent, status (Active / Completed / Failed / Archived), and chips for each quality flag (Denied, Overridden, Crashed, 👍, 👎). Filters compose into URL params, so you can bookmark a filtered view.
 
-The event types enum has ~50 values. The major groups:
+## The 7 quality flags
 
-| Group | Examples |
+These flip when corresponding events fire during the session:
+
+| Flag | Set by |
 |---|---|
-| Session lifecycle | `session.created`, `session.completed`, `session.failed`, `session.archived`, `session.reset` |
-| User interaction | `user.message`, `user.define_outcome`, `clarify.response` |
-| LLM | `llm.request`, `llm.response`, `llm.error` |
-| Tool execution | `tool.call`, `tool.result`, `tool.error` |
-| Assistant | `assistant.final` |
-| Sub-agents | `worker.spawned`, `worker.complete`, `worker.failed`, `delegation.start`, `delegation.complete`, `delegation.failed`, `delegation.stale` |
-| Tasks | `task.created`, `task.blocked`, `task.failed`, `task.completed`, `task.cancelled` |
-| Governance | `policy.denied`, `policy.escalated`, `policy.allowed` |
-| Saga | `saga.start`, `saga.step_begin`, `saga.step_committed`, `saga.step_failed`, `saga.compensate`, `saga.complete`, `saga.escalated` |
-| Experts | `expert.delegation`, `expert.result`, `expert.override`, `expert.endorse` |
-| Skills | `skill.invoked`, `skill.activated` |
-| Memory | `memory.added`, `memory.replaced`, `memory.removed` |
-| Browser | `browser.provisioned`, `browser.destroyed`, `browser.control_granted`, `browser.control_returned` |
-| Outcomes (`/goal`) | `outcome.defined`, `outcome.continuation`, `outcome.paused`, `outcome.cleared`, `span.outcome_evaluation_*` |
-| Inbox | `inbox.input_required`, `inbox.action_required`, `inbox.task_complete`, `inbox.governance_gate`, `inbox.progress_checkin` |
-| Artifacts | `artifact.created` |
-| Context | `context.compact` |
-| Harness | `harness.crash`, `harness.recovered` |
+| 👍 / 👎 | User feedback in the THREAD view |
+| `policy.denied` | Governance gate blocked a tool call |
+| `harness.crash` | The agent's runtime crashed mid-session (rare) |
+| `saga.compensated` | A multi-step rollback fired |
+| `expert.override` | Base LLM rejected an expert's answer |
+| `expert.endorse` | Base LLM accepted an expert's answer |
 
-Full event-type reference at [Event types](../reference/event-types.md).
+Use them to slice traffic. Combine on the Sessions list — "sessions in the last 7 days where saga compensated AND the user thumb-downed."
 
 ## Reading the EVENTS log
 
-Each row:
+Each row is a typed event with a JSON payload. For the canonical list of event types and what their payloads contain, see [Event types](../reference/event-types.md).
 
-```
-created_at         type                 data (JSONB)
-12:43:01.234   user.message         { "content": "What's the refund policy?" }
-12:43:01.567   llm.request          { "model": "...", "tokens_in": 1247 }
-12:43:04.012   llm.response         { "content": "I'll check...", "tokens_out": 18 }
-12:43:04.034   tool.call            { "name": "kb_search", "args": {"query": "refund policy"}, "tool_call_id": "tc_1" }
-12:43:05.198   tool.result          { "tool_call_id": "tc_1", "content": "Refunds within 30 days..." }
-12:43:06.401   llm.request          { "tokens_in": 1429 }
-12:43:08.892   llm.response         { "content": "Our refund policy is...", "tokens_out": 146 }
-12:43:08.892   assistant.final      { "content": "..." }
-```
+Failure-mode triage:
 
-Click any row to expand the full JSONB payload.
-
-## Filtering and search
-
-Develop mode adds richer filters:
-
-- **Per-agent picker** (left rail)
-- **Status combobox** — All / Active / Completed / Failed / Archived
-- **Filter chips** — Denied · Overridden · Crashed · 👍 · 👎
-- **Search box** — title, ID, model
-
-URL params persist filters: `/studio/sessions?agentId=<uuid>&status=failed&flag=denied`.
-
-## Sub-agent observability
-
-Sessions can have children (via `spawn_worker` / `delegate_task` / `spawn_task`). The session detail surfaces:
-
-- **Sub-agent tree** in a "Running" panel — recursive children, refreshes every 4s while any child is active
-- **Per-child links** — click any sub-agent to drill into its own session
-- **Parent's `delegation.*` events** — child outcomes flow back as events in the parent's log
-
-For the full sub-agent / task / mission model, see [the surogates runtime docs](https://github.com/invergent-ai/surogates/blob/main/docs/sub-agents/index.md) and [Reference → Runtime architecture](../reference/runtime-architecture.md).
+- **Agent didn't search the KB** → SKILLS tab confirms the relevant skill loaded; if it did, check whether the `trigger` keywords match the user's phrasing.
+- **Agent searched but got bad results** → TOOLS tab, expand `tool.result` for `kb_search`. Often the KB content is the problem, not the agent.
+- **Agent looped** → check iteration count in METADATA; the last few `llm.response` events usually reveal the repetition pattern.
+- **Tool was blocked** → POLICIES tab; the denial reason is recorded.
+- **Saga rolled back** → look at `saga.step_failed` (the trigger) and the `saga.compensate` events that followed.
 
 ## Replay
 
-The Replay button forks a session: creates a new session with the same starting conditions, replays user messages one by one, and stops at the first divergence. Use for regression testing after agent config changes.
+In the THREAD view, **Replay** forks a session: it re-runs your user messages against the **current** agent config and shows where the new responses diverge from the originals. Use this when you've changed SOUL.md, attached a new skill, or swapped models — confirm the change doesn't regress past good answers.
 
-Programmatic: `POST /v1/sessions/{id}/replay` with optional config override. Returns a new session_id.
+Programmatically: `POST /v1/sessions/{id}/replay` with an optional `config_override`. Returns a new session ID; poll until completed and compare events.
 
 ## Export
 
-Three options from METADATA:
-
-| Action | What it does |
+| Destination | Where |
 |---|---|
-| **Copy session URL** | Shareable link within your tenant |
-| **Export events JSON** | Full event log as a `.json` file. Used for audit / compliance. |
-| **Add to dataset** | Adds this session's transcript to a dataset you can use for training or evaluation |
+| **Copy session URL** | Shareable within your tenant |
+| **Export events JSON** | Full event log as a `.json` file. Used for audits or offline analysis. |
+| **Add to dataset** | Captures the session into a versioned dataset. Used to build training corpora — see [Datasets](./datasets.md). |
 
-## SQL views — the audit substrate
+## Per-channel sessions
 
-Three views over `events` projected for analysis:
+Channel determines who can see / interact with the session:
 
-### `v_session_tree`
+| Channel | Session boundary |
+|---|---|
+| **Web** | Each "New chat" click. End user owns it. |
+| **Slack DM** | One DM thread = one session. |
+| **Slack channel** | Each `@mention` starts a thread-scoped session. |
+| **Telegram** | DM thread or forum topic. |
+| **Website widget** | One per visitor browser session (resumed via localStorage). Capped by `Session Message Cap` if set. |
+| **API channel** | Each `POST /v1/api/prompts` = one session. No SSE — clients poll. |
 
-Recursive parent/child relationships. Powers `GET /v1/sessions/{id}/tree` and the Running panel.
+## API channel sessions are different
 
-```sql
-SELECT * FROM v_session_tree
-WHERE root_id = $1
-ORDER BY depth, id
-LIMIT 200;
-```
-
-### `v_skill_trajectories`
-
-Successful trajectories where a `/skill` command was used. Filters out tainted sessions (`policy.denied`, `harness.crash`, `saga.compensated`, `expert.override`). Powers `collect_for_skill` bootstrap training.
-
-### `v_expert_outcomes`
-
-Expert delegations with success flag (no subsequent override). Powers `collect_for_expert` improve training.
-
-```sql
-SELECT date_trunc('day', created_at) AS day,
-       expert_name,
-       count(*) FILTER (WHERE success) AS successes,
-       count(*) AS total,
-       count(*) FILTER (WHERE success)::float / count(*) AS rate
-FROM v_expert_outcomes
-WHERE org_id = $1
-GROUP BY day, expert_name
-ORDER BY day DESC, rate ASC;
-```
-
-See [Event types reference](../reference/event-types.md) for full schemas.
-
-## API channel sessions
-
-API-channel sessions have `channel = 'api'` and `user_id = NULL` (no interactive user). They:
-
-- Use the org's org-wide memory (no per-user)
-- Have no inbox (service-account sessions don't push to an inbox)
-- Are pulled by clients from the events table — no SSE streaming
-- Last until `status='completed'` (which the harness sets when `assistant.final` is the final event)
-
-Pattern for a polling client:
+They have `channel="api"`, no interactive user (service-account ownership), no inbox surface, and **no SSE streaming**. Pipelines poll for completion:
 
 ```python
-import requests
-from time import sleep
+import requests, time
 
 resp = requests.post(
     "https://ops.surogate.ai/v1/api/prompts",
@@ -204,7 +97,7 @@ while True:
     ).json()["status"]
     if status in ("completed", "failed"):
         break
-    sleep(5)
+    time.sleep(5)
 
 events = requests.get(
     f"https://ops.surogate.ai/v1/api/sessions/{session_id}/events",
@@ -214,6 +107,18 @@ final = next(e for e in events if e["type"] == "assistant.final")
 print(final["data"]["content"])
 ```
 
-## What's next
+See [Use cases → API channel for batch jobs](../use-cases.md) for an end-to-end recipe.
 
-[Compute](./compute.md) for the deployment surface, [Skills & Experts](./skills-and-experts.md) for what you attach.
+## Sub-agent observability
+
+A session can have children (via `spawn_worker` / `delegate_task` / `spawn_task`). The session detail shows:
+
+- The **Running** panel in the sidebar — live sub-agent tree, auto-refreshes every 4s while children are active
+- Per-child links — click to drill into the child's own session
+- The parent's `delegation.*` events showing what each child did
+
+`GET /v1/sessions/{id}/tree` returns the full descendant graph (up to 200 nodes); `/children` returns one level. Use for building your own dashboards over sub-agent fan-out.
+
+## Retention
+
+Sessions are kept indefinitely by default — they're the source of truth for compliance and training-data extraction. To delete a specific one: METADATA tab → Delete (soft delete; the row stays for audit but disappears from default views).

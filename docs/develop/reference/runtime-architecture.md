@@ -1,262 +1,65 @@
 ---
-title: Runtime architecture
+title: How the runtime behaves
 sidebar_position: 1
 ---
 
-# Runtime architecture
+# How the runtime behaves
 
-The Surogate runtime (`invergent-ai/surogates` on GitHub) is what's actually running inside the container when your agent is deployed at `<slug>.cloud.surogate.ai`. This reference summarises its architecture for builders who need to know how things work end-to-end.
+The platform handles all the infrastructure — Kubernetes, model serving, sandboxing, policy enforcement. As someone building agents on top of `ops.surogate.ai`, you don't manage any of that, but a few **behavioural guarantees** matter when you design agents:
 
-For the full runtime documentation, see [`surogates/docs/`](https://github.com/invergent-ai/surogates/tree/main/docs).
+## Sessions are durable and append-only
 
-## Three components
+Every conversation is recorded as an immutable event log. If the agent crashes mid-turn, it picks up where it left off — no state lost. Tool calls and results are part of the log, so you can replay and audit any session forever.
 
-```
-+-----------------------------------------------------------+
-| API Server (trusted)                                      |
-| - S3 credentials for all tenant-* and agent-* buckets     |
-| - DB credentials (sessions, tenants)                      |
-| - Serves skills, memory, workspace files to frontend      |
-| - Issues scoped tokens to worker pods                     |
-+------------------------+----------------------------------+
-                         | HTTP API (session-scoped token)
-+------------------------v----------------------------------+
-| Worker (trusted, but no tenant S3 access)                 |
-| - DB + Redis access (session state, event log)            |
-| - API token for calling API server (skills, memory)       |
-| - Manages sandbox pods via K8s API                        |
-| - Does NOT run untrusted code directly                    |
-+------------------------+----------------------------------+
-                         | K8s exec API / subprocess
-+------------------------v----------------------------------+
-| Sandbox (untrusted)                                       |
-| - S3 credentials scoped to the agent bucket session path  |
-| - s3fs-fuse mounts session path as /workspace             |
-| - Runs tool commands (terminal, file I/O, code exec)      |
-| - No DB access, no API token, no tenant S3 access         |
-| - Cannot access other sessions or tenant data             |
-+-----------------------------------------------------------+
-```
+**What this means for you**: writing tools and skills, you can assume the agent's prior tool calls are visible to subsequent turns. Sessions outlive container restarts. The session ID is stable; share it freely.
 
-## API Server
+## The agent runs in an isolated sandbox
 
-FastAPI app. Serves:
-- Web SPA static files
-- REST API
-- SSE event streams to the chat UI
+Code execution, file I/O, and terminal commands run inside a per-session sandbox that has **no access** to your tenant's other data, no credentials, no database. The sandbox only sees its own workspace at `/workspace`.
 
-Auth: JWT (HS256, 30-min access tokens, 24-hour refresh tokens).
+**What this means for you**: even a fully prompt-injected agent can't exfiltrate credentials or reach other sessions. Files the agent writes during a session are scoped to that session.
 
-Storage access: **full** — all `tenant-*` and `agent-*` Garage buckets, all PostgreSQL tables.
+## Governance is frozen at session start
 
-## Worker
+Tool allowlists/denylists, network egress rules, and policy profiles are snapshotted when a session begins. Mid-session prompt injection cannot weaken them.
 
-Stateless Python pod that pops sessions from Redis and runs the `AgentHarness`.
+**What this means for you**: changes you make to an agent's CONFIG apply to **new** sessions only. In-progress sessions keep their original policy. This is intentional — it's the security model.
 
-Concurrency: up to 50 sessions per worker (semaphore-bounded).
+## Tools route to different locations
 
-Storage access: **none directly**. Tenant operations (read skills, write memory) go through the API server via `HarnessAPIClient`.
+You don't pick where a tool runs — but knowing helps debug behaviour:
 
-Database access: sessions, events, leases. Read + write.
+- **In the worker** — fast, no sandbox needed (memory, skill loading, web search, browser, scheduling, sub-agent delegation, `clarify`, `create_artifact`)
+- **In the sandbox** — anything that touches files or runs code (`terminal`, `read_file`, `write_file`, `patch`, `execute_code`)
+- **Through the MCP proxy** — external systems via the Model Context Protocol; credentials injected by the proxy so the sandbox never sees them
 
-Sandbox management: creates/destroys sandbox pods via K8s API.
+See [Tool catalog](./tool-catalog.md) for the full list.
 
-## Sandbox
+## Multi-agent topology
 
-K8s pod per session, lazily provisioned on first sandbox-bound tool call.
+Agents can spawn child agents via `spawn_worker`, `delegate_task`, or `spawn_task`. Each child is its own full session with its own event log and storage. Children inherit the tenant's skills, KBs, MCPs, and memory; they can have a narrower governance profile.
 
-Storage access: session-scoped only (`{agent_bucket}/sessions/{session_id}/`), mounted at `/workspace` via s3fs-fuse.
+Hard depth limit: **2** (one orchestrator level beneath the root). Prevents runaway delegation trees.
 
-Network: K8s NetworkPolicy restricts egress to:
-- MCP proxy
-- Garage S3 API
+**What this means for you**: you can build coordinator agents that fan out work, but you can't build arbitrary-depth agent trees. The 2-level cap is a safety property.
 
-Everything else (internet, DB, Redis, API server) is denied.
+## Saga rollback for multi-step external mutations
 
-Lifetime: `activeDeadlineSeconds: 3600`.
+When `saga.enabled: true`, sequential state-changing tool calls are tracked. If a later step fails, completed steps roll back via filesystem checkpoints (built-in tools) or declared undo tools (MCP tools).
 
-## The harness wake cycle
+**What this means for you**: design your MCP servers with explicit undo tools (`delete_ticket` undoes `create_ticket`) so saga can compensate. Without an undo, the saga enters an `escalated` state and a human must intervene.
 
-```python
-async def wake(session_id):
-    1. acquire_lease(session_id)          # exclusive lock; expires after TTL
-    2. session = load_session_row(session_id)
-    3. events = replay_events_from(cursor)
-    4. context = build_context(events, session.config)
-    5. while iteration < max_iterations:
-        a. response = call_llm(context)
-        b. emit(llm.response, content=response)
-        c. if response has tool_calls:
-            for call in response.tool_calls:
-                emit(tool.call, ...)
-                result = await tool_router.dispatch(call)
-                emit(tool.result, ...)
-                context.append(call, result)
-        d. else:
-            emit(assistant.final, response.content)
-            break
-    6. update_cursor(last_event_id)
-    7. release_lease()
-```
+## Trust boundaries that affect you
 
-Key properties:
-
-- **Stateless** — every state read goes to PostgreSQL/Redis; every write becomes an event
-- **Crash-recoverable** — a worker can die at any line; the next worker resumes from the cursor
-- **Tool calls are events** — `tool.call` + `tool.result` go into the event log; replay re-executes them by reading from the log (idempotent tools recommended)
-
-## Tool routing
-
-```
-+-----------------+
-| ToolRouter      |
-+--------+--------+
-         |
-         v
-+-----------------+
-| GovernanceGate  |   <-- frozen at session start; denies / escalates / allows
-+--------+--------+
-         |
-    +----+----+
-    |         |
-    v         v
-+-------+ +--------+
-| Local | | Sandbox|
-| Tools | | Tools  |
-+-------+ +--------+
-              |
-              v
-        +----------+
-        |MCP Proxy |
-        +----------+
-              |
-              v
-        External MCP
-        Servers
-```
-
-Tools live in three locations:
-
-| Location | What's there | Examples |
-|---|---|---|
-| **Worker-local** | Tools that don't need a sandbox | memory, skills, web_search, browser_*, delegate_task, cron_*, clarify, create_artifact |
-| **Sandbox** | Tools that run inside the per-session pod | terminal, read_file, write_file, patch, execute_code |
-| **MCP Proxy** | Anything an MCP server exposes | Forwarded through the proxy with credential injection |
-
-## Session-start freeze
-
-When a session starts, the agent's config is snapshotted into `sessions.config` JSONB. This snapshot includes:
-
-- SOUL.md text
-- Allowed/denied tool lists
-- Skill attachments + versions
-- KB attachments + versions
-- MCP server attachments
-- Network egress rules
-- Saga settings
-- Model + endpoint
-
-**Mid-session prompt injection cannot weaken this snapshot.** Even if a user tells the agent "ignore your rules," the rules are baked in. The `GovernanceGate` evaluates against the snapshot, not against the current state.
-
-## Sub-agent recursion
-
-A session can spawn child sessions via:
-
-- `spawn_worker(goal, agent_type=)` — fire-and-forget
-- `delegate_task(goal, agent_type=)` — synchronous, parent blocks
-- `spawn_task(goal, parents=[...], max_attempts=3)` — durable DAG task with retry
-
-Children share the tenant's skills/KBs/MCPs/memory. They can have a narrower governance profile (`policy_profile` in AGENT.md) that **intersects** (never widens) the parent's policy.
-
-Depth limit: 2 (one orchestrator level beneath the root). Prevents runaway delegation trees.
-
-Children emit `worker.complete` / `worker.failed` / `task.blocked` / `task.failed` events into the **parent's** event log, with truncated result attached.
-
-## Saga
-
-When `saga.enabled: true`:
-
-```
-Forward execution:
-  Step 1: write_file("config.yaml")   --> committed (checkpoint saved)
-  Step 2: write_file("main.py")       --> committed (checkpoint saved)
-  Step 3: terminal("python test.py")  --> FAILED
-
-Automatic compensation (reverse order):
-  Step 2: restore checkpoint           --> main.py reverted
-  Step 1: restore checkpoint           --> config.yaml reverted
-```
-
-Compensation strategies:
-
-- **Built-in tools** (file writes, patches, terminal): filesystem checkpoints restored
-- **MCP tools**: declared undo tool called (e.g. `delete_jira_ticket` for `create_jira_ticket`)
-
-Read-only tools (`read_file`, `search_files`, `web_search`, `skills_list`) are excluded from tracking.
-
-If a compensation step itself fails, the saga enters `escalated` state — an operator must intervene.
-
-## Event log
-
-PostgreSQL append-only:
-
-```sql
-events (
-  id BIGSERIAL PRIMARY KEY,
-  session_id UUID NOT NULL,
-  org_id UUID NOT NULL,            -- populated by trigger
-  user_id UUID,                    -- nullable for API channel
-  type event_type NOT NULL,
-  data JSONB NOT NULL,
-  trace_id UUID, span_id UUID,
-  created_at TIMESTAMPTZ
-)
-```
-
-The `events_populate_tenant` trigger fills `org_id` and `user_id` from the session row on insert. Lets tenant-scoped audit queries filter `events` directly without joining `sessions`.
-
-See [Event types](./event-types.md) for the full enum.
-
-## Channels
-
-Five first-class channels, each with an adapter:
-
-| Channel | Adapter |
+| Concern | Where it's enforced |
 |---|---|
-| **Web** | Built into the API server's SPA |
-| **Slack** | `surogate_ops/server/channels/slack/` Socket Mode |
-| **Telegram** | `surogate_ops/server/channels/telegram/` Bot API |
-| **Website widget** | `sdk/website-widget/` (separate npm package) |
-| **API** | `POST /v1/api/prompts` — service-account tokens, no SSE |
+| Per-session network policy | Sandbox can reach only the MCP proxy + the session's storage. Internet, DB, other sessions: denied. |
+| Per-tool governance | Synchronous check before every tool call. Audit log records every decision. |
+| Per-session resource isolation | Each session has its own storage path and its own pod |
+| Per-tenant data isolation | Org-scoped storage, JWT auth, never cross-tenant |
 
-Shared delivery model: **durable `delivery_outbox` rows + Redis nudges**. Adapters claim rows for their channel, format, send via platform API, mark delivered.
+You can read every governance decision after the fact in the session's POLICIES tab.
 
-## Storage layout
+---
 
-```
-tenant-{org_id}/
-  shared/                         # org-wide
-    SOUL.md
-    memory/{MEMORY.md, USER.md}
-    skills/<name>/SKILL.md
-    agents/<name>/AGENT.md         # sub-agent definitions
-    mcp/servers.json
-  users/{user_id}/                # per-user
-    skills/<name>/SKILL.md
-    memory/{MEMORY.md, USER.md}
-
-{agent_bucket}/
-  sessions/{session_id}/workspace/  # FUSE-mounted as /workspace
-  sessions/{session_id}/_artifacts/{id}/v{N}.json  # inline chat artifacts
-  sessions/{session_id}/browser-screenshots/        # PNG screenshots
-```
-
-Sandbox credentials are **session-scoped STS-style tokens** that only permit access to `{agent_bucket}/sessions/{session_id}/*`. The sandbox cannot reach other sessions or tenant data.
-
-## Trust isolation, restated
-
-The structural fix for prompt injection: credentials and tenant data are never reachable from the sandbox where the LLM's generated code runs. Even a perfectly prompt-injected agent has no way to access keys, other sessions' data, or the broader org's storage.
-
-## What's next
-
-[Tool catalog](./tool-catalog.md) for every built-in tool. [Event types](./event-types.md) for the full event enum. [Glossary](./glossary.md) for terminology.
+That's the runtime behavior you need. Implementation internals — the harness loop, lease semantics, the events table schema, K8s topology — live in the [`invergent-ai/surogates` runtime repo](https://github.com/invergent-ai/surogates) and matter only if you're contributing to the platform itself.
