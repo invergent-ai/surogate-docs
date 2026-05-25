@@ -32,7 +32,7 @@
 <meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
 <meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
-<script src="/assets/js/runtime~main.55a2dd31.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.f1672393.js" defer="defer"></script>
 <script src="/assets/js/main.661645df.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -45,12 +45,12 @@
 <p>Builders write skills more deeply — frontmatter, conditional activation, the four-layer override model. You&#x27;ll find that in <a class="" href="/develop/features/skills-and-experts">Develop mode → Skills &amp; Experts</a>. This chapter is the operator&#x27;s view: how to find, attach, and improve skills.</p>
 </blockquote>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="where-skills-live">Where skills live<a href="#where-skills-live" class="hash-link" aria-label="Direct link to Where skills live" title="Direct link to Where skills live" translate="no">​</a></h2>
-<p><strong>Library → Skills &amp; Tools → SKILLS tab.</strong> You&#x27;ll see three columns:</p>
+<p><strong>Library → Skills &amp; Tools → SKILLS tab.</strong> Layout:</p>
 <ul>
-<li class=""><strong>Skills you&#x27;ve published</strong> for your team (your tenant&#x27;s user-scoped + org-scoped skills)</li>
-<li class=""><strong>Platform defaults</strong> — utility skills that ship with Surogate</li>
-<li class=""><strong>Skill detail</strong> on the right when you select one</li>
+<li class=""><strong>Left rail</strong> — filter box, ADD SKILL / IMPORT SKILL / NEW SKILL buttons, then the list of every skill in your tenant (each row shows the icon, name, author, last-updated)</li>
+<li class=""><strong>Right pane</strong> — detail for the selected skill: name + version tag, USED BY count, EDIT / PUBLISH / DELETE, tags, and inner CONTENT / REPOSITORY tabs</li>
 </ul>
+<p>Platform-default skills (<code>skill-creator</code>, <code>pdf</code>, <code>xlsx</code>, …) are pulled in at agent runtime but aren&#x27;t surfaced in this list — it shows only the skills your tenant has published.</p>
 <p>Each skill has:</p>
 <ul>
 <li class="">A <strong>name</strong> (<code>summary-bullets</code>, <code>code-style-reviewer</code>)</li>
