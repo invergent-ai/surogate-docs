@@ -32,7 +32,7 @@
 <meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
 <meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
-<script src="/assets/js/runtime~main.6492ae8e.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.6795243d.js" defer="defer"></script>
 <script src="/assets/js/main.661645df.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -57,21 +57,22 @@
 <p>Add sources (<code>SOURCES → ADD SOURCE</code>): drop in 3–10 markdown files that describe your incident-response procedures.</p>
 <p>Click <strong>COMPILE</strong>. Wait until status flips to <code>active</code>. Search the <strong>WIKI</strong> tab for a typical question to confirm the curator extracted what you need.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-deploy-an-agent">3. Deploy an agent<a href="#3-deploy-an-agent" class="hash-link" aria-label="Direct link to 3. Deploy an agent" title="Direct link to 3. Deploy an agent" translate="no">​</a></h2>
-<p><strong>Templates</strong> → pick <strong>Empty agent</strong> → <strong>DEPLOY NEW AGENT</strong>:</p>
+<p>In Develop mode, open <strong>Agents</strong> in the left nav → <strong>DEPLOY AGENT</strong> at the top of the list. Fill the dialog:</p>
 <ul>
-<li class=""><strong>Name</strong> — <code>incident-bot</code></li>
+<li class=""><strong>Display Name</strong> — <code>Incident Bot</code></li>
 <li class=""><strong>Slug</strong> — <code>incident-bot</code> (becomes <code>incident-bot.cloud.surogate.ai</code>)</li>
 <li class=""><strong>Description</strong> — <code>Triage incoming incidents, ground answers in runbooks</code></li>
-<li class=""><strong>Model</strong> — default</li>
+<li class=""><strong>Model</strong> — leave as <code>Surogate</code></li>
 </ul>
-<p>DEPLOY. Wait for <code>running</code>.</p>
+<p>Click <strong>CREATE AGENT</strong>. Wait for status <code>running</code>.</p>
+<p>(From Work mode the equivalent path is Templates → <strong>Start from scratch</strong> → same dialog.)</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-configure-it">4. Configure it<a href="#4-configure-it" class="hash-link" aria-label="Direct link to 4. Configure it" title="Direct link to 4. Configure it" translate="no">​</a></h2>
-<p>Open the agent → <strong>KNOWLEDGE &amp; TOOLS</strong>:</p>
+<p>In Develop mode, with the agent selected, open the <strong>KNOWLEDGE &amp; TOOLS</strong> tab in the detail panel:</p>
 <ul>
 <li class=""><strong>+ ATTACH SKILL</strong> → <code>triage-incident@v0.1.0</code></li>
 <li class=""><strong>+ ATTACH KNOWLEDGE BASE</strong> → <code>incident-runbooks</code></li>
 </ul>
-<p>Open <strong>CONFIG</strong> → <strong>Tool Access</strong>:</p>
+<p>Then open the <strong>CONFIG</strong> tab → <strong>Tool Access</strong> section:</p>
 <ul>
 <li class=""><strong>Allowed</strong>: <code>kb_search</code>, <code>kb_query</code>, <code>read_file</code>, <code>web_search</code>, <code>create_artifact</code></li>
 <li class=""><strong>Denied</strong>: <code>terminal</code>, <code>execute_code</code>, <code>write_file</code>, <code>patch</code> (this agent shouldn&#x27;t be running code)</li>

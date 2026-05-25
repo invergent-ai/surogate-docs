@@ -32,7 +32,7 @@
 <meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
 <meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
-<script src="/assets/js/runtime~main.6492ae8e.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.6795243d.js" defer="defer"></script>
 <script src="/assets/js/main.661645df.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -109,7 +109,7 @@
 </ul>
 <p>Preview what the agent will see before attaching the KB. Search for what a real user might ask. If the right page surfaces, the agent will too.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="attach-a-kb-to-an-agent">Attach a KB to an agent<a href="#attach-a-kb-to-an-agent" class="hash-link" aria-label="Direct link to Attach a KB to an agent" title="Direct link to Attach a KB to an agent" translate="no">​</a></h2>
-<p>Open the agent → <strong>KNOWLEDGE &amp; TOOLS</strong> tab → <strong>+ ATTACH KNOWLEDGE BASE</strong> → pick the KB.</p>
+<p>Open the agent → <strong>Configure</strong> in the left nav → scroll to the <strong>Knowledge Bases</strong> section → <strong>+ ATTACH KNOWLEDGE BASE</strong> → pick the KB.</p>
 <p>The agent&#x27;s system prompt grows by:</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">## Available Knowledge Bases</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">- acme-product-docs: Product documentation, runbooks, known-issues database.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  Search via kb_search(&quot;acme-product-docs&quot;, &quot;your query&quot;).</span><br></span></code></pre></div></div>
 <p>Plus the agent gains <code>kb_search</code> and <code>kb_query</code> as available tools. The LLM uses them automatically — you don&#x27;t need to write a skill to invoke them.</p>
@@ -120,7 +120,7 @@
 <p>Sources don&#x27;t auto-sync from their origin. For frequently-changing content, wait for the S3 / GitHub / Notion / URL source types to ship — they&#x27;ll have continuous-sync.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="detach-and-delete">Detach and delete<a href="#detach-and-delete" class="hash-link" aria-label="Direct link to Detach and delete" title="Direct link to Detach and delete" translate="no">​</a></h2>
 <ul>
-<li class=""><strong>Detach from an agent</strong> — KNOWLEDGE &amp; TOOLS → DETACH. The agent loses <code>kb_search</code> access for this KB on the next session.</li>
+<li class=""><strong>Detach from an agent</strong> — agent&#x27;s Configure page → Knowledge Bases section → DETACH. The agent loses <code>kb_search</code> access for this KB on the next session.</li>
 <li class=""><strong>Delete the KB entirely</strong> — KB detail → DELETE. A pre-flight check warns you if any agent has it attached.</li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="a-worked-example">A worked example<a href="#a-worked-example" class="hash-link" aria-label="Direct link to A worked example" title="Direct link to A worked example" translate="no">​</a></h2>
@@ -130,8 +130,8 @@
 <li class="">Add sources: <code>getting-started.md</code>, <code>pricing.md</code>, <code>faq.md</code>, <code>known-issues.csv</code>.</li>
 <li class="">COMPILE. Wait. Status: <code>active</code>.</li>
 <li class="">Browse the WIKI → confirm relevant content surfaces for typical questions.</li>
-<li class="">Deploy the &quot;Customer Support Bot&quot; template (or use an existing agent).</li>
-<li class="">Attach <code>acme-product</code> to the agent.</li>
+<li class="">Deploy a new agent (Templates page → <strong>Start from scratch</strong> → fill in the dialog) or pick an existing one.</li>
+<li class="">Open the agent → Configure → Knowledge Bases section → attach <code>acme-product</code>.</li>
 <li class="">Open a chat → ask: <em>&quot;What&#x27;s included in the Pro plan?&quot;</em></li>
 <li class="">Watch the EVENTS tab — you&#x27;ll see a <code>tool.call</code> for <code>kb_search</code>, then a grounded answer.</li>
 </ol>

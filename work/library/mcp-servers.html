@@ -32,7 +32,7 @@
 <meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
 <meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
-<script src="/assets/js/runtime~main.6492ae8e.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.6795243d.js" defer="defer"></script>
 <script src="/assets/js/main.661645df.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -159,9 +159,9 @@
 <div class="theme-admonition theme-admonition-warning admonition_xJq3 alert alert--warning"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>Known state-machine quirk</div><div class="admonitionContent_BuS1"><p>Sometimes the detail panel shows DISABLE (implying the server is enabled) but the security scan reads &quot;Not scanned — enable the server to trigger tool scanning.&quot; If this happens, click DISABLE then ENABLE again to force a fresh scan.</p></div></div>
 </blockquote>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="attaching-to-an-agent">Attaching to an agent<a href="#attaching-to-an-agent" class="hash-link" aria-label="Direct link to Attaching to an agent" title="Direct link to Attaching to an agent" translate="no">​</a></h2>
-<p>Open the agent → <strong>KNOWLEDGE &amp; TOOLS</strong> tab → MCP Servers section → <strong>+ Attach server</strong> combobox → pick the MCP server.</p>
+<p>Open the agent → <strong>Configure</strong> in the left nav → scroll to the <strong>MCP Servers</strong> section → <strong>+ Attach server…</strong> combobox → pick the MCP server.</p>
 <p>The agent&#x27;s tool catalogue grows by however many tools that server exposes. The LLM sees them in <code>skills_list</code> style — name + description per tool.</p>
-<p>To remove: click the <strong>X</strong> next to an attached server in the agent&#x27;s detail.</p>
+<p>To remove: click the <strong>X</strong> next to an attached server in the same section.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="editing-a-server">Editing a server<a href="#editing-a-server" class="hash-link" aria-label="Direct link to Editing a server" title="Direct link to Editing a server" translate="no">​</a></h2>
 <p>Server detail → <strong>EDIT</strong>. Same form as ADD SERVER but pre-filled. Most fields can change; transport and URL are the structural ones — if you change them, behaviour is essentially &quot;deleted old, added new.&quot;</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="deleting-a-server">Deleting a server<a href="#deleting-a-server" class="hash-link" aria-label="Direct link to Deleting a server" title="Direct link to Deleting a server" translate="no">​</a></h2>
