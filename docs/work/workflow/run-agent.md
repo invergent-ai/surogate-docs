@@ -5,6 +5,8 @@ sidebar_position: 1
 
 # Run an agent
 
+Open an agent from **Agents** in the left nav, then click **New chat** in the agent's left navigation (between Configure and Inbox). The composer opens with a `Send a message...` field; you'll see Commands / Skills / Scheduled Tasks shortcuts above it and an Add button for attachments.
+
 ## What you'll see in the thread
 
 The agent streams its response in real-time, token by token. Tool calls render inline as bracketed events you can expand:

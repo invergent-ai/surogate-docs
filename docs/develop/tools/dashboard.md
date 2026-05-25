@@ -29,9 +29,9 @@ Seven buttons on the right side:
 | Button | What it opens |
 |---|---|
 | **Deploy Agent** | Opens the DEPLOY NEW AGENT dialog (same as Agents → DEPLOY AGENT) |
-| **Serve Model** | ADD MODEL dialog (Local Hub / HF / OpenRouter / URL) |
+| **Serve Model** | DEPLOY MODEL dialog (Local Hub / HF / OpenRouter / URL) |
 | **New Skill** | NEW SKILL form |
-| **Start Training** | NEW TRAINING RUN form (SFT or GRPO) |
+| **Start Training** | Opens the NEW RUN form on the Training page (SFT or GRPO) |
 | **New KB** | NEW KNOWLEDGE BASE dialog |
 | **New Dataset** | NEW DATASET picker |
 | **New Eval** | NEW EVALUATION wizard |

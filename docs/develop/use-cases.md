@@ -365,7 +365,7 @@ Open SAMPLES → click random rows → verify the labels are reasonable. If the 
 
 **5. Train**.
 
-NEW TRAINING RUN with the synthetic dataset as input. SFT method, base model of your choice.
+NEW RUN with the synthetic dataset as input. SFT method, base model of your choice.
 
 **6. Combine with real traffic**.
 

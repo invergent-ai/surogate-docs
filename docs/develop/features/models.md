@@ -9,7 +9,7 @@ The Models page is where you register and serve models. Four sources, five detai
 
 ## Four sources
 
-Click **ADD MODEL** at the top of the Models page. Pick a source:
+Click **DEPLOY MODEL** at the top of the Models page. Pick a source:
 
 | Source | What it is | When to use |
 |---|---|---|

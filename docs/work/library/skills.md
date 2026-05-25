@@ -11,11 +11,12 @@ A **skill** is a small markdown file that tells the agent how to handle a specif
 
 ## Where skills live
 
-**Library → Skills & Tools → SKILLS tab.** You'll see three columns:
+**Library → Skills & Tools → SKILLS tab.** Layout:
 
-- **Skills you've published** for your team (your tenant's user-scoped + org-scoped skills)
-- **Platform defaults** — utility skills that ship with Surogate
-- **Skill detail** on the right when you select one
+- **Left rail** — filter box, ADD SKILL / IMPORT SKILL / NEW SKILL buttons, then the list of every skill in your tenant (each row shows the icon, name, author, last-updated)
+- **Right pane** — detail for the selected skill: name + version tag, USED BY count, EDIT / PUBLISH / DELETE, tags, and inner CONTENT / REPOSITORY tabs
+
+Platform-default skills (`skill-creator`, `pdf`, `xlsx`, …) are pulled in at agent runtime but aren't surfaced in this list — it shows only the skills your tenant has published.
 
 Each skill has:
 

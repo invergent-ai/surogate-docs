@@ -9,20 +9,19 @@ Evaluations test models and agents against benchmarks. Two paths: pick from the 
 
 ## The benchmarks catalog
 
-Click **Browse Benchmarks** in the Evaluations page. 40 benchmarks grouped into 10 categories:
+Click **BROWSE BENCHMARKS** in the Evaluations page. 40 benchmarks grouped into 9 categories:
 
 | Category | Examples |
 |---|---|
-| **Reasoning** | MMLU, GPQA, MMLU-Pro, ARC, Hellaswag |
-| **Coding** | HumanEval, MBPP, SWE-bench (lite + full) |
-| **Math** | MATH, GSM8K, MATH-500 |
-| **Instruction-following** | IFEval, AlpacaEval |
-| **Retrieval / RAG** | RAG-Bench, multi-hop QA |
-| **Tool use** | BFCL, ToolBench |
-| **Safety** | Guardrails, JailbreakBench |
-| **Long-context** | LongBench, Needle-in-Haystack |
-| **Code review** | CodeReviewBench |
-| **Multilingual** | XQuAD, MGSM |
+| **Reasoning** | GSM8K, ARC-AGI, GPQA |
+| **Language** | HellaSwag |
+| **Knowledge** | MMLU, MMLU-Pro, MMLU-Redux, SuperGPQA |
+| **Coding** | HumanEval, HumanEval+, MBPP, LiveCodeBench v6, Text-to-SQL (BIRD) |
+| **Safety** | TruthfulQA, ToxiGen, Red Team, Guardrails |
+| **Chat** | MT-Bench |
+| **Instruction** | IFEval, IFBench |
+| **Agent** | SWE-bench (Verified / Multilingual / Pro), Terminal-Bench 2.0, TAU-Bench, BFCL v4, MCP-Atlas, MCPMark, Tool Decathlon, DeepPlanning, WideSearch, VITA-Bench |
+| **Vision** | MMMU, MMMU-Pro, MathVista, ChartQA, DocVQA, OCRBench, HallusionBench, RealWorldQA |
 
 Each benchmark has its own detail page with:
 

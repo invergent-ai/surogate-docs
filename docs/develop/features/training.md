@@ -65,7 +65,7 @@ Use when:
 ## Training run lifecycle
 
 ```
-1. Create        Click NEW TRAINING RUN, fill the form
+1. Create        Click NEW RUN, fill the form
 2. Provision     Platform spins up GPU on selected provider
 3. Run           Training executes (5min to days depending on dataset + model size)
 4. Monitor       Logs, metrics, checkpoints via the run detail page
