@@ -7,15 +7,15 @@ sidebar_position: 2
 
 Everything you declare about the agent before users start using it: its identity, its tool envelope, what data it can search, where it's reachable, how governance constrains it.
 
-## Three creation paths
+## Creation paths
 
-| Path | Use when |
+| Path | How |
 |---|---|
-| **Templates** | You want a sensible starting point and will customise from there. Templates page → pick from prebuilt agents (Customer Support, Code Reviewer, Incident Responder, Data Analyst, Content Writer, Sentiment Tagger, or Empty). |
-| **Develop dashboard → Quick Actions → Deploy Agent** | Same as Templates but launched from the dashboard. |
-| **Empty agent** | You want full control. Pick everything yourself: model, skills, KBs, MCPs, persona, channels, governance. |
+| **Templates → Start from scratch** | The current builds ship an empty template catalog. **Start from scratch** opens the DEPLOY NEW AGENT dialog; fill Display Name / Slug / Description / Model, click CREATE AGENT. |
+| **Develop dashboard → Quick Actions → Deploy Agent** | Same dialog, launched from the dashboard. |
+| **REST API** `POST /v1/agents` | Programmatic. Useful when cloning an existing agent's config dict. |
 
-In practice: start with the closest template, then strip / replace what doesn't fit.
+Skills, knowledge bases, MCP servers, and channels are added afterwards on the **Configure** page.
 
 ## The agent's anatomy
 
@@ -95,15 +95,15 @@ Recommended starting points:
 
 ### 4. Attached skills / KBs / MCPs
 
-Three categories of attached resources. The KNOWLEDGE & TOOLS tab manages all three.
+Three categories of attached resources. The agent's **Configure** page manages all three in their own sections (Skills, Knowledge Bases, MCP Servers).
 
-- **Skills** — reusable prompt-based behaviours (markdown files). See [Skills & Experts](../features/skills-and-experts.md).
+- **Skills** — reusable prompt-based behaviours (markdown files). See [Skills & Tools](../features/skills-and-experts.md).
 - **Knowledge Bases** — curated document corpora. See [Knowledge Bases](../features/knowledge-bases.md).
 - **MCP Servers** — external system connectors. See [MCP & Vault](../features/mcp-and-vault.md).
 
 ### 5. Channels
 
-Where users reach the agent. CHANNELS tab. Web is always on; Slack, Telegram, Website widget toggle on/off with credentials. See [Agents](../features/agents.md) for per-channel config.
+Where users reach the agent. **Configure → Channels** section. Web is always on; Slack, Telegram, Website widget toggle on/off with credentials. See [Agents](../features/agents.md) for per-channel config.
 
 ### 6. Governance & Saga
 
@@ -131,7 +131,7 @@ The agent gets a URL `https://<slug>.cloud.surogate.ai`.
 
 Before declaring the build done:
 
-1. Click **CHAT** at the top of the agent detail. Send 3-5 representative queries.
+1. Click **CHAT** at the top of the agent detail (Develop mode) — or **New chat** in the left nav (Work mode). Send 3-5 representative queries.
 2. Open the resulting sessions. EVENTS tab. Check:
    - Did the LLM understand the query?
    - Did it call the right tools?

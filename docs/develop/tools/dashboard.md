@@ -28,7 +28,7 @@ Seven buttons on the right side:
 
 | Button | What it opens |
 |---|---|
-| **Deploy Agent** | Same as Templates → Use template; pre-selects "From template or config" |
+| **Deploy Agent** | Opens the DEPLOY NEW AGENT dialog (same as Agents → DEPLOY AGENT) |
 | **Serve Model** | ADD MODEL dialog (Local Hub / HF / OpenRouter / URL) |
 | **New Skill** | NEW SKILL form |
 | **Start Training** | NEW TRAINING RUN form (SFT or GRPO) |
@@ -49,4 +49,4 @@ A common builder workflow:
 
 ## What's next
 
-[Copilot](./copilot.md) for the platform-driving agent. [Templates](./templates.md) for the seven prebuilt agent types.
+[Copilot](./copilot.md) for the platform-driving agent. [Templates](./templates.md) for the deploy flow.

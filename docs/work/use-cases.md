@@ -27,25 +27,25 @@ For more complex multi-step recipes (fine-tune an expert, build an MCP server, A
 - COMPILE. Wait 30s–3min. Status: `active`.
 - Verify in the WIKI tab — search a typical question, confirm relevant content surfaces.
 
-**2. Deploy the template.**
+**2. Create the agent.**
 
-- Templates → **Customer Support Bot** → **DEPLOY NEW AGENT**.
-- Name: `acme-support-bot`. Description: "Support agent grounded in product docs."
-- Click DEPLOY. Status moves `deploying` → `running` in ~30s.
+- Templates → **Start from scratch** → **DEPLOY NEW AGENT** dialog.
+- Display name: `Acme support bot`. Slug: `acme-support-bot`. Description: "Support agent grounded in product docs."
+- Click CREATE AGENT. Status moves `deploying` → `running` in ~30s.
 
 **3. Attach the KB.**
 
-- Open the agent → KNOWLEDGE & TOOLS tab → **+ ATTACH KNOWLEDGE BASE** → pick `acme-product` → confirm.
+- Open the agent → **Configure** in the left nav → scroll to the **Knowledge Bases** section → **+ ATTACH KNOWLEDGE BASE** → pick `acme-product` → confirm.
 
 **4. Test it.**
 
-- Click **CHAT** at the top right.
+- Click **New chat** in the agent's left nav (between Configure and Inbox).
 - Ask 5 representative questions: pricing, features, "how do I…?", troubleshooting, refund policy.
-- Watch the EVENTS tab on each — the agent should call `kb_search` and ground its answers.
+- Open the session afterwards from **Sessions** in the WORK sidebar — confirm the agent called `kb_search` and grounded its answers.
 
 **5. Customise the persona.**
 
-- CONFIG tab → SOUL.md. Replace the default with something like:
+- Configure → **Identity** section → edit the DESCRIPTION / persona block. Replace the default with something like:
 
 ```markdown
 # Acme Support Agent
@@ -64,9 +64,9 @@ Never disclose internal ticket IDs. Never make legally binding statements.
 
 **6. Publish to your website.**
 
-- CHANNELS tab → toggle **Website** ON.
+- Configure → scroll to the **Channels** section → toggle **Website** ON.
 - Add your domain to Allowed Origins (e.g. `https://acme.com`, `https://www.acme.com`).
-- SAVE CHANNELS.
+- SAVE.
 - COPY the publishable key. Click **Embed code** to reveal the script tag.
 - Paste the script tag into your website's HTML before `</body>`.
 
@@ -75,7 +75,7 @@ Your support bot is live. Visitors hit a chat bubble in the bottom-right. The bo
 ### Follow-up
 
 - Review sessions daily for the first week. Thumb-down anything bad.
-- Look at the SKILLS tab on bad sessions — which skill should have fired but didn't? Write or fix one.
+- For bad sessions, check which skill should have fired but didn't — write or fix one.
 - Add new KB sources as your product evolves; click COMPILE to refresh.
 
 ---
@@ -96,10 +96,10 @@ Your support bot is live. Visitors hit a chat bubble in the bottom-right. The bo
 
 **2. Configure in Surogate.**
 
-- Open `acme-support-bot` → CHANNELS tab → toggle **Slack** ON.
+- Open `acme-support-bot` → Configure → scroll to the **Channels** section → toggle **Slack** ON.
 - Paste App Token and Bot Token.
 - Defaults are fine for most: Require @mention ON, Reply in Thread ON.
-- SAVE CHANNELS.
+- SAVE.
 
 **3. Verify.**
 
@@ -132,10 +132,10 @@ Your support bot is live. Visitors hit a chat bubble in the bottom-right. The bo
 **2. After a week, filter to thumb-down sessions.**
 
 - Sessions → filter chip **👎**.
-- For each session, open EVENTS and look for the failure mode:
+- Open each session and look for the failure mode:
   - **The agent didn't search the KB**: it answered from training data instead of looking up the fact. Likely a skill or KB attachment problem.
   - **The agent searched the KB but the KB returned junk**: source quality issue. Update or refine the KB content.
-  - **The agent searched the right thing but ignored the result**: SOUL.md may be overriding KB content. Tighten the persona.
+  - **The agent searched the right thing but ignored the result**: persona may be overriding KB content. Tighten the description.
   - **The agent used a tool that did the wrong thing**: tool-allowlist issue or skill missing.
   - **The agent crashed or got into a loop**: runtime issue — escalate to admin.
 
@@ -146,13 +146,13 @@ By cause: "missing facts," "wrong tone," "wrong tool," "wrong workflow." Each bu
 **4. Apply fixes in batches.**
 
 - "Missing facts" → add KB sources, recompile.
-- "Wrong tone" → edit SOUL.md.
+- "Wrong tone" → edit the agent's description on the Configure page.
 - "Wrong workflow" → write a skill (or update an existing one).
-- "Wrong tool" → tighten allowed tools in CONFIG.
+- "Wrong tool" → detach problem skills/MCP servers on the Configure page.
 
 **5. Verify with replay**.
 
-- For the worst thumb-down sessions, click REPLAY in the THREAD view.
+- For the worst thumb-down sessions, click REPLAY in the session view.
 - Replay walks through your old user messages with the new agent config.
 - Side-by-side diff shows where the new behaviour diverges. Confirm it's better.
 
@@ -188,14 +188,14 @@ By cause: "missing facts," "wrong tone," "wrong tool," "wrong workflow." Each bu
 
 **4. Verify the wiki.**
 
-- WIKI tab → search a real customer question. Confirm:
+- Open the KB → **Wiki** tab → search a real customer question. Confirm:
   - Wiki page surfaces if the answer is in the docs
   - Ticket resolution surfaces if there's a relevant past case
   - Cross-source synthesis page combines both
 
 **5. Attach to your support bot.**
 
-- Open `acme-support-bot` → KNOWLEDGE & TOOLS → ATTACH KNOWLEDGE BASE → `acme-support-corpus`.
+- Open `acme-support-bot` → Configure → **Knowledge Bases** section → + ATTACH KNOWLEDGE BASE → `acme-support-corpus`.
 
 ### Follow-up
 

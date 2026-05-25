@@ -35,7 +35,7 @@ Every agent improvement cycle has four phases:
 
 ### BUILD
 
-You're declaring what the agent **is**: its identity, its tools, its data sources, its boundaries. Most of this happens in the agent's CONFIG and KNOWLEDGE & TOOLS tabs. See [Build phase](./build.md).
+You're declaring what the agent **is**: its identity, its tools, its data sources, its boundaries. Most of this happens on the agent's **Configure** page (Identity / Skills / Knowledge Bases / MCP Servers / Channels / Users sections), with deeper knobs on Develop mode's CONFIG and KNOWLEDGE & TOOLS tabs. See [Build phase](./build.md).
 
 ### OBSERVE
 
@@ -74,7 +74,7 @@ Each phase touches different parts of `ops.surogate.ai`:
 
 | Phase | UI surfaces |
 |---|---|
-| BUILD | Develop dashboard → Quick Actions; Agents → CONFIG / KNOWLEDGE & TOOLS / CHANNELS; Library (Skills, KBs, MCP & Vault, Models, Hub) |
+| BUILD | Develop dashboard → Quick Actions; Agents page → Configure (Work mode) or CONFIG / KNOWLEDGE & TOOLS tabs (Develop mode); Library (Skills, KBs, MCP & Vault, Models, Hub) |
 | OBSERVE | Sessions list + detail (all 6 tabs); Agent OVERVIEW; Develop dashboard's Recent Conversations feed |
 | TRAIN | Datasets; Training Runs; Evaluations; Hub for artifact versioning |
 | REDEPLOY | Agent → SAVE (config); SCALE; STOP/START; the Hub rolls forward; Models for swapping expert endpoints |

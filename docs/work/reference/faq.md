@@ -9,7 +9,7 @@ Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (w
 
 ## Agents
 
-**Stuck on `deploying` past 90s.** Check the agent OVERVIEW → ERRORS counter for the most recent error message. The **Data Analyst** template has a known stuck-deploying issue — force-restart via STOP → START.
+**Stuck on `deploying` past 90s.** Check the agent's Overview page for the most recent error message. Force-restart via STOP → START.
 
 **Develop mode shows "No agents" but they exist.** Known cache bug. Reload the page; Work mode is unaffected.
 
