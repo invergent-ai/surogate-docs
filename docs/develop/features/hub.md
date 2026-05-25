@@ -3,11 +3,11 @@ title: Hub
 sidebar_position: 5
 ---
 
-# Hub
+# Data Hub
 
-Every artifact in Surogate is a **lakeFS repository** — a git-like store with branches, commits, and tags. The Hub is the browser for those repos.
+Every artifact in Surogate is a **lakeFS repository** — a git-like store with branches, commits, and tags. The Data Hub (link in the Develop sidebar) is the browser for those repos.
 
-## What's in the Hub
+## What's in the Data Hub
 
 | Artifact type | Hub repo pattern |
 |---|---|

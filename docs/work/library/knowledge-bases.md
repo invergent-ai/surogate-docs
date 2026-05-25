@@ -115,7 +115,7 @@ Preview what the agent will see before attaching the KB. Search for what a real 
 
 ## Attach a KB to an agent
 
-Open the agent → **KNOWLEDGE & TOOLS** tab → **+ ATTACH KNOWLEDGE BASE** → pick the KB.
+Open the agent → **Configure** in the left nav → scroll to the **Knowledge Bases** section → **+ ATTACH KNOWLEDGE BASE** → pick the KB.
 
 The agent's system prompt grows by:
 
@@ -140,7 +140,7 @@ Sources don't auto-sync from their origin. For frequently-changing content, wait
 
 ## Detach and delete
 
-- **Detach from an agent** — KNOWLEDGE & TOOLS → DETACH. The agent loses `kb_search` access for this KB on the next session.
+- **Detach from an agent** — agent's Configure page → Knowledge Bases section → DETACH. The agent loses `kb_search` access for this KB on the next session.
 - **Delete the KB entirely** — KB detail → DELETE. A pre-flight check warns you if any agent has it attached.
 
 ## A worked example
@@ -151,8 +151,8 @@ You have a product, `acme-shop`, and you want a customer-support agent to know y
 2. Add sources: `getting-started.md`, `pricing.md`, `faq.md`, `known-issues.csv`.
 3. COMPILE. Wait. Status: `active`.
 4. Browse the WIKI → confirm relevant content surfaces for typical questions.
-5. Deploy the "Customer Support Bot" template (or use an existing agent).
-6. Attach `acme-product` to the agent.
+5. Deploy a new agent (Templates page → **Start from scratch** → fill in the dialog) or pick an existing one.
+6. Open the agent → Configure → Knowledge Bases section → attach `acme-product`.
 7. Open a chat → ask: *"What's included in the Pro plan?"*
 8. Watch the EVENTS tab — you'll see a `tool.call` for `kb_search`, then a grounded answer.
 

@@ -5,7 +5,7 @@ sidebar_position: 5
 
 # Per-agent users
 
-The **USERS** tab on an agent manages the people who chat with this agent through its public Web endpoint. These are **distinct from your operator account** (your `ops.surogate.ai` login).
+The **Users** section on an agent's Configure page manages the people who chat with this agent through its public Web endpoint. These are **distinct from your operator account** (your `ops.surogate.ai` login).
 
 ## When you'd use this
 
@@ -17,41 +17,29 @@ Three patterns:
 
 ## Adding a user
 
-USERS tab → **+ ADD USER**:
+Open the agent → **Configure** in the left nav → scroll to the **Users** section → **+ ADD USER**:
 
 | Field | Notes |
 |---|---|
 | **Email** | The user's login email |
 | **Display name** | Optional — what shows up in chat |
-| **Password** | Optional — leave blank if you'd rather they use SSO |
-| **SSO link** | Optional Google / GitHub login |
+| **AUTH** | Database (password), Google SSO, or GitHub SSO |
 
 The user gets an invite email with the agent's public URL and instructions.
 
 ## Identity across channels
 
-A user on the Web endpoint is one identity. If they also use Slack or Telegram, their channel identities link to this same user (via the channel-identity table). They see the same sessions across all channels.
+A user on the Web endpoint is one identity. If they also use Slack or Telegram, their channel identities link to this same user. They see the same sessions across all channels.
 
-If a user signs up on Slack first and you then add them on the Web, **the platform pairs the identities** via a flow where the Slack bot DMs them a pairing link.
+If a user signs up on Slack first and you then add them on the Web, the platform pairs the identities via a flow where the Slack bot DMs them a pairing link.
 
 ## Managing existing users
 
-The USERS tab shows every user with:
-
-- Email
-- Display name
-- Last active timestamp
-- Sessions count
-
-You can:
-
-- **Edit** — change display name, reset password, toggle SSO
-- **Disable** — temporarily revoke access without deleting the user (sessions stay)
-- **Delete** — remove the user and (optionally) their sessions
+The Users section shows every user with email, display name, AUTH type, and CREATED timestamp. Per-row actions let you edit, disable, or delete each one.
 
 ## Bulk operations
 
-For >20 users, the per-row workflow is slow. Operators with admin permissions can use the REST API to bulk-add — see [Develop mode → REST API](/develop/reference/runtime-architecture).
+For more than ~20 users, the per-row workflow is slow. Operators with admin permissions can use the REST API to bulk-add.
 
 ## What's next
 

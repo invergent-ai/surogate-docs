@@ -13,7 +13,7 @@ Nothing external. The platform issues a **publishable key** when you enable the 
 
 ## Configuration
 
-Open the agent → **CHANNELS** tab → toggle **Website** ON. The form expands:
+Open the agent → **Configure** in the left nav → scroll to the **Channels** section → toggle **Website** ON. The form expands:
 
 | Field | What it does |
 |---|---|
@@ -66,7 +66,7 @@ You haven't saved the channel config yet. Click **SAVE CHANNELS** first. The key
 
 If your key leaks (it ended up in a public GitHub repo, etc.):
 
-1. Agent → CHANNELS → Website → **ROTATE**.
+1. Agent → Configure → Channels → Website → **ROTATE**.
 2. Confirm. The old key is invalidated immediately.
 3. Update your site with the new key.
 

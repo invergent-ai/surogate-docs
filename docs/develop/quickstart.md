@@ -56,23 +56,25 @@ Click **COMPILE**. Wait until status flips to `active`. Search the **WIKI** tab 
 
 ## 3. Deploy an agent
 
-**Templates** → pick **Empty agent** → **DEPLOY NEW AGENT**:
+In Develop mode, open **Agents** in the left nav → **DEPLOY AGENT** at the top of the list. Fill the dialog:
 
-- **Name** — `incident-bot`
+- **Display Name** — `Incident Bot`
 - **Slug** — `incident-bot` (becomes `incident-bot.cloud.surogate.ai`)
 - **Description** — `Triage incoming incidents, ground answers in runbooks`
-- **Model** — default
+- **Model** — leave as `Surogate`
 
-DEPLOY. Wait for `running`.
+Click **CREATE AGENT**. Wait for status `running`.
+
+(From Work mode the equivalent path is Templates → **Start from scratch** → same dialog.)
 
 ## 4. Configure it
 
-Open the agent → **KNOWLEDGE & TOOLS**:
+In Develop mode, with the agent selected, open the **KNOWLEDGE & TOOLS** tab in the detail panel:
 
 - **+ ATTACH SKILL** → `triage-incident@v0.1.0`
 - **+ ATTACH KNOWLEDGE BASE** → `incident-runbooks`
 
-Open **CONFIG** → **Tool Access**:
+Then open the **CONFIG** tab → **Tool Access** section:
 
 - **Allowed**: `kb_search`, `kb_query`, `read_file`, `web_search`, `create_artifact`
 - **Denied**: `terminal`, `execute_code`, `write_file`, `patch` (this agent shouldn't be running code)

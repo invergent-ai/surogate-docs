@@ -3,9 +3,9 @@ title: Skills & Experts
 sidebar_position: 2
 ---
 
-# Skills & Experts
+# Skills & Tools
 
-A **skill** is a markdown file (`SKILL.md`) the agent loads into its prompt. An **expert** is a skill whose `type` is `expert` — backed by a fine-tuned model that runs in a bounded mini-loop.
+The **Skills & Tools** page in the Develop nav has two tabs: **SKILLS** and **MCP SERVERS**. A skill is a markdown file (`SKILL.md`) the agent loads into its prompt. An **expert** is a skill whose `type` is `expert` — backed by a fine-tuned model that runs in a bounded mini-loop.
 
 This chapter covers both. For the operator's walk-through of writing a skill in the UI, see [Work mode → Skills](/work/library/skills).
 

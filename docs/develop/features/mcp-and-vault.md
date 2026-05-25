@@ -7,6 +7,8 @@ sidebar_position: 4
 
 The **Model Context Protocol** (MCP) is an open standard for connecting LLMs to external tools and data. Surogate ships a full MCP client + a credential-injecting proxy + security scanning.
 
+You manage MCP servers in **Skills & Tools → MCP SERVERS tab** (Develop or Work mode). The Vault button at the top of that tab opens the credential store.
+
 ## Architecture
 
 ```

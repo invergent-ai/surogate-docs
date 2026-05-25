@@ -7,64 +7,61 @@ sidebar_position: 2
 
 A working agent on your team's Slack in **10 minutes**. No code, no setup.
 
-## 1. Deploy from a template
+## 1. Create the agent
 
-Open the **Templates** page → pick a template that matches what you want the agent to do:
+From the **Agents** page (left nav under WORK) or from the **Dashboard's "CREATE ANOTHER AGENT"** card, you land on the **Templates** page.
 
-| Template | What it's good at |
+The template catalog is currently empty. Click **Start from scratch** at the top of the page — a **DEPLOY NEW AGENT** dialog opens.
+
+Fill in:
+
+| Field | What to put |
 |---|---|
-| **Customer Support Bot** | Answers questions from your product docs |
-| **Incident Responder** | Triages alerts, writes runbooks |
-| **Content Writer** | Drafts, edits, headlines |
-| **Data Analyst** | Reads CSVs, makes charts |
-| **Code Reviewer** | Reviews code diffs |
-| **Customer Support Bot** | Customer support |
-| **Empty agent** | Start from scratch |
+| **Display Name** | e.g. `Acme Support Bot` |
+| **Slug** | auto-generated from the name. Becomes `acme-support-bot.cloud.surogate.ai`. Locked once you confirm. |
+| **Description** | one sentence — what the agent does |
+| **Model** | leave as `Surogate` (the platform default) |
 
-Click **DEPLOY** → fill in:
+Click **CREATE AGENT**. The agent provisions in ~30 seconds; status flips from `deploying` to `running`.
 
-- **Name** — `acme-support-bot` (or whatever)
-- **Description** — one sentence
-- Leave **Model** as the platform default
+You land on the agent's **Overview** page with its public URL, stats, channels, and recent sessions.
 
-Click **DEPLOY**. Wait 30 seconds while the agent comes online. Status flips from `deploying` to `running`.
+## 2. Have your first conversation
 
-## 2. Test it from the platform
+On the agent's Overview page, click **New chat** in the left navigation (between **Configure** and **Inbox**).
 
-On the agent's page, click **CHAT** (top right). Type a question. The agent streams back its response, calling tools (search, file reads) as needed. Tool calls render inline so you can see what it did.
+The chat opens. Type a question, press Enter — the agent streams its response. Tool calls (KB searches, web fetches) appear inline so you can see what it did.
 
-If the agent doesn't know enough about your product, that's normal — templates ship without your team's content. Skip ahead to step 4 to fix that.
+Templates ship without your team's content, so the agent doesn't know your product yet. Step 4 fixes that.
 
-## 3. Give it a Slack channel
+## 3. Publish to Slack
 
-Open the agent → **CHANNELS** tab → toggle **Slack** ON. Paste:
+Click **Configure** in the left nav. Scroll to the **Channels** section near the bottom. Find the **Slack** row and toggle the switch ON.
 
-- **App Token** — `xapp-…` from your Slack app's App-Level Tokens, scope `connections:write`
-- **Bot Token** — `xoxb-…` from your Slack app's OAuth & Permissions
+Paste your Slack credentials:
 
-If you don't have a Slack app yet, create one at [api.slack.com/apps](https://api.slack.com/apps) → enable Socket Mode → add scopes (`chat:write`, `app_mentions:read`, `im:read`, `im:write`, `channels:history`, `groups:history`, `users:read`) → install to your workspace.
+- **App Token** — `xapp-…` from your Slack app's **App-Level Tokens** (scope `connections:write`)
+- **Bot Token** — `xoxb-…` from **OAuth & Permissions**
 
-Click **SAVE CHANNELS**. Within 5 seconds, the bot is online in Slack. DM it or `@mention` it in a channel.
+Don't have a Slack app yet? Create one at [api.slack.com/apps](https://api.slack.com/apps) → enable **Socket Mode** → add bot scopes (`chat:write`, `app_mentions:read`, `im:read`, `im:write`, `channels:history`, `groups:history`, `users:read`) → install to your workspace.
+
+Click **SAVE CHANNELS**. Within a few seconds, the bot is online in Slack. DM it or `@mention` it in a channel.
 
 ## 4. Make it smarter (optional but worth it)
 
-Two quick wins:
+Two quick wins, both on the **Configure** page:
 
 ### Add a knowledge base
 
-Go to **Library → Knowledge Bases → NEW KNOWLEDGE BASE**:
+In the left nav under **LIBRARY**, click **Knowledge Bases** → **NEW KNOWLEDGE BASE**. Name it (e.g. `acme-product`) and pick a curator model. Add a few `.md` or `.pdf` sources, click **COMPILE**, wait for status `active`.
 
-- Name: `acme-product`
-- Add a few `.md` or `.pdf` sources (product docs, FAQ, runbooks)
-- Click **COMPILE**, wait
+Back on the agent's **Configure** page → **Knowledge Bases** section → **+ ATTACH KNOWLEDGE BASE** → pick the new KB.
 
-Attach it to your agent: open the agent → **KNOWLEDGE & TOOLS** → **+ ATTACH KNOWLEDGE BASE** → pick `acme-product`.
-
-New sessions now have `kb_search` available. The agent uses it automatically when a question matches the KB.
+The agent will now search the KB at runtime when a question matches its content.
 
 ### Tighten the persona
 
-Open the agent → **CONFIG** tab → **SOUL.md**. Replace the default with:
+The agent's identity, tone, and rules live in the Configure page's identity section (the **DESCRIPTION** field plus a system-prompt block in Develop mode's CONFIG tab). Replace the default with something like:
 
 ```markdown
 # Acme Support Agent
@@ -72,26 +69,24 @@ Open the agent → **CONFIG** tab → **SOUL.md**. Replace the default with:
 You are the Acme support assistant. Speak as "we" when referring to Acme.
 Tone: warm, concise, technically literate. Avoid corporate boilerplate.
 
-When you don't know something, say "I'll get a human on this" and call
-the `escalate` skill rather than guessing.
+When you don't know something, say "I'll get a human on this" rather
+than guessing.
 ```
 
-Save. New sessions pick up the new persona; in-progress ones keep the old one (by design).
+Save. New chats pick up the new persona; in-progress sessions keep the old one (by design).
 
 ## 5. Watch what it does
 
-Every conversation is a session. Go to **Sessions** → pick your agent → click any session.
+Every chat is a **session**. Open **Sessions** in the left nav → pick a session.
 
 For each session, hover assistant turns and click 👍 or 👎. This is the signal you use to improve the agent over time — see [Improve your agent](./workflow/improve-agent.md).
 
-## What you've done
+## What you've done in 10 minutes
 
-In 10 minutes:
-
-- A live agent on a custom URL: `<your-slug>.cloud.surogate.ai`
+- A live agent on a public URL: `<your-slug>.cloud.surogate.ai`
 - Available in Slack to your team
 - Grounded in your product docs (via the KB)
-- With your tone (via SOUL.md)
+- With your tone (via the persona)
 - Recording every conversation for review and improvement
 
 That's enough to start using it for real work. Come back to [Run an agent](./workflow/run-agent.md) and [Improve your agent](./workflow/improve-agent.md) when you want to go deeper.

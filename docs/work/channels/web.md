@@ -25,7 +25,7 @@ This is the customer-facing Web UI — a separate React app from `ops.surogate.a
 Two modes:
 
 1. **Anonymous** (default): visitors use the agent without an account. Each browser session gets a UUID stored locally; subsequent visits resume the same Surogate session.
-2. **Authorised users only**: open the agent → **USERS** tab → **+ ADD USER** for each authorised email. Add **Require sign-in** in the agent's CHANNELS → Web config.
+2. **Authorised users only**: open the agent → **Configure** in the left nav → scroll to the **Users** section → **+ ADD USER** for each authorised email.
 
 For authorised users, they sign in with the credentials you set (email + password, Google SSO, or GitHub SSO).
 
@@ -35,7 +35,7 @@ For authorised users, they sign in with the credentials you set (email + passwor
 
 The slug is set when you deploy the agent (the URL is what your team and customers will see, so pick something readable).
 
-You can't change the slug after deployment — only Rename via the dedicated button in CONFIG.
+You can't change the slug after deployment — only via the dedicated **Rename** button on the agent's Configure page.
 
 ## Customising the look
 
