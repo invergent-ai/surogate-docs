@@ -32,7 +32,7 @@
 <meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
 <meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
-<script src="/assets/js/runtime~main.6795243d.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.55a2dd31.js" defer="defer"></script>
 <script src="/assets/js/main.661645df.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -55,25 +55,25 @@
 <li class="">COMPILE. Wait 30s–3min. Status: <code>active</code>.</li>
 <li class="">Verify in the WIKI tab — search a typical question, confirm relevant content surfaces.</li>
 </ul>
-<p><strong>2. Deploy the template.</strong></p>
+<p><strong>2. Create the agent.</strong></p>
 <ul>
-<li class="">Templates → <strong>Customer Support Bot</strong> → <strong>DEPLOY NEW AGENT</strong>.</li>
-<li class="">Name: <code>acme-support-bot</code>. Description: &quot;Support agent grounded in product docs.&quot;</li>
-<li class="">Click DEPLOY. Status moves <code>deploying</code> → <code>running</code> in ~30s.</li>
+<li class="">Templates → <strong>Start from scratch</strong> → <strong>DEPLOY NEW AGENT</strong> dialog.</li>
+<li class="">Display name: <code>Acme support bot</code>. Slug: <code>acme-support-bot</code>. Description: &quot;Support agent grounded in product docs.&quot;</li>
+<li class="">Click CREATE AGENT. Status moves <code>deploying</code> → <code>running</code> in ~30s.</li>
 </ul>
 <p><strong>3. Attach the KB.</strong></p>
 <ul>
-<li class="">Open the agent → KNOWLEDGE &amp; TOOLS tab → <strong>+ ATTACH KNOWLEDGE BASE</strong> → pick <code>acme-product</code> → confirm.</li>
+<li class="">Open the agent → <strong>Configure</strong> in the left nav → scroll to the <strong>Knowledge Bases</strong> section → <strong>+ ATTACH KNOWLEDGE BASE</strong> → pick <code>acme-product</code> → confirm.</li>
 </ul>
 <p><strong>4. Test it.</strong></p>
 <ul>
-<li class="">Click <strong>CHAT</strong> at the top right.</li>
+<li class="">Click <strong>New chat</strong> in the agent&#x27;s left nav (between Configure and Inbox).</li>
 <li class="">Ask 5 representative questions: pricing, features, &quot;how do I…?&quot;, troubleshooting, refund policy.</li>
-<li class="">Watch the EVENTS tab on each — the agent should call <code>kb_search</code> and ground its answers.</li>
+<li class="">Open the session afterwards from <strong>Sessions</strong> in the WORK sidebar — confirm the agent called <code>kb_search</code> and grounded its answers.</li>
 </ul>
 <p><strong>5. Customise the persona.</strong></p>
 <ul>
-<li class="">CONFIG tab → SOUL.md. Replace the default with something like:</li>
+<li class="">Configure → <strong>Identity</strong> section → edit the DESCRIPTION / persona block. Replace the default with something like:</li>
 </ul>
 <div class="language-markdown codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-markdown codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token title important punctuation" style="color:rgb(199, 146, 234)">#</span><span class="token title important"> Acme Support Agent</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">You are the Acme Corp customer support assistant. Speak as &quot;we&quot; when</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">referring to Acme. Be warm, concise, technically literate.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">When the knowledge base doesn&#x27;t have an answer, say:</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">&quot;I don&#x27;t have that information. Let me get a human on this.&quot; Then</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">recommend the user open a ticket via the </span><span class="token code-snippet code keyword" style="font-style:italic">`escalate`</span><span class="token plain"> skill.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">Never disclose internal ticket IDs. Never make legally binding statements.</span><br></span></code></pre></div></div>
 <ul>
@@ -81,9 +81,9 @@
 </ul>
 <p><strong>6. Publish to your website.</strong></p>
 <ul>
-<li class="">CHANNELS tab → toggle <strong>Website</strong> ON.</li>
+<li class="">Configure → scroll to the <strong>Channels</strong> section → toggle <strong>Website</strong> ON.</li>
 <li class="">Add your domain to Allowed Origins (e.g. <code>https://acme.com</code>, <code>https://www.acme.com</code>).</li>
-<li class="">SAVE CHANNELS.</li>
+<li class="">SAVE.</li>
 <li class="">COPY the publishable key. Click <strong>Embed code</strong> to reveal the script tag.</li>
 <li class="">Paste the script tag into your website&#x27;s HTML before <code>&lt;/body&gt;</code>.</li>
 </ul>
@@ -91,7 +91,7 @@
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="follow-up">Follow-up<a href="#follow-up" class="hash-link" aria-label="Direct link to Follow-up" title="Direct link to Follow-up" translate="no">​</a></h3>
 <ul>
 <li class="">Review sessions daily for the first week. Thumb-down anything bad.</li>
-<li class="">Look at the SKILLS tab on bad sessions — which skill should have fired but didn&#x27;t? Write or fix one.</li>
+<li class="">For bad sessions, check which skill should have fired but didn&#x27;t — write or fix one.</li>
 <li class="">Add new KB sources as your product evolves; click COMPILE to refresh.</li>
 </ul>
 <hr>
@@ -100,7 +100,7 @@
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="steps-1">Steps<a href="#steps-1" class="hash-link" aria-label="Direct link to Steps" title="Direct link to Steps" translate="no">​</a></h3>
 <p><strong>1. Create the Slack app.</strong></p>
 <ul>
-<li class=""><a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" class="">api.slack.com/apps</a> → Create New App → From scratch → name it (e.g. <code>acme-support</code>) → pick your workspace.</li>
+<li class=""><a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" class="">api.slack.com/apps</a> → Create New App   → From scratch → name it (e.g. <code>acme-support</code>) → pick your workspace.</li>
 <li class="">Bot Scopes (OAuth &amp; Permissions): <code>chat:write</code>, <code>app_mentions:read</code>, <code>im:read</code>, <code>im:write</code>, <code>channels:history</code>, <code>groups:history</code>, <code>files:read</code>, <code>users:read</code>.</li>
 <li class="">Socket Mode → Enable.</li>
 <li class="">Basic Information → App-Level Tokens → Generate → scope <code>connections:write</code> → copy <code>xapp-…</code>.</li>
@@ -108,10 +108,10 @@
 </ul>
 <p><strong>2. Configure in Surogate.</strong></p>
 <ul>
-<li class="">Open <code>acme-support-bot</code> → CHANNELS tab → toggle <strong>Slack</strong> ON.</li>
+<li class="">Open <code>acme-support-bot</code> → Configure → scroll to the <strong>Channels</strong> section → toggle <strong>Slack</strong> ON.</li>
 <li class="">Paste App Token and Bot Token.</li>
 <li class="">Defaults are fine for most: Require @mention ON, Reply in Thread ON.</li>
-<li class="">SAVE CHANNELS.</li>
+<li class="">SAVE.</li>
 </ul>
 <p><strong>3. Verify.</strong></p>
 <ul>
@@ -140,11 +140,11 @@
 <p><strong>2. After a week, filter to thumb-down sessions.</strong></p>
 <ul>
 <li class="">Sessions → filter chip <strong>👎</strong>.</li>
-<li class="">For each session, open EVENTS and look for the failure mode:
+<li class="">Open each session and look for the failure mode:
 <ul>
 <li class=""><strong>The agent didn&#x27;t search the KB</strong>: it answered from training data instead of looking up the fact. Likely a skill or KB attachment problem.</li>
 <li class=""><strong>The agent searched the KB but the KB returned junk</strong>: source quality issue. Update or refine the KB content.</li>
-<li class=""><strong>The agent searched the right thing but ignored the result</strong>: SOUL.md may be overriding KB content. Tighten the persona.</li>
+<li class=""><strong>The agent searched the right thing but ignored the result</strong>: persona may be overriding KB content. Tighten the description.</li>
 <li class=""><strong>The agent used a tool that did the wrong thing</strong>: tool-allowlist issue or skill missing.</li>
 <li class=""><strong>The agent crashed or got into a loop</strong>: runtime issue — escalate to admin.</li>
 </ul>
@@ -155,13 +155,13 @@
 <p><strong>4. Apply fixes in batches.</strong></p>
 <ul>
 <li class="">&quot;Missing facts&quot; → add KB sources, recompile.</li>
-<li class="">&quot;Wrong tone&quot; → edit SOUL.md.</li>
+<li class="">&quot;Wrong tone&quot; → edit the agent&#x27;s description on the Configure page.</li>
 <li class="">&quot;Wrong workflow&quot; → write a skill (or update an existing one).</li>
-<li class="">&quot;Wrong tool&quot; → tighten allowed tools in CONFIG.</li>
+<li class="">&quot;Wrong tool&quot; → detach problem skills/MCP servers on the Configure page.</li>
 </ul>
 <p><strong>5. Verify with replay</strong>.</p>
 <ul>
-<li class="">For the worst thumb-down sessions, click REPLAY in the THREAD view.</li>
+<li class="">For the worst thumb-down sessions, click REPLAY in the session view.</li>
 <li class="">Replay walks through your old user messages with the new agent config.</li>
 <li class="">Side-by-side diff shows where the new behaviour diverges. Confirm it&#x27;s better.</li>
 </ul>
@@ -193,7 +193,7 @@
 </ul>
 <p><strong>4. Verify the wiki.</strong></p>
 <ul>
-<li class="">WIKI tab → search a real customer question. Confirm:
+<li class="">Open the KB → <strong>Wiki</strong> tab → search a real customer question. Confirm:
 <ul>
 <li class="">Wiki page surfaces if the answer is in the docs</li>
 <li class="">Ticket resolution surfaces if there&#x27;s a relevant past case</li>
@@ -203,7 +203,7 @@
 </ul>
 <p><strong>5. Attach to your support bot.</strong></p>
 <ul>
-<li class="">Open <code>acme-support-bot</code> → KNOWLEDGE &amp; TOOLS → ATTACH KNOWLEDGE BASE → <code>acme-support-corpus</code>.</li>
+<li class="">Open <code>acme-support-bot</code> → Configure → <strong>Knowledge Bases</strong> section → + ATTACH KNOWLEDGE BASE → <code>acme-support-corpus</code>.</li>
 </ul>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="follow-up-3">Follow-up<a href="#follow-up-3" class="hash-link" aria-label="Direct link to Follow-up" title="Direct link to Follow-up" translate="no">​</a></h3>
 <ul>
