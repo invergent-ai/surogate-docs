@@ -35,7 +35,7 @@ For more complex multi-step recipes (fine-tune an expert, build an MCP server, A
 
 **3. Attach the KB.**
 
-- Open the agent → **Configure** in the left nav → scroll to the **Knowledge Bases** section → **+ ATTACH KNOWLEDGE BASE** → pick `acme-product` → confirm.
+- Open the agent → **Configure** in the left nav → the **Knowledge Bases** tab → **+ ATTACH KNOWLEDGE BASE** → pick `acme-product` → confirm.
 
 **4. Test it.**
 
@@ -45,7 +45,7 @@ For more complex multi-step recipes (fine-tune an expert, build an MCP server, A
 
 **5. Customise the persona.**
 
-- Configure → **Identity** section → edit the DESCRIPTION / persona block. Replace the default with something like:
+- Configure → **Identity** tab → edit the DESCRIPTION (short summary) and the **SOUL.md** textarea (full persona). Replace the default with something like:
 
 ```markdown
 # Acme Support Agent
@@ -64,7 +64,7 @@ Never disclose internal ticket IDs. Never make legally binding statements.
 
 **6. Publish to your website.**
 
-- Configure → scroll to the **Channels** section → toggle **Website** ON.
+- Configure → the **Channels** tab → toggle **Website** ON.
 - Add your domain to Allowed Origins (e.g. `https://acme.com`, `https://www.acme.com`).
 - SAVE.
 - COPY the publishable key. Click **Embed code** to reveal the script tag.
@@ -96,7 +96,7 @@ Your support bot is live. Visitors hit a chat bubble in the bottom-right. The bo
 
 **2. Configure in Surogate.**
 
-- Open `acme-support-bot` → Configure → scroll to the **Channels** section → toggle **Slack** ON.
+- Open `acme-support-bot` → Configure → the **Channels** tab → toggle **Slack** ON.
 - Paste App Token and Bot Token.
 - Defaults are fine for most: Require @mention ON, Reply in Thread ON.
 - SAVE.
@@ -195,7 +195,7 @@ By cause: "missing facts," "wrong tone," "wrong tool," "wrong workflow." Each bu
 
 **5. Attach to your support bot.**
 
-- Open `acme-support-bot` → Configure → **Knowledge Bases** section → + ATTACH KNOWLEDGE BASE → `acme-support-corpus`.
+- Open `acme-support-bot` → Configure → **Knowledge Bases** tab → + ATTACH KNOWLEDGE BASE → `acme-support-corpus`.
 
 ### Follow-up
 

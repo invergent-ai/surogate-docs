@@ -80,7 +80,7 @@ The PUBLISH dialog asks for a tag (e.g. `v0.2.0`). Use semantic versioning if yo
 
 ## Attach to an agent
 
-Open the agent → **Configure** in the left nav → scroll to the **Skills** section → **+ ATTACH SKILLS** → pick the skill.
+Open the agent → **Configure** in the left nav → the **Skills & Tools** tab → **+ ATTACH SKILLS** → pick the skill.
 
 The agent hot-reloads on the next session. Existing in-progress sessions keep their old skill list.
 

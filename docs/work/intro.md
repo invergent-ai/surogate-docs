@@ -17,7 +17,7 @@ A Surogate **agent** is a deployed service at `<slug>.cloud.surogate.ai` bundlin
 - **Skills** — markdown files telling it how to handle specific request types
 - **Knowledge bases** — documents it can search at runtime
 - **MCP servers** — connections to external systems (Slack, GitHub, your APIs)
-- **Persona** — the agent's identity, tone, and boundaries. In Work mode this is the DESCRIPTION field on the Configure page; Develop mode exposes the underlying SOUL.md textarea.
+- **Persona** — the agent's identity, tone, and boundaries. Configure → Identity tab exposes both the short DESCRIPTION field and the full SOUL.md textarea (up to 20,000 characters) in either mode.
 - **Channels** — Web (always on), Slack, Telegram, Website widget
 
 The improvement loop:

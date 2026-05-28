@@ -18,7 +18,7 @@ Three patterns:
 
 ## Adding a user
 
-Open the agent → **Configure** in the left nav → scroll to the **Users** section → **+ ADD USER**:
+Open the agent → **Configure** in the left nav → the **Users** tab → **+ ADD USER**:
 
 | Field | Notes |
 |---|---|

@@ -36,7 +36,7 @@ Templates ship without your team's content, so the agent doesn't know your produ
 
 ## 3. Publish to Slack
 
-Click **Configure** in the left nav. Scroll to the **Channels** section near the bottom. Find the **Slack** row and toggle the switch ON.
+Click **Configure** in the left nav, then open the **Channels** tab. Find the **Slack** row and toggle the switch ON.
 
 Paste your Slack credentials:
 
@@ -55,13 +55,13 @@ Two quick wins, both on the **Configure** page:
 
 In the left nav under **LIBRARY**, click **Knowledge Bases** → **NEW KNOWLEDGE BASE**. Name it (e.g. `acme-product`) and pick a curator model. Add a few `.md` or `.pdf` sources, click **COMPILE**, wait for status `active`.
 
-Back on the agent's **Configure** page → **Knowledge Bases** section → **+ ATTACH KNOWLEDGE BASE** → pick the new KB.
+Back on the agent's **Configure** page → **Knowledge Bases** tab → **+ ATTACH KNOWLEDGE BASE** → pick the new KB.
 
 The agent will now search the KB at runtime when a question matches its content.
 
 ### Tighten the persona
 
-The agent's identity, tone, and rules live in the Configure page's identity section (the **DESCRIPTION** field plus a system-prompt block in Develop mode's CONFIG tab). Replace the default with something like:
+The agent's identity, tone, and rules live on **Configure → Identity tab** — the **DESCRIPTION** field for short summaries and a **SOUL.md** textarea (up to 20,000 characters) for the full persona block. Replace the default with something like:
 
 ```markdown
 # Acme Support Agent

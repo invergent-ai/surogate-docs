@@ -46,13 +46,13 @@ You'll need a project on the **Pro plan or higher** with **BYO Firebase Auth** c
 
 ### Step 1 — Connect your Stripe account
 
-Open your agent and click the **Monetize** tab. You'll see a Stripe Connect block. Click **Connect Stripe** and follow Stripe's onboarding:
+Open the agent's **Configure** page and click the **$ Monetize** tab. You'll see a **STRIPE CONNECT** block with `Status: not_connected`. Click **CONNECT STRIPE** and follow Stripe's onboarding:
 
 - Verify your identity (passport / driving licence depending on country).
 - Link a bank account (Stripe uses Plaid-style instant verification where available).
 - Answer a short questionnaire about your business.
 
-Stripe redirects you back to Surogate when you're done. The status block flips to **Active** once Stripe has cleared you for charges. If anything is still pending you'll see exactly which step to finish.
+Stripe redirects you back to Surogate when you're done. The status flips from `not_connected` to **Active** once Stripe has cleared you for charges, and the **OPEN DASHBOARD** button (next to CONNECT STRIPE) becomes active. If anything is still pending you'll see exactly which step to finish.
 
 A few things worth knowing:
 
@@ -64,43 +64,43 @@ A few things worth knowing:
 
 Your buyers need a way to sign in before they can pay. Surogate uses **Firebase Authentication** for this — the same setup you use to let end users [self-register](./channels/self-registration.md).
 
-Under **Settings → Firebase Auth**, configure your project's Firebase account. Choose which sign-in providers to offer (email/password, Google, GitHub). You can use the same Firebase project for both agent self-registration and commerce, or set them up separately.
+Under **Settings → ⚙ Settings tab → Firebase Auth**, configure your project's Firebase account. Choose which sign-in providers to offer (email/password, Google, GitHub). You can use the same Firebase project for both agent self-registration and commerce.
 
 If you skip this step the buyer paywall shows *"buyer authentication is not configured."*
 
 ### Step 3 — Pick a monetization mode
 
-Back on the Monetize tab, the **Mode** selector has four choices:
+Back on the Monetize tab, the **MODE** radio group has four choices:
 
 | Mode | When to use it |
 |---|---|
-| **Free** | No charge. The default. |
-| **Subscription required** | Buyers must hold an active subscription to send any message. Best for "all you can eat" pricing. |
-| **Token packs only** | Pay as you go. Buyers top up a balance and the agent burns tokens per message. Best for casual users. |
-| **Both** | Buyers can subscribe *or* buy packs. Subscription tokens get spent first; top-up tokens kick in when those run out. |
+| **FREE** | No charge. The default. |
+| **SUBSCRIPTION** | Buyers must hold an active subscription to send any message. Best for *all you can eat* pricing. |
+| **TOKEN PACKS** | Pay as you go. Buyers top up a balance and the agent burns tokens per message. Best for casual users. |
+| **BOTH** | Buyers can subscribe *or* buy packs. Subscription tokens get spent first; top-up tokens kick in when those run out. |
 
-You can change the mode at any time. Existing offers and existing buyers carry over — the change only affects the paywall the buyer sees next time they visit.
+You can change the mode at any time. Existing offers and existing buyers carry over — the change only affects the paywall the buyer sees next time they visit. The page shows a *Monetization updated* toast after each change.
 
 ### Step 4 — Create offers
 
-Once you've picked a mode, the right editors appear:
+Once you've picked a mode (anything other than FREE), the right editors appear under the STRIPE CONNECT block. The fields stay **disabled** until Stripe is connected.
 
-**Subscription** — a recurring monthly or yearly charge. You set:
+**Subscription plan** — a recurring monthly or yearly charge. Fields:
 
-- A name (shown on the paywall and on the buyer's card statement)
-- A price in USD
-- A billing interval (`month` or `year`)
-- The number of tokens included each period
+- **NAME** — defaults to `Monthly access`; shown on the paywall and on the buyer's card statement
+- **PRICE (USD)** — defaults to `10`
+- **TOKENS INCLUDED** — defaults to `1,000,000`
+- **INTERVAL** — combobox, `Monthly` or `Yearly`
 
-Each period the buyer pays, they get a fresh batch of tokens. Unused tokens from the previous period **do not roll over**.
+Click **ADD PLAN**. Each period the buyer pays, they get a fresh batch of tokens. Unused tokens from the previous period **do not roll over**.
 
-**Token pack** — a one-time purchase. You set:
+**Token pack** — a one-time purchase. Fields:
 
-- A name
-- A price in USD
-- The number of tokens added to the buyer's balance
+- **NAME** — defaults to `Top-up pack`
+- **PRICE (USD)** — defaults to `5`
+- **TOKENS INCLUDED** — defaults to `500,000`
 
-Top-up tokens **never expire** — buyers keep them until they spend them, even if they later cancel a subscription.
+Click **ADD PACK**. Top-up tokens **never expire** — buyers keep them until they spend them, even if they later cancel a subscription.
 
 A few rules:
 

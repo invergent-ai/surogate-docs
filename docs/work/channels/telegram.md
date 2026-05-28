@@ -15,7 +15,7 @@ Simpler than Slack — one bot token and you're up.
 
 ## Configuration in Surogate
 
-Open the agent → **Configure** in the left nav → scroll to the **Channels** section → toggle **Telegram** ON. The form expands:
+Open the agent → **Configure** in the left nav → the **Channels** tab → toggle **Telegram** ON. The form expands:
 
 | Field | What it does |
 |---|---|
@@ -45,7 +45,7 @@ The most common cause: **another instance is consuming Telegram updates**. Teleg
 
 ## Toggling off
 
-Configure page → Channels section → Telegram OFF → **SAVE CHANNELS**. Same semantics as Slack.
+Configure → Channels tab → Telegram OFF → **SAVE CHANNELS**. Same semantics as Slack.
 
 ## What's next
 

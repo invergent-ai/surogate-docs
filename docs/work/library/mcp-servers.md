@@ -109,7 +109,7 @@ The detail panel shows the result: **Exposed Tools** count, security-scan status
 
 ## Attaching to an agent
 
-Open the agent → **Configure** in the left nav → scroll to the **MCP Servers** section → **+ Attach server…** combobox → pick the MCP server.
+Open the agent → **Configure** in the left nav → the **Skills & Tools** tab → **+ Attach server…** combobox → pick the MCP server.
 
 The agent's tool catalogue grows by however many tools that server exposes. The LLM sees them in `skills_list` style — name + description per tool.
 

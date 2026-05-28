@@ -22,7 +22,7 @@ Copy two tokens:
 
 ## Configuration in Surogate
 
-Open the agent → **Configure** in the left nav → scroll to the **Channels** section → toggle **Slack** ON. The form expands:
+Open the agent → **Configure** in the left nav → the **Channels** tab → toggle **Slack** ON. The form expands:
 
 | Field | What it does |
 |---|---|
@@ -81,7 +81,7 @@ Check the agent's **Sessions** view — if no Slack-channel sessions are appeari
 
 ## Toggling Slack off
 
-Configure page → Channels section → toggle Slack OFF → **SAVE CHANNELS**. The bot stops responding within seconds. Sessions in flight finish; new ones don't start. Tokens are preserved — you can re-enable later without re-entering them.
+Configure → Channels tab → toggle Slack OFF → **SAVE CHANNELS**. The bot stops responding within seconds. Sessions in flight finish; new ones don't start. Tokens are preserved — you can re-enable later without re-entering them.
 
 ## What's next
 

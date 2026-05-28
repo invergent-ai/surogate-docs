@@ -13,7 +13,7 @@ Nothing external. The platform issues a **publishable key** when you enable the 
 
 ## Configuration
 
-Open the agent → **Configure** in the left nav → scroll to the **Channels** section → toggle **Website** ON. The form expands:
+Open the agent → **Configure** in the left nav → the **Channels** tab → toggle **Website** ON. The form expands:
 
 | Field | What it does |
 |---|---|
