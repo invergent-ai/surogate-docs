@@ -37,3 +37,7 @@ Disabled by default. The platform's bundled LLM endpoints are billed through the
 ## Stripe Customer Portal
 
 **Manage Subscription** opens Stripe — card, invoices, plan changes (prorated), pause / cancel. Changes propagate to the platform via webhook (usually instant, occasionally 30-60s lag).
+
+## Monetize your agents
+
+On Pro and above, you can charge end users for access to your public agents via Stripe Connect — see [Monetize your agents](../monetize.md). Earnings land in **your** Stripe account, not Surogate's; Surogate collects a small platform fee on each charge.

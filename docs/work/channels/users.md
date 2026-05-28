@@ -13,6 +13,7 @@ Three patterns:
 
 - **Internal-only agent** — your team only. Don't add users here; only operators in your tenant can chat with the agent via `ops.surogate.ai`. The Web endpoint at `<slug>.cloud.surogate.ai` is locked down.
 - **Closed customer-facing bot** — invite specific customers / partners. Add them one at a time, or bulk-add from CSV. The Web endpoint requires sign-in.
+- **Open sign-up** — let visitors create their own accounts via Firebase. Configure once at the project level, then toggle per agent. See [Self-registration](./self-registration.md).
 - **Public-facing bot** — use the **Website widget** instead (see [Website widget](./website-widget.md)). Visitors are anonymous; identity is managed in your existing system.
 
 ## Adding a user

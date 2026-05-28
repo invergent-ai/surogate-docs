@@ -34,6 +34,7 @@ module.exports = {
         'work/channels/telegram',
         'work/channels/website-widget',
         'work/channels/users',
+        'work/channels/self-registration',
       ],
     },
     {
@@ -56,6 +57,7 @@ module.exports = {
         'work/settings/billing',
       ],
     },
+    'work/monetize',
     'work/use-cases',
     {
       type: 'category',
