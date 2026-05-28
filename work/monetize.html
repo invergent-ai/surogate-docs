@@ -32,7 +32,7 @@
 <meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
 <meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
-<script src="/assets/js/runtime~main.28546600.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.e873c3df.js" defer="defer"></script>
 <script src="/assets/js/main.ad149205.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -128,13 +128,13 @@
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="set-up-your-agent">Set up your agent<a href="#set-up-your-agent" class="hash-link" aria-label="Direct link to Set up your agent" title="Direct link to Set up your agent" translate="no">​</a></h2>
 <p>You&#x27;ll need a project on the <strong>Pro plan or higher</strong> with <strong>BYO Firebase Auth</strong> configured (see <a class="" href="/work/channels/self-registration">Self-registration</a>). The platform operator must have completed the platform-side Stripe Connect setup; if Stripe Connect isn&#x27;t enabled platform-wide, the Monetize tab returns <em>&quot;Stripe Connect is not configured.&quot;</em></p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-1--connect-your-stripe-account">Step 1 — Connect your Stripe account<a href="#step-1--connect-your-stripe-account" class="hash-link" aria-label="Direct link to Step 1 — Connect your Stripe account" title="Direct link to Step 1 — Connect your Stripe account" translate="no">​</a></h3>
-<p>Open your agent and click the <strong>Monetize</strong> tab. You&#x27;ll see a Stripe Connect block. Click <strong>Connect Stripe</strong> and follow Stripe&#x27;s onboarding:</p>
+<p>Open the agent&#x27;s <strong>Configure</strong> page and click the <strong>$ Monetize</strong> tab. You&#x27;ll see a <strong>STRIPE CONNECT</strong> block with <code>Status: not_connected</code>. Click <strong>CONNECT STRIPE</strong> and follow Stripe&#x27;s onboarding:</p>
 <ul>
 <li class="">Verify your identity (passport / driving licence depending on country).</li>
 <li class="">Link a bank account (Stripe uses Plaid-style instant verification where available).</li>
 <li class="">Answer a short questionnaire about your business.</li>
 </ul>
-<p>Stripe redirects you back to Surogate when you&#x27;re done. The status block flips to <strong>Active</strong> once Stripe has cleared you for charges. If anything is still pending you&#x27;ll see exactly which step to finish.</p>
+<p>Stripe redirects you back to Surogate when you&#x27;re done. The status flips from <code>not_connected</code> to <strong>Active</strong> once Stripe has cleared you for charges, and the <strong>OPEN DASHBOARD</strong> button (next to CONNECT STRIPE) becomes active. If anything is still pending you&#x27;ll see exactly which step to finish.</p>
 <p>A few things worth knowing:</p>
 <ul>
 <li class=""><strong>One Stripe account per project</strong>, not per agent. If you monetize more than one agent in the same project they all share the same Stripe account and the same payout schedule.</li>
@@ -143,10 +143,10 @@
 </ul>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-2--set-up-buyer-sign-in">Step 2 — Set up buyer sign-in<a href="#step-2--set-up-buyer-sign-in" class="hash-link" aria-label="Direct link to Step 2 — Set up buyer sign-in" title="Direct link to Step 2 — Set up buyer sign-in" translate="no">​</a></h3>
 <p>Your buyers need a way to sign in before they can pay. Surogate uses <strong>Firebase Authentication</strong> for this — the same setup you use to let end users <a class="" href="/work/channels/self-registration">self-register</a>.</p>
-<p>Under <strong>Settings → Firebase Auth</strong>, configure your project&#x27;s Firebase account. Choose which sign-in providers to offer (email/password, Google, GitHub). You can use the same Firebase project for both agent self-registration and commerce, or set them up separately.</p>
+<p>Under <strong>Settings → ⚙ Settings tab → Firebase Auth</strong>, configure your project&#x27;s Firebase account. Choose which sign-in providers to offer (email/password, Google, GitHub). You can use the same Firebase project for both agent self-registration and commerce.</p>
 <p>If you skip this step the buyer paywall shows <em>&quot;buyer authentication is not configured.&quot;</em></p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-3--pick-a-monetization-mode">Step 3 — Pick a monetization mode<a href="#step-3--pick-a-monetization-mode" class="hash-link" aria-label="Direct link to Step 3 — Pick a monetization mode" title="Direct link to Step 3 — Pick a monetization mode" translate="no">​</a></h3>
-<p>Back on the Monetize tab, the <strong>Mode</strong> selector has four choices:</p>
+<p>Back on the Monetize tab, the <strong>MODE</strong> radio group has four choices:</p>
 
 
 
@@ -172,25 +172,25 @@
 
 
 
-<table><thead><tr><th>Mode</th><th>When to use it</th></tr></thead><tbody><tr><td><strong>Free</strong></td><td>No charge. The default.</td></tr><tr><td><strong>Subscription required</strong></td><td>Buyers must hold an active subscription to send any message. Best for &quot;all you can eat&quot; pricing.</td></tr><tr><td><strong>Token packs only</strong></td><td>Pay as you go. Buyers top up a balance and the agent burns tokens per message. Best for casual users.</td></tr><tr><td><strong>Both</strong></td><td>Buyers can subscribe <em>or</em> buy packs. Subscription tokens get spent first; top-up tokens kick in when those run out.</td></tr></tbody></table>
-<p>You can change the mode at any time. Existing offers and existing buyers carry over — the change only affects the paywall the buyer sees next time they visit.</p>
+<table><thead><tr><th>Mode</th><th>When to use it</th></tr></thead><tbody><tr><td><strong>FREE</strong></td><td>No charge. The default.</td></tr><tr><td><strong>SUBSCRIPTION</strong></td><td>Buyers must hold an active subscription to send any message. Best for <em>all you can eat</em> pricing.</td></tr><tr><td><strong>TOKEN PACKS</strong></td><td>Pay as you go. Buyers top up a balance and the agent burns tokens per message. Best for casual users.</td></tr><tr><td><strong>BOTH</strong></td><td>Buyers can subscribe <em>or</em> buy packs. Subscription tokens get spent first; top-up tokens kick in when those run out.</td></tr></tbody></table>
+<p>You can change the mode at any time. Existing offers and existing buyers carry over — the change only affects the paywall the buyer sees next time they visit. The page shows a <em>Monetization updated</em> toast after each change.</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-4--create-offers">Step 4 — Create offers<a href="#step-4--create-offers" class="hash-link" aria-label="Direct link to Step 4 — Create offers" title="Direct link to Step 4 — Create offers" translate="no">​</a></h3>
-<p>Once you&#x27;ve picked a mode, the right editors appear:</p>
-<p><strong>Subscription</strong> — a recurring monthly or yearly charge. You set:</p>
+<p>Once you&#x27;ve picked a mode (anything other than FREE), the right editors appear under the STRIPE CONNECT block. The fields stay <strong>disabled</strong> until Stripe is connected.</p>
+<p><strong>Subscription plan</strong> — a recurring monthly or yearly charge. Fields:</p>
 <ul>
-<li class="">A name (shown on the paywall and on the buyer&#x27;s card statement)</li>
-<li class="">A price in USD</li>
-<li class="">A billing interval (<code>month</code> or <code>year</code>)</li>
-<li class="">The number of tokens included each period</li>
+<li class=""><strong>NAME</strong> — defaults to <code>Monthly access</code>; shown on the paywall and on the buyer&#x27;s card statement</li>
+<li class=""><strong>PRICE (USD)</strong> — defaults to <code>10</code></li>
+<li class=""><strong>TOKENS INCLUDED</strong> — defaults to <code>1,000,000</code></li>
+<li class=""><strong>INTERVAL</strong> — combobox, <code>Monthly</code> or <code>Yearly</code></li>
 </ul>
-<p>Each period the buyer pays, they get a fresh batch of tokens. Unused tokens from the previous period <strong>do not roll over</strong>.</p>
-<p><strong>Token pack</strong> — a one-time purchase. You set:</p>
+<p>Click <strong>ADD PLAN</strong>. Each period the buyer pays, they get a fresh batch of tokens. Unused tokens from the previous period <strong>do not roll over</strong>.</p>
+<p><strong>Token pack</strong> — a one-time purchase. Fields:</p>
 <ul>
-<li class="">A name</li>
-<li class="">A price in USD</li>
-<li class="">The number of tokens added to the buyer&#x27;s balance</li>
+<li class=""><strong>NAME</strong> — defaults to <code>Top-up pack</code></li>
+<li class=""><strong>PRICE (USD)</strong> — defaults to <code>5</code></li>
+<li class=""><strong>TOKENS INCLUDED</strong> — defaults to <code>500,000</code></li>
 </ul>
-<p>Top-up tokens <strong>never expire</strong> — buyers keep them until they spend them, even if they later cancel a subscription.</p>
+<p>Click <strong>ADD PACK</strong>. Top-up tokens <strong>never expire</strong> — buyers keep them until they spend them, even if they later cancel a subscription.</p>
 <p>A few rules:</p>
 <ul>
 <li class="">You can create as many offers as you want. Stripe creates a corresponding product and price on your account for each one.</li>

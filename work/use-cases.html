@@ -32,7 +32,7 @@
 <meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
 <meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
-<script src="/assets/js/runtime~main.28546600.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.e873c3df.js" defer="defer"></script>
 <script src="/assets/js/main.ad149205.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -63,7 +63,7 @@
 </ul>
 <p><strong>3. Attach the KB.</strong></p>
 <ul>
-<li class="">Open the agent → <strong>Configure</strong> in the left nav → scroll to the <strong>Knowledge Bases</strong> section → <strong>+ ATTACH KNOWLEDGE BASE</strong> → pick <code>acme-product</code> → confirm.</li>
+<li class="">Open the agent → <strong>Configure</strong> in the left nav → the <strong>Knowledge Bases</strong> tab → <strong>+ ATTACH KNOWLEDGE BASE</strong> → pick <code>acme-product</code> → confirm.</li>
 </ul>
 <p><strong>4. Test it.</strong></p>
 <ul>
@@ -73,7 +73,7 @@
 </ul>
 <p><strong>5. Customise the persona.</strong></p>
 <ul>
-<li class="">Configure → <strong>Identity</strong> section → edit the DESCRIPTION / persona block. Replace the default with something like:</li>
+<li class="">Configure → <strong>Identity</strong> tab → edit the DESCRIPTION (short summary) and the <strong>SOUL.md</strong> textarea (full persona). Replace the default with something like:</li>
 </ul>
 <div class="language-markdown codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-markdown codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token title important punctuation" style="color:rgb(199, 146, 234)">#</span><span class="token title important"> Acme Support Agent</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">You are the Acme Corp customer support assistant. Speak as &quot;we&quot; when</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">referring to Acme. Be warm, concise, technically literate.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">When the knowledge base doesn&#x27;t have an answer, say:</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">&quot;I don&#x27;t have that information. Let me get a human on this.&quot; Then</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">recommend the user open a ticket via the </span><span class="token code-snippet code keyword" style="font-style:italic">`escalate`</span><span class="token plain"> skill.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">Never disclose internal ticket IDs. Never make legally binding statements.</span><br></span></code></pre></div></div>
 <ul>
@@ -81,7 +81,7 @@
 </ul>
 <p><strong>6. Publish to your website.</strong></p>
 <ul>
-<li class="">Configure → scroll to the <strong>Channels</strong> section → toggle <strong>Website</strong> ON.</li>
+<li class="">Configure → the <strong>Channels</strong> tab → toggle <strong>Website</strong> ON.</li>
 <li class="">Add your domain to Allowed Origins (e.g. <code>https://acme.com</code>, <code>https://www.acme.com</code>).</li>
 <li class="">SAVE.</li>
 <li class="">COPY the publishable key. Click <strong>Embed code</strong> to reveal the script tag.</li>
@@ -108,7 +108,7 @@
 </ul>
 <p><strong>2. Configure in Surogate.</strong></p>
 <ul>
-<li class="">Open <code>acme-support-bot</code> → Configure → scroll to the <strong>Channels</strong> section → toggle <strong>Slack</strong> ON.</li>
+<li class="">Open <code>acme-support-bot</code> → Configure → the <strong>Channels</strong> tab → toggle <strong>Slack</strong> ON.</li>
 <li class="">Paste App Token and Bot Token.</li>
 <li class="">Defaults are fine for most: Require @mention ON, Reply in Thread ON.</li>
 <li class="">SAVE.</li>
@@ -203,7 +203,7 @@
 </ul>
 <p><strong>5. Attach to your support bot.</strong></p>
 <ul>
-<li class="">Open <code>acme-support-bot</code> → Configure → <strong>Knowledge Bases</strong> section → + ATTACH KNOWLEDGE BASE → <code>acme-support-corpus</code>.</li>
+<li class="">Open <code>acme-support-bot</code> → Configure → <strong>Knowledge Bases</strong> tab → + ATTACH KNOWLEDGE BASE → <code>acme-support-corpus</code>.</li>
 </ul>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="follow-up-3">Follow-up<a href="#follow-up-3" class="hash-link" aria-label="Direct link to Follow-up" title="Direct link to Follow-up" translate="no">​</a></h3>
 <ul>

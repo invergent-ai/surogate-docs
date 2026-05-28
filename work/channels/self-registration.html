@@ -32,7 +32,7 @@
 <meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
 <meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
-<script src="/assets/js/runtime~main.28546600.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.e873c3df.js" defer="defer"></script>
 <script src="/assets/js/main.ad149205.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -50,8 +50,8 @@
 <p>Three things to get right, in order:</p>
 <ol>
 <li class=""><strong>Create a Firebase project</strong> in the Firebase Console and write down a handful of public config values.</li>
-<li class=""><strong>Paste those values into Surogate</strong> under <strong>Settings → Firebase Auth</strong>. Pick which sign-in methods you want offered (Google, GitHub, Email/Password).</li>
-<li class=""><strong>Flip the toggle on each agent</strong> under <strong>Configure → Users → Allow self-registration</strong>. Restart the agent so the new config is picked up by its web app.</li>
+<li class=""><strong>Paste those values into Surogate</strong> under <strong>Settings → ⚙ Settings tab → Firebase Auth</strong>. Pick which sign-in methods you want offered (Google, GitHub, Email/Password).</li>
+<li class=""><strong>Flip the toggle on each agent</strong> under <strong>Configure → Users tab → Allow self-registration</strong>. Restart the agent so the new config is picked up by its web app.</li>
 </ol>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-1--create-a-firebase-project">Step 1 — Create a Firebase project<a href="#step-1--create-a-firebase-project" class="hash-link" aria-label="Direct link to Step 1 — Create a Firebase project" title="Direct link to Step 1 — Create a Firebase project" translate="no">​</a></h2>
 <ol>
@@ -77,7 +77,7 @@
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-2--tell-surogate-about-your-firebase-project">Step 2 — Tell Surogate about your Firebase project<a href="#step-2--tell-surogate-about-your-firebase-project" class="hash-link" aria-label="Direct link to Step 2 — Tell Surogate about your Firebase project" title="Direct link to Step 2 — Tell Surogate about your Firebase project" translate="no">​</a></h2>
 <ol>
 <li class="">
-<p>Open <strong>Settings → Firebase Auth</strong> (the card sits on the project Settings page; if it&#x27;s missing you&#x27;re on the Free plan — upgrade first).</p>
+<p>Open <strong>Settings → ⚙ Settings tab → Firebase Auth</strong> (the card sits on the project Settings page; if it&#x27;s missing you&#x27;re on the Free plan — upgrade first).</p>
 </li>
 <li class="">
 <p>Fill in:</p>
@@ -117,7 +117,7 @@
 </li>
 </ol>
 <p>The card stays editable — change a value and click <em>Save Firebase</em> again any time. Click <em>Remove Firebase</em> to disconnect (existing self-registered users keep their database rows but can no longer sign in until you re-add the config or issue them local credentials).</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-3--choose-sign-in-methods">Step 3 — Choose sign-in methods<a href="#step-3--choose-sign-in-methods" class="hash-link" aria-label="Direct link to Step 3 — Choose sign-in methods" title="Direct link to Step 3 — Choose sign-in methods" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-3--choose-sign-in-methods">Step 3 — Choose sign-in methods<a href="#step-3--choose-sign-in-methods" class="hash-link" aria-label="Direct link to Step 3 — Choose sign-in methods" title="Direct link to Step 3   — Choose sign-in methods" translate="no">​</a></h2>
 <p>Firebase has dozens of sign-in providers. Surogate surfaces three:</p>
 
 
@@ -171,10 +171,10 @@
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-5--turn-the-switch-on-for-an-agent">Step 5 — Turn the switch on for an agent<a href="#step-5--turn-the-switch-on-for-an-agent" class="hash-link" aria-label="Direct link to Step 5 — Turn the switch on for an agent" title="Direct link to Step 5 — Turn the switch on for an agent" translate="no">​</a></h2>
 <ol>
 <li class="">Open the agent you want self-registration enabled for.</li>
-<li class=""><strong>Configure</strong> in the left nav → scroll to the <strong>Users</strong> section.</li>
-<li class="">Flip <strong>Allow self-registration</strong>.</li>
+<li class=""><strong>Configure</strong> in the left nav → <strong>Users</strong> tab.</li>
+<li class="">Flip <strong>ALLOW SELF-REGISTRATION</strong>.</li>
 </ol>
-<p>The switch is disabled until your project has a Firebase config saved. If you see an info icon next to a disabled switch, click it to jump straight to the Settings page.</p>
+<p>The switch is disabled until your project has a Firebase config saved. When it&#x27;s disabled you&#x27;ll see a small <strong>Open Settings to configure Firebase auth</strong> link next to it — click to jump straight to the Settings → ⚙ Settings tab.</p>
 <p>Restart (or stop + start) the agent. Self-registration is picked up at deploy time, so the toggle won&#x27;t take effect on the live web app until the agent restarts.</p>
 <div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>tip</div><div class="admonitionContent_BuS1"><p>You can have a mix: Agent A allows self-registration while Agent B stays admin-only. The Firebase project is shared across all your agents in the project, but each agent decides independently whether to surface the sign-up buttons.</p></div></div>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-end-users-see">What end users see<a href="#what-end-users-see" class="hash-link" aria-label="Direct link to What end users see" title="Direct link to What end users see" translate="no">​</a></h2>
@@ -209,17 +209,17 @@
 <ol>
 <li class=""><strong>You&#x27;re on the Free plan.</strong> Self-registration requires Standard or above — the Settings tab shows an upgrade banner. Upgrade and the toggle becomes editable.</li>
 <li class=""><strong>You&#x27;re not the project owner.</strong> Editors and viewers can see the toggle but can&#x27;t flip it. Ask the project owner.</li>
-<li class=""><strong>You configured Firebase but didn&#x27;t save it.</strong> Re-open <strong>Settings → Firebase Auth</strong> and confirm the green <em>configured</em> badge is showing. If not, click <strong>Save Firebase</strong>.</li>
+<li class=""><strong>You configured Firebase but didn&#x27;t save it.</strong> Re-open <strong>Settings → ⚙ Settings tab → Firebase Auth</strong> and confirm the green <em>configured</em> badge is showing. If not, click <strong>Save Firebase</strong>.</li>
 </ol>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="self-registered-users-were-locked-out-after-i-removed-firebase">Self-registered users were locked out after I removed Firebase<a href="#self-registered-users-were-locked-out-after-i-removed-firebase" class="hash-link" aria-label="Direct link to Self-registered users were locked out after I removed Firebase" title="Direct link to Self-registered users were locked out after I removed Firebase" translate="no">​</a></h3>
-<p>Removing the project&#x27;s Firebase config also disables Firebase login. Their database row still exists — go to <strong>Configure → Users → + ADD USER</strong> and re-issue local credentials by entering the same email, or restore the Firebase config.</p>
+<p>Removing the project&#x27;s Firebase config also disables Firebase login. Their database row still exists — go to <strong>Configure → Users tab → + ADD USER</strong> and re-issue local credentials by entering the same email, or restore the Firebase config.</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="a-user-complains-they-never-got-the-verification-email">A user complains they never got the verification email<a href="#a-user-complains-they-never-got-the-verification-email" class="hash-link" aria-label="Direct link to A user complains they never got the verification email" title="Direct link to A user complains they never got the verification email" translate="no">​</a></h3>
 <p>On the login page, switch to create-account mode (you might already be seeing the notice from a recent attempt), then click <strong>Resend verification email</strong>. If that returns <em>&quot;Too many attempts. Please wait a moment and try again.&quot;</em> — Firebase rate-limited; wait a few minutes.</p>
 <p>Also worth telling them to check the spam folder, especially before you&#x27;ve set up a custom auth domain (see above).</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="removing-self-registration-later">Removing self-registration later<a href="#removing-self-registration-later" class="hash-link" aria-label="Direct link to Removing self-registration later" title="Direct link to Removing self-registration later" translate="no">​</a></h2>
 <p>Two scopes:</p>
 <ul>
-<li class=""><strong>Stop offering it on one specific agent</strong> — flip <strong>Allow self-registration</strong> off on the agent&#x27;s Configure → Users section and restart the agent. People who already signed up for that agent keep working; only new sign-ups are blocked.</li>
+<li class=""><strong>Stop offering it on one specific agent</strong> — flip <strong>Allow self-registration</strong> off on the agent&#x27;s Configure → Users tab and restart the agent. People who already signed up for that agent keep working; only new sign-ups are blocked.</li>
 <li class=""><strong>Stop offering it across the whole project</strong> — click <strong>Remove Firebase</strong> on the Settings page. Every agent in the project goes back to admin-only login, and previously self-registered users can no longer authenticate via Firebase until you restore the config (their rows are preserved; you can issue them local credentials in the meantime).</li>
 </ul>
 <p>The Firebase project itself is yours — Surogate doesn&#x27;t touch it. Deleting your Firebase project deletes all your users; the same applies if you cancel Firebase billing.</p>

@@ -32,7 +32,7 @@
 <meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
 <meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
-<script src="/assets/js/runtime~main.28546600.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.e873c3df.js" defer="defer"></script>
 <script src="/assets/js/main.ad149205.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -78,7 +78,7 @@
 <p>The chat opens. Type a question, press Enter — the agent streams its response. Tool calls (KB searches, web fetches) appear inline so you can see what it did.</p>
 <p>Templates ship without your team&#x27;s content, so the agent doesn&#x27;t know your product yet. Step 4 fixes that.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-publish-to-slack">3. Publish to Slack<a href="#3-publish-to-slack" class="hash-link" aria-label="Direct link to 3. Publish to Slack" title="Direct link to 3. Publish to Slack" translate="no">​</a></h2>
-<p>Click <strong>Configure</strong> in the left nav. Scroll to the <strong>Channels</strong> section near the bottom. Find the <strong>Slack</strong> row and toggle the switch ON.</p>
+<p>Click <strong>Configure</strong> in the left nav, then open the <strong>Channels</strong> tab. Find the <strong>Slack</strong> row and toggle the switch ON.</p>
 <p>Paste your Slack credentials:</p>
 <ul>
 <li class=""><strong>App Token</strong> — <code>xapp-…</code> from your Slack app&#x27;s <strong>App-Level Tokens</strong> (scope <code>connections:write</code>)</li>
@@ -90,10 +90,10 @@
 <p>Two quick wins, both on the <strong>Configure</strong> page:</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="add-a-knowledge-base">Add a knowledge base<a href="#add-a-knowledge-base" class="hash-link" aria-label="Direct link to Add a knowledge base" title="Direct link to Add a knowledge base" translate="no">​</a></h3>
 <p>In the left nav under <strong>LIBRARY</strong>, click <strong>Knowledge Bases</strong> → <strong>NEW KNOWLEDGE BASE</strong>. Name it (e.g. <code>acme-product</code>) and pick a curator model. Add a few <code>.md</code> or <code>.pdf</code> sources, click <strong>COMPILE</strong>, wait for status <code>active</code>.</p>
-<p>Back on the agent&#x27;s <strong>Configure</strong> page → <strong>Knowledge Bases</strong> section → <strong>+ ATTACH KNOWLEDGE BASE</strong> → pick the new KB.</p>
+<p>Back on the agent&#x27;s <strong>Configure</strong> page → <strong>Knowledge Bases</strong> tab → <strong>+ ATTACH KNOWLEDGE BASE</strong> → pick the new KB.</p>
 <p>The agent will now search the KB at runtime when a question matches its content.</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="tighten-the-persona">Tighten the persona<a href="#tighten-the-persona" class="hash-link" aria-label="Direct link to Tighten the persona" title="Direct link to Tighten the persona" translate="no">​</a></h3>
-<p>The agent&#x27;s identity, tone, and rules live in the Configure page&#x27;s identity section (the <strong>DESCRIPTION</strong> field plus a system-prompt block in Develop mode&#x27;s CONFIG tab). Replace the default with something like:</p>
+<p>The agent&#x27;s identity, tone, and rules live on <strong>Configure → Identity tab</strong> — the <strong>DESCRIPTION</strong> field for short summaries and a <strong>SOUL.md</strong> textarea (up to 20,000 characters) for the full persona block. Replace the default with something like:</p>
 <div class="language-markdown codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-markdown codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token title important punctuation" style="color:rgb(199, 146, 234)">#</span><span class="token title important"> Acme Support Agent</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">You are the Acme support assistant. Speak as &quot;we&quot; when referring to Acme.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">Tone: warm, concise, technically literate. Avoid corporate boilerplate.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">When you don&#x27;t know something, say &quot;I&#x27;ll get a human on this&quot; rather</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">than guessing.</span><br></span></code></pre></div></div>
 <p>Save. New chats pick up the new persona; in-progress sessions keep the old one (by design).</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="5-watch-what-it-does">5. Watch what it does<a href="#5-watch-what-it-does" class="hash-link" aria-label="Direct link to 5. Watch what it does" title="Direct link to 5. Watch what it does" translate="no">​</a></h2>
