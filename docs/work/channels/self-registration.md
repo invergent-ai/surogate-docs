@@ -23,7 +23,7 @@ Three things to get right, in order:
 
 1. **Create a Firebase project** in the Firebase Console and write down a handful of public config values.
 2. **Paste those values into Surogate** under **Settings → ⚙ Settings tab → Firebase Auth**. Pick which sign-in methods you want offered (Google, GitHub, Email/Password).
-3. **Flip the toggle on each agent** under **Configure → Users tab → Allow self-registration**. Restart the agent so the new config is picked up by its web app.
+3. **Flip the toggle on each agent** under **Configure → Users tab → Let anyone sign up**. Restart the agent so the new config is picked up by its web app.
 
 ## Step 1 — Create a Firebase project
 
@@ -106,9 +106,9 @@ Skip this step and your users will see *"This domain is not authorized."* the mo
 
 1. Open the agent you want self-registration enabled for.
 2. **Configure** in the left nav → **Users** tab.
-3. Flip **ALLOW SELF-REGISTRATION**.
+3. Flip **Let anyone sign up**.
 
-The switch is disabled until your project has a Firebase config saved. When it's disabled you'll see a small **Open Settings to configure Firebase auth** link next to it — click to jump straight to the Settings → ⚙ Settings tab.
+The switch is disabled until your project has a Firebase config saved. When it's disabled you'll see a small **Set up in Settings** link next to it — click to jump straight to the Settings → ⚙ Settings tab.
 
 Restart (or stop + start) the agent. Self-registration is picked up at deploy time, so the toggle won't take effect on the live web app until the agent restarts.
 
@@ -181,7 +181,7 @@ Also worth telling them to check the spam folder, especially before you've set u
 
 Two scopes:
 
-- **Stop offering it on one specific agent** — flip **Allow self-registration** off on the agent's Configure → Users tab and restart the agent. People who already signed up for that agent keep working; only new sign-ups are blocked.
+- **Stop offering it on one specific agent** — flip **Let anyone sign up** off on the agent's Configure → Users tab and restart the agent. People who already signed up for that agent keep working; only new sign-ups are blocked.
 - **Stop offering it across the whole project** — click **Remove Firebase** on the Settings page. Every agent in the project goes back to admin-only login, and previously self-registered users can no longer authenticate via Firebase until you restore the config (their rows are preserved; you can issue them local credentials in the meantime).
 
 The Firebase project itself is yours — Surogate doesn't touch it. Deleting your Firebase project deletes all your users; the same applies if you cancel Firebase billing.

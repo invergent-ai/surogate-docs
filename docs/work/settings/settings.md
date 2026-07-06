@@ -1,11 +1,11 @@
 ---
-title: Project settings
-sidebar_position: 4
+title: Settings
+sidebar_position: 2
 ---
 
-# Project settings
+# Settings
 
-Project-scoped configuration for your active project, reached via the **Settings** tab at `/work/settings/settings` (shared with Dev mode at `/studio/settings/settings`).
+The **Settings** tab holds project-scoped configuration for your active project, at `/work/settings/settings` (shared with Dev mode at `/studio/settings/settings`).
 
 Projects are hidden from the everyday UX — each account works against a single default project — so this tab always acts on whichever project is active in the navbar. If no project is active, it shows "No active project. Pick a project from the navbar to manage its settings." The only knob today is **BYO Firebase auth**; more per-project settings will land here over time.
 

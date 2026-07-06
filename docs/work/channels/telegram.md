@@ -15,25 +15,30 @@ Simpler than Slack — one bot token and you're up.
 
 ## Configuration in Surogate
 
-Open the agent → **Configure** in the left nav → the **Channels** tab → toggle **Telegram** ON. The form expands:
+Open the agent → **Configure** in the left nav → the **Channels** tab → find the **Telegram** card → **Connect**. A short walkthrough (BotFather → `/newbot` → copy token) ends in a single **Bot Token** field. Paste the token and click **Connect Telegram**. Once connected, the bot's `@username` is shown.
 
-| Field | What it does |
+There is no separate save button — connecting and every later option change save automatically.
+
+## Options (the Telegram "Manage" screen)
+
+Once connected, the Telegram card shows **Manage**. The options there auto-save as you change them:
+
+| Option | What it does |
 |---|---|
-| **Bot Token** | Paste the token from BotFather |
-| **DM only** vs **Allow in groups** | Restrict where the bot responds |
-| **Forum topics** | If on, each topic in a group with topics is its own session |
-| **Media handling** | Accept photos, voice notes (transcribed), documents |
+| **Require @mention** (default OFF) | Only replies in groups when @mentioned. Off = replies to every message in groups it's added to. |
+| **Mode** | **Team member** — members talk to a shared agent identity. **Personal assistant** — each user links their own Surogate account; unlinked users are prompted to link. |
+| **Reply Threading** | **First chunk only**, **All chunks**, or **Off** — controls whether replies are threaded to the user's message. |
+| **Message Reactions** | Show processing status via emoji reactions. |
+| **Per-User Group Chats** | Each user in a group gets their own chat. |
 
-Click **SAVE CHANNELS**.
+Photos, voice notes, and documents are handled automatically — voice notes get transcribed if the model supports it, and documents (PDFs, etc.) get parsed.
 
 ## What users see
 
 Users find your bot in Telegram by its `@username`. They start a DM and just type. If the bot is in a group:
 
-- It responds when @mentioned (like Slack)
-- Or always, if you've turned off the @mention requirement and added it to the group
-
-Voice notes get transcribed automatically if the model supports it. Documents (PDFs, etc.) get parsed.
+- It responds when @mentioned (if Require @mention is on)
+- Or to every message, if you leave Require @mention off and add it to the group
 
 ## Identity linking
 
@@ -43,9 +48,10 @@ Same model as Slack — a `(platform=telegram, platform_user_id=12345)` row in t
 
 The most common cause: **another instance is consuming Telegram updates**. Telegram only delivers each update once. If you have a dev environment also running with the same bot token, only one of them gets the messages. Stop the other.
 
-## Toggling off
+## Reconnecting and disconnecting
 
-Configure → Channels tab → Telegram OFF → **SAVE CHANNELS**. Same semantics as Slack.
+- **Reconnect** reopens the walkthrough so you can paste a new bot token.
+- **Disconnect** stops the bot from replying on Telegram. Your bot token stays in place — reconnect anytime.
 
 ## What's next
 

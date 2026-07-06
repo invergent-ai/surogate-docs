@@ -1,6 +1,7 @@
 ---
 title: Experts & arenas
 sidebar_position: 8
+draft: true
 ---
 
 # Experts & arenas
@@ -9,8 +10,8 @@ An **arena** is a supervised, multi-agent run: a *coordinator* agent drives a se
 
 This page documents the Arenas UI at `/studio/arenas`. For the conceptual model of experts and skills, see [Skills & experts](./skills-and-experts.md) — this page is the complementary "where do I watch and steer a run" surface.
 
-:::note
-The Arenas screens are currently a frontend preview populated with representative data; the layout below reflects the real UI, but treat exact numbers you see as illustrative.
+:::note Preview
+The Arenas screens are a **frontend-only preview**: they render representative sample data with no backend wiring. The layout below reflects the real UI, but the numbers are illustrative and the controls (create arena, pause/resume, terminate, steer, import to dataset) don't yet drive real runs. Treat this page as a design preview of where multi-agent runs will be watched and steered.
 :::
 
 ## Arenas list

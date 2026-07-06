@@ -30,11 +30,11 @@ System agents (like the platform copilot) hide the **Identity**, **Capabilities*
 
 A read-only overview of the agent's health and footprint — no editable fields. It shows:
 
-- **Key metrics** — Requests/sec, Error Rate, and Tokens (24h) as stat cards with sparklines.
-- **Deployment** (dedicated agents only) — replicas (current/desired), CPU, memory, namespace, model, base, image, endpoint, and created time.
-- **Conversations (24h)** — total, average turns, satisfaction, and tokens in.
+- **Key metrics** — Requests/sec, Error Rate, and Tokens (24h) as stat cards with sparklines, backed by the metrics API.
+- **Deployment** (dedicated agents only) — replicas (current/desired), model, image, endpoint, and created time.
 - **Connected** — a count of attached skills and MCP servers with skill-name chips.
-- **Resources** and **Metric charts** — CPU/memory usage bars and per-second request, error-rate, and token-throughput sparklines.
+- **Resources** — the agent's CPU and memory requests and limits.
+- **Metric charts** — per-second request, error-rate, and token-throughput sparklines.
 
 A **BYO model active** banner appears when the agent runs on your own model, noting that token traffic isn't billed by Surogate.
 
@@ -54,7 +54,7 @@ Who the agent is. Two cards, each with its own **SAVE**.
 
 ## Capabilities
 
-Toggle the agent's built-in behaviors. Each switch saves immediately and reaches live sessions on their next turn.
+Toggle the agent's built-in behaviors. The Brainstorming gate, Live browser, and slash-command switches save the moment you flip them; the Saga card collects its toggle and number fields behind its own **Save** button. Changes reach live sessions on their next turn.
 
 | Capability | What it does |
 |---|---|
@@ -139,7 +139,7 @@ The agent's guardrails. An **Unsaved changes** bar collects edits across the car
 
 Manage the people who can chat with this agent — separate from your Surogate team. A **Let anyone sign up** toggle controls self-registration (available only when the project has Firebase auth configured and is on a paid plan).
 
-A searchable list shows each user's email, auth provider (Email & password / Google / GitHub), and a **Disabled** badge where applicable, with **Edit**, **Enable/Disable**, and **Delete** row actions. **Add user** opens a form with **Email**, an optional **Display name**, and an optional **Password** (leave empty for SSO). See [Users](../channels/users.md) and [Self-registration](../channels/self-registration.md).
+A searchable list shows each user's email and auth provider (Email & password / Google / GitHub), with **Edit** and **Delete** row actions. **Add user** opens a form with **Email**, an optional **Display name**, and an optional **Password** (leave empty for SSO). See [Users](../channels/users.md) and [Self-registration](../channels/self-registration.md).
 
 ## Channels
 

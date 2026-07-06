@@ -25,7 +25,7 @@ This is the customer-facing Web UI — a separate React app from `ops.surogate.a
 Two modes:
 
 1. **Anonymous** (default): visitors use the agent without an account. Each browser session gets a UUID stored locally; subsequent visits resume the same Surogate session.
-2. **Authorised users only**: open the agent → **Configure** in the left nav → the **Users** tab → **+ ADD USER** for each authorised email.
+2. **Authorised users only**: open the agent → **Configure** in the left nav → the **Users** tab → **Add user** for each authorised email.
 
 For authorised users, they sign in with the credentials you set (email + password, Google SSO, or GitHub SSO).
 

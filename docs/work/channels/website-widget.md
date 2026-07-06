@@ -9,66 +9,53 @@ The Website widget embeds the agent as a chat bubble on your own domain — mark
 
 ## What you need
 
-Nothing external. The platform issues a **publishable key** when you enable the channel.
+Nothing external. The platform issues a **publishable key** (prefixed `surg_wk_…`) when you enable the channel.
 
 ## Configuration
 
-Open the agent → **Configure** in the left nav → the **Channels** tab → toggle **Website** ON. The form expands:
+Open the agent → **Configure** in the left nav → the **Channels** tab → find the **Website** card → **Connect**. The connect screen asks for your **Allowed origins**, then you click **Enable widget**.
 
 | Field | What it does |
 |---|---|
-| **Publishable Key** | Auto-generated. Masked by default — click **SHOW** to reveal, **COPY** to clipboard. The COPY button is **disabled until you save** — the key isn't deployed yet. **ROTATE** to invalidate the current key and generate a new one. |
-| **Allowed Origins** | Exact-match URLs where the widget will be embedded. Format: `scheme://host[:port]`. Add `https://www.acme.com` and `https://acme.com` if you serve both. No wildcards. |
-| **Session Message Cap** | Max messages per visitor session. `0` = no cap. Useful for cost control on a public-facing widget. |
-| **Embed code** | Click to reveal the JavaScript snippet. |
+| **Allowed origins** | Exact-match URLs where the widget will be embedded. Format: `scheme://host[:port]`. Add `https://www.acme.com` and `https://acme.com` if you serve both. Bare domains get `https://` added automatically. No wildcards. |
 
-Click **SAVE CHANNELS**.
+Once enabled, the **Manage** screen shows:
+
+- **Embed code** — the script snippet, with a **Copy** button.
+- **Allowed origins** — the same editor; add/remove auto-saves.
+- **Messages per chat** — max messages per visitor chat. `0` = no limit. Useful for cost control on a public-facing widget.
+- **Advanced → Publishable key** — the generated key (shown read-only).
+- **Turn off** — stops the bubble appearing on your site; your key and settings stay in place.
+
+Changes on the Manage screen save automatically — there is no separate save button.
 
 ## The embed code
 
-You paste a script tag into your site's HTML, typically before `</body>`:
+Copy the snippet from the Manage screen and paste it before `</body>` on your site. It looks like this:
 
 ```html
-<script src="https://widget.surogate.ai/v1/widget.js"
-        data-agent-slug="acme-support-bot"
-        data-publishable-key="pk_live_..."
-        defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@invergent/website-widget@2/dist/surogates-widget.global.js"></script>
+<script>
+  SurogatesWidget.mount({
+    apiUrl: "https://acme-support-bot.cloud.surogate.ai",
+    publishableKey: "surg_wk_...",
+  });
+</script>
 ```
 
-Drop into any page on an allowed origin. A chat bubble appears in the bottom-right corner. Click → chat opens.
+`apiUrl` is the agent's endpoint and `publishableKey` is the key from the Advanced section. Drop the snippet into any page on an allowed origin. A chat bubble appears in the bottom-right corner. Click → chat opens.
 
-## Anonymous vs identified visitors
+If you don't manage the site yourself, send the snippet to whoever does.
 
-By default visitors are anonymous — each browser session has a UUID stored in localStorage. Subsequent visits resume the same Surogate session.
+## Visitors are anonymous
 
-To link a logged-in user from your site to a Surogate user:
-
-```js
-window.Surogate.identify({
-  email: "user@example.com",
-  external_id: "your-internal-user-id",
-});
-```
-
-Now the same person using your widget and using your Slack bot for the same agent shares one set of sessions.
+Each browser session gets a UUID stored in localStorage, so subsequent visits from the same browser resume the same Surogate session. The widget doesn't require your visitors to have Surogate accounts.
 
 ## When the widget says "origin not allowed"
 
-Check the browser console — the widget logs the rejected origin. The most common cause: your Allowed Origins list doesn't include the exact URL the page is served from. Add it → SAVE → reload the page.
+The page's exact URL isn't in your **Allowed origins** list. Add it on the Manage screen (it auto-saves) and reload the page.
 
 No wildcards: `https://*.acme.com` doesn't work. You need each subdomain individually.
-
-## When the COPY button is greyed out
-
-You haven't saved the channel config yet. Click **SAVE CHANNELS** first. The key isn't deployed (and the platform won't accept widget connections with it) until then.
-
-## Rotating the key
-
-If your key leaks (it ended up in a public GitHub repo, etc.):
-
-1. Agent → Configure → Channels → Website → **ROTATE**.
-2. Confirm. The old key is invalidated immediately.
-3. Update your site with the new key.
 
 ## Charging for a public agent
 

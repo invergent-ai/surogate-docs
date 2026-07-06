@@ -52,6 +52,10 @@ Click any row to open the workload detail (logs, metrics). Opening a workload re
 
 ### Policies
 
+:::note Preview
+The Policies view is a **visual preview**: it renders sample auto-scaling policies, but the **+ New Policy** button, the per-policy **Edit** button, and the enable/disable **Switch** are not yet wired to a backend. Nothing shown here is live, and changes you make aren't saved or enforced.
+:::
+
 The Policies view (`/studio/compute/policies`) lists auto-scaling & resource policies. A **+ New Policy** button sits in the header. Each policy is a card with:
 
 - An enable/disable **Switch** and the policy name.
