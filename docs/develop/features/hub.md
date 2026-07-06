@@ -62,7 +62,7 @@ Click any file to view it inline. Markdown renders, code highlights, CSV display
 When you PUBLISH a skill, the platform tags the current `main` commit (e.g. `v0.1.0`). You can also tag via the REST API:
 
 ```bash
-curl -X POST http://localhost:8000/v1/hub/repositories/{owner}/{repo}/tags \
+curl -X POST http://localhost:8000/api/hub/repositories/{owner}/{repo}/tags \
   -d '{"branch": "main", "tag": "v0.2.0", "message": "Better example queries"}'
 ```
 
@@ -71,7 +71,7 @@ curl -X POST http://localhost:8000/v1/hub/repositories/{owner}/{repo}/tags \
 Branches let you iterate without breaking production. Create a feature branch off `main`, edit, test, then merge.
 
 ```bash
-curl -X POST http://localhost:8000/v1/hub/repositories/{owner}/{repo}/branches \
+curl -X POST http://localhost:8000/api/hub/repositories/{owner}/{repo}/branches \
   -d '{"name": "feature/refactor-prompt", "source": "main"}'
 ```
 
@@ -91,14 +91,14 @@ The Hub is what makes agent improvement durable. Three properties:
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| `GET` | `/v1/hub/repositories` | List |
-| `GET` | `/v1/hub/repositories/{owner}/{repo}` | Detail |
-| `GET` | `/v1/hub/repositories/{owner}/{repo}/in-use` | Reference pre-flight |
-| `GET` | `/v1/hub/repositories/{owner}/{repo}/branches` | Branches |
-| `GET` | `/v1/hub/repositories/{owner}/{repo}/tags` | Tags |
-| `GET` | `/v1/hub/repositories/{owner}/{repo}/refs/{branch}/commits` | Commits on a branch |
-| `GET` | `/v1/hub/repositories/{owner}/{repo}/refs/{branch}/objects/ls?path=` | Directory listing |
-| `DELETE` | `/v1/hub/repositories/{owner}/{repo}` | Delete |
+| `GET` | `/api/hub/repositories` | List |
+| `GET` | `/api/hub/repositories/{owner}/{repo}` | Detail |
+| `GET` | `/api/hub/repositories/{owner}/{repo}/in-use` | Reference pre-flight |
+| `GET` | `/api/hub/repositories/{owner}/{repo}/branches` | Branches |
+| `GET` | `/api/hub/repositories/{owner}/{repo}/tags` | Tags |
+| `GET` | `/api/hub/repositories/{owner}/{repo}/refs/{branch}/commits` | Commits on a branch |
+| `GET` | `/api/hub/repositories/{owner}/{repo}/refs/{branch}/objects/ls?path=` | Directory listing |
+| `DELETE` | `/api/hub/repositories/{owner}/{repo}` | Delete |
 
 ## What's next
 

@@ -68,6 +68,8 @@ Pick the benchmark(s). You can select multiple to run in batch.
 
 Confirm the target + judge + benchmark. Click RUN EVALUATION.
 
+Creating and running are **two steps**: the wizard first saves the run as a **draft** (`POST /api/eval-runs`), then launches it (`POST /api/eval-runs/{id}/start`). A draft can be edited before it's launched, and a running eval can be halted with `POST /api/eval-runs/{id}/stop`. Both boundaries are gated: `402` if the project's plan doesn't include evaluations, or if it's out of ML-compute credits.
+
 ## What an evaluation produces
 
 A run report with:
@@ -76,6 +78,14 @@ A run report with:
 - **Per-sample breakdown** — which samples passed/failed, with the model's actual output
 - **Comparison** — if you ran the same benchmark on a previous model, side-by-side scores
 - **Drift detection** — when re-running on the same model, alerts on regressions
+
+### Export a report
+
+A finished run can be exported as a standalone report via `GET /api/eval-runs/{id}/export?format=html` (or `format=md`). The download bundles the run's scores, compare/previous deltas, and metadata (model, judge, compute, duration) into a single HTML or Markdown file you can share outside Studio.
+
+## Leaderboard
+
+`GET /api/leaderboard` aggregates completed eval runs across the project (or a single project scope) into a ranked view, so you can see how each model/agent stacks up on the benchmarks you've run without opening each run individually.
 
 ## Side-by-side: A/B evaluation
 
@@ -100,12 +110,20 @@ Many benchmarks have objective metrics (test passes/fails, math answer matches).
 
 ## REST API
 
+Runs live under `/api/eval-runs`; the benchmark catalog under `/api/benchmarks`; the ranked view under `/api/leaderboard`. Create and start are separate calls.
+
 | Method | Endpoint | Purpose |
 |---|---|---|
-| `GET` | `/v1/evaluations` | List |
-| `GET` | `/v1/evaluations/{id}` | Detail |
-| `POST` | `/v1/evaluations` | Create + run |
-| `GET` | `/v1/evaluations/{id}/results` | Detailed per-sample results |
+| `GET` | `/api/eval-runs` | List runs |
+| `GET` | `/api/eval-runs/{id}` | Run detail |
+| `POST` | `/api/eval-runs` | Create (draft) — `402` if the plan lacks evaluations |
+| `POST` | `/api/eval-runs/{id}/start` | Launch — `402` if out of ML-compute credits |
+| `POST` | `/api/eval-runs/{id}/stop` | Stop a running eval |
+| `GET` | `/api/eval-runs/{id}/scores` | Per-benchmark scores |
+| `GET` | `/api/eval-runs/{id}/samples` | Per-sample breakdown |
+| `GET` | `/api/eval-runs/{id}/export` | Export report (`?format=html` or `md`) |
+| `GET` | `/api/benchmarks` | Benchmark catalog |
+| `GET` | `/api/leaderboard` | Ranked cross-run leaderboard |
 
 ## What's next
 

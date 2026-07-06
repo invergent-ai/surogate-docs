@@ -104,14 +104,14 @@ If you're using your own provider end-to-end (not Surogate-bundled models), enab
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| `GET` | `/v1/models` | List models |
-| `GET` | `/v1/models/{id}` | Model detail |
-| `POST` | `/v1/models` | Register a model (any source) |
-| `POST` | `/v1/models/{id}/start` | Provision and serve |
-| `POST` | `/v1/models/{id}/stop` | Drop replicas |
-| `POST` | `/v1/models/{id}/scale` | Update min/max replicas |
-| `DELETE` | `/v1/models/{id}` | Unregister |
-| `GET` | `/v1/models/artifacts?project_id=&hub_repo=&limit=200` | List artifacts in a lakeFS repo |
+| `GET` | `/api/models` | List models |
+| `GET` | `/api/models/{id}` | Model detail |
+| `POST` | `/api/models` | Register a model (any source) |
+| `POST` | `/api/models/{id}/start` | Provision and serve |
+| `POST` | `/api/models/{id}/stop` | Drop replicas |
+| `POST` | `/api/models/{id}/scale` | Update min/max replicas |
+| `DELETE` | `/api/models/{id}` | Unregister |
+| `GET` | `/api/models/artifacts?project_id=&hub_repo=&limit=200` | List artifacts in a lakeFS repo |
 
 ## What's next
 

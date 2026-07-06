@@ -183,17 +183,17 @@ If a server returns a different tool definition on reconnect (different fingerpr
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| `GET` | `/v1/mcp-servers` | List |
-| `GET` | `/v1/mcp-servers/{id}` | Detail with connected tools |
-| `POST` | `/v1/mcp-servers` | Add server |
-| `PUT` | `/v1/mcp-servers/{id}` | Update config |
-| `DELETE` | `/v1/mcp-servers/{id}` | Remove server |
-| `POST` | `/v1/mcp-servers/{id}/enable` | Trigger security scan + activate |
-| `POST` | `/v1/mcp-servers/{id}/disable` | Deactivate |
-| `GET` | `/v1/credentials` | List Vault entries (names only) |
-| `POST` | `/v1/credentials` | Store credential |
-| `PUT` | `/v1/credentials/{name}` | Replace value |
-| `DELETE` | `/v1/credentials/{name}` | Remove |
+| `GET` | `/api/mcp-servers` | List |
+| `GET` | `/api/mcp-servers/{id}` | Detail with connected tools |
+| `POST` | `/api/mcp-servers` | Add server |
+| `PUT` | `/api/mcp-servers/{id}` | Update config |
+| `DELETE` | `/api/mcp-servers/{id}` | Remove server |
+| `POST` | `/api/mcp-servers/{id}/enable` | Trigger security scan + activate |
+| `POST` | `/api/mcp-servers/{id}/disable` | Deactivate |
+| `GET` | `/api/credentials` | List Vault entries (names only) |
+| `POST` | `/api/credentials` | Store credential |
+| `PUT` | `/api/credentials/{name}` | Replace value |
+| `DELETE` | `/api/credentials/{name}` | Remove |
 
 ## What's next
 

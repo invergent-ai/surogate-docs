@@ -14,7 +14,7 @@ Click **NEW DATASET** → pick a source:
 | Source | What it is | Output format |
 |---|---|---|
 | **From Conversations** | Filter sessions by agent, time range, quality flags. Each session becomes a sample. | SFT / preference / conversation |
-| **Expert Training Data** | Pre-existing JSONL exports from `POST /v1/skills/{name}/collect`. | SFT |
+| **Expert Training Data** | Pre-existing JSONL exports from `POST /api/experts/{name}/collect`. | SFT |
 | **Upload File** | Drop a CSV / JSONL / parquet file. | Format inferred from file |
 | **Synthetic Generation** | Teacher/judge/worker pattern to synthesize labeled data. | Configurable |
 
@@ -38,7 +38,7 @@ The dataset row lands in the Hub as a versioned repo.
 
 ### Expert Training Data
 
-If you've already triggered expert training data exports via `POST /v1/skills/{name}/collect`, those JSONLs land in `tenant-{org_id}/shared/skills/{name}/training/`. Wrap them as a dataset to use them in training runs.
+If you've already triggered expert training data exports via `POST /api/experts/{name}/collect`, those JSONLs land in `tenant-{org_id}/shared/skills/{name}/training/`. Wrap them as a dataset to use them in training runs.
 
 ### Upload File
 
@@ -227,11 +227,11 @@ Standard pre-flight check — if the dataset is referenced by an active training
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| `GET` | `/v1/datasets` | List |
-| `GET` | `/v1/datasets/{id}` | Detail |
-| `POST` | `/v1/datasets` | Create (any source type) |
-| `GET` | `/v1/datasets/{id}/samples?split=train&limit=50` | Preview samples |
-| `DELETE` | `/v1/datasets/{id}` | Delete (with reference check) |
+| `GET` | `/api/datasets` | List |
+| `GET` | `/api/datasets/{id}` | Detail |
+| `POST` | `/api/datasets` | Create (any source type) |
+| `GET` | `/api/datasets/{id}/samples?split=train&limit=50` | Preview samples |
+| `DELETE` | `/api/datasets/{id}` | Delete (with reference check) |
 
 ## What's next
 

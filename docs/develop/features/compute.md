@@ -7,7 +7,7 @@ sidebar_position: 3
 
 The Compute page is where you wire up cloud GPU providers so the platform can run training jobs and serve fine-tuned models on your behalf. You don't manage Kubernetes or VM provisioning — the platform does that — but you choose **which provider** runs what.
 
-Two tabs: **Cloud** for connecting providers, **Workload Queue** for seeing what's running.
+Two tabs: **Cloud** for connecting providers, **Workload Queue** for seeing what's running. Auto-scaling **Policies** and the step-by-step provider connection walk-through (credentials per provider, browsing backend offers) live in [Connect compute](./connect-compute.md) — this page stays conceptual.
 
 ## Cloud — connect a provider
 

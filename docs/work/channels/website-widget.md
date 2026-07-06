@@ -70,6 +70,10 @@ If your key leaks (it ended up in a public GitHub repo, etc.):
 2. Confirm. The old key is invalidated immediately.
 3. Update your site with the new key.
 
+## Charging for a public agent
+
+The widget is the buyer-facing surface for a public agent, so it's where monetization takes effect: if the embedded agent is monetized, visitors hit a paywall (subscriptions and/or token packs) before they can chat. See [Monetize your agents](../monetize.md) to set that up.
+
 ## What's next
 
 If you need end-user accounts, see [Users](./users.md).

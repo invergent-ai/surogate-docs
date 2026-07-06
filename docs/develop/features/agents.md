@@ -260,14 +260,14 @@ CANCEL is focused by default. If references exist, the modal lists them.
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| `GET` | `/v1/agents` | List agents |
-| `GET` | `/v1/agents/{id_or_slug}` | Agent detail |
-| `POST` | `/v1/agents` | Deploy new agent |
-| `PATCH` | `/v1/agents/{id}` | Update config |
-| `POST` | `/v1/agents/{id}/start` | Bring replicas to min |
-| `POST` | `/v1/agents/{id}/stop` | Drop replicas to 0 |
-| `POST` | `/v1/agents/{id}/scale` | `{min_replicas, max_replicas}` |
-| `DELETE` | `/v1/agents/{id}` | Tombstone (409 if references) |
+| `GET` | `/api/agents` | List agents |
+| `GET` | `/api/agents/{id_or_slug}` | Agent detail |
+| `POST` | `/api/agents` | Deploy new agent |
+| `PATCH` | `/api/agents/{id}` | Update config |
+| `POST` | `/api/agents/{id}/start` | Bring replicas to min |
+| `POST` | `/api/agents/{id}/stop` | Drop replicas to 0 |
+| `POST` | `/api/agents/{id}/scale` | `{min_replicas, max_replicas}` |
+| `DELETE` | `/api/agents/{id}` | Tombstone (409 if references) |
 
 See [Runtime architecture reference](../reference/runtime-architecture.md) for full schemas.
 

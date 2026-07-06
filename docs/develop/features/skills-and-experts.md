@@ -148,13 +148,14 @@ For dynamic invocation, the harness calls `skill_view` server-side and inlines t
 
 | Method | Endpoint | Description |
 |---|---|---|
-| `GET` | `/v1/skills?type=skill\|expert&enabled=true` | List |
-| `POST` | `/v1/skills` | Create. Body: `{name, content, category?, user_id?}` |
-| `GET` | `/v1/skills/{name}` | Detail |
-| `PUT` | `/v1/skills/{name}` | Update. Body: `{content}` |
-| `DELETE` | `/v1/skills/{name}` | Delete |
+| `GET` | `/api/skills?is_expert=true&project_id=` | List (filter `is_expert` for experts only) |
+| `POST` | `/api/skills?project_id=` | Create. Body: `{name, content, description, ...}` |
+| `GET` | `/api/skills/{skill_id}` | Detail |
+| `PATCH` | `/api/skills/{skill_id}` | Update. Body: partial skill fields |
+| `POST` | `/api/skills/{skill_id}/publish` | Tag a version |
+| `DELETE` | `/api/skills/{skill_id}` | Delete (409 if in use) |
 
-API-created skills land in the database (layer 3 or 4 depending on `user_id`). Agent-created skills (via the `skill_manage` tool) go to the tenant bucket (layer 2).
+Skills are addressed by `skill_id`, not by name. API-created skills land in the database (layer 3 or 4 depending on `user_id`). Agent-created skills (via the `skill_manage` tool) go to the tenant bucket (layer 2).
 
 ## Validation rules
 
@@ -219,7 +220,7 @@ Rules:
 | `description` | yes | — | Shown to the base LLM |
 | `type` | yes | `skill` | Must be `expert` |
 | `model` | yes | — | Model name passed to the inference endpoint |
-| `endpoint` | no | — | OpenAI-compatible URL (can be set at activation) |
+| `endpoint` | no | — | OpenAI-compatible URL; normally resolved from the served model at activation rather than set by hand |
 | `trigger` | yes for routing | — | Phrases describing when to select this expert |
 | `adapter` | no | — | LoRA adapter path in tenant storage |
 | `tools` | no | `[]` | Tools the expert can use in its mini-loop |
@@ -229,13 +230,15 @@ Rules:
 ## The expert lifecycle
 
 ```
-1. Define     SKILL.md with type: expert            expert_status: draft
-2. Collect    POST /v1/skills/{name}/collect         expert_status: collecting
-3. Train      Externally (your fine-tuning pipeline)
-4. Activate   POST /v1/skills/{name}/activate        expert_status: active
-5. Monitor    GET /v1/skills/{name} → expert_stats   (auto-retire if < 60%)
-6. Retrain    Collect → train → activate             (loop)
+1. Define     SKILL.md with type: expert                expert_status: draft
+2. Collect    POST /api/experts/{name}/collect          expert_status: collecting
+3. Train      In-platform SFT/GRPO run over the dataset (or export the JSONL)
+4. Activate   POST /api/skills/{skill_id}/activate      expert_status: active
+5. Monitor    GET /api/skills/{skill_id} → expert_stats (auto-retire if < 60%)
+6. Retrain    Collect → train → activate                (loop)
 ```
+
+Collect (and its dataset/trajectory inspection) lives on a separate **experts** router keyed by name (`/api/experts/{name}/...`); activation, monitoring, and retirement are on the **skills** router keyed by `skill_id` (`/api/skills/{skill_id}/...`).
 
 ### 1. Define
 
@@ -244,46 +247,44 @@ Create the SKILL.md with `type: expert, expert_status: draft`. Place in `tenant-
 ### 2. Collect training data
 
 ```bash
-curl -X POST http://localhost:8000/v1/skills/sql_writer/collect \
-  -H "Authorization: Bearer $TOKEN"
+curl -X POST http://localhost:8000/api/experts/sql_writer/collect \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"project_id": "<project>", "mode": "bootstrap"}'
 ```
 
-The platform walks the events table and exports successful trajectories as OpenAI fine-tuning JSONL. Two modes:
+The platform walks the surogates session events and appends successful trajectories as fine-tuning JSONL to the expert's dataset repo in the Hub, committing each run. Two modes:
 
-- **Bootstrap** (`collect_for_skill`) — walks `skill.invoked` events for this skill name. Use to train an expert from an existing prompt-based skill.
-- **Improve** (`collect_for_expert`) — walks `expert.delegation → tool.call → expert.result` chains. Use once the expert is active to train on fresh successful trajectories.
+- **Bootstrap** — walks the skill's trajectories for this name. Use to train an expert from an existing prompt-based skill.
+- **Improve** — walks the active expert's delegation → tool-call → result chains. Use once the expert is active to train on fresh successful trajectories.
 
-Both filter tainted sessions by default (`policy.denied`, `harness.crash`, `saga.compensated`, `expert.override`).
+Each collect is a strict delta from the manifest's `last_collect_at` cursor (pass `since` to re-collect from an earlier point), and tainted sessions are excluded by default (`exclude_tainted: true`).
 
-Export lands at `tenant-{org_id}/shared/skills/{name}/training/dataset_YYYYMMDD_HHMMSS.jsonl`.
+Preview candidate counts before a full run with `GET /api/experts/{name}/trajectories?project_id=&mode=bootstrap`; inspect the accumulated dataset manifest (row counts, run history, cursor) with `GET /api/experts/{name}/dataset?project_id=`. Note: the improve-mode preview is not yet implemented — only bootstrap preview is wired.
 
-### 3. Train (external)
+### 3. Train (in-platform)
 
-Your fine-tuning pipeline reads the JSONL. Compatible with:
+The collected dataset closes the loop **inside the platform**. Wrap the expert's JSONL as a dataset and launch an in-platform **SFT or GRPO** training run over it — no external fine-tuning service required. See [Training](./training.md) for the run wizard and [Datasets](./datasets.md) for turning the collected export into a training dataset.
 
-- OpenAI fine-tuning API
-- Anthropic fine-tuning (when available)
-- Unsloth (local LoRA)
-- Axolotl (config-driven)
-- Custom training scripts using `transformers` + `peft`
-
-Output: a fine-tuned model with an OpenAI-compatible serving endpoint.
+You can still export the JSONL and train elsewhere (OpenAI fine-tuning, Unsloth, Axolotl, or a custom `transformers` + `peft` script) if you prefer. Either way the output is a model with an OpenAI-compatible serving endpoint that the platform can serve and back the expert with.
 
 ### 4. Activate
 
 ```bash
-curl -X POST http://localhost:8000/v1/skills/sql_writer/activate \
+curl -X POST http://localhost:8000/api/skills/{skill_id}/activate \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"endpoint": "http://expert-pool:8000/v1"}'
+  -d '{"model_id": "<served-model-id>"}'
 ```
+
+Activation resolves the endpoint from the model's serving service rather than taking a raw URL — so the expert's model **must already be serving a live endpoint**, otherwise activation fails with a 400 (an active expert always has a live endpoint invariant). Activation also republishes every agent bundle that embeds the skill, so the refreshed `SKILL.md` reaches the runtime.
 
 After activation, the base LLM sees the expert in its system prompt under `# Available Experts`. The harness routes hard tasks matching the expert's triggers; the base LLM can also explicitly call `consult_expert("sql_writer", task="...")`.
 
 ### 5. Monitor
 
 ```bash
-curl http://localhost:8000/v1/skills/sql_writer \
+curl http://localhost:8000/api/skills/{skill_id} \
   -H "Authorization: Bearer $TOKEN"
 ```
 
@@ -306,11 +307,11 @@ After ≥20 invocations, the platform monitors success rate. Below the threshold
 ### 6. Retire / retrain
 
 ```bash
-curl -X POST http://localhost:8000/v1/skills/sql_writer/retire \
+curl -X POST http://localhost:8000/api/skills/{skill_id}/retire \
   -H "Authorization: Bearer $TOKEN"
 ```
 
-To retrain: collect fresh data → train → activate with new endpoint.
+Retirement flips `expert_status` to `retired` and, like activation, republishes the dependent agent bundles. To retrain: collect fresh data → train → activate against the newly served model.
 
 ## The expert mini-loop
 
@@ -330,14 +331,16 @@ Bounded — can't go forever, can't escalate its tool surface, can't keep the co
 
 ## REST API for experts
 
+Collection is keyed by expert **name** on the `experts` router; lifecycle is keyed by **`skill_id`** on the `skills` router:
+
 | Method | Endpoint | Description |
 |---|---|---|
-| `GET` | `/v1/skills?type=expert` | List experts |
-| `POST` | `/v1/skills/{name}/collect` | Export training JSONL |
-| `GET` | `/v1/skills/{name}/training-data` | List exported datasets |
-| `POST` | `/v1/skills/{name}/activate` | Set status to active |
-| `POST` | `/v1/skills/{name}/retire` | Set status to retired |
-| `GET` | `/v1/skills/{name}/file?path=training/dataset_XYZ.jsonl` | Download a specific export |
+| `GET` | `/api/skills?is_expert=true` | List experts |
+| `GET` | `/api/experts/{name}/trajectories?project_id=&mode=bootstrap` | Preview candidate trajectories (bootstrap only) |
+| `POST` | `/api/experts/{name}/collect` | Collect trajectories → append JSONL to the Hub dataset |
+| `GET` | `/api/experts/{name}/dataset?project_id=` | Dataset manifest (row counts, run history, cursor) |
+| `POST` | `/api/skills/{skill_id}/activate` | Set status to active (requires a live serving endpoint) |
+| `POST` | `/api/skills/{skill_id}/retire` | Set status to retired |
 
 ## What's next
 

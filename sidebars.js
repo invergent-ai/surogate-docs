@@ -38,19 +38,23 @@ module.exports = {
         'work/channels/website-widget',
         'work/channels/users',
         'work/channels/self-registration',
+        'work/channels/proactive',
       ],
     },
     {
       type: 'category',
-      label: 'Conversation tools',
+      label: 'Commands & tools',
       collapsed: true,
       items: [
-        'work/tools/goals',
+        'work/tools/commands',
         'work/tools/copilot',
-        'work/tools/inbox',
+        'work/tools/goals',
         'work/tools/missions',
         'work/tools/scheduled-work',
+        'work/tools/deep-research',
+        'work/tools/code',
         'work/tools/sub-agents',
+        'work/tools/inbox',
       ],
     },
     {
@@ -109,6 +113,16 @@ module.exports = {
     },
     {
       type: 'category',
+      label: 'Agent capabilities',
+      collapsed: false,
+      items: [
+        'develop/features/memory',
+        'develop/features/browser',
+        'develop/features/browser-profiles',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Library',
       collapsed: false,
       items: [
@@ -152,6 +166,8 @@ module.exports = {
         'develop/reference/runtime-architecture',
         'develop/reference/tool-catalog',
         'develop/reference/event-types',
+        'develop/reference/background-jobs',
+        'develop/reference/coordination',
         'develop/reference/glossary',
       ],
     },
