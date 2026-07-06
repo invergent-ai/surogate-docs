@@ -11,14 +11,15 @@ For designing agents, writing skills, training experts, running evaluations, int
 
 ## How the platform is built
 
-Two source-of-truth repos:
+Surogate is built on open-source components you can run and inspect yourself:
 
 | Repo | Role | License |
 |---|---|---|
 | [`invergent-ai/surogates`](https://github.com/invergent-ai/surogates) | Agent runtime — harness loop, sessions, sandbox, MCP, governance, channels, memory, tools | AGPL-3.0 |
-| [`invergent-ai/surogate-ops`](https://github.com/invergent-ai/surogate-ops) | Operator platform (the `ops.surogate.ai` UI itself) — REST API, billing, hub, training pipeline | AGPL-3.0 |
+| [`invergent-ai/surogate`](https://github.com/invergent-ai/surogate) | Training framework — the SFT/RL engine behind the expert models you own | Apache-2.0 |
+| [`invergent-ai/surogate-hub`](https://github.com/invergent-ai/surogate-hub) | Artifact versioning store — lakeFS-backed "Git for data" for skills, datasets, and models | Apache-2.0 |
 
-When you deploy an agent at `<slug>.cloud.surogate.ai`, the ops platform's Helm chart wraps the runtime image and binds your config to it. The runtime is what's actually running inside the container.
+When you deploy an agent at `<slug>.cloud.surogate.ai`, the platform wraps the runtime image and binds your config to it. The runtime is what's actually running inside the container.
 
 This documentation focuses on the platform surface — what you can do through `ops.surogate.ai`. For runtime internals, see the [runtime architecture reference](./reference/runtime-architecture.md).
 

@@ -101,7 +101,8 @@ module.exports = {
                     title: 'Repos',
                     items: [
                         {label: 'Runtime (surogates)', href: 'https://github.com/invergent-ai/surogates'},
-                        {label: 'Ops platform', href: 'https://github.com/invergent-ai/surogate-ops'},
+                        {label: 'Training framework (surogate)', href: 'https://github.com/invergent-ai/surogate'},
+                        {label: 'Artifact store (surogate-hub)', href: 'https://github.com/invergent-ai/surogate-hub'},
                     ],
                 },
             ],
