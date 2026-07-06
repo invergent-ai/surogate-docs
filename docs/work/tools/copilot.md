@@ -19,7 +19,7 @@ Read operations (always enabled):
 - *"Show me the latest training run for sql-writer."*
 - *"What skills does my customer-support-bot have attached?"*
 
-Write operations (gated by an explicit feature-flag rollout):
+Write operations (live — with a confirmation step for risky actions, see below):
 
 - *"Create a skill called `weekly-summary` that produces 5-bullet summaries."*
 - *"Attach the `acme-product` KB to my customer-support-bot."*
@@ -57,13 +57,13 @@ Operations that require CLARIFY:
 
 Routine writes (`create_skill`, `update_skill`, `create_dataset`, `create_knowledge_base`, `stop_agent`, `cancel_training`) **don't** require CLARIFY — the Copilot proceeds directly.
 
-## The full-page view
+## Conversation history
 
-Click the Copilot button (not the keyboard shortcut) for the full-page view at `/copilot`. Same functionality, more screen real estate. There's a sidebar with conversation history — you can resume past Copilot sessions.
+The Copilot drawer keeps a history menu in its header (the clock/history icon). Open it to switch between past Copilot conversations, rename them, or start a new chat — each conversation is its own session and resumes where you left off.
 
 ## What the Copilot can't do
 
-- **It has no browser tool**. By design — the Copilot is a read-only-Q&A surface, not a research agent. If you want to scrape something, use a regular agent with `browser_*` tools.
+- **It has no browser tool**. By design — the Copilot works from the platform's own tools, not the open web. If you want to scrape or navigate a site, use a regular agent with `browser_*` tools.
 - **It can't see all sessions in your org** — only the ones in your current project. Use the Sessions view for tenant-wide observability.
 - **It can't change billing**, manage Stripe, change your password, or other deeply personal admin ops. Those still go through Settings.
 

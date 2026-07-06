@@ -10,8 +10,10 @@ module.exports = {
       collapsed: false,
       items: [
         'work/workflow/run-agent',
+        'work/workflow/configure-agent',
         'work/workflow/review-sessions',
         'work/workflow/improve-agent',
+        'work/workflow/templates',
       ],
     },
     {
@@ -22,6 +24,7 @@ module.exports = {
         'work/library/skills',
         'work/library/knowledge-bases',
         'work/library/mcp-servers',
+        'work/library/integrations',
       ],
     },
     {
@@ -45,6 +48,9 @@ module.exports = {
         'work/tools/goals',
         'work/tools/copilot',
         'work/tools/inbox',
+        'work/tools/missions',
+        'work/tools/scheduled-work',
+        'work/tools/sub-agents',
       ],
     },
     {
@@ -55,6 +61,10 @@ module.exports = {
         'work/settings/profile',
         'work/settings/usage',
         'work/settings/billing',
+        'work/settings/project',
+        'work/settings/notifications',
+        'work/settings/team',
+        'work/settings/integrations',
       ],
     },
     'work/monetize',
@@ -94,6 +104,7 @@ module.exports = {
         'develop/features/agents',
         'develop/features/sessions',
         'develop/features/compute',
+        'develop/features/connect-compute',
       ],
     },
     {
@@ -102,7 +113,10 @@ module.exports = {
       collapsed: false,
       items: [
         'develop/features/models',
+        'develop/features/playground',
         'develop/features/skills-and-experts',
+        'develop/features/experts-arenas',
+        'develop/features/skill-optimization',
         'develop/features/knowledge-bases',
         'develop/features/mcp-and-vault',
         'develop/features/hub',

@@ -7,26 +7,37 @@ sidebar_position: 3
 
 ## Plans
 
-| Plan | Monthly | Tokens | Web-browse | ML compute | Storage | Support |
-|---|---|---|---|---|---|---|
-| **Standard** | $45 | 1M | 100 min | 5h | 5GB | Basic |
-| **Pro** | $98 | 5M | 500 min | 25h | 25GB | Priority |
-| **Max** | $192 | 25M | 2,500 min | 150h | 250GB | Enterprise |
+| Plan | Monthly | Agents | Tokens / mo | Workspace | Hub | Web browsing | Support |
+|---|---|---|---|---|---|---|---|
+| **Free** | $0 | 5 | 500K starter | 1 GB | 1 GB | 0.5 h | Community |
+| **Standard** | $30 | 100 | 5M | 5 GB | 10 GB | 5 h | Email |
+| **Pro** ⭐ | $72 | 500 | 11.5M | 20 GB | 50 GB | 15 h | Priority email |
+| **Max** | $144 | 1,000 | 22M | 50 GB | 200 GB | 40 h | Priority |
+| **Enterprise** | Custom | Custom | Custom | Custom | Custom | Custom | SSO, audit logs, RBAC, SLA |
 
-Annual saves ~20%.
+Annual billing saves ~5% (Standard $28/mo, Pro $69/mo, Max $138/mo). **Running more agents costs nothing extra** — every plan includes its full concurrent-agent count; you pay for what agents *do* (tokens, compute), not how many you create.
 
-## Add-ons
+## Wallets: how consumables work
 
-Stackable on top of any plan, monthly renewing until removed:
+Each consumable resource (tokens, web browsing, ML compute) is a **prepaid wallet**. Your plan grants a monthly balance; top-ups add more on demand; usage drains the wallet in real time. **When a wallet hits zero, the operation stops** — no surprise bills, no auto-upgrades. The plan-granted portion resets each billing cycle (use-it-or-lose-it); the top-up portion is cash you paid in and rolls over while your account is active.
 
-- Extra LLM tokens (1M / 5M / 25M bundles)
-- Extra ML compute (GPU hours)
-- Extra storage (GB)
-- Custom domain for agent endpoints
+## Top-ups (pay-as-you-go)
 
-## Top-up credits
+One-shot, never expire until used, consumed **before** plan allowance:
 
-One-shot prepaid in $10 / $50 / $200 / $1,000 chunks. Consumed **before** plan tokens — a $200 top-up effectively delays your plan from hitting its cap by ~$200 worth of usage.
+| Resource | Rate |
+|---|---|
+| Tokens | **$5.57 / 1M** |
+| Web browsing | **$0.08 / hour** (10-hour minimum) |
+
+## Add-ons (recurring)
+
+Raise your monthly ceiling, renewing until removed:
+
+| Resource | Rate |
+|---|---|
+| Extra workspace storage | **+$0.0605 / GB / month** |
+| Custom domain for agent endpoints | included on paid plans |
 
 ## BYO LLM
 
