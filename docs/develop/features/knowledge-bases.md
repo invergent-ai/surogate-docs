@@ -14,14 +14,14 @@ For the operator's view, see [Work mode → Knowledge bases](/work/library/knowl
 ```
 Source files (markdown, PDF, CSV)
         │
-        ▼ uploaded via POST /v1/knowledge-bases/{id}/sources
+        ▼ uploaded via POST /api/knowledge-bases/{id}/sources
    ┌─────────────────────────────┐
    │   Curator (an LLM)          │
    │   Reads sources, extracts   │
    │   structured knowledge,     │
    │   deduplicates              │
    └─────────────┬───────────────┘
-                 │ COMPILE (POST /v1/knowledge-bases/{id}/compile)
+                 │ COMPILE (POST /api/knowledge-bases/{id}/compile)
                  ▼
    ┌─────────────────────────────┐
    │   Wiki — searchable index   │
@@ -74,7 +74,7 @@ The curator runs once per source on COMPILE. The cost is dominated by the size o
 ## Compile
 
 ```bash
-curl -X POST http://localhost:8000/v1/knowledge-bases/{id}/compile \
+curl -X POST http://localhost:8000/api/knowledge-bases/{id}/compile \
   -H "Authorization: Bearer $TOKEN"
 ```
 
@@ -104,7 +104,7 @@ Bug-track: this is the H4 issue from the audit — the platform should surface c
 The same search the agent uses at runtime:
 
 ```bash
-curl "http://localhost:8000/v1/knowledge-bases/{id}/wiki/search?q=refund+policy" \
+curl "http://localhost:8000/api/knowledge-bases/{id}/wiki/search?q=refund+policy" \
   -H "Authorization: Bearer $TOKEN"
 ```
 
@@ -113,7 +113,7 @@ Returns ranked wiki pages with snippets. Pre-test your KB before attaching to an
 ## Attach to an agent
 
 ```bash
-curl -X POST http://localhost:8000/v1/agents/{agent_id}/knowledge-bases \
+curl -X POST http://localhost:8000/api/agents/{agent_id}/knowledge-bases \
   -H "Authorization: Bearer $TOKEN" \
   -d '{"kb_id": "..."}'
 ```
@@ -133,16 +133,16 @@ Plus the agent's tool catalogue grows by `kb_search` and `kb_query`.
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| `GET` | `/v1/knowledge-bases` | List |
-| `GET` | `/v1/knowledge-bases/{id}` | Detail |
-| `POST` | `/v1/knowledge-bases` | Create. Body: `{name, description, curator_model}` |
-| `DELETE` | `/v1/knowledge-bases/{id}` | Delete (pre-flight: warns if attached to agents) |
-| `GET` | `/v1/knowledge-bases/{id}/sources` | List sources |
-| `POST` | `/v1/knowledge-bases/{id}/sources` | Add source (multipart for File, JSON for others) |
-| `DELETE` | `/v1/knowledge-bases/{id}/sources/{source_id}` | Remove source |
-| `POST` | `/v1/knowledge-bases/{id}/compile` | Trigger compile |
-| `GET` | `/v1/knowledge-bases/{id}/wiki` | Browse wiki |
-| `GET` | `/v1/knowledge-bases/{id}/wiki/search?q=` | Search wiki |
+| `GET` | `/api/knowledge-bases` | List |
+| `GET` | `/api/knowledge-bases/{id}` | Detail |
+| `POST` | `/api/knowledge-bases` | Create. Body: `{name, description, curator_model}` |
+| `DELETE` | `/api/knowledge-bases/{id}` | Delete (pre-flight: warns if attached to agents) |
+| `GET` | `/api/knowledge-bases/{id}/sources` | List sources |
+| `POST` | `/api/knowledge-bases/{id}/sources` | Add source (multipart for File, JSON for others) |
+| `DELETE` | `/api/knowledge-bases/{id}/sources/{source_id}` | Remove source |
+| `POST` | `/api/knowledge-bases/{id}/compile` | Trigger compile |
+| `GET` | `/api/knowledge-bases/{id}/wiki` | Browse wiki |
+| `GET` | `/api/knowledge-bases/{id}/wiki/search?q=` | Search wiki |
 
 ## What's next
 

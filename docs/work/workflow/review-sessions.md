@@ -1,11 +1,11 @@
 ---
-title: Review what your agent did
+title: Sessions
 sidebar_position: 3
 ---
 
-# Review what your agent did
+# Sessions
 
-Every conversation is a **session** — fully recorded, replayable, and inspectable. Review them when something looks wrong, or to find good examples for improving your agent.
+Every conversation is a **session** — fully recorded, replayable, and inspectable. Open the **Sessions** page to review what your agent did: when something looks wrong, or to find good examples for improving your agent.
 
 ## Find a session
 

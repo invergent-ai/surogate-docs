@@ -7,34 +7,40 @@ sidebar_position: 2
 
 Publishes the agent as a Slack bot. Users DM it or @mention it in channels. Same conversations as on Web — if Slack identities are linked to Surogate users, sessions are shared.
 
-## What you need from Slack
-
-1. **Create a Slack app** at [api.slack.com/apps](https://api.slack.com/apps).
-2. Add **Bot Scopes**: at minimum `chat:write`, `app_mentions:read`, `im:read`, `im:write`, `channels:history`, `groups:history`, `files:read`, `users:read`.
-3. Enable **Socket Mode** (no public webhook URL needed).
-4. Add an **App-Level Token** with the `connections:write` scope.
-5. Install the app to your workspace.
-
-Copy two tokens:
-
-- **App Token** — starts with `xapp-`. Authenticates the Socket Mode connection (inbound events).
-- **Bot Token** — starts with `xoxb-`. Authenticates outbound messages.
+Surogate connects to Slack over **webhooks** (Event Subscriptions), not Socket Mode. You create a Slack app, paste a few Request URLs into it, and hand Surogate your app's Signing Secret and Bot Token.
 
 ## Configuration in Surogate
 
-Open the agent → **Configure** in the left nav → the **Channels** tab → toggle **Slack** ON. The form expands:
+Open the agent → **Configure** in the left nav → the **Channels** tab → find the **Slack** card → **Connect**. That opens a step-by-step walkthrough:
 
-| Field | What it does |
+1. **Create a Slack app** at [api.slack.com/apps](https://api.slack.com/apps) → *Create New App* → *From scratch*.
+2. **Add Bot Token Scopes** (OAuth & Permissions → Bot Token Scopes):
+   `chat:write`, `app_mentions:read`, `im:read`, `im:write`, `channels:history`, `groups:history`, `files:read`, `users:read`. The wizard has a **Copy** button for the full list.
+3. **Enable Event Subscriptions and paste your Request URLs.** Enter your **App ID** in the wizard; it then shows the exact URLs to paste back into Slack:
+   - Event Subscriptions Request URL — `https://channels.surogate.ai/slack/<APP_ID>`
+   - Interactivity Request URL — `https://channels.surogate.ai/slack/<APP_ID>/interact`
+   - Slash Command Request URL — `https://channels.surogate.ai/slack/<APP_ID>/commands`
+
+   Also subscribe to these bot events: `message.im`, `app_mention`, `message.channels`.
+4. **Install to your workspace** (OAuth & Permissions → *Install to Workspace*) and copy the **Bot User OAuth Token** (starts with `xoxb-`).
+5. **Paste your credentials** — the **Signing Secret** (Basic Information) and the **Bot Token** (`xoxb-…`).
+
+Click **Connect Slack**. There is no separate save button — the connect step and every later option change save automatically.
+
+## Options (the Slack "Manage" screen)
+
+Once connected, the Slack card shows **Manage**. The options there auto-save as you change them:
+
+| Option | What it does |
 |---|---|
-| **App Token** | Paste `xapp-…` |
-| **Bot Token** | Paste `xoxb-…` |
-| **Require @mention** (default ON) | If on, the bot only responds in channels when @mentioned. Without this it would respond to every message in any channel it's added to — usually not what you want. |
-| **Allow Bots** | Whether other bots can talk to it. Default `None`. |
-| **Reply in Thread** (default ON) | Responses go in the thread, not the channel. Recommended. |
-| **Reply Broadcast** (default OFF) | When on, thread replies also post to the channel (everyone sees them). |
-| **Free Response Channels** | Comma-separated channel IDs where @mention is NOT required (use for dedicated `#agent` channels). |
+| **Require @mention** (default ON) | Only replies when @mentioned. Off = replies to every message in any channel it's added to. |
+| **Mode** | **Team member** — channel members talk to a shared agent identity. **Personal assistant** — each user links their own Surogate account; unlinked users are prompted to link. |
+| **Allow Bots** | Whether other bots can talk to this agent: **None** (default), **Mentions only**, or **All**. |
+| **Reply in thread** (default ON) | Keeps replies inside the message thread. |
+| **Reply broadcast** (default OFF) | Also posts the threaded reply to the main channel. |
+| **Free-response channels** | Comma-separated Slack **channel IDs** (not names, e.g. `C0123ABCD`) where it answers without being @mentioned. |
 
-Click **SAVE CHANNELS**.
+The Slack manage screen also has a **Surogate Mate** section (Follow / Ambient) — see [Proactive engagement](./proactive.md).
 
 ## What users see
 
@@ -48,7 +54,7 @@ The user types a message; the bot responds. Each DM is one Surogate session. Sub
 @acme-support what's the refund policy?
 ```
 
-The bot responds inside the thread (assuming Reply in Thread is on). Subsequent messages in that thread continue the session — no need to @mention again.
+The bot responds inside the thread (assuming Reply in thread is on). Subsequent messages in that thread continue the session — no need to @mention again.
 
 ### File attachments
 
@@ -60,28 +66,28 @@ The first time a Slack user messages the bot:
 
 1. The platform looks up `(platform=slack, platform_user_id=U03ABCDEF)` in the channel-identity table.
 2. If found, the message routes to that user's existing Surogate sessions.
-3. If not found, an internal user is created OR the bot DMs them a pairing link to connect to an existing web account.
+3. If not found, an internal user is created OR the bot DMs them a pairing link to connect to an existing web account (this is the **Personal assistant** mode).
 
 Once linked, the same person on Web and Slack sees the same agent, same memory, same sessions.
 
 ## Multi-workspace
 
-Each Slack workspace needs its own Slack app + its own pair of tokens. To run the same agent across multiple workspaces, create multiple agents in Surogate (each pointing at its workspace's tokens), or use the API channel for cross-workspace routing.
+Each Slack workspace needs its own Slack app + its own credentials. To run the same agent across multiple workspaces, create multiple agents in Surogate (each pointing at its workspace's app), or use the API channel for cross-workspace routing.
 
 ## When the Slack bot isn't responding
 
 Common causes:
 
-- **Missing scopes** — you added a new scope but didn't re-install the app to the workspace. Re-install.
-- **Socket Mode disabled** — toggle it back on in Slack app settings.
-- **Wrong tokens** — App Token must have `connections:write`. Bot Token must have the bot scopes. Mix them up and nothing works.
-- **Another instance is running** — Slack only delivers updates to one consumer at a time. Stop your dev environment.
+- **Missing scopes** — you added a new scope but didn't re-install the app to the workspace. Re-install, then paste the new Bot Token via **Reconnect**.
+- **Request URLs not verified** — Slack must accept the Event Subscriptions Request URL (it shows a green "Verified"). If it's not verified, events never reach Surogate.
+- **Wrong credentials** — the Signing Secret and Bot Token must both be from the same Slack app.
 
 Check the agent's **Sessions** view — if no Slack-channel sessions are appearing when you send Slack messages, the inbound path is broken.
 
-## Toggling Slack off
+## Reconnecting and disconnecting
 
-Configure → Channels tab → toggle Slack OFF → **SAVE CHANNELS**. The bot stops responding within seconds. Sessions in flight finish; new ones don't start. Tokens are preserved — you can re-enable later without re-entering them.
+- **Reconnect** reopens the walkthrough so you can paste a new Bot Token after re-installing the app (e.g. when you added scopes).
+- **Disconnect** stops the bot from replying. Your Slack app and credentials stay in place — reconnect anytime.
 
 ## What's next
 

@@ -54,8 +54,8 @@ export default function Home() {
             — the agent runtime (harness, sessions, sandbox, governance, MCP integration)
           </li>
           <li>
-            <a href="https://github.com/invergent-ai/surogate-ops"><b>surogate-ops</b></a>{' '}
-            — the operator platform (the UI, billing, hub, training pipeline)
+            <a href="https://github.com/invergent-ai/surogate"><b>surogate</b></a>{' '}
+            — the training framework (SFT/RL engine for the expert models you own)
           </li>
           <li>
             <a href="https://github.com/invergent-ai/surogate-hub"><b>surogate-hub</b></a>{' '}

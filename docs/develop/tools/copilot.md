@@ -51,7 +51,7 @@ Routine writes — `create_skill`, `update_skill`, `create_dataset`, `create_kno
 
 ## What the Copilot won't do
 
-- **It has no browser tool.** By design — it's a read-only-Q&A surface plus controlled writes, not a research agent.
+- **It has no browser tool.** By design — it works from the platform's own tools, not the open web; it's not a research agent.
 - **It can't see cross-project state.** Operates inside the current project only.
 - **It can't change billing**, manage Stripe, or rotate your account password.
 
@@ -74,4 +74,4 @@ Every Copilot operation maps to a REST API endpoint. If you're building automati
 - **Enter** — submit
 - **Shift+Enter** — newline
 
-Click the Copilot button (not the shortcut) for the full-page view at `/copilot` — same agent, full-screen, with a session history sidebar so you can resume past Copilot conversations.
+The drawer's header has a history menu (clock icon) — switch between past Copilot conversations, rename them, or start a new chat. Each conversation is its own session and resumes where you left off.

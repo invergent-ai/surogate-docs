@@ -49,12 +49,6 @@ Failure-mode triage:
 - **Tool was blocked** → POLICIES tab; the denial reason is recorded.
 - **Saga rolled back** → look at `saga.step_failed` (the trigger) and the `saga.compensate` events that followed.
 
-## Replay
-
-In the THREAD view, **Replay** forks a session: it re-runs your user messages against the **current** agent config and shows where the new responses diverge from the originals. Use this when you've changed SOUL.md, attached a new skill, or swapped models — confirm the change doesn't regress past good answers.
-
-Programmatically: `POST /v1/sessions/{id}/replay` with an optional `config_override`. Returns a new session ID; poll until completed and compare events.
-
 ## Export
 
 | Destination | Where |
@@ -117,7 +111,7 @@ A session can have children (via `spawn_worker` / `delegate_task` / `spawn_task`
 - Per-child links — click to drill into the child's own session
 - The parent's `delegation.*` events showing what each child did
 
-`GET /v1/sessions/{id}/tree` returns the full descendant graph (up to 200 nodes); `/children` returns one level. Use for building your own dashboards over sub-agent fan-out.
+`GET /api/sessions/{id}/tree` returns the full descendant graph (up to 200 nodes). Use it to build your own dashboards over sub-agent fan-out.
 
 ## Retention
 
