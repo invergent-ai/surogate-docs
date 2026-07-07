@@ -15,7 +15,7 @@ sidebar_position: 4
 | **Max** | $144 | 1,000 | 22M | 50 GB | 200 GB | 40 h | Priority |
 | **Enterprise** | Custom | Custom | Custom | Custom | Custom | Custom | SSO, audit logs, RBAC, SLA |
 
-Annual billing saves ~5% (Standard $28/mo, Pro $69/mo, Max $138/mo). **Running more agents costs nothing extra** — every plan includes its full concurrent-agent count; you pay for what agents *do* (tokens, compute), not how many you create.
+Annual billing saves ~5% (Standard $29/mo, Pro $69/mo, Max $138/mo). **Running more agents costs nothing extra** — every plan includes its full concurrent-agent count; you pay for what agents *do* (tokens, compute), not how many you create.
 
 ## Wallets: how consumables work
 

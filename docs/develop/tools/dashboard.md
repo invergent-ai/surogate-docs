@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # Dashboard
 
-The Develop-mode dashboard is at `/studio`. It's denser than the Work-mode dashboard — designed for builders monitoring their workspace.
+The **Dashboard** is the builder home at `/studio` — a dense workspace overview for monitoring agents, models, training, and recent activity.
 
 ## Top widgets
 
@@ -20,23 +20,21 @@ The Develop-mode dashboard is at `/studio`. It's denser than the Work-mode dashb
 - **Training Jobs** — active SFT / GRPO runs
 - **Eval Runs** — active evaluation runs
 - **Recent Conversations** — feed of recent sessions across all agents
-  - Filter chips: All / Flagged / Negative
+  - Filter chips: **All / Flagged**
 
 ## Quick Actions
 
-Seven buttons on the right side:
+Five shortcut buttons:
 
 | Button | What it opens |
 |---|---|
-| **Deploy Agent** | Opens the DEPLOY NEW AGENT dialog (same as Agents → DEPLOY AGENT) |
-| **Serve Model** | DEPLOY MODEL dialog (Local Hub / HF / OpenRouter / URL) |
-| **New Skill** | NEW SKILL form |
-| **Start Training** | Opens the NEW RUN form on the Training page (SFT or GRPO) |
-| **New KB** | NEW KNOWLEDGE BASE dialog |
 | **New Dataset** | NEW DATASET picker |
+| **Start Training** | The NEW RUN form on the Training page (SFT or GRPO) |
 | **New Eval** | NEW EVALUATION wizard |
+| **Serve Model** | DEPLOY MODEL dialog (Local Hub / HF / OpenRouter / URL) |
+| **New Expert** | Create an expert (a skill backed by a fine-tuned model) |
 
-These are shortcuts — each opens the same modal/wizard you'd reach by navigating to its respective module page.
+Each opens the same modal/wizard you'd reach by navigating to its module page.
 
 ## Daily ops habit
 

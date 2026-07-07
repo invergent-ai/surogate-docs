@@ -7,7 +7,7 @@ sidebar_position: 10
 
 The Compute page is where you wire up cloud GPU providers, watch what's running, and set scaling policies. This page walks through the onboarding — the tabs, connecting a provider, and browsing the instance types a backend offers. For the conceptual overview of *why* and *when* to connect a provider, see [Compute](./compute.md).
 
-In-app path: **Studio → Compute** (`/studio/compute`, which lands on the Cloud tab).
+In-app path: **Develop → Compute** (`/studio/compute`, which lands on the Cloud tab).
 
 ## The Compute tabs
 

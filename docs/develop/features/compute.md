@@ -7,7 +7,7 @@ sidebar_position: 3
 
 The Compute page is where you wire up GPU providers so the platform can run training jobs, serve fine-tuned models, and drive data pipelines on your behalf. You don't manage Kubernetes or VM provisioning — the platform does that — but you choose **which provider** runs what, and you watch everything that's consuming compute in one place.
 
-In-app path: **Studio → Compute** (`/studio/compute`, which lands on the Cloud tab). The backend lives under the REST prefix `/api/compute` (also mounted at `/api/nebius`).
+In-app path: **Develop → Compute** (`/studio/compute`, which lands on the Cloud tab). The backend lives under the REST prefix `/api/compute` (also mounted at `/api/nebius`).
 
 This page is the conceptual overview — *what* the providers are, the difference between bringing your own GPUs and using bundled compute, and what actually shows up in the queue. The step-by-step onboarding — the tabs, per-provider credential fields, browsing backend offers, and the Policies preview — lives in [Connect compute](./connect-compute.md).
 

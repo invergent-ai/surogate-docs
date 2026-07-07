@@ -5,7 +5,7 @@ sidebar_position: 4
 
 # Configure your agent
 
-The **CONFIG** page — reached from an agent's left navigation (`/work/agents/{id}/settings?tab=...`) — is the core agent-building surface: twelve tabs that control who the agent is, what it can do, which model runs it, and where people reach it.
+The **Configure** page — reached from an agent's left navigation (`/work/agents/{id}/settings?tab=...`) — is the core agent-building surface: twelve tabs that control who the agent is, what it can do, which model runs it, and where people reach it.
 
 Each tab saves independently. Most tabs surface a **SAVE** button (which flashes a green **Saved** confirmation) or an amber **Unsaved changes** bar with **Save** / **Discard changes** when a field is dirty; a few toggles save the moment you flip them. Where noted, changes apply to **new sessions only** or reach live sessions on their next turn.
 

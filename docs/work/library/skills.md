@@ -41,7 +41,7 @@ Frontmatter fields:
 
 | Field | Required | Notes |
 |---|---|---|
-| **name** | Yes | Unique slug used to reference and invoke the skill (agent catalog, slash commands). Lowercase letters, digits, `-`, `.`, `_`; must start with a letter/digit; ≤ 64 chars. **Fixed after creation.** |
+| **name** | Yes | Unique slug used to reference and invoke the skill (agent catalog, slash commands). Lowercase letters, digits, `-`, `.`, `_`; must start with a letter/digit; ≤ 64 chars. **Fixed after creation.** (The Studio **From scratch** form is stricter — lowercase letters, digits, and hyphens only — so use hyphens there; `.`/`_` names come in via import or the API.) |
 | **description** | Yes | One line — what the skill does and when to use it. The agent reads this to decide whether to apply the skill, so be specific and action-oriented. |
 | **trigger** | No | Comma-separated keywords describing when the skill is relevant. Surfaced to the agent as a hint. |
 | **tags** | No | Labels for organizing and filtering in the studio. |

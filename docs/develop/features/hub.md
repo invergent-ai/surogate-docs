@@ -7,7 +7,7 @@ sidebar_position: 5
 
 The Data Hub is **Git for data**. Every artifact your project produces — a skill, a dataset, a model, a knowledge base, a training experiment — is stored as its own **versioned repository** with branches, commits, and tags. The Hub is backed by **surogate-hub**, a lakeFS-based object store, so a repo behaves like a git repo whose objects happen to be data files instead of source code.
 
-Open it from **Develop → Hub** (`/studio/hub`). The page lists every repository in your active project; clicking one opens a browser for its files, history, branches, and versions.
+Open it from **Develop → Data Hub** (`/studio/hub`). The page lists every repository in your active project; clicking one opens a browser for its files, history, branches, and versions.
 
 A repository is identified as `{namespace}/{name}`, where the namespace is a stable, opaque per-project prefix (`p-` followed by the first eight characters of the project id — see `core/hub/naming.py::project_hub_namespace`). Everything you see in the Hub is scoped to the projects you're a member of: `GET /api/hub/repositories` lists only repos under your projects' namespaces.
 

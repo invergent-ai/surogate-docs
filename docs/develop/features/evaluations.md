@@ -61,7 +61,7 @@ Pick the benchmark(s). You can select multiple to run in batch.
 - **Judge LLM** — if the benchmark uses an LLM judge (most do for subjective metrics):
   - **External** — OpenRouter / Anthropic / OpenAI / your endpoint
   - **Colocated** — a model already in the platform's Models page
-- **API Key** — for external judge (required; missing key causes silent failures — H3 in the audit)
+- **API Key** — for an external judge (required; a missing key causes the judge calls to fail)
 - **Subset** — sample size if you want a quick run (e.g. 100 samples instead of full set)
 
 ### Step 3 — Target & Run
