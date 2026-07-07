@@ -113,13 +113,15 @@ mcp_servers:
 
 ## The credential vault
 
-The **VAULT** button on the MCP Servers tab opens the credential store:
+The **Vault** button on the MCP Servers tab opens the credential store:
 
 | Field | Notes |
 |---|---|
 | **Name** | Reference name (e.g. `github_token`) — used in MCP server configs as `<NAME>_REF: name` |
-| **Value** | Masked. SHOW to reveal, COPY, ROTATE to replace, DELETE |
-| **Scope** | Org-wide (default) or user-specific |
+| **Value** | Write-only. You set it, and later **Update** it (store a new value) or **Remove** it — but the value is never displayed back to you. The list API returns names + timestamps only, never the secret. |
+| **Scope** | Project-scoped (= org). Credentials belong to the project; every MCP server in the project can reference them. |
+
+System-owned credentials (used by platform/system agents) are protected: the API refuses to delete them (`403`), and a credential still consumed by a running agent's MCP server can't be deleted until you stop the consumer (`409`, in-use conflict).
 
 ### How references work
 
@@ -183,17 +185,19 @@ If a server returns a different tool definition on reconnect (different fingerpr
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| `GET` | `/api/mcp-servers` | List |
+| `GET` | `/api/mcp-servers` | List (filter by `project_id`, `enabled`, `layer`) |
+| `GET` | `/api/mcp-servers/composio/catalog` | Live Composio toolkit catalog |
 | `GET` | `/api/mcp-servers/{id}` | Detail with connected tools |
 | `POST` | `/api/mcp-servers` | Add server |
-| `PUT` | `/api/mcp-servers/{id}` | Update config |
-| `DELETE` | `/api/mcp-servers/{id}` | Remove server |
-| `POST` | `/api/mcp-servers/{id}/enable` | Trigger security scan + activate |
-| `POST` | `/api/mcp-servers/{id}/disable` | Deactivate |
-| `GET` | `/api/credentials` | List Vault entries (names only) |
-| `POST` | `/api/credentials` | Store credential |
-| `PUT` | `/api/credentials/{name}` | Replace value |
-| `DELETE` | `/api/credentials/{name}` | Remove |
+| `PATCH` | `/api/mcp-servers/{id}` | Update config (including the `enabled` toggle) |
+| `GET` | `/api/mcp-servers/{id}/in-use` | List agents referencing this server |
+| `DELETE` | `/api/mcp-servers/{id}` | Remove server (409 if attached to a running agent) |
+| `GET` | `/api/credentials` | List Vault entries (names + timestamps only, never values) |
+| `POST` | `/api/credentials` | Store a credential (same name overwrites — this is how "Update" works) |
+| `GET` | `/api/credentials/{name}/in-use` | List MCP servers referencing this credential |
+| `DELETE` | `/api/credentials/{name}` | Remove (403 if system-owned, 409 if in use) |
+
+There is no dedicated `/enable` endpoint — enabling/disabling is a `PATCH` that flips the `enabled` flag. Tool security scanning happens in the MCP proxy at tool-discovery time, not as a synchronous call on this API. Updating a credential is a `POST` with the same name (the store upserts); there is no `PUT`.
 
 ## What's next
 

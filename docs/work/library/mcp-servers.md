@@ -7,137 +7,104 @@ sidebar_position: 3
 
 The **Model Context Protocol (MCP)** is an open standard for connecting LLMs to external systems — your CRM, your ticketing tool, GitHub, internal APIs, anything that speaks MCP.
 
-You wire it up once in the Library; any agent in your tenant can attach it.
+You wire a server up once in the Library; any agent in your workspace can then attach it and use its tools.
 
-## The MCP servers tab
+## The MCP Servers tab
 
-**Library → Skills & Tools → MCP SERVERS tab.**
+**Library → Skills & Tools → MCP Servers tab.**
 
-The header shows how many MCP servers are **enabled** (in this build I see "1 MCP servers enabled" with the test server I created during the audit). Below that: a list of every server in your tenant. Each row shows:
+- **Left rail** — a **Vault** button at the top (a lock icon, showing how many keys are stored), a search box, then the list of every server. Each row shows the server name and a `TRANSPORT · LAYER · N tools` line, with a green dot when the server is enabled.
+- **Right pane** — the selected server's detail: name + transport/layer chips, an Enabled/Disabled status with the number of connected agents, **Disable/Enable · Edit · Delete**, the connection details, the auth method, the security-scan result, and the list of exposed tools.
 
-- Name (`test-context7`, `github-readonly`, etc.)
-- Transport (HTTP or stdio)
-- Scope (PLATFORM / ORG / USER)
-- URL
-- Auth method
-- Number of exposed tools
-- Number of agents connected
-
-Click any server to open its detail panel.
+Click any server to open its detail panel; click **Add server** (top right) to create one.
 
 ## Adding a server
 
-Click **ADD SERVER** at the top of the list. The form:
+Click **Add server**. The form ("Add a server — connect an MCP endpoint, its tools become available to your agents"):
 
-| Field | Required | Notes |
-|---|---|---|
-| **Name** | Yes | Lowercase, hyphens, alphanumeric (e.g. `linear-tickets`, `github-readonly`) |
-| **Description** | No | What this server provides |
-| **Transport** | Yes | **HTTP** for cloud-hosted, **stdio** for local subprocess |
-| **URL** (for HTTP) | Yes | The MCP server's endpoint (e.g. `https://mcp.linear.app/mcp`) |
-| **Command** + args (for stdio) | Yes | The shell command to launch the server (e.g. `npx -y @modelcontextprotocol/server-github`) |
-| **Auth Method** | Yes | **None** / **OAuth** / **API Key** / **Bearer Token** |
-| **Timeout (seconds)** | No | Default 120 |
+| Field | Notes |
+|---|---|
+| **Name** | Lowercase, hyphens (e.g. `stripe`, `github`). |
+| **What it does** | One line, shown wherever the tool appears. |
+| **Connection type** | **Remote endpoint (HTTP)** or **Local command (stdio)**. |
+| **Web address (URL)** *(HTTP)* | The tool's MCP endpoint, e.g. `https://mcp.stripe.com`. |
+| **How do you sign in?** *(HTTP)* | **API key** (stored in the Vault) or **OAuth** (sign in in a new window). |
+| **API key** *(HTTP + API key)* | The key itself — saved securely to the Vault, your agent never sees it. |
+| **Command** *(stdio)* | The full command that starts the server, e.g. `npx -y @modelcontextprotocol/server-filesystem /workspace`. |
+| **Environment** *(stdio)* | Optional, one `KEY=value` per line. |
+| **Timeout (seconds)** | Optional, defaults to 120. |
 
-Click **ADD SERVER**. The server is created in a `disabled` state until you trigger a security scan.
+The submit button reads **Add & connect** (HTTP + API key), **Connect** (OAuth), or **Add server** (stdio). New servers are created **enabled**, at the **user** layer, and are mirrored into the runtime's MCP registry so the proxy picks them up on its next discovery cycle.
 
-### Choosing transport
+### What happens to your API key
 
-- **HTTP / StreamableHTTP** — for cloud-hosted MCP servers. The platform's MCP proxy talks to them over HTTP. Best when the server is somewhere remote (SaaS connectors, your internal API, third-party MCP services).
-- **stdio** — for locally-installed tools that launch as subprocesses. Good for CLI-like tools, MCP servers shipped as npm packages.
+When you add an HTTP server with an API key, Studio does two things: it stores the key in the **Vault** (keyed by the server name), and it saves the server with a *reference* to that Vault entry — not the key itself. At runtime the MCP proxy resolves the reference and injects the key. The agent's sandbox never sees the secret. See [MCP & Vault](/develop/features/mcp-and-vault) for the full trust model.
 
-If in doubt, HTTP is the more modern choice.
+### Choosing a connection type
 
-## Configuring authentication
+- **Remote endpoint (HTTP / StreamableHTTP)** — for cloud-hosted MCP servers (SaaS connectors, your internal API, third-party MCP services). The most common choice.
+- **Local command (stdio)** — for tools that launch as a subprocess (CLI-like tools, MCP servers shipped as npm packages).
 
-Most MCP servers need credentials. Four options:
+## Authentication
 
-### None
+- **API key** — a static key, passed as a header. Stored in the Vault, injected by the proxy.
+- **OAuth** — for servers that require an OAuth 2.1 sign-in (Salesforce, Slack, GitHub, most enterprise SaaS). You sign in in a browser window; the platform stores the resulting connection (refresh token), not your password.
 
-No auth. Use only for public, read-only MCP servers (the `context7` MCP I tested in my audit is a public example — no creds needed to fetch documentation).
-
-### OAuth
-
-For servers that require an OAuth 2.1 PKCE flow (Salesforce, Slack, GitHub, most enterprise SaaS). When the agent first calls a tool from this server, the platform opens a browser, you sign in / approve, and tokens are cached on disk.
-
-Configure:
-- **Client ID** (registered with the MCP server)
-- **Client secret** (sometimes required)
-- **Scope** (e.g. `read write`)
-- **Token directory** (where the platform stores tokens)
-
-### API Key
-
-A static key the platform passes as a header. Stored in the **Vault** so the agent's sandbox never sees it.
-
-### Bearer Token
-
-A long-lived bearer token. Same as API key in practice — stored in the Vault, injected by the proxy.
+The proxy also supports **Bearer token** and **no auth** for servers configured directly; the Studio "Add server" form surfaces the two you'll reach for most. Whatever the method, secrets live in the Vault and are injected by the proxy — never handed to the sandbox.
 
 ## The Vault
 
-The **VAULT** button at the top of the MCP servers tab opens a credential store. This is where you store API keys, OAuth secrets, and other tokens the MCP proxy needs to authenticate to upstream servers.
-
-Each credential has:
-- **Name** (used to reference it from MCP server configs — e.g. `GITHUB_TOKEN_REF: github_token`)
-- **Value** (masked by default; SHOW to reveal, COPY to clipboard, ROTATE to replace, DELETE to remove)
+The **Vault** button at the top of the left rail opens the credential store — where API keys, OAuth secrets, and other tokens the proxy needs live. Each entry shows its name and when it was added; you can **Update** it (set a new value) or **Remove** it. Values are write-only: they're never displayed back to you.
 
 > :::info Credentials never reach the sandbox
-> The agent's sandbox is the most untrusted component in the platform. Credentials live in the Vault and are injected by the MCP proxy as it forwards calls — even a fully prompt-injected agent can't exfiltrate them.
+> The agent's sandbox is the most untrusted component in the platform. Credentials live in the Vault and are injected by the MCP proxy as it forwards each call — even a fully prompt-injected agent can't exfiltrate them.
 > :::
 
-## Enabling and scanning a server
+Full detail — reference syntax, encryption at rest, config layers — is in [MCP & Vault](/develop/features/mcp-and-vault).
 
-After adding a server: click **ENABLE**. The platform:
+## Enabling, disabling, and security scanning
 
-1. Connects to the MCP server using the configured auth.
-2. Lists every tool the server exposes.
-3. Runs each tool definition through a **security scanner** that checks for:
-   - Invisible Unicode (zero-width, bidi marks)
-   - Hidden HTML comments
-   - Prompt-injection patterns
-   - Tool-poisoning descriptions
-   - Schema abuse
-4. Computes a SHA-256 fingerprint for each tool.
-5. Registers each tool that passes.
+The **Enable / Disable** button toggles whether the server is live. Enabling doesn't run a synchronous scan in Studio — instead, the **MCP proxy scans every tool a server advertises when it discovers them** (at attach/connect time). The scanner:
 
-The detail panel shows the result: **Exposed Tools** count, security-scan status.
+1. Runs each tool definition through checks for **invisible Unicode** (zero-width, bidi marks), **hidden HTML comments**, **prompt-injection patterns**, **tool-poisoning descriptions**, and **schema abuse**.
+2. Computes a SHA-256 fingerprint for each tool (for rug-pull detection).
+3. Drops any tool that fails; only passing tools are registered and offered to the agent.
 
-> :::warning Known state-machine quirk
-> Sometimes the detail panel shows DISABLE (implying the server is enabled) but the security scan reads "Not scanned — enable the server to trigger tool scanning." If this happens, click DISABLE then ENABLE again to force a fresh scan.
-> :::
+The detail panel reflects the result under **Security scan**: **Passed** / **Failed** with a scan timestamp, or *"Not scanned yet — enable the server to scan its tools."* until the proxy has connected.
 
 ## Attaching to an agent
 
-Open the agent → **Configure** in the left nav → the **Skills & Tools** tab → **+ Attach server…** combobox → pick the MCP server.
+Open the agent → **Configure** → **Skills & Tools** → **Connect a tool**. Three tabs:
 
-The agent's tool catalogue grows by however many tools that server exposes. The LLM sees them in `skills_list` style — name + description per tool.
+- **From your Library** — the custom MCP servers you've added. **Attach** the one you want.
+- **Toolkits** — the live **Composio** catalog (searchable, can be 1000+ toolkits). Attaching one provisions a shared `composio-{toolkit}` server for the project, with OAuth auto-provisioned by the broker under the agent's own account.
+- **Add server** — the same "Add a server" form inline, so you can connect a brand-new server and attach it in one step.
 
-To remove: click the **X** next to an attached server in the same section.
+Attaching a server grants the agent its **full (scanned) toolset** — there's no per-tool checkbox in Studio; the security scanner is the gate (it removes unsafe tools before they ever reach the agent). Builders who need a tighter allow/deny list can pin one in the agent config (`tools` / `disallowed_tools`).
 
-## Editing a server
+To remove a server from an agent, detach it from the same section.
 
-Server detail → **EDIT**. Same form as ADD SERVER but pre-filled. Most fields can change; transport and URL are the structural ones — if you change them, behaviour is essentially "deleted old, added new."
+## Editing and deleting
 
-## Deleting a server
-
-Server detail → **DELETE**. The pre-flight check warns you if any agent has it attached.
+- **Edit** — the same form, pre-filled. For an HTTP + API-key server, leaving the API-key field blank keeps the current key.
+- **Delete** — a pre-flight dependency check lists any agents attached to the server; stop those agents first. (System-agent servers are protected and can't be deleted.)
 
 ## Rug-pull detection
 
-The security scanner fingerprints every tool definition. If a server returns a different tool definition on reconnect (the same tool name with different behaviour), the platform flags it as a **rug-pull**. Common cause: the upstream MCP server got updated. Review the diff before re-enabling.
+The scanner fingerprints every tool definition. If a server returns a *different* definition on reconnect (the same tool name with different behaviour), it's flagged as a **rug-pull** — the fingerprint no longer matches. The common cause is a legitimate upstream update; review the change before trusting the new definition.
 
 ## What MCP gives you in practice
 
-| You want to... | Add an MCP server for... |
+| You want to… | Add an MCP server / toolkit for… |
 |---|---|
-| Create / read GitHub issues | `@modelcontextprotocol/server-github` (npm) |
-| Look up customer accounts in Salesforce | A Salesforce MCP server |
+| Create / read GitHub issues | `@modelcontextprotocol/server-github` (stdio) or the GitHub toolkit |
+| Look up customer accounts in Salesforce | A Salesforce MCP server (OAuth) |
 | Read internal docs from Confluence / Notion | Confluence / Notion MCP servers |
 | Get current data from your data warehouse | A SQL MCP server (Postgres, Snowflake, etc.) |
-| Send messages to Slack channels from inside an agent | A Slack MCP server (different from the Slack channel — this is for outbound) |
-| Integrate your internal API | Build a custom MCP server (see [Develop mode → MCP & Vault](/develop/features/mcp-and-vault)) |
+| Send messages to Slack from inside an agent | A Slack MCP server (outbound — distinct from the Slack channel) |
+| Integrate your internal API | A custom HTTP MCP server (see [MCP & Vault](/develop/features/mcp-and-vault)) |
 
 ## What's next
 
 If you've covered the Library, head to [Channels](../channels/web.md) to publish the agent. Or jump to [Use cases](../use-cases.md) for end-to-end recipes.
+</content>

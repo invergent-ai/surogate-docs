@@ -1,35 +1,44 @@
 module.exports = {
-  // Work-mode sidebar — operator-facing
-  // Maps to docs/work/* — every entry is a path relative to docs/work/
+  // Work-mode sidebar — operator-facing. Mirrors the Work app nav:
+  // Agents · Sessions · Skills & Tools · Knowledge Bases (+ Settings).
   workSidebar: [
     'work/intro',
     'work/quickstart',
     {
       type: 'category',
-      label: 'Workflow',
+      label: 'Agents',
       collapsed: false,
       items: [
         'work/workflow/run-agent',
         'work/workflow/configure-agent',
-        'work/workflow/review-sessions',
+        'work/tools/chat',
+        'work/tools/commands',
+        'work/tools/goals',
+        'work/tools/missions',
+        'work/tools/scheduled-work',
+        'work/tools/deep-research',
+        'work/tools/code',
+        'work/tools/sub-agents',
+        'work/tools/inbox',
         'work/workflow/improve-agent',
-        'work/workflow/templates',
       ],
     },
+    { type: 'doc', id: 'work/workflow/review-sessions', label: 'Sessions' },
     {
       type: 'category',
-      label: 'Library',
+      label: 'Skills & Tools',
       collapsed: false,
       items: [
         'work/library/skills',
-        'work/library/knowledge-bases',
         'work/library/mcp-servers',
         'work/library/integrations',
+        'work/workflow/templates',
       ],
     },
+    { type: 'doc', id: 'work/library/knowledge-bases', label: 'Knowledge Bases' },
     {
       type: 'category',
-      label: 'Channels & users',
+      label: 'Channels',
       collapsed: true,
       items: [
         'work/channels/web',
@@ -43,22 +52,6 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Commands & tools',
-      collapsed: true,
-      items: [
-        'work/tools/commands',
-        'work/tools/copilot',
-        'work/tools/goals',
-        'work/tools/missions',
-        'work/tools/scheduled-work',
-        'work/tools/deep-research',
-        'work/tools/code',
-        'work/tools/sub-agents',
-        'work/tools/inbox',
-      ],
-    },
-    {
-      type: 'category',
       label: 'Settings',
       collapsed: true,
       items: [
@@ -68,6 +61,7 @@ module.exports = {
         'work/settings/billing',
       ],
     },
+    'work/tools/copilot',
     'work/monetize',
     'work/use-cases',
     {
@@ -81,14 +75,16 @@ module.exports = {
     },
   ],
 
-  // Develop-mode sidebar — builder-facing
+  // Develop-mode sidebar — builder-facing. Mirrors the Dev app nav:
+  // Dashboard · Sessions · Models · Playground · Data Hub · Datasets ·
+  // Training · Evaluations · Compute. (Experts is not shipped yet — hidden.)
   developSidebar: [
     'develop/intro',
     'develop/quickstart',
     {
       type: 'category',
       label: 'The builder loop',
-      collapsed: false,
+      collapsed: true,
       items: [
         'develop/loop/overview',
         'develop/loop/build',
@@ -97,21 +93,40 @@ module.exports = {
         'develop/loop/redeploy',
       ],
     },
+    { type: 'doc', id: 'develop/tools/dashboard', label: 'Dashboard' },
+    { type: 'doc', id: 'develop/features/sessions', label: 'Sessions' },
+    { type: 'doc', id: 'develop/features/agents', label: 'Agents' },
+    { type: 'doc', id: 'develop/features/models', label: 'Models' },
+    { type: 'doc', id: 'develop/features/playground', label: 'Playground' },
+    { type: 'doc', id: 'develop/features/hub', label: 'Data Hub' },
+    { type: 'doc', id: 'develop/features/datasets', label: 'Datasets' },
+    { type: 'doc', id: 'develop/features/training', label: 'Training' },
+    { type: 'doc', id: 'develop/features/evaluations', label: 'Evaluations' },
     {
       type: 'category',
-      label: 'Operate',
+      label: 'Compute',
       collapsed: false,
       items: [
-        'develop/features/agents',
-        'develop/features/sessions',
         'develop/features/compute',
         'develop/features/connect-compute',
       ],
     },
     {
       type: 'category',
+      label: 'Skills & knowledge',
+      collapsed: true,
+      items: [
+        'develop/features/skills-and-experts',
+        'develop/features/skill-optimization',
+        'develop/features/knowledge-bases',
+        'develop/features/mcp-and-vault',
+        'develop/features/byo-llm',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Agent capabilities',
-      collapsed: false,
+      collapsed: true,
       items: [
         'develop/features/memory',
         'develop/features/browser',
@@ -120,35 +135,9 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Library',
-      collapsed: false,
-      items: [
-        'develop/features/models',
-        'develop/features/playground',
-        'develop/features/skills-and-experts',
-        'develop/features/skill-optimization',
-        'develop/features/knowledge-bases',
-        'develop/features/mcp-and-vault',
-        'develop/features/hub',
-        'develop/features/byo-llm',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Train',
-      collapsed: false,
-      items: [
-        'develop/features/datasets',
-        'develop/features/training',
-        'develop/features/evaluations',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Tools & dashboard',
+      label: 'Tools',
       collapsed: true,
       items: [
-        'develop/tools/dashboard',
         'develop/tools/copilot',
         'develop/tools/templates',
       ],
@@ -169,7 +158,7 @@ module.exports = {
     },
   ],
 
-  // Training-framework sidebar (existing, untouched)
+  // Training-framework sidebar (the surogate trainer engine) — untouched.
   mySidebar: [
     {
       type: 'doc',

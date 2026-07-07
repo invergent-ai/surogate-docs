@@ -31,7 +31,14 @@ The Cloud tab stacks a few cards:
 
 ### Workload Queue tab
 
-A live table of everything running on your behalf. Filter pills across the top narrow by type, each with a live count:
+A **live** table of everything running on your behalf — not a mockup. It merges four real backend sources, scoped to the active project:
+
+- **Training runs** → shown as **SFT** (SFT/DPO) or **GRPO** (GRPO/PPO).
+- **Models** → shown as **Serving**.
+- **Synthetic runs** → shown as **Synthetic**.
+- **Managed jobs** (`/api/compute/jobs`) → shown as **Task**, including **KB-compile** (`kb_compile`) and **synthetic-data** pipeline jobs; the `TYPE`/method reads the underlying job kind (e.g. `kb compile`).
+
+Rows sort active-first, then newest. Filter pills across the top narrow by type, each with a live count:
 
 **ALL · SFT · GRPO · SERVING · EVAL · TASK · SYNTHETIC**
 
