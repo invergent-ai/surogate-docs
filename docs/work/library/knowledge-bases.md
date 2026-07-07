@@ -1,9 +1,9 @@
 ---
-title: Knowledge bases
+title: Knowledge Bases
 sidebar_position: 2
 ---
 
-# Knowledge bases
+# Knowledge Bases
 
 A **knowledge base** (KB) is the agent's searchable library. Where a skill teaches the agent *how* to do something, a KB tells it *what it knows*.
 

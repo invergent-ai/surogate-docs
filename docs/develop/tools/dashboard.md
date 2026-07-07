@@ -1,9 +1,9 @@
 ---
-title: Develop dashboard
+title: Dashboard
 sidebar_position: 1
 ---
 
-# Develop dashboard
+# Dashboard
 
 The Develop-mode dashboard is at `/studio`. It's denser than the Work-mode dashboard — designed for builders monitoring their workspace.
 

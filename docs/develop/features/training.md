@@ -3,7 +3,7 @@ title: Training
 sidebar_position: 2
 ---
 
-# Training Runs
+# Training
 
 The Training page launches fine-tuning runs. Two methods can be created and launched from Studio — **SFT** and **GRPO** — each with their own configuration.
 

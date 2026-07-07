@@ -1,5 +1,5 @@
 ---
-title: Hub
+title: Data Hub
 sidebar_position: 5
 ---
 

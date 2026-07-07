@@ -95,7 +95,6 @@ module.exports = {
     },
     { type: 'doc', id: 'develop/tools/dashboard', label: 'Dashboard' },
     { type: 'doc', id: 'develop/features/sessions', label: 'Sessions' },
-    { type: 'doc', id: 'develop/features/agents', label: 'Agents' },
     { type: 'doc', id: 'develop/features/models', label: 'Models' },
     { type: 'doc', id: 'develop/features/playground', label: 'Playground' },
     { type: 'doc', id: 'develop/features/hub', label: 'Data Hub' },
