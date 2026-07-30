@@ -1,5 +1,7 @@
 ---
-title: BYO LLM
+title: BYO LLM (Bring Your Own LLM)
+sidebar:
+  label: BYO LLM
 ---
 
 When the BYO LLM toggle is on, the platform routes LLM calls through your own provider instead of Surogate's bundled endpoints. Surogate charges only for platform usage (storage, compute, sessions); your provider charges for tokens.

@@ -1,5 +1,7 @@
 ---
 title: Datasets
+sidebar:
+  label: Datasets
 ---
 
 A dataset is a versioned corpus you use for training and evaluation. Every dataset is backed by a repository in the [Data Hub](/develop/features/hub/) — the training files (`train/dataset.parquet`, plus a `dataset_dict.json` split manifest) live there, while the dataset's metadata (name, format, status, stats, PII scan, pipeline) lives in the platform database. Creating, building, and deleting datasets all go through `/api/datasets`.

@@ -1,5 +1,7 @@
 ---
 title: Dashboard
+sidebar:
+  label: Dashboard
 ---
 
 The **Dashboard** is the builder home at `/studio` — a dense workspace overview for monitoring agents, models, training, and recent activity.

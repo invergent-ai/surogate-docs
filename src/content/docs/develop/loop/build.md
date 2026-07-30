@@ -1,5 +1,7 @@
 ---
-title: Build phase
+title: Build phase — designing the agent
+sidebar:
+  label: Build
 ---
 
 Everything you declare about the agent before users start using it: its identity, its tool envelope, what data it can search, where it's reachable, how governance constrains it.

@@ -1,5 +1,7 @@
 ---
 title: Evaluations
+sidebar:
+  label: Evaluations
 ---
 
 Evaluations test models and agents against benchmarks. Two paths: pick from the 40 built-in benchmarks, or build a Custom Benchmark.

@@ -1,5 +1,7 @@
 ---
-title: Slack
+title: Slack channel
+sidebar:
+  label: Slack
 ---
 
 Publishes the agent as a Slack bot. Users DM it or @mention it in channels. Same conversations as on Web — if Slack identities are linked to Surogate users, sessions are shared.

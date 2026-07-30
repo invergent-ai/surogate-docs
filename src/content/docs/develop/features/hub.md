@@ -1,5 +1,7 @@
 ---
 title: Data Hub
+sidebar:
+  label: Data Hub
 ---
 
 The Data Hub is **Git for data**. Every artifact your project produces — a skill, a dataset, a model, a knowledge base, a training experiment — is stored as its own **versioned repository** with branches, commits, and tags. The Hub is backed by **surogate-hub**, a lakeFS-based object store, so a repo behaves like a git repo whose objects happen to be data files instead of source code.

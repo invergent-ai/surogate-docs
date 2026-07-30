@@ -1,5 +1,7 @@
 ---
-title: Web
+title: Web channel
+sidebar:
+  label: Web
 ---
 
 The Web channel is **always on** for every deployed agent. Once the agent is `running`, anyone with the URL `https://<slug>.cloud.surogate.ai` can sign in and chat.

@@ -1,5 +1,7 @@
 ---
 title: Playground
+sidebar:
+  label: Playground
 ---
 
 The Playground is an interactive chat where you send prompts to a model that is currently serving and watch it stream a reply live. Use it to sanity-check a model or a fine-tune before you wire it into an agent.

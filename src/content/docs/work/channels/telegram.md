@@ -1,5 +1,7 @@
 ---
-title: Telegram
+title: Telegram channel
+sidebar:
+  label: Telegram
 ---
 
 Simpler than Slack — one bot token and you're up.

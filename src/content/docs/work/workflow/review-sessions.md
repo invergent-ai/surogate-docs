@@ -1,5 +1,7 @@
 ---
 title: Sessions
+sidebar:
+  label: Sessions
 ---
 
 Every conversation is a **session** — fully recorded, replayable, and inspectable. Open the **Sessions** page to review what your agent did: when something looks wrong, or to find good examples for improving your agent.

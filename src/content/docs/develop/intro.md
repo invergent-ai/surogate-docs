@@ -1,7 +1,8 @@
 ---
-slug: /develop
-title: Welcome to Develop mode
-sidebar_label: Welcome
+title: Develop mode
+slug: develop
+sidebar:
+  label: Welcome
 ---
 
 For designing agents, writing skills, training experts, running evaluations, integrating via API, and deploying on your own cluster. Flip to **Work mode** in the navbar if you only need to chat with deployed agents and watch sessions.

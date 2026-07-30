@@ -1,5 +1,7 @@
 ---
-title: Train phase
+title: Train phase — using observed signal
+sidebar:
+  label: Train
 ---
 
 You have a corpus of marked sessions. Now use them to make the agent better.

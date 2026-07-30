@@ -1,5 +1,7 @@
 ---
-title: The builder loop (overview)
+title: The builder loop
+sidebar:
+  label: Overview
 ---
 
 Every agent improvement cycle has four phases:

@@ -1,5 +1,7 @@
 ---
-title: Users
+title: Per-agent users
+sidebar:
+  label: Users
 ---
 
 The **Users** section on an agent's Configure page manages the people who chat with this agent through its public Web endpoint. These are **distinct from your operator account** (your `ops.surogate.ai` login).

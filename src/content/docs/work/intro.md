@@ -1,7 +1,8 @@
 ---
-slug: /work
-title: Welcome to Work mode
-sidebar_label: Welcome
+title: Work mode
+slug: work
+sidebar:
+  label: Welcome
 ---
 
 Work mode is for the day-to-day of running agents — chatting with them, watching sessions, attaching skills and KBs, publishing to channels. If you write skills in code, train experts, or run evaluations, flip to **Develop mode** in the navbar.

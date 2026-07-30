@@ -1,5 +1,7 @@
 ---
 title: Sessions
+sidebar:
+  label: Sessions
 ---
 
 Every conversation is a session, fully recorded and inspectable. This chapter is about reading and using session data deliberately — what to look at, what to filter on, what to extract for training and evaluation.

@@ -1,6 +1,5 @@
 ---
-title: Experts & arenas
-draft: true
+title: "Experts & arenas"
 ---
 
 An **arena** is a supervised, multi-agent run: a *coordinator* agent drives a set of *participant* agents toward an objective, and the run ends when a success **predicate** is met. It is the platform's mission-control view for agents working together (or against each other) on a goal.

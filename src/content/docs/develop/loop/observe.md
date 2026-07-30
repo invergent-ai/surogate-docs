@@ -1,5 +1,7 @@
 ---
-title: Observe phase
+title: Observe phase — what the agent actually does
+sidebar:
+  label: Observe
 ---
 
 Sessions are your source of truth. Every conversation, tool call, LLM response, and governance decision is in the event log. This chapter is about reading that data with intent.

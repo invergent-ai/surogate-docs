@@ -1,5 +1,7 @@
 ---
-title: Self-registration
+title: Let end users sign up for your agent
+sidebar:
+  label: Self-registration
 ---
 
 By default, only users you create by hand under [Users](/work/channels/users/) can sign in to one of your agents. Self-registration flips that: visitors land on the agent's login page, click *"Continue with Google"* (or sign up with email + password), verify their email, and walk straight into the agent.

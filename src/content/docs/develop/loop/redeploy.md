@@ -1,5 +1,7 @@
 ---
-title: Redeploy phase
+title: Redeploy phase — rolling out the changes
+sidebar:
+  label: Redeploy
 ---
 
 Config changes are cheap. Model changes are slightly more involved. The runtime is built so neither drops traffic.

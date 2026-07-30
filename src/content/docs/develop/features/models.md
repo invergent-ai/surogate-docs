@@ -1,5 +1,7 @@
 ---
 title: Models
+sidebar:
+  label: Models
 ---
 
 The Models page is where you register and serve the LLM endpoints your agents call. Click **DEPLOY MODEL** at the top of the page to open the deploy flow: first a source picker, then a per-source form, then the model's detail page where you configure and start it.
