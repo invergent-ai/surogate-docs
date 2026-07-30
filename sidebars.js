@@ -56,7 +56,7 @@ module.exports = {
       collapsed: true,
       items: [
         'work/settings/profile',
-        'work/settings/settings',
+        'work/settings/authentication',
         'work/settings/usage',
         'work/settings/billing',
       ],

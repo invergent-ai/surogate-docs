@@ -64,7 +64,7 @@ A few things worth knowing:
 
 Your buyers need a way to sign in before they can pay. Surogate uses **Firebase Authentication** for this — the same setup you use to let end users [self-register](./channels/self-registration.md).
 
-Under **Settings → ⚙ Settings tab → Firebase Auth**, configure your project's Firebase account. Choose which sign-in providers to offer (email/password, Google, GitHub). You can use the same Firebase project for both agent self-registration and commerce.
+Under **Settings → Authentication tab → BYO Firebase auth**, configure your project's Firebase account. Choose which sign-in providers to offer (email/password, Google, GitHub). You can use the same Firebase project for both agent self-registration and commerce.
 
 If you skip this step the buyer paywall shows *"buyer authentication is not configured."*
 

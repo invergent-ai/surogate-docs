@@ -13,7 +13,7 @@ You only need to set this up **once per project**. After that, every agent in th
 
 ## Who can use it
 
-Self-registration is **available on the Standard plan and above**. Projects on the Free plan see the configuration screen but can't edit it — there's an inline upgrade prompt on the Settings tab.
+Self-registration is **available on the Standard plan and above**. Projects on the Free plan see the configuration screen but can't edit it — there's an inline upgrade prompt on the Authentication tab.
 
 You need to be the **project owner** to configure Firebase. Editors and viewers can see whether self-registration is on for an agent but can't change the project-level Firebase settings.
 
@@ -22,7 +22,7 @@ You need to be the **project owner** to configure Firebase. Editors and viewers 
 Three things to get right, in order:
 
 1. **Create a Firebase project** in the Firebase Console and write down a handful of public config values.
-2. **Paste those values into Surogate** under **Settings → ⚙ Settings tab → Firebase Auth**. Pick which sign-in methods you want offered (Google, GitHub, Email/Password).
+2. **Paste those values into Surogate** under **Settings → Authentication tab → BYO Firebase auth**. Pick which sign-in methods you want offered (Google, GitHub, Email/Password).
 3. **Flip the toggle on each agent** under **Configure → Users tab → Let anyone sign up**. Restart the agent so the new config is picked up by its web app.
 
 ## Step 1 — Create a Firebase project
@@ -51,7 +51,7 @@ These values are **not secret**. Firebase web config is designed to ship in clie
 
 ## Step 2 — Tell Surogate about your Firebase project
 
-1. Open **Settings → ⚙ Settings tab → Firebase Auth** (the card sits on the project Settings page; if it's missing you're on the Free plan — upgrade first).
+1. Open **Settings → Authentication tab → BYO Firebase auth** (the card sits on the Authentication tab; if it's missing you're on the Free plan — upgrade first).
 2. Fill in:
 
    | Surogate field | Firebase value |
@@ -76,7 +76,7 @@ Firebase has dozens of sign-in providers. Surogate surfaces three:
 | **GitHub** | Clicks *"Continue with GitHub"*, authorizes the OAuth app, done. | Register a GitHub OAuth App and paste its Client ID + Secret into Firebase. See *Wiring GitHub* below. |
 | **Email/Password** | Types email + password into the existing login form. | Toggle it on in the Firebase Console. Firebase manages the passwords. |
 
-Toggle the providers you want on the Settings tab's *Providers* row.
+Toggle the providers you want on the Authentication tab's *Providers* row.
 
 :::warning
 The Surogate toggles only control which buttons appear on your agent's login page. Each provider also has to be **enabled in the Firebase Console** under **Authentication → Sign-in method**. If a user clicks *Continue with Google* and you forgot the Console step, Firebase rejects the request with `auth/operation-not-allowed`.
@@ -108,7 +108,7 @@ Skip this step and your users will see *"This domain is not authorized."* the mo
 2. **Configure** in the left nav → **Users** tab.
 3. Flip **Let anyone sign up**.
 
-The switch is disabled until your project has a Firebase config saved. When it's disabled you'll see a small **Set up in Settings** link next to it — click to jump straight to the Settings → ⚙ Settings tab.
+The switch is disabled until your project has a Firebase config saved. When it's disabled you'll see a small **Set up in Settings** link next to it — click to jump straight to Settings → Authentication.
 
 Restart (or stop + start) the agent. Self-registration is picked up at deploy time, so the toggle won't take effect on the live web app until the agent restarts.
 
@@ -163,9 +163,9 @@ The hostname your agent's web app runs on isn't in Firebase's authorized-domains
 
 Three things to check, in order:
 
-1. **You're on the Free plan.** Self-registration requires Standard or above — the Settings tab shows an upgrade banner. Upgrade and the toggle becomes editable.
+1. **You're on the Free plan.** Self-registration requires Standard or above — the Authentication tab shows an upgrade banner. Upgrade and the toggle becomes editable.
 2. **You're not the project owner.** Editors and viewers can see the toggle but can't flip it. Ask the project owner.
-3. **You configured Firebase but didn't save it.** Re-open **Settings → ⚙ Settings tab → Firebase Auth** and confirm the green *configured* badge is showing. If not, click **Save Firebase**.
+3. **You configured Firebase but didn't save it.** Re-open **Settings → Authentication tab → BYO Firebase auth** and confirm the green *configured* badge is showing. If not, click **Save Firebase**.
 
 ### Self-registered users were locked out after I removed Firebase
 
