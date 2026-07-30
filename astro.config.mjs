@@ -12,6 +12,31 @@ export default defineConfig({
     starlight({
       title: 'Surogate',
       description: 'Documentation for Surogate Ops — operator and builder tracks.',
+      logo: {
+        light: './src/assets/logo-black.svg',
+        dark: './src/assets/logo-white.svg',
+        alt: 'Surogate',
+        replacesTitle: false,
+      },
+      customCss: [
+        // Self-hosted, replacing the render-blocking Google Fonts @import that
+        // the old custom.css opened on every page load.
+        '@fontsource/inter/400.css',
+        '@fontsource/inter/600.css',
+        './src/styles/custom.css',
+      ],
+      social: [
+        {
+          icon: 'github',
+          label: 'GitHub',
+          href: 'https://github.com/invergent-ai/surogate',
+        },
+        { icon: 'x.com', label: 'X', href: 'https://x.com/surogate_ai' },
+      ],
+      editLink: {
+        baseUrl: 'https://github.com/invergent-ai/surogate-docs/edit/main/',
+      },
+      components: { SocialIcons: './src/components/HeaderLogin.astro' },
       // One sidebar, two sibling top-level groups. Order and category labels
       // are carried over from the deleted sidebars.js. Inner subgroups all
       // collapse by default: the two tracks now share a single column, so the

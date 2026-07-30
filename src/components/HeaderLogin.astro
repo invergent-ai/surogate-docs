@@ -1,0 +1,12 @@
+---
+// Overrides Starlight's SocialIcons to prepend a Login CTA. Starlight's header
+// exposes no config for arbitrary links, and Login is the only one of the four
+// old Docusaurus navbar items with commercial value — About is reachable from
+// the logo, the splash hero and the GitHub icon.
+//
+// The upstream component takes no slot, so this renders it bare.
+import Default from '@astrojs/starlight/components/SocialIcons.astro';
+---
+
+<a class="header-login" href="https://ops.surogate.ai">Login</a>
+<Default />
