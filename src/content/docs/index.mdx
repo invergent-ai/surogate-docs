@@ -8,19 +8,27 @@ hero:
   tagline: Two tracks — one for operators who run agents day-to-day, one for builders who design and train them.
 ---
 
-import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+{/* Card rather than LinkCard: LinkCard takes only title + description and
+    hardcodes a right-arrow, with no icon prop. Card is the component that
+    accepts an icon. Default Starlight styling, no overrides. */}
 
 <CardGrid>
-  <LinkCard
-    title="Work mode"
-    href="/work/"
-    description="You sign in, use existing agents, watch sessions, and improve from real traffic. Plain-language workflow guides, no code, no infrastructure."
-  />
-  <LinkCard
-    title="Develop mode"
-    href="/develop/"
-    description="You design agents, write skills, attach knowledge bases, train experts, run evaluations, ship to channels. Deep configuration, code snippets, runtime internals."
-  />
+  <Card title="Work mode" icon="comment">
+    You sign in, use existing agents, watch sessions, and improve from real
+    traffic. Plain-language workflow guides, no code, no infrastructure.
+
+    [Start with Work mode →](/work/)
+  </Card>
+
+  <Card title="Develop mode" icon="puzzle">
+    You design agents, write skills, attach knowledge bases, train experts, run
+    evaluations, ship to channels. Deep configuration, code snippets, runtime
+    internals.
+
+    [Start with Develop mode →](/develop/)
+  </Card>
 </CardGrid>
 
 ## What is Surogate?
