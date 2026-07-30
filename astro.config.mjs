@@ -49,7 +49,10 @@ export default defineConfig({
         light: './src/assets/logo-black.svg',
         dark: './src/assets/logo-white.svg',
         alt: 'Surogate',
-        replacesTitle: false,
+        // The logo is a 3.1:1 wordmark that already reads "Surogate", so
+        // rendering the site title beside it duplicates the word. The alt text
+        // above carries the name for screen readers and when images fail.
+        replacesTitle: true,
       },
       customCss: [
         // Self-hosted, replacing the render-blocking Google Fonts @import that

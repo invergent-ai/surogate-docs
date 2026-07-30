@@ -505,7 +505,7 @@ export default defineConfig({
     description: 'Documentation for Surogate Ops — operator and builder tracks.',
     logo: { light: './src/assets/logo-black.svg',
             dark:  './src/assets/logo-white.svg',
-            alt: 'Surogate', replacesTitle: false },   // §7.4
+            alt: 'Surogate', replacesTitle: true },    // §7.4
     favicon: '/favicon.svg',
     customCss: ['@fontsource/inter/400.css', '@fontsource/inter/600.css',
                 './src/styles/custom.css'],
@@ -566,10 +566,14 @@ from nowhere on the site. It now lives in the header, which is where it started.
 **[audit] — two config values have no Starlight home.** Docusaurus sets
 `navbar.title: 'Documentation'` (rendered *next to* the logo) and
 `tagline: 'AgentOps Factory'`. Starlight has no `tagline` option at all, and its
-`description` is the meta-description, not visible chrome. With
-`replacesTitle: false` the header reads logo + "Surogate" — so the visible word
-changes from "Documentation" to "Surogate". Deliberate: "Surogate" is the site title
-and the docs context is already implied by the domain. **Flagged in §15.**
+`description` is the meta-description, not visible chrome.
+
+**Resolved:** neither word appears. The logo is a 3.1:1 wordmark that already reads
+"Surogate", so `replacesTitle: true` suppresses the adjacent site title rather than
+printing the same word twice. Starlight keeps the name in a `sr-only` span (rendered
+1×1px) and in the logo `alt`, so the accessible name survives — the header link measures
+exactly the logo's width. Docusaurus's "Documentation" and the "AgentOps Factory" tagline
+are both dropped.
 
 ### 7.5 Styling
 
