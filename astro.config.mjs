@@ -1,0 +1,21 @@
+import { defineConfig } from 'astro/config';
+import starlight from '@astrojs/starlight';
+
+// NOTE: `trailingSlash` and `build.format` are deliberately unset. Astro's
+// defaults (directory format, trailing slash) are the only combination whose
+// hrefs, canonical tags, sitemap entries and Pagefind results all agree on
+// GitHub Pages. Setting `build.format: 'file'` bakes `.html` into every one of
+// them. See specs/2026-07-30-docusaurus-to-starlight-design.md section 7.2.
+export default defineConfig({
+  site: 'https://docs.surogate.ai',
+  integrations: [
+    starlight({
+      title: 'Surogate',
+      description: 'Documentation for Surogate Ops — operator and builder tracks.',
+      sidebar: [
+        { label: 'Work — for operators', items: ['work-placeholder'] },
+        { label: 'Develop — for builders', items: ['develop-placeholder'] },
+      ],
+    }),
+  ],
+});
