@@ -20,6 +20,22 @@
   --sl-color-accent-high: #e3fbe2;
 }
 
+/*
+ * Splash hero with no image.
+ *
+ * Starlight sizes .hero for a two-column layout: it reserves a second grid
+ * column for the hero image and pads the block generously to balance it.
+ * Measured with copy only, that left 110.5px of padding above and below a
+ * 297px stack, plus ~317px of dead column to the right of the text.
+ *
+ * Collapse to a single column and normal padding when no image is present.
+ * A hero that later gains an image keeps Starlight's original treatment.
+ */
+.hero:not(:has(img)):not(:has(.hero-html)) {
+  grid-template-columns: 1fr;
+  padding-block: 2.5rem 1rem;
+}
+
 /* Login CTA in the header — see src/components/HeaderLogin.astro. Starlight
    has no config for arbitrary header links, and Login is the one old navbar
    item worth the header space. */
