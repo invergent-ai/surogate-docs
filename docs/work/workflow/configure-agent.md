@@ -11,7 +11,7 @@ Each tab saves independently. Most tabs surface a **SAVE** button (which flashes
 
 | Tab | What you set here |
 |---|---|
-| **Metrics** | Read-only dashboard: traffic, errors, tokens, deployment, connected resources |
+| **Metrics** | Read-only dashboard: traffic, errors, latency, tokens, conversations, connected resources |
 | **Identity** | Name, slug, description, and the SOUL.md persona |
 | **Capabilities** | Brainstorming gate, live browser, Saga, and the built-in slash commands |
 | **Knowledge Bases** | Attach KBs the agent can search, in grounding or reference mode |
@@ -28,15 +28,15 @@ System agents (like the platform copilot) hide the **Identity**, **Capabilities*
 
 ## Metrics
 
-A read-only overview of the agent's health and footprint — no editable fields. It shows:
+A read-only overview of the agent's health and footprint — no editable fields. It refreshes itself every minute while visible and shows:
 
-- **Key metrics** — Requests/sec, Error Rate, and Tokens (24h) as stat cards with sparklines, backed by the metrics API.
-- **Deployment** (dedicated agents only) — replicas (current/desired), model, image, endpoint, and created time.
-- **Connected** — a count of attached skills and MCP servers with skill-name chips.
-- **Resources** — the agent's CPU and memory requests and limits.
-- **Metric charts** — per-second request, error-rate, and token-throughput sparklines.
+- **Four 24-hour stat cards**, each with an ⓘ tooltip: **Requests — 24h** (count, last-request time; the tooltip shows the derived hourly rate), **Error rate** (share of model-gateway calls with HTTP ≥ 400, "N of M failed"), **Latency** (average round-trip, with **p95** in the detail line), and **Tokens — 24h** (total; the tooltip breaks out prompt/completion and average per call).
+- **Four hourly bar charts** mirroring the cards: requests per hour, errors as % of requests, average latency (tooltip adds p95), and tokens stacked in/out. Quiet hours render as real gaps and read "no requests" — distinct from "0% errors".
+- **Conversations — last 7 days** — Sessions (with ↑/↓ vs the prior 7 days), Resolved %, **Flagged** (a policy denial, a crash, or a thumbs-down), and Time worked (total model processing time, not wall-clock waiting), plus per-channel chips and last-active time.
+- **Deployment** / **Resources** (self-deployed dedicated agents only) — replicas, model, image, endpoint, CPU/memory requests and limits.
+- **Connected** — attached skills and MCP servers (with per-server enabled dots) and **Manage skills →** / **Manage MCP →** shortcuts into those tabs.
 
-A **BYO model active** banner appears when the agent runs on your own model, noting that token traffic isn't billed by Surogate.
+Empty states are honest: an agent on a **self-deployed model** points you to that model's own Models page instead of showing empty cards, and a zero-traffic agent says charts appear after the first conversation. A **BYO model active** banner appears when the agent runs on your own model, noting that token traffic isn't billed by Surogate.
 
 ## Identity
 
