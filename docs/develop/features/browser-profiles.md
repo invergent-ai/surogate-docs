@@ -28,7 +28,7 @@ The login state itself (`storage_state`) is encrypted before it is written and d
 Creating a usable profile is a three-step, interactive flow — you log in by hand once, and the profile keeps that login:
 
 1. CREATE — an empty named profile is created for the caller's principal.
-2. SETUP SESSION — a dedicated, interactive browser-setup session is started and its browser is handed to you in the [live view](/develop/features/browser#live-view) with control already granted. You navigate to the site and sign in by hand (including MFA/CAPTCHA). This session is short-lived: it self-terminates after 15 minutes, and nothing is saved unless you explicitly capture it.
+2. SETUP SESSION — a dedicated, interactive browser-setup session is started and its browser is handed to you in the [live view](/develop/features/browser#live-view) with control already granted. You navigate to the site and sign in by hand (including MFA/CAPTCHA). This session is short-lived: it self-terminates after 15 minutes, and nothing is saved unless you explicitly capture it. On monetized agents, setup sessions are exempt from per-buyer browsing-time metering — capture never spends a buyer's minutes.
 3. CAPTURE — while you still hold control, the post-login cookies and storage you just established are exported and saved (encrypted) onto the profile. The setup browser is then torn down.
 
 Capture is deliberately narrow: it can only export from the dedicated setup session bound to that specific profile, and only for the person who holds control of it — it cannot export login state out of an ordinary agent session.
