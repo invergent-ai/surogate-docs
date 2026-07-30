@@ -50,7 +50,7 @@ build, or a live HTTP check. Three evidence sources:
 
 | Item | Count | Rationale |
 |---|---|---|
-| Legacy trainer tree: `docs/index.mdx`, `about/`, `getting-started/`, `guides/`, `examples/`, `reference/`, `appendix/` | ~46 files | Documents the `surogate` training framework, a different product. Verified: **zero links from work/ or develop/ point into this tree**, so removal breaks no internal navigation. Recoverable from git history. |
+| Legacy trainer tree: `docs/index.mdx`, `about/`, `getting-started/`, `guides/`, `examples/`, `reference/`, `appendix/` | ~46 files | Documents the `surogate` training framework, a different product. Recoverable from git history. **Correction (found at execution):** an earlier claim of "zero links from work/ or develop/ into this tree" was wrong — that grep only matched root-absolute forms. `develop/features/memory.md` carried a *relative* link, `[memory guide](../../guides/memory.md)`. The link validator caught it; the sentence now disambiguates agent memory from GPU memory without the dead cross-reference. |
 | `static/img/screenshots/*.png` | 42 | **Referenced by no page anywhere in the repo.** Committed in `2b00238` "v2.3: audit-driven expansion + visual pipeline"; the `<Figure>` calls that would have consumed them were never written. |
 | `static/img/transformer-block.{png,svg}` | 2 | Used only by the legacy tree. |
 

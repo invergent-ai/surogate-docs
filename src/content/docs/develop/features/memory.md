@@ -4,7 +4,7 @@ title: Agent memory
 
 Agents keep a small, curated store of durable facts that survives across sessions, so a user never has to repeat themselves.
 
-This page is about an **agent's runtime memory** — what it remembers between conversations. It is unrelated to the trainer's [memory guide](/guides/memory/), which covers GPU memory during model training.
+This page is about an **agent's runtime memory** — what it remembers between conversations. It is unrelated to GPU memory during model training.
 
 ## What memory holds
 
