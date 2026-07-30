@@ -29,11 +29,11 @@ Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (w
 
 ## Knowledge bases
 
-**COMPILE fails with `task failed`.** Usually transient (curator LLM rate limit). Retry. If it persists: reduce source size (split large PDFs), verify the source is well-formed UTF-8, and check OVERVIEW → RECENT COMPILES for the one-line reason.
+**COMPILE reports an error.** One bad file no longer fails the whole compile — healthy sources still produce a wiki, and each failing file shows its own error inline in the SOURCES list with a per-file retry. `error` on the KB means "at least one source failed", so check the WIKI tab before assuming nothing was built. Persistent per-file failures: reduce source size (split large documents) and verify the file is well-formed.
 
 **CSV upload shows 0 samples.** Known issue. Workaround: convert to a markdown-formatted summary and re-upload.
 
-**Agent doesn't use the KB.** Check the KB status is `active` (compiled successfully). In EVENTS, check whether the LLM called `kb_search` — if not, it didn't think the KB was relevant. Adjusting SOUL.md to mention the KB explicitly helps.
+**Agent doesn't use the KB.** Check the KB status is `active` (compiled successfully). In EVENTS, check whether the LLM called `kb_list_pages` / `kb_read_page` — if not, it didn't think the KB was relevant. Adjusting SOUL.md to mention the KB explicitly helps.
 
 ## Channels
 
@@ -58,3 +58,23 @@ Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (w
 **Top-up credits don't show in Usage.** They show on a separate line — they're consumed before plan tokens.
 
 **BYO LLM enabled but agent still uses Surogate's model.** Per-agent CONFIG → Model overrides the global toggle. Update each agent.
+
+**Agent says it's out of media credits.** Media has its own wallet — top up under Settings → Billing (Media chips) or wait for the monthly reset. Chat is unaffected; the wallets fail independently.
+
+## Agent commerce
+
+**A buyer paid but has no access.** Almost always the Connect webhook — if no Stripe endpoint targets `/api/commerce/stripe/connect/webhook`, checkouts succeed but grants never arrive. The server warns about this at startup; see [Monetize](../monetize.md#e-add-the-connected-account-webhook-endpoint).
+
+**Sold the Pro model, buyer still gets Basic.** Older agents need one server restart after the platform upgrade (tier-slot backfill); agents on a BYO model don't support tier swaps.
+
+**A buyer sees "Your current plan doesn't include this channel."** Their package excludes that channel — check the offer's What's included, or point them at an offer that includes it.
+
+**A slash command answers "disabled for this agent" for one user only.** Probably a package exclusion, not agent config — excluded capabilities use the same wording.
+
+**Second Subscribe click errors with "already subscribed".** By design — plan changes go through **Manage subscription** (the Stripe portal), never a second subscription.
+
+**Free trial isn't showing on the buy page.** The trial toggle is off, its size is zero, or the deployment hasn't enabled per-user allowances.
+
+**A user says they hit a usage limit.** Check, in order: their purchase/entitlement (Plan & Usage), your trial/per-user limit on the Monetize tab, and your own token wallet (Settings → Usage) — your wallet is the hard ceiling for every end-user turn.
+
+**A user can't change their password.** They signed in with Google or GitHub — the provider owns the credential. Only email/password and operator-created accounts have password controls. See [Web](../channels/web.md#password-controls-by-account-type).

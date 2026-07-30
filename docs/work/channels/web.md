@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # Web channel
 
-The Web channel is **always on** for every deployed agent. Once the agent is `running`, anyone with the URL `https://<slug>.cloud.surogate.ai` can sign in and chat.
+The Web channel is **always on** for every deployed agent. Once the agent is `running`, anyone with the URL `https://<slug>.cloud.surogate.ai` can sign in and chat. On monetized agents, the web app is also the one channel a buyer's package can never exclude — every purchase includes it.
 
 ## What users see
 
@@ -15,19 +15,59 @@ A clean, branded chat UI with:
 - A composer at the bottom
 - A session history sidebar (their own sessions only)
 - File upload + download
-- A live browser pane (if the agent is using browser tools)
+- A live browser pane (when the agent's **Live browser support** capability is on)
 - An inbox icon for items needing the user's attention
 
 This is the customer-facing Web UI — a separate React app from `ops.surogate.ai`. Each user only sees what they're allowed to see (their sessions, their files).
+
+If the agent's **AI disclosure** is on (Configure → Governance), a disclosure banner is shown before interaction — **Accept** records a `disclosure.confirmed` event, **Decline** blocks interaction. See [Governance & AI disclosure](../workflow/governance.md).
+
+### Answering the agent's questions
+
+When the agent asks something via `ask_user_question`, a tabbed question widget appears — but users can also just **type their reply in the composer** and it's consumed as the answer: an exact match on a choice label picks that choice, anything else is recorded as "Other". Messages with images or attachments stay ordinary messages, and the shortcut expires with the question (30 minutes).
+
+### Single-session agents
+
+When the agent's **Multi session** capability is off, each user gets one dedicated conversation and always returns to it: no "New chat", no session list — the sidebar shows a **Chat** button that reopens their conversation from anywhere in the app (their other sessions stay hidden until the capability is turned back on).
 
 ## Who can sign in
 
 Two modes:
 
 1. **Anonymous** (default): visitors use the agent without an account. Each browser session gets a UUID stored locally; subsequent visits resume the same Surogate session.
-2. **Authorised users only**: open the agent → **Configure** in the left nav → the **Users** tab → **Add user** for each authorised email.
+2. **Authorised users only**: open the agent → **Configure** in the left nav → the **Users** tab → **Add user** for each authorised email — or turn on [self-registration](./self-registration.md).
 
-For authorised users, they sign in with the credentials you set (email + password, Google SSO, or GitHub SSO).
+For authorised users, they sign in with the credentials you set (email + password, Google SSO, or GitHub SSO). Signed-in turns are metered against the user's [per-user allowance](../monetize.md#how-usage-is-spent); when a limit is hit, the composer shows a clear message — with a buy link on monetized agents.
+
+## The user's Settings page
+
+Signed-in users get their own **Settings** page with up to five tabs — three of them appear only when the matching capability is on:
+
+| Tab | Shown when | What's there |
+|---|---|---|
+| **Profile** | Always | Display name (editable), email (read-only — *"Your sign-in email cannot be changed here."*), member-since, and password controls (below) |
+| **Connected Channels** | The agent has at least one active messaging channel (Slack / Telegram / WhatsApp) | Linked channel identities, per-row unlink, **Link a channel** |
+| **Plan & Usage** | Always | Their plan and renewal date, usage / browsing / media balances, "Your plan includes …", and your offers — see [Monetize](../monetize.md#your-buy-page) |
+| **Coding Agents** | The `/code` command is enabled | Their coding-agent plans |
+| **Browser Profiles** | Live browser support is on | Their saved browser logins |
+
+### Password controls, by account type
+
+Which password affordance a user sees follows how they sign in — recorded server-side, so it stays correct even after an SSO session lapses:
+
+- **Accounts you created on the Users tab** (local accounts) → an in-app change-password form (current + new + confirm, 8-character minimum).
+- **Self-registered with email/password** (Firebase) → a **Send reset email** button. The confirmation toast is deliberately neutral — it never reveals whether an address is registered.
+- **Signed in with Google or GitHub** → no password UI at all; their provider owns the credential. If such a user asks how to change their password, that's the answer.
+
+### Linking a messaging channel (`/link`)
+
+When a channel runs in **Personal assistant** mode, users pair their Slack / Telegram / WhatsApp identity with their web account:
+
+1. The user messages the agent on the messaging channel; the bot replies privately with an **8-character code** (like `A3F7-K9M2`) and a link to `<agent-url>/link`.
+2. On the `/link` page they enter the code (**Verify code** shows which platform it's from), then click **Link account**. Opening a link with `?code=` pre-fills and verifies automatically.
+3. The identity appears under **Connected Channels**; unlinking warns that a fresh pairing code will be needed to re-link.
+
+Codes last **10 minutes**, are single-use, and are minted at most once per user per 10 minutes. See [Users](./users.md#identity-across-channels) for the operator-side picture.
 
 ## The endpoint
 
@@ -49,4 +89,4 @@ Full white-label (custom domain, your logo, your colours) is on the roadmap. If 
 
 ## What's next
 
-If you want to also publish to Slack: [Slack channel](./slack.md). For Telegram: [Telegram channel](./telegram.md). Or for a customer site: [Website widget](./website-widget.md).
+If you want to also publish to Slack: [Slack channel](./slack.md). For Telegram: [Telegram channel](./telegram.md). For WhatsApp: [WhatsApp channel](./whatsapp.md). Or for a customer site: [Website widget](./website-widget.md).

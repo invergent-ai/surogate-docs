@@ -58,7 +58,7 @@ When the THREAD doesn't tell you why something happened, switch to EVENTS:
 12:43:01  user.message       "What's the refund policy?"
 12:43:02  llm.request         model=surogate-default, tokens_in=1247
 12:43:04  llm.response        "Let me check that..."  tokens_out=18
-12:43:04  tool.call           kb_search("refund policy")     tool_call_id=tc_1
+12:43:04  tool.call           kb_read_page("billing/refund-policy")     tool_call_id=tc_1
 12:43:05  tool.result         "Refunds within 30 days..."    tc_1
 12:43:06  llm.request         tokens_in=1429
 12:43:08  llm.response        "Our refund policy is..."      tokens_out=146
@@ -84,7 +84,9 @@ If a skill loaded but never fired, the LLM didn't think it was relevant. Possibl
 
 ### POLICIES — governance decisions
 
-Every time the governance gate denies a tool call, escalates a decision, or the prompt-injection guard fires, it's logged here. Useful for compliance audits ("which agents tried to do destructive things, and were any of them allowed through?").
+Every `policy.denied` event — a tool call the governance gate blocked — is listed here with the tool, reason, and timestamp. Allowed calls are logged too (as `policy.allowed`) when the deployment enables `governance.log_allowed`. Useful for compliance audits ("which agents tried to do destructive things, and were any of them allowed through?").
+
+The AI-disclosure evidence trail (`disclosure.presented` when a messaging channel posts the notice, `disclosure.confirmed` when a web user accepts the banner) lives in the session's **EVENTS** tab — see [Governance & AI disclosure](./governance.md).
 
 ### METADATA — counters and quality flags
 

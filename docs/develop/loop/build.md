@@ -88,7 +88,7 @@ Recommended starting points:
 
 | Agent type | Allow | Deny |
 |---|---|---|
-| Customer support | `web_search`, `kb_*`, `memory`, `clarify`, `create_artifact` | `terminal`, `execute_code`, `write_file`, `patch` |
+| Customer support | `web_search`, `kb_list_pages`, `kb_read_page`, `memory`, `ask_user_question`, `create_artifact` | `terminal`, `process`, `run_coding_agent`, `write_file`, `patch` |
 | Data analyst | All (default) | `cron_*` if no scheduling needed |
 | Code reviewer | `read_file`, `search_files`, `list_files`, `web_search` | `write_file`, `patch`, `terminal` |
 | Internal admin bot | Denylist only — agent needs broad access | Targeted denies (e.g. `delete_*` tools) |
@@ -109,13 +109,13 @@ Where users reach the agent. **Configure → Channels** section. Web is always o
 
 Built into CONFIG:
 
-- **Network egress** — domain-level allow/deny rules for the agent's outbound network calls. Default action `deny`; add rules to open specific destinations.
-- **EU AI Act transparency** — disclosure / withdraw-consent endpoints for regulatory compliance.
+- **Web & browser egress** — glob-domain allow/deny rules for the URLs `web_extract` and `browser_navigate` may open (not the terminal, `web_search`, or MCP — restrict those by denying the tool or detaching the server).
+- **EU AI Act transparency** — the AI-disclosure toggle and level (`basic` / `enhanced` / `full`); the disclosure is shown as a web banner and posted as the first message on messaging channels.
 - **Saga** — automatic multi-step rollback. When ON, tool calls are sequential and a failed step compensates the completed steps in reverse order. Opt-in (`saga.enabled: true`). See [Reference → Saga](../features/agents.md).
 - **Session reset** — idle-session reset with memory flush. Default 24h.
 - **Allowed/Denied tools** — see above.
 
-These are policy-engine-enforced and **frozen at session start** — mid-session prompt injection cannot weaken governance.
+These are policy-engine-enforced on **every tool call** and **frozen per wake** — mid-turn prompt injection cannot weaken governance, while policy edits still reach live sessions on their next wake.
 
 ## Deploy the agent
 

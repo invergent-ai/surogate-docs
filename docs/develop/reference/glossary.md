@@ -14,7 +14,7 @@ Every Surogate term you'll encounter as a builder.
 | **Agent** | A deployed service at `<slug>.cloud.surogate.ai` bundling a model, skills, KBs, MCP servers, persona, and channels. |
 | **API Channel** | Programmatic channel. `POST /v1/api/prompts` with a service-account `surg_sk_...` token. No SSE — clients pull from `/v1/api/sessions/{id}/events` once status flips to `completed`. |
 | **Channel** | A user-facing interface — Web (always on), Slack, Telegram, Website widget, API. |
-| **CLARIFY** | The `clarify` tool. Renders a tabbed widget with up to 5 questions × 4 choices each. 30-min wait cap. |
+| **CLARIFY** | Legacy name for `ask_user_question` (event types still say `clarify.response`). Renders a tabbed widget with up to 5 questions × 4 choices each; on web/Telegram a typed reply also answers it. 30-min wait cap. |
 | **Coordinator** | A session that spawns sub-agents via `spawn_worker` / `delegate_task` / `spawn_task`. |
 | **Event** | An immutable record in a session's log. See [Event types](./event-types.md). |
 | **Expert** | A `SKILL.md` with `type: expert`. Backed by a fine-tuned model + endpoint. The base LLM delegates via `consult_expert`. |

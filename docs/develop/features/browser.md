@@ -18,6 +18,8 @@ The agent browser is gated by a per-agent capability toggle, LIVE BROWSER SUPPOR
 | On (`browser_enabled = true`) | The runtime includes the agent's `browser_*` tools. |
 | Off | The `browser_*` tools are removed from the agent's toolset. |
 
+The capability is also the prerequisite for **selling browsing time** on a monetized agent's offers — see [Monetize](/work/monetize#browsing-time-and-media-credits).
+
 ## Browser tools
 
 Browser tools are registered under the `browser` toolset. Every call passes through governance before it runs (including URL checks on navigation).
@@ -44,11 +46,22 @@ Browser tools are registered under the `browser` toolset. Every call passes thro
 Each session gets at most one browser, created lazily and reused:
 
 1. The agent calls its first `browser_*` tool (for example `browser_navigate`).
-2. The runtime provisions a browser through the configured backend (a dedicated Kubernetes pod in production).
+2. The runtime provisions a browser through the configured backend (a dedicated Kubernetes pod in production). On a metered agent, a chunk of the sender's browsing minutes (default 10) is held **before** the pod is provisioned — once per provision, so pod reuse costs no extra authorize.
 3. The browser is reused by every later browser call in that same session.
-4. The session keeps the same browser until it calls `browser_close` or the session ends, at which point the browser is torn down.
+4. The session keeps the same browser until it calls `browser_close` or the session ends, at which point the browser is torn down. On a metered agent there's one more terminal state: when the buyer's balance can no longer cover the next chunk, the platform closes the browser within about half a minute and bills only the time that actually ran.
 
 The browser runs separately from the agent's execution sandbox but mounts the same session workspace, so files and screenshots can be shared between the two.
+
+## Minutes and metering
+
+Two independent meters can apply to browser time:
+
+- **The project's own web-browsing wallet** (always) — every agent browser draws on the operator's prepaid browsing minutes; see [Usage](/work/settings/usage) and [Billing](/work/settings/billing).
+- **The buyer's purchased browsing time** (monetized agents that sell minutes) — each buyer's per-agent balance, held before provisioning and settled after teardown. See [Monetize](/work/monetize#browsing-time-and-media-credits).
+
+Accrual is **wall-clock while the browser is open**, not per tool call — rounded up per minute with a 1-minute minimum per browser. An idle open browser still costs minutes; closing it with `browser_close` when done is the cheap habit.
+
+Exempt from the buyer meter: sessions run by the operator (Studio chat, API service accounts, scheduled runs) and [browser-profile](/develop/features/browser-profiles) capture sessions — those draw only on the project wallet.
 
 ## Live view
 
@@ -75,4 +88,10 @@ The browser is deliberately isolated from the agent's sandbox:
 - Browser pods receive no database, Redis, API, or LLM credentials, and their service account has no Kubernetes permissions.
 - All live-view and control traffic is authenticated and authorized by the API server.
 - Browser tool calls pass through governance, including URL checks on `browser_navigate`.
-- If the browser backend is unavailable, browser tools return a structured `browser_unavailable` result with guidance rather than failing the whole session.
+- If a browser can't be provided, the tools degrade with a structured result rather than failing the session. Three distinct cases:
+
+| Result | Meaning | Fix |
+|---|---|---|
+| `browser_unavailable` | The browser backend (or, on metered agents, the metering plane) is unreachable | Try again shortly; nothing was charged |
+| `browser_credits_exhausted` | The **project's** web-browsing wallet is empty | Operator tops up under Settings → Billing |
+| `browser_minutes_exhausted` | The **sender's** purchased browsing time is spent | Carries the agent's buy link; the agent is told not to retry and to continue on non-browser tools |

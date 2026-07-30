@@ -11,6 +11,7 @@ module.exports = {
       items: [
         'work/workflow/run-agent',
         'work/workflow/configure-agent',
+        'work/workflow/governance',
         'work/tools/chat',
         'work/tools/commands',
         'work/tools/goals',
@@ -44,6 +45,7 @@ module.exports = {
         'work/channels/web',
         'work/channels/slack',
         'work/channels/telegram',
+        'work/channels/whatsapp',
         'work/channels/website-widget',
         'work/channels/users',
         'work/channels/self-registration',
@@ -56,7 +58,7 @@ module.exports = {
       collapsed: true,
       items: [
         'work/settings/profile',
-        'work/settings/settings',
+        'work/settings/authentication',
         'work/settings/usage',
         'work/settings/billing',
       ],
@@ -130,6 +132,7 @@ module.exports = {
         'develop/features/memory',
         'develop/features/browser',
         'develop/features/browser-profiles',
+        'develop/features/media-generation',
       ],
     },
     {
