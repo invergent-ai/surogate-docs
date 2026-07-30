@@ -1,0 +1,59 @@
+---
+title: Surogate documentation
+description: Two documentation tracks for Surogate Ops — Work mode for operators, Develop mode for builders.
+template: splash
+hero:
+  tagline: Two tracks — one for operators who run agents day-to-day, one for builders who design and train them.
+  actions:
+    - text: Work mode — for operators
+      link: /work/
+      icon: right-arrow
+      variant: primary
+    - text: Develop mode — for builders
+      link: /develop/
+      icon: right-arrow
+    - text: surogate.ai
+      link: https://surogate.ai
+      icon: external
+      variant: minimal
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+<CardGrid>
+  <LinkCard
+    title="Work mode"
+    href="/work/"
+    description="You sign in, use existing agents, watch sessions, and improve from real traffic. Plain-language workflow guides, no code, no infrastructure."
+  />
+  <LinkCard
+    title="Develop mode"
+    href="/develop/"
+    description="You design agents, write skills, attach knowledge bases, train experts, run evaluations, ship to channels. Deep configuration, code snippets, runtime internals."
+  />
+</CardGrid>
+
+## What is Surogate?
+
+Surogate is a hosted platform for building, deploying, and improving autonomous AI
+agents. You don't manage Kubernetes, model serving, policy enforcement, or the LLM
+loop yourself — the platform handles the runtime so you focus on what the agent does.
+
+The platform is built on three open-source components:
+
+- **[surogates](https://github.com/invergent-ai/surogates)** — the agent runtime
+  (harness, sessions, sandbox, governance, MCP integration)
+- **[surogate](https://github.com/invergent-ai/surogate)** — the training framework
+  (SFT/RL engine for the expert models you own)
+- **[surogate-hub](https://github.com/invergent-ai/surogate-hub)** — the artifact
+  versioning store
+
+## Which mode is right for you?
+
+| If you... | Use |
+| --- | --- |
+| Chat with deployed agents, configure them in a UI, review sessions | [Work mode](/work/) |
+| Manage skills, knowledge bases, channels, billing for your team | [Work mode](/work/) |
+| Design new agents, write skills, configure tools / governance | [Develop mode](/develop/) |
+| Train experts, run evaluations, integrate via the REST API | [Develop mode](/develop/) |
+| Deploy on your own cluster, customize the runtime | [Develop mode](/develop/) |
