@@ -31,7 +31,10 @@ ROOT = 'src/content/docs'
 # One-time corpus invariants, asserted only under --strict-counts.
 EXPECTED_FILES = 73  # 72 migrated pages + the splash index
 EXPECTED_FENCE_HASHES = 22  # shell comments a naive H1 strip would destroy
-EXPECTED_ASIDES = 13
+# 13 came across from Docusaurus; the 14th is the homepage's Open source note,
+# written after the migration. This tracks the corpus, so it moves whenever
+# content legitimately does -- which is why it is not a CI gate.
+EXPECTED_ASIDES = 14
 
 failures: list[str] = []
 
