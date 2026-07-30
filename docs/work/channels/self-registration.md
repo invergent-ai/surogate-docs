@@ -132,6 +132,16 @@ When a user creates an account with Email/Password, Firebase sends them a verifi
 
 Once they verify, they sign in normally and land in the agent. Social sign-ins (Google, GitHub) are pre-verified by the provider, so those users skip the verification step entirely.
 
+### After sign-in: what they can change
+
+Signed-in users manage their account under the agent app's **Settings → Profile** — display name is editable, the sign-in email is not. Password controls follow the sign-in method (Surogate records it server-side, so the right control shows even after the SSO session lapses):
+
+- **Email/password** users get a **Send reset email** button (the confirmation toast is deliberately neutral — it never reveals whether an address is registered).
+- **Google / GitHub** users see **no password UI** — their provider owns the credential. If such a user reports "I can't change my password", that's why.
+- Accounts you created manually on the Users tab get an in-app change-password form instead.
+
+See [Web](./web.md#the-users-settings-page) for the full Settings page.
+
 ### Manual users still work
 
 If you've created users by hand under [Users](./users.md), they keep signing in with their local password as before. Self-registration adds options on top — it doesn't replace anything.

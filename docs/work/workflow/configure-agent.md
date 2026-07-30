@@ -21,7 +21,7 @@ Each tab saves independently. Most tabs surface a **SAVE** button (which flashes
 | **Model** | Serving model plus summary / vision / image / video role models |
 | **Governance** | Policy enforcement, tool allow/deny, web & browser egress, SSH, EU AI Act AI disclosure |
 | **Users** | End-users who can chat with this agent, and self-registration |
-| **Channels** | Web, Slack, Telegram, and website-widget connections |
+| **Channels** | Web, Slack, Telegram, WhatsApp, and website-widget connections |
 | **Monetize** | Charge for access via Stripe Connect (Pro plan) |
 
 System agents (like the platform copilot) hide the **Identity**, **Capabilities**, and **Governance** tabs, and non-admins see a "managed by platform administrators" notice instead of the tabs. The **Coding** tab appears only when the agent's coding capability (`/code`) is turned on in **Capabilities**.
@@ -59,7 +59,8 @@ Toggle the agent's built-in behaviors. The Brainstorming gate, Live browser, and
 | Capability | What it does |
 |---|---|
 | **Brainstorming gate** | Forces a short design/brainstorm pass with the user before creative or implementation work. Turn off for an agent that should act immediately |
-| **Live browser support** | Lets the agent drive a real browser (navigate, click, type, screenshot). Off removes the browser tools |
+| **Live browser support** | Lets the agent drive a real browser (navigate, click, type, screenshot). Off removes the browser tools — and hides the end-user Browser Profiles tab |
+| **Multi session** | Lets each user open multiple sessions with the agent. When off, every user gets one dedicated conversation per channel — web, Slack, Telegram or website — and always returns to it; their other sessions are hidden until you turn this back on. End users see a **Chat** button instead of "New chat" |
 | **Saga** | Tracks multi-step tool chains and rolls back completed steps when a later step fails. Exposes **Step timeout (s)**, **Max retries**, and **Retry delay (s)** |
 
 **Slash commands** — a master switch turns all built-in chat commands on or off at once, with individual toggles below:
@@ -153,6 +154,7 @@ Connect the agent to where your people already work. Each channel card shows an 
 - **Web** — the always-on hosted chat page; copy its endpoint URL once the agent is deployed. See [Web](../channels/web.md).
 - **Slack** — a guided **Connect Slack** wizard (bot scopes, event subscriptions, signing secret, bot token). The **Manage** view auto-saves options: **Require @mention**, **Mode** (Team member / Personal assistant), **Allow Bots** (None / Mentions only / All), **Reply in thread**, **Reply broadcast**, **Free-response channels**, plus **Surogate Mate** follow-the-channel and ambient-mode toggles. See [Slack](../channels/slack.md).
 - **Telegram** — a **Connect Telegram** wizard (BotFather token). **Manage** options: **Require @mention**, **Mode**, **Reply Threading** (First chunk only / All chunks / Off), **Message Reactions**, and **Per-User Group Chats**. See [Telegram](../channels/telegram.md).
+- **WhatsApp** — a **Connect WhatsApp** wizard (Meta Cloud API credentials: Phone Number ID, Access Token, App Secret, WABA ID), then a callback URL + verify token to register in Meta. **Manage** option: **Mode**. See [WhatsApp](../channels/whatsapp.md).
 - **Website** — an embeddable chat bubble. Set **Allowed origins**, copy the **Embed code**, cap **Messages per chat**, and reveal the **Publishable key** under Advanced. See [Website widget](../channels/website-widget.md).
 
 ## Monetize

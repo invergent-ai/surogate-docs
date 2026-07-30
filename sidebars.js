@@ -45,6 +45,7 @@ module.exports = {
         'work/channels/web',
         'work/channels/slack',
         'work/channels/telegram',
+        'work/channels/whatsapp',
         'work/channels/website-widget',
         'work/channels/users',
         'work/channels/self-registration',

@@ -68,9 +68,11 @@ The first time a Slack user messages the bot:
 
 1. The platform looks up `(platform=slack, platform_user_id=U03ABCDEF)` in the channel-identity table.
 2. If found, the message routes to that user's existing Surogate sessions.
-3. If not found, an internal user is created OR the bot DMs them a pairing link to connect to an existing web account (this is the **Personal assistant** mode).
+3. If not found, the behavior follows the channel's **Mode**: in **Team member** mode an internal user is created automatically; in **Personal assistant** mode the bot DMs them an 8-character pairing code and a link to the agent app's `/link` page, where they sign in and enter the code (codes last 10 minutes, single-use — see [Users](./users.md#identity-across-channels)).
 
-Once linked, the same person on Web and Slack sees the same agent, same memory, same sessions.
+Once linked, the same person on Web and Slack sees the same agent, same memory, same sessions — and shares the same per-user usage allowance, so switching channels never resets a limit.
+
+When the agent asks a question (`ask_user_question`), Slack shows a modal — typed replies aren't converted into answers here (unlike Web and Telegram); the bot nudges toward the modal instead. On monetized agents, Slack is a **sellable channel**: a buyer whose package excludes it gets a short notice with their buy link.
 
 ## Multi-workspace
 
