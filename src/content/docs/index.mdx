@@ -1,17 +1,26 @@
 ---
 title: Surogate documentation
-description: Surogate is a platform for building, deploying, and continuously improving autonomous AI agents. Start in Work mode to run agents, or Develop mode to build and train them.
+description: Train an autonomous AI agent on the way you already work, deploy it to the people you serve, improve it with expert models trained on its own conversations, and charge for access. Start in Work mode to run agents, or Develop mode to build and train them.
 template: splash
 hero:
   # No actions: the two track CTAs are the CardGrid under "Start here", which
   # carries the same links plus enough description to choose between them.
-  tagline: Build autonomous AI agents, put them to work in the channels your users already use, and turn their real conversations into measurably better agents.
+  #
+  # The tagline is surogate.ai's brand line verbatim. It deliberately explains
+  # nothing on its own, so the first paragraph below carries the whole
+  # description — keep that paragraph first and keep it concrete.
+  tagline: Multiply yourself.
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-Surogate is a platform for building, deploying, and improving autonomous AI agents. An
-agent is a model plus a persona, the skills it follows, the knowledge bases it searches
+Surogate is a platform for building autonomous AI agents that do real work. Train an agent
+on the way you already work, put it in front of the people you serve, and it handles what
+you would otherwise handle yourself — in the channels they already use. You can
+[charge for access](/work/monetize/): you set the price, buyers pay into your own Stripe
+account, and Surogate takes a platform fee.
+
+An agent is a model plus a persona, the skills it follows, the knowledge bases it searches
 while answering, the tools it may call, and the guardrails it operates under. Agents do
 real work: they browse the web and hand control back to a person for login or MFA, reach
 your internal systems through MCP servers using credentials held in a vault the agent
@@ -19,11 +28,13 @@ never sees, delegate to sub-agents on long-running missions, and remember contex
 conversations.
 
 Every message, tool call, and governance decision is written to an append-only event log,
-so every session is recorded and replayable. Flag the turns that went well or badly, build
-evaluation sets out of real failures, and — when configuration changes stop being enough —
-fine-tune an expert model on the data you collected and serve it back to the agent.
-Configuration changes apply to new sessions immediately while in-flight sessions finish on
-the version they started on, and any version rolls back.
+so every session is recorded and replayable. That log is what makes agents improvable
+rather than merely configurable: flag the turns that went well or badly, build evaluation
+sets out of real failures, and — when prompt and knowledge changes stop paying off —
+train an [expert model](/develop/features/skills-and-experts/) on the successful
+trajectories the agent has already produced. Configuration changes apply to new sessions
+immediately while in-flight sessions finish on the version they started on, and any
+version rolls back.
 
 ## Start here
 
@@ -56,6 +67,40 @@ base — or the expensive way, by fine-tuning an expert on the sessions you flag
 four phases and gives the end-to-end time for each kind of change; the same cycle without
 the configuration detail is [Improve your agent](/work/workflow/improve-agent/).
 
+## Skills and expert models
+
+A [skill](/develop/features/skills-and-experts/) is a reusable procedure an agent follows
+for a specific task — the steps, the rules, the format of a good answer. Set `type: expert`
+on that same skill and it gains its own fine-tuned model: the skill body becomes the
+expert's system prompt, and the agent consults it in a bounded mini-loop with its own tools
+and iteration budget instead of answering from the general model.
+
+Pairing the two is what makes narrow, repeated tasks reliable. The skill constrains the
+task; the fine-tune specializes a model to exactly that task, trained on trajectories the
+agent has already completed successfully. The platform walks the session log, collects
+those successful trajectories into a versioned dataset, and trains on them — so the
+training data is your own production traffic rather than something you have to author.
+
+The lifecycle is define → collect → train → activate → monitor → retrain. An active expert
+records its own success rate as it runs and retires automatically if it stops performing,
+which means a specialist that degrades gets pulled rather than quietly making things worse.
+[Skill optimization](/develop/features/skill-optimization/) works the other end of the same
+problem, proposing edited skills, scoring them, and keeping the best.
+
+## Charging for an agent
+
+An agent trained on how you work is worth something to the people you already serve, so
+you can sell access to it. [Monetize an agent](/work/monetize/) and you choose the pricing
+— a monthly subscription, packs of tokens, or both — and set the price yourself.
+
+You are the merchant of record. Buyers pay into **your** Stripe account on your normal
+payout schedule, your business name appears on their card statement, and Surogate takes a
+platform fee rather than holding the money. Buyers do not need a Surogate account of their
+own; they sign in through your agent and the platform enforces the token budget on every
+message. Agent commerce needs the Pro plan or higher — see
+[Billing](/work/settings/billing/) — and buyer sign-in is configured through
+[self-registration](/work/channels/self-registration/).
+
 ## Capabilities
 
 Each row links to the page that covers it. Feature pages live in Develop mode; the
@@ -65,12 +110,14 @@ day-to-day usage pages live in Work mode.
 | --- | --- |
 | [Agents](/develop/features/agents/) | A model, persona, skills, knowledge, tools, and guardrails, deployed as a service your users can talk to. |
 | Channels | The same agent on [web chat](/work/channels/web/), [Slack](/work/channels/slack/), [Telegram](/work/channels/telegram/), an [embeddable widget](/work/channels/website-widget/), or the API — sharing one [memory](/develop/features/memory/). |
-| [Skills and experts](/develop/features/skills-and-experts/) | Reusable procedures an agent follows, plus fine-tuned specialists it consults for hard, repeated problems. [Skill optimization](/develop/features/skill-optimization/) proposes edited skills, scores them, and keeps the best. |
+| [Skills](/develop/features/skills-and-experts/) | Reusable procedures an agent follows for a task — steps, rules, and what a good answer looks like. [Skill optimization](/develop/features/skill-optimization/) proposes edited skills, scores them, and keeps the best. |
+| [Expert models](/develop/features/skills-and-experts/) | A skill backed by its own fine-tuned model, trained on the successful trajectories the agent already produced, consulted in a bounded mini-loop and retired automatically if its success rate drops. |
 | [Knowledge bases](/develop/features/knowledge-bases/) | Document collections searched during the conversation, so answers come from your material with sources attached. |
 | [Tools and credentials](/develop/features/mcp-and-vault/) | MCP servers connect an agent to your systems and to third-party APIs; secrets stay in a vault and are never exposed to the agent's runtime. |
 | [Browser control](/develop/features/browser/) | Agents drive a real Chromium browser and hand control back to a person for login, MFA, or anything needing judgement. |
 | Long-running work | [Missions](/work/tools/missions/) graded against success criteria, [sub-agents](/work/tools/sub-agents/) for delegated parts, an [inbox](/work/tools/inbox/) for approvals, and [arenas](/develop/features/experts-arenas/) — in preview — for supervised multi-agent runs. |
 | [Sessions](/develop/features/sessions/) | Every message, tool call, and result recorded and replayable. [Event types](/develop/reference/event-types/) explains what the log contains; [reviewing sessions](/work/workflow/review-sessions/) is the day-to-day flagging workflow. |
+| [Monetization](/work/monetize/) | Sell access to a public agent as a subscription, token packs, or both. You set the price and are the merchant of record; payouts land in your own Stripe account. Pro plan or higher. |
 | [Evaluations](/develop/features/evaluations/) | Score an agent or a model against 40 built-in benchmarks, or a custom benchmark built from your own failed sessions, then A/B two candidates before promoting either. |
 | [Models](/develop/features/models/) | Catalog, serving endpoints with quantization and autoscaling, and versioned rollback — or [bring your own LLM](/develop/features/byo-llm/) per agent. Runs execute on the providers you attach under [Compute](/develop/features/compute/). |
 | [Training](/develop/features/training/) | Supervised fine-tuning, LoRA and QLoRA adapters, mixture-of-experts and long-context runs distributed across several GPUs and nodes, and reinforcement learning against verifiable rewards or an LLM judge. |
