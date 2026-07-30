@@ -63,7 +63,7 @@ export default defineConfig({
       editLink: {
         baseUrl: 'https://github.com/invergent-ai/surogate-docs/edit/main/',
       },
-      components: { SocialIcons: './src/components/HeaderLogin.astro' },
+      components: { SocialIcons: './src/components/HeaderLinks.astro' },
       favicon: '/favicon.svg',
       // Turns any broken internal link or anchor into a build failure. This
       // replaces onBrokenLinks: 'warn', under which breakage was invisible --

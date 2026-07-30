@@ -53,20 +53,34 @@ html {
   padding-block: 2.5rem 1rem;
 }
 
-/* Login CTA in the header — see src/components/HeaderLogin.astro. Starlight
-   has no config for arbitrary header links, and Login is the one old navbar
-   item worth the header space. */
+/* Header links — see src/components/HeaderLinks.astro. Starlight has no config
+   for arbitrary header links, so they arrive via a SocialIcons override.
+   surogate.ai is plain text and Login is a bordered CTA, so the two carry
+   different weight rather than competing. */
+.header-nav-link,
 .header-login {
   display: inline-flex;
   align-items: center;
+  font-size: var(--sl-text-sm);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.header-nav-link {
+  padding: 0.25rem 0.5rem;
+  color: var(--sl-color-gray-2);
+}
+
+.header-login {
   padding: 0.25rem 0.75rem;
   border: 1px solid var(--sl-color-gray-5);
   border-radius: 0.375rem;
-  font-size: var(--sl-text-sm);
   font-weight: 600;
   color: var(--sl-color-white);
-  text-decoration: none;
-  white-space: nowrap;
+}
+
+.header-nav-link:hover {
+  color: var(--sl-color-white);
 }
 
 .header-login:hover {
@@ -74,9 +88,10 @@ html {
   color: var(--sl-color-accent);
 }
 
-/* The header is tight on narrow viewports; the splash page and sidebar both
-   still reach the product, so drop the CTA rather than crowd the row. */
+/* The header is tight on narrow viewports. Drop the text links rather than
+   crowd the row — the homepage and sidebar still reach both destinations. */
 @media (max-width: 50rem) {
+  .header-nav-link,
   .header-login {
     display: none;
   }

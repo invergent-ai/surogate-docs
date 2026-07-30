@@ -95,7 +95,7 @@ src/content/docs/
 src/styles/custom.css               ~20 lines, replaces 98-line src/css/custom.css
 src/assets/logo-black.svg
 src/assets/logo-white.svg
-src/components/HeaderLogin.astro    SocialIcons override — the one custom component
+src/components/HeaderLinks.astro    SocialIcons override — the one custom component
 public/CNAME                        docs.surogate.ai   (new)
 public/favicon.svg                  new — see §8
 public/og-card.png                  new — see §8
@@ -514,7 +514,7 @@ export default defineConfig({
       { icon: 'x.com',  label: 'X',      href: 'https://x.com/surogate_ai' },
     ],
     editLink: { baseUrl: 'https://github.com/invergent-ai/surogate-docs/edit/main/' },
-    components: { SocialIcons: './src/components/HeaderLogin.astro' },
+    components: { SocialIcons: './src/components/HeaderLinks.astro' },
     head: [ /* gtag G-7YRDGYZN0R; og:*, twitter:* tags; keywords — §7.6 */ ],
     plugins: [starlightLinksValidator()],
     sidebar: [ /* §7.1 */ ],
@@ -549,13 +549,19 @@ there is no arbitrary top-nav-links config.
 |---|---|
 | GitHub | native `social` icon |
 | Follow us on X | native `social` icon |
-| Login → ops.surogate.ai | `HeaderLogin.astro`, ~20-line `SocialIcons` override |
-| About → surogate.ai | **dropped from chrome**; splash-page action button instead |
+| Login → ops.surogate.ai | `HeaderLinks.astro`, a `SocialIcons` override — bordered CTA |
+| About → surogate.ai | **kept**, in the same override as a plain text link beside Login |
 | Search | Pagefind modal |
 | Work/Develop pill toggle | **deleted** — superseded by the two sidebar groups |
 
-Login keeps header prominence as the only one of the four with commercial value.
-"About" is reachable via the logo, the splash CTA and the GitHub icon.
+Login keeps header prominence as the one with commercial value, so it is the bordered
+CTA. `surogate.ai` sits beside it as a plain text link — same override, different
+weight, so the two do not compete.
+
+**Correction (found at execution):** this section originally dropped "About" on the
+reasoning that the splash hero would carry a `surogate.ai` action. The hero actions
+were later removed as redundant with the track cards, which left `surogate.ai` linked
+from nowhere on the site. It now lives in the header, which is where it started.
 
 **[audit] — two config values have no Starlight home.** Docusaurus sets
 `navbar.title: 'Documentation'` (rendered *next to* the logo) and
@@ -772,7 +778,7 @@ availability. Confirm the workflow is currently enabled before relying on it.
 | Astro 7 whitespace handling mangles ASCII art | Low | Gate 6 covers all six affected files |
 | Pagefind ranks worse than Algolia | Low | Accepted; reinstatable without content changes |
 | 42 screenshot + ~46 legacy URLs 404 | Low | Accepted decision (§3) |
-| `HeaderLogin.astro` breaks on upgrade | Low | ~20 lines against a documented, stable API |
+| `HeaderLinks.astro` breaks on upgrade | Low | ~20 lines against a documented, stable API |
 
 ---
 
