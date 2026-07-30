@@ -15,26 +15,9 @@ hero:
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
 Surogate is a platform for building autonomous AI agents that do real work. Train an agent
-on the way you already work, put it in front of the people you serve, and it handles what
-you would otherwise handle yourself — in the channels they already use. You can
-[charge for access](/work/monetize/): you set the price, buyers pay into your own Stripe
-account, and Surogate takes a platform fee.
-
-An agent is a model plus a persona, the skills it follows, the knowledge bases it searches
-while answering, the tools it may call, and the guardrails it operates under. Agents do
-real work: they browse the web and hand control back to a person for login or MFA, reach
-your internal systems through MCP servers using credentials held in a vault the agent
-never sees, delegate to sub-agents on long-running missions, and remember context across
-conversations.
-
-Every message, tool call, and governance decision is written to an append-only event log,
-so every session is recorded and replayable. That log is what makes agents improvable
-rather than merely configurable: flag the turns that went well or badly, build evaluation
-sets out of real failures, and — when prompt and knowledge changes stop paying off —
-train an [expert model](/develop/features/skills-and-experts/) on the successful
-trajectories the agent has already produced. Configuration changes apply to new sessions
-immediately while in-flight sessions finish on the version they started on, and any
-version rolls back.
+on the way you already work, put it in front of the people you serve, and
+[charge for access](/work/monetize/) if you want to. Everything it does is recorded, and
+that record is what you use to make it better.
 
 ## Start here
 
