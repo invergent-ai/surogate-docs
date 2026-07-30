@@ -37,6 +37,78 @@ export default defineConfig({
         baseUrl: 'https://github.com/invergent-ai/surogate-docs/edit/main/',
       },
       components: { SocialIcons: './src/components/HeaderLogin.astro' },
+      favicon: '/favicon.svg',
+      head: [
+        // The old config pointed favicon at img/favicon.ico and the social
+        // cards at /img/social-card.jpg. Neither file ever existed, so the
+        // site shipped with no favicon and broken share previews. Both are
+        // now real brand assets.
+        {
+          tag: 'link',
+          attrs: { rel: 'icon', href: '/favicon.png', type: 'image/png' },
+        },
+        {
+          tag: 'script',
+          attrs: {
+            async: true,
+            src: 'https://www.googletagmanager.com/gtag/js?id=G-7YRDGYZN0R',
+          },
+        },
+        {
+          tag: 'script',
+          content:
+            'window.dataLayer=window.dataLayer||[];' +
+            'function gtag(){dataLayer.push(arguments);}' +
+            "gtag('js',new Date());gtag('config','G-7YRDGYZN0R');",
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'keywords',
+            content:
+              'Surogate, AgentOps, agents, LLM, MCP, training, fine-tuning, RL, evaluations',
+          },
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            property: 'og:image',
+            content: 'https://docs.surogate.ai/og-card.jpg',
+          },
+        },
+        { tag: 'meta', attrs: { property: 'og:image:alt', content: 'Surogate' } },
+        { tag: 'meta', attrs: { property: 'og:locale', content: 'en_US' } },
+        // Starlight's head builder emits og:title and og:description but NOT
+        // the twitter: equivalents, so these are kept explicitly rather than
+        // dropped as redundant.
+        {
+          tag: 'meta',
+          attrs: { name: 'twitter:card', content: 'summary_large_image' },
+        },
+        { tag: 'meta', attrs: { name: 'twitter:site', content: '@surogate_ai' } },
+        {
+          tag: 'meta',
+          attrs: { name: 'twitter:creator', content: '@surogate_ai' },
+        },
+        {
+          tag: 'meta',
+          attrs: { name: 'twitter:title', content: 'Surogate Documentation' },
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'twitter:description',
+            content: 'Operator and builder documentation for Surogate Ops.',
+          },
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'twitter:image',
+            content: 'https://docs.surogate.ai/og-card.jpg',
+          },
+        },
+      ],
       // One sidebar, two sibling top-level groups. Order and category labels
       // are carried over from the deleted sidebars.js. Inner subgroups all
       // collapse by default: the two tracks now share a single column, so the
