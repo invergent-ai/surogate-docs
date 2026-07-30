@@ -1,5 +1,11 @@
 ---
 title: Settings
+# Serves at /work/settings/, matching the URL already in the sitemap and
+# indexed by search engines. Docusaurus reached the same URL via its
+# foo/foo.md route collapse, but emitted work/settings.html beside a
+# work/settings/ directory — GitHub Pages resolves the directory first, 301s
+# to /work/settings/, and finds no index there, so the live page 404s today.
+slug: work/settings
 ---
 
 The **Settings** tab holds project-scoped configuration for your active project, at `/work/settings/settings` (shared with Dev mode at `/studio/settings/settings`).

@@ -198,7 +198,7 @@ export default defineConfig({
               collapsed: true,
               items: [
                 'work/settings/profile',
-                'work/settings/settings',
+                'work/settings',
                 'work/settings/usage',
                 'work/settings/billing',
               ],
