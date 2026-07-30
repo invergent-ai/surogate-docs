@@ -131,6 +131,7 @@ module.exports = {
         'develop/features/memory',
         'develop/features/browser',
         'develop/features/browser-profiles',
+        'develop/features/media-generation',
       ],
     },
     {

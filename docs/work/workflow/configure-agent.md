@@ -123,8 +123,10 @@ Choose which models power the agent. Every chooser except the serving model defa
 | **Serving model** | The primary model the agent runs on (platform default is labelled "Surogate") |
 | **Summary model** | Used for session titles and context compression |
 | **Vision model** | Used for image understanding |
-| **Image model** | Used by the `generate_image` tool |
-| **Video model** | Used by the `generate_video` tool |
+| **Image model** | Used by the `generate_image` tool. With neither a pick here nor a platform preset, the tool is hidden from the agent entirely |
+| **Video model** | Used by the `generate_video` tool — same hiding rule |
+
+Platform-model media generation draws on the project's **media wallet** (see [Usage](../settings/usage.md)); BYO image/video models aren't metered by Surogate. A wired image or video model is also what allows selling **media credits** on the [Monetize](../monetize.md) tab.
 
 ## Governance
 
