@@ -39,6 +39,19 @@ that record is what you use to make it better.
   </Card>
 </CardGrid>
 
+## Ask the Copilot instead
+
+Press **⌘+/** anywhere in the platform and describe what you want. The
+[Copilot](/work/tools/copilot/) drives the platform's own tools on your behalf: create an
+agent, attach a skill or a knowledge base, scale a deployment, start a training run, or
+just ask what ran yesterday and which sessions got a thumbs-down. Most of what you would
+click through in the sections below, you can ask for instead.
+
+Destructive or expensive operations — deleting anything, starting a training run — show a
+confirmation card naming the exact resource before they run. The
+[builder's view](/develop/tools/copilot/) lists every operation it exposes, and what it
+deliberately will not do.
+
 ## The improvement loop
 
 You [build](/develop/loop/build/) an agent from configuration rather than code;
@@ -100,6 +113,7 @@ day-to-day usage pages live in Work mode.
 | [Browser control](/develop/features/browser/) | Agents drive a real Chromium browser and hand control back to a person for login, MFA, or anything needing judgement. |
 | Long-running work | [Missions](/work/tools/missions/) graded against success criteria, [sub-agents](/work/tools/sub-agents/) for delegated parts, an [inbox](/work/tools/inbox/) for approvals, and [arenas](/develop/features/experts-arenas/) — in preview — for supervised multi-agent runs. |
 | [Sessions](/develop/features/sessions/) | Every message, tool call, and result recorded and replayable. [Event types](/develop/reference/event-types/) explains what the log contains; [reviewing sessions](/work/workflow/review-sessions/) is the day-to-day flagging workflow. |
+| [Copilot](/work/tools/copilot/) | An agent that drives the platform itself. Ask in natural language and it calls the platform's tools — creating agents, attaching skills, deploying models, launching training runs — with a confirmation step before anything destructive or expensive. |
 | [Monetization](/work/monetize/) | Sell access to a public agent as a subscription, token packs, or both. You set the price and are the merchant of record; payouts land in your own Stripe account. Pro plan or higher. |
 | [Evaluations](/develop/features/evaluations/) | Score an agent or a model against 40 built-in benchmarks, or a custom benchmark built from your own failed sessions, then A/B two candidates before promoting either. |
 | [Models](/develop/features/models/) | Catalog, serving endpoints with quantization and autoscaling, and versioned rollback — or [bring your own LLM](/develop/features/byo-llm/) per agent. Runs execute on the providers you attach under [Compute](/develop/features/compute/). |
