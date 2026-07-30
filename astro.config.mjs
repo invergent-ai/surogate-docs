@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightLinksValidator from 'starlight-links-validator';
+import starlightLlmsTxt from 'starlight-llms-txt';
 
 // NOTE: `trailingSlash` and `build.format` are deliberately unset. Astro's
 // defaults (directory format, trailing slash) are the only combination whose
@@ -68,7 +69,10 @@ export default defineConfig({
       // replaces onBrokenLinks: 'warn', under which breakage was invisible --
       // and the remarkConfig with remark-validate-links, which was configured
       // but never wired into the build at all.
-      plugins: [starlightLinksValidator()],
+      // starlight-llms-txt emits llms.txt / llms-full.txt. There was no
+      // AI-crawler surface before, and this is documentation about building
+      // agents.
+      plugins: [starlightLinksValidator(), starlightLlmsTxt()],
       head: [
         // The old config pointed favicon at img/favicon.ico and the social
         // cards at /img/social-card.jpg. Neither file ever existed, so the
