@@ -23,7 +23,7 @@ Every task's requirements implicitly include this section.
 - **Aside titles use bracket syntax only:** `:::note[Title]`. The space form `:::note Title` silently deletes the title text.
 - **All internal doc links:** root-absolute, extensionless, **with** trailing slash — `/work/tools/chat/`. Relative links and `.md` extensions are build failures once the link validator is installed.
 - **Never modify lines inside fenced code blocks.** 22 `# ` lines in the corpus are shell/Python comments. Every transform is fence-aware.
-- **Scope:** only `docs/work/` (40 files) and `docs/develop/` (32 files). The legacy trainer tree and all 42 screenshots are deleted.
+- **Scope:** only `docs/work/` (36 files) and `docs/develop/` (36 files). The legacy trainer tree and all 42 screenshots are deleted.
 - **Working tree must be clean before Task 3's codemod runs** (Task 1 handles this).
 
 ---

@@ -43,8 +43,8 @@ build, or a live HTTP check. Three evidence sources:
 
 | Tree | Files | Serves |
 |---|---|---|
-| `docs/work/` | 40 | Operator track, `/work/*` |
-| `docs/develop/` | 32 | Builder track, `/develop/*` |
+| `docs/work/` | 36 | Operator track, `/work/*` |
+| `docs/develop/` | 36 | Builder track, `/develop/*` |
 
 ### Out of scope — deleted, no redirects
 
@@ -90,8 +90,8 @@ package.json                        5 packages, down from 27
 src/content.config.ts               docsLoader() + docsSchema()
 src/content/docs/
   index.mdx                         splash homepage (replaces src/pages/index.jsx)
-  work/…       40 files             moved from docs/work/
-  develop/…    32 files             moved from docs/develop/
+  work/…       36 files             moved from docs/work/
+  develop/…    36 files             moved from docs/develop/
 src/styles/custom.css               ~20 lines, replaces 98-line src/css/custom.css
 src/assets/logo-black.svg
 src/assets/logo-white.svg
