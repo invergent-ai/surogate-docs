@@ -36,11 +36,11 @@ Nine backends are supported. Eight are managed clouds; the ninth (**SSH / On-pre
 
 Click a provider card → paste credentials → **CONNECT**. The platform verifies the connection (the button reads "Verifying connection…") before marking the backend healthy. The exact credential fields each provider asks for are documented in [Connect compute → Credentials per provider](/develop/features/connect-compute/#credentials-per-provider).
 
-:::note Free plan
+:::note[Free plan]
 Connecting a provider isn't available on the Free plan — the credential form is replaced by an **Upgrade** prompt (Standard, Pro, or Max). See [Connect compute → Connecting a cloud provider](/develop/features/connect-compute/#connecting-a-cloud-provider).
 :::
 
-:::warning Billing
+:::caution[Billing]
 Connecting a managed cloud gives the platform permission to spin up GPU instances **billed to your account at that provider**. Every provider except SSH shows an amber note to this effect on its connect page. SSH/on-prem is the exception — you run on hardware you already own.
 :::
 
@@ -106,4 +106,3 @@ If none of those apply, leave the Cloud tab empty.
 - [Connect compute](/develop/features/connect-compute/) — the tabs, per-provider credential fields, backend offers, and the Policies preview.
 - [Training](/develop/features/training/) — launching training runs on connected compute.
 - [Models](/develop/features/models/) — serving fine-tuned models.
-</content>

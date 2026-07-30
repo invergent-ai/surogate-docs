@@ -56,7 +56,7 @@ Click any row to open the workload detail (logs, metrics). Opening a workload re
 
 ### Policies
 
-:::note Preview
+:::note[Preview]
 The Policies view is a **visual preview**: it renders sample auto-scaling policies, but the **+ New Policy** button, the per-policy **Edit** button, and the enable/disable **Switch** are not yet wired to a backend. Nothing shown here is live, and changes you make aren't saved or enforced.
 :::
 
@@ -93,7 +93,7 @@ On the connect page you'll see:
 - For every provider except SSH, an amber note: *"Connecting lets the platform spin up GPU billed to your account at this provider."*
 - The credential form (below). **CONNECT** verifies the connection (button reads "Verifying connection…") before showing a success screen.
 
-:::note Free plan
+:::note[Free plan]
 Connecting cloud providers isn't available on the Free plan — the form is replaced by an **Upgrade** prompt (Standard, Pro, or Max).
 :::
 

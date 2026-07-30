@@ -53,9 +53,9 @@ The proxy also supports **Bearer token** and **no auth** for servers configured 
 
 The **Vault** button at the top of the left rail opens the credential store — where API keys, OAuth secrets, and other tokens the proxy needs live. Each entry shows its name and when it was added; you can **Update** it (set a new value) or **Remove** it. Values are write-only: they're never displayed back to you.
 
-> :::info Credentials never reach the sandbox
-> The agent's sandbox is the most untrusted component in the platform. Credentials live in the Vault and are injected by the MCP proxy as it forwards each call — even a fully prompt-injected agent can't exfiltrate them.
-> :::
+:::note[Credentials never reach the sandbox]
+The agent's sandbox is the most untrusted component in the platform. Credentials live in the Vault and are injected by the MCP proxy as it forwards each call — even a fully prompt-injected agent can't exfiltrate them.
+:::
 
 Full detail — reference syntax, encryption at rest, config layers — is in [MCP & Vault](/develop/features/mcp-and-vault).
 
@@ -104,4 +104,3 @@ The scanner fingerprints every tool definition. If a server returns a *different
 ## What's next
 
 If you've covered the Library, head to [Channels](/work/channels/web/) to publish the agent. Or jump to [Use cases](/work/use-cases/) for end-to-end recipes.
-</content>

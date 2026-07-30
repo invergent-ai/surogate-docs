@@ -58,9 +58,9 @@ Click **New skill** in the Skills tab. This opens an **Add a skill** panel with 
 
 All three land the skill in your workspace Library; from the agent's own Skills & Tools tab (see below) they additionally auto-attach it to that agent.
 
-> :::info Templates are real, not empty
-> The Browse tab is backed by a live template registry (`/api/skill-templates`) organized into categories. Importing one gives you a full, working starting point you then customize — you're never editing the original.
-> :::
+:::note[Templates are real, not empty]
+The Browse tab is backed by a live template registry (`/api/skill-templates`) organized into categories. Importing one gives you a full, working starting point you then customize — you're never editing the original.
+:::
 
 ### Create a skill from a chat
 
@@ -147,5 +147,3 @@ Skill detail → **Delete**. A pre-flight check warns you if any agent currently
 ## What's next
 
 If you've never built a knowledge base, read [Knowledge bases](/work/library/knowledge-bases/). For the tool side of this tab, see [MCP servers](/work/library/mcp-servers/). If you want a worked end-to-end example, jump to [Use cases](/work/use-cases/).
-</content>
-</invoke>

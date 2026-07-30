@@ -42,7 +42,7 @@ Three things to get right, in order:
 
    Leave this tab open — you'll copy these values in the next step.
 
-:::info
+:::note
 These values are **not secret**. Firebase web config is designed to ship in client code; the real security boundary is in Firebase's sign-in providers and authorized-domain list, not in hiding the `apiKey`. Pasting them into Surogate is safe.
 :::
 
@@ -75,7 +75,7 @@ Firebase has dozens of sign-in providers. Surogate surfaces three:
 
 Toggle the providers you want on the Settings tab's *Providers* row.
 
-:::warning
+:::caution
 The Surogate toggles only control which buttons appear on your agent's login page. Each provider also has to be **enabled in the Firebase Console** under **Authentication → Sign-in method**. If a user clicks *Continue with Google* and you forgot the Console step, Firebase rejects the request with `auth/operation-not-allowed`.
 :::
 

@@ -58,9 +58,9 @@ Fields:
 
 Click **CREATE**. The KB starts in `error` status — that's normal until you add sources and compile.
 
-> :::warning Curator model is locked
-> Once you pick a curator model and create the KB, you can't change it. If you need a different curator, create a new KB.
-> :::
+:::caution[Curator model is locked]
+Once you pick a curator model and create the KB, you can't change it. If you need a different curator, create a new KB.
+:::
 
 ## Adding sources
 
@@ -70,9 +70,9 @@ Five source types are listed in the picker. **Only File works in the current bui
 
 So: drop your most important `.md`, `.pdf`, `.txt`, `.docx`, or `.csv` files in one at a time. Each one becomes a row in the SOURCES table with its own status.
 
-> :::tip Smaller is more reliable
-> The KB compile job sometimes fails on very large or oddly-formatted PDFs. Split big documents into chapter-sized chunks for a higher success rate.
-> :::
+:::tip[Smaller is more reliable]
+The KB compile job sometimes fails on very large or oddly-formatted PDFs. Split big documents into chapter-sized chunks for a higher success rate.
+:::
 
 ## Compiling
 

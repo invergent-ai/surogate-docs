@@ -178,7 +178,7 @@ Sessions record which version of each skill they used. You can:
 
 ---
 
-# Experts — model-backed skills
+## Experts — model-backed skills
 
 When you set `type: expert` on a skill, you turn it into something different. The body becomes the **expert's system prompt** (not the agent's), and you specify a model + endpoint.
 
