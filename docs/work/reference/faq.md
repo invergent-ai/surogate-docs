@@ -33,7 +33,7 @@ Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (w
 
 **CSV upload shows 0 samples.** Known issue. Workaround: convert to a markdown-formatted summary and re-upload.
 
-**Agent doesn't use the KB.** Check the KB status is `active` (compiled successfully). In EVENTS, check whether the LLM called `kb_search` — if not, it didn't think the KB was relevant. Adjusting SOUL.md to mention the KB explicitly helps.
+**Agent doesn't use the KB.** Check the KB status is `active` (compiled successfully). In EVENTS, check whether the LLM called `kb_list_pages` / `kb_read_page` — if not, it didn't think the KB was relevant. Adjusting SOUL.md to mention the KB explicitly helps.
 
 ## Channels
 

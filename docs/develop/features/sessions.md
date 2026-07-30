@@ -44,7 +44,7 @@ Each row is a typed event with a JSON payload. For the canonical list of event t
 Failure-mode triage:
 
 - **Agent didn't search the KB** → SKILLS tab confirms the relevant skill loaded; if it did, check whether the `trigger` keywords match the user's phrasing.
-- **Agent searched but got bad results** → TOOLS tab, expand `tool.result` for `kb_search`. Often the KB content is the problem, not the agent.
+- **Agent searched but got bad results** → TOOLS tab, expand `tool.result` for `kb_read_page`. Often the KB content is the problem, not the agent.
 - **Agent looped** → check iteration count in METADATA; the last few `llm.response` events usually reveal the repetition pattern.
 - **Tool was blocked** → POLICIES tab; the denial reason is recorded.
 - **Saga rolled back** → look at `saga.step_failed` (the trigger) and the `saga.compensate` events that followed.

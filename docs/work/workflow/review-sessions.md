@@ -58,7 +58,7 @@ When the THREAD doesn't tell you why something happened, switch to EVENTS:
 12:43:01  user.message       "What's the refund policy?"
 12:43:02  llm.request         model=surogate-default, tokens_in=1247
 12:43:04  llm.response        "Let me check that..."  tokens_out=18
-12:43:04  tool.call           kb_search("refund policy")     tool_call_id=tc_1
+12:43:04  tool.call           kb_read_page("billing/refund-policy")     tool_call_id=tc_1
 12:43:05  tool.result         "Refunds within 30 days..."    tc_1
 12:43:06  llm.request         tokens_in=1429
 12:43:08  llm.response        "Our refund policy is..."      tokens_out=146

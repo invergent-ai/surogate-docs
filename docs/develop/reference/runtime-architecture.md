@@ -30,7 +30,7 @@ Tool allowlists/denylists, network egress rules, and policy profiles are snapsho
 You don't pick where a tool runs — but knowing helps debug behaviour:
 
 - **In the worker** — fast, no sandbox needed (memory, skill loading, web search, browser, scheduling, sub-agent delegation, `clarify`, `create_artifact`)
-- **In the sandbox** — anything that touches files or runs code (`terminal`, `read_file`, `write_file`, `patch`, `execute_code`)
+- **In the sandbox** — anything that touches files or runs code (`terminal`, `process`, `read_file`, `write_file`, `patch`)
 - **Through the MCP proxy** — external systems via the Model Context Protocol; credentials injected by the proxy so the sandbox never sees them
 
 See [Tool catalog](./tool-catalog.md) for the full list.

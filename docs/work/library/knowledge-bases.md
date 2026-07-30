@@ -44,7 +44,7 @@ You add SOURCES (files, URLs, etc.)
    └─────────────┬───────────────┘
                  │
                  ↓
-   Agent calls kb_search at runtime
+   Agent calls kb_list_pages / kb_read_page at runtime
 ```
 
 The **curator** is an LLM that reads your raw documents and produces a structured wiki. At runtime the agent doesn't read the raw documents — it searches the curated wiki. Much cleaner than naive chunk-retrieval RAG.
@@ -123,10 +123,10 @@ The agent's system prompt grows by:
 ## Available Knowledge Bases
 
 - acme-product-docs: Product documentation, runbooks, known-issues database.
-  Search via kb_search("acme-product-docs", "your query").
+  Browse via kb_list_pages("acme-product-docs"), then kb_read_page(path).
 ```
 
-Plus the agent gains `kb_search` and `kb_query` as available tools. The LLM uses them automatically — you don't need to write a skill to invoke them.
+Plus the agent gains `kb_list_pages` and `kb_read_page` as available tools. The LLM uses them automatically — you don't need to write a skill to invoke them.
 
 ## Updating a KB
 
@@ -140,7 +140,7 @@ Sources don't auto-sync from their origin. For frequently-changing content, wait
 
 ## Detach and delete
 
-- **Detach from an agent** — agent's Configure → Knowledge Bases tab → DETACH. The agent loses `kb_search` access for this KB on the next session.
+- **Detach from an agent** — agent's Configure → Knowledge Bases tab → DETACH. The agent loses KB-tool access for this KB on the next session.
 - **Delete the KB entirely** — KB detail → DELETE. A pre-flight check warns you if any agent has it attached.
 
 ## A worked example
@@ -154,7 +154,7 @@ You have a product, `acme-shop`, and you want a customer-support agent to know y
 5. Deploy a new agent (Templates page → **Start from scratch** → fill in the dialog) or pick an existing one.
 6. Open the agent → Configure → Knowledge Bases tab → attach `acme-product`.
 7. Open a chat → ask: *"What's included in the Pro plan?"*
-8. Watch the EVENTS tab — you'll see a `tool.call` for `kb_search`, then a grounded answer.
+8. Watch the EVENTS tab — you'll see a `tool.call` for `kb_read_page`, then a grounded answer.
 
 For the full multi-step recipe with screenshots, see [Use cases → Product-support agent with a KB](../use-cases.md).
 

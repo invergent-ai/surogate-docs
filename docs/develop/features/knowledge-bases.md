@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # Knowledge Bases
 
-A KB is a curated corpus the agent can search at runtime via `kb_search`. Where a skill teaches the agent **how** to do something, a KB tells it **what it knows**.
+A KB is a curated corpus the agent can browse at runtime via `kb_list_pages` / `kb_read_page`. Where a skill teaches the agent **how** to do something, a KB tells it **what it knows**.
 
 For the operator's view, see [Work mode → Knowledge bases](/work/library/knowledge-bases).
 
@@ -28,7 +28,7 @@ Source files (markdown, PDF, CSV)
    │   (lakeFS-versioned)        │
    └─────────────┬───────────────┘
                  │
-                 ▼  kb_search at runtime
+                 ▼  kb_list_pages / kb_read_page at runtime
    Agent's session context grows by relevant pages
 ```
 
@@ -124,10 +124,10 @@ The agent's system prompt gains:
 ## Available Knowledge Bases
 
 - acme-product-docs: Product documentation, runbooks, known-issues database.
-  Search via kb_search("acme-product-docs", "your query").
+  Browse via kb_list_pages("acme-product-docs"), then kb_read_page(path).
 ```
 
-Plus the agent's tool catalogue grows by `kb_search` and `kb_query`.
+Plus the agent's tool catalogue grows by `kb_list_pages` and `kb_read_page`.
 
 ## REST API
 
