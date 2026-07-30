@@ -7,6 +7,23 @@
  * .header-github-link), a KaTeX override and an asciinema terminal theme.
  * None of those have an equivalent here, and nothing in the corpus used them.
  */
+/*
+ * Overall type scale.
+ *
+ * Starlight's whole design system is expressed in rem — the --sl-text-*
+ * steps, --sl-content-width, --sl-sidebar-width, --sl-nav-height — so moving
+ * the root font size scales text and the measure it sits in together, rather
+ * than cramming more characters onto the same line width. Starlight's own
+ * proportions are preserved exactly.
+ *
+ * 106.25% of the 16px default = 17px base. Media-query breakpoints are
+ * unaffected: rem inside a media query resolves against the initial root
+ * size, not this one.
+ */
+html {
+  font-size: 106.25%;
+}
+
 :root {
   --sl-color-accent-low: #d4f5d2;
   --sl-color-accent: #07a000;
