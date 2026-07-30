@@ -8,6 +8,31 @@ import starlight from '@astrojs/starlight';
 // them. See specs/2026-07-30-docusaurus-to-starlight-design.md section 7.2.
 export default defineConfig({
   site: 'https://docs.surogate.ai',
+  // 13 /ops/* entries ported verbatim from the deleted docusaurus.config.js,
+  // plus /search -- which was a real page under Algolia and sits in today's
+  // sitemap, but does not exist under Pagefind's modal-only search.
+  //
+  // All destinations carry trailing slashes so no visitor takes two hops.
+  //
+  // These must stay static literals. Astro rejects prefix-rewriting wildcards
+  // with InvalidRedirectDestination: only '/prefix/[...slug]': '/[...slug]' is
+  // legal, and the parameter must literally be named `slug`.
+  redirects: {
+    '/ops': '/work/',
+    '/ops/getting-started/quickstart': '/work/',
+    '/ops/features/agents': '/develop/features/agents/',
+    '/ops/features/skills': '/develop/features/skills-and-experts/',
+    '/ops/features/knowledge-bases': '/develop/features/knowledge-bases/',
+    '/ops/features/models': '/develop/features/models/',
+    '/ops/features/datasets': '/develop/features/datasets/',
+    '/ops/features/training': '/develop/features/training/',
+    '/ops/features/evaluations': '/develop/features/evaluations/',
+    '/ops/features/sessions': '/develop/features/sessions/',
+    '/ops/features/compute': '/develop/features/compute/',
+    '/ops/features/hub': '/develop/features/hub/',
+    '/ops/features/templates': '/develop/tools/templates/',
+    '/search': '/',
+  },
   integrations: [
     starlight({
       title: 'Surogate',
