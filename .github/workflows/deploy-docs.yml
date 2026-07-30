@@ -1,9 +1,9 @@
 name: Deploy Docusaurus to GitHub Pages
 
-# Auto-trigger disabled while a self-hosted runner isn't registered.
-# Docs are deployed manually via `npm run build` + force-push of build/ to gh-pages.
-# Re-enable the `push:` block below once a runner with label `self-hosted` is online.
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Deploy to GitHub Pages
