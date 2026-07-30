@@ -17,7 +17,7 @@ For the operator's lighter walk-through, see [Work mode → Review what your age
 | **EVENTS** | Full ordered log of every event — user messages, LLM responses, tool calls, governance decisions. Your primary debugging surface. |
 | **TOOLS** | Filtered to `tool.call` + `tool.result`. Fastest way to answer "what did the agent actually do?" |
 | **SKILLS** | Which skills loaded into context, which the LLM invoked. Drift between the two is a signal: the skill loaded but didn't fire = `trigger` keywords don't match, or `description` is wrong. |
-| **POLICIES** | Governance decisions — denied / escalated / allowed. Includes prompt-injection-guard hits. |
+| **POLICIES** | Governance denials (`policy.denied`), plus allowed calls when the deployment enables `governance.log_allowed`. AI-disclosure events (`disclosure.presented` / `disclosure.confirmed`) appear in EVENTS. |
 | **METADATA** | Counters (turns, tokens, cost, duration), the 7 quality flags, the agent's frozen config snapshot at session start. |
 
 The Sessions list page has filters for: agent, status (Active / Completed / Failed / Archived), and chips for each quality flag (Denied, Overridden, Crashed, 👍, 👎). Filters compose into URL params, so you can bookmark a filtered view.

@@ -44,6 +44,8 @@ The Slack manage screen also has a **Surogate Mate** section (Follow / Ambient) 
 
 ## What users see
 
+If the agent's **AI disclosure** is on (Configure → Governance), the disclosure text is posted as its own message at the start of every new conversation, before any agent output. It doesn't repeat on established conversations, and control commands like `/stop` don't trigger it. See [Governance & AI disclosure](../workflow/governance.md).
+
 ### DMs
 
 The user types a message; the bot responds. Each DM is one Surogate session. Subsequent messages in the same DM continue the session.

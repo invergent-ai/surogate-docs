@@ -19,7 +19,7 @@ Each tab saves independently. Most tabs surface a **SAVE** button (which flashes
 | **Tools** | Connect MCP servers, Composio toolkits, and manage the key vault |
 | **Coding** | GitHub repos and coding-agent plans (only when `/code` is enabled) |
 | **Model** | Serving model plus summary / vision / image / video role models |
-| **Governance** | Policy enforcement, tool allow/deny, network egress, SSH, EU AI Act transparency |
+| **Governance** | Policy enforcement, tool allow/deny, web & browser egress, SSH, EU AI Act AI disclosure |
 | **Users** | End-users who can chat with this agent, and self-registration |
 | **Channels** | Web, Slack, Telegram, and website-widget connections |
 | **Monetize** | Charge for access via Stripe Connect (Pro plan) |
@@ -128,12 +128,15 @@ Choose which models power the agent. Every chooser except the serving model defa
 
 ## Governance
 
-The agent's guardrails. An **Unsaved changes** bar collects edits across the cards. The top **Policy enforcement** switch turns the whole policy on or off — when off, the agent runs without these guardrails.
+The agent's guardrails — and they are **enforced**: the composed policy is checked before every tool call the agent makes. An **Unsaved changes** bar collects edits across the cards and clears on a successful save ("Governance settings saved."). Edits reach live sessions on their **next wake** — no redeploy needed.
 
-- **Tool access** — **Allowed tools** and **Denied tools** multi-selects. Empty "Allowed" means all built-in tools are allowed; the two lists are mutually exclusive.
-- **Network egress** — a **Default action** of *Allow* or *Deny*, plus a rules table. Each **Add rule** row sets a **Domain**, **Ports**, **Proto** (tcp/udp), and **Action** (allow/deny).
+- **Policy enforcement** — the master switch. When off, the agent's own rules below are dropped, but the platform floor (workspace path containment, path-argument hygiene) still applies, and AI disclosure falls back to the deployment-wide default rather than turning off.
+- **Tool access** — **Allowed tools** and **Denied tools** multi-selects, grouped by the built-in tool catalog. Empty "Allowed" means all built-in tools are allowed; the two lists are mutually exclusive, and unknown tool names are rejected on save. MCP tools are **not** governed here — restrict them by detaching the MCP server. A denied tool is still visible to the model and blocked at call time: expect the agent to try, get `Blocked: <reason>`, and report it. The coordination self-tools (`worker_*`, board tools, `unblock_task` / `cancel_task`) are deliberately not offered — denying them would strand blocked work.
+- **Web & browser egress** — a **Default action** of *Allow* or *Deny*, plus a rules table. Each **Add rule** row sets a **Domain** (glob patterns like `*.acme.com` work; CIDR ranges don't), **Ports**, **Proto** (tcp/udp), and **Action** (allow/deny). Scope: this governs the URLs the web-fetch and browser tools may open (`web_extract`, `browser_navigate`). It does **not** restrict `web_search` (a search query is not a URL), the terminal, coding agents, or MCP servers — restrict those by denying the tool or detaching the server. See [Governance & AI disclosure](./governance.md) for the full network-controls picture.
 - **SSH** — agent-owned SSH keys and remote targets (which hosts the agent can reach and under what credentials). Independent of the policy toggle.
-- **EU AI Act transparency** — a **Transparency endpoints** toggle, a **Transparency level** (Full / Partial / Minimal), **Require user confirmation** for AI-generated content, and an **Emotion recognition flag**.
+- **EU AI Act transparency** — an **AI disclosure** toggle ("Tell end-users they are talking to an AI. Art. 50 of the EU AI Act requires this from 2 Aug 2026 on every channel.") and a **Disclosure level**: **Basic** (short AI notice before the first interaction), **Enhanced** (adds a capability and limitation summary), **Full** (complete Art. 50 disclosure with legal references), or **None** (no disclosure text — not compliant for end-user chat). How each channel delivers the disclosure is covered in [Governance & AI disclosure](./governance.md).
+
+A denial is returned to the model as a tool error and recorded as a `policy.denied` event, visible per session under **Sessions → POLICIES**.
 
 ## Users
 

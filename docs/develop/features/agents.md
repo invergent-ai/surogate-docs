@@ -19,7 +19,7 @@ An agent bundles six things, configured through five tabs:
 | **KNOWLEDGE & TOOLS** | Attach / detach Skills, Knowledge Bases, MCP Servers; per-row DETACH; ATTACH dropdown. |
 | **USERS** | Per-agent end-user accounts. Add Web users, set passwords or SSO, manage display names. |
 | **CHANNELS** | Web (always on), Slack (App + Bot tokens, threading, mention requirements), Telegram (Bot token, DM/group toggles), Website widget (publishable key, allowed origins, embed code, session message cap). |
-| **CONFIG** | Persona (SOUL.md), Tool Access, Network Egress, EU AI Act, Saga, Session Reset, Environment Variables. |
+| **CONFIG** | Persona (SOUL.md), Tool Access, Web & Browser Egress, EU AI Act Transparency, Saga, Session Reset, Environment Variables. |
 
 Plus four action buttons:
 
@@ -164,31 +164,25 @@ Sections:
 
 ### Channels (same as CHANNELS tab)
 
-### Network Egress
+### Web & Browser Egress
 
 ```yaml
 default_action: deny
 rules:
   - domain: api.openai.com         ports: [443]  action: allow
   - domain: api.github.com         ports: [443]  action: allow
-  - domain: *.amazonaws.com        ports: [443]  action: allow
-  - domain: 192.168.0.0/16         ports: [*]    action: deny
+  - domain: "*.amazonaws.com"      ports: [443]  action: allow
 ```
 
-Rules evaluated top-to-bottom; first match wins. Wildcards supported for subdomains; CIDR for IP ranges. Default should stay `deny` for sensitive agents.
+Rules evaluated top-to-bottom; first match wins. Domain matching is glob-based (`*.acme.com` covers subdomains); CIDR ranges are **not** supported. Scope: these rules govern only the URL arguments of `web_extract` and `browser_navigate` — not `web_search`, the terminal, coding agents, or MCP servers. The terminal has its own fixed sandbox allowlist, and MCP is governed by server attachment. `default_action: deny` therefore does not mean "no internet"; see [Governance & AI disclosure](../../work/workflow/governance.md) for the three network planes.
 
-### EU AI Act
+### EU AI Act Transparency
 
-If you operate in the EU:
-
-- **Disclosure endpoint** — URL where users can read what your agent is
-- **Withdraw-consent endpoint** — URL where users can opt out
-
-When set, agent responses include `x-ai-disclosure` and `x-ai-withdraw-consent` headers. Channel adapters add a small disclosure card to first-message responses.
+Per-agent AI disclosure, stored as `policy.transparency = {enabled, level}` with levels `none | basic | enhanced | full`. The public `GET /v1/transparency` endpoint serves the server-composed disclosure `{enabled, level, text}` for the resolved agent; the web app shows it as a blocking banner, and Slack / Telegram / WhatsApp post it as the first message of every new conversation. Evidence lands on the session log as `disclosure.presented` / `disclosure.confirmed` events.
 
 ### Governance Policy Enforcement (on/off)
 
-When ON, the `GovernanceGate` evaluates every tool call against the configured policies. Disabling this is for testing only — production agents should always have it on.
+When ON, the governance gate evaluates **every tool call** against the composed policy (platform floor + this agent's rules). When OFF, the agent's own rules are dropped but the platform floor (workspace containment, path hygiene) still applies, and disclosure falls back to the deployment default. Production agents should keep it on.
 
 ### Saga (multi-step rollback)
 

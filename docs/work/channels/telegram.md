@@ -35,6 +35,8 @@ Photos, voice notes, and documents are handled automatically — voice notes get
 
 ## What users see
 
+If the agent's **AI disclosure** is on (Configure → Governance), the disclosure text arrives as the first message of every new conversation — see [Governance & AI disclosure](../workflow/governance.md).
+
 Users find your bot in Telegram by its `@username`. They start a DM and just type. If the bot is in a group:
 
 - It responds when @mentioned (if Require @mention is on)

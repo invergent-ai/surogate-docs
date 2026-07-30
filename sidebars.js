@@ -11,6 +11,7 @@ module.exports = {
       items: [
         'work/workflow/run-agent',
         'work/workflow/configure-agent',
+        'work/workflow/governance',
         'work/tools/chat',
         'work/tools/commands',
         'work/tools/goals',

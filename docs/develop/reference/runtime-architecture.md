@@ -19,17 +19,17 @@ Code execution, file I/O, and terminal commands run inside a per-session sandbox
 
 **What this means for you**: even a fully prompt-injected agent can't exfiltrate credentials or reach other sessions. Files the agent writes during a session are scoped to that session.
 
-## Governance is frozen at session start
+## Governance is frozen per wake
 
-Tool allowlists/denylists, network egress rules, and policy profiles are snapshotted when a session begins. Mid-session prompt injection cannot weaken them.
+The governance gate is composed once per wake — a platform floor (workspace path containment, path-argument hygiene; no agent config can relax it) narrowed by the agent's own policy — and frozen for that wake. Mid-turn prompt injection cannot weaken it.
 
-**What this means for you**: changes you make to an agent's CONFIG apply to **new** sessions only. In-progress sessions keep their original policy. This is intentional — it's the security model.
+**What this means for you**: policy edits are projected into the agent's runtime config with a version bump and a cache invalidation, so live sessions pick up the new policy at their **next wake** — you don't have to wait for new sessions. Within a wake, nothing moves. Two more scoping rules: built-in tools absent from the catalog fail closed, while `mcp__*` tools bypass the built-in allow-list (they're governed by MCP-server attachment and entitlements instead), and the coordination self-tools can never be denied.
 
 ## Tools route to different locations
 
 You don't pick where a tool runs — but knowing helps debug behaviour:
 
-- **In the worker** — fast, no sandbox needed (memory, skill loading, web search, browser, scheduling, sub-agent delegation, `clarify`, `create_artifact`)
+- **In the worker** — fast, no sandbox needed (memory, skill loading, web search, browser, scheduling, sub-agent delegation, `ask_user_question`, `create_artifact`)
 - **In the sandbox** — anything that touches files or runs code (`terminal`, `process`, `read_file`, `write_file`, `patch`)
 - **Through the MCP proxy** — external systems via the Model Context Protocol; credentials injected by the proxy so the sandbox never sees them
 
@@ -54,7 +54,7 @@ When `saga.enabled: true`, sequential state-changing tool calls are tracked. If 
 | Concern | Where it's enforced |
 |---|---|
 | Per-session network policy | Sandbox can reach only the MCP proxy + the session's storage. Internet, DB, other sessions: denied. |
-| Per-tool governance | Synchronous check before every tool call. Audit log records every decision. |
+| Per-tool governance | Synchronous check before every tool call. Denials are always logged (`policy.denied`); allowed calls are logged too when the deployment enables `governance.log_allowed`. |
 | Per-session resource isolation | Each session has its own storage path and its own pod |
 | Per-tenant data isolation | Org-scoped storage, JWT auth, never cross-tenant |
 

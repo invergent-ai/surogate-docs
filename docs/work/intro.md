@@ -44,7 +44,6 @@ Skip to Develop mode when you need to:
 - Train fine-tuned experts on your traffic
 - Run benchmark evaluations or build a custom benchmark
 - Connect a cloud GPU provider
-- Configure governance policies in detail
 - Integrate via the REST API
 - Self-host on your own cluster
 

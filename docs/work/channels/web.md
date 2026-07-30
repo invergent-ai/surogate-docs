@@ -20,6 +20,8 @@ A clean, branded chat UI with:
 
 This is the customer-facing Web UI — a separate React app from `ops.surogate.ai`. Each user only sees what they're allowed to see (their sessions, their files).
 
+If the agent's **AI disclosure** is on (Configure → Governance), a disclosure banner is shown before interaction — **Accept** records a `disclosure.confirmed` event, **Decline** blocks interaction. See [Governance & AI disclosure](../workflow/governance.md).
+
 ## Who can sign in
 
 Two modes:
