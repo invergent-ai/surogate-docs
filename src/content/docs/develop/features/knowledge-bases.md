@@ -2,7 +2,7 @@
 title: Knowledge Bases
 ---
 
-A KB is a curated corpus the agent can search at runtime via `kb_search`. Where a skill teaches the agent **how** to do something, a KB tells it **what it knows**.
+A KB is a curated corpus the agent can browse at runtime via `kb_list_pages` / `kb_read_page`. Where a skill teaches the agent **how** to do something, a KB tells it **what it knows**.
 
 For the operator's view, see [Work mode → Knowledge bases](/work/library/knowledge-bases).
 
@@ -25,7 +25,7 @@ Source files (markdown, PDF, CSV)
    │   (lakeFS-versioned)        │
    └─────────────┬───────────────┘
                  │
-                 ▼  kb_search at runtime
+                 ▼  kb_list_pages / kb_read_page at runtime
    Agent's session context grows by relevant pages
 ```
 
@@ -87,14 +87,12 @@ Compile time: 30s to several minutes per source.
 
 ### When compile fails
 
-This is the single flakiest pipeline in current builds. If COMPILE returns `task failed`:
+Failures are isolated per file: a bad source is marked `error` with its own recorded error message (shown inline in the SOURCES list), healthy sources continue, and a wiki is still produced from the survivors. The compile as a whole still reports `failed` when any file failed — so `error` means "at least one source failed", not "nothing was built".
 
-- **Retry** — many failures are transient (curator LLM rate limit)
-- **Reduce source size** — split large PDFs into chapter-sized chunks
+- **Retry the failing file** — transient failures (curator LLM rate limits) are common, and files a dead compile left locked are requeued automatically on every finalize path, so retry never reports "no files to compile"
+- **Reduce source size** — split large documents into chapter-sized chunks. PDFs above a page threshold route through the long-document indexer; other source types are summarised directly with input bounded to ~240k characters as a head-and-tail excerpt (the middle of an oversized non-PDF file is absent from its summary)
 - **Check format** — corrupt PDFs and non-UTF-8 markdown choke the parser
-- **Check OVERVIEW → RECENT COMPILES** for the one-line reason
-
-Bug-track: this is the H4 issue from the audit — the platform should surface curator-side errors more clearly. Most of the time you'll see only `task failed` without detail.
+- **Read the per-file error** — it names the actual reason
 
 ## Wiki search
 
@@ -121,10 +119,10 @@ The agent's system prompt gains:
 ## Available Knowledge Bases
 
 - acme-product-docs: Product documentation, runbooks, known-issues database.
-  Search via kb_search("acme-product-docs", "your query").
+  Browse via kb_list_pages("acme-product-docs"), then kb_read_page(path).
 ```
 
-Plus the agent's tool catalogue grows by `kb_search` and `kb_query`.
+Plus the agent's tool catalogue grows by `kb_list_pages` and `kb_read_page`.
 
 ## REST API
 

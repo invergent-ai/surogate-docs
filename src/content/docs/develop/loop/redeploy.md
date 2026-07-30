@@ -14,15 +14,15 @@ Config changes are cheap. Model changes are slightly more involved. The runtime 
 | Attach / detach skill | Click ATTACH/DETACH | None — applies to new sessions |
 | Attach / detach KB | Click ATTACH/DETACH | None — applies to new sessions |
 | Attach / detach MCP server | Click ATTACH/DETACH | None — but new MCP sessions need a security re-scan if the server changed |
-| Tool allowlist / denylist | Save CONFIG | None — applies to new sessions |
-| Network egress rules | Save CONFIG | None — applies to new sessions |
+| Tool allowlist / denylist | Save CONFIG | None — reaches live sessions on their next wake |
+| Web & browser egress rules | Save CONFIG | None — reaches live sessions on their next wake |
 | Channel toggle (Slack on/off) | Save CHANNELS | Seconds — the adapter pod's connection cycles |
 | Model swap | Save CONFIG → Model | New sessions use new model. Existing sessions finish on old model. |
 | Expert endpoint swap | `POST /v1/skills/{name}/activate` with new endpoint | None — base LLM picks up the new endpoint immediately |
 | Replica count change (SCALE) | Click SCALE → new min/max | Pod-level rollout (~30s per replica) |
 | Helm chart change (advanced) | Helm upgrade | Pod cycle (~30-60s per pod) |
 
-The **session-start freeze** is the key safety property: every governance and config decision is locked when a session starts. Mid-session changes can't weaken protection. This is what makes config-only changes safe to apply without coordinated rollouts.
+The **per-wake freeze** is the key safety property: the governance gate is composed once per wake and frozen for that wake, so nothing that happens mid-turn (including prompt injection) can weaken protection. Governance edits are projected into the agent's runtime config with a version bump and a cache invalidation, so a live session picks up the new policy at its **next wake** — no coordinated rollout needed.
 
 ## Hub versioning
 

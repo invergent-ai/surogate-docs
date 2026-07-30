@@ -32,7 +32,7 @@ Each step has its own chapter:
 | [Review what your agent did](/work/workflow/review-sessions/) | Session detail, quality flags, replay |
 | [Improve your agent](/work/workflow/improve-agent/) | Mark sessions, attach skills/KBs, edit persona |
 
-Plus shorter chapters: **Library** (skills, KBs, MCP servers), **Channels** (Web/Slack/Telegram/Website + end-user accounts, including [self-registration](/work/channels/self-registration/) via your own Firebase), **Conversation tools** (`/goal`, the Copilot, the inbox), **Settings**, [**Monetize**](/work/monetize/) (charge end users via Stripe Connect, Pro+), **Use cases**, **Reference**.
+Plus shorter chapters: **Library** (skills, KBs, MCP servers), **Channels** (Web/Slack/Telegram/WhatsApp/Website + end-user accounts, including [self-registration](/work/channels/self-registration/) via your own Firebase), **Conversation tools** (`/goal`, the Copilot, the inbox), **Settings**, [**Monetize**](/work/monetize/) (charge end users via Stripe Connect, Pro+), **Use cases**, **Reference**.
 
 ## When to flip to Develop mode
 
@@ -42,7 +42,6 @@ Skip to Develop mode when you need to:
 - Train fine-tuned experts on your traffic
 - Run benchmark evaluations or build a custom benchmark
 - Connect a cloud GPU provider
-- Configure governance policies in detail
 - Integrate via the REST API
 - Self-host on your own cluster
 

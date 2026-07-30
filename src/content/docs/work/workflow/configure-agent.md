@@ -8,7 +8,7 @@ Each tab saves independently. Most tabs surface a **SAVE** button (which flashes
 
 | Tab | What you set here |
 |---|---|
-| **Metrics** | Read-only dashboard: traffic, errors, tokens, deployment, connected resources |
+| **Metrics** | Read-only dashboard: traffic, errors, latency, tokens, conversations, connected resources |
 | **Identity** | Name, slug, description, and the SOUL.md persona |
 | **Capabilities** | Brainstorming gate, live browser, Saga, and the built-in slash commands |
 | **Knowledge Bases** | Attach KBs the agent can search, in grounding or reference mode |
@@ -16,24 +16,24 @@ Each tab saves independently. Most tabs surface a **SAVE** button (which flashes
 | **Tools** | Connect MCP servers, Composio toolkits, and manage the key vault |
 | **Coding** | GitHub repos and coding-agent plans (only when `/code` is enabled) |
 | **Model** | Serving model plus summary / vision / image / video role models |
-| **Governance** | Policy enforcement, tool allow/deny, network egress, SSH, EU AI Act transparency |
+| **Governance** | Policy enforcement, tool allow/deny, web & browser egress, SSH, EU AI Act AI disclosure |
 | **Users** | End-users who can chat with this agent, and self-registration |
-| **Channels** | Web, Slack, Telegram, and website-widget connections |
+| **Channels** | Web, Slack, Telegram, WhatsApp, and website-widget connections |
 | **Monetize** | Charge for access via Stripe Connect (Pro plan) |
 
 System agents (like the platform copilot) hide the **Identity**, **Capabilities**, and **Governance** tabs, and non-admins see a "managed by platform administrators" notice instead of the tabs. The **Coding** tab appears only when the agent's coding capability (`/code`) is turned on in **Capabilities**.
 
 ## Metrics
 
-A read-only overview of the agent's health and footprint — no editable fields. It shows:
+A read-only overview of the agent's health and footprint — no editable fields. It refreshes itself every minute while visible and shows:
 
-- **Key metrics** — Requests/sec, Error Rate, and Tokens (24h) as stat cards with sparklines, backed by the metrics API.
-- **Deployment** (dedicated agents only) — replicas (current/desired), model, image, endpoint, and created time.
-- **Connected** — a count of attached skills and MCP servers with skill-name chips.
-- **Resources** — the agent's CPU and memory requests and limits.
-- **Metric charts** — per-second request, error-rate, and token-throughput sparklines.
+- **Four 24-hour stat cards**, each with an ⓘ tooltip: **Requests — 24h** (count, last-request time; the tooltip shows the derived hourly rate), **Error rate** (share of model-gateway calls with HTTP ≥ 400, "N of M failed"), **Latency** (average round-trip, with **p95** in the detail line), and **Tokens — 24h** (total; the tooltip breaks out prompt/completion and average per call).
+- **Four hourly bar charts** mirroring the cards: requests per hour, errors as % of requests, average latency (tooltip adds p95), and tokens stacked in/out. Quiet hours render as real gaps and read "no requests" — distinct from "0% errors".
+- **Conversations — last 7 days** — Sessions (with ↑/↓ vs the prior 7 days), Resolved %, **Flagged** (a policy denial, a crash, or a thumbs-down), and Time worked (total model processing time, not wall-clock waiting), plus per-channel chips and last-active time.
+- **Deployment** / **Resources** (self-deployed dedicated agents only) — replicas, model, image, endpoint, CPU/memory requests and limits.
+- **Connected** — attached skills and MCP servers (with per-server enabled dots) and **Manage skills →** / **Manage MCP →** shortcuts into those tabs.
 
-A **BYO model active** banner appears when the agent runs on your own model, noting that token traffic isn't billed by Surogate.
+Empty states are honest: an agent on a **self-deployed model** points you to that model's own Models page instead of showing empty cards, and a zero-traffic agent says charts appear after the first conversation. A **BYO model active** banner appears when the agent runs on your own model, noting that token traffic isn't billed by Surogate.
 
 ## Identity
 
@@ -56,7 +56,8 @@ Toggle the agent's built-in behaviors. The Brainstorming gate, Live browser, and
 | Capability | What it does |
 |---|---|
 | **Brainstorming gate** | Forces a short design/brainstorm pass with the user before creative or implementation work. Turn off for an agent that should act immediately |
-| **Live browser support** | Lets the agent drive a real browser (navigate, click, type, screenshot). Off removes the browser tools |
+| **Live browser support** | Lets the agent drive a real browser (navigate, click, type, screenshot). Off removes the browser tools — and hides the end-user Browser Profiles tab |
+| **Multi session** | Lets each user open multiple sessions with the agent. When off, every user gets one dedicated conversation per channel — web, Slack, Telegram or website — and always returns to it; their other sessions are hidden until you turn this back on. End users see a **Chat** button instead of "New chat" |
 | **Saga** | Tracks multi-step tool chains and rolls back completed steps when a later step fails. Exposes **Step timeout (s)**, **Max retries**, and **Retry delay (s)** |
 
 **Slash commands** — a master switch turns all built-in chat commands on or off at once, with individual toggles below:
@@ -120,17 +121,22 @@ Choose which models power the agent. Every chooser except the serving model defa
 | **Serving model** | The primary model the agent runs on (platform default is labelled "Surogate") |
 | **Summary model** | Used for session titles and context compression |
 | **Vision model** | Used for image understanding |
-| **Image model** | Used by the `generate_image` tool |
-| **Video model** | Used by the `generate_video` tool |
+| **Image model** | Used by the `generate_image` tool. With neither a pick here nor a platform preset, the tool is hidden from the agent entirely |
+| **Video model** | Used by the `generate_video` tool — same hiding rule |
+
+Platform-model media generation draws on the project's **media wallet** (see [Usage](/work/settings/usage/)); BYO image/video models aren't metered by Surogate. A wired image or video model is also what allows selling **media credits** on the [Monetize](/work/monetize/) tab.
 
 ## Governance
 
-The agent's guardrails. An **Unsaved changes** bar collects edits across the cards. The top **Policy enforcement** switch turns the whole policy on or off — when off, the agent runs without these guardrails.
+The agent's guardrails — and they are **enforced**: the composed policy is checked before every tool call the agent makes. An **Unsaved changes** bar collects edits across the cards and clears on a successful save ("Governance settings saved."). Edits reach live sessions on their **next wake** — no redeploy needed.
 
-- **Tool access** — **Allowed tools** and **Denied tools** multi-selects. Empty "Allowed" means all built-in tools are allowed; the two lists are mutually exclusive.
-- **Network egress** — a **Default action** of *Allow* or *Deny*, plus a rules table. Each **Add rule** row sets a **Domain**, **Ports**, **Proto** (tcp/udp), and **Action** (allow/deny).
+- **Policy enforcement** — the master switch. When off, the agent's own rules below are dropped, but the platform floor (workspace path containment, path-argument hygiene) still applies, and AI disclosure falls back to the deployment-wide default rather than turning off.
+- **Tool access** — **Allowed tools** and **Denied tools** multi-selects, grouped by the built-in tool catalog. Empty "Allowed" means all built-in tools are allowed; the two lists are mutually exclusive, and unknown tool names are rejected on save. MCP tools are **not** governed here — restrict them by detaching the MCP server. A denied tool is still visible to the model and blocked at call time: expect the agent to try, get `Blocked: <reason>`, and report it. The coordination self-tools (`worker_*`, board tools, `unblock_task` / `cancel_task`) are deliberately not offered — denying them would strand blocked work.
+- **Web & browser egress** — a **Default action** of *Allow* or *Deny*, plus a rules table. Each **Add rule** row sets a **Domain** (glob patterns like `*.acme.com` work; CIDR ranges don't), **Ports**, **Proto** (tcp/udp), and **Action** (allow/deny). Scope: this governs the URLs the web-fetch and browser tools may open (`web_extract`, `browser_navigate`). It does **not** restrict `web_search` (a search query is not a URL), the terminal, coding agents, or MCP servers — restrict those by denying the tool or detaching the server. See [Governance & AI disclosure](/work/workflow/governance/) for the full network-controls picture.
 - **SSH** — agent-owned SSH keys and remote targets (which hosts the agent can reach and under what credentials). Independent of the policy toggle.
-- **EU AI Act transparency** — a **Transparency endpoints** toggle, a **Transparency level** (Full / Partial / Minimal), **Require user confirmation** for AI-generated content, and an **Emotion recognition flag**.
+- **EU AI Act transparency** — an **AI disclosure** toggle ("Tell end-users they are talking to an AI. Art. 50 of the EU AI Act requires this from 2 Aug 2026 on every channel.") and a **Disclosure level**: **Basic** (short AI notice before the first interaction), **Enhanced** (adds a capability and limitation summary), **Full** (complete Art. 50 disclosure with legal references), or **None** (no disclosure text — not compliant for end-user chat). How each channel delivers the disclosure is covered in [Governance & AI disclosure](/work/workflow/governance/).
+
+A denial is returned to the model as a tool error and recorded as a `policy.denied` event, visible per session under **Sessions → POLICIES**.
 
 ## Users
 
@@ -145,10 +151,11 @@ Connect the agent to where your people already work. Each channel card shows an 
 - **Web** — the always-on hosted chat page; copy its endpoint URL once the agent is deployed. See [Web](/work/channels/web/).
 - **Slack** — a guided **Connect Slack** wizard (bot scopes, event subscriptions, signing secret, bot token). The **Manage** view auto-saves options: **Require @mention**, **Mode** (Team member / Personal assistant), **Allow Bots** (None / Mentions only / All), **Reply in thread**, **Reply broadcast**, **Free-response channels**, plus **Surogate Mate** follow-the-channel and ambient-mode toggles. See [Slack](/work/channels/slack/).
 - **Telegram** — a **Connect Telegram** wizard (BotFather token). **Manage** options: **Require @mention**, **Mode**, **Reply Threading** (First chunk only / All chunks / Off), **Message Reactions**, and **Per-User Group Chats**. See [Telegram](/work/channels/telegram/).
+- **WhatsApp** — a **Connect WhatsApp** wizard (Meta Cloud API credentials: Phone Number ID, Access Token, App Secret, WABA ID), then a callback URL + verify token to register in Meta. **Manage** option: **Mode**. See [WhatsApp](/work/channels/whatsapp/).
 - **Website** — an embeddable chat bubble. Set **Allowed origins**, copy the **Embed code**, cap **Messages per chat**, and reveal the **Publishable key** under Advanced. See [Website widget](/work/channels/website-widget/).
 
 ## Monetize
 
 Charge people for access to this agent. Requires the **Pro** plan (lower tiers see an **Upgrade to Pro** gate).
 
-Connect billing via **Stripe Connect** (status pill: Not connected / Onboarding / Active / Restricted / Disconnected), then pick a **Mode**: **Free**, **Subscription**, **Token packs**, or **Both**. Under **Offers** you add plans — a **Name**, **Price USD**, **Tokens included**, and (for subscriptions) a monthly/yearly **Interval**. To change a price, deactivate the offer and add a new one. See the [Monetize](/work/monetize/) guide.
+Connect billing via **Stripe Connect** (status pill: Not connected / Onboarding / Active / Restricted / Disconnected), then pick a **Pricing model**: **Free**, **Subscription**, **One-time packs**, or **Both**. Offers carry a **Name**, **Price** and **Currency** (defaults to EUR), **Usage included** (authored in messages), an **Interval** for plans, optional **Browsing time** and **Media credits**, an AI-draftable **Description**, and a **What's included** package (capabilities, channels, KBs, tools, skills, model tier). Most fields edit in place; price/currency/interval changes replace the offer with a new Stripe Price. **Free trial** and **Per-user usage limit** cards control what non-payers get. The tab remembers itself in the URL (`?tab=monetize`). See the [Monetize](/work/monetize/) guide.

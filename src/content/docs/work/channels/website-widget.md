@@ -54,9 +54,24 @@ The page's exact URL isn't in your **Allowed origins** list. Add it on the Manag
 
 No wildcards: `https://*.acme.com` doesn't work. You need each subdomain individually.
 
-## Charging for a public agent
+## Monetized agents and the widget
 
-The widget is the buyer-facing surface for a public agent, so it's where monetization takes effect: if the embedded agent is monetized, visitors hit a paywall (subscriptions and/or token packs) before they can chat. See [Monetize your agents](/work/monetize/) to set that up.
+Selling happens on the agent's hosted **buy page**, not in the widget itself — see [Monetize your agents](/work/monetize/). Two things matter for the widget:
+
+- **Website is a sellable channel.** A buyer's package can include or exclude it; a visitor on an excluded plane is refused with *"Your current plan doesn't include this channel."* and the buy link, before any usage is spent.
+- **Your own widget is a free side door unless you gate it.** If a monetized agent keeps its free operator widget enabled, visitors there chat without paying — the Monetize tab warns about exactly this. Either disable the Website channel and sell only through your buy link, or rely on trial/allowance limits.
+
+## Buyer-minted embed keys
+
+Buyers of a monetized agent can resell it on **their own** site. On the buy page, an **Embed on your website** panel lets a buyer with a **funded purchase** (active subscription or a positive pack balance) enter their own origins and mint a personal `surg_wk_…` key — *"Put this agent on your own site so visitors' chats come out of your purchased usage."*
+
+How it behaves:
+
+- Their visitors are anonymous, and every chat draws from the **buyer's** purchased allowance. When it runs out, visitors see a paywall pointing back to your buy page.
+- Origins are comma-separated exact matches (no wildcards, no paths); the panel emits the standard `SurogatesWidget.mount` snippet with a Copy button, and the button flips to **Update embed code** on refresh.
+- The buyer's widget inherits your **Messages per chat** cap.
+- Preconditions: you must have the Website channel enabled (else *website channel not enabled*), and the buyer needs a funded purchase (a free trial doesn't qualify — else *purchase required*). A first-time mint also requires your project to be on Pro+; refreshing an existing embed survives a downgrade.
+- Turning your Website channel off deactivates buyer embeds too (without deleting them — a later refresh reactivates).
 
 ## What's next
 

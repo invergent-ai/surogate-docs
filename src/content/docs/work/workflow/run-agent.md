@@ -12,8 +12,8 @@ The agent streams its response in real-time, token by token. Tool calls render i
 You: Compare our Standard and Pro plans.
 
 Agent: I'll pull the pricing details for you.
-[kb_search: "plan comparison"]
-[kb_search: "pricing standard pro"]
+[kb_list_pages: pricing-kb]
+[kb_read_page: plans/standard-vs-pro]
 Agent: Here's a comparison: ...
 ```
 
@@ -31,10 +31,10 @@ Each agent has an allowlist of built-in tools set in its CONFIG tab:
 
 | Tool | Purpose |
 |---|---|
-| `kb_search` | Search any KB attached to this agent |
-| `web_search`, `web_extract`, `web_crawl` | Public web research (Tavily / Exa) |
+| `kb_list_pages`, `kb_read_page` | Browse and read any KB attached to this agent |
+| `web_search`, `web_extract` | Public web research (Tavily / Exa) |
 | `read_file`, `write_file`, `patch` | Read and modify workspace files |
-| `terminal`, `execute_code` | Shell + code execution in the isolated sandbox |
+| `terminal`, `process` | Shell + code execution in the isolated sandbox |
 | `vision_analyze` | Image analysis |
 | `browser_*` | Drive a real Chromium browser (with user-handoff for login / MFA) |
 | `consult_expert` | Delegate a hard task to a fine-tuned expert |

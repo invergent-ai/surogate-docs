@@ -16,7 +16,7 @@ For the operator's lighter walk-through, see [Work mode → Review what your age
 | **EVENTS** | Full ordered log of every event — user messages, LLM responses, tool calls, governance decisions. Your primary debugging surface. |
 | **TOOLS** | Filtered to `tool.call` + `tool.result`. Fastest way to answer "what did the agent actually do?" |
 | **SKILLS** | Which skills loaded into context, which the LLM invoked. Drift between the two is a signal: the skill loaded but didn't fire = `trigger` keywords don't match, or `description` is wrong. |
-| **POLICIES** | Governance decisions — denied / escalated / allowed. Includes prompt-injection-guard hits. |
+| **POLICIES** | Governance denials (`policy.denied`), plus allowed calls when the deployment enables `governance.log_allowed`. AI-disclosure events (`disclosure.presented` / `disclosure.confirmed`) appear in EVENTS. |
 | **METADATA** | Counters (turns, tokens, cost, duration), the 7 quality flags, the agent's frozen config snapshot at session start. |
 
 The Sessions list page has filters for: agent, status (Active / Completed / Failed / Archived), and chips for each quality flag (Denied, Overridden, Crashed, 👍, 👎). Filters compose into URL params, so you can bookmark a filtered view.
@@ -43,7 +43,7 @@ Each row is a typed event with a JSON payload. For the canonical list of event t
 Failure-mode triage:
 
 - **Agent didn't search the KB** → SKILLS tab confirms the relevant skill loaded; if it did, check whether the `trigger` keywords match the user's phrasing.
-- **Agent searched but got bad results** → TOOLS tab, expand `tool.result` for `kb_search`. Often the KB content is the problem, not the agent.
+- **Agent searched but got bad results** → TOOLS tab, expand `tool.result` for `kb_read_page`. Often the KB content is the problem, not the agent.
 - **Agent looped** → check iteration count in METADATA; the last few `llm.response` events usually reveal the repetition pattern.
 - **Tool was blocked** → POLICIES tab; the denial reason is recorded.
 - **Saga rolled back** → look at `saga.step_failed` (the trigger) and the `saga.compensate` events that followed.

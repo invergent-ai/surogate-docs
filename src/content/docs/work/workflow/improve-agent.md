@@ -2,6 +2,8 @@
 title: Improve your agent
 ---
 
+Start from the signal: the agent's **Metrics** tab ([Configure → Metrics](/work/workflow/configure-agent/#metrics)) shows error rate, latency, and a **Conversations — last 7 days** card whose **Flagged** count (a policy denial, a crash, or a thumbs-down) is the fastest pointer to the sessions worth triaging.
+
 Three levers, in increasing order of effort:
 
 1. **Mark sessions** — 👍 / 👎 the ones that matter

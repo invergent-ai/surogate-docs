@@ -2,9 +2,11 @@
 title: Tool catalog
 ---
 
-Every built-in tool an agent can call. These are the names you set in an agent's CONFIG → Allowed Tools / Denied Tools.
+Every built-in tool an agent can call. These are exactly the names the Governance policy accepts in **Allowed tools / Denied tools** — the catalog is generated from the runtime's real tool registry, and unknown names are rejected on save. (`execute_code` and `web_crawl` are not tools; the shell entry point is `terminal`.)
 
 You don't pick which tool the agent uses for a given turn — the agent does. You decide which tools to **expose**.
+
+The coordination self-tools (`worker_complete`, `worker_block`, `worker_context`, `share_note`, `read_board`, `expand_note`, `unblock_task`, `cancel_task`) are listed below for completeness but are **not configurable** in the allow/deny lists — denying them could strand blocked work, so the policy API refuses them.
 
 ## File I/O
 
@@ -55,6 +57,8 @@ Session-scoped browser. Supports **user-control handoff** for login / MFA / CAPT
 |---|---|
 | `generate_image` | Generate an image from a text prompt (optional image-to-image); saved to the workspace and shown inline |
 | `generate_video` | Generate a video from a text prompt (optional first-frame image-to-video); blocks until rendered, saved to the workspace |
+
+Availability: each tool is **dropped from the agent's toolset entirely** when no model is wired for its role (a per-agent pick under Configure → Model, or a platform preset) — the LLM never sees an unusable tool. Platform-model generation bills the project's **media wallet** (a flat few cents per image; a video bills its reported provider cost); BYO image/video models are not metered by Surogate. When the wallet is empty the tool returns an actionable `media_budget_exhausted` error — nothing is generated or charged — and on monetized agents a buyer without media credits gets `media_credits_exhausted` with their buy link. See [Media generation](/develop/features/media-generation/).
 
 ## Memory
 
@@ -148,6 +152,17 @@ Hard depth limit: 2 levels of orchestration beneath the root coordinator.
 |---|---|
 | `ask_user_question` | Ask the user up to 5 questions (each up to 4 labeled choices + optional "Other") in a tabbed chat widget, and wait for the batched answers. 30-min wait cap. |
 
+How answers arrive depends on the channel:
+
+| Channel | Widget | Typed reply |
+|---|---|---|
+| **Web** | Yes | Yes — a plain text message while the question is pending is consumed as the answer |
+| **Telegram** | Yes | Yes — same rule |
+| **Slack** | Modal | No — a typed reply gets a nudge toward the modal |
+| **API service accounts** | Respond route only | Never converted |
+
+Typed-reply mapping: text that exactly matches a choice label (case-insensitive) selects that choice; anything else is recorded as an "Other" answer; a multi-question prompt receives the whole reply against each question. Messages with images or attachments are never converted, and the conversion stops working shortly before the 30-minute cap. Once a response exists for the tool call, later messages are ordinary messages.
+
 ## Inline output
 
 | Tool | Use for |
@@ -160,23 +175,26 @@ Hard depth limit: 2 levels of orchestration beneath the root coordinator.
 |---|---|
 | `todo` | Per-session multi-step task tracker |
 | `session_search` | Full-text search the session's event history |
+| `user_reports` | Operator-only: read the agent's per-user and cohort reports (overview / get / list) |
 
 ## MCP-proxied tools
 
 Any tool an MCP server registers becomes available to attached agents. The MCP proxy injects credentials from the Vault — the agent's sandbox never sees secrets. See [MCP & Vault](/develop/features/mcp-and-vault/) for setup.
 
+MCP tools (`mcp__*`) are **outside the built-in allow-list**: an allowlist doesn't reject them. They're governed by which servers you attach (and, on monetized agents, by the buyer's package); deny-lists, egress, and sandbox checks still apply.
+
 ## Allowed vs denied
 
 Configure per-agent in CONFIG → Tool Access:
 
-- **Allowlist** — only these tools are visible to the LLM. Empty allowlist = all tools (subject to denylist).
-- **Denylist** — always blocked. Deny beats allow.
+- **Allowlist** — only these built-in tools pass the governance gate. Empty allowlist = all tools (subject to denylist). Note: a tool outside the allowlist is still *advertised* to the LLM — it's blocked at call time with a `Blocked: <reason>` result, not hidden from the schema.
+- **Denylist** — always blocked. Deny beats allow, and the two lists can't overlap.
 
-Common patterns:
+Lists take **exact tool names** — there is no prefix or wildcard matching. Common patterns:
 
 | Agent type | Suggested |
 |---|---|
-| Customer support | Allow: `kb_*`, `web_search`, `ask_user_question`, `create_artifact`, `memory`. Deny: `terminal`, `write_file`, `patch` |
+| Customer support | Allow: `kb_list_pages`, `kb_read_page`, `web_search`, `ask_user_question`, `create_artifact`, `memory`. Deny: `terminal`, `write_file`, `patch` |
 | Code assistant | Allow: read tools + `web_search` + `github`. Deny: `write_file`, `patch`, `terminal` |
-| Data analyst | Allow everything. Deny: `cron_*` if no scheduling |
+| Data analyst | Allow everything. Deny: `cron_create`, `cron_delete`, `cron_list` if no scheduling |
 | Internal automation bot | Start with denylist only, gate the dangerous ones explicitly |

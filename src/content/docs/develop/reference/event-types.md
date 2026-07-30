@@ -11,7 +11,7 @@ The Sessions UI's EVENTS tab and the `GET /v1/sessions/{id}/events` API both ret
 | `user.message` | A user sent input | `content`, `source` (web / slack / api / scheduled / …) |
 | `assistant.final` | The agent produced a final user-visible response | `content` |
 | `llm.request` / `llm.response` | A single LLM call (the agent may make many per turn) | `model`, `tokens_in`, `tokens_out` |
-| `clarify.response` | The user answered a `clarify` widget | `tool_call_id`, `responses` |
+| `clarify.response` | The user answered an `ask_user_question` prompt (the event type keeps the legacy `clarify` name) | `tool_call_id`, `responses` |
 
 ## Tool execution
 
@@ -40,8 +40,12 @@ When a session spawns child sessions via `spawn_worker` / `delegate_task` / `spa
 
 | Type | When |
 |---|---|
-| `policy.denied` | A tool call was blocked by the governance gate. Payload: `tool_name`, `reason`, `args_excerpt` |
-| `policy.escalated` | Denied but user-overridable — an inbox `governance_gate` item was raised |
+| `policy.denied` | A tool call was blocked by the governance gate. Payload: `tool`, `reason`, `timestamp` |
+| `policy.allowed` | A tool call passed the gate — emitted only when the deployment enables `governance.log_allowed` (off by default; doubles event volume). Payload: `tool`, `check: "governance_gate"`, `timestamp` |
+| `disclosure.presented` | A messaging channel (Slack / Telegram / WhatsApp) posted the AI disclosure as the first message of a new conversation. Payload: `level`, `channel`, `delivery: "channel_message"` |
+| `disclosure.confirmed` | A web user accepted the disclosure banner. Payload: `level`, `source: "web_banner"` |
+
+The two `disclosure.*` events are the Art. 50 compliance evidence trail — see [Governance & AI disclosure](/work/workflow/governance/).
 
 ## Saga (multi-step rollback)
 
@@ -78,10 +82,10 @@ The agent raised something to the user:
 
 | Type | What it surfaces |
 |---|---|
-| `inbox.input_required` | A `clarify` widget |
+| `inbox.input_required` | An `ask_user_question` prompt |
 | `inbox.action_required` | An external action needed (browser login, MFA, etc.) |
 | `inbox.task_complete` | An informational completion |
-| `inbox.governance_gate` | A user-overridable policy denial |
+| `inbox.governance_gate` | Reserved for user-overridable policy denials — not currently produced (no policy decision is marked overridable today) |
 | `inbox.progress_checkin` | A long-running-session status update |
 
 ## Lifecycle
@@ -111,4 +115,4 @@ See the API reference for full schemas. For Slack and Telegram channel sessions,
 
 ## Stability
 
-Event type names and their documented payload keys are a stable contract. **Adding new keys is safe**; renaming or removing requires a deprecation cycle. If you're querying programmatically, prefer reading specific keys (`event.data.tool_name`) over depending on the full payload shape.
+Event type names and their documented payload keys are a stable contract. **Adding new keys is safe**; renaming or removing requires a deprecation cycle. If you're querying programmatically, prefer reading specific keys (`event.data.tool`) over depending on the full payload shape.

@@ -34,6 +34,12 @@ export default defineConfig({
     '/ops/features/hub': '/develop/features/hub/',
     '/ops/features/templates': '/develop/tools/templates/',
     '/search': '/',
+    // Upstream renamed work/settings/settings.md to authentication.md. The old
+    // URL is in the pre-migration sitemap, so point it at the renamed page
+    // rather than letting it 404 — it has in fact been 404ing in production
+    // already, because Docusaurus emitted work/settings.html beside a
+    // work/settings/ directory and the directory wins on GitHub Pages.
+    '/work/settings': '/work/settings/authentication/',
   },
   integrations: [
     starlight({
@@ -160,6 +166,7 @@ export default defineConfig({
               items: [
                 'work/workflow/run-agent',
                 'work/workflow/configure-agent',
+                'work/workflow/governance',
                 'work/tools/chat',
                 'work/tools/commands',
                 'work/tools/goals',
@@ -191,6 +198,7 @@ export default defineConfig({
                 'work/channels/web',
                 'work/channels/slack',
                 'work/channels/telegram',
+                'work/channels/whatsapp',
                 'work/channels/website-widget',
                 'work/channels/users',
                 'work/channels/self-registration',
@@ -202,7 +210,7 @@ export default defineConfig({
               collapsed: true,
               items: [
                 'work/settings/profile',
-                'work/settings',
+                'work/settings/authentication',
                 'work/settings/usage',
                 'work/settings/billing',
               ],
@@ -275,6 +283,7 @@ export default defineConfig({
                 'develop/features/memory',
                 'develop/features/browser',
                 'develop/features/browser-profiles',
+                'develop/features/media-generation',
               ],
             },
             {
