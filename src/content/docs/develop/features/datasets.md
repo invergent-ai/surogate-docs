@@ -6,14 +6,13 @@ sidebar:
 
 A dataset is a versioned corpus you use for training and evaluation. Every dataset is backed by a repository in the [Data Hub](/develop/features/hub/) — the training files (`train/dataset.parquet`, plus a `dataset_dict.json` split manifest) live there, while the dataset's metadata (name, format, status, stats, PII scan, pipeline) lives in the platform database. Creating, building, and deleting datasets all go through `/api/datasets`.
 
-## Five ways to bring a dataset
+## Four ways to bring a dataset
 
 Click **NEW DATASET** (or, on an empty list, **+ New dataset**) to open the source chooser at `/studio/datasets/create`. It's a grid of cards, each routing to a dedicated builder page:
 
 | Card | Builder page | What it does | Backend |
 |---|---|---|---|
 | **From chats** | `/studio/datasets/from-chats` | Turn real agent conversations into supervised training pairs. | `POST /api/datasets/from-conversations` |
-| **Expert training data** | `/studio/datasets/from-expert` | Use traces from an Expert's runs as reward-scored examples. | *(preview — Build is not wired yet)* |
 | **Upload files** | `/studio/datasets/upload` | Bring your own JSONL / JSON / CSV / Parquet file. | `POST /api/datasets/upload` |
 | **Generate synthetic** | `/studio/datasets/synthetic` | Teacher model generates, judge model filters. | `POST /api/datasets/synthetic` → pipeline run |
 | **Import repository** | `/studio/datasets/import` | Pull a dataset repo from the Hugging Face Hub. | `import_dataset` compute job |
@@ -43,7 +42,7 @@ Fields:
 
 The page fetches at most the newest 500 chats per agent, and tells you when an agent's list was truncated. A build may post at most 500 chats; above that the summary line asks you to remove an agent or tick **Only good chats**, and **Build dataset** stays disabled.
 
-Click **Build dataset** to kick off the build.
+Click **Build dataset** to kick off the build. You can leave the page while it runs without stopping it, but a from-chats build can't be cancelled once it's started, and it isn't resumable on screen — reloading during a build returns you to the datasets list while the build itself carries on.
 
 ### From chats (advanced) — `/studio/datasets/new`
 
@@ -72,24 +71,7 @@ The server walks the selected sessions, converts each `user.message` + `llm.resp
 
 The advanced form's Quality / Channel / Skill / Time-range filters and its Format selector shape the on-screen estimate and choose which sessions are sent; the export itself always produces SFT `messages` for now.
 
-## 2. Expert training data — `/studio/datasets/from-expert`
-
-Build a dataset from an Expert's collected run traces, as reward-scored examples.
-
-Fields:
-
-- **Dataset name** (required, lowercase-hyphens). Pre-filled as `<expert>-grpo` or `<expert>-scored` depending on the format.
-- **Expert** (required) — only Experts that have collected runs appear here.
-- **Successful runs only** — on by default; off counts every run instead of just the successes.
-- **Reward threshold** — default `0.7`.
-- **Format** — **Preference pairs** (feeds GRPO / DPO runs) or **Scored completions** (keeps each trace's reward for reward-weighted SFT).
-- **Estimated output** — derived from the Expert's run counters at ~350 tokens per trace.
-
-:::note
-This page is a preview. The Expert picker and the estimate read real Skill counters, but the backend does not store per-trace rewards yet, so **Build dataset** reports the queued shape and returns you to the list without creating a dataset. `POST /api/datasets/expert-training` exists at the API layer — it provisions a dataset (`format=sft`, `status=building`) tied to a skill plus teacher and judge models and spawns a generation run — but this page does not call it.
-:::
-
-## 3. Upload file — `/studio/datasets/upload`
+## 2. Upload file — `/studio/datasets/upload`
 
 Bring your own file. Fields:
 
@@ -131,7 +113,9 @@ A dataset also needs **at least 2 usable rows**, since a valid training split ca
 
 Uploaded columns are preserved. A file whose first row lacks a key that later rows carry keeps that column — the parquet schema is built from the union of every row's keys, not inferred from row one.
 
-## 4. Synthetic generation — `/studio/datasets/synthetic`
+An upload can be cancelled while it runs: **Cancel build** aborts the transfer, cancels the job on the server, and deletes the partial dataset.
+
+## 3. Synthetic generation — `/studio/datasets/synthetic`
 
 The teacher → judge flow, surfaced as three pipeline chips: **Teacher generates → Judge scores → Keep above threshold**.
 
@@ -159,7 +143,7 @@ The starter pipeline it composes:
 
 Your 0–1 quality threshold becomes the run's minimum score on that `quality` column (`0.8` → a cutoff of 8), and deduplication is on. Everything is an ordinary pipeline afterwards — open the Pipeline tab to edit the columns, re-run, or extend it.
 
-## 5. Hugging Face import — `/studio/datasets/import`
+## 4. Hugging Face import — `/studio/datasets/import`
 
 Fields:
 
@@ -216,18 +200,6 @@ These counts are an approximation, not a tokenizer's output. The real chat templ
 Token stats are computed for chat uploads, pair uploads, single-text uploads, from-chats builds, Hugging Face imports, and synthetic datasets. Coverage is forward-only: datasets created before a given path gained stats aren't backfilled and keep showing an em dash.
 
 ---
-
-## Build progress — `/studio/datasets/building`
-
-The from-chats, upload, and synthetic flows hand off to a progress page showing a percentage bar, a step checklist, and an estimated time remaining.
-
-- **Upload**: Uploading the file → Validating the schema → Storing to the repo → Committing.
-- **From chats**: Extract messages from chats → Tokenize & pack pairs → Validate & publish to repo.
-- **Synthetic**: Spin up teacher & judge → Generate samples → Judge & filter by quality → Validate & publish to repo.
-
-Upload progress is real: the first stretch tracks the actual file transfer, and the rest follows the server-side job's phase. The other kinds run a cosmetic timer, capped until the dataset itself reports `ready`; when a build carries a real dataset id the page polls `/api/datasets/{id}` and surfaces a **Build failed** state if it errors.
-
-**Run in background** returns you to the list and lets the build finish. **Cancel build** stops it and deletes the partial dataset — on an upload that also aborts the transfer in the browser and cancels the job on the server.
 
 ## Dataset detail page
 
