@@ -53,10 +53,6 @@ Every memory write — from the tool or the API — is scanned before storage, b
 
 Memory files are stored per agent and per user in the tenant's object storage (S3 / Garage), under the agent's slice of the memory bucket. Writes are atomic (temp file + rename) and guarded by a file lock so concurrent turns never corrupt a file.
 
-## Idle flush
-
-When a session goes idle long enough, an idle-session-reset background job reviews the transcript and saves anything important to `MEMORY.md` / `USER.md` before tearing down the sandbox, then emits a `session.reset` event. The session itself is untouched — the user can return and continue. See [Background jobs](/develop/reference/background-jobs/) and the `session.reset` row in [Event types](/develop/reference/event-types/).
-
 ## Related
 
 - [Tool catalog → Memory](/develop/reference/tool-catalog/) — the `memory` tool at a glance.

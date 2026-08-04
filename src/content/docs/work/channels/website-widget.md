@@ -44,6 +44,21 @@ Copy the snippet from the Manage screen and paste it before `</body>` on your si
 
 If you don't manage the site yourself, send the snippet to whoever does.
 
+### Embedding with the key alone
+
+If you'd rather not hardcode the agent's URL — so a rename or a move never breaks a live page — use the key-only form instead. The widget looks the agent up from the publishable key when the page loads:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@invergent/website-widget@2/dist/surogates-widget.global.js"></script>
+<script>
+  SurogatesWidget.mountWithPairing({
+    publishableKey: "surg_wk_...",
+  });
+</script>
+```
+
+Behaviour is otherwise identical, including the allowed-origins check. Passing `apiUrl` as well skips the lookup and is exactly the same as `mount`. The snippet Studio generates uses `mount` with an explicit `apiUrl`; both forms work.
+
 ## Visitors are anonymous
 
 Each browser session gets a UUID stored in localStorage, so subsequent visits from the same browser resume the same Surogate session. The widget doesn't require your visitors to have Surogate accounts.

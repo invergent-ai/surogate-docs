@@ -10,11 +10,17 @@ Every conversation is recorded as an immutable event log. If the agent crashes m
 
 **What this means for you**: writing tools and skills, you can assume the agent's prior tool calls are visible to subsequent turns. Sessions outlive container restarts. The session ID is stable; share it freely.
 
+## A mid-turn message steers, it doesn't restart
+
+A user message that arrives while a turn is running is neither discarded nor treated as a cancel. The in-flight model response and its tool calls finish, then the message is folded in at the next iteration boundary as a fresh user turn and the **same run continues**. Several messages arriving in the same window are coalesced into one turn. A follow-up that lands just as the final response is emitted keeps the run going instead of completing the session. Synthetic `user.message` events (mission continuations, harness nudges) never steer.
+
+**What this means for you**: a mid-task "also check Z" costs no re-run — the agent adapts without losing the work already done. An explicit **Stop** is a hard cancel and always wins over a steer. Note that the shipped chat composer stops the running turn before sending, so steering from that UI is the Stop button rather than a queued message; a message sent while the agent is waiting on an `ask_user_question` answer goes straight through.
+
 ## The agent runs in an isolated sandbox
 
-Code execution, file I/O, and terminal commands run inside a per-session sandbox that has **no access** to your tenant's other data, no credentials, no database. The sandbox only sees its own workspace at `/workspace`.
+Code execution, file I/O, and terminal commands run inside a sandbox that has **no access** to your tenant's other data, no credentials, no database. The sandbox only sees its own workspace at `/workspace`. It is keyed to the root of a session tree, so a session and every child it spawns share one sandbox and one workspace.
 
-**What this means for you**: even a fully prompt-injected agent can't exfiltrate credentials or reach other sessions. Files the agent writes during a session are scoped to that session.
+**What this means for you**: even a fully prompt-injected agent can't exfiltrate credentials or reach other session trees. Files the agent writes are scoped to the tree's workspace; a child writes into the same `/workspace` as its parent.
 
 ## Governance is frozen per wake
 
@@ -34,7 +40,20 @@ See [Tool catalog](/develop/reference/tool-catalog/) for the full list.
 
 ## Multi-agent topology
 
-Agents can spawn child agents via `spawn_worker`, `delegate_task`, or `spawn_task`. Each child is its own full session with its own event log and storage. Children inherit the tenant's skills, KBs, MCPs, and memory; they can have a narrower governance profile.
+Agents can spawn child agents via `spawn_worker`, `delegate_task`, or `spawn_task`. Each child is its own full session with its own event log and iteration budget, but it shares the root session's workspace and storage prefix — no per-child storage is allocated.
+
+Children inherit the tenant's skills, KBs, MCPs, and memory — and the parent's governance policy **verbatim**. A child is created with the parent's `agent_id`, so its gate is composed from the same policy: same allow-list, same deny-list, same approval requirements. There is no per-sub-agent policy profile.
+
+What actually scopes a child is its [sub-agent](/work/tools/sub-agents/) definition (`AGENT.md`):
+
+| Frontmatter key | Effect on the child |
+|---|---|
+| `tools` | Becomes the child's allow-list — authoritative, not intersected with the parent's |
+| `disallowed_tools` | Dropped from the child's toolset. Only takes effect when the definition sets no `tools`; an allow-list supersedes it |
+| `model` | Used unless the spawn call names a model explicitly |
+| `max_iterations` | Narrows the child's budget when smaller than the cap |
+
+Both lists are applied as a **toolset filter**, not a runtime denial — an excluded tool's schema never reaches the child's model, so there is nothing for it to refuse or argue around. The iteration cap is **30**, but where a child's budget comes from depends on how it was spawned: `spawn_worker` and `delegate_task` hand over a slice of the parent's *remaining* budget (so a child spawned late in a long turn starts with less), while a `spawn_task` attempt is claimed by the dispatcher with the full 30, narrowed only by the definition's `max_iterations`.
 
 Hard depth limit: **2** (one orchestrator level beneath the root). Prevents runaway delegation trees.
 
@@ -50,9 +69,9 @@ When `saga.enabled: true`, sequential state-changing tool calls are tracked. If 
 
 | Concern | Where it's enforced |
 |---|---|
-| Per-session network policy | Sandbox can reach only the MCP proxy + the session's storage. Internet, DB, other sessions: denied. |
+| Per-session network policy | Sandbox can reach only the MCP proxy + the session tree's storage. Internet, DB, other sessions: denied. |
 | Per-tool governance | Synchronous check before every tool call. Denials are always logged (`policy.denied`); allowed calls are logged too when the deployment enables `governance.log_allowed`. |
-| Per-session resource isolation | Each session has its own storage path and its own pod |
+| Per-session-tree resource isolation | Each session tree has its own storage path and its own sandbox |
 | Per-tenant data isolation | Org-scoped storage, JWT auth, never cross-tenant |
 
 You can read every governance decision after the fact in the session's POLICIES tab.

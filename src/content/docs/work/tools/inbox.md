@@ -26,9 +26,13 @@ Informational. Producers: `/goal`, `/mission`, `/loop`. Acknowledge or open to i
 
 Pure status update mid-run. No action required.
 
-### `governance_gate` — policy override request (reserved)
+Off unless the session was created with a check-in interval — nothing in Studio sets one, so in practice these appear only on sessions started through the API.
 
-Reserved for governance denials configured as user-overridable, with **Approve** / **Reject**. Not currently produced — today every policy denial is final (`policy.denied`), and no decision is marked overridable.
+### `governance_gate` — the agent needs your approval for a tool call
+
+Raised when the agent calls a tool your governance policy marks as approval-required. The item names the tool, the reason it was blocked, and an excerpt of the call's arguments, with **Approve** / **Reject**.
+
+Either decision is posted back into the session, so the agent picks it up straight away. See [Tools that need approval first](/work/workflow/governance/#tools-that-need-approval-first) for what an approval covers and how long it lasts.
 
 ## Statuses
 
@@ -36,4 +40,4 @@ Reserved for governance denials configured as user-overridable, with **Approve**
 
 ## Triage order
 
-`input_required` → `action_required` → informational items. The first two block the agent; the rest don't.
+`input_required` → `action_required` → `governance_gate` → informational items. The first two block the agent outright; an unanswered `governance_gate` leaves it without a tool it asked for; the rest are informational.

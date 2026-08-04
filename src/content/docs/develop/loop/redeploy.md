@@ -26,7 +26,7 @@ The **per-wake freeze** is the key safety property: the governance gate is compo
 
 ## Hub versioning
 
-Every artifact (skill, KB, dataset, model, environment) is a lakeFS repo. That means:
+Every artifact (skill, KB, dataset, model, environment) is a Hub repo. That means:
 
 - Every change has a **commit** with author + message
 - You can roll back to a previous tag (`v0.2.0` → `v0.1.0`)

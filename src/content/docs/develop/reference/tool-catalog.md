@@ -12,11 +12,13 @@ The coordination self-tools (`worker_complete`, `worker_block`, `worker_context`
 
 | Tool | Use for |
 |---|---|
-| `read_file` | Read workspace files (with optional offset/limit) |
+| `read_file` | Read workspace files with line numbers and pagination (`offset` / `limit`) — parses documents, describes images |
 | `write_file` | Write a file (sensitive paths denied — SSH keys, shell rc, credentials) |
 | `patch` | Apply a unified diff or V4A patch |
 | `search_files` | Regex across workspace files |
 | `list_files` | Directory listing, optionally recursive |
+
+`read_file` is not text-only. `.pdf`, Word (`.doc` / `.docx` / `.docm`), Excel (`.xls` / `.xlsx` / `.xlsm`), PowerPoint (`.ppt` / `.pptx` / `.pptm`), OpenDocument (`.odt` / `.ods` / `.odp`) and `.rtf` are parsed to text by the tool itself, and image files are described by a vision model. Calling `read_file` on those paths directly is the intended path — no need to shell out to `pdftotext` or pip-install a parser through `terminal`. Two limits to plan around: `limit` defaults to 500 lines and caps at 2000, and a single read over roughly 100K characters is rejected outright (an operator-tunable default) — page through large files with `offset` / `limit`.
 
 ## Shell
 
@@ -39,11 +41,14 @@ Session-scoped browser. Supports **user-control handoff** for login / MFA / CAPT
 | Tool | Use for |
 |---|---|
 | `browser_navigate` | Open a URL |
-| `browser_get_state` | Page's accessibility tree with stable element refs |
+| `browser_get_state` | Page as a markdown outline with stable `@eN` refs (`format: "json"` for the raw node tree with coordinates) |
+| `browser_evaluate` | Run JavaScript in the page and return its value — a whole table, a hidden input, every option of a `<select>` in one call |
 | `browser_click`, `browser_type`, `browser_press_key` | Interact |
 | `browser_scroll`, `browser_drag`, `browser_wait` | Navigate / wait |
 | `browser_screenshot` | Save PNG to workspace |
 | `browser_close` | Close the session's browser |
+
+`browser_evaluate` runs agent-written JavaScript with the page's full privileges, against whatever the browser is currently signed in to. It is governed like any other tool, but it is the widest reach in the browser toolset — deny it explicitly on agents where you allow the rest of `browser_*`. See [Agent browser](/develop/features/browser/).
 
 ## Vision
 
@@ -86,8 +91,10 @@ Availability: each tool is **dropped from the agent's toolset entirely** when no
 
 | Tool | Use for |
 |---|---|
-| `fetch_channel_messages` | Read recent messages posted in this channel (optionally filter by `since` / `user`) |
-| `fetch_channel_file` | Fetch a file shared in this channel (by name or Slack file id) into the workspace |
+| `fetch_channel_messages` | Read recent messages in this Slack channel — `limit` (default 50, max 200), `since` (`24h`, `7d`, or `2026-07-01`), `user` (a Slack user id or `<@U…>` mention). Returns oldest-to-newest |
+| `fetch_channel_file` | Fetch a file shared in this Slack channel (by name or Slack file id) into the workspace |
+
+Both are **Slack-only**: on a session whose effective channel isn't Slack (Telegram, WhatsApp, website, web) they return an error rather than a result, so allow-listing them on a non-Slack agent buys nothing. Ambient sessions count as Slack. Inbound attachments on the other channels still reach the workspace through the normal attachment path.
 
 ## GitHub & coding
 
@@ -181,14 +188,15 @@ Typed-reply mapping: text that exactly matches a choice label (case-insensitive)
 
 Any tool an MCP server registers becomes available to attached agents. The MCP proxy injects credentials from the Vault — the agent's sandbox never sees secrets. See [MCP & Vault](/develop/features/mcp-and-vault/) for setup.
 
-MCP tools (`mcp__*`) are **outside the built-in allow-list**: an allowlist doesn't reject them. They're governed by which servers you attach (and, on monetized agents, by the buyer's package); deny-lists, egress, and sandbox checks still apply.
+MCP tools (`mcp__*`) are **outside the built-in allow/deny lists**: an allowlist doesn't reject them, and a denylist won't accept an `mcp__*` name either. They're governed by which servers you attach (and, on monetized agents, by the buyer's package); egress and sandbox checks still apply, and the approval list below is the one place a single MCP tool can be gated by name.
 
-## Allowed vs denied
+## Allowed, denied, and approval-required
 
-Configure per-agent in CONFIG → Tool Access:
+Three lists govern a tool call. Allowlist and denylist are configured per-agent in CONFIG → Tool Access:
 
 - **Allowlist** — only these built-in tools pass the governance gate. Empty allowlist = all tools (subject to denylist). Note: a tool outside the allowlist is still *advertised* to the LLM — it's blocked at call time with a `Blocked: <reason>` result, not hidden from the schema.
 - **Denylist** — always blocked. Deny beats allow, and the two lists can't overlap.
+- **Approval-required** (`require_approval` on the agent policy) — the call is held and raised to a human as a `governance_gate` inbox item; approving lets the agent's retry of that exact call through. Evaluation order is **deny → approval → allow**, so a denied tool is never approvable, and this is the only list that accepts `mcp__*` names. Set it through the agents API: the tool-access form doesn't render it, and saving that form drops it. See [Tools that need approval first](/work/workflow/governance/#tools-that-need-approval-first).
 
 Lists take **exact tool names** — there is no prefix or wildcard matching. Common patterns:
 

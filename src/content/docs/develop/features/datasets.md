@@ -244,7 +244,7 @@ A DataDesigner canvas for authoring a generation/transformation pipeline — thi
 
 ### Repository
 
-The underlying lakeFS repo — files, commits, branches, tags. Same operations as any Data Hub repo.
+The underlying Hub repo — files, commits, branches, tags. Same operations as any Data Hub repo.
 
 ## SFT vs Preference vs Conversation formats
 

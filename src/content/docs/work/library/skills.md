@@ -17,6 +17,8 @@ The **Content** tab renders the skill's frontmatter (name / description / trigge
 
 Platform-default skills that the runtime loads on its own (the built-in process skills like `brainstorming` or `systematic-debugging`) don't appear in this list — it shows only the skills your workspace has created.
 
+You can still change how one behaves: create your own skill with **the same name** and attach it to the agent. An attached skill shadows the platform default of the same name for that agent — the built-in isn't deleted, just superseded. Detach yours and the original comes back.
+
 ## The SKILL.md format
 
 A skill is YAML frontmatter followed by a markdown body:
@@ -89,7 +91,7 @@ Skill detail → **Edit**. You can change everything except the **name** (the sl
 
 ## Publishing — versioning your skill
 
-Every skill is stored in a small git-like repo (LakeFS) under your project. Click **Publish** on a skill to create a tag such as `v1.0.0`. Why this matters:
+Every skill is stored in a small git-backed repo in the Hub under your project. Click **Publish** on a skill to create a tag such as `v1.0.0`. Why this matters:
 
 - **Immutability**: once published, the tag doesn't change. Editing creates new commits; you have to Publish again to cut a new tag.
 - **Rollback**: if a new version regresses, you can re-attach the previous tag.
@@ -133,7 +135,7 @@ In the `SKILL.md` this surfaces as `type: expert` in the frontmatter plus the mo
 
 ### Lifecycle
 
-Experts have a status: **draft → active → retired**. The expert detail panel shows the backing model, a usage tally (successes / total, with a success rate), and an **Activate** / **Retire** button.
+Experts have a status: **draft → active → retired**. The expert detail panel shows the backing model, a usage tally, and an **Activate** / **Retire** button. Don't trust the tally — it isn't wired up and reads zero no matter how much the expert has run. Judge an expert by reading the sessions that used it.
 
 - **Activate** publishes the expert as live. It's refused unless the backing model has a working serving endpoint — otherwise `consult_expert` would fail at runtime with "no endpoint configured." Deploy/serve the model first.
 - **Retire** takes it out of rotation: the base LLM stops delegating to it.

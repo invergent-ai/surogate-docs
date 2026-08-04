@@ -4,7 +4,7 @@ sidebar:
   label: Data Hub
 ---
 
-The Data Hub is **Git for data**. Every artifact your project produces — a skill, a dataset, a model, a knowledge base, a training experiment — is stored as its own **versioned repository** with branches, commits, and tags. The Hub is backed by **surogate-hub**, a lakeFS-based object store, so a repo behaves like a git repo whose objects happen to be data files instead of source code.
+The Data Hub is **Git for data**. Every artifact your project produces — a skill, a dataset, a model, a knowledge base, a training experiment — is stored as its own **versioned repository** with branches, commits, and tags. The Hub is backed by **surogate-hub**, an open-source versioned object store, so a repo behaves like a git repo whose objects happen to be data files instead of source code.
 
 Open it from **Develop → Data Hub** (`/studio/hub`). The page lists every repository in your active project; clicking one opens a browser for its files, history, branches, and versions.
 
@@ -70,7 +70,7 @@ Artifacts are referenced elsewhere in the platform with a **hub_ref** string of 
 
 Click any repo on the Hub to open its explorer. Across the top:
 
-- a **`lakefs://` breadcrumb** for navigating up the object tree, and
+- a **URI breadcrumb** for navigating up the object tree, and
 - a **ref combobox** grouping **Branches** and **Tags** — switch it to view the repo at any version.
 
 Below that, tabs:

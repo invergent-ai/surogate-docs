@@ -36,11 +36,8 @@ For ongoing automation, query the REST API:
 # List sessions matching filters
 GET /v1/sessions?agent_id=<uuid>&flag=thumbs_down&since=2026-04-01
 
-# Get the full event log
-GET /v1/sessions/{id}/events
-
-# Filter to specific event types
-GET /v1/sessions/{id}/events?type=policy.denied
+# Read the event log as JSON (no server-side type filter — select client-side)
+GET /v1/sessions/{id}/events/poll?after=<last_id>&limit=50
 
 # Live tail via SSE
 GET /v1/sessions/{id}/events?after=<last_id>

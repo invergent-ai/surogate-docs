@@ -12,7 +12,7 @@ The deploy flow opens on **"Where is the model coming from?"** — four cards:
 
 | Source | What it is | When to use |
 |---|---|---|
-| **Local Hub** | A model already in your tenant's lakeFS hub | After a training run completes, the trained model lands here |
+| **Local Hub** | A model already in your tenant's Hub | After a training run completes, the trained model lands here |
 | **Hugging Face** | Pull a public model from HF Hub by repo + revision | Public bases, quantized variants |
 | **OpenRouter** | Use OpenRouter as the backing endpoint | Mix-and-match commercial models through one key |
 | **URL** | Any OpenAI-compatible endpoint | Your own vLLM server, Anthropic, OpenAI direct, etc. |

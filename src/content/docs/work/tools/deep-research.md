@@ -21,7 +21,7 @@ If you send `/deep-research` with no topic, the agent asks what you'd like resea
 `/deep-research` delegates **exactly once**. It does not retry.
 
 - The topic goes to the sub-agent as a single research goal — it is not split into sub-topics or fanned out into multiple parallel runs.
-- If that one delegation fails or times out, the agent reports the failure to you verbatim and stops, rather than launching more attempts that would burn the same budget again.
+- If that one delegation fails or times out, the agent reports the failure to you verbatim and stops, rather than launching more attempts that would burn the same budget again. The wait is capped at **60 minutes** — a sub-agent still running then counts as timed out.
 
 This keeps a single request from turning into a runaway fleet of research jobs. If a run fails, re-issue the command yourself once you've adjusted the topic.
 

@@ -17,10 +17,38 @@ Turning **Policy enforcement** off drops your rules but keeps the floor — it i
 
 - The composed gate is checked **before every tool call**.
 - It is built once per wake and **frozen for that wake**, so nothing that happens mid-turn — including prompt injection — can weaken it. Saving a policy edit bumps the agent's runtime config and invalidates live pods: sessions pick up the new policy on their **next wake**.
-- A denial hands the model a `Blocked: <reason>` tool result and records a `policy.denied` event. The agent will typically tell the user it couldn't perform the action.
+- A plain denial hands the model a `Blocked: <reason>` tool result and records a `policy.denied` event. The agent will typically tell the user it couldn't perform the action.
 - Denied tools are still advertised to the model and blocked at call time — the agent may try once, get blocked, and adapt.
-- **MCP tools** (`mcp__*`) are outside the built-in allow-list: they're governed by which MCP servers you attach and by what a buyer's package includes. Deny-lists, egress, sandbox and argument checks still apply to them.
+- **MCP tools** (`mcp__*`) are outside both lists — the allow/deny fields only accept built-in tool names, so an `mcp__*` name can't be typed into either. They're governed by which MCP servers you attach and by what a buyer's package includes. Egress, sandbox and argument checks still apply to them.
 - **Protected self-tools** (`worker_block`, `worker_complete`, `worker_context`, `share_note`, `read_board`, `expand_note`, `unblock_task`, `cancel_task`) can never be denied — a policy that could strand a blocked task forever isn't accepted.
+
+## Tools that need approval first
+
+A third list sits beside allow and deny: **approval-required** tools. A call to one of these isn't refused — it's held until a human says yes.
+
+- The model is told the call needs human approval rather than that it was refused, and an **Approval needed** item lands in your [Inbox](/work/tools/inbox/) with **Approve** / **Reject**.
+- **Approve** and the agent's retry of that same call goes through; **Reject** leaves the denial standing. Nothing freezes in the meantime — the agent carries on with the rest of its work.
+
+Approving records a durable grant, not just a chat message:
+
+| Property | Behaviour |
+|---|---|
+| **Scope** | The exact call, arguments included — approving one command doesn't approve the next one from the same tool |
+| **Lifetime** | One hour |
+| **Uses** | Once — a second call needs a second approval |
+
+Once a grant has expired or been used, the next call is blocked again, and the reason says *prior approval expired* / *exhausted* rather than that the tool was never approved.
+
+Two rules worth remembering:
+
+- **Deny still wins.** The deny-list is checked first, so a tool in **Denied tools** is never approvable.
+- **MCP tool names belong here.** This is the only list that accepts them (`mcp__*`) — the one way to gate an individual MCP tool instead of detaching its whole server.
+
+Both outcomes are on the record: the block emits `policy.denied`, and an approved retry emits `policy.allowed` with the reason *human approval*.
+
+:::caution
+Configure → Governance doesn't render this list yet, and **saving that form rebuilds the policy from its own fields, which drops the approval list**. Set it through the agents API, and re-apply it after every Governance save.
+:::
 
 ## Network controls: three separate planes
 
@@ -61,7 +89,7 @@ Compliance evidence lives on the session log:
 - `disclosure.presented` — `{level, channel, delivery}` when a messaging channel posts the notice.
 - `disclosure.confirmed` — `{level, source}` when a web user accepts the banner.
 - `policy.denied` — every blocked tool call, visible in **Sessions → POLICIES**.
-- `policy.allowed` — optionally, every *allowed* call too, when the deployment enables `governance.log_allowed` (doubles event volume; off by default).
+- `policy.allowed` — always for a call let through by a human approval; for every *other* allowed call only when the deployment enables `governance.log_allowed` (doubles event volume; off by default).
 
 The disclosure events appear in the session's **EVENTS** tab and the events API.
 

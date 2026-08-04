@@ -30,6 +30,8 @@ This is the structural fix for "what if my agent leaks an API key" — the agent
 
 ## Two transports
 
+The blocks below show the shape of a server's stored config — the same fields the Studio form (or `/api/mcp-servers`) writes into the registry. There is no config file on disk to edit.
+
 ### Stdio
 
 Launch the MCP server as a subprocess; communicate via stdin/stdout. Configuration:
@@ -40,8 +42,7 @@ mcp_servers:
     transport: stdio
     command: npx
     args: ["-y", "@modelcontextprotocol/server-github"]
-    env:
-      GITHUB_TOKEN_REF: github_token   # resolved from Vault
+    credential_refs: ["GITHUB_TOKEN"]   # resolved from Vault
     timeout: 120
 ```
 
@@ -114,7 +115,7 @@ The **Vault** button on the MCP Servers tab opens the credential store:
 
 | Field | Notes |
 |---|---|
-| **Name** | Reference name (e.g. `github_token`) — used in MCP server configs as `<NAME>_REF: name` |
+| **Name** | Vault entry name (e.g. `GITHUB_TOKEN`) — named in an MCP server's `credential_refs` |
 | **Value** | Write-only. You set it, and later **Update** it (store a new value) or **Remove** it — but the value is never displayed back to you. The list API returns names + timestamps only, never the secret. |
 | **Scope** | Project-scoped (= org). Credentials belong to the project; every MCP server in the project can reference them. |
 
@@ -122,36 +123,49 @@ System-owned credentials (used by platform/system agents) are protected: the API
 
 ### How references work
 
-In an MCP server config:
+A server config never carries a secret. It carries a `credential_refs` array naming Vault entries and saying where each value is injected. The short form is a bare name:
 
-```yaml
-mcp_servers:
-  github:
-    env:
-      GITHUB_TOKEN_REF: github_token       # ← reference
+```json
+"credential_refs": ["GITHUB_TOKEN"]
 ```
 
-At runtime, the MCP proxy:
+- **stdio** → injected as `env.GITHUB_TOKEN`
+- **http** → injected as `headers.Authorization: Bearer <value>`
 
-1. Sees `GITHUB_TOKEN_REF: github_token`
-2. Resolves `github_token` from the Vault
-3. Substitutes the actual value in the outbound request
+Use the structured form when the target variable or header differs from the Vault name:
 
-The sandbox never sees the value. Credentials don't appear in logs, error messages, or agent contexts.
+```json
+"credential_refs": [
+  {"name": "MY_TOKEN", "env": "GITHUB_PERSONAL_ACCESS_TOKEN"},
+  {"name": "API_KEY", "header": "X-API-Key"},
+  {"name": "AUTH", "header": "Authorization", "prefix": "Bearer "}
+]
+```
+
+| Field | Notes |
+|---|---|
+| `name` | Vault entry name (required) |
+| `env` | Inject as this environment variable (stdio) |
+| `header` | Inject as this HTTP header (http) |
+| `prefix` | Prepended to the value — header form only (e.g. `Bearer `) |
+
+With neither `env` nor `header`, the value is injected as an environment variable named after the credential.
+
+The Auth dialog on an MCP server writes these for you: **API key** produces `{"name": …, "header": "X-API-Key"}`, **Bearer** produces `{"name": …, "header": "Authorization", "prefix": "Bearer "}`, **OAuth** produces `{"name": …, "env": "CLIENT_SECRET"}`.
+
+At runtime the proxy resolves each ref from the Vault and injects it into the outbound connection. The sandbox never sees the value, and every lookup is written to the tenant audit log as a `credential.access` entry.
 
 ### Encryption
 
 Vault credentials are encrypted at rest with Fernet (AES-128-CBC + HMAC-SHA256). The symmetric key lives in a K8s cluster secret.
 
-## MCP server config layers
+## Where MCP servers are registered
 
-| Layer | Location | Managed by |
-|---|---|---|
-| Platform | `/etc/surogates/mcp/servers.json` | Platform operator |
-| Org | `tenant-{org_id}/shared/mcp/servers.json` | Org admin |
-| User | `tenant-{org_id}/users/{uid}/mcp/servers.json` | End user |
+The registry is exclusively DB-backed — the `mcp_servers` table, written by the Studio UI and `/api/mcp-servers`. There are no on-disk config layers.
 
-Last-wins precedence by server name.
+Servers are **project (org) scoped**: every server you register is visible to the whole project. What a given session actually loads is decided per agent — the proxy loads only the servers attached to that agent, so two agents in the same project get different toolsets from the same registry. Servers toggled off are skipped entirely.
+
+The **PLATFORM / ORG / USER** chip on a server row is a label for your own bookkeeping (the REST list can filter on it). It does not change who can see the server and it does not affect load precedence.
 
 ## Security scanning
 

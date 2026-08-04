@@ -50,22 +50,31 @@ You are a code reviewer. When asked to review code:
 | `platforms` | list | no | Restrict to OSes `["linux", "macos", "windows"]` |
 | `requires_tools` | list | no | Hidden unless ALL listed tools are available |
 | `fallback_for_tools` | list | no | Hidden when ALL listed tools are available |
-| `enabled` | bool | no | Default `true` |
+| `enabled` | bool | no | Parsed but not enforced — a skill file loads whether or not it is set |
 
 Body text after the frontmatter is the skill's prompt content — inlined into the system prompt when the skill triggers, or returned by `skill_view` when explicitly invoked.
 
 ## The 4-layer loading model
 
-Skills load from four layers in increasing precedence:
+Skills load from four layers in increasing precedence. Layer 1 has two halves, both served from the [Hub](/develop/features/hub/):
 
 ```
-Layer 1: Platform      /etc/surogates/skills/                       (lowest)
-Layer 2: User files    tenant-{org_id}/users/{user_id}/skills/
-Layer 3: Org (DB)      skills table, org-wide (user_id IS NULL)
-Layer 4: User (DB)     skills table, user-specific                  (highest)
+Layer 1a: System bundle     platform/system-skills repo, <name>/SKILL.md   (lowest)
+Layer 1b: Per-agent bundle  agent bundle repo, skills/<name>/SKILL.md
+Layer 2:  User files        tenant assets, {org_id}/users/{user_id}/skills/
+Layer 3:  Org (DB)          skills table, org-wide (user_id IS NULL)
+Layer 4:  User (DB)         skills table, user-specific                    (highest)
 ```
 
-Higher layers override by name. Org admins always win — an end user cannot override a skill the org admin has set. Setting `enabled: false` in a higher layer disables the skill entirely.
+| Layer | Managed by | How |
+|---|---|---|
+| 1a System bundle | Platform operator | One Hub repo (`platform/system-skills`) shared by every agent in the cluster — the framework built-ins (`brainstorming`, `executing-plans`, …). The runtime reads its latest `v*` tag and caches that snapshot per process, re-fetching when the catalog is republished. |
+| 1b Per-agent bundle | Org admin | Attaching a Hub-published skill to an agent copies its repo subtree under `skills/<name>/` in that agent's own bundle repo. |
+| 2 User files | End user | Written by the agent's `skill_manage` tool during a session. |
+| 3 Org (DB) | — | Org-wide rows in the runtime's `skills` table. |
+| 4 User (DB) | — | Per-user rows in the same table. Both DB layers are read paths only: nothing currently writes them, so in practice a skill you author reaches an agent through 1b. |
+
+Higher layers override by name, so a per-agent skill (1b) **shadows** a built-in of the same name for that agent — the system skill is not removed, just superseded. Org admins always win: an end user cannot override a skill the org admin has set. Disabling a DB skill row does not mask a lower layer — the row simply drops out of the merge and the lower layer's version loads instead.
 
 ## Conditional activation
 
@@ -137,9 +146,11 @@ Users invoke a skill explicitly via `/<skill-name> [args...]`:
 
 Resolution order in the harness:
 
-1. Builtin commands (`/clear`, `/compress`, `/goal`, `/loop`, `/mission`)
+1. Builtin commands — `/clear`, `/code`, `/compress`, `/deep-research`, `/goal`, `/loop`, `/mission`, `/auto-research`
 2. Dynamic skill resolution
 3. Plain user message if no match
+
+Those eight names are **reserved**: the parser skips them, so a skill named `code` or `deep-research` is never reached by slash command.
 
 For dynamic invocation, the harness calls `skill_view` server-side and inlines the body into the user message.
 
@@ -154,7 +165,7 @@ For dynamic invocation, the harness calls `skill_view` server-side and inlines t
 | `POST` | `/api/skills/{skill_id}/publish` | Tag a version |
 | `DELETE` | `/api/skills/{skill_id}` | Delete (409 if in use) |
 
-Skills are addressed by `skill_id`, not by name. API-created skills land in the database (layer 3 or 4 depending on `user_id`). Agent-created skills (via the `skill_manage` tool) go to the tenant bucket (layer 2).
+Skills are addressed by `skill_id`, not by name. An API-created skill gets its own Hub repo; attaching it to an agent copies it into that agent's bundle (layer 1b). Agent-created skills (via the `skill_manage` tool) go to the tenant bucket (layer 2).
 
 ## Validation rules
 
@@ -170,7 +181,7 @@ Validation errors return `422 Unprocessable Entity`.
 
 ## Publishing — versioning
 
-When you PUBLISH a skill, you tag a version in the underlying lakeFS repo. Tags are immutable. Editing creates a new draft; the next PUBLISH creates `v0.1.1`, `v0.2.0`, etc.
+When you PUBLISH a skill, you tag a version in the skill's [Hub](/develop/features/hub/) repo. Tags are immutable. Editing creates a new draft; the next PUBLISH creates `v0.1.1`, `v0.2.0`, etc.
 
 Sessions record which version of each skill they used. You can:
 
@@ -233,15 +244,15 @@ Rules:
 2. Collect    POST /api/experts/{name}/collect          expert_status: collecting
 3. Train      In-platform SFT/GRPO run over the dataset (or export the JSONL)
 4. Activate   POST /api/skills/{skill_id}/activate      expert_status: active
-5. Monitor    GET /api/skills/{skill_id} → expert_stats (auto-retire if < 60%)
+5. Monitor    expert.result / expert.failure session events (retire manually)
 6. Retrain    Collect → train → activate                (loop)
 ```
 
-Collect (and its dataset/trajectory inspection) lives on a separate **experts** router keyed by name (`/api/experts/{name}/...`); activation, monitoring, and retirement are on the **skills** router keyed by `skill_id` (`/api/skills/{skill_id}/...`).
+Collect (and its dataset/trajectory inspection) lives on a separate **experts** router keyed by name (`/api/experts/{name}/...`); activation and retirement are on the **skills** router keyed by `skill_id` (`/api/skills/{skill_id}/...`).
 
 ### 1. Define
 
-Create the SKILL.md with `type: expert, expert_status: draft`. Place in `tenant-{org_id}/shared/skills/<name>/SKILL.md` or via REST.
+Create the SKILL.md with `type: expert, expert_status: draft`, via the Studio or `POST /api/skills`.
 
 ### 2. Collect training data
 
@@ -282,26 +293,13 @@ After activation, the base LLM sees the expert in its system prompt under `# Ava
 
 ### 5. Monitor
 
-```bash
-curl http://localhost:8000/api/skills/{skill_id} \
-  -H "Authorization: Bearer $TOKEN"
-```
+An expert's quality signal lives in the **session event log**, not on the skill row. Every consultation emits an `expert.result` or `expert.failure` event, and the feedback API adds `expert.endorse` / `expert.override` when a user or judge rates a result. Count those per expert to decide whether it is still earning its serving cost.
 
-Response includes `expert_stats`:
+:::caution[The expert usage counters are dead columns]
+`GET /api/skills/{skill_id}` returns `total_uses` and `total_successes`, and the Studio renders them as a success rate — but **no code path writes them**. They always read `0`. Ignore that tile.
+:::
 
-```json
-{
-  "name": "sql_writer",
-  "type": "expert",
-  "expert_status": "active",
-  "expert_stats": {
-    "total_uses": 47,
-    "total_successes": 44
-  }
-}
-```
-
-After ≥20 invocations, the platform monitors success rate. Below the threshold (default 60%), the expert is auto-retired.
+Nothing retires an expert automatically. A failing expert stays `active` — and stays in the base LLM's `# Available Experts` block — until an operator calls `/retire`.
 
 ### 6. Retire / retrain
 

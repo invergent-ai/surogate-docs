@@ -25,6 +25,10 @@ If the agent's **AI disclosure** is on (Configure → Governance), a disclosure 
 
 When the agent asks something via `ask_user_question`, a tabbed question widget appears — but users can also just **type their reply in the composer** and it's consumed as the answer: an exact match on a choice label picks that choice, anything else is recorded as "Other". Messages with images or attachments stay ordinary messages, and the shortcut expires with the question (30 minutes).
 
+### The inbox spans a user's agents
+
+A user's inbox is scoped to **the user**, not to the agent whose app they happen to be in — so someone with accounts on several of your agents sees every agent's items in one list. Opening an item that belongs to a *different* agent opens that agent's app in a new browser tab, at that session; items for the current agent open in place.
+
 ### Single-session agents
 
 When the agent's **Multi session** capability is off, each user gets one dedicated conversation and always returns to it: no "New chat", no session list — the sidebar shows a **Chat** button that reopens their conversation from anywhere in the app (their other sessions stay hidden until the capability is turned back on).
