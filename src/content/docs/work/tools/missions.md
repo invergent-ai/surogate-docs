@@ -39,20 +39,62 @@ Each mission row carries a status badge:
 |---|---|
 | **Running · _n_/_max_** | Actively iterating; shows the current iteration out of the maximum. |
 | **Needs revision** | The last evaluation asked for another pass. |
-| **Paused** | Automatic continuation is stopped; the mission is retained. |
+| **Paused** | Automatic continuation is stopped; the mission is retained. A mission also pauses **itself** when the evaluator returns unreadable output three times in a row, or when its token budget runs out. |
 | **Satisfied** | The goal was met. |
-| **Blocked** | Stopped — the agent needs external input it can't get. |
+| **Blocked** | Stopped — the agent needs external input it can't get. The evaluator is also told to return this instead of repeating the same guidance round after round, so *Blocked* can mean the run was going in circles. A coordinator that goes quiet and stays quiet is blocked too, after three unanswered nudges. |
 | **Failed** | Stopped — the goal was judged unreachable. |
 | **Max iterations** | The iteration budget was exhausted. |
 | **Cancelled** | The mission was cancelled. |
 
 Running, needs-revision, and paused missions count as **active**; the rest are **history**.
 
+## How a mission is judged
+
+A run started with `/mission` **must** carry a `Rubric:` block. Without one the command is rejected with "missing Rubric: block" and no mission is created — stricter than `/goal`, where the rubric is optional and falls back to a generic default.
+
+The evaluator grades evidence, not prose. It sees the agent's latest reply, but only the structured results the finished tasks reported back count as evidence — so write the rubric against something the work can measure and report: "satisfied when the failing-test count is 0", not "satisfied when the code is clean". A *satisfied* verdict is demoted back to *needs revision* when the mission spawned tasks and none of them completed; task status is recorded by the platform, never claimed by the agent. A mission that spawned no tasks at all is exempt.
+
+The evaluator also doesn't read every reply. It runs when a task the mission spawned reaches a terminal state, or when the agent explicitly marks the objective complete, and at most once every 30 seconds per mission. A mission sitting on the same iteration for a while usually means no task has finished yet — not that it is stuck. A run started with `/goal` is different: there the evaluator reads every final response (see [Goals](/work/tools/goals/)).
+
 ## Starting and tracking a mission
 
-1. In any chat with the agent, type `/goal <what you want>` (or `/mission …`) and press Enter. See [Goals](/work/tools/goals/) for how to write a good rubric.
+1. In any chat with the agent, type `/goal <what you want>` (or `/mission …`) and press Enter. See [How a mission is judged](#how-a-mission-is-judged) for what a `/mission` rubric has to look like. `/mission` needs a signed-in user or a service-account session — anonymous website-widget visitors can't own one.
 2. Open the **Missions** page. The new mission appears at the top of the **ACTIVE** list.
 3. Click the mission to open its dashboard on the right, where you can follow its progress and open the underlying session transcript.
 4. When the mission is satisfied, blocked, failed, cancelled, or hits its iteration cap, it moves into **HISTORY**.
 
-Control commands (`/goal pause`, `/goal resume`, `/goal clear`, `/goal status`) are issued from the chat, not from this page.
+## Control commands
+
+Missions are steered from the chat, not from this page. Which verbs apply depends on which command started the run:
+
+| Command | Effect |
+|---|---|
+| `/mission` or `/mission status` | Status, current iteration, and the latest verdict. |
+| `/mission pause [reason]` | Stop automatic continuation. Workers already running keep running. |
+| `/mission resume` | Resume a paused mission and wake the agent. |
+| `/mission cancel [reason]` | End the mission. Running workers finish what they're on; their results are no longer graded. |
+| `/mission cancel --cascade [reason]` | End the mission **and** interrupt every worker still running. |
+| `/mission budget <count>` | Set or change the token ceiling; replies with the new ceiling and how much is already spent. |
+| `/mission budget none` | Remove the ceiling (`off`, `clear` and `unlimited` also work). |
+
+A run started with `/goal` uses `/goal status`, `/goal pause`, `/goal resume` and `/goal clear` instead; a run started with `/auto-research` uses `/auto-research status`, `pause`, `resume` and `cancel [--cascade]`.
+
+The families don't share verbs: `/mission` has no `clear`, `/goal` has no `cancel`, and `/auto-research` has no `budget`. An unrecognised verb is read as the text of a *new* run — `/mission clear` fails with a missing-rubric error, and `/goal cancel` would start a goal called "cancel".
+
+## The token budget
+
+A `/mission` can carry a ceiling on the tokens it is allowed to spend. Set it when you start the run by putting a `Budget:` line on a line of its own in the command body, or at any point afterwards with `/mission budget <count>`:
+
+```
+/mission Audit every test file for tests that pass for the wrong reason.
+
+Budget: 20M
+Rubric: every directory under tests/ has a completed task, and each finding
+names a file, a test, and a demonstrated reason the test is vacuous.
+```
+
+Write the count the way you'd say it — `20M`, `500k`, `1.5M`, `2_000_000`, or a plain number. A count that can't be read is rejected rather than quietly meaning "no ceiling". The budget covers the whole run: the coordinating session plus every session its tasks run in, counted from the tokens those sessions actually used.
+
+When the allowance is gone the mission **pauses** at the next judging point — it is never cut off mid-task. Raise the ceiling with `/mission budget <count>` and `/mission resume` to carry on. With no `Budget:` line the mission is unbounded.
+
+See [Slash commands](/work/tools/commands/) for the rest of the command set.

@@ -57,6 +57,18 @@ The user types a message; the bot responds. Each DM is one Surogate session. Sub
 
 The bot responds inside the thread (assuming Reply in thread is on). Subsequent messages in that thread continue the session — no need to @mention again.
 
+### The slash command
+
+Pasting the Slash Command Request URL doesn't create the command. You also have to add it in the Slack app (Slash Commands → *Create New Command*), point it at that URL, and reinstall if Slack asks. Any name works, but call it `/surogates` — that's the name the built-in usage hint tells your users, which they see if they send the command with nothing after it.
+
+Whatever the user types after the command goes to the agent as a message. It works from any channel, but the message always lands in the sender's **DM session** with the agent, never the channel's session. It's a quick private question without leaving the channel you're in — not a way to talk to the channel's shared conversation.
+
+### Channel history on the first message
+
+The first time the bot is messaged in a channel, that session starts with a snapshot of the channel's recent history, so the agent isn't answering blind on a conversation already underway. The snapshot is bounded — at most the last **7 days** and **200 messages** — and joins, leaves, topic changes and other bots' posts are dropped. DMs are never backfilled.
+
+It's a one-time snapshot per session, not continuous reading. To have the agent keep building context from everything posted in the channel, turn on FOLLOW THE CHANNEL — see [Proactive engagement](/work/channels/proactive/).
+
 ### File attachments
 
 Slack users can attach files to messages. The bot reads them (markdown, CSV, JSON, images, PDFs) like any other input. If the bot writes files in response (e.g. an analysis CSV), it uploads them to Slack.

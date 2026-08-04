@@ -37,7 +37,7 @@ Selecting a sub-agent shows:
 
 - **Header** — name, a "disabled" badge if it's off, and a description. For editable sub-agents, **Edit** and a delete (trash) button appear.
 - **Meta row** — Source, and Category / Tags when set.
-- **Configuration** panel — Model, Max iterations, Policy profile, Allowed tools, and Disallowed tools, when set.
+- **Configuration** panel — Model, Max iterations, Allowed tools, and Disallowed tools, when set.
 - **System prompt** — the rendered prompt body.
 
 ## Creating a sub-agent
@@ -49,7 +49,9 @@ Selecting a sub-agent shows:
    - **AGENT.md content** — the full definition. The dialog pre-fills a template with `name`, `description`, `tools`, `disallowed_tools`, `model`, and `max_iterations` frontmatter plus a system-prompt body.
 3. Click **Create**. The new sub-agent is added project-wide and selected in the detail pane.
 
-The frontmatter fields the definition understands include `name`, `description`, `tools`, `disallowed_tools`, `model`, `max_iterations`, `policy_profile`, `category`, `tags`, and `enabled`.
+The frontmatter fields the definition understands are `name`, `description`, `tools`, `disallowed_tools`, `model`, `max_iterations`, `preloaded_skills`, `category`, `tags`, and `enabled`. Any other key is ignored.
+
+**Max iterations** is capped at 30: a higher number in the frontmatter is reduced to 30, a lower one narrows the sub-agent further. When an agent spawns a sub-agent mid-conversation it can only hand over iterations it still has itself, so late in a long session a sub-agent can start with fewer.
 
 ## Editing and deleting
 

@@ -120,7 +120,7 @@ curl -X POST https://ops.surogate.ai/v1/admin/service-accounts \
   -d '{"org_id": "<your-org-uuid>", "name": "incident-pipeline"}'
 ```
 
-Returns the token **once** as `surg_sk_...`. Store it; you can't retrieve it again. Tokens are valid only on `/v1/api/*` routes; no SSE, no inbox.
+Returns the token **once** as `surg_sk_...`. Store it; you can't retrieve it again. Tokens are valid only on `/v1/api/*` routes — which covers the SSE event stream but not the JSON `/events/poll` route, and not the inbox.
 
 ## 7. Call the agent from Python
 
@@ -130,44 +130,50 @@ import os, time, requests, json
 TOKEN = os.environ["SUROGATE_SA_TOKEN"]
 BASE = "https://ops.surogate.ai/v1/api"
 
-def triage(incident_text: str) -> dict:
-    # Submit the prompt
+H = {"Authorization": f"Bearer {TOKEN}"}
+
+
+def triage(incident_text: str, alert_id: str) -> dict:
+    # Submit the prompt. The agent comes from the token, so there is no
+    # agent field; `metadata` is free-form passthrough stored on the session.
     r = requests.post(
         f"{BASE}/prompts",
-        headers={"Authorization": f"Bearer {TOKEN}"},
+        headers=H,
         json={
-            "agent_slug": "incident-bot",
             "prompt": f"Triage: {incident_text}",
-            "context": {"source": "pagerduty-webhook"},
+            "idempotency_key": alert_id,
+            "metadata": {"source": "pagerduty-webhook"},
         },
     )
-    session_id = r.json()["session_id"]
+    session_id = r.json()["session_id"]  # 202 Accepted
 
     # Poll for completion
     while True:
-        s = requests.get(
-            f"{BASE}/sessions/{session_id}",
-            headers={"Authorization": f"Bearer {TOKEN}"},
-        ).json()
+        s = requests.get(f"{BASE}/sessions/{session_id}", headers=H).json()
         if s["status"] in ("completed", "failed"):
             break
         time.sleep(3)
 
-    # Extract the final response (the skill returns a JSON card)
-    events = requests.get(
-        f"{BASE}/sessions/{session_id}/events",
-        headers={"Authorization": f"Bearer {TOKEN}"},
-    ).json()
-    final = next(e for e in events if e["type"] == "assistant.final")
-    return json.loads(final["data"]["content"])
+    # Read the answer off the SSE stream — the LAST llm.response is the
+    # user-visible one; earlier ones narrate before a tool call.
+    answer, etype = None, None
+    with requests.get(f"{BASE}/sessions/{session_id}/events", headers=H, stream=True) as r:
+        for line in r.iter_lines(decode_unicode=True):
+            if line.startswith("event:"):
+                etype = line.split(":", 1)[1].strip()
+                if etype in ("session.done", "stream.timeout"):
+                    break
+            elif line.startswith("data:") and etype == "llm.response":
+                answer = json.loads(line.split(":", 1)[1])["message"].get("content") or answer
+    return json.loads(answer)  # the skill returns a JSON card
 
 
-card = triage("API responses timing out for 12 customers since 5min ago")
+card = triage("API responses timing out for 12 customers since 5min ago", "pd-8891")
 print(card)
 # {'severity': 'P1', 'category': 'api-availability', ...}
 ```
 
-Add an `Idempotency-Key` header to the `POST /prompts` call to dedupe webhook retries within 24h.
+`idempotency_key` is a **body field**, not a header. Replaying the same key for the same org returns the original session with `deduplicated: true` instead of running the work twice — send your webhook's own id and retries are free. See [Sessions → API channel sessions are different](/develop/features/sessions/#api-channel-sessions-are-different) for the traps in that flow.
 
 ## What you've built
 

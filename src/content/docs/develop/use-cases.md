@@ -117,7 +117,7 @@ After ~20 invocations, check:
 curl http://ops.surogate.ai/v1/skills/<name> -H "Authorization: Bearer $TOKEN"
 ```
 
-Look at `expert_stats.total_successes / total_uses`. Below 60%, the platform auto-retires the expert.
+Look at `expert_stats.total_successes / total_uses`. Retirement is a deliberate act, not an automatic one — when the rate stops justifying the expert, retire it with `POST /v1/skills/{id}/retire` and the agent falls back to the base model for that task.
 
 **8. Retrain**.
 
@@ -400,71 +400,93 @@ Agent `classifier-bot` needs to:
 **3. Write your pipeline**.
 
 ```python
+import json
 import requests
 from time import sleep
 
 SA_TOKEN = "surg_sk_..."  # from secret store
 BASE = "http://ops.surogate.ai/v1/api"
+H = {"Authorization": f"Bearer {SA_TOKEN}"}
 
-def classify_case(case_text):
-    # Submit
+def classify_case(case):
+    # Submit. The token fixes the agent — the body carries no agent selector.
     resp = requests.post(
         f"{BASE}/prompts",
-        headers={"Authorization": f"Bearer {SA_TOKEN}"},
+        headers=H,
         json={
-            "agent_slug": "classifier-bot",
-            "prompt": f"Classify this support case: {case_text}",
-            "context": {"pipeline": "nightly-batch", "version": "v3"},
+            "prompt": f"Classify this support case: {case['text']}",
+            "idempotency_key": case["case_id"],
+            "metadata": {"pipeline": "nightly-batch", "version": "v3"},
         },
     )
     session_id = resp.json()["session_id"]
 
-    # Poll
+    # Poll for a terminal status
     while True:
-        s = requests.get(
-            f"{BASE}/sessions/{session_id}",
-            headers={"Authorization": f"Bearer {SA_TOKEN}"},
-        ).json()
+        s = requests.get(f"{BASE}/sessions/{session_id}", headers=H).json()
         if s["status"] in ("completed", "failed"):
             break
         sleep(5)
 
-    # Extract result
-    events = requests.get(
-        f"{BASE}/sessions/{session_id}/events",
-        headers={"Authorization": f"Bearer {SA_TOKEN}"},
-    ).json()
-    final = next(e for e in events if e["type"] == "assistant.final")
-    return final["data"]["content"]
+    # Read the log. Events are SSE; the answer is the LAST llm.response.
+    answer, etype = None, None
+    with requests.get(
+        f"{BASE}/sessions/{session_id}/events", headers=H, stream=True
+    ) as r:
+        for line in r.iter_lines(decode_unicode=True):
+            if line.startswith("event:"):
+                etype = line.split(":", 1)[1].strip()
+                if etype in ("session.done", "stream.timeout"):
+                    break
+            elif line.startswith("data:") and etype == "llm.response":
+                answer = json.loads(line.split(":", 1)[1])["message"].get("content") or answer
+    return answer
 
 
 # Process the batch
 with open("cases.jsonl") as f:
     for line in f:
         case = json.loads(line)
-        result = classify_case(case["text"])
-        case["classification"] = result
+        case["classification"] = classify_case(case)
         print(json.dumps(case))
 ```
 
+The event-read contract — SSE only under `/v1/api/`, no `assistant.final` type, stream caps — is spelled out in [Sessions → API channel sessions are different](/develop/features/sessions/#api-channel-sessions-are-different).
+
 **4. Idempotency**.
 
-To avoid duplicate processing on retries, add an `Idempotency-Key` header:
+`idempotency_key` is a **body field**, not a header. An `Idempotency-Key` header is ignored and you get a duplicate session.
+
+Keys are scoped per org and never expire. The first call returns `deduplicated: false` with a new session; a repeat returns `deduplicated: true` with the original `session_id` and enqueues no new work. Keys from different orgs never collide.
+
+Use `metadata` for pipeline passthrough — it lands on `sessions.config['pipeline_metadata']`, which is what you join results back on.
+
+**5. Submit in batches**.
+
+One round-trip carries up to **100** prompts:
 
 ```python
+rows = [json.loads(line) for line in open("cases.jsonl")][:100]
+
 resp = requests.post(
-    f"{BASE}/prompts",
-    headers={
-        "Authorization": f"Bearer {SA_TOKEN}",
-        "Idempotency-Key": case["case_id"],
-    },
-    json={...},
+    f"{BASE}/prompts:batch",
+    headers=H,
+    json={"prompts": [
+        {
+            "prompt": f"Classify this support case: {row['text']}",
+            "idempotency_key": row["case_id"],
+            "metadata": {"pipeline": "nightly-batch"},
+        }
+        for row in rows
+    ]},
 )
+for row, result in zip(rows, resp.json()["results"]):
+    row["session_id"] = result["session_id"]   # None when result["error"] is set
 ```
 
-Duplicate requests with the same key within 24h return the same session_id (no new session).
+Each entry is accepted or rejected independently — one bad prompt does not fail the rest, and a rejected slot comes back with `error` set and `session_id: null`. The response preserves input order, so you can zip it straight onto your source rows. The call returns a 500 only when *every* entry failed.
 
-**5. Concurrency**.
+**6. Concurrency**.
 
 The platform supports parallel API requests. Run with concurrency:
 
@@ -472,14 +494,14 @@ The platform supports parallel API requests. Run with concurrency:
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 with ThreadPoolExecutor(max_workers=10) as ex:
-    futures = {ex.submit(classify_case, c["text"]): c for c in cases}
+    futures = {ex.submit(classify_case, c): c for c in cases}
     for f in as_completed(futures):
         # ...
 ```
 
-Watch rate limits: per-org default is 600 requests/min. The platform returns `429` if you exceed.
+Watch rate limits: the default is 300 requests/min, counted per org **and** agent in a fixed 60s window, and overridable per tenant with the governance setting `rate_limit_rpm`. The platform returns `429` if you exceed.
 
-**6. Monitor**.
+**7. Monitor**.
 
 API-channel sessions show up in the Sessions list with `channel=api`. You can filter and audit them like any other sessions.
 
@@ -492,6 +514,27 @@ WHERE org_id = $1
   AND created_at > now() - interval '24 hours'
 GROUP BY status;
 ```
+
+**8. Record judge grades back onto the session**.
+
+If the pipeline scores its own outputs, write the grade back so training-data selection can weight on it:
+
+```python
+requests.post(
+    f"{BASE}/sessions/{session_id}/events/{event_id}/feedback",
+    headers=H,
+    json={
+        "rating": "up",                              # required — "up" or "down"
+        "score": 0.82,                               # optional float, 0.0–1.0
+        "criteria": {"accuracy": 1.0, "tone": 0.5},  # float values only
+        "rationale": "Correct label, slightly verbose.",
+    },
+)
+```
+
+`event_id` is the numeric event id — the `id:` line of the SSE stream, or `events.id` in SQL. It must name an `llm.response` or an `expert.result` event; anything else is a 400. Feedback on an `llm.response` emits `user.feedback`; on an `expert.result` it emits `expert.endorse` or `expert.override` depending on the rating.
+
+Feedback posted with a service-account token is stored with `source: "judge"`, while a user JWT posting to the `/v1/…` route gets `source: "user"` — so judge grades stay separable from human 👍/👎 when you build a training set. Repeat calls from the same principal are no-ops: the existing rating is returned unchanged.
 
 ---
 
@@ -532,15 +575,15 @@ If `send_email` fails:
 2. Platform calls `delete_jira_project` to undo the previous step
 3. Platform calls `delete_salesforce_customer` to undo the first step
 4. Workspace is back to pre-flow state
-5. Session emits `saga.compensate` events for each undo
+5. The session emits **one** `saga.compensate` event per saga, carrying `steps_rolled_back` and the rollback `reason` — not one per undo
 6. The session METADATA's `saga.compensated` flag is set
 
 **6. Escalation case**.
 
 If `send_email` fails AND `delete_jira_project` ALSO fails (e.g. the Jira API is down):
-1. Saga enters `escalated` state
-2. An inbox `governance_gate` item is created
-3. An operator must manually resolve
+1. The saga transitions to `escalated`
+2. The `saga.compensate` event carries a non-empty `failed_steps` list naming the undo calls that themselves failed
+3. An operator resolves it by hand — escalation emits no dedicated event and raises no inbox item (`inbox.governance_gate` belongs to the approval gate, not to saga)
 
 **7. Observability**.
 
@@ -552,7 +595,9 @@ SELECT
   count(*) FILTER (WHERE e.type = 'saga.step_begin') AS steps_started,
   count(*) FILTER (WHERE e.type = 'saga.step_committed') AS steps_committed,
   count(*) FILTER (WHERE e.type = 'saga.compensate') AS compensations,
-  bool_or(e.type = 'saga.escalated') AS escalated
+  bool_or(e.type = 'saga.compensate'
+          AND jsonb_array_length(coalesce(e.data->'failed_steps', '[]'::jsonb)) > 0)
+    AS escalated
 FROM sessions s
 LEFT JOIN events e ON e.session_id = s.id
 WHERE s.org_id = $1

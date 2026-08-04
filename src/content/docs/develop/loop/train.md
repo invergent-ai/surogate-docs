@@ -54,7 +54,7 @@ Six steps, three of them outside the platform:
 
 5. Monitor    (platform)
    GET /v1/skills/{name} for expert_stats
-   → auto-retire if success rate < 60% over ≥20 invocations
+   → POST /v1/skills/{id}/retire when the success rate stops justifying it
 
 6. Retrain    (collect → train → activate cycle)
 ```

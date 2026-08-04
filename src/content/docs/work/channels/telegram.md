@@ -30,7 +30,7 @@ Once connected, the Telegram card shows **Manage**. The options there auto-save 
 | **Message Reactions** | Show processing status via emoji reactions. |
 | **Per-User Group Chats** | Each user in a group gets their own chat. |
 
-Photos, voice notes, and documents are handled automatically — voice notes get transcribed if the model supports it, and documents (PDFs, etc.) get parsed.
+Photos, documents, audio and video are ingested automatically as attachments (up to 10 files / 20 MB per message), and a caption becomes the message's text. Documents under 2 MB — PDF, Word, Excel, PowerPoint and text formats like CSV or Markdown — are read as text. Note: voice notes arrive as audio files; there's no speech-to-text on this channel. Long replies are split at natural boundaries to fit Telegram's 4,096-character message limit.
 
 ## What users see
 

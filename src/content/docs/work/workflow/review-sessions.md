@@ -28,7 +28,7 @@ The filter chips are your shortcut to finding **specific kinds** of sessions:
 - 👍 — sessions a user thumbed-up (good examples)
 - **Denied** — sessions where the governance gate blocked a tool call
 - **Crashed** — sessions where the agent's runtime crashed
-- **Overridden** — sessions where the base LLM rejected an expert's answer
+- **Overridden** — sessions where a rater thumbed-down an expert's answer
 
 ## The session detail page
 
@@ -61,8 +61,10 @@ When the THREAD doesn't tell you why something happened, switch to EVENTS:
 12:43:05  tool.result         "Refunds within 30 days..."    tc_1
 12:43:06  llm.request         tokens_in=1429
 12:43:08  llm.response        "Our refund policy is..."      tokens_out=146
-12:43:08  assistant.final     (the user-visible response)
+12:43:09  session.complete
 ```
+
+The user-visible answer is the **last** `llm.response` — the earlier ones narrate before a tool call.
 
 You'll spot whether the LLM understood the question, whether it searched the right KB, whether tool calls succeeded.
 
@@ -83,7 +85,7 @@ If a skill loaded but never fired, the LLM didn't think it was relevant. Possibl
 
 ### POLICIES — governance decisions
 
-Every `policy.denied` event — a tool call the governance gate blocked — is listed here with the tool, reason, and timestamp. Allowed calls are logged too (as `policy.allowed`) when the deployment enables `governance.log_allowed`. Useful for compliance audits ("which agents tried to do destructive things, and were any of them allowed through?").
+Every `policy.denied` event — a tool call the governance gate blocked — is listed here with the tool, reason, and timestamp. Not every one is a hard block: a call held for [human approval](/work/workflow/governance/#tools-that-need-approval-first) is denied first and shows a matching `policy.allowed` once someone approves it. Allowed calls are logged too (as `policy.allowed`) when the deployment enables `governance.log_allowed`. Useful for compliance audits ("which agents tried to do destructive things, and were any of them allowed through?").
 
 The AI-disclosure evidence trail (`disclosure.presented` when a messaging channel posts the notice, `disclosure.confirmed` when a web user accepts the banner) lives in the session's **EVENTS** tab — see [Governance & AI disclosure](/work/workflow/governance/).
 
@@ -116,8 +118,8 @@ The seven quality flags drive everything downstream:
 - `policy.denied` — governance blocked something
 - `harness.crash` — the runtime died mid-session
 - `saga.compensated` — a multi-step rollback fired
-- `expert.override` — the base LLM rejected an expert's suggestion
-- `expert.endorse` — the base LLM accepted an expert's suggestion
+- `expert.override` — an expert's answer was thumbed-down, by a person in the UI or by an automated judge
+- `expert.endorse` — an expert's answer was thumbed-up, by either of the same two
 
 Filter the Sessions list by any combination of these to slice your traffic.
 
