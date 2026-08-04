@@ -15,7 +15,7 @@ Surogate is built on open-source components you can run and inspect yourself:
 |---|---|---|
 | [`invergent-ai/surogates`](https://github.com/invergent-ai/surogates) | Agent runtime — harness loop, sessions, sandbox, MCP, governance, channels, memory, tools | AGPL-3.0 |
 | [`invergent-ai/surogate`](https://github.com/invergent-ai/surogate) | Training framework — the SFT/RL engine behind the expert models you own | Apache-2.0 |
-| [`invergent-ai/surogate-hub`](https://github.com/invergent-ai/surogate-hub) | Artifact versioning store — lakeFS-backed "Git for data" for skills, datasets, and models | Apache-2.0 |
+| [`invergent-ai/surogate-hub`](https://github.com/invergent-ai/surogate-hub) | Artifact versioning store — "Git for data" for skills, datasets, and models | Apache-2.0 |
 
 When you deploy an agent at `<slug>.cloud.surogate.ai`, the platform wraps the runtime image and binds your config to it. The runtime is what's actually running inside the container.
 

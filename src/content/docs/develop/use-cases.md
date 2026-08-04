@@ -296,7 +296,7 @@ Evaluations → NEW EVALUATION → Custom Benchmark:
 
 Either:
 - Clone `acme-support-bot` as `acme-support-bot-v2` and apply your changes
-- Or use a feature branch via lakeFS
+- Or use a feature branch in the Hub
 
 **4. Run the evaluation on the current production agent**.
 

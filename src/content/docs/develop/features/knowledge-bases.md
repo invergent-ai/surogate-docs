@@ -22,7 +22,7 @@ Source files (markdown, PDF, CSV)
                  ▼
    ┌─────────────────────────────┐
    │   Wiki — searchable index   │
-   │   (lakeFS-versioned)        │
+   │   (Hub-versioned)           │
    └─────────────┬───────────────┘
                  │
                  ▼  kb_list_pages / kb_read_page at runtime
@@ -81,7 +81,7 @@ What happens:
 2. For each chunk: curator extracts structured knowledge
 3. Per-source wiki page assembled
 4. Cross-source synthesis index built
-5. Wiki committed to lakeFS
+5. Wiki committed to the Hub
 
 Compile time: 30s to several minutes per source.
 

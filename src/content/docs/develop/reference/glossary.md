@@ -18,7 +18,7 @@ Every Surogate term you'll encounter as a builder.
 | **Expert** | A `SKILL.md` with `type: expert`. Backed by a fine-tuned model + endpoint. The base LLM delegates via `consult_expert`. |
 | **Goal (`/goal`)** | Slash command that defines an outcome. The platform's evaluator runs until `satisfied` / `failed` / `blocked` or 20 iterations are spent. |
 | **GRPO** | Group Relative Policy Optimisation. RL training method. RL Mode: Environment / Agent / RULER. |
-| **Hub** | Versioned (lakeFS-backed) repository browser for every artifact — skills, KBs, datasets, models, environments. Branches, commits, tags. |
+| **Hub** | Versioned repository browser for every artifact — skills, KBs, datasets, models, environments. Branches, commits, tags. |
 | **Inbox** | Per-user queue of items the agent has explicitly raised. Five kinds: `input_required`, `action_required`, `task_complete`, `governance_gate`, `progress_checkin`. |
 | **MCP** | Model Context Protocol. Open standard for connecting LLMs to external tools. Surogate supports stdio + HTTP transport, OAuth 2.1 PKCE. |
 | **MCP Vault** | Encrypted credential storage. Secrets are injected by the MCP proxy and never reach the agent's sandbox. |

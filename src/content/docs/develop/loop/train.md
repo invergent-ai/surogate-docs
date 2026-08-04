@@ -65,7 +65,7 @@ Filter on tainted sessions: by default, sessions with `policy.denied`, `harness.
 
 ## Datasets
 
-The platform's **Datasets** page sits between observation and training. A dataset is a versioned (lakeFS) corpus you can:
+The platform's **Datasets** page sits between observation and training. A dataset is a versioned (Hub) corpus you can:
 
 - Build from session conversations
 - Upload as a CSV / JSONL
@@ -77,7 +77,7 @@ Each dataset has four tabs:
 - **OVERVIEW** — counts, status
 - **SAMPLES** — preview rows
 - **PIPELINE** — DAG of how this dataset was built
-- **REPOSITORY** — the underlying lakeFS repo, with branches, commits, and tags
+- **REPOSITORY** — the underlying Hub repo, with branches, commits, and tags
 
 For details on each source type, see [Datasets](/develop/features/datasets/).
 
