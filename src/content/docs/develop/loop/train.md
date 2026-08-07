@@ -102,7 +102,7 @@ See [Training](/develop/features/training/) for the full configuration.
 
 After you've trained: run an evaluation to confirm improvement.
 
-The platform ships 40 built-in benchmarks across 10 categories (coding, reasoning, instruction-following, retrieval, etc.). Plus a **Custom Benchmark** builder for your own task-specific tests.
+The platform ships 40 built-in benchmarks across 9 categories (reasoning, language, knowledge, coding, safety, chat, instruction, agent, vision). Plus a **Custom Benchmark** builder for scoring one of your own datasets.
 
 Each evaluation produces:
 
