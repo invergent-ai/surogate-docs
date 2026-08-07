@@ -288,9 +288,11 @@ Datasets → NEW DATASET → From Conversations:
 
 Evaluations → NEW EVALUATION → Custom Benchmark:
 - Name: `acme-support-regression-suite`
-- Dataset: `acme-support-failures-2026q1`
-- Metric: LLM-judge (Claude Sonnet)
-- Judge prompt: *"Did the agent's response accurately address the user's question? Score 0 (no) to 10 (yes). Brief explanation."*
+- Dataset: `acme-support-failures-2026q1`, split `train`
+- Columns: the prompt column and the expected-answer column
+- Scoring: **LLM judge**, with criteria like *"Did the answer accurately address the user's question?"*
+
+The judge model isn't set here — it's configured once per run, in the next step.
 
 **3. Deploy the candidate agent**.
 
@@ -298,27 +300,23 @@ Either:
 - Clone `acme-support-bot` as `acme-support-bot-v2` and apply your changes
 - Or use a feature branch in the Hub
 
-**4. Run the evaluation on the current production agent**.
+**4. Run both agents in one evaluation**.
 
 Evaluations → `acme-support-regression-suite` → RUN EVALUATION:
 - Target: `acme-support-bot` (production)
-- Judge LLM: Claude Sonnet (your existing OpenRouter key)
-- API Key: `<openrouter_key>`
+- Compare model: `acme-support-bot-v2` (the candidate)
+- Judge LLM: Claude Sonnet, with your OpenRouter key
 
-Wait for results. Each sample shows model output + judge score + judge reasoning.
+One run scores both targets against the same benchmark, so you don't have to line two reports up by hand. The key is stored server-side and isn't shown again.
 
-**5. Run the same evaluation on the candidate**.
+**5. Compare**.
 
-Same benchmark, target = `acme-support-bot-v2`. Same judge.
-
-**6. Compare**.
-
-Open the two run reports side-by-side. Look at:
+Wait for results, then look at:
 - **Aggregate score** — does v2 beat v1?
-- **Per-sample comparison** — where does v2 win, where does it lose?
-- **Critical regressions** — any samples where v2 scored lower than v1 by ≥3 points?
+- **Per-subset breakdown** — the report gives each subset's pass rate for both targets and the delta between them, so regressions stand out.
+- **Per-sample detail** — model output, judge score and judge reasoning for each sample.
 
-**7. Decide**.
+**6. Decide**.
 
 If v2 net-improves and doesn't have critical regressions: promote v2.
 
