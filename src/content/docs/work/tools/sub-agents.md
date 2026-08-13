@@ -4,7 +4,9 @@ title: Sub-agents
 
 The **Sub-agents** page is a catalog of the specialized helper agents your agent can delegate to — each a preset bundle of system prompt, tool filter, model, and iteration cap.
 
-Open it from an agent's left navigation (**Sub-agents**) or go to `/work/agents/<agentId>/sub-agents`.
+Open it from the left navigation under **Library**, below Knowledge Bases, or go to `/work/sub-agents`. The catalog is **project-wide**: every agent in the project sees and shares the same sub-agents, which is why it lives in the Library rather than under one agent. (The old per-agent URL, `/work/agents/<agentId>/sub-agents`, redirects here.)
+
+Reading and editing the catalog goes through a running agent, so with nothing running the page says so.
 
 ## What a sub-agent is
 

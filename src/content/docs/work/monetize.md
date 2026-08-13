@@ -47,7 +47,7 @@ You'll need a project on the **Pro plan or higher** with **BYO Firebase Auth** c
 
 ### Step 1 — Connect your Stripe account
 
-Open the agent's **Configure** page and click the **$ Monetize** tab. A **How selling works** guide walks the five steps (Connect Stripe → Finish onboarding → Enable buyer sign-in → Pick pricing and add offers → Share with buyers) and dismisses itself once selling is live.
+Open the agent's **Publish** page and click the **$ Monetize** tab. A **How selling works** guide walks the five steps (Connect Stripe → Finish onboarding → Enable buyer sign-in → Pick pricing and add offers → Share with buyers) and dismisses itself once selling is live.
 
 Click **Connect Stripe** and follow Stripe's Express onboarding:
 
