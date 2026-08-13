@@ -4,7 +4,7 @@ sidebar:
   label: Users
 ---
 
-The **Users** section on an agent's Configure page manages the people who chat with this agent through its public Web endpoint. These are **distinct from your operator account** (your `ops.surogate.ai` login).
+The **Users** tab on an agent's [Publish](/work/workflow/publish-agent/) page manages the people who chat with this agent through its public Web endpoint. These are **distinct from your operator account** (your `ops.surogate.ai` login).
 
 ## When you'd use this
 

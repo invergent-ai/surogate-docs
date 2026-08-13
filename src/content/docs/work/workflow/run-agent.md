@@ -2,7 +2,7 @@
 title: Run an agent
 ---
 
-Open an agent from **Agents** in the left nav, then click **New chat** in the agent's left navigation (between Configure and Inbox). The composer opens with a `Send a message...` field; you'll see Commands / Skills / Scheduled Tasks shortcuts above it and an Add button for attachments.
+Open an agent from **Agents** in the left nav, then click **New chat** in the agent's left navigation (between Publish and Inbox). The composer opens with a `Send a message...` field; you'll see Commands / Skills / Scheduled Tasks shortcuts above it and an Add button for attachments.
 
 ## What you'll see in the thread
 

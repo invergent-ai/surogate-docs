@@ -22,7 +22,7 @@ Three things to get right, in order:
 
 1. **Create a Firebase project** in the Firebase Console and write down a handful of public config values.
 2. **Paste those values into Surogate** under **Settings → Authentication tab → BYO Firebase auth**. Pick which sign-in methods you want offered (Google, GitHub, Email/Password).
-3. **Flip the toggle on each agent** under **Configure → Users tab → Let anyone sign up**. Restart the agent so the new config is picked up by its web app.
+3. **Flip the toggle on each agent** under **Publish → Users tab → Let anyone sign up**. Restart the agent so the new config is picked up by its web app.
 
 ## Step 1 — Create a Firebase project
 
@@ -178,7 +178,7 @@ Three things to check, in order:
 
 ### Self-registered users were locked out after I removed Firebase
 
-Removing the project's Firebase config also disables Firebase login. Their database row still exists — go to **Configure → Users tab → + ADD USER** and re-issue local credentials by entering the same email, or restore the Firebase config.
+Removing the project's Firebase config also disables Firebase login. Their database row still exists — go to **Publish → Users tab → + ADD USER** and re-issue local credentials by entering the same email, or restore the Firebase config.
 
 ### A user complains they never got the verification email
 
@@ -190,7 +190,7 @@ Also worth telling them to check the spam folder, especially before you've set u
 
 Two scopes:
 
-- **Stop offering it on one specific agent** — flip **Let anyone sign up** off on the agent's Configure → Users tab and restart the agent. People who already signed up for that agent keep working; only new sign-ups are blocked.
+- **Stop offering it on one specific agent** — flip **Let anyone sign up** off on the agent's Publish → Users tab and restart the agent. People who already signed up for that agent keep working; only new sign-ups are blocked.
 - **Stop offering it across the whole project** — click **Remove Firebase** on the Settings page. Every agent in the project goes back to admin-only login, and previously self-registered users can no longer authenticate via Firebase until you restore the config (their rows are preserved; you can issue them local credentials in the meantime).
 
 The Firebase project itself is yours — Surogate doesn't touch it. Deleting your Firebase project deletes all your users; the same applies if you cancel Firebase billing.

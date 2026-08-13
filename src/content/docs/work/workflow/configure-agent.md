@@ -2,7 +2,9 @@
 title: Configure your agent
 ---
 
-The **Configure** page — reached from an agent's left navigation (`/work/agents/{id}/settings?tab=...`) — is the core agent-building surface: twelve tabs that control who the agent is, what it can do, which model runs it, and where people reach it.
+The **Configure** page — reached from an agent's left navigation (`/work/agents/{id}/settings?tab=...`) — is the core agent-building surface: ten tabs that control who the agent is, what it can do, which model runs it, and where people reach it.
+
+Getting the agent *to* people — its landing page, end-users, usage insights and pricing — lives on the sibling [Publish](/work/workflow/publish-agent/) page instead.
 
 Each tab saves independently. Most tabs surface a **SAVE** button (which flashes a green **Saved** confirmation) or an amber **Unsaved changes** bar with **Save** / **Discard changes** when a field is dirty; a few toggles save the moment you flip them. Where noted, changes apply to **new sessions only** or reach live sessions on their next turn.
 
@@ -17,9 +19,7 @@ Each tab saves independently. Most tabs surface a **SAVE** button (which flashes
 | **Coding** | GitHub repos and coding-agent plans (only when `/code` is enabled) |
 | **Model** | Serving model plus summary / vision / image / video role models |
 | **Governance** | Policy enforcement, tool allow/deny, web & browser egress, SSH, EU AI Act AI disclosure |
-| **Users** | End-users who can chat with this agent, and self-registration |
 | **Channels** | Web, Slack, Telegram, WhatsApp, and website-widget connections |
-| **Monetize** | Charge for access via Stripe Connect (Pro plan) |
 
 System agents (like the platform copilot) hide the **Identity**, **Capabilities**, and **Governance** tabs, and non-admins see a "managed by platform administrators" notice instead of the tabs. The **Coding** tab appears only when the agent's coding capability (`/code`) is turned on in **Capabilities**.
 
@@ -139,12 +139,6 @@ The agent's guardrails — and they are **enforced**: the composed policy is che
 
 A denial is returned to the model as a tool error and recorded as a `policy.denied` event, visible per session under **Sessions → POLICIES**.
 
-## Users
-
-Manage the people who can chat with this agent — separate from your Surogate team. A **Let anyone sign up** toggle controls self-registration (available only when the project has Firebase auth configured and is on a paid plan).
-
-A searchable list shows each user's email and auth provider (Email & password / Google / GitHub), with **Edit** and **Delete** row actions. **Add user** opens a form with **Email**, an optional **Display name**, and an optional **Password** (leave empty for SSO). See [Users](/work/channels/users/) and [Self-registration](/work/channels/self-registration/).
-
 ## Channels
 
 Connect the agent to where your people already work. Each channel card shows an **Active** / **Off** status and a **Connect** or **Manage** button.
@@ -154,9 +148,3 @@ Connect the agent to where your people already work. Each channel card shows an 
 - **Telegram** — a **Connect Telegram** wizard (BotFather token). **Manage** options: **Require @mention**, **Mode**, **Reply Threading** (First chunk only / All chunks / Off), **Message Reactions**, and **Per-User Group Chats**. See [Telegram](/work/channels/telegram/).
 - **WhatsApp** — a **Connect WhatsApp** wizard (Meta Cloud API credentials: Phone Number ID, Access Token, App Secret, WABA ID), then a callback URL + verify token to register in Meta. **Manage** option: **Mode**. See [WhatsApp](/work/channels/whatsapp/).
 - **Website** — an embeddable chat bubble. Set **Allowed origins**, copy the **Embed code**, cap **Messages per chat**, and reveal the **Publishable key** under Advanced. See [Website widget](/work/channels/website-widget/).
-
-## Monetize
-
-Charge people for access to this agent. Requires the **Pro** plan (lower tiers see an **Upgrade to Pro** gate).
-
-Connect billing via **Stripe Connect** (status pill: Not connected / Onboarding / Active / Restricted / Disconnected), then pick a **Pricing model**: **Free**, **Subscription**, **One-time packs**, or **Both**. Offers carry a **Name**, **Price** and **Currency** (defaults to EUR), **Usage included** (authored in messages), an **Interval** for plans, optional **Browsing time** and **Media credits**, an AI-draftable **Description**, and a **What's included** package (capabilities, channels, KBs, tools, skills, model tier). Most fields edit in place; price/currency/interval changes replace the offer with a new Stripe Price. **Free trial** and **Per-user usage limit** cards control what non-payers get. The tab remembers itself in the URL (`?tab=monetize`). See the [Monetize](/work/monetize/) guide.

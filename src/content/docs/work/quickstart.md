@@ -25,7 +25,7 @@ You land on the agent's **Overview** page with its public URL, stats, channels, 
 
 ## 2. Have your first conversation
 
-On the agent's Overview page, click **New chat** in the left navigation (between **Configure** and **Inbox**).
+On the agent's Overview page, click **New chat** in the left navigation (between **Publish** and **Inbox**).
 
 The chat opens. Type a question, press Enter — the agent streams its response. Tool calls (KB searches, web fetches) appear inline so you can see what it did.
 

@@ -169,6 +169,8 @@ export default defineConfig({
               items: [
                 'work/workflow/run-agent',
                 'work/workflow/configure-agent',
+                'work/workflow/publish-agent',
+                'work/workflow/landing-page',
                 'work/workflow/governance',
                 'work/tools/chat',
                 'work/tools/commands',
