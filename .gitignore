@@ -4,3 +4,8 @@ dist/
 .DS_Store
 __pycache__/
 *.pyc
+
+# Docusaurus leftovers. The site builds to dist/ with Astro; these were the
+# old toolchain's output, committed by accident during the migration.
+build/
+.docusaurus/

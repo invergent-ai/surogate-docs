@@ -1,5 +1,10 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "migration"]
+  // `include` is "**/*", so `astro check` type-checks whatever happens to be
+  // on disk. With the Docusaurus leftovers present (24 MB, 174 generated JS
+  // files) it exhausted the 4 GB heap and aborted with a native stack trace —
+  // failing the deploy workflow's Type check step. They are deleted and
+  // gitignored now; this keeps a stale local copy from reproducing it.
+  "exclude": ["dist", "migration", "build", ".docusaurus"]
 }
