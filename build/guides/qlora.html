@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-guides/qlora" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Quantized LoRA (QLoRA) | Surogate</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.surogate.ai/guides/qlora"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Quantized LoRA (QLoRA) | Surogate"><meta data-rh="true" name="description" content="QLoRA enables memory-efficient fine-tuning by quantizing the frozen base model weights while training LoRA adapters in higher precision. Surogate supports two modes:"><meta data-rh="true" property="og:description" content="QLoRA enables memory-efficient fine-tuning by quantizing the frozen base model weights while training LoRA adapters in higher precision. Surogate supports two modes:"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.surogate.ai/guides/qlora"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/guides/qlora" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/guides/qlora" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://K46M9C3QXR-dsn.algolia.net" crossorigin="anonymous"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Quantized LoRA (QLoRA)","item":"https://docs.surogate.ai/guides/qlora"}]}</script><link rel="preconnect" href="https://www.google-analytics.com">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7YRDGYZN0R"></script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-7YRDGYZN0R",{})</script>
+
+
+
+<link rel="search" type="application/opensearchdescription+xml" title="Surogate" href="/opensearch.xml">
+
+
+<meta name="keywords" content="Surogate, AgentOps, agents, LLM, MCP, training, fine-tuning, RL, evaluations">
+<meta name="description" content="Documentation for Surogate Ops — operator and builder tracks. Build reliable autonomous agents.">
+<meta name="og:type" content="website">
+<meta name="og:url" content="https://docs.surogate.ai">
+<meta name="og:title" content="Surogate Documentation">
+<meta name="og:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="og:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:secure_url" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:alt" content="Surogate">
+<meta name="og:locale" content="en_US">
+<meta name="og:image:type" content="image/jpeg">
+<meta name="twitter:site" content="surogate_ai">
+<meta name="twitter:creator" content="surogate_ai">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://docs.surogate.ai">
+<meta name="twitter:title" content="Surogate Documentation">
+<meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
+<script src="/assets/js/runtime~main.5374f7b7.js" defer="defer"></script>
+<script src="/assets/js/main.c60b3980.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo-black.svg" alt="logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo-white.svg" alt="logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Documentation</b></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">About<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://ops.surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Login<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://x.com/surogate_ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Follow us on X<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="navbarSearchContainer_Bca1"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search (Meta+k)" aria-keyshortcuts="Meta+k"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" fill="none" stroke-width="1.4"></circle><path d="m21 21-4.3-4.3" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/old-docs"><span title="Welcome" class="linkLabel_WmDU">Welcome</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/about/how-it-works"><span title="About Surogate" class="categoryLinkLabel_W154">About Surogate</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/how-it-works"><span title="How Surogate Works" class="linkLabel_WmDU">How Surogate Works</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/adaptive-training"><span title="Adaptive Training System" class="linkLabel_WmDU">Adaptive Training System</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/dsl"><span title="DSL Language" class="linkLabel_WmDU">DSL Language</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/automatic-differentiation"><span title="Automatic Differentiation" class="linkLabel_WmDU">Automatic Differentiation</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/getting-started/installation"><span title="Getting Started" class="categoryLinkLabel_W154">Getting Started</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/installation"><span title="Installation" class="linkLabel_WmDU">Installation</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/training-modes"><span title="Training Modes" class="linkLabel_WmDU">Training Modes</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-pretraining"><span title="Quickstart: Pretraining (PT)" class="linkLabel_WmDU">Quickstart: Pretraining (PT)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-sft"><span title="Quickstart: Supervised Fine-Tuning (SFT)" class="linkLabel_WmDU">Quickstart: Supervised Fine-Tuning (SFT)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-grpo"><span title="Quickstart: RL Training (GRPO)" class="linkLabel_WmDU">Quickstart: RL Training (GRPO)</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/examples"><span title="Examples Library" class="categoryLinkLabel_W154">Examples Library</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/examples"><span title="Examples Library" class="linkLabel_WmDU">Examples Library</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/examples/pt/qwen3"><span title="Pre-training (PT)" class="categoryLinkLabel_W154">Pre-training (PT)</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/examples/sft/qwen3-lora"><span title="Fine-tuning (SFT)" class="categoryLinkLabel_W154">Fine-tuning (SFT)</span></a></div></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/guides/configuration"><span title="User Guides" class="categoryLinkLabel_W154">User Guides</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/configuration"><span title="Configuration" class="linkLabel_WmDU">Configuration</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/datasets"><span title="Datasets" class="linkLabel_WmDU">Datasets</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/optimizers"><span title="Optimizers" class="linkLabel_WmDU">Optimizers</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/precision-and-recipes"><span title="Precision &amp; Recipes" class="linkLabel_WmDU">Precision &amp; Recipes</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/guides/qlora"><span title="Quantized LoRA (QLoRA)" class="linkLabel_WmDU">Quantized LoRA (QLoRA)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/metrics"><span title="Training Metrics &amp; Monitoring" class="linkLabel_WmDU">Training Metrics &amp; Monitoring</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/moe"><span title="Mixture-of-Experts (MoE) Models" class="linkLabel_WmDU">Mixture-of-Experts (MoE) Models</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/multi-gpu"><span title="Multi-GPU Training" class="linkLabel_WmDU">Multi-GPU Training</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/multi-node"><span title="Multi-Node Training" class="linkLabel_WmDU">Multi-Node Training</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/offloading"><span title="Offloading in Surogate" class="linkLabel_WmDU">Offloading in Surogate</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/long-context"><span title="Long Context Training" class="linkLabel_WmDU">Long Context Training</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/memory"><span title="Memory" class="linkLabel_WmDU">Memory</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/debugging"><span title="Debugging training issues" class="linkLabel_WmDU">Debugging training issues</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/rl-environments"><span title="RL Environments" class="linkLabel_WmDU">RL Environments</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/rl-training"><span title="RL Training (GRPO)" class="linkLabel_WmDU">RL Training (GRPO)</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/reference/benchmarks"><span title="Technical Reference" class="categoryLinkLabel_W154">Technical Reference</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/appendix/release-notes"><span title="Appendix" class="categoryLinkLabel_W154">Appendix</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">User Guides</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Quantized LoRA (QLoRA)</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Quantized LoRA (QLoRA)</h1></header>
+<p>QLoRA enables memory-efficient fine-tuning by quantizing the frozen base model weights while training LoRA adapters in higher precision. Surogate supports two modes:</p>
+<ul>
+<li class=""><strong>Online QLoRA</strong>: Weights are quantized on-the-fly at startup from a standard BF16/FP16 checkpoint.</li>
+<li class=""><strong>Pre-quantized models</strong>: Load a model that is already quantized (e.g., from HuggingFace Hub). Supported formats are <strong>Fine-Grained FP8</strong> (compatible with NVIDIA ModelOpt FP8 exports), <strong>ModelOpt NVFP4</strong> (two-level FP8+FP32 block scaling), and <strong>MXFP4</strong> (microscaling FP4, GPT-OSS models). Pre-quantized models skip the quantization step at startup and load directly into the quantized format.</li>
+</ul>
+<p>Surogate supports three online QLoRA quantization formats:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Aspect</th><th>FP8 QLoRA</th><th>FP4 QLoRA</th><th>NF4 QLoRA (BitsAndBytes)</th></tr></thead><tbody><tr><td><strong>Format</strong></td><td>E4M3 (fwd), E5M2 (bwd)</td><td>E2M1 (both)</td><td>NF4 (4-bit normal float)</td></tr><tr><td><strong>Scaling</strong></td><td>Per-tensor delayed</td><td>Two-level block (FP8 + FP32)</td><td>Per-block absmax (+ double quant)</td></tr><tr><td><strong>GPU Requirement</strong></td><td>SM89+ (Ada, Hopper, Blackwell)</td><td>SM100+ (Blackwell only)</td><td>Any CUDA GPU</td></tr><tr><td><strong>Memory Compression</strong></td><td>~50% vs FP16</td><td>~75% vs FP16</td><td>~75% vs FP16</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="pre-quantized-models">Pre-Quantized Models<a href="#pre-quantized-models" class="hash-link" aria-label="Direct link to Pre-Quantized Models" title="Direct link to Pre-Quantized Models" translate="no">​</a></h2>
+<p>When a HuggingFace model already ships with pre-quantized weights (e.g., a ModelOpt-quantized checkpoint), Surogate can load the quantized tensors directly from the safetensors files without running an online quantization pass at startup. This saves significant startup time for large models and ensures the training run uses exactly the same quantized representation as the published checkpoint.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="supported-formats">Supported Formats<a href="#supported-formats" class="hash-link" aria-label="Direct link to Supported Formats" title="Direct link to Supported Formats" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Format</th><th>HF <code>quant_method</code></th><th>Data dtype</th><th>Scale dtype</th><th>Notes</th></tr></thead><tbody><tr><td><a href="https://huggingface.co/docs/transformers/en/quantization/finegrained_fp8" target="_blank" rel="noopener noreferrer" class=""><strong>Fine-Grained FP8</strong></a></td><td><code>fp8</code></td><td>FP8 E4M3</td><td>FP32 (inverse scale)</td><td>Per-block 2D tile scaling</td></tr><tr><td><a href="https://huggingface.co/docs/transformers/en/quantization/mxfp4" target="_blank" rel="noopener noreferrer" class=""><strong>ModelOpt NVFP4</strong></a></td><td><code>modelopt</code> / NVFP4</td><td>FP4 E2M1</td><td>FP8 block + FP32 global</td><td>Two-level scaling (FP8 + FP32)</td></tr><tr><td><a href="https://huggingface.co/docs/transformers/en/quantization/mxfp4" target="_blank" rel="noopener noreferrer" class=""><strong>MXFP4</strong></a></td><td><code>mxfp4</code></td><td>FP4 E2M1</td><td>FP8 per-block</td><td>GPT-OSS models only; uses <code>_blocks</code>/<code>_scales</code> tensor naming</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-it-works">How It Works<a href="#how-it-works" class="hash-link" aria-label="Direct link to How It Works" title="Direct link to How It Works" translate="no">​</a></h3>
+<p>Surogate inspects the model&#x27;s <code>quantization_config</code> in its HuggingFace <code>config.json</code> at startup to detect the pre-quantized format automatically — no extra config keys are needed.</p>
+<p><strong>HuggingFace tensor naming:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Format</th><th>Data tensor</th><th>Block scale tensor</th><th>Global scale tensor</th></tr></thead><tbody><tr><td>Fine-Grained FP8</td><td><code>{name}.weight</code></td><td><code>{name}.weight_scale_inv</code></td><td>—</td></tr><tr><td>ModelOpt NVFP4</td><td><code>{name}.weight</code></td><td><code>{name}.weight_scale</code></td><td><code>{name}.weight_scale_2</code></td></tr><tr><td>MXFP4</td><td><code>{base}_blocks</code></td><td><code>{base}_scales</code></td><td>—</td></tr></tbody></table>
+<p>MXFP4 uses a different base name convention — there is no <code>.weight</code> suffix; instead, the packed FP4 data is stored as <code>{base}_blocks</code> and the FP8 scales as <code>{base}_scales</code>.</p>
+<p>For all formats, layers listed in the model&#x27;s <code>modules_to_not_convert</code> (typically the embedding and LM head) are loaded at full BF16 precision.</p>
+<p>Fused weight tensors (e.g., <code>gate_up_proj</code>) that are stored as separate components in the pre-quantized checkpoint are loaded, dequantized, fused, and re-quantized automatically.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="constraints">Constraints<a href="#constraints" class="hash-link" aria-label="Direct link to Constraints" title="Direct link to Constraints" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>Requires <code>lora: true</code></strong> — base weights are frozen; only LoRA adapters are trained.</li>
+<li class=""><strong>Mutually exclusive with online QLoRA</strong> — <code>qlora_fp8</code>, <code>qlora_fp4</code>, and <code>qlora_bnb</code> must all be <code>false</code>.</li>
+<li class=""><strong>No adapter merging</strong> — <code>adapter_path</code> is not supported because there is no BF16 intermediate.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="example--fine-grained-fp8">Example — Fine-Grained FP8<a href="#example--fine-grained-fp8" class="hash-link" aria-label="Direct link to Example — Fine-Grained FP8" title="Direct link to Example — Fine-Grained FP8" translate="no">​</a></h3>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">model</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> nvidia/Llama</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">3.1</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">8B</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">Instruct</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">FP8</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_rank</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">16</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">recipe</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> bf16</span><br></span></code></pre></div></div>
+<p>No quantization flags are needed — the format is detected from the checkpoint&#x27;s <code>quantization_config</code>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="example--modelopt-nvfp4">Example — ModelOpt NVFP4<a href="#example--modelopt-nvfp4" class="hash-link" aria-label="Direct link to Example — ModelOpt NVFP4" title="Direct link to Example — ModelOpt NVFP4" translate="no">​</a></h3>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">model</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> nvidia/Llama</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">3.1</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">8B</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">Instruct</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">NVFP4</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_rank</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">16</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">recipe</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> nvfp4</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="example--mxfp4-gpt-oss">Example — MXFP4 (GPT-OSS)<a href="#example--mxfp4-gpt-oss" class="hash-link" aria-label="Direct link to Example — MXFP4 (GPT-OSS)" title="Direct link to Example — MXFP4 (GPT-OSS)" translate="no">​</a></h3>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">model</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> nvidia/Nemotron</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">H</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">47B</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">Base</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">MXFP4</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_rank</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">16</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">recipe</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> bf16</span><br></span></code></pre></div></div>
+<p>MXFP4 is currently only supported for GPT-OSS model architectures. The format is detected automatically from the checkpoint&#x27;s <code>quantization_config</code>.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="qlora-vs-recipes">QLoRA vs Recipes<a href="#qlora-vs-recipes" class="hash-link" aria-label="Direct link to QLoRA vs Recipes" title="Direct link to QLoRA vs Recipes" translate="no">​</a></h2>
+<p><strong>QLoRA</strong> determines how the frozen base model weights are stored and used during the forward pass. The base weights remain quantized and are never updated.</p>
+<p><strong>Recipes</strong> determine the precision format used for LoRA adapter computations, activations, and gradients during training.</p>
+<p>You can combine any QLoRA format with any compatible recipe:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">QLoRA (base weights) + Recipe (LoRA training) = Full Configuration</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="fp8-qlora">FP8 QLoRA<a href="#fp8-qlora" class="hash-link" aria-label="Direct link to FP8 QLoRA" title="Direct link to FP8 QLoRA" translate="no">​</a></h2>
+<p>FP8 QLoRA stores base model weights in FP8 format, reducing memory by ~50% compared to FP16/BF16.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-it-works-1">How It Works<a href="#how-it-works-1" class="hash-link" aria-label="Direct link to How It Works" title="Direct link to How It Works" translate="no">​</a></h3>
+<p>Base weights are quantized to FP8 using two formats optimized for their use cases:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Format</th><th>Exponent</th><th>Mantissa</th><th>Max Value</th><th>Use Case</th></tr></thead><tbody><tr><td><strong>E4M3</strong></td><td>4 bits</td><td>3 bits</td><td>448</td><td>Forward pass (higher precision)</td></tr><tr><td><strong>E5M2</strong></td><td>5 bits</td><td>2 bits</td><td>57344</td><td>Backward pass (larger dynamic range)</td></tr></tbody></table>
+<p><strong>Delayed Scaling</strong>: Scale factors are computed from the previous iteration&#x27;s abs-max values (history window of 1024 by default), providing more stable training than just-in-time scaling.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="parameters">Parameters<a href="#parameters" class="hash-link" aria-label="Direct link to Parameters" title="Direct link to Parameters" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>qlora_fp8</code></td><td>false</td><td>Enable FP8 QLoRA</td></tr><tr><td><code>margin</code></td><td>0</td><td>Margin for scale factor computation</td></tr><tr><td><code>amax_history_len</code></td><td>1024</td><td>Length of amax history window</td></tr><tr><td><code>amax_compute_algo</code></td><td>MAX</td><td>Algorithm: MAX or MOST_RECENT</td></tr><tr><td><code>reduce_amax</code></td><td>true</td><td>Reduce amax across distributed group</td></tr><tr><td><code>skip_quant_first_layers</code></td><td>0</td><td>Skip quantization for first N layers</td></tr><tr><td><code>skip_quant_last_layers</code></td><td>0</td><td>Skip quantization for last N layers</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="recommended-recipe-combinations">Recommended Recipe Combinations<a href="#recommended-recipe-combinations" class="hash-link" aria-label="Direct link to Recommended Recipe Combinations" title="Direct link to Recommended Recipe Combinations" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Recipe</th><th>Use Case</th></tr></thead><tbody><tr><td><strong>bf16</strong></td><td>Maximum LoRA accuracy, any GPU (Recommended)</td></tr><tr><td>fp8-hybrid</td><td>Faster LoRA compute on SM89+ GPUs</td></tr><tr><td>nvfp4</td><td>Maximum speed on Blackwell (experimental)</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="example">Example<a href="#example" class="hash-link" aria-label="Direct link to Example" title="Direct link to Example" translate="no">​</a></h3>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">qlora_fp8</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">skip_quant_first_layers</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">skip_quant_last_layers</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">recipe</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> bf16</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_rank</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">16</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="fp4-qlora">FP4 QLoRA<a href="#fp4-qlora" class="hash-link" aria-label="Direct link to FP4 QLoRA" title="Direct link to FP4 QLoRA" translate="no">​</a></h2>
+<p>FP4 QLoRA stores base model weights in NVIDIA&#x27;s FP4 E2M1 format, reducing memory by ~75% compared to FP16/BF16. Requires Blackwell GPUs (SM100+).</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-it-works-2">How It Works<a href="#how-it-works-2" class="hash-link" aria-label="Direct link to How It Works" title="Direct link to How It Works" translate="no">​</a></h3>
+<p>FP4 E2M1 provides extreme compression with only 8 representable values per sign:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Value</th></tr></thead><tbody><tr><td><strong>Exponent bits</strong></td><td>2</td></tr><tr><td><strong>Mantissa bits</strong></td><td>1</td></tr><tr><td><strong>Values</strong></td><td>±{0.0, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 6.0}</td></tr><tr><td><strong>Storage</strong></td><td>2 values per byte (4 bits each)</td></tr></tbody></table>
+<p><strong>Two-Level Block Scaling</strong>:</p>
+<ul>
+<li class="">Level 1: FP8 E4M3 scales per block (16 values for activations, 16x16 for weights)</li>
+<li class="">Level 2: FP32 global amax baked into block scales</li>
+</ul>
+<p><strong>Stability Techniques</strong>:</p>
+<ul>
+<li class=""><strong>Random Hadamard Transform (RHT)</strong>: Spreads outliers before quantization</li>
+<li class=""><strong>Stochastic Rounding</strong>: Prevents quantization bias accumulation in gradients</li>
+<li class=""><strong>Four-Over-Six (4/6) Adaptive Scaling</strong>: Selects optimal scale per block</li>
+<li class=""><strong>Layer Skipping</strong>: Keep critical layers (embedding, lm_head) in BF16</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="parameters-1">Parameters<a href="#parameters-1" class="hash-link" aria-label="Direct link to Parameters" title="Direct link to Parameters" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>qlora_fp4</code></td><td>false</td><td>Enable FP4 QLoRA</td></tr><tr><td><code>skip_quant_first_layers</code></td><td>0</td><td>Skip FP4 for first N layers</td></tr><tr><td><code>skip_quant_last_layers</code></td><td>0</td><td>Skip FP4 for last N layers</td></tr><tr><td><code>backend</code></td><td>cutlass</td><td>Backend: cudnn or cutlass</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="recommended-recipe-combinations-1">Recommended Recipe Combinations<a href="#recommended-recipe-combinations-1" class="hash-link" aria-label="Direct link to Recommended Recipe Combinations" title="Direct link to Recommended Recipe Combinations" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Recipe</th><th>Use Case</th></tr></thead><tbody><tr><td><strong>nvfp4</strong></td><td>Maximum speed, full FP4 pipeline (Recommended)</td></tr><tr><td>bf16</td><td>Higher LoRA accuracy, slower</td></tr><tr><td>fp8-hybrid</td><td>Balance of speed and accuracy</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="example-1">Example<a href="#example-1" class="hash-link" aria-label="Direct link to Example" title="Direct link to Example" translate="no">​</a></h3>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">qlora_fp4</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">recipe</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> nvfp4</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_rank</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">16</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">skip_quant_first_layers</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">skip_quant_last_layers</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">4</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="nf4-qlora-bitsandbytes">NF4 QLoRA (BitsAndBytes)<a href="#nf4-qlora-bitsandbytes" class="hash-link" aria-label="Direct link to NF4 QLoRA (BitsAndBytes)" title="Direct link to NF4 QLoRA (BitsAndBytes)" translate="no">​</a></h2>
+<p>NF4 QLoRA uses the BitsAndBytes NF4 (NormalFloat4) quantization format, providing ~75% memory reduction with broad GPU compatibility.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-it-works-3">How It Works<a href="#how-it-works-3" class="hash-link" aria-label="Direct link to How It Works" title="Direct link to How It Works" translate="no">​</a></h3>
+<p>NF4 is a 4-bit data type optimized for normally distributed weights:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Value</th></tr></thead><tbody><tr><td><strong>Bits per value</strong></td><td>4</td></tr><tr><td><strong>Storage</strong></td><td>2 values per byte</td></tr><tr><td><strong>Quantile-based</strong></td><td>16 levels mapped to normal distribution quantiles</td></tr><tr><td><strong>Block size</strong></td><td>Configurable (default: 64 values per block)</td></tr></tbody></table>
+<p><strong>Block-wise Quantization</strong>:</p>
+<ul>
+<li class="">Weights are divided into blocks (default 64 values)</li>
+<li class="">Each block stores an FP32 absmax scale factor</li>
+<li class="">Values are quantized to 4-bit indices into a fixed NF4 lookup table</li>
+</ul>
+<p><strong>Double Quantization</strong> (optional):</p>
+<ul>
+<li class="">Absmax scales are further quantized to INT8</li>
+<li class="">Groups of 256 blocks share an FP32 scale and offset</li>
+<li class="">Reduces scale overhead from 4 bytes to ~1 byte per block</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="memory-layout">Memory Layout<a href="#memory-layout" class="hash-link" aria-label="Direct link to Memory Layout" title="Direct link to Memory Layout" translate="no">​</a></h3>
+<p>For a weight tensor with N elements using block size 64:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Component</th><th>Size (bytes)</th><th>With Double Quant</th></tr></thead><tbody><tr><td>NF4 data</td><td>N / 2</td><td>N / 2</td></tr><tr><td>Absmax scales</td><td>(N / 64) × 4</td><td>(N / 64) × 1</td></tr><tr><td>Double quant</td><td>—</td><td>(N / 64 / 256) × 8</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="parameters-2">Parameters<a href="#parameters-2" class="hash-link" aria-label="Direct link to Parameters" title="Direct link to Parameters" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Parameter</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>qlora_bnb</code></td><td>false</td><td>Enable BitsAndBytes NF4 QLoRA</td></tr><tr><td><code>qlora_bnb_block_size</code></td><td>64</td><td>Block size for quantization (64 or 128)</td></tr><tr><td><code>qlora_bnb_double_quant</code></td><td>true</td><td>Enable double quantization for scales</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="gpu-compatibility">GPU Compatibility<a href="#gpu-compatibility" class="hash-link" aria-label="Direct link to GPU Compatibility" title="Direct link to GPU Compatibility" translate="no">​</a></h3>
+<p>Unlike FP8 and FP4 QLoRA which require specific GPU architectures, NF4 QLoRA works on any CUDA GPU. The dequantization happens on-the-fly during forward and backward passes.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="recommended-recipe-combinations-2">Recommended Recipe Combinations<a href="#recommended-recipe-combinations-2" class="hash-link" aria-label="Direct link to Recommended Recipe Combinations" title="Direct link to Recommended Recipe Combinations" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Recipe</th><th>Use Case</th></tr></thead><tbody><tr><td><strong>bf16</strong></td><td>Best accuracy, broad compatibility (Recommended)</td></tr><tr><td>fp8-hybrid</td><td>Faster compute on SM89+ GPUs</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="example-2">Example<a href="#example-2" class="hash-link" aria-label="Direct link to Example" title="Direct link to Example" translate="no">​</a></h3>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">model</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> Qwen/Qwen3</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">4B</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_rank</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">16</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_alpha</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">32</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">qlora_bnb</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">qlora_bnb_block_size</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">64</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">qlora_bnb_double_quant</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">recipe</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> bf16</span><br></span></code></pre></div></div>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="see-also">See also<a href="#see-also" class="hash-link" aria-label="Direct link to See also" title="Direct link to See also" translate="no">​</a></h2>
+<ul>
+<li class=""><a class="" href="/guides/precision-and-recipes">Precision &amp; recipes</a></li>
+<li class=""><a class="" href="/reference/config">Config reference</a></li>
+<li class=""><a class="" href="/old-docs">Back to docs index</a></li>
+</ul></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/guides/precision-and-recipes"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Precision &amp; Recipes</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/guides/metrics"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Training Metrics &amp; Monitoring</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#pre-quantized-models" class="table-of-contents__link toc-highlight">Pre-Quantized Models</a><ul><li><a href="#supported-formats" class="table-of-contents__link toc-highlight">Supported Formats</a></li><li><a href="#how-it-works" class="table-of-contents__link toc-highlight">How It Works</a></li><li><a href="#constraints" class="table-of-contents__link toc-highlight">Constraints</a></li><li><a href="#example--fine-grained-fp8" class="table-of-contents__link toc-highlight">Example — Fine-Grained FP8</a></li><li><a href="#example--modelopt-nvfp4" class="table-of-contents__link toc-highlight">Example — ModelOpt NVFP4</a></li><li><a href="#example--mxfp4-gpt-oss" class="table-of-contents__link toc-highlight">Example — MXFP4 (GPT-OSS)</a></li></ul></li><li><a href="#qlora-vs-recipes" class="table-of-contents__link toc-highlight">QLoRA vs Recipes</a></li><li><a href="#fp8-qlora" class="table-of-contents__link toc-highlight">FP8 QLoRA</a><ul><li><a href="#how-it-works-1" class="table-of-contents__link toc-highlight">How It Works</a></li><li><a href="#parameters" class="table-of-contents__link toc-highlight">Parameters</a></li><li><a href="#recommended-recipe-combinations" class="table-of-contents__link toc-highlight">Recommended Recipe Combinations</a></li><li><a href="#example" class="table-of-contents__link toc-highlight">Example</a></li></ul></li><li><a href="#fp4-qlora" class="table-of-contents__link toc-highlight">FP4 QLoRA</a><ul><li><a href="#how-it-works-2" class="table-of-contents__link toc-highlight">How It Works</a></li><li><a href="#parameters-1" class="table-of-contents__link toc-highlight">Parameters</a></li><li><a href="#recommended-recipe-combinations-1" class="table-of-contents__link toc-highlight">Recommended Recipe Combinations</a></li><li><a href="#example-1" class="table-of-contents__link toc-highlight">Example</a></li></ul></li><li><a href="#nf4-qlora-bitsandbytes" class="table-of-contents__link toc-highlight">NF4 QLoRA (BitsAndBytes)</a><ul><li><a href="#how-it-works-3" class="table-of-contents__link toc-highlight">How It Works</a></li><li><a href="#memory-layout" class="table-of-contents__link toc-highlight">Memory Layout</a></li><li><a href="#parameters-2" class="table-of-contents__link toc-highlight">Parameters</a></li><li><a href="#gpu-compatibility" class="table-of-contents__link toc-highlight">GPU Compatibility</a></li><li><a href="#recommended-recipe-combinations-2" class="table-of-contents__link toc-highlight">Recommended Recipe Combinations</a></li><li><a href="#example-2" class="table-of-contents__link toc-highlight">Example</a></li></ul></li><li><a href="#see-also" class="table-of-contents__link toc-highlight">See also</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Work mode (operators)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/work">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/run-agent">Run an agent</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/review-sessions">Review sessions</a></li><li class="footer__item"><a class="footer__link-item" href="/work/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Develop mode (builders)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/develop">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/loop/overview">The builder loop</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/features/skills-and-experts">Skills &amp; Experts</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Repos</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/invergent-ai/surogates" target="_blank" rel="noopener noreferrer" class="footer__link-item">Runtime (surogates)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="footer__link-item">Training framework (surogate)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate-hub" target="_blank" rel="noopener noreferrer" class="footer__link-item">Artifact store (surogate-hub)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 Invergent. All rights reserved.</div></div></div></footer></div>
+</body>
+</html>

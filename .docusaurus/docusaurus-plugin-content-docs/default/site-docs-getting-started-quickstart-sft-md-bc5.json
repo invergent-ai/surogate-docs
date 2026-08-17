@@ -1,0 +1,23 @@
+{
+  "id": "getting-started/quickstart-sft",
+  "title": "Quickstart: Supervised Fine-Tuning (SFT)",
+  "description": "This runs a small LoRA SFT example using a YAML config.",
+  "source": "@site/docs/getting-started/quickstart-sft.md",
+  "sourceDirName": "getting-started",
+  "slug": "/getting-started/quickstart-sft",
+  "permalink": "/getting-started/quickstart-sft",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "Quickstart: Pretraining (PT)",
+    "permalink": "/getting-started/quickstart-pretraining"
+  },
+  "next": {
+    "title": "Quickstart: RL Training (GRPO)",
+    "permalink": "/getting-started/quickstart-grpo"
+  }
+}

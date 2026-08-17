@@ -1,0 +1,27 @@
+{
+  "id": "develop/features/playground",
+  "title": "Playground",
+  "description": "The Playground is an interactive chat where you send prompts to a model that is currently serving and watch it stream a reply live. Use it to sanity-check a model or a fine-tune before you wire it into an agent.",
+  "source": "@site/docs/develop/features/playground.md",
+  "sourceDirName": "develop/features",
+  "slug": "/develop/features/playground",
+  "permalink": "/develop/features/playground",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 7,
+  "frontMatter": {
+    "title": "Playground",
+    "sidebar_position": 7
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Models",
+    "permalink": "/develop/features/models"
+  },
+  "next": {
+    "title": "Data Hub",
+    "permalink": "/develop/features/hub"
+  }
+}

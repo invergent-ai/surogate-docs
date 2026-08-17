@@ -1,0 +1,27 @@
+{
+  "id": "work/settings/integrations",
+  "title": "Integrations",
+  "description": "Account-level connections to external tools, listed at /studio/settings/integrations in Dev mode.",
+  "source": "@site/docs/work/settings/integrations.md",
+  "sourceDirName": "work/settings",
+  "slug": "/work/settings/integrations",
+  "permalink": "/work/settings/integrations",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 7,
+  "frontMatter": {
+    "title": "Integrations",
+    "sidebar_position": 7
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Team & users",
+    "permalink": "/work/settings/team"
+  },
+  "next": {
+    "title": "Monetize your agents",
+    "permalink": "/work/monetize"
+  }
+}

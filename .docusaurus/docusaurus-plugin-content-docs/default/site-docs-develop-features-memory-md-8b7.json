@@ -1,0 +1,27 @@
+{
+  "id": "develop/features/memory",
+  "title": "Agent memory",
+  "description": "Agents keep a small, curated store of durable facts that survives across sessions, so a user never has to repeat themselves.",
+  "source": "@site/docs/develop/features/memory.md",
+  "sourceDirName": "develop/features",
+  "slug": "/develop/features/memory",
+  "permalink": "/develop/features/memory",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 11,
+  "frontMatter": {
+    "title": "Agent memory",
+    "sidebar_position": 11
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "BYO LLM",
+    "permalink": "/develop/features/byo-llm"
+  },
+  "next": {
+    "title": "Agent browser",
+    "permalink": "/develop/features/browser"
+  }
+}

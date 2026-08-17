@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-getting-started/training-modes" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Training Modes | Surogate</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.surogate.ai/getting-started/training-modes"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Training Modes | Surogate"><meta data-rh="true" name="description" content="Surogate supports four practical ways to adapt a model:"><meta data-rh="true" property="og:description" content="Surogate supports four practical ways to adapt a model:"><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.surogate.ai/getting-started/training-modes"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/getting-started/training-modes" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/getting-started/training-modes" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://K46M9C3QXR-dsn.algolia.net" crossorigin="anonymous"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Training Modes","item":"https://docs.surogate.ai/getting-started/training-modes"}]}</script><link rel="preconnect" href="https://www.google-analytics.com">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7YRDGYZN0R"></script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-7YRDGYZN0R",{})</script>
+
+
+
+<link rel="search" type="application/opensearchdescription+xml" title="Surogate" href="/opensearch.xml">
+
+
+<meta name="keywords" content="Surogate, AgentOps, agents, LLM, MCP, training, fine-tuning, RL, evaluations">
+<meta name="description" content="Documentation for Surogate Ops — operator and builder tracks. Build reliable autonomous agents.">
+<meta name="og:type" content="website">
+<meta name="og:url" content="https://docs.surogate.ai">
+<meta name="og:title" content="Surogate Documentation">
+<meta name="og:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="og:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:secure_url" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:alt" content="Surogate">
+<meta name="og:locale" content="en_US">
+<meta name="og:image:type" content="image/jpeg">
+<meta name="twitter:site" content="surogate_ai">
+<meta name="twitter:creator" content="surogate_ai">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://docs.surogate.ai">
+<meta name="twitter:title" content="Surogate Documentation">
+<meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
+<script src="/assets/js/runtime~main.5374f7b7.js" defer="defer"></script>
+<script src="/assets/js/main.c60b3980.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo-black.svg" alt="logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo-white.svg" alt="logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Documentation</b></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">About<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://ops.surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Login<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://x.com/surogate_ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Follow us on X<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="navbarSearchContainer_Bca1"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search (Meta+k)" aria-keyshortcuts="Meta+k"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" fill="none" stroke-width="1.4"></circle><path d="m21 21-4.3-4.3" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/old-docs"><span title="Welcome" class="linkLabel_WmDU">Welcome</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/about/how-it-works"><span title="About Surogate" class="categoryLinkLabel_W154">About Surogate</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/how-it-works"><span title="How Surogate Works" class="linkLabel_WmDU">How Surogate Works</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/adaptive-training"><span title="Adaptive Training System" class="linkLabel_WmDU">Adaptive Training System</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/dsl"><span title="DSL Language" class="linkLabel_WmDU">DSL Language</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/automatic-differentiation"><span title="Automatic Differentiation" class="linkLabel_WmDU">Automatic Differentiation</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/getting-started/installation"><span title="Getting Started" class="categoryLinkLabel_W154">Getting Started</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/installation"><span title="Installation" class="linkLabel_WmDU">Installation</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/getting-started/training-modes"><span title="Training Modes" class="linkLabel_WmDU">Training Modes</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-pretraining"><span title="Quickstart: Pretraining (PT)" class="linkLabel_WmDU">Quickstart: Pretraining (PT)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-sft"><span title="Quickstart: Supervised Fine-Tuning (SFT)" class="linkLabel_WmDU">Quickstart: Supervised Fine-Tuning (SFT)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-grpo"><span title="Quickstart: RL Training (GRPO)" class="linkLabel_WmDU">Quickstart: RL Training (GRPO)</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/examples"><span title="Examples Library" class="categoryLinkLabel_W154">Examples Library</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/examples"><span title="Examples Library" class="linkLabel_WmDU">Examples Library</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/examples/pt/qwen3"><span title="Pre-training (PT)" class="categoryLinkLabel_W154">Pre-training (PT)</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/examples/sft/qwen3-lora"><span title="Fine-tuning (SFT)" class="categoryLinkLabel_W154">Fine-tuning (SFT)</span></a></div></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/guides/configuration"><span title="User Guides" class="categoryLinkLabel_W154">User Guides</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/reference/benchmarks"><span title="Technical Reference" class="categoryLinkLabel_W154">Technical Reference</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/appendix/release-notes"><span title="Appendix" class="categoryLinkLabel_W154">Appendix</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Getting Started</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Training Modes</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Training Modes</h1></header>
+<p>Surogate supports four practical ways to adapt a model:</p>
+<ol>
+<li class=""><strong>Pretraining / Continued Pretraining (PT)</strong></li>
+<li class=""><strong>Full Fine-Tuning</strong></li>
+<li class=""><strong>LoRA / QLoRA (Adapter Fine-Tuning)</strong></li>
+<li class=""><strong>RL Fine-Tuning (GRPO)</strong></li>
+</ol>
+<p>They differ in <em>which parameters are updated</em>, <em>how much data you need</em>, and <em>how much compute/VRAM you’ll spend</em>.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="quick-decision-guide">Quick decision guide<a href="#quick-decision-guide" class="hash-link" aria-label="Direct link to Quick decision guide" title="Direct link to Quick decision guide" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Goal</th><th>Recommended mode</th></tr></thead><tbody><tr><td>Train a base model from scratch on large text</td><td><strong>Pretraining</strong></td></tr><tr><td>Continue training a base model on more text (domain adaptation)</td><td><strong>Continued pretraining</strong></td></tr><tr><td>Maximize quality for a specific task/domain and you can afford it</td><td><strong>Full fine-tuning</strong></td></tr><tr><td>Fast adaptation, smaller GPU, cheaper runs, easy iteration</td><td><strong>LoRA</strong></td></tr><tr><td>Same as LoRA but you’re VRAM-limited</td><td><strong>QLoRA</strong></td></tr><tr><td>Improve reasoning, math, coding via reward-based training</td><td><strong>GRPO</strong></td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-pretraining--continued-pretraining-pt">1) Pretraining / Continued Pretraining (PT)<a href="#1-pretraining--continued-pretraining-pt" class="hash-link" aria-label="Direct link to 1) Pretraining / Continued Pretraining (PT)" title="Direct link to 1) Pretraining / Continued Pretraining (PT)" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-it-works">How it works<a href="#how-it-works" class="hash-link" aria-label="Direct link to How it works" title="Direct link to How it works" translate="no">​</a></h3>
+<p><strong>Pretraining</strong> updates <em>all</em> (or nearly all) model weights by predicting the next token on large-scale raw text.</p>
+<ul>
+<li class=""><strong>What updates?</strong> Base model weights (full model training)</li>
+<li class=""><strong>Typical data:</strong> Raw text corpora (<code>type: text</code> datasets)</li>
+<li class=""><strong>Typical run shape:</strong> Lots of tokens, long runs, throughput-focused</li>
+</ul>
+<p>In Surogate, you typically run PT with:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">surogate pt path/to/config.yaml</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="when-to-use-it">When to use it<a href="#when-to-use-it" class="hash-link" aria-label="Direct link to When to use it" title="Direct link to When to use it" translate="no">​</a></h3>
+<ul>
+<li class="">You’re training a new base model.</li>
+<li class="">You want <strong>domain adaptation</strong> via continued pretraining (e.g., legal/medical/finance corpora).</li>
+<li class="">You care about general capabilities and broad distribution learning.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="tradeoffs">Tradeoffs<a href="#tradeoffs" class="hash-link" aria-label="Direct link to Tradeoffs" title="Direct link to Tradeoffs" translate="no">​</a></h3>
+<ul>
+<li class="">Highest compute + longest wall-clock.</li>
+<li class="">Requires the most data.</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-full-fine-tuning-update-all-weights">2) Full Fine-Tuning (update all weights)<a href="#2-full-fine-tuning-update-all-weights" class="hash-link" aria-label="Direct link to 2) Full Fine-Tuning (update all weights)" title="Direct link to 2) Full Fine-Tuning (update all weights)" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-it-works-1">How it works<a href="#how-it-works-1" class="hash-link" aria-label="Direct link to How it works" title="Direct link to How it works" translate="no">​</a></h3>
+<p><strong>Full fine-tuning</strong> starts from a pretrained checkpoint and updates the full parameter set on a task/domain dataset.</p>
+<ul>
+<li class=""><strong>What updates?</strong> Base model weights (and optionally embeddings / lm_head depending on your config)</li>
+<li class=""><strong>Typical data:</strong> Instruction or conversation datasets</li>
+<li class=""><strong>Typical run shape:</strong> Fewer tokens than PT, but still heavy VRAM/compute</li>
+</ul>
+<p>In Surogate, full fine-tuning is usually done through the SFT workflow with LoRA disabled:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">false</span><br></span></code></pre></div></div>
+<p>(and then run via <code>surogate sft ...</code>).</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="when-to-use-it-1">When to use it<a href="#when-to-use-it-1" class="hash-link" aria-label="Direct link to When to use it" title="Direct link to When to use it" translate="no">​</a></h3>
+<ul>
+<li class="">You need the <em>best possible</em> task/domain performance.</li>
+<li class="">You can afford the VRAM/compute of updating all weights.</li>
+<li class="">You don’t need easy “adapter swapping” across many downstream tasks.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="tradeoffs-1">Tradeoffs<a href="#tradeoffs-1" class="hash-link" aria-label="Direct link to Tradeoffs" title="Direct link to Tradeoffs" translate="no">​</a></h3>
+<ul>
+<li class="">More expensive and heavier than LoRA.</li>
+<li class="">Harder to maintain multiple downstream variants (each run produces a full checkpoint).</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-lora--qlora-adapter-fine-tuning">3) LoRA / QLoRA (adapter fine-tuning)<a href="#3-lora--qlora-adapter-fine-tuning" class="hash-link" aria-label="Direct link to 3) LoRA / QLoRA (adapter fine-tuning)" title="Direct link to 3) LoRA / QLoRA (adapter fine-tuning)" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-lora-works">How LoRA works<a href="#how-lora-works" class="hash-link" aria-label="Direct link to How LoRA works" title="Direct link to How LoRA works" translate="no">​</a></h3>
+<p><strong>LoRA</strong> freezes the base model weights and trains small low-rank adapter matrices inserted into selected linear layers.</p>
+<ul>
+<li class=""><strong>What updates?</strong> Only LoRA adapter parameters</li>
+<li class=""><strong>Base weights:</strong> Frozen (unchanged)</li>
+<li class=""><strong>Typical data:</strong> Instruction / conversation / task datasets</li>
+</ul>
+<p>In config, you enable LoRA with:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_rank</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">16</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_alpha</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">32</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="when-to-use-lora">When to use LoRA<a href="#when-to-use-lora" class="hash-link" aria-label="Direct link to When to use LoRA" title="Direct link to When to use LoRA" translate="no">​</a></h3>
+<ul>
+<li class="">You want fast iteration and lower cost.</li>
+<li class="">You want multiple downstream specializations (adapters are easy to store, ship, and swap).</li>
+<li class="">You’re experimenting and want quick turnarounds.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-qlora">What is QLoRA?<a href="#what-is-qlora" class="hash-link" aria-label="Direct link to What is QLoRA?" title="Direct link to What is QLoRA?" translate="no">​</a></h3>
+<p><strong>QLoRA</strong> is LoRA plus quantization of the frozen base model weights to reduce VRAM.</p>
+<ul>
+<li class=""><strong>What updates?</strong> LoRA adapters (still)</li>
+<li class=""><strong>Base weights:</strong> Frozen and stored in a quantized format (FP8 / FP4 / NF4)</li>
+<li class=""><strong>When to use it:</strong> When VRAM is the bottleneck</li>
+</ul>
+<p>Surogate supports:</p>
+<ul>
+<li class=""><code>qlora_fp8</code> (SM89+)</li>
+<li class=""><code>qlora_fp4</code> (SM100+ Blackwell)</li>
+<li class=""><code>qlora_bnb</code> (NF4 via BitsAndBytes, broad compatibility)</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-rl-fine-tuning-grpo">4) RL Fine-Tuning (GRPO)<a href="#4-rl-fine-tuning-grpo" class="hash-link" aria-label="Direct link to 4) RL Fine-Tuning (GRPO)" title="Direct link to 4) RL Fine-Tuning (GRPO)" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-it-works-2">How it works<a href="#how-it-works-2" class="hash-link" aria-label="Direct link to How it works" title="Direct link to How it works" translate="no">​</a></h3>
+<p><strong>GRPO</strong> (Group Relative Policy Optimization) is a reinforcement learning method that improves a model by generating rollouts, scoring them with a reward function, and updating the policy to favor higher-reward responses.</p>
+<ul>
+<li class=""><strong>What updates?</strong> LoRA adapter parameters (base model is frozen)</li>
+<li class=""><strong>Typical data:</strong> Prompts + reward environments (math, code, custom verifiers)</li>
+<li class=""><strong>Typical run shape:</strong> Iterative rollout → reward → gradient loop</li>
+</ul>
+<p>GRPO coordinates three components in a single command:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">surogate grpo --train train.yaml --infer infer.yaml --orch orch.yaml</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="when-to-use-it-2">When to use it<a href="#when-to-use-it-2" class="hash-link" aria-label="Direct link to When to use it" title="Direct link to When to use it" translate="no">​</a></h3>
+<ul>
+<li class="">You want to improve reasoning, math, or coding capabilities beyond what SFT achieves.</li>
+<li class="">You have a reward signal (verifier, unit tests, reference answers) rather than just demonstration data.</li>
+<li class="">You want to optimize for outcome quality rather than imitating a fixed dataset.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="tradeoffs-2">Tradeoffs<a href="#tradeoffs-2" class="hash-link" aria-label="Direct link to Tradeoffs" title="Direct link to Tradeoffs" translate="no">​</a></h3>
+<ul>
+<li class="">Requires a reward environment (built-in or custom).</li>
+<li class="">More complex pipeline than SFT (inference server + orchestrator + trainer).</li>
+<li class="">Training dynamics are less predictable — requires monitoring importance ratios and masking fractions.</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="practical-recommendations">Practical recommendations<a href="#practical-recommendations" class="hash-link" aria-label="Direct link to Practical recommendations" title="Direct link to Practical recommendations" translate="no">​</a></h2>
+<ul>
+<li class="">Start with <strong>LoRA (bf16 recipe)</strong> unless you have a strong reason not to.</li>
+<li class="">Use <strong>QLoRA</strong> when you can’t fit the base model + activations comfortably.</li>
+<li class="">Use <strong>Full fine-tuning</strong> when you want maximum quality and have budget.</li>
+<li class="">Use <strong>(Continued) pretraining</strong> for domain adaptation on large raw text.</li>
+<li class="">Use <strong>GRPO</strong> when you have a reward signal and want to go beyond imitation learning.</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="see-also">See also<a href="#see-also" class="hash-link" aria-label="Direct link to See also" title="Direct link to See also" translate="no">​</a></h2>
+<ul>
+<li class=""><a class="" href="/getting-started/quickstart-pretraining">Quickstart: Pretraining</a></li>
+<li class=""><a class="" href="/getting-started/quickstart-sft">Quickstart: Supervised Fine-Tuning</a></li>
+<li class=""><a class="" href="/getting-started/quickstart-grpo">Quickstart: GRPO</a></li>
+<li class=""><a class="" href="/guides/configuration">Configuration</a></li>
+<li class=""><a class="" href="/guides/precision-and-recipes">Precision &amp; recipes</a></li>
+<li class=""><a class="" href="/guides/qlora">QLoRA</a></li>
+<li class=""><a class="" href="/reference/config">Config reference</a></li>
+<li class=""><a class="" href="/old-docs">Back to docs index</a></li>
+</ul></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/getting-started/installation"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Installation</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/getting-started/quickstart-pretraining"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Quickstart: Pretraining (PT)</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#quick-decision-guide" class="table-of-contents__link toc-highlight">Quick decision guide</a></li><li><a href="#1-pretraining--continued-pretraining-pt" class="table-of-contents__link toc-highlight">1) Pretraining / Continued Pretraining (PT)</a><ul><li><a href="#how-it-works" class="table-of-contents__link toc-highlight">How it works</a></li><li><a href="#when-to-use-it" class="table-of-contents__link toc-highlight">When to use it</a></li><li><a href="#tradeoffs" class="table-of-contents__link toc-highlight">Tradeoffs</a></li></ul></li><li><a href="#2-full-fine-tuning-update-all-weights" class="table-of-contents__link toc-highlight">2) Full Fine-Tuning (update all weights)</a><ul><li><a href="#how-it-works-1" class="table-of-contents__link toc-highlight">How it works</a></li><li><a href="#when-to-use-it-1" class="table-of-contents__link toc-highlight">When to use it</a></li><li><a href="#tradeoffs-1" class="table-of-contents__link toc-highlight">Tradeoffs</a></li></ul></li><li><a href="#3-lora--qlora-adapter-fine-tuning" class="table-of-contents__link toc-highlight">3) LoRA / QLoRA (adapter fine-tuning)</a><ul><li><a href="#how-lora-works" class="table-of-contents__link toc-highlight">How LoRA works</a></li><li><a href="#when-to-use-lora" class="table-of-contents__link toc-highlight">When to use LoRA</a></li><li><a href="#what-is-qlora" class="table-of-contents__link toc-highlight">What is QLoRA?</a></li></ul></li><li><a href="#4-rl-fine-tuning-grpo" class="table-of-contents__link toc-highlight">4) RL Fine-Tuning (GRPO)</a><ul><li><a href="#how-it-works-2" class="table-of-contents__link toc-highlight">How it works</a></li><li><a href="#when-to-use-it-2" class="table-of-contents__link toc-highlight">When to use it</a></li><li><a href="#tradeoffs-2" class="table-of-contents__link toc-highlight">Tradeoffs</a></li></ul></li><li><a href="#practical-recommendations" class="table-of-contents__link toc-highlight">Practical recommendations</a></li><li><a href="#see-also" class="table-of-contents__link toc-highlight">See also</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Work mode (operators)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/work">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/run-agent">Run an agent</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/review-sessions">Review sessions</a></li><li class="footer__item"><a class="footer__link-item" href="/work/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Develop mode (builders)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/develop">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/loop/overview">The builder loop</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/features/skills-and-experts">Skills &amp; Experts</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Repos</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/invergent-ai/surogates" target="_blank" rel="noopener noreferrer" class="footer__link-item">Runtime (surogates)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="footer__link-item">Training framework (surogate)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate-hub" target="_blank" rel="noopener noreferrer" class="footer__link-item">Artifact store (surogate-hub)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 Invergent. All rights reserved.</div></div></div></footer></div>
+</body>
+</html>

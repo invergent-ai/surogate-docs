@@ -1,0 +1,23 @@
+{
+  "id": "reference/python-api",
+  "title": "Python API",
+  "description": "Surogate’s primary Python API is exposed via the surogate._surogate extension module (nanobind).",
+  "source": "@site/docs/reference/python-api.md",
+  "sourceDirName": "reference",
+  "slug": "/reference/python-api",
+  "permalink": "/reference/python-api",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "Speed Benchmarks",
+    "permalink": "/reference/benchmarks"
+  },
+  "next": {
+    "title": "CLI reference",
+    "permalink": "/reference/cli"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "about/dsl",
+  "title": "DSL Language",
+  "description": "Table of Contents",
+  "source": "@site/docs/about/dsl.md",
+  "sourceDirName": "about",
+  "slug": "/about/dsl",
+  "permalink": "/about/dsl",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "title": "DSL Language"
+  },
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "Adaptive Training System",
+    "permalink": "/about/adaptive-training"
+  },
+  "next": {
+    "title": "Automatic Differentiation",
+    "permalink": "/about/automatic-differentiation"
+  }
+}

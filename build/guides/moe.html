@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-guides/moe" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Mixture-of-Experts (MoE) Models | Surogate</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.surogate.ai/guides/moe"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Mixture-of-Experts (MoE) Models | Surogate"><meta data-rh="true" name="description" content="Surogate provides full support for pre-training and fine-tuning Mixture-of-Experts (MoE) models. MoE architectures replace dense feed-forward networks (FFN) with multiple &quot;expert&quot; FFNs, where a learned router selects which experts process each token. This allows models to scale parameters without proportionally increasing compute."><meta data-rh="true" property="og:description" content="Surogate provides full support for pre-training and fine-tuning Mixture-of-Experts (MoE) models. MoE architectures replace dense feed-forward networks (FFN) with multiple &quot;expert&quot; FFNs, where a learned router selects which experts process each token. This allows models to scale parameters without proportionally increasing compute."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.surogate.ai/guides/moe"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/guides/moe" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/guides/moe" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://K46M9C3QXR-dsn.algolia.net" crossorigin="anonymous"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Mixture-of-Experts (MoE) Models","item":"https://docs.surogate.ai/guides/moe"}]}</script><link rel="preconnect" href="https://www.google-analytics.com">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7YRDGYZN0R"></script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-7YRDGYZN0R",{})</script>
+
+
+
+<link rel="search" type="application/opensearchdescription+xml" title="Surogate" href="/opensearch.xml">
+
+
+<meta name="keywords" content="Surogate, AgentOps, agents, LLM, MCP, training, fine-tuning, RL, evaluations">
+<meta name="description" content="Documentation for Surogate Ops — operator and builder tracks. Build reliable autonomous agents.">
+<meta name="og:type" content="website">
+<meta name="og:url" content="https://docs.surogate.ai">
+<meta name="og:title" content="Surogate Documentation">
+<meta name="og:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="og:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:secure_url" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:alt" content="Surogate">
+<meta name="og:locale" content="en_US">
+<meta name="og:image:type" content="image/jpeg">
+<meta name="twitter:site" content="surogate_ai">
+<meta name="twitter:creator" content="surogate_ai">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://docs.surogate.ai">
+<meta name="twitter:title" content="Surogate Documentation">
+<meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
+<script src="/assets/js/runtime~main.5374f7b7.js" defer="defer"></script>
+<script src="/assets/js/main.c60b3980.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo-black.svg" alt="logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo-white.svg" alt="logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Documentation</b></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">About<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://ops.surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Login<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://x.com/surogate_ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Follow us on X<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="navbarSearchContainer_Bca1"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search (Meta+k)" aria-keyshortcuts="Meta+k"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" fill="none" stroke-width="1.4"></circle><path d="m21 21-4.3-4.3" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/old-docs"><span title="Welcome" class="linkLabel_WmDU">Welcome</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/about/how-it-works"><span title="About Surogate" class="categoryLinkLabel_W154">About Surogate</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/how-it-works"><span title="How Surogate Works" class="linkLabel_WmDU">How Surogate Works</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/adaptive-training"><span title="Adaptive Training System" class="linkLabel_WmDU">Adaptive Training System</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/dsl"><span title="DSL Language" class="linkLabel_WmDU">DSL Language</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/automatic-differentiation"><span title="Automatic Differentiation" class="linkLabel_WmDU">Automatic Differentiation</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/getting-started/installation"><span title="Getting Started" class="categoryLinkLabel_W154">Getting Started</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/installation"><span title="Installation" class="linkLabel_WmDU">Installation</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/training-modes"><span title="Training Modes" class="linkLabel_WmDU">Training Modes</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-pretraining"><span title="Quickstart: Pretraining (PT)" class="linkLabel_WmDU">Quickstart: Pretraining (PT)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-sft"><span title="Quickstart: Supervised Fine-Tuning (SFT)" class="linkLabel_WmDU">Quickstart: Supervised Fine-Tuning (SFT)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-grpo"><span title="Quickstart: RL Training (GRPO)" class="linkLabel_WmDU">Quickstart: RL Training (GRPO)</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/examples"><span title="Examples Library" class="categoryLinkLabel_W154">Examples Library</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/examples"><span title="Examples Library" class="linkLabel_WmDU">Examples Library</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/examples/pt/qwen3"><span title="Pre-training (PT)" class="categoryLinkLabel_W154">Pre-training (PT)</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/examples/sft/qwen3-lora"><span title="Fine-tuning (SFT)" class="categoryLinkLabel_W154">Fine-tuning (SFT)</span></a></div></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/guides/configuration"><span title="User Guides" class="categoryLinkLabel_W154">User Guides</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/configuration"><span title="Configuration" class="linkLabel_WmDU">Configuration</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/datasets"><span title="Datasets" class="linkLabel_WmDU">Datasets</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/optimizers"><span title="Optimizers" class="linkLabel_WmDU">Optimizers</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/precision-and-recipes"><span title="Precision &amp; Recipes" class="linkLabel_WmDU">Precision &amp; Recipes</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/qlora"><span title="Quantized LoRA (QLoRA)" class="linkLabel_WmDU">Quantized LoRA (QLoRA)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/metrics"><span title="Training Metrics &amp; Monitoring" class="linkLabel_WmDU">Training Metrics &amp; Monitoring</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/guides/moe"><span title="Mixture-of-Experts (MoE) Models" class="linkLabel_WmDU">Mixture-of-Experts (MoE) Models</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/multi-gpu"><span title="Multi-GPU Training" class="linkLabel_WmDU">Multi-GPU Training</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/multi-node"><span title="Multi-Node Training" class="linkLabel_WmDU">Multi-Node Training</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/offloading"><span title="Offloading in Surogate" class="linkLabel_WmDU">Offloading in Surogate</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/long-context"><span title="Long Context Training" class="linkLabel_WmDU">Long Context Training</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/memory"><span title="Memory" class="linkLabel_WmDU">Memory</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/debugging"><span title="Debugging training issues" class="linkLabel_WmDU">Debugging training issues</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/rl-environments"><span title="RL Environments" class="linkLabel_WmDU">RL Environments</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/rl-training"><span title="RL Training (GRPO)" class="linkLabel_WmDU">RL Training (GRPO)</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/reference/benchmarks"><span title="Technical Reference" class="categoryLinkLabel_W154">Technical Reference</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/appendix/release-notes"><span title="Appendix" class="categoryLinkLabel_W154">Appendix</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">User Guides</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Mixture-of-Experts (MoE) Models</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Mixture-of-Experts (MoE) Models</h1></header>
+<p>Surogate provides full support for pre-training and fine-tuning Mixture-of-Experts (MoE) models. MoE architectures replace dense feed-forward networks (FFN) with multiple &quot;expert&quot; FFNs, where a learned router selects which experts process each token. This allows models to scale parameters without proportionally increasing compute.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="supported-moe-models">Supported MoE Models<a href="#supported-moe-models" class="hash-link" aria-label="Direct link to Supported MoE Models" title="Direct link to Supported MoE Models" translate="no">​</a></h2>
+<p>Surogate natively supports:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model</th><th>Architecture</th><th>Experts</th><th>Active (top-k)</th></tr></thead><tbody><tr><td>Qwen3-MoE-30B-A3B</td><td>qwen3_moe</td><td>128</td><td>8</td></tr><tr><td>GPT-OSS-20B</td><td>gpt_oss</td><td>128</td><td>4</td></tr><tr><td>Nemotron-H (MoE layers)</td><td>nemotron_h</td><td>64</td><td>4</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="pre-training-from-scratch">Pre-training from Scratch<a href="#pre-training-from-scratch" class="hash-link" aria-label="Direct link to Pre-training from Scratch" title="Direct link to Pre-training from Scratch" translate="no">​</a></h2>
+<p>To pre-train an MoE model from scratch, use the <code>surogate pt</code> command with an MoE model preset:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># pt-moe-config.yaml</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">model</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> Qwen3</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">MoE</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">30B</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">A3B  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Or path to model</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">model_type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> qwen3_moe</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Pre-training specific settings</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">sequence_len</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">4096</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">per_device_train_batch_size</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">gradient_accumulation_steps</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">16</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Dataset for pre-training</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">datasets</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> </span><span class="token key atrule">path</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;HuggingFaceFW/fineweb-edu&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> text</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">text_field</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> text</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="fine-tuning-moe-models">Fine-Tuning MoE Models<a href="#fine-tuning-moe-models" class="hash-link" aria-label="Direct link to Fine-Tuning MoE Models" title="Direct link to Fine-Tuning MoE Models" translate="no">​</a></h2>
+<p>Fine-tuning MoE models requires special care because of the router. There are three approaches:</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-full-fine-tuning-fft">1. Full Fine-Tuning (FFT)<a href="#1-full-fine-tuning-fft" class="hash-link" aria-label="Direct link to 1. Full Fine-Tuning (FFT)" title="Direct link to 1. Full Fine-Tuning (FFT)" translate="no">​</a></h3>
+<p>Train all model weights including experts and router:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># moe-fft.yaml</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">model</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> ./my</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">moe</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">model</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">model_type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> qwen3_moe</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">output_dir</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> ./output</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">moe</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">fft</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">false</span><span class="token plain">  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Disable LoRA for full fine-tuning</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Critical: Use lower learning rate than dense models</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">learning_rate</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1e-4</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">warmup_ratio</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.15</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">max_grad_norm</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.5</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">weight_decay</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.01</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># MoE models don&#x27;t support CUDA graphs due to dynamic routing</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">use_cuda_graphs</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">false</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">per_device_train_batch_size</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">gradient_accumulation_steps</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">8</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">gpus</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">4</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-lora-fine-tuning-experts-only">2. LoRA Fine-Tuning (Experts Only)<a href="#2-lora-fine-tuning-experts-only" class="hash-link" aria-label="Direct link to 2. LoRA Fine-Tuning (Experts Only)" title="Direct link to 2. LoRA Fine-Tuning (Experts Only)" translate="no">​</a></h3>
+<p>Train LoRA adapters on expert weights while keeping the router frozen:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># moe-lora.yaml</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">model</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> ./my</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">moe</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">model</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">model_type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> qwen3_moe</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">output_dir</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> ./output</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">moe</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">lora</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">merge_adapter</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_rank</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">16</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_alpha</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">32</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_dtype</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> bf16</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Target expert projections (applied per-expert)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_target_modules</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> q_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> k_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> v_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> o_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> gate_proj  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Expert gate projection</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> up_proj    </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Expert up projection</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> down_proj  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Expert down projection</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">learning_rate</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1e-4</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">warmup_ratio</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.15</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">max_grad_norm</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.5</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">use_cuda_graphs</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">false</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="qlora-for-moe-models">QLoRA for MoE Models<a href="#qlora-for-moe-models" class="hash-link" aria-label="Direct link to QLoRA for MoE Models" title="Direct link to QLoRA for MoE Models" translate="no">​</a></h2>
+<p>MoE models can be fine-tuned with QLoRA to reduce memory usage. All QLoRA variants (BnB, FP8, FP4) are supported:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># moe-qlora-bnb.yaml</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">model</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> Qwen/Qwen3</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">30B</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">A3B</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">model_type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> qwen3_moe</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">output_dir</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> ./output</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">moe</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">qlora</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_rank</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">16</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_alpha</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">32</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Enable BitsAndBytes NF4 quantization</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">qlora_bnb</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">qlora_bnb_block_size</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">64</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">qlora_bnb_double_quant</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Optional: Router training works with QLoRA too</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">train_router</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="configuring-moe-loss-coefficients">Configuring MoE Loss Coefficients<a href="#configuring-moe-loss-coefficients" class="hash-link" aria-label="Direct link to Configuring MoE Loss Coefficients" title="Direct link to Configuring MoE Loss Coefficients" translate="no">​</a></h2>
+<p>MoE training uses two loss terms to regularize the router behavior:</p>
+<ul>
+<li class=""><strong>Auxiliary Loss</strong> (<code>router_aux_loss_coef</code>): Encourages balanced token distribution across experts. Higher values push for more uniform load balancing.</li>
+<li class=""><strong>Z-Loss</strong> (<code>router_z_loss_coef</code>): Regularizes router logits to prevent them from growing too large, which can cause routing instability.</li>
+</ul>
+<p>Both coefficients can be configured via the training YAML:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># MoE router loss coefficients</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">router_aux_loss_coef</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.01</span><span class="token plain">   </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Load balancing (default: from model config, typically 0.001-0.01)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">router_z_loss_coef</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.001</span><span class="token plain">    </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Logit regularization (default: from model config, typically 0.001)</span><br></span></code></pre></div></div>
+<p><strong>When to adjust these values:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Scenario</th><th>Aux Loss Coef</th><th>Z-Loss Coef</th><th>Reasoning</th></tr></thead><tbody><tr><td>Default/pre-trained models</td><td>Use model default</td><td>Use model default</td><td>Well-tuned for the architecture</td></tr><tr><td>Router collapse detected</td><td>Increase 2-5x</td><td>Increase 2-5x</td><td>Stronger regularization to stabilize routing</td></tr><tr><td>Over-uniform routing</td><td>Decrease 2-5x</td><td>Keep default</td><td>Allow more routing specialization</td></tr><tr><td>Large batch training</td><td>Keep default</td><td>Keep default</td><td>Usually stable</td></tr><tr><td>Small batch training</td><td>Increase 2x</td><td>Increase 2x</td><td>More regularization helps with noisy gradients</td></tr></tbody></table>
+<p><strong>Note:</strong> Setting these values in the config overrides the model&#x27;s default coefficients. Omit them to use the model&#x27;s pre-configured values.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="hyperparameter-recommendations">Hyperparameter Recommendations<a href="#hyperparameter-recommendations" class="hash-link" aria-label="Direct link to Hyperparameter Recommendations" title="Direct link to Hyperparameter Recommendations" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="for-pre-trained-moe-models-eg-qwen3-moe-30b-a3b">For Pre-trained MoE Models (e.g., Qwen3-MoE-30B-A3B)<a href="#for-pre-trained-moe-models-eg-qwen3-moe-30b-a3b" class="hash-link" aria-label="Direct link to For Pre-trained MoE Models (e.g., Qwen3-MoE-30B-A3B)" title="Direct link to For Pre-trained MoE Models (e.g., Qwen3-MoE-30B-A3B)" translate="no">​</a></h3>
+<p>Pre-trained MoE models have a well-trained router, so standard LoRA hyperparameters work:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Parameter</th><th>Recommended Value</th><th>Notes</th></tr></thead><tbody><tr><td><code>learning_rate</code></td><td>1e-4 to 2e-4</td><td>Standard LoRA learning rate</td></tr><tr><td><code>warmup_ratio</code></td><td>0.03-0.10</td><td>Standard warmup</td></tr><tr><td><code>max_grad_norm</code></td><td>1.0</td><td>Standard clipping</td></tr><tr><td><code>train_router</code></td><td>false</td><td>Router is already trained</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="dataset-size-guidelines">Dataset Size Guidelines<a href="#dataset-size-guidelines" class="hash-link" aria-label="Direct link to Dataset Size Guidelines" title="Direct link to Dataset Size Guidelines" translate="no">​</a></h3>
+<p><strong>Fine-tuning (SFT/LoRA):</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Scenario</th><th>Minimum</th><th>Recommended</th><th>Notes</th></tr></thead><tbody><tr><td>Task-specific (e.g., code, math)</td><td>5,000</td><td>50,000–100,000</td><td>1–3 epochs; diminishing returns beyond ~100k for narrow tasks</td></tr><tr><td>General instruction tuning</td><td>50,000</td><td>200,000–500,000</td><td>1 epoch typically sufficient; mix diverse sources</td></tr><tr><td>MoE with router training</td><td>100,000</td><td>300,000+</td><td>Router needs more signal to converge; extend warmup to 0.15</td></tr></tbody></table>
+<p><strong>Pretraining / continual pretraining:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Scenario</th><th>Minimum</th><th>Recommended</th><th>Notes</th></tr></thead><tbody><tr><td>Domain adaptation</td><td>500M tokens</td><td>5B–20B tokens</td><td>Less than this risks catastrophic forgetting</td></tr><tr><td>Full pretraining from scratch</td><td>1T tokens</td><td>5T–20T tokens</td><td>Scale data with model size; follow Chinchilla ratios</td></tr><tr><td>Vocabulary / architecture extension</td><td>50B tokens</td><td>200B–500B tokens</td><td>Enough to stabilize new parameters before mixing</td></tr></tbody></table>
+<p><strong>General rules of thumb:</strong></p>
+<ul>
+<li class="">Prefer more shorter sequences over fewer long ones when memory-constrained — <code>truncation_strategy: split</code> keeps all tokens in pretraining</li>
+<li class="">For MoE models, ensure your dataset covers enough variety to keep all experts active; a narrow corpus can cause router collapse even with sufficient token count</li>
+<li class="">Monitor <code>expert_utilization</code> during early training; below 0.5 after warmup suggests the dataset is too narrow or <code>router_aux_loss_coef</code> needs to be increased</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="monitoring-moe-training">Monitoring MoE Training<a href="#monitoring-moe-training" class="hash-link" aria-label="Direct link to Monitoring MoE Training" title="Direct link to Monitoring MoE Training" translate="no">​</a></h2>
+<p>Surogate provides dedicated MoE metrics to monitor router health and expert utilization during training. These metrics are logged automatically for all MoE models and can be viewed in the console, JSON logs, or external backends (wandb/Aim).</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="moe-specific-metrics">MoE-Specific Metrics<a href="#moe-specific-metrics" class="hash-link" aria-label="Direct link to MoE-Specific Metrics" title="Direct link to MoE-Specific Metrics" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Metric</th><th>Description</th><th>Healthy Range</th></tr></thead><tbody><tr><td><code>aux_loss</code></td><td>Load balancing auxiliary loss (sum across layers)</td><td>0.001 - 0.1</td></tr><tr><td><code>z_loss</code></td><td>Router z-loss for logit regularization</td><td>0.0001 - 0.01</td></tr><tr><td><code>expert_utilization</code></td><td>Fraction of experts receiving tokens (0-1)</td><td>0.7 - 1.0</td></tr><tr><td><code>load_imbalance</code></td><td>Ratio of max to mean expert token counts (1.0 = perfect)</td><td>Depends on architecture*</td></tr></tbody></table>
+<p>*Load imbalance healthy range depends on the number of experts — see <a href="#load-imbalance" class="">Load Imbalance</a> for per-architecture guidance.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="enabling-moe-metrics">Enabling MoE Metrics<a href="#enabling-moe-metrics" class="hash-link" aria-label="Direct link to Enabling MoE Metrics" title="Direct link to Enabling MoE Metrics" translate="no">​</a></h3>
+<p>MoE metrics are logged automatically when training MoE models. To view them in external backends:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">report_to</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> wandb  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># or [wandb, aim]</span><br></span></code></pre></div></div>
+<p>Metrics appear as:</p>
+<ul>
+<li class=""><strong>wandb/Aim</strong>: <code>train/moe_aux_loss</code>, <code>train/moe_z_loss</code>, <code>train/moe_load_imbalance</code>, <code>train/moe_expert_utilization</code> (logged with each training step)</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="interpreting-the-metrics">Interpreting the Metrics<a href="#interpreting-the-metrics" class="hash-link" aria-label="Direct link to Interpreting the Metrics" title="Direct link to Interpreting the Metrics" translate="no">​</a></h3>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="expert-utilization">Expert Utilization<a href="#expert-utilization" class="hash-link" aria-label="Direct link to Expert Utilization" title="Direct link to Expert Utilization" translate="no">​</a></h4>
+<p>Measures what fraction of experts are receiving tokens each step. Monitor via:</p>
+<ul>
+<li class=""><strong>Console</strong>: Not shown inline</li>
+<li class=""><strong>JSON logs</strong>: <code>moe_expert_utilization</code> field in step logs</li>
+<li class=""><strong>wandb/Aim</strong>: <code>train/moe_expert_utilization</code></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Value</th><th>Interpretation</th></tr></thead><tbody><tr><td>0.9 - 1.0</td><td>Excellent - all experts contributing</td></tr><tr><td>0.7 - 0.9</td><td>Good - most experts active</td></tr><tr><td>0.5 - 0.7</td><td>Warning - some experts underutilized</td></tr><tr><td>&lt; 0.5</td><td>Critical - possible router collapse</td></tr></tbody></table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="load-imbalance">Load Imbalance<a href="#load-imbalance" class="hash-link" aria-label="Direct link to Load Imbalance" title="Direct link to Load Imbalance" translate="no">​</a></h4>
+<p>Measures how evenly tokens are distributed across active experts, computed as <code>max_expert_tokens / mean_expert_tokens</code>. Monitor via:</p>
+<ul>
+<li class=""><strong>Console</strong>: <code>imbal</code> field shown inline for MoE models</li>
+<li class=""><strong>JSON logs</strong>: <code>moe_load_imbalance</code> field in step logs</li>
+<li class=""><strong>wandb/Aim</strong>: <code>train/moe_load_imbalance</code></li>
+</ul>
+<p><strong>Important:</strong> The expected load imbalance depends heavily on the number of experts and top-k. With more experts, the most popular expert will naturally receive many more tokens than the average, even with a well-trained router. A single threshold does not apply across architectures.</p>
+<p><strong>Per-architecture expected ranges (pre-trained models with trained router):</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Architecture</th><th>Experts</th><th>Top-k</th><th>Expected Imbalance</th><th>Warning Threshold</th></tr></thead><tbody><tr><td>Small MoE (e.g., 8x2)</td><td>8</td><td>2</td><td>1.5 - 3.0</td><td>&gt; 5.0</td></tr><tr><td>Nemotron-H MoE layers</td><td>64</td><td>4</td><td>3.0 - 6.0</td><td>&gt; 10.0</td></tr><tr><td>GPT-OSS (128 experts, top-4)</td><td>128</td><td>4</td><td>4.0 - 6.0</td><td>&gt; 10.0</td></tr><tr><td>Qwen3-MoE-30B-A3B (128 experts, top-8)</td><td>128</td><td>8</td><td>8.0 - 12.0</td><td>&gt; 20.0</td></tr></tbody></table>
+<p><strong>Why large expert counts have high imbalance:</strong> The metric reports the ratio of the <em>single busiest expert</em> to the <em>average across all experts</em>. With 128 experts and top-8 routing, each expert receives on average <code>tokens * 8 / 128 = 6.25%</code> of tokens. A trained router will specialize — popular experts may receive 50-75% of tokens while many experts receive very few. This is normal and expected behavior, not a sign of router collapse.</p>
+<p><strong>What to watch for:</strong> Rather than absolute values, monitor for:</p>
+<ul>
+<li class=""><strong>Sudden spikes</strong> in imbalance (2x+ increase within a few steps)</li>
+<li class=""><strong>Monotonically increasing</strong> imbalance (router concentrating on fewer experts over time)</li>
+<li class=""><strong>Imbalance combined with low utilization</strong> (&lt; 0.5) — this indicates actual router collapse</li>
+</ul>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="auxiliary-loss">Auxiliary Loss<a href="#auxiliary-loss" class="hash-link" aria-label="Direct link to Auxiliary Loss" title="Direct link to Auxiliary Loss" translate="no">​</a></h4>
+<p>The load balancing loss that encourages uniform expert utilization. Monitor via:</p>
+<ul>
+<li class=""><strong>Console</strong>: <code>aux</code> field shown inline for MoE models</li>
+<li class=""><strong>JSON logs</strong>: <code>moe_aux_loss</code> field in step logs</li>
+<li class=""><strong>wandb/Aim</strong>: <code>train/moe_aux_loss</code></li>
+<li class=""><strong>Config</strong>: Adjust strength with <code>router_aux_loss_coef</code> (see <a href="#configuring-moe-loss-coefficients" class="">Configuring MoE Loss Coefficients</a>)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Value</th><th>Interpretation</th></tr></thead><tbody><tr><td>&lt; 0.01</td><td>Very low - router may be too uniform</td></tr><tr><td>0.01 - 0.1</td><td>Normal range</td></tr><tr><td>0.1 - 1.0</td><td>Elevated - router learning to balance</td></tr><tr><td>&gt; 1.0</td><td>High - significant load imbalance</td></tr></tbody></table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="z-loss">Z-Loss<a href="#z-loss" class="hash-link" aria-label="Direct link to Z-Loss" title="Direct link to Z-Loss" translate="no">​</a></h4>
+<p>Regularization term that prevents router logits from becoming too large. Monitor via:</p>
+<ul>
+<li class=""><strong>Console</strong>: Not shown inline (check JSON logs or external backends)</li>
+<li class=""><strong>JSON logs</strong>: <code>moe_z_loss</code> field in step logs</li>
+<li class=""><strong>wandb/Aim</strong>: <code>train/moe_z_loss</code></li>
+<li class=""><strong>Config</strong>: Adjust strength with <code>router_z_loss_coef</code> (see <a href="#configuring-moe-loss-coefficients" class="">Configuring MoE Loss Coefficients</a>)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Value</th><th>Interpretation</th></tr></thead><tbody><tr><td>&lt; 0.001</td><td>Normal</td></tr><tr><td>0.001 - 0.01</td><td>Slightly elevated</td></tr><tr><td>&gt; 0.01</td><td>Warning - router logits may be unstable</td></tr><tr><td>&gt; 0.1</td><td>Critical - possible routing collapse</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="signs-of-healthy-training">Signs of Healthy Training<a href="#signs-of-healthy-training" class="hash-link" aria-label="Direct link to Signs of Healthy Training" title="Direct link to Signs of Healthy Training" translate="no">​</a></h3>
+<p>Monitor these indicators for healthy MoE training:</p>
+<ul>
+<li class=""><strong>Loss</strong>: Decreases steadily without sudden spikes</li>
+<li class=""><strong>Gradient norm</strong>: Stays below 0.4 (or 1.0 with <code>max_grad_norm: 1.0</code>)</li>
+<li class=""><strong>Expert utilization</strong>: Above 0.7 and stable or increasing</li>
+<li class=""><strong>Load imbalance</strong>: Stable and within expected range for the architecture (see <a href="#load-imbalance" class="">Load Imbalance</a>)</li>
+<li class=""><strong>Aux loss</strong>: Decreasing or stable in the 0.01-0.1 range</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="signs-of-router-collapse">Signs of Router Collapse<a href="#signs-of-router-collapse" class="hash-link" aria-label="Direct link to Signs of Router Collapse" title="Direct link to Signs of Router Collapse" translate="no">​</a></h3>
+<p>Router collapse occurs when the router stops distributing tokens effectively:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Symptom</th><th>Metric Indicator</th></tr></thead><tbody><tr><td>All tokens to few experts</td><td><code>expert_utilization</code> &lt; 0.2</td></tr><tr><td>Severe load imbalance</td><td><code>load_imbalance</code> &gt; 2x the expected range for architecture</td></tr><tr><td>Router instability</td><td><code>z_loss</code> &gt; 0.1 or spiking</td></tr><tr><td>Training divergence</td><td><code>aux_loss</code> &gt; 2.0</td></tr></tbody></table>
+<p><strong>Recovery steps:</strong></p>
+<ol>
+<li class=""><strong>Reduce learning rate</strong> by 2-5x</li>
+<li class=""><strong>Increase warmup ratio</strong> to 0.15-0.20</li>
+<li class=""><strong>Enable gradient clipping</strong> with <code>max_grad_norm: 0.5</code></li>
+<li class=""><strong>Enable router training</strong> with <code>train_router: true</code></li>
+<li class=""><strong>Increase loss coefficients</strong> - set <code>router_aux_loss_coef: 0.05</code> and <code>router_z_loss_coef: 0.01</code> for stronger regularization</li>
+<li class=""><strong>Check batch size</strong> - very small batches can cause routing instability</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="memory-considerations">Memory Considerations<a href="#memory-considerations" class="hash-link" aria-label="Direct link to Memory Considerations" title="Direct link to Memory Considerations" translate="no">​</a></h2>
+<p>MoE models have more parameters than dense models but similar active compute:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model</th><th>Total Params</th><th>Active Params</th><th>VRAM (BF16)</th><th>VRAM (QLoRA BnB)</th></tr></thead><tbody><tr><td>Qwen3-0.6B (dense)</td><td>0.6B</td><td>0.6B</td><td>~2GB</td><td>~1GB</td></tr><tr><td>Qwen3-0.6B 8x2 MoE</td><td>~2.4B</td><td>~0.6B</td><td>~6GB</td><td>~2GB</td></tr><tr><td>Qwen3-MoE-30B-A3B</td><td>30B</td><td>3B</td><td>~60GB</td><td>~12GB</td></tr></tbody></table>
+<p>Tips for reducing memory:</p>
+<ul>
+<li class="">Use QLoRA (<code>qlora_bnb: true</code> or <code>qlora_fp8: true</code>) for large models</li>
+<li class="">Use Expert Parallelism (<code>ep_size: N</code>) to shard experts across GPUs — each GPU holds <code>1/N</code> of the experts</li>
+<li class="">Enable <code>qlora_offload_experts: true</code> to offload inactive expert weights to CPU</li>
+<li class="">Reduce <code>per_device_train_batch_size</code> and increase <code>gradient_accumulation_steps</code></li>
+<li class="">Enable <code>recompute</code> (default)</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="expert-parallelism-ep">Expert Parallelism (EP)<a href="#expert-parallelism-ep" class="hash-link" aria-label="Direct link to Expert Parallelism (EP)" title="Direct link to Expert Parallelism (EP)" translate="no">​</a></h2>
+<p>By default, every GPU holds a full copy of all expert weights (data-parallel only). For large MoE models with many experts, this means each GPU must fit all expert weights in memory — even though only a few experts are active per token.</p>
+<p><strong>Expert Parallelism</strong> distributes experts across GPUs so that each GPU holds only <code>num_experts / ep_size</code> local experts. Tokens are routed to the correct GPU via all-to-all communication, experts run in parallel, and results are sent back. This reduces per-GPU memory and enables parallel expert compute across GPUs.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="configuration">Configuration<a href="#configuration" class="hash-link" aria-label="Direct link to Configuration" title="Direct link to Configuration" translate="no">​</a></h3>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">gpus</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">4</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">ep_size</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2</span><span class="token plain">                       </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># 2-way expert parallelism</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">ep_load_balance_threshold</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1.3</span><span class="token plain">   </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># LLEP activation threshold (default)</span><br></span></code></pre></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>ep_size</code></td><td>int</td><td>1</td><td>Number of GPUs in each expert-parallel group. Must divide <code>gpus</code>. Each GPU holds <code>num_experts / ep_size</code> local experts.</td></tr><tr><td><code>ep_load_balance_threshold</code></td><td>float</td><td>1.3</td><td>Imbalance ratio (<code>max_gpu_load / mean_gpu_load</code>) above which dynamic load balancing (LLEP) activates. Set to <code>1.0</code> for always-active load balancing.</td></tr></tbody></table>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li class=""><code>ep_size</code> must evenly divide <code>gpus</code></li>
+<li class=""><code>num_experts</code> must be evenly divisible by <code>ep_size</code></li>
+<li class=""><code>ep_size = 1</code> (default) disables EP and uses pure data parallelism</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-ep-works">How EP Works<a href="#how-ep-works" class="hash-link" aria-label="Direct link to How EP Works" title="Direct link to How EP Works" translate="no">​</a></h3>
+<p>With <code>gpus: 4</code> and <code>ep_size: 2</code>:</p>
+<ul>
+<li class=""><strong>EP groups</strong>: Ranks {0, 1} and {2, 3} each form an expert-parallel group</li>
+<li class=""><strong>DP groups</strong>: Ranks {0, 2} and {1, 3} each form a data-parallel group</li>
+<li class="">Each GPU holds <code>num_experts / 2</code> local experts</li>
+<li class="">Dense layer gradients are all-reduced across all 4 GPUs (global)</li>
+<li class="">Expert weight gradients are all-reduced across the DP group only (2 GPUs)</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="llep-load-balancing">LLEP Load Balancing<a href="#llep-load-balancing" class="hash-link" aria-label="Direct link to LLEP Load Balancing" title="Direct link to LLEP Load Balancing" translate="no">​</a></h3>
+<p>MoE routing is inherently imbalanced — some experts receive more tokens than others. Without load balancing, the GPU with the most-loaded experts becomes a bottleneck.</p>
+<p><strong>Least-Loaded EP (LLEP)</strong> dynamically redistributes work when imbalance is detected:</p>
+<ol>
+<li class="">At each layer, expert token counts are measured across the EP group</li>
+<li class="">If <code>max_gpu_load / mean_gpu_load</code> exceeds <code>ep_load_balance_threshold</code>, the LPT (Longest Processing Time) scheduler activates</li>
+<li class="">Overloaded experts are temporarily transferred to underloaded GPUs along with their weights</li>
+<li class="">After computation, results and gradients are routed back to the native GPU</li>
+</ol>
+<p>LLEP is automatic when <code>ep_size &gt; 1</code>. The <code>ep_load_balance_threshold</code> controls sensitivity:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Value</th><th>Behavior</th></tr></thead><tbody><tr><td><code>1.0</code></td><td>Always active — LPT scheduling runs every layer</td></tr><tr><td><code>1.3</code></td><td>Default — activates only when significant imbalance is detected</td></tr><tr><td><code>2.0+</code></td><td>Rarely activates — only under extreme imbalance</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="ep-with-qlora">EP with QLoRA<a href="#ep-with-qlora" class="hash-link" aria-label="Direct link to EP with QLoRA" title="Direct link to EP with QLoRA" translate="no">​</a></h3>
+<p>EP works with all QLoRA variants. When combined with expert offloading (<code>qlora_offload_experts: true</code>), each GPU offloads only its local expert shard, reducing both GPU and CPU memory:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">model</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> Qwen/Qwen3</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">30B</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">A3B</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">model_type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> qwen3_moe</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">gpus</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">4</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">ep_size</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_rank</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">16</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_alpha</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">32</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">qlora_fp8</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">qlora_offload_experts</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">ep_load_balance_threshold</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1.0</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_target_modules</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> q_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> k_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> v_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> o_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> gate_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> up_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> down_proj</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="when-to-use-ep">When to Use EP<a href="#when-to-use-ep" class="hash-link" aria-label="Direct link to When to Use EP" title="Direct link to When to Use EP" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Scenario</th><th>Recommendation</th></tr></thead><tbody><tr><td>Model fits on one GPU with QLoRA</td><td>EP not needed (<code>ep_size: 1</code>)</td></tr><tr><td>Many GPUs, want faster throughput</td><td>Use EP to parallelize expert compute</td></tr><tr><td>Expert weights too large for one GPU even with QLoRA</td><td>Use EP to shard experts across GPUs</td></tr><tr><td>High routing imbalance</td><td>Use EP with <code>ep_load_balance_threshold: 1.0</code></td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="limitations">Limitations<a href="#limitations" class="hash-link" aria-label="Direct link to Limitations" title="Direct link to Limitations" translate="no">​</a></h2>
+<ol>
+<li class="">
+<p><strong>CUDA Graphs:</strong> MoE models cannot use CUDA graphs due to dynamic expert routing. Always set <code>use_cuda_graphs: false</code>.</p>
+</li>
+<li class="">
+<p><strong>ZeRO-3:</strong> MoE expert weights can be sharded with ZeRO-3, but routing overhead increases with world size.</p>
+</li>
+<li class="">
+<p><strong>EP checkpoint compatibility:</strong> Checkpoints saved with EP require the same <code>ep_size</code> when resuming training.</p>
+</li>
+</ol>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="example-configurations">Example Configurations<a href="#example-configurations" class="hash-link" aria-label="Direct link to Example Configurations" title="Direct link to Example Configurations" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="moe-pretraining">MoE Pretraining<a href="#moe-pretraining" class="hash-link" aria-label="Direct link to MoE Pretraining" title="Direct link to MoE Pretraining" translate="no">​</a></h3>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">model</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> Qwen/Qwen3</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">30B</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">A3B</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">model_type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> qwen3_moe</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">output_dir</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> ./output</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">pt</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">per_device_train_batch_size</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">gradient_accumulation_steps</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">8</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">gpus</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">8</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">use_cuda_graphs</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">false</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">sample_packing</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">sequence_len</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">4096</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">truncation_strategy</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> split</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">use_chat_template</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">false</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">loss_scale</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> all</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">max_steps</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">10000</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">eval_steps</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">500</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">save_steps</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1000</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">learning_rate</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">3e-4</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lr_scheduler_type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> cosine</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">warmup_ratio</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.05</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">max_grad_norm</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1.0</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">weight_decay</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.1</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">recipe</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> fp8</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">hybrid</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">optimizer</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> adamw_8bit</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">false</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Expert parallelism across all 8 GPUs</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">ep_size</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">8</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">ep_load_balance_threshold</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1.0</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">router_aux_loss_coef</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.001</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">router_z_loss_coef</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.0001</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">dataloader_num_workers</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">4</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">datasets</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> </span><span class="token key atrule">path</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;HuggingFaceFW/fineweb-edu&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> text</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">text_field</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> text</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">split</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> train</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="large-moe-model-with-qlora">Large MoE Model with QLoRA<a href="#large-moe-model-with-qlora" class="hash-link" aria-label="Direct link to Large MoE Model with QLoRA" title="Direct link to Large MoE Model with QLoRA" translate="no">​</a></h3>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">model</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> Qwen/Qwen3</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">30B</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">A3B</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">model_type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> qwen3_moe</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">output_dir</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> ./output</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">30b</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">per_device_train_batch_size</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">gradient_accumulation_steps</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">16</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">gpus</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">4</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">use_cuda_graphs</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">false</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">sequence_len</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2048</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">num_epochs</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">3</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">learning_rate</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2e-4</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">warmup_ratio</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.03</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">max_grad_norm</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1.0</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_rank</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">32</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_alpha</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">64</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># QLoRA for memory efficiency</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">qlora_bnb</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">qlora_bnb_block_size</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">64</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">qlora_bnb_double_quant</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_target_modules</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> q_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> k_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> v_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> o_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> gate_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> up_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> down_proj</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">datasets</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> </span><span class="token key atrule">path</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;your-dataset&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">    </span><span class="token key atrule">type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> auto</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="verifying-router-training">Verifying Router Training<a href="#verifying-router-training" class="hash-link" aria-label="Direct link to Verifying Router Training" title="Direct link to Verifying Router Training" translate="no">​</a></h2>
+<p>To confirm the router is being trained when using <code>train_router: true</code>:</p>
+<ol>
+<li class="">
+<p><strong>Check adapter checkpoint:</strong> The exported adapter should contain router weights:</p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-python codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token keyword" style="font-style:italic">from</span><span class="token plain"> safetensors</span><span class="token punctuation" style="color:rgb(199, 146, 234)">.</span><span class="token plain">torch </span><span class="token keyword" style="font-style:italic">import</span><span class="token plain"> load_file</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">weights </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> load_file</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token string" style="color:rgb(195, 232, 141)">&quot;output/adapter_model.safetensors&quot;</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">router_keys </span><span class="token operator" style="color:rgb(137, 221, 255)">=</span><span class="token plain"> </span><span class="token punctuation" style="color:rgb(199, 146, 234)">[</span><span class="token plain">k </span><span class="token keyword" style="font-style:italic">for</span><span class="token plain"> k </span><span class="token keyword" style="font-style:italic">in</span><span class="token plain"> weights</span><span class="token punctuation" style="color:rgb(199, 146, 234)">.</span><span class="token plain">keys</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">if</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;mlp.gate&quot;</span><span class="token plain"> </span><span class="token keyword" style="font-style:italic">in</span><span class="token plain"> k</span><span class="token punctuation" style="color:rgb(199, 146, 234)">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token keyword" style="font-style:italic">print</span><span class="token punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token string-interpolation string" style="color:rgb(195, 232, 141)">f&quot;Router weights in adapter: </span><span class="token string-interpolation interpolation punctuation" style="color:rgb(199, 146, 234)">{</span><span class="token string-interpolation interpolation builtin" style="color:rgb(130, 170, 255)">len</span><span class="token string-interpolation interpolation punctuation" style="color:rgb(199, 146, 234)">(</span><span class="token string-interpolation interpolation">router_keys</span><span class="token string-interpolation interpolation punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token string-interpolation interpolation punctuation" style="color:rgb(199, 146, 234)">}</span><span class="token string-interpolation string" style="color:rgb(195, 232, 141)">&quot;</span><span class="token punctuation" style="color:rgb(199, 146, 234)">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Should show one per layer (e.g., 28 for 28-layer model)</span><br></span></code></pre></div></div>
+</li>
+<li class="">
+<p><strong>Monitor gradient norms:</strong> During training, router gradients contribute to the total gradient norm. You should see non-zero gradients being clipped.</p>
+</li>
+<li class="">
+<p><strong>Compare before/after:</strong> Load the merged model and compare router weights to the original. They should differ if the router was trained.</p>
+</li>
+</ol></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/guides/metrics"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Training Metrics &amp; Monitoring</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/guides/multi-gpu"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Multi-GPU Training</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#supported-moe-models" class="table-of-contents__link toc-highlight">Supported MoE Models</a></li><li><a href="#pre-training-from-scratch" class="table-of-contents__link toc-highlight">Pre-training from Scratch</a></li><li><a href="#fine-tuning-moe-models" class="table-of-contents__link toc-highlight">Fine-Tuning MoE Models</a><ul><li><a href="#1-full-fine-tuning-fft" class="table-of-contents__link toc-highlight">1. Full Fine-Tuning (FFT)</a></li><li><a href="#2-lora-fine-tuning-experts-only" class="table-of-contents__link toc-highlight">2. LoRA Fine-Tuning (Experts Only)</a></li></ul></li><li><a href="#qlora-for-moe-models" class="table-of-contents__link toc-highlight">QLoRA for MoE Models</a></li><li><a href="#configuring-moe-loss-coefficients" class="table-of-contents__link toc-highlight">Configuring MoE Loss Coefficients</a></li><li><a href="#hyperparameter-recommendations" class="table-of-contents__link toc-highlight">Hyperparameter Recommendations</a><ul><li><a href="#for-pre-trained-moe-models-eg-qwen3-moe-30b-a3b" class="table-of-contents__link toc-highlight">For Pre-trained MoE Models (e.g., Qwen3-MoE-30B-A3B)</a></li><li><a href="#dataset-size-guidelines" class="table-of-contents__link toc-highlight">Dataset Size Guidelines</a></li></ul></li><li><a href="#monitoring-moe-training" class="table-of-contents__link toc-highlight">Monitoring MoE Training</a><ul><li><a href="#moe-specific-metrics" class="table-of-contents__link toc-highlight">MoE-Specific Metrics</a></li><li><a href="#enabling-moe-metrics" class="table-of-contents__link toc-highlight">Enabling MoE Metrics</a></li><li><a href="#interpreting-the-metrics" class="table-of-contents__link toc-highlight">Interpreting the Metrics</a></li><li><a href="#signs-of-healthy-training" class="table-of-contents__link toc-highlight">Signs of Healthy Training</a></li><li><a href="#signs-of-router-collapse" class="table-of-contents__link toc-highlight">Signs of Router Collapse</a></li></ul></li><li><a href="#memory-considerations" class="table-of-contents__link toc-highlight">Memory Considerations</a></li><li><a href="#expert-parallelism-ep" class="table-of-contents__link toc-highlight">Expert Parallelism (EP)</a><ul><li><a href="#configuration" class="table-of-contents__link toc-highlight">Configuration</a></li><li><a href="#how-ep-works" class="table-of-contents__link toc-highlight">How EP Works</a></li><li><a href="#llep-load-balancing" class="table-of-contents__link toc-highlight">LLEP Load Balancing</a></li><li><a href="#ep-with-qlora" class="table-of-contents__link toc-highlight">EP with QLoRA</a></li><li><a href="#when-to-use-ep" class="table-of-contents__link toc-highlight">When to Use EP</a></li></ul></li><li><a href="#limitations" class="table-of-contents__link toc-highlight">Limitations</a></li><li><a href="#example-configurations" class="table-of-contents__link toc-highlight">Example Configurations</a><ul><li><a href="#moe-pretraining" class="table-of-contents__link toc-highlight">MoE Pretraining</a></li><li><a href="#large-moe-model-with-qlora" class="table-of-contents__link toc-highlight">Large MoE Model with QLoRA</a></li></ul></li><li><a href="#verifying-router-training" class="table-of-contents__link toc-highlight">Verifying Router Training</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Work mode (operators)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/work">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/run-agent">Run an agent</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/review-sessions">Review sessions</a></li><li class="footer__item"><a class="footer__link-item" href="/work/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Develop mode (builders)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/develop">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/loop/overview">The builder loop</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/features/skills-and-experts">Skills &amp; Experts</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Repos</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/invergent-ai/surogates" target="_blank" rel="noopener noreferrer" class="footer__link-item">Runtime (surogates)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="footer__link-item">Training framework (surogate)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate-hub" target="_blank" rel="noopener noreferrer" class="footer__link-item">Artifact store (surogate-hub)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 Invergent. All rights reserved.</div></div></div></footer></div>
+</body>
+</html>

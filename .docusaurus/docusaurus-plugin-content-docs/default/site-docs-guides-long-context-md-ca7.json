@@ -1,0 +1,23 @@
+{
+  "id": "guides/long-context",
+  "title": "Long Context Training",
+  "description": "When fine-tuning at very long sequence lengths (8K, 32K, 128K+ tokens), MLP intermediate activations become the dominant source of GPU memory consumption. The long_context option enables tiled MLP execution, which chunks the MLP computation along the sequence dimension to reduce peak memory usage.",
+  "source": "@site/docs/guides/long-context.md",
+  "sourceDirName": "guides",
+  "slug": "/guides/long-context",
+  "permalink": "/guides/long-context",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "Offloading in Surogate",
+    "permalink": "/guides/offloading"
+  },
+  "next": {
+    "title": "Memory",
+    "permalink": "/guides/memory"
+  }
+}

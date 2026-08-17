@@ -1,0 +1,27 @@
+{
+  "id": "develop/reference/background-jobs",
+  "title": "Background jobs",
+  "description": "Work that outlives a single agent turn — asynchronous sub-agents, durable tasks, scheduled runs, and the platform sweepers that keep everything tidy.",
+  "source": "@site/docs/develop/reference/background-jobs.md",
+  "sourceDirName": "develop/reference",
+  "slug": "/develop/reference/background-jobs",
+  "permalink": "/develop/reference/background-jobs",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 5,
+  "frontMatter": {
+    "title": "Background jobs",
+    "sidebar_position": 5
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Event types",
+    "permalink": "/develop/reference/event-types"
+  },
+  "next": {
+    "title": "Coordination & the board",
+    "permalink": "/develop/reference/coordination"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "develop/reference/event-types",
+  "title": "Event types",
+  "description": "The Sessions UI's EVENTS tab and the GET /v1/sessions//events API both return a stream of typed events. This page lists what you'll see and what each event tells you.",
+  "source": "@site/docs/develop/reference/event-types.md",
+  "sourceDirName": "develop/reference",
+  "slug": "/develop/reference/event-types",
+  "permalink": "/develop/reference/event-types",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "title": "Event types",
+    "sidebar_position": 3
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Tool catalog",
+    "permalink": "/develop/reference/tool-catalog"
+  },
+  "next": {
+    "title": "Background jobs",
+    "permalink": "/develop/reference/background-jobs"
+  }
+}

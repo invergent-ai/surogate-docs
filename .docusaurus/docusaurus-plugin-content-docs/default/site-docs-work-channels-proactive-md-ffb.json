@@ -1,0 +1,27 @@
+{
+  "id": "work/channels/proactive",
+  "title": "Proactive engagement",
+  "description": "Let an agent do more than answer when spoken to — build context from everything in a channel and, when it is confident it will help, reach out on its own.",
+  "source": "@site/docs/work/channels/proactive.md",
+  "sourceDirName": "work/channels",
+  "slug": "/work/channels/proactive",
+  "permalink": "/work/channels/proactive",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 7,
+  "frontMatter": {
+    "title": "Proactive engagement",
+    "sidebar_position": 7
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Self-registration",
+    "permalink": "/work/channels/self-registration"
+  },
+  "next": {
+    "title": "Profile",
+    "permalink": "/work/settings/profile"
+  }
+}

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-develop/features/knowledge-bases" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Knowledge Bases | Surogate</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.surogate.ai/develop/features/knowledge-bases"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Knowledge Bases | Surogate"><meta data-rh="true" name="description" content="A KB is a curated corpus the agent can browse at runtime via kblistpages / kbreadpage. Where a skill teaches the agent how to do something, a KB tells it what it knows."><meta data-rh="true" property="og:description" content="A KB is a curated corpus the agent can browse at runtime via kblistpages / kbreadpage. Where a skill teaches the agent how to do something, a KB tells it what it knows."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.surogate.ai/develop/features/knowledge-bases"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/develop/features/knowledge-bases" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/develop/features/knowledge-bases" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://K46M9C3QXR-dsn.algolia.net" crossorigin="anonymous"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Knowledge Bases","item":"https://docs.surogate.ai/develop/features/knowledge-bases"}]}</script><link rel="preconnect" href="https://www.google-analytics.com">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7YRDGYZN0R"></script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-7YRDGYZN0R",{})</script>
+
+
+
+<link rel="search" type="application/opensearchdescription+xml" title="Surogate" href="/opensearch.xml">
+
+
+<meta name="keywords" content="Surogate, AgentOps, agents, LLM, MCP, training, fine-tuning, RL, evaluations">
+<meta name="description" content="Documentation for Surogate Ops — operator and builder tracks. Build reliable autonomous agents.">
+<meta name="og:type" content="website">
+<meta name="og:url" content="https://docs.surogate.ai">
+<meta name="og:title" content="Surogate Documentation">
+<meta name="og:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="og:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:secure_url" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:alt" content="Surogate">
+<meta name="og:locale" content="en_US">
+<meta name="og:image:type" content="image/jpeg">
+<meta name="twitter:site" content="surogate_ai">
+<meta name="twitter:creator" content="surogate_ai">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://docs.surogate.ai">
+<meta name="twitter:title" content="Surogate Documentation">
+<meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
+<script src="/assets/js/runtime~main.5374f7b7.js" defer="defer"></script>
+<script src="/assets/js/main.c60b3980.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo-black.svg" alt="logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo-white.svg" alt="logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Documentation</b></a><div class="toggle_mBnC" role="group" aria-label="Documentation mode"><button type="button" class="option_jJ1x active_xCPe" aria-pressed="true">Work</button><button type="button" class="option_jJ1x" aria-pressed="false">Develop</button></div></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">About<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://ops.surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Login<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://x.com/surogate_ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Follow us on X<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="navbarSearchContainer_Bca1"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search (Meta+k)" aria-keyshortcuts="Meta+k"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" fill="none" stroke-width="1.4"></circle><path d="m21 21-4.3-4.3" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop"><span title="Welcome" class="linkLabel_WmDU">Welcome</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/quickstart"><span title="Quickstart" class="linkLabel_WmDU">Quickstart</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/loop/overview"><span title="The builder loop" class="categoryLinkLabel_W154">The builder loop</span></a></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/tools/dashboard"><span title="Dashboard" class="linkLabel_WmDU">Dashboard</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/sessions"><span title="Sessions" class="linkLabel_WmDU">Sessions</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/models"><span title="Models" class="linkLabel_WmDU">Models</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/playground"><span title="Playground" class="linkLabel_WmDU">Playground</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/hub"><span title="Data Hub" class="linkLabel_WmDU">Data Hub</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/datasets"><span title="Datasets" class="linkLabel_WmDU">Datasets</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/training"><span title="Training" class="linkLabel_WmDU">Training</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/evaluations"><span title="Evaluations" class="linkLabel_WmDU">Evaluations</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/develop/features/compute"><span title="Compute" class="categoryLinkLabel_W154">Compute</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/compute"><span title="Compute" class="linkLabel_WmDU">Compute</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/connect-compute"><span title="Connect compute" class="linkLabel_WmDU">Connect compute</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/develop/features/skills-and-experts"><span title="Skills &amp; knowledge" class="categoryLinkLabel_W154">Skills &amp; knowledge</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/skills-and-experts"><span title="Skills &amp; Experts" class="linkLabel_WmDU">Skills &amp; Experts</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/skill-optimization"><span title="Skill optimization" class="linkLabel_WmDU">Skill optimization</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/develop/features/knowledge-bases"><span title="Knowledge Bases" class="linkLabel_WmDU">Knowledge Bases</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/mcp-and-vault"><span title="MCP &amp; Vault" class="linkLabel_WmDU">MCP &amp; Vault</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/byo-llm"><span title="BYO LLM" class="linkLabel_WmDU">BYO LLM</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/features/memory"><span title="Agent capabilities" class="categoryLinkLabel_W154">Agent capabilities</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/tools/copilot"><span title="Tools" class="categoryLinkLabel_W154">Tools</span></a></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/use-cases"><span title="Use cases" class="linkLabel_WmDU">Use cases</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/reference/runtime-architecture"><span title="Reference" class="categoryLinkLabel_W154">Reference</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Skills &amp; knowledge</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Knowledge Bases</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Knowledge Bases</h1></header>
+<p>A KB is a curated corpus the agent can browse at runtime via <code>kb_list_pages</code> / <code>kb_read_page</code>. Where a skill teaches the agent <strong>how</strong> to do something, a KB tells it <strong>what it knows</strong>.</p>
+<p>For the operator&#x27;s view, see <a class="" href="/work/library/knowledge-bases">Work mode → Knowledge bases</a>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-a-kb-works-architecturally">How a KB works (architecturally)<a href="#how-a-kb-works-architecturally" class="hash-link" aria-label="Direct link to How a KB works (architecturally)" title="Direct link to How a KB works (architecturally)" translate="no">​</a></h2>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">Source files (markdown, PDF, CSV)</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">        │</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">        ▼ uploaded via POST /api/knowledge-bases/{id}/sources</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   ┌─────────────────────────────┐</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   │   Curator (an LLM)          │</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   │   Reads sources, extracts   │</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   │   structured knowledge,     │</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   │   deduplicates              │</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   └─────────────┬───────────────┘</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">                 │ COMPILE (POST /api/knowledge-bases/{id}/compile)</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">                 ▼</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   ┌─────────────────────────────┐</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   │   Wiki — searchable index   │</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   │   (lakeFS-versioned)        │</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   └─────────────┬───────────────┘</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">                 │</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">                 ▼  kb_list_pages / kb_read_page at runtime</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">   Agent&#x27;s session context grows by relevant pages</span><br></span></code></pre></div></div>
+<p>The curator does the work of distilling, structuring, cross-referencing — agents don&#x27;t read raw documents at runtime, they search the curated wiki.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-a-kb-carries">What a KB carries<a href="#what-a-kb-carries" class="hash-link" aria-label="Direct link to What a KB carries" title="Direct link to What a KB carries" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Field</th><th>Notes</th></tr></thead><tbody><tr><td><strong>Name</strong></td><td>Unique within your org</td></tr><tr><td><strong>Description</strong></td><td>Free-form</td></tr><tr><td><strong>Curator model</strong></td><td>Locked at creation — can&#x27;t be changed later. Default works for most cases; pick a smarter model (Claude Sonnet 4.6, GPT-5) at creation for highly technical content.</td></tr><tr><td><strong>Sources</strong></td><td>List of files / S3 prefixes / GitHub repos / Notion pages / URLs (only File works in current builds)</td></tr><tr><td><strong>Status</strong></td><td><code>error</code> (no successful compile yet) → <code>compiling</code> → <code>active</code></td></tr><tr><td><strong>Counters</strong></td><td>sources, wiki pages, attached agents</td></tr></tbody></table>
+<p>The compiled wiki is versioned in the Hub — every COMPILE produces a new commit you can roll back to.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="five-source-types">Five source types<a href="#five-source-types" class="hash-link" aria-label="Direct link to Five source types" title="Direct link to Five source types" translate="no">​</a></h2>
+<p>Five types are listed in ADD SOURCE. <strong>Only File is enabled in current builds</strong> — the rest are scaffolded but not yet wired.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Type</th><th>Available</th><th>Notes</th></tr></thead><tbody><tr><td><strong>File</strong></td><td>✅</td><td>Upload <code>.md</code>, <code>.pdf</code>, <code>.txt</code>, <code>.docx</code>, <code>.csv</code></td></tr><tr><td><strong>S3</strong></td><td>🚧</td><td>Recursive pull from a bucket/prefix</td></tr><tr><td><strong>GitHub</strong></td><td>🚧</td><td>Auto-pull from a repo&#x27;s docs folder with branch tracking</td></tr><tr><td><strong>Notion</strong></td><td>🚧</td><td>OAuth into a Notion workspace</td></tr><tr><td><strong>URL</strong></td><td>🚧</td><td>Crawl a domain or specific URLs</td></tr></tbody></table>
+<p>When the other source types ship, they&#x27;ll have continuous sync (re-compile on detected changes).</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="curator-model">Curator model<a href="#curator-model" class="hash-link" aria-label="Direct link to Curator model" title="Direct link to Curator model" translate="no">​</a></h2>
+<p>Locked at KB creation. Can&#x27;t be changed later. Common choices:</p>
+<ul>
+<li class=""><strong>Surogate default</strong> — fine for most cases</li>
+<li class=""><strong>Claude Sonnet 4.6</strong> — better for highly technical content</li>
+<li class=""><strong>GPT-5</strong> — alternative</li>
+</ul>
+<p>The curator runs once per source on COMPILE. The cost is dominated by the size of the source corpus.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="compile">Compile<a href="#compile" class="hash-link" aria-label="Direct link to Compile" title="Direct link to Compile" translate="no">​</a></h2>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">curl -X POST http://localhost:8000/api/knowledge-bases/{id}/compile \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  -H &quot;Authorization: Bearer $TOKEN&quot;</span><br></span></code></pre></div></div>
+<p>What happens:</p>
+<ol>
+<li class="">For each source: read, parse, chunk</li>
+<li class="">For each chunk: curator extracts structured knowledge</li>
+<li class="">Per-source wiki page assembled</li>
+<li class="">Cross-source synthesis index built</li>
+<li class="">Wiki committed to lakeFS</li>
+</ol>
+<p>Compile time: 30s to several minutes per source.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="when-compile-fails">When compile fails<a href="#when-compile-fails" class="hash-link" aria-label="Direct link to When compile fails" title="Direct link to When compile fails" translate="no">​</a></h3>
+<p>Failures are isolated per file: a bad source is marked <code>error</code> with its own recorded error message (shown inline in the SOURCES list), healthy sources continue, and a wiki is still produced from the survivors. The compile as a whole still reports <code>failed</code> when any file failed — so <code>error</code> means &quot;at least one source failed&quot;, not &quot;nothing was built&quot;.</p>
+<ul>
+<li class=""><strong>Retry the failing file</strong> — transient failures (curator LLM rate limits) are common, and files a dead compile left locked are requeued automatically on every finalize path, so retry never reports &quot;no files to compile&quot;</li>
+<li class=""><strong>Reduce source size</strong> — split large documents into chapter-sized chunks. PDFs above a page threshold route through the long-document indexer; other source types are summarised directly with input bounded to ~240k characters as a head-and-tail excerpt (the middle of an oversized non-PDF file is absent from its summary)</li>
+<li class=""><strong>Check format</strong> — corrupt PDFs and non-UTF-8 markdown choke the parser</li>
+<li class=""><strong>Read the per-file error</strong> — it names the actual reason</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="wiki-search">Wiki search<a href="#wiki-search" class="hash-link" aria-label="Direct link to Wiki search" title="Direct link to Wiki search" translate="no">​</a></h2>
+<p>The same search the agent uses at runtime:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">curl &quot;http://localhost:8000/api/knowledge-bases/{id}/wiki/search?q=refund+policy&quot; \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  -H &quot;Authorization: Bearer $TOKEN&quot;</span><br></span></code></pre></div></div>
+<p>Returns ranked wiki pages with snippets. Pre-test your KB before attaching to an agent — if the right pages don&#x27;t surface for typical queries, the curator didn&#x27;t extract what you need.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="attach-to-an-agent">Attach to an agent<a href="#attach-to-an-agent" class="hash-link" aria-label="Direct link to Attach to an agent" title="Direct link to Attach to an agent" translate="no">​</a></h2>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">curl -X POST http://localhost:8000/api/agents/{agent_id}/knowledge-bases \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  -H &quot;Authorization: Bearer $TOKEN&quot; \</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  -d &#x27;{&quot;kb_id&quot;: &quot;...&quot;}&#x27;</span><br></span></code></pre></div></div>
+<p>The agent&#x27;s system prompt gains:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">## Available Knowledge Bases</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">- acme-product-docs: Product documentation, runbooks, known-issues database.</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  Browse via kb_list_pages(&quot;acme-product-docs&quot;), then kb_read_page(path).</span><br></span></code></pre></div></div>
+<p>Plus the agent&#x27;s tool catalogue grows by <code>kb_list_pages</code> and <code>kb_read_page</code>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="rest-api">REST API<a href="#rest-api" class="hash-link" aria-label="Direct link to REST API" title="Direct link to REST API" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Method</th><th>Endpoint</th><th>Purpose</th></tr></thead><tbody><tr><td><code>GET</code></td><td><code>/api/knowledge-bases</code></td><td>List</td></tr><tr><td><code>GET</code></td><td><code>/api/knowledge-bases/{id}</code></td><td>Detail</td></tr><tr><td><code>POST</code></td><td><code>/api/knowledge-bases</code></td><td>Create. Body: <code>{name, description, curator_model}</code></td></tr><tr><td><code>DELETE</code></td><td><code>/api/knowledge-bases/{id}</code></td><td>Delete (pre-flight: warns if attached to agents)</td></tr><tr><td><code>GET</code></td><td><code>/api/knowledge-bases/{id}/sources</code></td><td>List sources</td></tr><tr><td><code>POST</code></td><td><code>/api/knowledge-bases/{id}/sources</code></td><td>Add source (multipart for File, JSON for others)</td></tr><tr><td><code>DELETE</code></td><td><code>/api/knowledge-bases/{id}/sources/{source_id}</code></td><td>Remove source</td></tr><tr><td><code>POST</code></td><td><code>/api/knowledge-bases/{id}/compile</code></td><td>Trigger compile</td></tr><tr><td><code>GET</code></td><td><code>/api/knowledge-bases/{id}/wiki</code></td><td>Browse wiki</td></tr><tr><td><code>GET</code></td><td><code>/api/knowledge-bases/{id}/wiki/search?q=</code></td><td>Search wiki</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-next">What&#x27;s next<a href="#whats-next" class="hash-link" aria-label="Direct link to What&#x27;s next" title="Direct link to What&#x27;s next" translate="no">​</a></h2>
+<p><a class="" href="/develop/features/mcp-and-vault">MCP &amp; Vault</a> for external system integration. <a class="" href="/develop/features/datasets">Datasets</a> for the other corpus type used in training.</p></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/develop/features/skill-optimization"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Skill optimization</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/develop/features/mcp-and-vault"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">MCP &amp; Vault</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#how-a-kb-works-architecturally" class="table-of-contents__link toc-highlight">How a KB works (architecturally)</a></li><li><a href="#what-a-kb-carries" class="table-of-contents__link toc-highlight">What a KB carries</a></li><li><a href="#five-source-types" class="table-of-contents__link toc-highlight">Five source types</a></li><li><a href="#curator-model" class="table-of-contents__link toc-highlight">Curator model</a></li><li><a href="#compile" class="table-of-contents__link toc-highlight">Compile</a><ul><li><a href="#when-compile-fails" class="table-of-contents__link toc-highlight">When compile fails</a></li></ul></li><li><a href="#wiki-search" class="table-of-contents__link toc-highlight">Wiki search</a></li><li><a href="#attach-to-an-agent" class="table-of-contents__link toc-highlight">Attach to an agent</a></li><li><a href="#rest-api" class="table-of-contents__link toc-highlight">REST API</a></li><li><a href="#whats-next" class="table-of-contents__link toc-highlight">What&#39;s next</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Work mode (operators)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/work">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/run-agent">Run an agent</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/review-sessions">Review sessions</a></li><li class="footer__item"><a class="footer__link-item" href="/work/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Develop mode (builders)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/develop">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/loop/overview">The builder loop</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/features/skills-and-experts">Skills &amp; Experts</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Repos</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/invergent-ai/surogates" target="_blank" rel="noopener noreferrer" class="footer__link-item">Runtime (surogates)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="footer__link-item">Training framework (surogate)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate-hub" target="_blank" rel="noopener noreferrer" class="footer__link-item">Artifact store (surogate-hub)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 Invergent. All rights reserved.</div></div></div></footer></div>
+</body>
+</html>

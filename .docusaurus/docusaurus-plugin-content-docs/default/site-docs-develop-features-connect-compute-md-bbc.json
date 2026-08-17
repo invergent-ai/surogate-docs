@@ -1,0 +1,27 @@
+{
+  "id": "develop/features/connect-compute",
+  "title": "Connect compute",
+  "description": "The Compute page is where you wire up cloud GPU providers, watch what's running, and set scaling policies. This page walks through the onboarding — the tabs, connecting a provider, and browsing the instance types a backend offers. For the conceptual overview of why and when to connect a provider, see Compute.",
+  "source": "@site/docs/develop/features/connect-compute.md",
+  "sourceDirName": "develop/features",
+  "slug": "/develop/features/connect-compute",
+  "permalink": "/develop/features/connect-compute",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 10,
+  "frontMatter": {
+    "title": "Connect compute",
+    "sidebar_position": 10
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Compute",
+    "permalink": "/develop/features/compute"
+  },
+  "next": {
+    "title": "Skills & Experts",
+    "permalink": "/develop/features/skills-and-experts"
+  }
+}

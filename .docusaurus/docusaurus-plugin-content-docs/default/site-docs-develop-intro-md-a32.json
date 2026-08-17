@@ -1,0 +1,25 @@
+{
+  "id": "develop/intro",
+  "title": "Welcome to Develop mode",
+  "description": "For designing agents, writing skills, training experts, running evaluations, integrating via API, and deploying on your own cluster. Flip to Work mode in the navbar if you only need to chat with deployed agents and watch sessions.",
+  "source": "@site/docs/develop/intro.md",
+  "sourceDirName": "develop",
+  "slug": "/develop",
+  "permalink": "/develop",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "slug": "/develop",
+    "title": "Welcome to Develop mode",
+    "sidebar_label": "Welcome",
+    "sidebar_position": 1
+  },
+  "sidebar": "developSidebar",
+  "next": {
+    "title": "Quickstart",
+    "permalink": "/develop/quickstart"
+  }
+}

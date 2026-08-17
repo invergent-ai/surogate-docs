@@ -1,0 +1,23 @@
+{
+  "id": "examples/index",
+  "title": "Examples Library",
+  "description": "Surogate comes with a collection of pre-built training recipes and configurations for popular models and hardware setups. You can find these in the examples/ directory of the repository.",
+  "source": "@site/docs/examples/index.md",
+  "sourceDirName": "examples",
+  "slug": "/examples/",
+  "permalink": "/examples/",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "Quickstart: RL Training (GRPO)",
+    "permalink": "/getting-started/quickstart-grpo"
+  },
+  "next": {
+    "title": "Qwen 3 Pre-training (PT)",
+    "permalink": "/examples/pt/qwen3"
+  }
+}

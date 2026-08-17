@@ -13,7 +13,7 @@ A Meta app and a business phone number:
 
 ## Configuration in Surogate
 
-Open the agent → **Configure** in the left nav → the **Channels** tab → find the **WhatsApp** card ("Reply to people on WhatsApp") → **Connect**. The wizard walks the Meta steps and asks for four credentials:
+Open the agent → **Publish** in the left nav → the **Channels** tab → find the **WhatsApp** card ("Reply to people on WhatsApp") → **Connect**. The wizard walks the Meta steps and asks for four credentials:
 
 | Field | Where it comes from |
 |---|---|

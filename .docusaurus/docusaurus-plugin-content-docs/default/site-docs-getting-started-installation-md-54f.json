@@ -1,0 +1,23 @@
+{
+  "id": "getting-started/installation",
+  "title": "Installation",
+  "description": "Supported platforms",
+  "source": "@site/docs/getting-started/installation.md",
+  "sourceDirName": "getting-started",
+  "slug": "/getting-started/installation",
+  "permalink": "/getting-started/installation",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "Automatic Differentiation",
+    "permalink": "/about/automatic-differentiation"
+  },
+  "next": {
+    "title": "Training Modes",
+    "permalink": "/getting-started/training-modes"
+  }
+}

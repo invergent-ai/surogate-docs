@@ -1,0 +1,23 @@
+{
+  "id": "guides/rl-environments",
+  "title": "RL Environments",
+  "description": "This guide walks through building environments with the verifiers library, from simple single-turn tasks to complex multi-turn agents with tools.",
+  "source": "@site/docs/guides/rl-environments.md",
+  "sourceDirName": "guides",
+  "slug": "/guides/rl-environments",
+  "permalink": "/guides/rl-environments",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "Debugging training issues",
+    "permalink": "/guides/debugging"
+  },
+  "next": {
+    "title": "RL Training (GRPO)",
+    "permalink": "/guides/rl-training"
+  }
+}

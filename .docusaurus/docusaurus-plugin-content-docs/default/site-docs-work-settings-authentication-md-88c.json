@@ -1,0 +1,27 @@
+{
+  "id": "work/settings/authentication",
+  "title": "Authentication",
+  "description": "The Authentication tab holds end-user sign-in configuration for your active project, at /work/settings/authentication (shared with Dev mode at /studio/settings/authentication).",
+  "source": "@site/docs/work/settings/authentication.md",
+  "sourceDirName": "work/settings",
+  "slug": "/work/settings/authentication",
+  "permalink": "/work/settings/authentication",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "title": "Authentication",
+    "sidebar_position": 2
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Profile",
+    "permalink": "/work/settings/profile"
+  },
+  "next": {
+    "title": "Usage",
+    "permalink": "/work/settings/usage"
+  }
+}

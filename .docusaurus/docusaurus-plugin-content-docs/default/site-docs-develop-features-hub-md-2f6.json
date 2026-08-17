@@ -1,0 +1,27 @@
+{
+  "id": "develop/features/hub",
+  "title": "Data Hub",
+  "description": "The Data Hub is Git for data. Every artifact your project produces — a skill, a dataset, a model, a knowledge base, a training experiment — is stored as its own versioned repository with branches, commits, and tags. The Hub is backed by surogate-hub, a lakeFS-based object store, so a repo behaves like a git repo whose objects happen to be data files instead of source code.",
+  "source": "@site/docs/develop/features/hub.md",
+  "sourceDirName": "develop/features",
+  "slug": "/develop/features/hub",
+  "permalink": "/develop/features/hub",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 5,
+  "frontMatter": {
+    "title": "Data Hub",
+    "sidebar_position": 5
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Playground",
+    "permalink": "/develop/features/playground"
+  },
+  "next": {
+    "title": "Datasets",
+    "permalink": "/develop/features/datasets"
+  }
+}

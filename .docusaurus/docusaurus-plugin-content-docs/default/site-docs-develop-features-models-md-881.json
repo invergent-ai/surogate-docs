@@ -1,0 +1,27 @@
+{
+  "id": "develop/features/models",
+  "title": "Models",
+  "description": "The Models page is where you register and serve the LLM endpoints your agents call. Click DEPLOY MODEL at the top of the page to open the deploy flow: first a source picker, then a per-source form, then the model's detail page where you configure and start it.",
+  "source": "@site/docs/develop/features/models.md",
+  "sourceDirName": "develop/features",
+  "slug": "/develop/features/models",
+  "permalink": "/develop/features/models",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "title": "Models",
+    "sidebar_position": 1
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Sessions",
+    "permalink": "/develop/features/sessions"
+  },
+  "next": {
+    "title": "Playground",
+    "permalink": "/develop/features/playground"
+  }
+}

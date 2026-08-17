@@ -1,0 +1,27 @@
+{
+  "id": "work/channels/slack",
+  "title": "Slack",
+  "description": "Publishes the agent as a Slack bot. Users DM it or @mention it in channels. Same conversations as on Web — if Slack identities are linked to Surogate users, sessions are shared.",
+  "source": "@site/docs/work/channels/slack.md",
+  "sourceDirName": "work/channels",
+  "slug": "/work/channels/slack",
+  "permalink": "/work/channels/slack",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "title": "Slack",
+    "sidebar_position": 2
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Web",
+    "permalink": "/work/channels/web"
+  },
+  "next": {
+    "title": "Telegram",
+    "permalink": "/work/channels/telegram"
+  }
+}

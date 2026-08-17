@@ -1,0 +1,23 @@
+{
+  "id": "examples/pt/qwen3",
+  "title": "Qwen 3 Pre-training (PT)",
+  "description": "This example demonstrates how to pre-train a Qwen 3 model using Surogate's high-performance FP8 hybrid recipe.",
+  "source": "@site/docs/examples/pt/qwen3.md",
+  "sourceDirName": "examples/pt",
+  "slug": "/examples/pt/qwen3",
+  "permalink": "/examples/pt/qwen3",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "Examples Library",
+    "permalink": "/examples/"
+  },
+  "next": {
+    "title": "Qwen 3 LoRA Fine-Tuning (SFT)",
+    "permalink": "/examples/sft/qwen3-lora"
+  }
+}

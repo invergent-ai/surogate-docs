@@ -1,0 +1,27 @@
+{
+  "id": "work/tools/commands",
+  "title": "Slash commands",
+  "description": "Slash commands are shortcuts you type into the chat composer to steer the agent's next turn — start a goal, force a compression, run a coding agent, kick off research, and more.",
+  "source": "@site/docs/work/tools/commands.md",
+  "sourceDirName": "work/tools",
+  "slug": "/work/tools/commands",
+  "permalink": "/work/tools/commands",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "title": "Slash commands",
+    "sidebar_position": 1
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Chatting with an agent",
+    "permalink": "/work/tools/chat"
+  },
+  "next": {
+    "title": "Goals (`/goal`)",
+    "permalink": "/work/tools/goals"
+  }
+}

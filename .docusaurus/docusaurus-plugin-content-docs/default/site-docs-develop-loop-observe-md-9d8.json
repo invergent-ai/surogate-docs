@@ -1,0 +1,27 @@
+{
+  "id": "develop/loop/observe",
+  "title": "Observe phase",
+  "description": "Sessions are your source of truth. Every conversation, tool call, LLM response, and governance decision is in the event log. This chapter is about reading that data with intent.",
+  "source": "@site/docs/develop/loop/observe.md",
+  "sourceDirName": "develop/loop",
+  "slug": "/develop/loop/observe",
+  "permalink": "/develop/loop/observe",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "title": "Observe phase",
+    "sidebar_position": 3
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Build phase",
+    "permalink": "/develop/loop/build"
+  },
+  "next": {
+    "title": "Train phase",
+    "permalink": "/develop/loop/train"
+  }
+}

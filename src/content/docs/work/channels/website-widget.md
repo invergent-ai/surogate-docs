@@ -10,7 +10,7 @@ Nothing external. The platform issues a **publishable key** (prefixed `surg_wk_�
 
 ## Configuration
 
-Open the agent → **Configure** in the left nav → the **Channels** tab → find the **Website** card → **Connect**. The connect screen asks for your **Allowed origins**, then you click **Enable widget**.
+Open the agent → **Publish** in the left nav → the **Channels** tab → find the **Website** card → **Connect**. The connect screen asks for your **Allowed origins**, then you click **Enable widget**.
 
 | Field | What it does |
 |---|---|

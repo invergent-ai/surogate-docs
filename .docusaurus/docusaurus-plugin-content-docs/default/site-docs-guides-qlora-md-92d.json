@@ -1,0 +1,23 @@
+{
+  "id": "guides/qlora",
+  "title": "Quantized LoRA (QLoRA)",
+  "description": "QLoRA enables memory-efficient fine-tuning by quantizing the frozen base model weights while training LoRA adapters in higher precision. Surogate supports two modes:",
+  "source": "@site/docs/guides/qlora.md",
+  "sourceDirName": "guides",
+  "slug": "/guides/qlora",
+  "permalink": "/guides/qlora",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "Precision & Recipes",
+    "permalink": "/guides/precision-and-recipes"
+  },
+  "next": {
+    "title": "Training Metrics & Monitoring",
+    "permalink": "/guides/metrics"
+  }
+}

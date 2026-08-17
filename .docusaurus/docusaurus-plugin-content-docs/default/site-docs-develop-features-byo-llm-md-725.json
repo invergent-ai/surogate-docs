@@ -1,0 +1,27 @@
+{
+  "id": "develop/features/byo-llm",
+  "title": "BYO LLM",
+  "description": "When the BYO LLM toggle is on, the platform routes LLM calls through your own provider instead of Surogate's bundled endpoints. Surogate charges only for platform usage (storage, compute, sessions); your provider charges for tokens.",
+  "source": "@site/docs/develop/features/byo-llm.md",
+  "sourceDirName": "develop/features",
+  "slug": "/develop/features/byo-llm",
+  "permalink": "/develop/features/byo-llm",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 6,
+  "frontMatter": {
+    "title": "BYO LLM",
+    "sidebar_position": 6
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "MCP & Vault",
+    "permalink": "/develop/features/mcp-and-vault"
+  },
+  "next": {
+    "title": "Agent memory",
+    "permalink": "/develop/features/memory"
+  }
+}

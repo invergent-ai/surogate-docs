@@ -1,0 +1,27 @@
+{
+  "id": "work/settings/usage",
+  "title": "Usage",
+  "description": "The Usage tab shows what your project has consumed this billing period, how much of each wallet is left, and a breakdown per agent and model. It's the real-time meter behind your plan — no end-of-month surprises. Balances refresh silently every minute while the tab is visible.",
+  "source": "@site/docs/work/settings/usage.md",
+  "sourceDirName": "work/settings",
+  "slug": "/work/settings/usage",
+  "permalink": "/work/settings/usage",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "title": "Usage",
+    "sidebar_position": 3
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Authentication",
+    "permalink": "/work/settings/authentication"
+  },
+  "next": {
+    "title": "Billing",
+    "permalink": "/work/settings/billing"
+  }
+}

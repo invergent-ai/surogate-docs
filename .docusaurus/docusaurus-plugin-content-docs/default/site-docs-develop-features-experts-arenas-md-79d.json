@@ -1,0 +1,27 @@
+{
+  "id": "develop/features/experts-arenas",
+  "title": "Experts & arenas",
+  "description": "An arena is a supervised, multi-agent run: a coordinator agent drives a set of participant agents toward an objective, and the run ends when a success predicate is met. It is the platform's mission-control view for agents working together (or against each other) on a goal.",
+  "source": "@site/docs/develop/features/experts-arenas.md",
+  "sourceDirName": "develop/features",
+  "slug": "/develop/features/experts-arenas",
+  "permalink": "/develop/features/experts-arenas",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 8,
+  "frontMatter": {
+    "title": "Experts & arenas",
+    "sidebar_position": 8
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Skills & Experts",
+    "permalink": "/develop/features/skills-and-experts"
+  },
+  "next": {
+    "title": "Skill optimization",
+    "permalink": "/develop/features/skill-optimization"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "develop/tools/copilot",
+  "title": "Copilot (⌘+/)",
+  "description": "The Copilot drives the platform itself on your behalf. Press ⌘+/ (Mac) or Ctrl+/ anywhere in ops.surogate.ai. For the operator's introduction, see Work mode → Copilot.",
+  "source": "@site/docs/develop/tools/copilot.md",
+  "sourceDirName": "develop/tools",
+  "slug": "/develop/tools/copilot",
+  "permalink": "/develop/tools/copilot",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "title": "Copilot (⌘+/)",
+    "sidebar_position": 2
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Media generation",
+    "permalink": "/develop/features/media-generation"
+  },
+  "next": {
+    "title": "Templates",
+    "permalink": "/develop/tools/templates"
+  }
+}

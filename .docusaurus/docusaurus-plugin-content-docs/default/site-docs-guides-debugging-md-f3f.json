@@ -1,0 +1,23 @@
+{
+  "id": "guides/debugging",
+  "title": "Debugging training issues",
+  "description": "Training memory breakdown",
+  "source": "@site/docs/guides/debugging.md",
+  "sourceDirName": "guides",
+  "slug": "/guides/debugging",
+  "permalink": "/guides/debugging",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "Memory",
+    "permalink": "/guides/memory"
+  },
+  "next": {
+    "title": "RL Environments",
+    "permalink": "/guides/rl-environments"
+  }
+}

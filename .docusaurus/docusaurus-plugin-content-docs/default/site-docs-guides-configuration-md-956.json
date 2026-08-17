@@ -1,0 +1,23 @@
+{
+  "id": "guides/configuration",
+  "title": "Configuration",
+  "description": "Surogate is driven by a YAML config file.",
+  "source": "@site/docs/guides/configuration.md",
+  "sourceDirName": "guides",
+  "slug": "/guides/configuration",
+  "permalink": "/guides/configuration",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "Qwen 3 MoE Fine-Tuning",
+    "permalink": "/examples/sft/qwen3moe-lora"
+  },
+  "next": {
+    "title": "Datasets",
+    "permalink": "/guides/datasets"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "work/tools/deep-research",
+  "title": "Deep research (`/deep-research`)",
+  "description": "/deep-research  produces a cited research report on a topic. The agent hands the topic to a dedicated deep-research sub-agent that plans the investigation, searches the web, curates an evidence bank, and delegates to a research-writer sub-agent for the final write-up.",
+  "source": "@site/docs/work/tools/deep-research.md",
+  "sourceDirName": "work/tools",
+  "slug": "/work/tools/deep-research",
+  "permalink": "/work/tools/deep-research",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 8,
+  "frontMatter": {
+    "title": "Deep research (`/deep-research`)",
+    "sidebar_position": 8
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Scheduled work",
+    "permalink": "/work/tools/scheduled-work"
+  },
+  "next": {
+    "title": "Coding agents (`/code`)",
+    "permalink": "/work/tools/code"
+  }
+}

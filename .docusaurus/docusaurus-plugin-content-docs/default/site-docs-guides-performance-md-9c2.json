@@ -1,0 +1,14 @@
+{
+  "id": "guides/performance",
+  "title": "Performance",
+  "description": "This page is a work in progress. It will collect practical performance tuning tips and describe major optimizations implemented in Surogate.",
+  "source": "@site/docs/guides/performance.md",
+  "sourceDirName": "guides",
+  "slug": "/guides/performance",
+  "permalink": "/guides/performance",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

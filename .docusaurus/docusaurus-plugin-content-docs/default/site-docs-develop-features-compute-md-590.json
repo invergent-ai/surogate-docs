@@ -1,0 +1,27 @@
+{
+  "id": "develop/features/compute",
+  "title": "Compute",
+  "description": "The Compute page is where you wire up GPU providers so the platform can run training jobs, serve fine-tuned models, and drive data pipelines on your behalf. You don't manage Kubernetes or VM provisioning — the platform does that — but you choose which provider runs what, and you watch everything that's consuming compute in one place.",
+  "source": "@site/docs/develop/features/compute.md",
+  "sourceDirName": "develop/features",
+  "slug": "/develop/features/compute",
+  "permalink": "/develop/features/compute",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "title": "Compute",
+    "sidebar_position": 3
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Evaluations",
+    "permalink": "/develop/features/evaluations"
+  },
+  "next": {
+    "title": "Connect compute",
+    "permalink": "/develop/features/connect-compute"
+  }
+}

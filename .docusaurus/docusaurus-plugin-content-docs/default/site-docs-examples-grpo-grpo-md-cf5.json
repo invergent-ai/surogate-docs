@@ -1,0 +1,14 @@
+{
+  "id": "examples/grpo/grpo",
+  "title": "Teach a model to reverse the prompt",
+  "description": "In this example we demostrate how to train Qwen3-0.6B to reverse a small chunk of text. We will use a SFT warmup to learn the skill of text reversal on longer documents and then a quick RL run to reverse smaller chunks of text in the reverse-text environment.",
+  "source": "@site/docs/examples/grpo/grpo.md",
+  "sourceDirName": "examples/grpo",
+  "slug": "/examples/grpo/",
+  "permalink": "/examples/grpo/",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

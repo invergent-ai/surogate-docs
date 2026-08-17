@@ -1,0 +1,23 @@
+{
+  "id": "guides/rl-training",
+  "title": "RL Training (GRPO)",
+  "description": "Surogate supports reinforcement learning fine-tuning via GRPO (Group Relative Policy Optimization). The pipeline coordinates a vLLM inference server, a GRPO orchestrator, and the Surogate trainer.",
+  "source": "@site/docs/guides/rl-training.md",
+  "sourceDirName": "guides",
+  "slug": "/guides/rl-training",
+  "permalink": "/guides/rl-training",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "RL Environments",
+    "permalink": "/guides/rl-environments"
+  },
+  "next": {
+    "title": "Speed Benchmarks",
+    "permalink": "/reference/benchmarks"
+  }
+}

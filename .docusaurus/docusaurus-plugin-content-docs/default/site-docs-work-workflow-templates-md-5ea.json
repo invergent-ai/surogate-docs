@@ -1,0 +1,27 @@
+{
+  "id": "work/workflow/templates",
+  "title": "Templates",
+  "description": "The Templates page is where you start a new agent — either from a pre-built template or from scratch.",
+  "source": "@site/docs/work/workflow/templates.md",
+  "sourceDirName": "work/workflow",
+  "slug": "/work/workflow/templates",
+  "permalink": "/work/workflow/templates",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 5,
+  "frontMatter": {
+    "title": "Templates",
+    "sidebar_position": 5
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Integrations",
+    "permalink": "/work/library/integrations"
+  },
+  "next": {
+    "title": "Knowledge Bases",
+    "permalink": "/work/library/knowledge-bases"
+  }
+}

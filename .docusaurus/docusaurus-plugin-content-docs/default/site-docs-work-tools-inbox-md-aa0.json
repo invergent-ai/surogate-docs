@@ -1,0 +1,27 @@
+{
+  "id": "work/tools/inbox",
+  "title": "Inbox",
+  "description": "The inbox surfaces items the agent has explicitly raised to you. If it's empty, no agent has called askuserquestion or asked you to complete an external action — that's normal.",
+  "source": "@site/docs/work/tools/inbox.md",
+  "sourceDirName": "work/tools",
+  "slug": "/work/tools/inbox",
+  "permalink": "/work/tools/inbox",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "title": "Inbox",
+    "sidebar_position": 3
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Sub-agents",
+    "permalink": "/work/tools/sub-agents"
+  },
+  "next": {
+    "title": "Improve your agent",
+    "permalink": "/work/workflow/improve-agent"
+  }
+}

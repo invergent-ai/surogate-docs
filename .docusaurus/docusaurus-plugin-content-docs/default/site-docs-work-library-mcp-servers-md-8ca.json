@@ -1,0 +1,27 @@
+{
+  "id": "work/library/mcp-servers",
+  "title": "MCP servers",
+  "description": "The Model Context Protocol (MCP) is an open standard for connecting LLMs to external systems — your CRM, your ticketing tool, GitHub, internal APIs, anything that speaks MCP.",
+  "source": "@site/docs/work/library/mcp-servers.md",
+  "sourceDirName": "work/library",
+  "slug": "/work/library/mcp-servers",
+  "permalink": "/work/library/mcp-servers",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "title": "MCP servers",
+    "sidebar_position": 3
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Skills",
+    "permalink": "/work/library/skills"
+  },
+  "next": {
+    "title": "Integrations",
+    "permalink": "/work/library/integrations"
+  }
+}

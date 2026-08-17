@@ -1,0 +1,27 @@
+{
+  "id": "work/workflow/configure-agent",
+  "title": "Configure your agent",
+  "description": "The Configure page — reached from an agent's left navigation (/work/agents//settings?tab=...) — is the core agent-building surface: twelve tabs that control who the agent is, what it can do, which model runs it, and where people reach it.",
+  "source": "@site/docs/work/workflow/configure-agent.md",
+  "sourceDirName": "work/workflow",
+  "slug": "/work/workflow/configure-agent",
+  "permalink": "/work/workflow/configure-agent",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "title": "Configure your agent",
+    "sidebar_position": 4
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Run an agent",
+    "permalink": "/work/workflow/run-agent"
+  },
+  "next": {
+    "title": "Governance & AI disclosure",
+    "permalink": "/work/workflow/governance"
+  }
+}

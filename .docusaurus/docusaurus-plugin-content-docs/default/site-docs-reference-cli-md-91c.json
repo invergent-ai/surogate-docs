@@ -1,0 +1,23 @@
+{
+  "id": "reference/cli",
+  "title": "CLI reference",
+  "description": "Surogate exposes a small CLI with subcommands for common workflows.",
+  "source": "@site/docs/reference/cli.md",
+  "sourceDirName": "reference",
+  "slug": "/reference/cli",
+  "permalink": "/reference/cli",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "Python API",
+    "permalink": "/reference/python-api"
+  },
+  "next": {
+    "title": "Configuration Reference",
+    "permalink": "/reference/config"
+  }
+}

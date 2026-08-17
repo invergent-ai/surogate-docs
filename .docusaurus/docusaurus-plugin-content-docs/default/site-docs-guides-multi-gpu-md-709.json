@@ -1,0 +1,23 @@
+{
+  "id": "guides/multi-gpu",
+  "title": "Multi-GPU Training",
+  "description": "Surogate provides robust support for multi-GPU training, enabling efficient utilization of multiple GPUs to accelerate model training and handle larger models and datasets. The framework leverages data parallelism techniques with optimized communication patterns to distribute the workload across available GPUs.",
+  "source": "@site/docs/guides/multi-gpu.md",
+  "sourceDirName": "guides",
+  "slug": "/guides/multi-gpu",
+  "permalink": "/guides/multi-gpu",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "Mixture-of-Experts (MoE) Models",
+    "permalink": "/guides/moe"
+  },
+  "next": {
+    "title": "Multi-Node Training",
+    "permalink": "/guides/multi-node"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "guides/precision-and-recipes",
+  "title": "Precision & Recipes",
+  "description": "This guide helps you choose a precision setup (recipes and optional QLoRA) and explains how the dtype knobs interact.",
+  "source": "@site/docs/guides/precision-and-recipes.md",
+  "sourceDirName": "guides",
+  "slug": "/guides/precision-and-recipes",
+  "permalink": "/guides/precision-and-recipes",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "Optimizers",
+    "permalink": "/guides/optimizers"
+  },
+  "next": {
+    "title": "Quantized LoRA (QLoRA)",
+    "permalink": "/guides/qlora"
+  }
+}

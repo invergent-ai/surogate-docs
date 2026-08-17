@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-develop/reference/background-jobs" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Background jobs | Surogate</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.surogate.ai/develop/reference/background-jobs"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Background jobs | Surogate"><meta data-rh="true" name="description" content="Work that outlives a single agent turn — asynchronous sub-agents, durable tasks, scheduled runs, and the platform sweepers that keep everything tidy."><meta data-rh="true" property="og:description" content="Work that outlives a single agent turn — asynchronous sub-agents, durable tasks, scheduled runs, and the platform sweepers that keep everything tidy."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.surogate.ai/develop/reference/background-jobs"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/develop/reference/background-jobs" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/develop/reference/background-jobs" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://K46M9C3QXR-dsn.algolia.net" crossorigin="anonymous"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Background jobs","item":"https://docs.surogate.ai/develop/reference/background-jobs"}]}</script><link rel="preconnect" href="https://www.google-analytics.com">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7YRDGYZN0R"></script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-7YRDGYZN0R",{})</script>
+
+
+
+<link rel="search" type="application/opensearchdescription+xml" title="Surogate" href="/opensearch.xml">
+
+
+<meta name="keywords" content="Surogate, AgentOps, agents, LLM, MCP, training, fine-tuning, RL, evaluations">
+<meta name="description" content="Documentation for Surogate Ops — operator and builder tracks. Build reliable autonomous agents.">
+<meta name="og:type" content="website">
+<meta name="og:url" content="https://docs.surogate.ai">
+<meta name="og:title" content="Surogate Documentation">
+<meta name="og:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="og:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:secure_url" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:alt" content="Surogate">
+<meta name="og:locale" content="en_US">
+<meta name="og:image:type" content="image/jpeg">
+<meta name="twitter:site" content="surogate_ai">
+<meta name="twitter:creator" content="surogate_ai">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://docs.surogate.ai">
+<meta name="twitter:title" content="Surogate Documentation">
+<meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
+<script src="/assets/js/runtime~main.5374f7b7.js" defer="defer"></script>
+<script src="/assets/js/main.c60b3980.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo-black.svg" alt="logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo-white.svg" alt="logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Documentation</b></a><div class="toggle_mBnC" role="group" aria-label="Documentation mode"><button type="button" class="option_jJ1x active_xCPe" aria-pressed="true">Work</button><button type="button" class="option_jJ1x" aria-pressed="false">Develop</button></div></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">About<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://ops.surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Login<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://x.com/surogate_ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Follow us on X<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="navbarSearchContainer_Bca1"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search (Meta+k)" aria-keyshortcuts="Meta+k"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" fill="none" stroke-width="1.4"></circle><path d="m21 21-4.3-4.3" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop"><span title="Welcome" class="linkLabel_WmDU">Welcome</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/quickstart"><span title="Quickstart" class="linkLabel_WmDU">Quickstart</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/loop/overview"><span title="The builder loop" class="categoryLinkLabel_W154">The builder loop</span></a></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/tools/dashboard"><span title="Dashboard" class="linkLabel_WmDU">Dashboard</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/sessions"><span title="Sessions" class="linkLabel_WmDU">Sessions</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/models"><span title="Models" class="linkLabel_WmDU">Models</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/playground"><span title="Playground" class="linkLabel_WmDU">Playground</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/hub"><span title="Data Hub" class="linkLabel_WmDU">Data Hub</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/datasets"><span title="Datasets" class="linkLabel_WmDU">Datasets</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/training"><span title="Training" class="linkLabel_WmDU">Training</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/evaluations"><span title="Evaluations" class="linkLabel_WmDU">Evaluations</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/develop/features/compute"><span title="Compute" class="categoryLinkLabel_W154">Compute</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/compute"><span title="Compute" class="linkLabel_WmDU">Compute</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/connect-compute"><span title="Connect compute" class="linkLabel_WmDU">Connect compute</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/features/skills-and-experts"><span title="Skills &amp; knowledge" class="categoryLinkLabel_W154">Skills &amp; knowledge</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/features/memory"><span title="Agent capabilities" class="categoryLinkLabel_W154">Agent capabilities</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/tools/copilot"><span title="Tools" class="categoryLinkLabel_W154">Tools</span></a></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/use-cases"><span title="Use cases" class="linkLabel_WmDU">Use cases</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/develop/reference/runtime-architecture"><span title="Reference" class="categoryLinkLabel_W154">Reference</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/reference/runtime-architecture"><span title="How the runtime behaves" class="linkLabel_WmDU">How the runtime behaves</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/reference/tool-catalog"><span title="Tool catalog" class="linkLabel_WmDU">Tool catalog</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/reference/event-types"><span title="Event types" class="linkLabel_WmDU">Event types</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/develop/reference/background-jobs"><span title="Background jobs" class="linkLabel_WmDU">Background jobs</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/reference/coordination"><span title="Coordination &amp; the board" class="linkLabel_WmDU">Coordination &amp; the board</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/reference/glossary"><span title="Glossary" class="linkLabel_WmDU">Glossary</span></a></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Reference</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Background jobs</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Background jobs</h1></header>
+<p>Work that outlives a single agent turn — asynchronous sub-agents, durable tasks, scheduled runs, and the platform sweepers that keep everything tidy.</p>
+<p>There are two families: <strong>agent-initiated background work</strong> (a running agent hands work to children or the future) and <strong>platform maintenance jobs</strong> (periodic sweepers the runtime schedules itself).</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="agent-initiated-background-work">Agent-initiated background work<a href="#agent-initiated-background-work" class="hash-link" aria-label="Direct link to Agent-initiated background work" title="Direct link to Agent-initiated background work" translate="no">​</a></h2>
+<p>An agent has three primitives for offloading work, each with a different durability and result-delivery model.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Primitive</th><th>Blocks the parent?</th><th>Survives crash / retries?</th><th>Best for</th></tr></thead><tbody><tr><td><code>spawn_worker</code></td><td>No — returns a <code>worker_id</code> immediately</td><td>No — single attempt</td><td>Fire-and-forget parallel work</td></tr><tr><td><code>delegate_task</code></td><td>Yes — parent waits for the result</td><td>No — single attempt</td><td>A sub-task that needs a fresh context window, whose answer the parent needs now</td></tr><tr><td><code>spawn_task</code></td><td>No — returns a <code>task_id</code></td><td>Yes — retries, DAG dependencies, pause/resume</td><td>Durable work that must outlive the turn or depend on other tasks</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="workers-spawn_worker">Workers (<code>spawn_worker</code>)<a href="#workers-spawn_worker" class="hash-link" aria-label="Direct link to workers-spawn_worker" title="Direct link to workers-spawn_worker" translate="no">​</a></h3>
+<p>A worker is a full child session with its own event log, budget, and sandbox. It runs asynchronously on any worker pod. When it finishes, a <code>worker.complete</code> event is emitted into the <strong>parent&#x27;s</strong> event log and the parent is re-enqueued so it wakes to process the result. The parent can steer a worker with <code>send_worker_message</code> (wakes it, even after it completed) or interrupt it with <code>stop_worker</code>. Workers cannot spawn their own workers — the coordinator tool family is stripped from a worker&#x27;s toolset.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="delegation-delegate_task">Delegation (<code>delegate_task</code>)<a href="#delegation-delegate_task" class="hash-link" aria-label="Direct link to delegation-delegate_task" title="Direct link to delegation-delegate_task" translate="no">​</a></h3>
+<p>Delegation spawns one or more children and <strong>waits</strong> for them, returning their final responses as the tool result. Pass <code>goals=[...]</code> to fan out in parallel. The parent polls until each child completes (up to a 60-minute ceiling), emitting <code>delegation.start</code> / <code>delegation.complete</code> / <code>delegation.failed</code> events, and a one-shot <code>delegation.stale</code> if a child idles past threshold. Delegation depth is capped (default 2 levels); a <code>leaf</code> child cannot delegate further, an <code>orchestrator</code> child can. Artifacts a child creates are propagated up to the parent&#x27;s chat thread automatically.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="durable-tasks-spawn_task">Durable tasks (<code>spawn_task</code>)<a href="#durable-tasks-spawn_task" class="hash-link" aria-label="Direct link to durable-tasks-spawn_task" title="Direct link to durable-tasks-spawn_task" translate="no">​</a></h3>
+<p>A task is a row in the database, so it survives the parent&#x27;s crash. Tasks add three things workers and delegation don&#x27;t have:</p>
+<ul>
+<li class=""><strong>Fan-in dependencies</strong> — <code>parents=[task_id, …]</code> keeps a task in <code>todo</code> until every parent reaches <code>done</code>, then it is promoted to <code>ready</code> and claimed. Cancelled or failed parents do not promote their children.</li>
+<li class=""><strong>Retries</strong> — <code>max_attempts</code> (default 3); the dispatcher gives up after that many consecutive crash/timeout attempts and marks the task <code>failed</code>.</li>
+<li class=""><strong>Block / unblock</strong> — a worker can <code>worker_block</code> to pause and wait for input; the spawning parent resumes it with <code>unblock_task</code> (optionally attaching new context). <code>cancel_task</code> stops a non-terminal task.</li>
+</ul>
+<p>A worker running a task reports back with <code>worker_complete</code>, which carries a human-readable <code>summary</code> (becomes <code>task.result</code>) plus free-form structured <code>metadata</code> (e.g. <code>changed_files</code>, <code>tests_run</code>, <code>decisions</code>). Successful completion reuses the <code>worker.complete</code> event, carrying the <code>task_id</code> so the parent can correlate; <code>task.blocked</code> and <code>task.failed</code> mark the other transitions.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-results-and-progress-are-tracked">How results and progress are tracked<a href="#how-results-and-progress-are-tracked" class="hash-link" aria-label="Direct link to How results and progress are tracked" title="Direct link to How results and progress are tracked" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>Events</strong> — outcomes flow back as <code>worker.*</code>, <code>delegation.*</code>, and <code>task.*</code> events on the parent&#x27;s log. See <a class="" href="/develop/reference/event-types">Event types → Sub-agent / task events</a>.</li>
+<li class=""><strong>Live tree</strong> — a session&#x27;s detail view shows a Running panel and per-child links; <code>GET /v1/sessions/{id}/tree</code> returns the descendant graph. See <a class="" href="/develop/features/sessions">Sessions → Sub-agent observability</a>.</li>
+<li class=""><strong>The board</strong> — a fan-out of workers/tasks shares a coordination board so siblings reuse each other&#x27;s findings without routing through the parent. See <a class="" href="/develop/reference/coordination">Coordination &amp; the board</a>.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="scheduled-sessions-and-loops">Scheduled sessions and loops<a href="#scheduled-sessions-and-loops" class="hash-link" aria-label="Direct link to Scheduled sessions and loops" title="Direct link to Scheduled sessions and loops" translate="no">​</a></h2>
+<p>Agents can schedule work for the future. Scheduled prompts are user-owned rows in the database; the platform&#x27;s scheduled-work ticker (a single leader-elected process across replicas) polls due rows, creates a fresh <code>channel=&quot;scheduled&quot;</code> session, emits the stored prompt, and enqueues it.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Tool / command</th><th>Effect</th></tr></thead><tbody><tr><td><code>cron_create</code></td><td>Schedule a user-owned prompt or slash command on a 5-field cron cadence (or one-shot)</td></tr><tr><td><code>cron_list</code> / <code>cron_delete</code></td><td>List and remove schedules</td></tr><tr><td><code>/loop [interval] &lt;prompt&gt;</code></td><td>Create a recurring loop. Fixed-interval loops expire after 3 days</td></tr><tr><td><code>loop_complete</code></td><td>End a fixed-interval loop early from inside a run, once its stop condition is met</td></tr><tr><td><code>loop_wait</code></td><td>(Dynamic loops, when no interval is given) choose the next delay, clamped to 1 minute–1 hour; the loop expires after 7 days. Pass <code>completed: true</code> to end it</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="result-delivery">Result delivery<a href="#result-delivery" class="hash-link" aria-label="Direct link to Result delivery" title="Direct link to Result delivery" translate="no">​</a></h3>
+<p>Each run executes on its own child session, and its output is surfaced back to the conversation that created it:</p>
+<ul>
+<li class=""><strong>Channel-origin loops</strong> (Slack, Telegram, Teams) — a run&#x27;s deliverables resolve to the parent session&#x27;s channel and routing, so every run posts back into the origin channel.</li>
+<li class=""><strong>Web / API-origin loops</strong> — a run&#x27;s final answer is emitted as a <code>loop.result</code> event on the parent session and appears inline in the originating conversation (web clients over SSE, API clients by polling <code>GET /sessions/{id}/events</code>). A <code>loop.result</code> never re-enters the parent agent&#x27;s context or re-wakes it; a run with no text output delivers nothing.</li>
+</ul>
+<p>An expired loop that never fired again is swept to <code>completed</code> by the ticker&#x27;s periodic recovery pass, so it never lingers as a due-but-idle row.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="platform-maintenance-jobs">Platform maintenance jobs<a href="#platform-maintenance-jobs" class="hash-link" aria-label="Direct link to Platform maintenance jobs" title="Direct link to Platform maintenance jobs" translate="no">​</a></h2>
+<p>The runtime schedules several sweepers (as Kubernetes CronJobs or long-running loop processes). They are idempotent and operator-invisible in normal operation.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Job</th><th>Cadence</th><th>What it does</th></tr></thead><tbody><tr><td>Board maintenance</td><td>~5 min</td><td>Expires lapsed board claims and purges old/orphaned notes. See <a class="" href="/develop/reference/coordination#lifecycle">Coordination &amp; the board</a></td></tr><tr><td>Inbox expiry</td><td>~5 min</td><td>Marks pending inbox items non-actionable once their owning session is terminal</td></tr><tr><td>Platform workspace cleanup</td><td>~6 h</td><td>Iterates every agent and deletes orphaned session-workspace prefixes in object storage</td></tr><tr><td>Idle-session reset</td><td>periodic</td><td>Flushes important facts to memory, then tears down idle sandboxes and emits <code>session.reset</code>. See <a class="" href="/develop/features/memory#idle-flush">Agent memory → Idle flush</a></td></tr><tr><td>Training collector</td><td>on demand</td><td>Exports successful expert-delegation and skill-invocation trajectories from the event log as JSONL to the tenant bucket, for external fine-tuning</td></tr></tbody></table>
+<p>The training collector&#x27;s responsibility ends at the JSONL file — training strategy, evaluation, and model hosting are the organization&#x27;s concern.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="related">Related<a href="#related" class="hash-link" aria-label="Direct link to Related" title="Direct link to Related" translate="no">​</a></h2>
+<ul>
+<li class=""><a class="" href="/develop/reference/coordination">Coordination &amp; the board</a> — how parallel background work coordinates.</li>
+<li class=""><a class="" href="/work/tools/missions">Missions</a> — a coordinator that decomposes a goal into durable tasks.</li>
+<li class=""><a class="" href="/develop/features/sessions">Sessions</a> — reading a session and its sub-agent tree.</li>
+<li class=""><a class="" href="/develop/reference/event-types">Event types</a> — the events every background primitive emits.</li>
+</ul></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/develop/reference/event-types"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Event types</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/develop/reference/coordination"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Coordination &amp; the board</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#agent-initiated-background-work" class="table-of-contents__link toc-highlight">Agent-initiated background work</a><ul><li><a href="#workers-spawn_worker" class="table-of-contents__link toc-highlight">Workers (<code>spawn_worker</code>)</a></li><li><a href="#delegation-delegate_task" class="table-of-contents__link toc-highlight">Delegation (<code>delegate_task</code>)</a></li><li><a href="#durable-tasks-spawn_task" class="table-of-contents__link toc-highlight">Durable tasks (<code>spawn_task</code>)</a></li><li><a href="#how-results-and-progress-are-tracked" class="table-of-contents__link toc-highlight">How results and progress are tracked</a></li></ul></li><li><a href="#scheduled-sessions-and-loops" class="table-of-contents__link toc-highlight">Scheduled sessions and loops</a><ul><li><a href="#result-delivery" class="table-of-contents__link toc-highlight">Result delivery</a></li></ul></li><li><a href="#platform-maintenance-jobs" class="table-of-contents__link toc-highlight">Platform maintenance jobs</a></li><li><a href="#related" class="table-of-contents__link toc-highlight">Related</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Work mode (operators)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/work">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/run-agent">Run an agent</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/review-sessions">Review sessions</a></li><li class="footer__item"><a class="footer__link-item" href="/work/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Develop mode (builders)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/develop">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/loop/overview">The builder loop</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/features/skills-and-experts">Skills &amp; Experts</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Repos</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/invergent-ai/surogates" target="_blank" rel="noopener noreferrer" class="footer__link-item">Runtime (surogates)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="footer__link-item">Training framework (surogate)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate-hub" target="_blank" rel="noopener noreferrer" class="footer__link-item">Artifact store (surogate-hub)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 Invergent. All rights reserved.</div></div></div></footer></div>
+</body>
+</html>

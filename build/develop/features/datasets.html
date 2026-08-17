@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-develop/features/datasets" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Datasets | Surogate</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.surogate.ai/develop/features/datasets"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Datasets | Surogate"><meta data-rh="true" name="description" content="A dataset is a versioned corpus you use for training and evaluation. Every dataset is backed by a repository in the Data Hub — the training files (train/dataset.parquet, plus a dataset_dict.json split manifest) live there, while the dataset&#x27;s metadata (name, format, status, stats, PII scan, pipeline) lives in the platform database. Creating, building, and deleting datasets all go through /api/datasets."><meta data-rh="true" property="og:description" content="A dataset is a versioned corpus you use for training and evaluation. Every dataset is backed by a repository in the Data Hub — the training files (train/dataset.parquet, plus a dataset_dict.json split manifest) live there, while the dataset&#x27;s metadata (name, format, status, stats, PII scan, pipeline) lives in the platform database. Creating, building, and deleting datasets all go through /api/datasets."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.surogate.ai/develop/features/datasets"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/develop/features/datasets" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/develop/features/datasets" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://K46M9C3QXR-dsn.algolia.net" crossorigin="anonymous"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Datasets","item":"https://docs.surogate.ai/develop/features/datasets"}]}</script><link rel="preconnect" href="https://www.google-analytics.com">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7YRDGYZN0R"></script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-7YRDGYZN0R",{})</script>
+
+
+
+<link rel="search" type="application/opensearchdescription+xml" title="Surogate" href="/opensearch.xml">
+
+
+<meta name="keywords" content="Surogate, AgentOps, agents, LLM, MCP, training, fine-tuning, RL, evaluations">
+<meta name="description" content="Documentation for Surogate Ops — operator and builder tracks. Build reliable autonomous agents.">
+<meta name="og:type" content="website">
+<meta name="og:url" content="https://docs.surogate.ai">
+<meta name="og:title" content="Surogate Documentation">
+<meta name="og:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="og:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:secure_url" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:alt" content="Surogate">
+<meta name="og:locale" content="en_US">
+<meta name="og:image:type" content="image/jpeg">
+<meta name="twitter:site" content="surogate_ai">
+<meta name="twitter:creator" content="surogate_ai">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://docs.surogate.ai">
+<meta name="twitter:title" content="Surogate Documentation">
+<meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
+<script src="/assets/js/runtime~main.5374f7b7.js" defer="defer"></script>
+<script src="/assets/js/main.c60b3980.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo-black.svg" alt="logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo-white.svg" alt="logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Documentation</b></a><div class="toggle_mBnC" role="group" aria-label="Documentation mode"><button type="button" class="option_jJ1x active_xCPe" aria-pressed="true">Work</button><button type="button" class="option_jJ1x" aria-pressed="false">Develop</button></div></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">About<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://ops.surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Login<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://x.com/surogate_ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Follow us on X<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="navbarSearchContainer_Bca1"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search (Meta+k)" aria-keyshortcuts="Meta+k"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" fill="none" stroke-width="1.4"></circle><path d="m21 21-4.3-4.3" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop"><span title="Welcome" class="linkLabel_WmDU">Welcome</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/quickstart"><span title="Quickstart" class="linkLabel_WmDU">Quickstart</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/loop/overview"><span title="The builder loop" class="categoryLinkLabel_W154">The builder loop</span></a></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/tools/dashboard"><span title="Dashboard" class="linkLabel_WmDU">Dashboard</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/sessions"><span title="Sessions" class="linkLabel_WmDU">Sessions</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/models"><span title="Models" class="linkLabel_WmDU">Models</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/playground"><span title="Playground" class="linkLabel_WmDU">Playground</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/hub"><span title="Data Hub" class="linkLabel_WmDU">Data Hub</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" href="/develop/features/datasets"><span title="Datasets" class="linkLabel_WmDU">Datasets</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/training"><span title="Training" class="linkLabel_WmDU">Training</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/features/evaluations"><span title="Evaluations" class="linkLabel_WmDU">Evaluations</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/develop/features/compute"><span title="Compute" class="categoryLinkLabel_W154">Compute</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/compute"><span title="Compute" class="linkLabel_WmDU">Compute</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/develop/features/connect-compute"><span title="Connect compute" class="linkLabel_WmDU">Connect compute</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/features/skills-and-experts"><span title="Skills &amp; knowledge" class="categoryLinkLabel_W154">Skills &amp; knowledge</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/features/memory"><span title="Agent capabilities" class="categoryLinkLabel_W154">Agent capabilities</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/tools/copilot"><span title="Tools" class="categoryLinkLabel_W154">Tools</span></a></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/develop/use-cases"><span title="Use cases" class="linkLabel_WmDU">Use cases</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/develop/reference/runtime-architecture"><span title="Reference" class="categoryLinkLabel_W154">Reference</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Datasets</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Datasets</h1></header>
+<p>A dataset is a versioned corpus you use for training and evaluation. Every dataset is backed by a repository in the <a class="" href="/develop/features/hub">Data Hub</a> — the training files (<code>train/dataset.parquet</code>, plus a <code>dataset_dict.json</code> split manifest) live there, while the dataset&#x27;s metadata (name, format, status, stats, PII scan, pipeline) lives in the platform database. Creating, building, and deleting datasets all go through <code>/api/datasets</code>.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="five-ways-to-bring-a-dataset">Five ways to bring a dataset<a href="#five-ways-to-bring-a-dataset" class="hash-link" aria-label="Direct link to Five ways to bring a dataset" title="Direct link to Five ways to bring a dataset" translate="no">​</a></h2>
+<p>Click <strong>NEW DATASET</strong> (or, on an empty list, <strong>+ New dataset</strong>) to open the source chooser at <code>/studio/datasets/create</code>. It&#x27;s a grid of cards, each routing to a dedicated builder page:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Card</th><th>Builder page</th><th>What it does</th><th>Backend</th></tr></thead><tbody><tr><td><strong>From chats</strong></td><td><code>/studio/datasets/from-chats</code></td><td>Turn real agent conversations into supervised training pairs.</td><td><code>POST /api/datasets/from-conversations</code></td></tr><tr><td><strong>Expert training data</strong></td><td><code>/studio/datasets/from-expert</code></td><td>Use traces from an Expert&#x27;s runs as reward-scored examples.</td><td><em>(preview — Build is not wired yet)</em></td></tr><tr><td><strong>Upload files</strong></td><td><code>/studio/datasets/upload</code></td><td>Bring your own JSONL / JSON / CSV / Parquet file.</td><td><code>POST /api/datasets/upload</code></td></tr><tr><td><strong>Generate synthetic</strong></td><td><code>/studio/datasets/synthetic</code></td><td>Teacher model generates, judge model filters.</td><td><code>POST /api/datasets/synthetic</code> → pipeline run</td></tr><tr><td><strong>Import repository</strong></td><td><code>/studio/datasets/import</code></td><td>Pull a dataset repo from the Hugging Face Hub.</td><td><code>import_dataset</code> compute job</td></tr></tbody></table>
+<p>The datasets list also has an <strong>Import from chats</strong> button that jumps straight to the from-chats builder, and <strong>Source</strong> / <strong>Status</strong> filters (All sources · Chats · Expert traces · Synthetic · Upload; All statuses · Ready · Building · Error).</p>
+<p>Every finished dataset lands in your list as <code>building</code> → <code>ready</code>, versioned in the Data Hub.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="1-from-conversations">1. From Conversations<a href="#1-from-conversations" class="hash-link" aria-label="Direct link to 1. From Conversations" title="Direct link to 1. From Conversations" translate="no">​</a></h2>
+<p>The most common source: build a dataset from observed agent traffic. Two builder pages share this source — a simple form and a filter-rich advanced form — and both call the same endpoint.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="from-chats-simple--studiodatasetsfrom-chats">From chats (simple) — <code>/studio/datasets/from-chats</code><a href="#from-chats-simple--studiodatasetsfrom-chats" class="hash-link" aria-label="Direct link to from-chats-simple--studiodatasetsfrom-chats" title="Direct link to from-chats-simple--studiodatasetsfrom-chats" translate="no">​</a></h3>
+<p>The form reached from the list&#x27;s <strong>Import from chats</strong>. When you arrive from a Sessions selection it&#x27;s pre-filled with those chats; otherwise it draws from the project&#x27;s recent chats and focuses on the agent with the most matching chats.</p>
+<p>Fields:</p>
+<ul>
+<li class=""><strong>Dataset name</strong> (required, lowercase-hyphens — used as the repo name). Pre-filled as <code>&lt;agent&gt;-sft-v1</code>.</li>
+<li class=""><strong>Agents</strong> — chips for the agents to draw from. Pre-filled from the arriving selection; add or remove agents to widen or narrow the dataset.</li>
+<li class=""><strong>Filters</strong> — two checkboxes: <em>Only good chats — no crashes, denials, overrides or thumbs-down</em> (on by default) and <em>Drop messages shorter than 3 words</em> (off by default).</li>
+<li class=""><strong>Format</strong> — <strong>SFT pairs</strong> (user prompt → assistant reply). <strong>Raw messages</strong> is present but disabled, marked <em>Coming soon</em>.</li>
+<li class=""><strong>Scrub PII</strong> — off by default. See <a href="#pii-scrubbing" class="">PII scrubbing</a> below.</li>
+<li class=""><strong>Estimated output</strong> — <code>N rows · ~&lt;tokens&gt; tokens</code> (tokens estimated at ~290 per row).</li>
+</ul>
+<p>The page fetches at most the newest 500 chats per agent, and tells you when an agent&#x27;s list was truncated. A build may post at most 500 chats; above that the summary line asks you to remove an agent or tick <strong>Only good chats</strong>, and <strong>Build dataset</strong> stays disabled.</p>
+<p>Click <strong>Build dataset</strong> to kick off the build.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="from-chats-advanced--studiodatasetsnew">From chats (advanced) — <code>/studio/datasets/new</code><a href="#from-chats-advanced--studiodatasetsnew" class="hash-link" aria-label="Direct link to from-chats-advanced--studiodatasetsnew" title="Direct link to from-chats-advanced--studiodatasetsnew" translate="no">​</a></h3>
+<p>The filter-rich builder, seeded from the dashboard&#x27;s &quot;Raw material&quot; selection or a Sessions selection. It carries a seeded-chats banner and a list you can trim.</p>
+<p>Fields:</p>
+<ul>
+<li class=""><strong>Dataset name</strong> (lowercase-hyphens, used as the repo name).</li>
+<li class=""><strong>Agents</strong> — chips pre-filled from the seeded chats; add more agents to widen the dataset.</li>
+<li class=""><strong>Time range</strong> — Last 24 hours / 7 days / 30 days / All time.</li>
+<li class=""><strong>Quality</strong> — pills: <strong>👎 Negative</strong> · <strong>👍 Positive</strong> · <strong>Flagged</strong> · <strong>All</strong>. These map to real session quality flags: Negative = a thumbs-down response; Positive = a thumbs-up response; Flagged = any policy denial, expert override, crash, or thumbs-down. Picking a quality also sets a recommended format.</li>
+<li class=""><strong>More filters</strong> — <strong>Channel</strong> and <strong>Skill</strong> selects, with options drawn from the matching sessions.</li>
+<li class="">A live <strong>N chats → ~N samples</strong> count (Preference halves the count into pairs), plus the seeded-chats list (each row removable).</li>
+<li class=""><strong>Format</strong> — <strong>Eval set</strong> · <strong>Preference</strong> · <strong>SFT</strong> · <strong>Conversation</strong>, with a &quot;Recommended for 👍/👎 chats&quot; badge (👍 → SFT; 👎 or flagged → eval set).</li>
+</ul>
+<p>Click <strong>Build dataset</strong>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-actually-happens">What actually happens<a href="#what-actually-happens" class="hash-link" aria-label="Direct link to What actually happens" title="Direct link to What actually happens" translate="no">​</a></h3>
+<p>Both forms POST to <code>/api/datasets/from-conversations</code>. The request carries <code>project_id</code>, <code>display_name</code>, and exactly one source: either <code>session_ids</code> (the from-chats page sends the ids it is showing you) or <code>agent_id</code> + <code>num_sessions</code> (the dashboard builder). Two options ride along:</p>
+<ul>
+<li class=""><strong><code>min_words</code></strong> — set by <em>Drop messages shorter than 3 words</em>. Turns below the threshold are dropped, and a session is discarded entirely unless a user → assistant pair survives, so an answer is never emitted without its question.</li>
+<li class=""><strong><code>scrub_pii</code></strong> — set by the <strong>Scrub PII</strong> toggle.</li>
+</ul>
+<p>The server walks the selected sessions, converts each <code>user.message</code> + <code>llm.response</code> turn into an OpenAI-style <code>messages</code> list, writes them as a single parquet file in a fresh Hub repo, and persists the dataset as <code>format=sft</code>. Tool-call and tool-result turns are dropped: the sample schema is <code>role</code> + <code>content</code> today, so promoting tool turns needs a schema change first. This is synchronous — at typical session counts it finishes within the request.</p>
+<p>The advanced form&#x27;s Quality / Channel / Skill / Time-range filters and its Format selector shape the on-screen estimate and choose which sessions are sent; the export itself always produces SFT <code>messages</code> for now.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-expert-training-data--studiodatasetsfrom-expert">2. Expert training data — <code>/studio/datasets/from-expert</code><a href="#2-expert-training-data--studiodatasetsfrom-expert" class="hash-link" aria-label="Direct link to 2-expert-training-data--studiodatasetsfrom-expert" title="Direct link to 2-expert-training-data--studiodatasetsfrom-expert" translate="no">​</a></h2>
+<p>Build a dataset from an Expert&#x27;s collected run traces, as reward-scored examples.</p>
+<p>Fields:</p>
+<ul>
+<li class=""><strong>Dataset name</strong> (required, lowercase-hyphens). Pre-filled as <code>&lt;expert&gt;-grpo</code> or <code>&lt;expert&gt;-scored</code> depending on the format.</li>
+<li class=""><strong>Expert</strong> (required) — only Experts that have collected runs appear here.</li>
+<li class=""><strong>Successful runs only</strong> — on by default; off counts every run instead of just the successes.</li>
+<li class=""><strong>Reward threshold</strong> — default <code>0.7</code>.</li>
+<li class=""><strong>Format</strong> — <strong>Preference pairs</strong> (feeds GRPO / DPO runs) or <strong>Scored completions</strong> (keeps each trace&#x27;s reward for reward-weighted SFT).</li>
+<li class=""><strong>Estimated output</strong> — derived from the Expert&#x27;s run counters at ~350 tokens per trace.</li>
+</ul>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>This page is a preview. The Expert picker and the estimate read real Skill counters, but the backend does not store per-trace rewards yet, so <strong>Build dataset</strong> reports the queued shape and returns you to the list without creating a dataset. <code>POST /api/datasets/expert-training</code> exists at the API layer — it provisions a dataset (<code>format=sft</code>, <code>status=building</code>) tied to a skill plus teacher and judge models and spawns a generation run — but this page does not call it.</p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-upload-file--studiodatasetsupload">3. Upload file — <code>/studio/datasets/upload</code><a href="#3-upload-file--studiodatasetsupload" class="hash-link" aria-label="Direct link to 3-upload-file--studiodatasetsupload" title="Direct link to 3-upload-file--studiodatasetsupload" translate="no">​</a></h2>
+<p>Bring your own file. Fields:</p>
+<ul>
+<li class=""><strong>Dataset name</strong> (required, lowercase-hyphens). Pre-filled from the file name.</li>
+<li class=""><strong>Files</strong> — a dropzone (or <em>browse files</em>) for a single file.</li>
+<li class=""><strong>Scrub PII</strong> — off by default. See <a href="#pii-scrubbing" class="">PII scrubbing</a> below.</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="accepted-formats">Accepted formats<a href="#accepted-formats" class="hash-link" aria-label="Direct link to Accepted formats" title="Direct link to Accepted formats" translate="no">​</a></h3>
+<p><strong>JSONL, JSON, CSV, or Parquet.</strong> The dropzone asks the server for this list (<code>GET /api/datasets/upload-formats</code>) rather than hardcoding it, so it always matches the validator — which in turn mirrors the Data Hub stats-worker&#x27;s converter, so the platform never accepts a format it can&#x27;t mirror to parquet.</p>
+<p>A single upload is capped at <strong>1 GiB</strong>, enforced before any database row or Hub write.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-the-page-detects">What the page detects<a href="#what-the-page-detects" class="hash-link" aria-label="Direct link to What the page detects" title="Direct link to What the page detects" translate="no">​</a></h3>
+<p>Once a file is added, the page inspects it locally and shows a detection summary — the <strong>format</strong>, the inferred <strong>schema</strong>, and the <strong>row count</strong>:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>File</th><th>Schema shown</th><th>Row count</th></tr></thead><tbody><tr><td>JSONL / JSON</td><td><code>prompt / completion</code>, <code>chat / messages</code>, <code>instruction / output</code>, the first three keys, or <code>records</code></td><td>Non-empty lines</td></tr><tr><td>CSV</td><td><code>N columns</code></td><td>Lines minus the header</td></tr><tr><td>Parquet</td><td><code>columnar</code></td><td>Read from the file&#x27;s footer</td></tr></tbody></table>
+<p>Parquet is read as binary — only the footer is fetched, not the whole file — so a large file previews its true row count without being parsed in the browser. A truncated or unusual footer shows no count rather than blocking the upload or inventing a number.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="validation">Validation<a href="#validation" class="hash-link" aria-label="Direct link to Validation" title="Direct link to Validation" translate="no">​</a></h3>
+<p>The server rejects a file the trainer couldn&#x27;t consume, with a <code>422</code> and a specific reason. A row must carry one of three recognised shapes:</p>
+<ul>
+<li class=""><strong>messages</strong> — a <code>messages</code>, <code>conversation</code>, or <code>conversations</code> column.</li>
+<li class=""><strong>pair</strong> — a query column plus a response column (<code>instruction</code>/<code>output</code>, <code>question</code>/<code>answer</code>, <code>prompt</code>/<code>completion</code>, and the other aliases the trainer itself resolves).</li>
+<li class=""><strong>text</strong> — a single text-ish column.</li>
+</ul>
+<p>A dataset also needs <strong>at least 2 usable rows</strong>, since a valid training split can&#x27;t be carved from fewer. Validation samples the first 50 rows.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-happens-on-build">What happens on build<a href="#what-happens-on-build" class="hash-link" aria-label="Direct link to What happens on build" title="Direct link to What happens on build" translate="no">​</a></h3>
+<p><strong>Build dataset</strong> uploads the file (multipart <code>POST /api/datasets/upload</code> with <code>project_id</code>, <code>display_name</code>, <code>scrub_pii</code>, and the file as <code>content</code>). The server creates the dataset (<code>kind=user</code>, <code>source=manual</code>, <code>format=sft</code>), drops the file under <code>train/&lt;filename&gt;</code>, seeds a <code>dataset_dict.json</code> registering the <code>train</code> split, records the text column so token stats can be computed, commits, and flips the dataset to <code>ready</code>.</p>
+<p>Uploaded columns are preserved. A file whose first row lacks a key that later rows carry keeps that column — the parquet schema is built from the union of every row&#x27;s keys, not inferred from row one.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="4-synthetic-generation--studiodatasetssynthetic">4. Synthetic generation — <code>/studio/datasets/synthetic</code><a href="#4-synthetic-generation--studiodatasetssynthetic" class="hash-link" aria-label="Direct link to 4-synthetic-generation--studiodatasetssynthetic" title="Direct link to 4-synthetic-generation--studiodatasetssynthetic" translate="no">​</a></h2>
+<p>The teacher → judge flow, surfaced as three pipeline chips: <strong>Teacher generates → Judge scores → Keep above threshold</strong>.</p>
+<p>Fields:</p>
+<ul>
+<li class=""><strong>Dataset name</strong> (required).</li>
+<li class=""><strong>What should the data teach?</strong> (required) — a brief the teacher model uses as its generation prompt (stored as the dataset description).</li>
+<li class=""><strong>Teacher model</strong> (required) — the strong model that writes the samples (from the project&#x27;s deployed models).</li>
+<li class=""><strong>Judge model</strong> (required) — scores each sample; low scores are dropped.</li>
+<li class=""><strong>Topics to cover</strong> (optional) — comma-separated. Each row is generated for a sampled topic, so outputs vary; leave it blank and samples may repeat at high counts.</li>
+<li class=""><strong>Samples to generate</strong> (default <code>5000</code>).</li>
+<li class=""><strong>Quality threshold</strong> (default <code>0.8</code>, range 0–1).</li>
+<li class=""><strong>Format</strong> — <strong>SFT pairs</strong>. <strong>Raw completions</strong> is present but disabled, marked <em>Coming soon</em>.</li>
+</ul>
+<p>Clicking <strong>Build dataset</strong> does four things: it calls <code>POST /api/datasets/synthetic</code> to provision the dataset shell (<code>kind=synthetic</code>, <code>status=building</code>) and an empty Hub repo, composes a runnable starter pipeline from your answers, saves it, and starts the run. You land on the dataset&#x27;s <strong>PIPELINE</strong> tab with the run already in flight.</p>
+<p>The starter pipeline it composes:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Column</th><th>Type</th><th>Purpose</th></tr></thead><tbody><tr><td><code>topic</code></td><td>Sample from distribution</td><td>Only when you list topics. A diversity seed — the generator conditions on it, and it&#x27;s dropped from the output rather than landing in the training data.</td></tr><tr><td><code>instruction</code></td><td>Generate with LLM (Text)</td><td>One realistic user request, written by the teacher at temperature 1.0.</td></tr><tr><td><code>response</code></td><td>Generate with LLM (Text)</td><td>The ideal assistant reply to that request, written by the teacher at temperature 0.7.</td></tr><tr><td><code>quality</code></td><td>Judge with LLM</td><td>The judge scores the pair against a rubric, 1–10.</td></tr></tbody></table>
+<p>Your 0–1 quality threshold becomes the run&#x27;s minimum score on that <code>quality</code> column (<code>0.8</code> → a cutoff of 8), and deduplication is on. Everything is an ordinary pipeline afterwards — open the Pipeline tab to edit the columns, re-run, or extend it.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="5-hugging-face-import--studiodatasetsimport">5. Hugging Face import — <code>/studio/datasets/import</code><a href="#5-hugging-face-import--studiodatasetsimport" class="hash-link" aria-label="Direct link to 5-hugging-face-import--studiodatasetsimport" title="Direct link to 5-hugging-face-import--studiodatasetsimport" translate="no">​</a></h2>
+<p>Fields:</p>
+<ul>
+<li class=""><strong>Repository</strong> (required) — a Hugging Face Hub search input; enter as <code>org/name</code> (e.g. <code>tatsu-lab/alpaca</code>).</li>
+<li class=""><strong>Subset</strong> (optional) — config / subset name, if the dataset has one.</li>
+<li class=""><strong>Access token</strong> (optional) — <code>hf_…</code>, needed only for private or gated repos.</li>
+<li class=""><strong>Destination branch</strong> — a branch combobox; created in the Data Hub if it doesn&#x27;t exist (defaults to <code>main</code>).</li>
+<li class=""><strong>Destination folder</strong> (optional) — leave empty to import at the repo root.</li>
+</ul>
+<p>The page pre-flights the repository as you type it and blocks the import when it can&#x27;t succeed:</p>
+<ul>
+<li class=""><strong>Script-based datasets aren&#x27;t supported</strong> — a repo with a loading script is refused.</li>
+<li class=""><strong>Multi-config datasets need a Subset</strong> — if the repo declares configs, pick one before submitting.</li>
+</ul>
+<p><strong>Import dataset</strong> spawns an <code>import_dataset</code> compute job (params: <code>hf_repo_id</code>, <code>hub_repo_id</code>, <code>hub_branch</code>, and optional <code>hub_path</code> / <code>hf_token</code> / <code>hf_dataset_subset</code>). This is a compute job, not a <code>/api/datasets</code> call — track it in <strong>Compute → Workload Queue</strong>. The flow is gated on the Free plan (shows an Upgrade prompt).</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="pii-scrubbing">PII scrubbing<a href="#pii-scrubbing" class="hash-link" aria-label="Direct link to PII scrubbing" title="Direct link to PII scrubbing" translate="no">​</a></h2>
+<p><strong>Scrub PII</strong> appears on the upload and from-chats builders. It is <strong>off by default</strong>, and it is destructive: matches are replaced with a placeholder tag in the stored data and no raw copy is kept, so a scrubbed dataset cannot be un-scrubbed.</p>
+<p>Detection is regex only — deliberately no NER, so there&#x27;s no model dependency and no false positives on names that are legitimate training signal. <strong>Names are never detected or removed.</strong> What it covers:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Detected</th><th>Replaced with</th></tr></thead><tbody><tr><td>Email addresses</td><td><code>[EMAIL]</code></td></tr><tr><td>US phone numbers, international phone numbers</td><td><code>[PHONE]</code></td></tr><tr><td>US Social Security numbers</td><td><code>[SSN]</code></td></tr><tr><td>Romanian CNPs</td><td><code>[CNP]</code></td></tr><tr><td>IBANs</td><td><code>[IBAN]</code></td></tr><tr><td>Credit-card numbers</td><td><code>[CREDIT_CARD]</code></td></tr><tr><td>IPv4 addresses</td><td><code>[IP]</code></td></tr></tbody></table>
+<p>Because a false positive is permanent corruption, precision is favoured over recall and every candidate must clear three independent checks: a semantic validator (a Luhn checksum for cards, mod-97 for IBANs, the control digit for CNPs, in-range octets for IPs), a context check on the text immediately before the match (so <code>version 1.2.3.4</code> isn&#x27;t read as an IP), and a token check (so a match can&#x27;t be carved out of a longer identifier). The sharpest case is a bare digit run: an unpunctuated ten-digit number is indistinguishable from a timestamp or an order id, so a phone number needs either phone-shaped punctuation or a nearby <code>phone</code> / <code>call</code> / <code>fax</code> label before it&#x27;s touched.</p>
+<p>Detection runs whether or not you scrub, and its result is stored with the dataset. That&#x27;s what the detail page&#x27;s PII tile reports:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Tile</th><th>Meaning</th></tr></thead><tbody><tr><td><strong>Not scanned</strong></td><td>No scan has run for this dataset — including anything created before scanning existed.</td></tr><tr><td><strong>None found</strong></td><td>Scanned, and clean.</td></tr><tr><td><strong>N removed</strong> (&quot;PII scrubbed&quot;)</td><td>Scanned with the toggle on; N matches were replaced.</td></tr><tr><td><strong>N found</strong> (&quot;PII · not scrubbed&quot;)</td><td>Scanned with the toggle off; N matches are still in the data.</td></tr></tbody></table>
+<p>Scanning is advisory: if detection fails, the ingest still succeeds and the dataset reads <strong>Not scanned</strong> rather than failing the build.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="token-stats">Token stats<a href="#token-stats" class="hash-link" aria-label="Direct link to Token stats" title="Direct link to Token stats" translate="no">​</a></h2>
+<p>The <strong>Tokens</strong> and <strong>Avg length</strong> figures are measured from one rendered column per row — the formatted training example, as a chat-shaped string — rather than summed across columns. A pair row is rendered as the two-turn conversation it becomes at training time, so it&#x27;s measured the way the trainer will actually consume it.</p>
+<p>These counts are an approximation, not a tokenizer&#x27;s output. The real chat template belongs to the model and is applied by the trainer at train time, so an ingest-time count can&#x27;t be model-exact and doesn&#x27;t try to be. Treat them as a sense of scale.</p>
+<p>Token stats are computed for chat uploads, pair uploads, single-text uploads, from-chats builds, Hugging Face imports, and synthetic datasets. Coverage is forward-only: datasets created before a given path gained stats aren&#x27;t backfilled and keep showing an em dash.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="build-progress--studiodatasetsbuilding">Build progress — <code>/studio/datasets/building</code><a href="#build-progress--studiodatasetsbuilding" class="hash-link" aria-label="Direct link to build-progress--studiodatasetsbuilding" title="Direct link to build-progress--studiodatasetsbuilding" translate="no">​</a></h2>
+<p>The from-chats, upload, and synthetic flows hand off to a progress page showing a percentage bar, a step checklist, and an estimated time remaining.</p>
+<ul>
+<li class=""><strong>Upload</strong>: Uploading the file → Validating the schema → Storing to the repo → Committing.</li>
+<li class=""><strong>From chats</strong>: Extract messages from chats → Tokenize &amp; pack pairs → Validate &amp; publish to repo.</li>
+<li class=""><strong>Synthetic</strong>: Spin up teacher &amp; judge → Generate samples → Judge &amp; filter by quality → Validate &amp; publish to repo.</li>
+</ul>
+<p>Upload progress is real: the first stretch tracks the actual file transfer, and the rest follows the server-side job&#x27;s phase. The other kinds run a cosmetic timer, capped until the dataset itself reports <code>ready</code>; when a build carries a real dataset id the page polls <code>/api/datasets/{id}</code> and surfaces a <strong>Build failed</strong> state if it errors.</p>
+<p><strong>Run in background</strong> returns you to the list and lets the build finish. <strong>Cancel build</strong> stops it and deletes the partial dataset — on an upload that also aborts the transfer in the browser and cancels the job on the server.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="dataset-detail-page">Dataset detail page<a href="#dataset-detail-page" class="hash-link" aria-label="Direct link to Dataset detail page" title="Direct link to Dataset detail page" translate="no">​</a></h2>
+<p>Open a dataset to see four tabs: <strong>Overview</strong>, <strong>Samples</strong>, <strong>Pipeline</strong>, and <strong>Repository</strong>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="overview">Overview<a href="#overview" class="hash-link" aria-label="Direct link to Overview" title="Direct link to Overview" translate="no">​</a></h3>
+<p>Four stat cards across the top:</p>
+<ul>
+<li class=""><strong>Rows</strong> — the measured row count, subtitled with the format.</li>
+<li class=""><strong>Tokens</strong> — the whole-dataset total, &quot;after formatting&quot;. See <a href="#token-stats" class="">Token stats</a>.</li>
+<li class=""><strong>Avg length</strong> — tokens per sample.</li>
+<li class=""><strong>PII</strong> — the scan result. See <a href="#pii-scrubbing" class="">PII scrubbing</a>.</li>
+</ul>
+<p>A ready dataset then shows a <strong>This dataset is ready to train on</strong> banner with a <strong>Train on this →</strong> button, which opens the new-run wizard with this dataset already selected.</p>
+<p>Below that, two cards:</p>
+<p><strong>Details</strong> — Source (for a from-chats dataset, <code>N chats · &lt;agent&gt;</code>), Format, Created, Visibility, Created by.</p>
+<p><strong>Quality</strong> —</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Row</th><th>What it shows</th></tr></thead><tbody><tr><td><strong>PII</strong></td><td>The same scan result as the stat card.</td></tr><tr><td><strong>Deduplicated</strong></td><td><code>Yes · N removed</code>, or <code>No duplicates</code>.</td></tr><tr><td><strong>Avg length</strong></td><td>Mean tokens per sample.</td></tr><tr><td><strong>Longest sample</strong></td><td>Max tokens in any sample.</td></tr><tr><td><strong>Empty / malformed</strong></td><td>Input rows that were empty or malformed and won&#x27;t become training examples. A data-quality warning, <strong>not</strong> subtracted from the row count. An em dash means the count wasn&#x27;t measured — it&#x27;s recorded going forward, not backfilled.</td></tr></tbody></table>
+<p>Figures come from <code>GET /api/datasets/{id}/stats</code>, which the Data Hub&#x27;s stats worker computes on each commit to the underlying repo. Until the first commit is processed you&#x27;ll see &quot;Stats haven&#x27;t been computed for this dataset yet.&quot; The PII rows are the exception: they read the dataset&#x27;s own stored scan, not the stats bundle.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="samples">Samples<a href="#samples" class="hash-link" aria-label="Direct link to Samples" title="Direct link to Samples" translate="no">​</a></h3>
+<p>Previews the first 20 rows via <code>GET /api/datasets/{id}/samples?limit=20&amp;split=&lt;split&gt;</code>. A split selector switches between splits (default <code>train</code>, or the first available). Rows that fit the SFT/DPO chat convention render as instruction → response; other rows fall back to a generic key-value column view.</p>
+<p>🚧 Known issue: the header counter sometimes shows N samples while the Samples tab shows 0 rows. Workaround: navigate away and back.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="pipeline">Pipeline<a href="#pipeline" class="hash-link" aria-label="Direct link to Pipeline" title="Direct link to Pipeline" translate="no"> ​</a></h3>
+<p>A DataDesigner canvas for authoring a generation/transformation pipeline — this is where synthetic datasets are actually built. The header sets the <strong>target row count</strong> and <strong>default model</strong>; the column palette adds <strong>Seed column</strong>, <strong>Sample from distribution</strong>, <strong>Generate with LLM (Text / Structured / Code)</strong>, <strong>Judge with LLM</strong>, <strong>Compute from expression</strong>, and <strong>Validate</strong> columns. Edits autosave (<code>PUT /api/datasets/{id}/pipeline</code>). <strong>Preview</strong> runs 1–200 rows without committing (<code>POST .../pipeline/preview</code>); <strong>Run</strong> generates the full target (<code>POST .../pipeline/run</code>, tagged <code>run-&lt;timestamp&gt;</code>) and commits it to the repo. Preview/run execute as managed compute jobs; their logs are at <code>/api/datasets/pipeline-jobs/{jobId}/logs</code>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="repository">Repository<a href="#repository" class="hash-link" aria-label="Direct link to Repository" title="Direct link to Repository" translate="no">​</a></h3>
+<p>The underlying lakeFS repo — files, commits, branches, tags. Same operations as any Data Hub repo.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="sft-vs-preference-vs-conversation-formats">SFT vs Preference vs Conversation formats<a href="#sft-vs-preference-vs-conversation-formats" class="hash-link" aria-label="Direct link to SFT vs Preference vs Conversation formats" title="Direct link to SFT vs Preference vs Conversation formats" translate="no">​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="sft-format">SFT format<a href="#sft-format" class="hash-link" aria-label="Direct link to SFT format" title="Direct link to SFT format" translate="no">​</a></h3>
+<div class="language-jsonl codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-jsonl codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">{&quot;messages&quot;: [</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are...&quot;},</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;How do I...&quot;},</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  {&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: &quot;Here&#x27;s how...&quot;, &quot;tool_calls&quot;: [...]},</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  {&quot;role&quot;: &quot;tool&quot;, &quot;tool_call_id&quot;: &quot;tc_1&quot;, &quot;content&quot;: &quot;...&quot;},</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  {&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: &quot;...&quot;}</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">]}</span><br></span></code></pre></div></div>
+<p>For supervised fine-tuning. Each line is a complete conversation.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="preference-format">Preference format<a href="#preference-format" class="hash-link" aria-label="Direct link to Preference format" title="Direct link to Preference format" translate="no">​</a></h3>
+<div class="language-jsonl codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-jsonl codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">{</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  &quot;prompt&quot;: &quot;Explain transformers&quot;,</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  &quot;chosen&quot;: &quot;Detailed accurate explanation...&quot;,</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  &quot;rejected&quot;: &quot;Incorrect explanation...&quot;</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">}</span><br></span></code></pre></div></div>
+<p>For preference learning (DPO, RLHF). Requires both good and bad examples for the same prompt.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="conversation-format">Conversation format<a href="#conversation-format" class="hash-link" aria-label="Direct link to Conversation format" title="Direct link to Conversation format" translate="no">​</a></h3>
+<p>Raw transcripts for analysis. Not used directly in training.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="datasets-for-evaluation">Datasets for evaluation<a href="#datasets-for-evaluation" class="hash-link" aria-label="Direct link to Datasets for evaluation" title="Direct link to Datasets for evaluation" translate="no">​</a></h2>
+<p>When you want a dataset specifically for <strong>evaluation</strong> rather than training, use:</p>
+<ul>
+<li class=""><strong>From Conversations</strong> filtered by 👎 — your worst cases become an eval / regression set.</li>
+<li class=""><strong>From Conversations</strong> filtered by 👍 — your best cases become regression checks.</li>
+<li class=""><strong>Upload file</strong> with hand-crafted edge cases.</li>
+</ul>
+<p>Then reference this dataset in the <a class="" href="/develop/features/evaluations">Evaluation</a> wizard.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="delete">Delete<a href="#delete" class="hash-link" aria-label="Direct link to Delete" title="Direct link to Delete" translate="no">​</a></h2>
+<p>Deleting runs a pre-flight in-use check (<code>GET /api/datasets/{id}/in-use</code>). If the dataset is referenced by an active training or synthetic run, deletion is blocked with a conflict — stop the listed runs from their detail pages first.</p>
+<p>Otherwise the platform cancels any running pipeline job and any in-flight upload, drops those job rows and their log archives, deletes the dataset, and drops the backing Hub repo.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="rest-api">REST API<a href="#rest-api" class="hash-link" aria-label="Direct link to REST API" title="Direct link to REST API" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Method</th><th>Endpoint</th><th>Purpose</th></tr></thead><tbody><tr><td><code>GET</code></td><td><code>/api/datasets</code></td><td>List (<code>?project_id</code>, <code>?kind</code>, <code>?limit</code>)</td></tr><tr><td><code>GET</code></td><td><code>/api/datasets/{id}</code></td><td>Detail</td></tr><tr><td><code>POST</code></td><td><code>/api/datasets</code></td><td>Create (generic)</td></tr><tr><td><code>PATCH</code></td><td><code>/api/datasets/{id}</code></td><td>Update metadata</td></tr><tr><td><code>DELETE</code></td><td><code>/api/datasets/{id}</code></td><td>Delete (with in-use check)</td></tr><tr><td><code>GET</code></td><td><code>/api/datasets/{id}/in-use</code></td><td>List active + historical references</td></tr><tr><td><code>GET</code></td><td><code>/api/datasets/upload-formats</code></td><td>File extensions the upload validator accepts</td></tr><tr><td><code>POST</code></td><td><code>/api/datasets/from-conversations</code></td><td>Build from sessions (<code>session_ids</code>, or <code>agent_id</code> + <code>num_sessions</code>)</td></tr><tr><td><code>POST</code></td><td><code>/api/datasets/upload</code></td><td>Upload a file (multipart)</td></tr><tr><td><code>POST</code></td><td><code>/api/datasets/synthetic</code></td><td>Provision a synthetic dataset shell</td></tr><tr><td><code>POST</code></td><td><code>/api/datasets/expert-training</code></td><td>Provision a collected-training-data dataset + run</td></tr><tr><td><code>GET</code></td><td><code>/api/datasets/{id}/stats</code></td><td>Overview stats</td></tr><tr><td><code>GET</code></td><td><code>/api/datasets/{id}/samples</code></td><td>Preview samples (<code>?split</code>, <code>?limit</code>)</td></tr><tr><td><code>GET</code> / <code>PUT</code></td><td><code>/api/datasets/{id}/pipeline</code></td><td>Read / save pipeline config</td></tr><tr><td><code>POST</code></td><td><code>/api/datasets/{id}/pipeline/preview</code></td><td>Preview run (1–200 rows)</td></tr><tr><td><code>POST</code></td><td><code>/api/datasets/{id}/pipeline/run</code></td><td>Full generation run</td></tr><tr><td><code>GET</code></td><td><code>/api/datasets/{id}/pipeline/active</code></td><td>In-flight pipeline job, if any</td></tr><tr><td><code>GET</code></td><td><code>/api/datasets/{id}/pipeline/jobs/{jobId}</code></td><td>Pipeline job state</td></tr><tr><td><code>POST</code></td><td><code>/api/datasets/{id}/pipeline/jobs/{jobId}/cancel</code></td><td>Cancel a pipeline job</td></tr><tr><td><code>GET</code></td><td><code>/api/datasets/pipeline-jobs/{jobId}/logs</code></td><td>Tail pipeline job logs</td></tr></tbody></table>
+<p>Hugging Face imports run as an <code>import_dataset</code> job via the compute API, not a <code>/api/datasets</code> route.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-next">What&#x27;s next<a href="#whats-next" class="hash-link" aria-label="Direct link to What&#x27;s next" title="Direct link to What&#x27;s next" translate="no">​</a></h2>
+<p><a class="" href="/develop/features/training">Training</a> to fine-tune on a dataset. <a class="" href="/develop/features/evaluations">Evaluations</a> to test with one.</p></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/develop/features/hub"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Data Hub</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/develop/features/training"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Training</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#five-ways-to-bring-a-dataset" class="table-of-contents__link toc-highlight">Five ways to bring a dataset</a></li><li><a href="#1-from-conversations" class="table-of-contents__link toc-highlight">1. From Conversations</a><ul><li><a href="#from-chats-simple--studiodatasetsfrom-chats" class="table-of-contents__link toc-highlight">From chats (simple) — <code>/studio/datasets/from-chats</code></a></li><li><a href="#from-chats-advanced--studiodatasetsnew" class="table-of-contents__link toc-highlight">From chats (advanced) — <code>/studio/datasets/new</code></a></li><li><a href="#what-actually-happens" class="table-of-contents__link toc-highlight">What actually happens</a></li></ul></li><li><a href="#2-expert-training-data--studiodatasetsfrom-expert" class="table-of-contents__link toc-highlight">2. Expert training data — <code>/studio/datasets/from-expert</code></a></li><li><a href="#3-upload-file--studiodatasetsupload" class="table-of-contents__link toc-highlight">3. Upload file — <code>/studio/datasets/upload</code></a><ul><li><a href="#accepted-formats" class="table-of-contents__link toc-highlight">Accepted formats</a></li><li><a href="#what-the-page-detects" class="table-of-contents__link toc-highlight">What the page detects</a></li><li><a href="#validation" class="table-of-contents__link toc-highlight">Validation</a></li><li><a href="#what-happens-on-build" class="table-of-contents__link toc-highlight">What happens on build</a></li></ul></li><li><a href="#4-synthetic-generation--studiodatasetssynthetic" class="table-of-contents__link toc-highlight">4. Synthetic generation — <code>/studio/datasets/synthetic</code></a></li><li><a href="#5-hugging-face-import--studiodatasetsimport" class="table-of-contents__link toc-highlight">5. Hugging Face import — <code>/studio/datasets/import</code></a></li><li><a href="#pii-scrubbing" class="table-of-contents__link toc-highlight">PII scrubbing</a></li><li><a href="#token-stats" class="table-of-contents__link toc-highlight">Token stats</a></li><li><a href="#build-progress--studiodatasetsbuilding" class="table-of-contents__link toc-highlight">Build progress — <code>/studio/datasets/building</code></a></li><li><a href="#dataset-detail-page" class="table-of-contents__link toc-highlight">Dataset detail page</a><ul><li><a href="#overview" class="table-of-contents__link toc-highlight">Overview</a></li><li><a href="#samples" class="table-of-contents__link toc-highlight">Samples</a></li><li><a href="#pipeline" class="table-of-contents__link toc-highlight">Pipeline</a></li><li><a href="#repository" class="table-of-contents__link toc-highlight">Repository</a></li></ul></li><li><a href="#sft-vs-preference-vs-conversation-formats" class="table-of-contents__link toc-highlight">SFT vs Preference vs Conversation formats</a><ul><li><a href="#sft-format" class="table-of-contents__link toc-highlight">SFT format</a></li><li><a href="#preference-format" class="table-of-contents__link toc-highlight">Preference format</a></li><li><a href="#conversation-format" class="table-of-contents__link toc-highlight">Conversation format</a></li></ul></li><li><a href="#datasets-for-evaluation" class="table-of-contents__link toc-highlight">Datasets for evaluation</a></li><li><a href="#delete" class="table-of-contents__link toc-highlight">Delete</a></li><li><a href="#rest-api" class="table-of-contents__link toc-highlight">REST API</a></li><li><a href="#whats-next" class="table-of-contents__link toc-highlight">What&#39;s next</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Work mode (operators)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/work">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/run-agent">Run an agent</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/review-sessions">Review sessions</a></li><li class="footer__item"><a class="footer__link-item" href="/work/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Develop mode (builders)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/develop">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/loop/overview">The builder loop</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/features/skills-and-experts">Skills &amp; Experts</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Repos</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/invergent-ai/surogates" target="_blank" rel="noopener noreferrer" class="footer__link-item">Runtime (surogates)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="footer__link-item">Training framework (surogate)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate-hub" target="_blank" rel="noopener noreferrer" class="footer__link-item">Artifact store (surogate-hub)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 Invergent. All rights reserved.</div></div></div></footer></div>
+</body>
+</html>

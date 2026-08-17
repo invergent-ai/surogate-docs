@@ -100,7 +100,7 @@ Three categories of attached resources. The agent's **Configure** page manages a
 
 ### 5. Channels
 
-Where users reach the agent. **Configure → Channels** section. Web is always on; Slack, Telegram, Website widget toggle on/off with credentials. See [Agents](/develop/features/agents/) for per-channel config.
+Where users reach the agent. **Publish → Channels** section. Web is always on; Slack, Telegram, Website widget toggle on/off with credentials. See [Agents](/develop/features/agents/) for per-channel config.
 
 ### 6. Governance & Saga
 

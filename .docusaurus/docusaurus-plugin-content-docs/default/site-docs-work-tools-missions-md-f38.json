@@ -1,0 +1,27 @@
+{
+  "id": "work/tools/missions",
+  "title": "Missions",
+  "description": "The Missions page is a dashboard for every goal your agent is working toward — the runs you start with the /goal and /mission slash commands.",
+  "source": "@site/docs/work/tools/missions.md",
+  "sourceDirName": "work/tools",
+  "slug": "/work/tools/missions",
+  "permalink": "/work/tools/missions",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "title": "Missions",
+    "sidebar_position": 4
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Goals (`/goal`)",
+    "permalink": "/work/tools/goals"
+  },
+  "next": {
+    "title": "Scheduled work",
+    "permalink": "/work/tools/scheduled-work"
+  }
+}

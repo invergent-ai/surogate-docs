@@ -1,0 +1,27 @@
+{
+  "id": "develop/tools/dashboard",
+  "title": "Dashboard",
+  "description": "The Dashboard is the builder home at /studio — a dense workspace overview for monitoring agents, models, training, and recent activity.",
+  "source": "@site/docs/develop/tools/dashboard.md",
+  "sourceDirName": "develop/tools",
+  "slug": "/develop/tools/dashboard",
+  "permalink": "/develop/tools/dashboard",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "title": "Dashboard",
+    "sidebar_position": 1
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Redeploy phase",
+    "permalink": "/develop/loop/redeploy"
+  },
+  "next": {
+    "title": "Sessions",
+    "permalink": "/develop/features/sessions"
+  }
+}

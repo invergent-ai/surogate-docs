@@ -1,0 +1,27 @@
+{
+  "id": "develop/loop/overview",
+  "title": "The builder loop (overview)",
+  "description": "Every agent improvement cycle has four phases:",
+  "source": "@site/docs/develop/loop/overview.md",
+  "sourceDirName": "develop/loop",
+  "slug": "/develop/loop/overview",
+  "permalink": "/develop/loop/overview",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "title": "The builder loop (overview)",
+    "sidebar_position": 1
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Quickstart",
+    "permalink": "/develop/quickstart"
+  },
+  "next": {
+    "title": "Build phase",
+    "permalink": "/develop/loop/build"
+  }
+}

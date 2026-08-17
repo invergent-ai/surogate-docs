@@ -1,0 +1,27 @@
+{
+  "id": "develop/features/knowledge-bases",
+  "title": "Knowledge Bases",
+  "description": "A KB is a curated corpus the agent can browse at runtime via kblistpages / kbreadpage. Where a skill teaches the agent how to do something, a KB tells it what it knows.",
+  "source": "@site/docs/develop/features/knowledge-bases.md",
+  "sourceDirName": "develop/features",
+  "slug": "/develop/features/knowledge-bases",
+  "permalink": "/develop/features/knowledge-bases",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "title": "Knowledge Bases",
+    "sidebar_position": 3
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Skill optimization",
+    "permalink": "/develop/features/skill-optimization"
+  },
+  "next": {
+    "title": "MCP & Vault",
+    "permalink": "/develop/features/mcp-and-vault"
+  }
+}

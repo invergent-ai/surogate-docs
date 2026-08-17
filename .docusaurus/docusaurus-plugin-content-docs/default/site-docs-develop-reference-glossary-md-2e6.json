@@ -1,0 +1,23 @@
+{
+  "id": "develop/reference/glossary",
+  "title": "Glossary",
+  "description": "Every Surogate term you'll encounter as a builder.",
+  "source": "@site/docs/develop/reference/glossary.md",
+  "sourceDirName": "develop/reference",
+  "slug": "/develop/reference/glossary",
+  "permalink": "/develop/reference/glossary",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "title": "Glossary",
+    "sidebar_position": 4
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Coordination & the board",
+    "permalink": "/develop/reference/coordination"
+  }
+}

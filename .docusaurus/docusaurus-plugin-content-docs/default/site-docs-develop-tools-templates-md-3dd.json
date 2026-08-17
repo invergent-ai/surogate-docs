@@ -1,0 +1,27 @@
+{
+  "id": "develop/tools/templates",
+  "title": "Templates",
+  "description": "The Templates page is a Work-mode surface (ops.surogate.ai/work/templates). In Develop mode the equivalent is the DEPLOY AGENT button on the Agents page — same dialog, same fields. Develop mode has no separate templates page.",
+  "source": "@site/docs/develop/tools/templates.md",
+  "sourceDirName": "develop/tools",
+  "slug": "/develop/tools/templates",
+  "permalink": "/develop/tools/templates",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "title": "Templates",
+    "sidebar_position": 3
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Copilot (⌘+/)",
+    "permalink": "/develop/tools/copilot"
+  },
+  "next": {
+    "title": "Use cases",
+    "permalink": "/develop/use-cases"
+  }
+}

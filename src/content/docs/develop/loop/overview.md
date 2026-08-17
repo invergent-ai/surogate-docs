@@ -34,7 +34,7 @@ Every agent improvement cycle has four phases:
 
 ### BUILD
 
-You're declaring what the agent **is**: its identity, its tools, its data sources, its boundaries. Most of this happens on the agent's **Configure** page (Identity / Skills / Knowledge Bases / MCP Servers / Channels sections) and its **Publish** page (Users), with deeper knobs on Develop mode's CONFIG and KNOWLEDGE & TOOLS tabs. See [Build phase](/develop/loop/build/).
+You're declaring what the agent **is**: its identity, its tools, its data sources, its boundaries. Most of this happens on the agent's **Configure** page (Identity / Skills / Knowledge Bases / MCP Servers sections) and its **Publish** page (Channels, Users), with deeper knobs on Develop mode's CONFIG and KNOWLEDGE & TOOLS tabs. See [Build phase](/develop/loop/build/).
 
 ### OBSERVE
 

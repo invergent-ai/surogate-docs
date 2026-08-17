@@ -1,0 +1,27 @@
+{
+  "id": "develop/features/evaluations",
+  "title": "Evaluations",
+  "description": "Evaluations test models and agents against benchmarks. Two paths: pick from the 40 built-in benchmarks, or build a Custom Benchmark.",
+  "source": "@site/docs/develop/features/evaluations.md",
+  "sourceDirName": "develop/features",
+  "slug": "/develop/features/evaluations",
+  "permalink": "/develop/features/evaluations",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "title": "Evaluations",
+    "sidebar_position": 3
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Training",
+    "permalink": "/develop/features/training"
+  },
+  "next": {
+    "title": "Compute",
+    "permalink": "/develop/features/compute"
+  }
+}

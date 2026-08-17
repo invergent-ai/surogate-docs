@@ -1,0 +1,23 @@
+{
+  "id": "work/reference/faq",
+  "title": "Troubleshooting & known issues",
+  "description": "Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (where things are, what buttons do) are covered in the relevant chapters.",
+  "source": "@site/docs/work/reference/faq.md",
+  "sourceDirName": "work/reference",
+  "slug": "/work/reference/faq",
+  "permalink": "/work/reference/faq",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "title": "Troubleshooting & known issues",
+    "sidebar_position": 2
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Glossary",
+    "permalink": "/work/reference/glossary"
+  }
+}

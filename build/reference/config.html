@@ -1,0 +1,1414 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-reference/config" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Configuration Reference | Surogate</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.surogate.ai/reference/config"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Configuration Reference | Surogate"><meta data-rh="true" name="description" content="This section provides a comprehensive reference for all configuration options available in Surogate. Each option is described in detail, including its purpose, default value, and possible values."><meta data-rh="true" property="og:description" content="This section provides a comprehensive reference for all configuration options available in Surogate. Each option is described in detail, including its purpose, default value, and possible values."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.surogate.ai/reference/config"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/reference/config" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/reference/config" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://K46M9C3QXR-dsn.algolia.net" crossorigin="anonymous"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Configuration Reference","item":"https://docs.surogate.ai/reference/config"}]}</script><link rel="preconnect" href="https://www.google-analytics.com">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7YRDGYZN0R"></script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-7YRDGYZN0R",{})</script>
+
+
+
+<link rel="search" type="application/opensearchdescription+xml" title="Surogate" href="/opensearch.xml">
+
+
+<meta name="keywords" content="Surogate, AgentOps, agents, LLM, MCP, training, fine-tuning, RL, evaluations">
+<meta name="description" content="Documentation for Surogate Ops — operator and builder tracks. Build reliable autonomous agents.">
+<meta name="og:type" content="website">
+<meta name="og:url" content="https://docs.surogate.ai">
+<meta name="og:title" content="Surogate Documentation">
+<meta name="og:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="og:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:secure_url" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:alt" content="Surogate">
+<meta name="og:locale" content="en_US">
+<meta name="og:image:type" content="image/jpeg">
+<meta name="twitter:site" content="surogate_ai">
+<meta name="twitter:creator" content="surogate_ai">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://docs.surogate.ai">
+<meta name="twitter:title" content="Surogate Documentation">
+<meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
+<script src="/assets/js/runtime~main.5374f7b7.js" defer="defer"></script>
+<script src="/assets/js/main.c60b3980.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo-black.svg" alt="logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo-white.svg" alt="logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Documentation</b></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">About<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://ops.surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Login<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://x.com/surogate_ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Follow us on X<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="navbarSearchContainer_Bca1"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search (Meta+k)" aria-keyshortcuts="Meta+k"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" fill="none" stroke-width="1.4"></circle><path d="m21 21-4.3-4.3" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/old-docs"><span title="Welcome" class="linkLabel_WmDU">Welcome</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/about/how-it-works"><span title="About Surogate" class="categoryLinkLabel_W154">About Surogate</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/how-it-works"><span title="How Surogate Works" class="linkLabel_WmDU">How Surogate Works</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/adaptive-training"><span title="Adaptive Training System" class="linkLabel_WmDU">Adaptive Training System</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/dsl"><span title="DSL Language" class="linkLabel_WmDU">DSL Language</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/automatic-differentiation"><span title="Automatic Differentiation" class="linkLabel_WmDU">Automatic Differentiation</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/getting-started/installation"><span title="Getting Started" class="categoryLinkLabel_W154">Getting Started</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/installation"><span title="Installation" class="linkLabel_WmDU">Installation</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/training-modes"><span title="Training Modes" class="linkLabel_WmDU">Training Modes</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-pretraining"><span title="Quickstart: Pretraining (PT)" class="linkLabel_WmDU">Quickstart: Pretraining (PT)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-sft"><span title="Quickstart: Supervised Fine-Tuning (SFT)" class="linkLabel_WmDU">Quickstart: Supervised Fine-Tuning (SFT)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-grpo"><span title="Quickstart: RL Training (GRPO)" class="linkLabel_WmDU">Quickstart: RL Training (GRPO)</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/examples"><span title="Examples Library" class="categoryLinkLabel_W154">Examples Library</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/examples"><span title="Examples Library" class="linkLabel_WmDU">Examples Library</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/examples/pt/qwen3"><span title="Pre-training (PT)" class="categoryLinkLabel_W154">Pre-training (PT)</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/examples/sft/qwen3-lora"><span title="Fine-tuning (SFT)" class="categoryLinkLabel_W154">Fine-tuning (SFT)</span></a></div></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/guides/configuration"><span title="User Guides" class="categoryLinkLabel_W154">User Guides</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/reference/benchmarks"><span title="Technical Reference" class="categoryLinkLabel_W154">Technical Reference</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/reference/benchmarks"><span title="Speed Benchmarks" class="linkLabel_WmDU">Speed Benchmarks</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/reference/python-api"><span title="Python API" class="linkLabel_WmDU">Python API</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/reference/cli"><span title="CLI reference" class="linkLabel_WmDU">CLI reference</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/reference/config"><span title="Configuration Reference" class="linkLabel_WmDU">Configuration Reference</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/appendix/release-notes"><span title="Appendix" class="categoryLinkLabel_W154">Appendix</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Technical Reference</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Configuration Reference</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Configuration Reference</h1></header>
+<p>This section provides a comprehensive reference for all configuration options available in Surogate. Each option is described in detail, including its purpose, default value, and possible values.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="general-settings">General Settings<a href="#general-settings" class="hash-link" aria-label="Direct link to General Settings" title="Direct link to General Settings" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>run_name</code></td><td>string</td><td>auto-generated</td><td>A descriptor for the run. If not provided, a unique name is generated automatically.</td></tr><tr><td><code>apply_recommended_values</code></td><td>bool</td><td><code>false</code></td><td>Whether to apply recommended configuration values.</td></tr><tr><td><code>num_epochs</code></td><td>int</td><td><code>3</code></td><td>Total number of training epochs to perform.</td></tr><tr><td><code>output_dir</code></td><td>string</td><td><code>&quot;output&quot;</code></td><td>The output directory where the model predictions and checkpoints will be written.</td></tr><tr><td><code>checkpoint_dir</code></td><td>string</td><td><code>null</code></td><td>Directory to save checkpoints during training. If None, defaults to <code>output_dir</code>.</td></tr><tr><td><code>resume_from_checkpoint</code></td><td>bool</td><td><code>true</code></td><td>Continue from checkpoint. If enabled, uses the latest checkpoint.</td></tr><tr><td><code>save_steps</code></td><td>int</td><td><code>50</code></td><td>Number of steps between saving checkpoints.</td></tr><tr><td><code>save_total_limit</code></td><td>int</td><td><code>5</code></td><td>Limit the total amount of checkpoints. Deletes older checkpoints in <code>output_dir</code>.</td></tr><tr><td><code>from_scratch</code></td><td>bool</td><td><code>false</code></td><td>Train from scratch (random initialization) instead of fine-tuning a pre-trained model.</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="model-settings">Model Settings<a href="#model-settings" class="hash-link" aria-label="Direct link to Model Settings" title="Direct link to Model Settings" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>model</code></td><td>string</td><td>required</td><td>Path or HuggingFace model identifier (e.g., <code>&quot;Qwen/Qwen3-0.6B&quot;</code>).</td></tr><tr><td><code>model_type</code></td><td>string</td><td>auto-detect</td><td>Type of the model group. Automatically detected from model config if not specified.</td></tr><tr><td><code>sequence_len</code></td><td>int</td><td><code>1024</code></td><td>Maximum sequence length for training. Samples exceeding this length are truncated.</td></tr><tr><td><code>max_model_len</code></td><td>int</td><td><code>null</code></td><td>Maximum model length for rope scaling. Automatically detected from model config if not specified.</td></tr><tr><td><code>rope_scaling</code></td><td>string</td><td><code>null</code></td><td>Type of RoPE scaling. Pass a string like <code>&quot;linear&quot;</code>, <code>&quot;dynamic&quot;</code>, or <code>&quot;yarn&quot;</code> along with <code>max_model_len</code> to automatically configure rope_scaling. Alternatively, pass a JSON string like <code>&#x27;{&quot;factor&quot;: 2.0, &quot;type&quot;: &quot;yarn&quot;}&#x27;</code> to directly override the rope_scaling in the model&#x27;s config.</td></tr><tr><td><code>torch_dtype</code></td><td>string</td><td>auto-detect</td><td>PyTorch data type for model weights. Options: <code>&quot;bfloat16&quot;</code>, <code>&quot;float16&quot;</code>, <code>&quot;float32&quot;</code>. Automatically detected from model config if not specified.</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="recomputation">Recomputation<a href="#recomputation" class="hash-link" aria-label="Direct link to Recomputation" title="Direct link to Recomputation" translate="no">​</a></h2>
+<p>Recomputation trades compute for memory by recomputing activations during the backward pass instead of storing them.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>recompute</code></td><td>bool</td><td><code>true</code></td><td>Enable activation recomputation. <code>false</code> saves all activations (fastest, most memory). <code>true</code> recomputes intermediates from checkpoints (saves VRAM, small compute overhead).</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="cpu-ram-centric-training">CPU-RAM Centric Training<a href="#cpu-ram-centric-training" class="hash-link" aria-label="Direct link to CPU-RAM Centric Training" title="Direct link to CPU-RAM Centric Training" translate="no">​</a></h2>
+<p>CPU-RAM centric training keeps model weights and optimizer state on CPU, streaming data to/from GPU per-layer. This allows training models that exceed GPU memory on a single GPU or across multiple GPUs with simple data parallelism (no ZeRO sharding required).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>cpu_training</code></td><td>bool</td><td><code>false</code></td><td>Enable CPU-RAM centric training. Streams weights from CPU per-layer during forward/backward, offloads gradients to CPU per-layer, and runs FP32 AdamW optimizer on CPU. Works with single-GPU and multi-GPU (data parallelism via per-layer NCCL all-reduce). Disables CUDA graphs.</td></tr></tbody></table>
+<p><strong>What <code>cpu_training</code> enables:</strong></p>
+<ul>
+<li class=""><strong>Weight streaming</strong>: Base model weights stored in CPU pinned memory, loaded to GPU one layer at a time via double-buffered prefetch (overlaps H2D with compute).</li>
+<li class=""><strong>Gradient streaming</strong> (FFT only): Parameter gradients copied to CPU per-layer during backward via double-buffered D2H, then recycled. GPU gradient memory is constant regardless of model depth.</li>
+<li class=""><strong>CPU optimizer</strong> (FFT only): FP32 AdamW runs on CPU with OpenMP parallelization. No 8-bit quantization (CPU RAM is abundant).</li>
+<li class=""><strong>LoRA support</strong>: With LoRA, only weight streaming is active (LoRA adapters and their optimizer stay on GPU since they&#x27;re small).</li>
+<li class=""><strong>Multi-GPU</strong>: Each GPU streams weights independently. Gradients are all-reduced per-layer on GPU (fast NVLink/PCIe) before D2H. All ranks run identical CPU optimizer updates, keeping weights in sync.</li>
+</ul>
+<p><strong>GPU memory usage with <code>cpu_training</code>:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Component</th><th>Without <code>cpu_training</code></th><th>With <code>cpu_training</code></th></tr></thead><tbody><tr><td>Model weights</td><td>All layers on GPU</td><td>~2 layers (double-buffered prefetch)</td></tr><tr><td>Gradients (FFT)</td><td>All layers on GPU</td><td>~2 layers (double-buffered D2H)</td></tr><tr><td>Optimizer state</td><td>On GPU (8-bit quantized)</td><td>On CPU (FP32, unlimited RAM)</td></tr><tr><td>Activations</td><td>Per recompute settings</td><td>Same</td></tr><tr><td>LoRA adapters</td><td>On GPU</td><td>On GPU (unchanged, small)</td></tr></tbody></table>
+<p><strong>Limitations:</strong></p>
+<ul>
+<li class="">Not compatible with QLoRA (<code>qlora_bnb</code>, <code>qlora_fp8</code>, <code>qlora_fp4</code>) or pre-quantized models — these use a separate weight pipeline that doesn&#x27;t support CPU streaming.</li>
+<li class="">Not recommended for MoE models — per-layer expert weight streaming is too slow due to many small PCIe transfers. Use QLoRA with <code>qlora_offload_experts</code> instead.</li>
+<li class="">Mutually exclusive with ZeRO sharding (<code>zero_level &gt; 1</code>).</li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">model</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> Qwen/Qwen3</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">8B</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">cpu_training</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_rank</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">16</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">per_device_train_batch_size</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">sequence_len</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2048</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="offloading-options-legacy">Offloading Options (Legacy)<a href="#offloading-options-legacy" class="hash-link" aria-label="Direct link to Offloading Options (Legacy)" title="Direct link to Offloading Options (Legacy)" translate="no">​</a></h2>
+<p>These options provide fine-grained control over CPU offloading. For most use cases, <code>cpu_training: true</code> is simpler and replaces these flags. These remain available for advanced configurations and backward compatibility.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>offload_residual</code></td><td>bool</td><td><code>false</code></td><td>Offload residuals (of the FFN block) to pinned host memory. Combined with <code>recompute</code>, total activation memory becomes independent of network depth.</td></tr><tr><td><code>offload_master</code></td><td>bool</td><td><code>false</code></td><td><strong>Legacy</strong> — use <code>cpu_training</code> instead. Store master weights in pinned host memory.</td></tr><tr><td><code>offload_quants</code></td><td>bool</td><td><code>false</code></td><td>Store quantized weights in pinned host memory. Requires <code>persistent_quants</code>.</td></tr><tr><td><code>offload_optimizer</code></td><td>bool</td><td><code>false</code></td><td><strong>Legacy</strong> — use <code>cpu_training</code> instead. Store optimizer state in pinned host memory.</td></tr><tr><td><code>offload_grads</code></td><td>bool</td><td><code>false</code></td><td><strong>Legacy</strong> — use <code>cpu_training</code> instead. Offload gradients to pinned host memory.</td></tr><tr><td><code>persistent_quants</code></td><td>bool</td><td><code>false</code></td><td>Avoid re-quantization of weights. Increases memory, but when combined with <code>offload_quants</code>, the additional memory is placed on the host. In PCIe settings, this can lead to significant speed-ups. Requires <code>shard_weights</code>.</td></tr><tr><td><code>use_zero_copy</code></td><td>bool</td><td><code>false</code></td><td><strong>Legacy</strong> — use <code>cpu_training</code> instead. Use ZeroCopy memory access for offloaded optimizer states.</td></tr><tr><td><code>use_write_combined</code></td><td>bool</td><td><code>false</code></td><td><strong>Legacy</strong> — use <code>cpu_training</code> instead. Use write-combined memory for offloaded tensors.</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="multi-gpu-training-zero-options">Multi-GPU Training (ZeRO) Options<a href="#multi-gpu-training-zero-options" class="hash-link" aria-label="Direct link to Multi-GPU Training (ZeRO) Options" title="Direct link to Multi-GPU Training (ZeRO) Options" translate="no">​</a></h2>
+<p>These options apply to single-node multi-GPU training. For multi-node distributed training, see <a href="#multi-node-distributed-training" class="">Multi-Node Distributed Training</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>zero_level</code></td><td>int</td><td><code>1</code></td><td>ZeRO redundancy optimization level: <code>1</code> = sharded optimizer states (default), <code>2</code> = sharded gradients + optimizer states, <code>3</code> = sharded weights + gradients + optimizer states.</td></tr><tr><td><code>shard_weights</code></td><td>bool</td><td><code>false</code></td><td>Shard model weights across data-parallel processes. Enables more effective offloading and reduces memory consumption.</td></tr><tr><td><code>shard_gradients</code></td><td>bool</td><td><code>false</code></td><td>Shard gradients across data-parallel processes. Enables more effective offloading and reduces memory consumption.</td></tr><tr><td><code>use_all_to_all_reduce</code></td><td>bool</td><td><code>false</code></td><td>Use all-to-all-based reduce algorithm (combine with <code>memcpy_send_recv</code>).</td></tr><tr><td><code>memcpy_all_gather</code></td><td>bool</td><td><code>false</code></td><td>Use memcpy for all-gather operations (threads backend only). Generally gets better bandwidth utilization on PCIe and does not consume SM resources.</td></tr><tr><td><code>memcpy_send_recv</code></td><td>bool</td><td><code>false</code></td><td>Use memcpy for send/receive operations (threads backend only).</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="multi-node-distributed-training">Multi-Node Distributed Training<a href="#multi-node-distributed-training" class="hash-link" aria-label="Direct link to Multi-Node Distributed Training" title="Direct link to Multi-Node Distributed Training" translate="no">​</a></h2>
+<p>Configuration for training across multiple machines using Ray and NCCL. See the <a class="" href="/guides/multi-node">Multi-Node Training Guide</a> for detailed setup instructions.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>distributed.ray_address</code></td><td>string</td><td><code>&quot;auto&quot;</code></td><td>Ray cluster address. Options: <code>&quot;auto&quot;</code> (connect to existing cluster), <code>&quot;local&quot;</code> (start local instance), <code>&quot;ray://host:port&quot;</code> (connect to specific head).</td></tr><tr><td><code>distributed.num_nodes</code></td><td>int</td><td><code>1</code></td><td>Total number of nodes to use for training. Set to <code>&gt; 1</code> to enable multi-node training.</td></tr><tr><td><code>distributed.gpus_per_node</code></td><td>int</td><td><code>0</code></td><td>Number of GPUs per node. If <code>0</code>, uses the value from <code>gpus</code> config parameter.</td></tr><tr><td><code>distributed.worker_output_dir</code></td><td>string</td><td><code>null</code></td><td>Base directory for worker-local tokenized data. Each worker creates a <code>node-{rank}/</code> subdirectory. If <code>null</code>, uses <code>/tmp/surogate-{run_name}/</code> on each node.</td></tr></tbody></table>
+<p><strong>Example configuration:</strong></p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">distributed</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token key atrule">ray_address</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;auto&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token key atrule">num_nodes</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token key atrule">gpus_per_node</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">8</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token key atrule">worker_output_dir</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> /shared/surogate</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">data</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="hardware-settings">Hardware Settings<a href="#hardware-settings" class="hash-link" aria-label="Direct link to Hardware Settings" title="Direct link to Hardware Settings" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>gpus</code></td><td>int</td><td><code>1</code></td><td>Number of GPUs to use for training. Use <code>0</code> for all available GPUs.</td></tr><tr><td><code>use_cuda_graphs</code></td><td>bool</td><td><code>true</code></td><td>Enable CUDA graphs for performance.</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="mixed-precision--recipe-options">Mixed Precision &amp; Recipe Options<a href="#mixed-precision--recipe-options" class="hash-link" aria-label="Direct link to Mixed Precision &amp; Recipe Options" title="Direct link to Mixed Precision &amp; Recipe Options" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>recipe</code></td><td>string</td><td><code>&quot;bf16&quot;</code></td><td>Mixed precision training recipe. Options: <code>&quot;bf16&quot;</code> (default), <code>&quot;fp8_hybrid&quot;</code>, <code>&quot;nvfp4&quot;</code>, <code>&quot;nvfp4_quartet&quot;</code>.</td></tr><tr><td><code>gradient_dtype</code></td><td>string</td><td><code>null</code></td><td>Dtype for activation gradients / backward matmul policy. Defaults to matmul-dtype. Note: recipes may override backward dtype.</td></tr><tr><td><code>master_dtype</code></td><td>string</td><td><code>null</code></td><td>Master weight dtype for optimizer updates (e.g., FP32 for stable full fine-tuning). Defaults to model-dtype.</td></tr><tr><td><code>use_fused_rope</code></td><td>bool</td><td><code>false</code></td><td>Use fused RoPE kernel with on-the-fly cos/sin computation (saves memory, reduces bandwidth).</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="fp8-recipe-options">FP8 Recipe Options<a href="#fp8-recipe-options" class="hash-link" aria-label="Direct link to FP8 Recipe Options" title="Direct link to FP8 Recipe Options" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>fp8_amax_history</code></td><td>int</td><td><code>16</code></td><td>FP8 delayed scaling amax history length (for <code>fp8_hybrid</code> recipe).</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="fp4nvfp4-recipe-options">FP4/NVFP4 Recipe Options<a href="#fp4nvfp4-recipe-options" class="hash-link" aria-label="Direct link to FP4/NVFP4 Recipe Options" title="Direct link to FP4/NVFP4 Recipe Options" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>fp4_backend</code></td><td>string</td><td><code>&quot;cutlass&quot;</code></td><td>FP4 matmul backend: <code>&quot;cutlass&quot;</code> (default) or <code>&quot;cudnn&quot;</code> (for <code>nvfp4</code> recipe).</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="layer-quantization-skip-options">Layer Quantization Skip Options<a href="#layer-quantization-skip-options" class="hash-link" aria-label="Direct link to Layer Quantization Skip Options" title="Direct link to Layer Quantization Skip Options" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>skip_quant_first_layers</code></td><td>int</td><td><code>0</code></td><td>Skip quantization for the first N transformer decoder layers. (embedding layers are always kept in BF16).</td></tr><tr><td><code>skip_quant_last_layers</code></td><td>int</td><td><code>0</code></td><td>Skip quantization for the last N transformer decoder layers (lm_head layers are always kept in BF16).</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="optimizer-settings">Optimizer Settings<a href="#optimizer-settings" class="hash-link" aria-label="Direct link to Optimizer Settings" title="Direct link to Optimizer Settings" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>optimizer</code></td><td>string</td><td><code>&quot;adamw_8bit&quot;</code></td><td>Optimizer type. Options: <code>&quot;adamw_8bit&quot;</code> (8-bit AdamW), <code>&quot;normuon&quot;</code> (NorMuon hybrid)</td></tr><tr><td><code>learning_rate</code></td><td>float</td><td><code>2e-4</code></td><td>The initial learning rate for the optimizer.</td></tr><tr><td><code>lr_scheduler_type</code></td><td>string</td><td><code>&quot;linear&quot;</code></td><td>Learning rate schedule function: <code>&quot;linear&quot;</code>, <code>&quot;cosine&quot;</code>, or <code>&quot;wsd&quot;</code>.</td></tr><tr><td><code>warmup_ratio</code></td><td>float</td><td><code>0.0</code></td><td>Ratio of total training steps used for linear warmup from 0 to <code>learning_rate</code>.</td></tr><tr><td><code>warmup_steps</code></td><td>int</td><td><code>0</code></td><td>Number of steps for linear warmup. Overrides <code>warmup_ratio</code> if set.</td></tr><tr><td><code>cooldown_steps</code></td><td>int</td><td><code>0</code></td><td>Number of steps for linear cooldown from <code>learning_rate</code> to <code>final_lr_fraction * learning_rate</code>.</td></tr><tr><td><code>final_lr_fraction</code></td><td>float</td><td><code>0.0</code></td><td>Final learning rate as a fraction of the initial learning rate.</td></tr><tr><td><code>weight_decay</code></td><td>float</td><td><code>0.1</code></td><td>Weight decay applied to all layers except bias and LayerNorm weights.</td></tr><tr><td><code>max_grad_norm</code></td><td>float</td><td><code>1.0</code></td><td>Maximum gradient norm for gradient clipping. <code>0.0</code> disables clipping.</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="adamw-8-bit-optimizer-parameters">AdamW 8-bit Optimizer Parameters<a href="#adamw-8-bit-optimizer-parameters" class="hash-link" aria-label="Direct link to AdamW 8-bit Optimizer Parameters" title="Direct link to AdamW 8-bit Optimizer Parameters" translate="no">​</a></h3>
+<p>Used when <code>optimizer: &quot;adamw_8bit&quot;</code> (default).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>adamw_beta1</code></td><td>float</td><td><code>0.9</code></td><td>The beta1 parameter for AdamW optimizer.</td></tr><tr><td><code>adamw_beta2</code></td><td>float</td><td><code>0.999</code></td><td>The beta2 parameter for AdamW optimizer.</td></tr><tr><td><code>adamw_epsilon</code></td><td>float</td><td><code>1e-8</code></td><td>The epsilon parameter for AdamW optimizer.</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="normuon-optimizer-parameters">NorMuon Optimizer Parameters<a href="#normuon-optimizer-parameters" class="hash-link" aria-label="Direct link to NorMuon Optimizer Parameters" title="Direct link to NorMuon Optimizer Parameters" translate="no">​</a></h3>
+<p>Used when <code>optimizer: &quot;normuon&quot;</code>. NorMuon uses a hybrid approach: AdamW for embeddings/norms/lm_head, and orthogonalized momentum for 2D weight matrices.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>normuon_momentum</code></td><td>float</td><td><code>0.95</code></td><td>Momentum coefficient for orthogonalized momentum updates in 2D weight matrices.</td></tr><tr><td><code>normuon_beta2</code></td><td>float</td><td><code>0.95</code></td><td>Second moment coefficient for variance tracking in NorMuon optimizer.</td></tr><tr><td><code>normuon_cautious_wd</code></td><td>bool</td><td><code>true</code></td><td>Enable cautious weight decay that only applies decay when gradient and momentum align.</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="training-loop-settings">Training Loop Settings<a href="#training-loop-settings" class="hash-link" aria-label="Direct link to Training Loop Settings" title="Direct link to Training Loop Settings" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>per_device_train_batch_size</code></td><td>int</td><td><code>2</code></td><td>Batch size per device during training/evaluation.</td></tr><tr><td><code>gradient_accumulation_steps</code></td><td>int</td><td><code>4</code></td><td>Number of update steps to accumulate gradients before performing backward/update pass. Effective batch size = batch_size × grad_accumulation × num_gpus.</td></tr><tr><td><code>max_steps</code></td><td>int</td><td><code>-1</code></td><td>Total number of training steps. <code>-1</code> derives from epochs and dataset size.</td></tr><tr><td><code>eval_steps</code></td><td>int</td><td><code>100</code></td><td>Run evaluation every N optimizer steps.</td></tr><tr><td><code>train_vision</code></td><td>bool</td><td><code>null</code></td><td>If <code>true</code>, run the vision encoder during training to process images/videos. If <code>false</code>, train on text only. If <code>null</code> and the model is multimodal, defaults to <code>true</code>.</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="dataset-settings">Dataset Settings<a href="#dataset-settings" class="hash-link" aria-label="Direct link to Dataset Settings" title="Direct link to Dataset Settings" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>datasets</code></td><td>list</td><td><code>null</code></td><td>List of datasets for training. Each dataset should specify <code>path</code>, <code>type</code>, and other dataset-specific options. See <a href="#dataset-configuration-options" class="">Dataset Configuration Options</a> below.</td></tr><tr><td><code>validation_datasets</code></td><td>list</td><td><code>null</code></td><td>List of datasets for validation during training. If not provided, uses <code>validation_split_ratio</code> to create validation split from training data. Uses same format as <code>datasets</code>.</td></tr><tr><td><code>validation_split_ratio</code></td><td>float</td><td><code>0.1</code></td><td>Ratio of training data to use for validation if no <code>validation_datasets</code> are provided. Value between 0.0 and 1.0.</td></tr><tr><td><code>train_seed</code></td><td>int</td><td><code>1234</code></td><td>Random seed for the training dataloader. Controls shuffling and sampling order.</td></tr><tr><td><code>eval_seed</code></td><td>int</td><td><code>1234</code></td><td>Random seed for the evaluation dataloader. Controls shuffling and sampling order.</td></tr><tr><td><code>dataloader_num_workers</code></td><td>int</td><td>auto</td><td>Number of subprocesses to use for data loading. <code>0</code> means data will be loaded in the main process. Defaults to optimal value based on CPU count.</td></tr><tr><td><code>sample_packing</code></td><td>bool</td><td><code>true</code></td><td>Whether to enable sample packing to fit multiple data samples into a single sequence. Packing reduces the number of samples in the dataset; adjust gradient accumulation steps and learning rate accordingly for packed datasets.</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="dataset-configuration-options">Dataset Configuration Options<a href="#dataset-configuration-options" class="hash-link" aria-label="Direct link to Dataset Configuration Options" title="Direct link to Dataset Configuration Options" translate="no">​</a></h3>
+<p>Each dataset in the <code>datasets</code> or <code>validation_datasets</code> list is configured with the following options. Dataset type determines which additional fields are required.</p>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="base-dataset-options-all-types">Base Dataset Options (All Types)<a href="#base-dataset-options-all-types" class="hash-link" aria-label="Direct link to Base Dataset Options (All Types)" title="Direct link to Base Dataset Options (All Types)" translate="no">​</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>path</code></td><td>string</td><td>required</td><td>HuggingFace dataset repo, s3:// URL, gs:// URL, or path to local file or directory.</td></tr><tr><td><code>type</code></td><td>string</td><td>required</td><td>Dataset type. Options: <code>&quot;text&quot;</code>, <code>&quot;instruction&quot;</code>, <code>&quot;conversation&quot;</code>, <code>&quot;auto&quot;</code> (auto-detect format).</td></tr><tr><td><code>subset</code></td><td>string</td><td><code>null</code></td><td>HuggingFace dataset subset/configuration name to load (e.g., <code>&quot;default&quot;</code> for datasets with multiple configurations).</td></tr><tr><td><code>split</code></td><td>string</td><td><code>&quot;train&quot;</code></td><td>Dataset split to load. Common values: <code>&quot;train&quot;</code>, <code>&quot;test&quot;</code>, <code>&quot;validation&quot;</code>.</td></tr><tr><td><code>samples</code></td><td>int</td><td><code>null</code></td><td>Limit the number of samples to use from this dataset. If not specified, uses all available samples.</td></tr></tbody></table>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="text-dataset-options-type-text">Text Dataset Options (<code>type: &quot;text&quot;</code>)<a href="#text-dataset-options-type-text" class="hash-link" aria-label="Direct link to text-dataset-options-type-text" title="Direct link to text-dataset-options-type-text" translate="no">​</a></h4>
+<p>For pre-training or continued pre-training on raw text data.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>text_field</code></td><td>string</td><td><code>&quot;text&quot;</code></td><td>Name of the column in the dataset that contains the raw text content.</td></tr></tbody></table>
+<p><strong>Example:</strong></p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">datasets</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> </span><span class="token key atrule">path</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;HuggingFaceFW/fineweb-edu&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> text</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">text_field</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> text</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">split</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> train</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">samples</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">100000</span><br></span></code></pre></div></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="instruction-dataset-options-type-instruction">Instruction Dataset Options (<code>type: &quot;instruction&quot;</code>)<a href="#instruction-dataset-options-type-instruction" class="hash-link" aria-label="Direct link to instruction-dataset-options-type-instruction" title="Direct link to instruction-dataset-options-type-instruction" translate="no">​</a></h4>
+<p>For instruction-following datasets with system/instruction/input/output format.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>instruction_field</code></td><td>string</td><td>required</td><td>Name of the column containing the instruction/question.</td></tr><tr><td><code>output_field</code></td><td>string</td><td>required</td><td>Name of the column containing the expected output/answer.</td></tr><tr><td><code>input_field</code></td><td>string</td><td><code>null</code></td><td>Name of the column containing additional input context (optional).</td></tr><tr><td><code>system_prompt_type</code></td><td>string</td><td><code>null</code></td><td>How to provide system prompt. Options: <code>&quot;field&quot;</code> (from dataset column), <code>&quot;fixed&quot;</code> (same for all samples), <code>null</code>.</td></tr><tr><td><code>system_prompt_field</code></td><td>string</td><td><code>null</code></td><td>Name of the column containing system prompts (required when <code>system_prompt_type: &quot;field&quot;</code>).</td></tr><tr><td><code>system_prompt</code></td><td>string</td><td><code>null</code></td><td>Fixed system prompt text to use for all samples (required when <code>system_prompt_type: &quot;fixed&quot;</code>).</td></tr><tr><td><code>prompt_format</code></td><td>string</td><td><code>null</code></td><td>Custom prompt format template. Use <code>{system}</code>, <code>{instruction}</code>, <code>{input}</code>, <code>{output}</code> as placeholders.</td></tr><tr><td><code>prompt_format_no_input</code></td><td>string</td><td><code>null</code></td><td>Custom prompt format when no input field. Use <code>{system}</code>, <code>{instruction}</code>, <code>{output}</code> as placeholders.</td></tr></tbody></table>
+<p><strong>Example:</strong></p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">datasets</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> </span><span class="token key atrule">path</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;yahma/alpaca-cleaned&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> instruction</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">instruction_field</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> instruction</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">input_field</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> input</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">output_field</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> output</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">system_prompt_type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> fixed</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">system_prompt</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;You are a helpful AI assistant.&quot;</span><br></span></code></pre></div></div>
+<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="conversation-dataset-options-type-conversation">Conversation Dataset Options (<code>type: &quot;conversation&quot;</code>)<a href="#conversation-dataset-options-type-conversation" class="hash-link" aria-label="Direct link to conversation-dataset-options-type-conversation" title="Direct link to conversation-dataset-options-type-conversation" translate="no">​</a></h4>
+<p>For multi-turn conversational datasets in chat format.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>messages_field</code></td><td>string</td><td><code>&quot;messages&quot;</code></td><td>Name of the column containing the list of conversation messages.</td></tr><tr><td><code>system_field</code></td><td>string</td><td><code>null</code></td><td>Name of the column containing the system prompt for the conversation (optional).</td></tr><tr><td><code>tools_field</code></td><td>string</td><td><code>null</code></td><td>Name of the column containing tool/function definitions for function calling.</td></tr><tr><td><code>message_property_mappings</code></td><td>dict</td><td><code>{&quot;role&quot;: &quot;role&quot;, &quot;content&quot;: &quot;content&quot;, ...}</code></td><td>Mapping of message property names if dataset uses non-standard field names.</td></tr></tbody></table>
+<p><strong>Example:</strong></p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">datasets</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> </span><span class="token key atrule">path</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;HuggingFaceH4/ultrachat_200k&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> conversation</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">messages_field</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> messages</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">split</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> train_sft</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="memory-optimization-settings">Memory Optimization Settings<a href="#memory-optimization-settings" class="hash-link" aria-label="Direct link to Memory Optimization Settings" title="Direct link to Memory Optimization Settings" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>lmhead_chunks</code></td><td>int</td><td><code>1</code></td><td>Split LM-head computation into N chunks to reduce logit tensor size by factor of N.</td></tr><tr><td><code>attn_bwd_chunks</code></td><td>int</td><td><code>1</code></td><td>Split attention backward pass into N chunks to save workspace memory.</td></tr><tr><td><code>long_context</code></td><td>bool</td><td><code>false</code></td><td>Enable tiled MLP execution for long-context training. Chunks MLP computation along the sequence dimension during both forward and backward passes, reducing per-layer MLP memory from O(B*T * intermediate) to O(chunk_size * intermediate). Automatically disables CUDA graphs. Only applies to dense models (Llama, Qwen3, Qwen3.5, Qwen3-VL); MoE models are excluded.</td></tr><tr><td><code>init_projections_to_zero</code></td><td>bool</td><td><code>false</code></td><td>Initialize projection weights (FFN down and attention out) to zero. Only used when training from scratch.</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="lora-settings">LoRA Settings<a href="#lora-settings" class="hash-link" aria-label="Direct link to LoRA Settings" title="Direct link to LoRA Settings" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>lora</code></td><td>bool</td><td><code>true</code></td><td>Whether to use LoRA adapters for training.</td></tr><tr><td><code>lora_rank</code></td><td>int</td><td><code>16</code></td><td>Rank for LoRA adapters.</td></tr><tr><td><code>lora_alpha</code></td><td>int</td><td><code>32</code></td><td>Alpha value for LoRA adapters.</td></tr><tr><td><code>lora_dropout</code></td><td>float</td><td><code>0.05</code></td><td>Dropout rate for LoRA adapters.</td></tr><tr><td><code>lora_dtype</code></td><td>string</td><td><code>&quot;fp32&quot;</code></td><td>Data type for LoRA adapters: <code>&quot;bf16&quot;</code> or <code>&quot;fp32&quot;</code>.</td></tr><tr><td><code>lora_target_modules</code></td><td>list</td><td><code>[&quot;all&quot;]</code></td><td>List of module names to apply LoRA adapters to.</td></tr><tr><td><code>train_router</code></td><td>bool</td><td><code>false</code></td><td>Train MoE router gate during LoRA fine-tuning. Only applies to MoE models.</td></tr><tr><td><code>adapter_path</code></td><td>string</td><td><code>null</code></td><td>Path to a PEFT adapter directory to merge into base weights before training. Requires <code>lora: true</code>. Not supported with pre-quantized models.</td></tr><tr><td><code>merge_adapter</code></td><td>bool</td><td><code>false</code></td><td>Whether to merge LoRA adapters into the base model after training.</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="moe-settings">MoE Settings<a href="#moe-settings" class="hash-link" aria-label="Direct link to MoE Settings" title="Direct link to MoE Settings" translate="no">​</a></h2>
+<p>MoE (Mixture-of-Experts) settings control router loss coefficients for load balancing during training.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>router_aux_loss_coef</code></td><td>float</td><td><code>null</code></td><td>MoE auxiliary (load balancing) loss coefficient. <code>null</code> uses model config default.</td></tr><tr><td><code>router_z_loss_coef</code></td><td>float</td><td><code>null</code></td><td>MoE z-loss (router logit regularization) coefficient. <code>null</code> uses model config default.</td></tr></tbody></table>
+<p><strong>Understanding MoE Losses:</strong></p>
+<ul>
+<li class=""><strong>Auxiliary Loss (<code>aux_loss</code>)</strong>: Encourages load balancing across experts. Higher values enforce more even token distribution but may reduce model capacity. Typical range: 0.001-0.1.</li>
+<li class=""><strong>Z-Loss (<code>z_loss</code>)</strong>: Regularizes router logits to prevent them from growing too large, which can cause routing collapse. Typical range: 0.0001-0.01.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="qlora-settings">QLoRA Settings<a href="#qlora-settings" class="hash-link" aria-label="Direct link to QLoRA Settings" title="Direct link to QLoRA Settings" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>qlora_fp4</code></td><td>bool</td><td><code>false</code></td><td>Enable NVFP4 QLoRA mode (base weights quantized to FP4 E2M1). <strong>Requires Blackwell GPU (SM100+)</strong>.</td></tr><tr><td><code>qlora_fp8</code></td><td>bool</td><td><code>false</code></td><td>Enable FP8 QLoRA mode (base weights quantized to FP8 with per-block scales).</td></tr><tr><td><code>qlora_bnb</code></td><td>bool</td><td><code>false</code></td><td>Enable BitsAndBytes NF4 QLoRA mode (base weights quantized to NF4 with per-block absmax). Works on any CUDA GPU.</td></tr><tr><td><code>qlora_block_size</code></td><td>int</td><td><code>128</code></td><td>Block size for FP8 QLoRA quantization. Valid values: <code>64</code>, <code>128</code>, <code>256</code>.</td></tr><tr><td><code>qlora_bnb_block_size</code></td><td>int</td><td><code>64</code></td><td>Block size for BnB NF4 QLoRA quantization. Valid values: <code>64</code>, <code>128</code>, <code>256</code>, <code>512</code>.</td></tr><tr><td><code>qlora_bnb_double_quant</code></td><td>bool</td><td><code>true</code></td><td>Enable double quantization for BnB (quantize absmax values to INT8 for extra memory savings).</td></tr><tr><td><code>qlora_four_over_six</code></td><td>bool</td><td><code>true</code></td><td>Enable Four Over Six (4/6) adaptive block scaling for NVFP4 QLoRA quantization. Evaluates both max=4 and max=6 scaling per block and selects lower error option.</td></tr><tr><td><code>qlora_selective_expert_dequant</code></td><td>bool</td><td><code>false</code></td><td>Enable selective expert dequantization for MoE models to reduce dequant buffer memory. When enabled, it only dequantizes the experts that are actually selected by the router for each forward pass, rather than dequantizing all experts.</td></tr><tr><td><code>qlora_offload_experts</code></td><td>bool</td><td><code>false</code></td><td>Offload expert weights in QLoRA MoE models to host memory. Works at the layer level (loads/unloads entire layer&#x27;s experts as groups).</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="chat-template-settings">Chat Template Settings<a href="#chat-template-settings" class="hash-link" aria-label="Direct link to Chat Template Settings" title="Direct link to Chat Template Settings" translate="no">​</a></h2>
+<p>Chat template settings control how conversations are formatted for training and inference.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>use_chat_template</code></td><td>bool</td><td><code>true</code></td><td>Whether to use chat template for training.</td></tr><tr><td><code>template</code></td><td>string</td><td>auto</td><td>The chat template to use. Automatically detected from model if not specified. Available templates defined in CHAT_TEMPLATE_MAPPING.</td></tr><tr><td><code>system</code></td><td>string</td><td><code>null</code></td><td>Override the default system prompt in the template. Use <code>\n</code> for newlines.</td></tr><tr><td><code>max_length</code></td><td>int</td><td><code>null</code></td><td>Maximum length for tokenized conversations. Defaults to <code>sequence_len</code> if not specified.</td></tr><tr><td><code>truncation_strategy</code></td><td>string</td><td><code>&quot;delete&quot;</code></td><td>How to handle conversations exceeding max_length. Options: <code>&quot;delete&quot;</code> (skip sample), <code>&quot;left&quot;</code> (truncate from start), <code>&quot;right&quot;</code> (truncate from end), <code>&quot;split&quot;</code> (split into multiple samples).</td></tr><tr><td><code>padding_side</code></td><td>string</td><td><code>&quot;right&quot;</code></td><td>Which side to pad sequences on. Options: <code>&quot;left&quot;</code>, <code>&quot;right&quot;</code>.</td></tr><tr><td><code>padding_free</code></td><td>bool</td><td><code>false</code></td><td>Enable padding-free training for more efficient packing.</td></tr><tr><td><code>loss_scale</code></td><td>string</td><td><code>&quot;default&quot;</code></td><td>Loss scaling strategy. Options: <code>&quot;default&quot;</code>, or custom scaling configuration.</td></tr><tr><td><code>sequence_parallel_size</code></td><td>int</td><td><code>1</code></td><td>Sequence parallelism size for distributed training across sequence dimension.</td></tr><tr><td><code>response_prefix</code></td><td>string</td><td><code>null</code></td><td>Prefix to add before model responses during inference. Use <code>\n</code> for newlines.</td></tr><tr><td><code>max_pixels</code></td><td>int</td><td><code>null</code></td><td>Maximum number of pixels for vision models (multimodal only).</td></tr><tr><td><code>norm_bbox</code></td><td>string</td><td><code>null</code></td><td>Bounding box normalization strategy for vision models. Options: <code>&quot;norm1000&quot;</code>, <code>&quot;none&quot;</code>, <code>null</code>.</td></tr><tr><td><code>agent_template</code></td><td>string</td><td><code>null</code></td><td>Template for agent-style conversations (advanced usage).</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="logging--reporting">Logging &amp; Reporting<a href="#logging--reporting" class="hash-link" aria-label="Direct link to Logging &amp; Reporting" title="Direct link to Logging &amp; Reporting" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>report_to</code></td><td>list</td><td><code>null</code></td><td>Report results and logs to specified platforms. Options: <code>&quot;wandb&quot;</code>, <code>&quot;aim&quot;</code>.</td></tr><tr><td><code>log_file</code></td><td>string</td><td><code>null</code></td><td>Where to save the training log. If <code>null</code>, no log file is written.</td></tr><tr><td><code>log_gpu_util</code></td><td>int</td><td><code>100</code></td><td>Interval for logging GPU utilization.</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="wandb-weights--biases-settings">WandB (Weights &amp; Biases) Settings<a href="#wandb-weights--biases-settings" class="hash-link" aria-label="Direct link to WandB (Weights &amp; Biases) Settings" title="Direct link to WandB (Weights &amp; Biases) Settings" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>wandb_project</code></td><td>string</td><td><code>null</code></td><td>WandB project name for logging.</td></tr><tr><td><code>wandb_name</code></td><td>string</td><td><code>run_name</code></td><td>WandB run name for logging. Defaults to the value of <code>run_name</code>.</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="aim-settings">Aim Settings<a href="#aim-settings" class="hash-link" aria-label="Direct link to Aim Settings" title="Direct link to Aim Settings" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>aim_experiment</code></td><td>string</td><td><code>null</code></td><td>Aim experiment name for logging.</td></tr><tr><td><code>aim_repo</code></td><td>string</td><td><code>null</code></td><td>Aim repository path for logging. Uses default if not specified.</td></tr><tr><td><code>aim_name</code></td><td>string</td><td><code>run_name</code></td><td>Aim run name for logging. Defaults to the value of <code>run_name</code>.</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="debugging-options">Debugging Options<a href="#debugging-options" class="hash-link" aria-label="Direct link to Debugging Options" title="Direct link to Debugging Options" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>debug_time_breakdown</code></td><td>bool</td><td><code>false</code></td><td>Enable detailed training timing breakdown for debugging.</td></tr><tr><td><code>debug_memory_breakdown</code></td><td>bool</td><td><code>false</code></td><td>Print detailed memory breakdown after model allocation (useful for QLoRA optimization).</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="training-diagnostics--automation">Training Diagnostics &amp; Automation<a href="#training-diagnostics--automation" class="hash-link" aria-label="Direct link to Training Diagnostics &amp; Automation" title="Direct link to Training Diagnostics &amp; Automation" translate="no">​</a></h2>
+<p>These options control automatic training monitoring, early stopping, and compute-optimal adjustments. All are disabled by default and safe to enable — they only add diagnostics or automation on top of the normal training loop.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>auto_lr_reduction</code></td><td>bool</td><td><code>false</code></td><td>Detect loss spikes and gradient explosions, then permanently reduce the learning rate. Monitors a rolling window of loss/grad-norm values; when an anomaly is detected (loss &gt; mean + 3σ, or grad_norm &gt; 10× average), the LR schedule is scaled down by 50%. Up to 5 reductions.</td></tr><tr><td><code>early_stop</code></td><td>bool</td><td><code>false</code></td><td>Multi-criteria early stopping. Stops training when ANY of: (1) convergence score &gt; 0.85 for 5 consecutive evals, (2) compute efficiency (loss reduction per FLOP) drops below 50% of peak, (3) training diverges for 200+ consecutive steps, (4) loss plateaus for 500+ consecutive steps. Uses the <code>6N</code> approximation for FLOPs/token.</td></tr><tr><td><code>epoch_adjustment</code></td><td>bool</td><td><code>false</code></td><td>Automatically adjust <code>num_epochs</code> to match the Chinchilla-optimal token budget (20× model parameters). If the dataset is smaller than the budget, increases epochs; if larger, decreases them. Only applies when <code>max_steps</code> is not explicitly set.</td></tr></tbody></table>
+<p><strong>Always-on diagnostics</strong> (no config flag required):</p>
+<ul>
+<li class=""><strong>Plateau detection</strong>: Warns when training loss stops improving over a rolling window. No automatic action taken.</li>
+<li class=""><strong>Phase detection</strong>: Classifies training into WARMUP / CONVERGING / PLATEAU / UNSTABLE / DIVERGING phases. Phase transitions are logged and the current phase is shown in the step log output.</li>
+<li class=""><strong>Chinchilla token budget</strong>: Printed at training start — shows the Chinchilla-optimal token count (20 × params) alongside planned tokens, so you can gauge training sufficiency at a glance.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="recipe-comparison">Recipe Comparison<a href="#recipe-comparison" class="hash-link" aria-label="Direct link to Recipe Comparison" title="Direct link to Recipe Comparison" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Recipe</th><th>Format</th><th>GPU Requirement</th><th>Use Case</th></tr></thead><tbody><tr><td><code>bf16</code></td><td>BF16 forward/backward</td><td>Any CUDA GPU</td><td>Baseline, maximum compatibility</td></tr><tr><td><code>fp8_hybrid</code></td><td>FP8 E4M3 fwd / E5M2 bwd</td><td>SM89+ (Ada, Hopper, Blackwell)</td><td>2x throughput, minimal accuracy loss</td></tr><tr><td><code>nvfp4</code></td><td>FP4 E2M1 with block scaling</td><td>SM100+ (Blackwell only)</td><td>Maximum memory efficiency</td></tr><tr><td><code>nvfp4_quartet</code></td><td>FP4 E2M1 quartet scaling</td><td>SM100+ (Blackwell only)</td><td>Higher accuracy FP4 training</td></tr></tbody></table>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="example-configuration">Example Configuration<a href="#example-configuration" class="hash-link" aria-label="Direct link to Example Configuration" title="Direct link to Example Configuration" translate="no">​</a></h2>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Model</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">model</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> Qwen/Qwen3</span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain">0.6B</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">model_type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> qwen  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># auto-detected if not specified</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">sequence_len</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2048</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">max_model_len</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2048</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">torch_dtype</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> bfloat16  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># auto-detected if not specified</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Output</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">output_dir</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> ./output</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">save_steps</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">100</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">save_total_limit</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">3</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Training</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">num_epochs</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">3</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">per_device_train_batch_size</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">gradient_accumulation_steps</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">4</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">learning_rate</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2e-4</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lr_scheduler_type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> cosine</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">warmup_ratio</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.03</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Dataset</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">datasets</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Conversation dataset (most common for fine-tuning)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token punctuation" style="color:rgb(199, 146, 234)">-</span><span class="token plain"> </span><span class="token key atrule">path</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token string" style="color:rgb(195, 232, 141)">&quot;mlabonne/FineTome-100k&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">type</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> conversation</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">messages_field</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> conversations</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">	</span><span class="token key atrule">split</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> train</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Or use instruction dataset format</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># - path: &quot;yahma/alpaca-cleaned&quot;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">#   type: instruction</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">#   instruction_field: instruction</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">#   input_field: input</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic">#   output_field: output</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">validation_split_ratio</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.1</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">train_seed</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1234</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">eval_seed</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1234</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">sample_packing</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">dataloader_num_workers</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">4</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Chat Template</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">use_chat_template</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">template</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> qwen  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># auto-detected if not specified</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">truncation_strategy</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> delete</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">padding_side</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> right</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># LoRA</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_rank</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">16</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_alpha</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">32</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_dropout</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.05</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">lora_dtype</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> fp32</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Memory optimization</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">recompute</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">recipe</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> bf16</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Hardware</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">gpus</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">use_cuda_graphs</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><br></span></code></pre></div></div></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/reference/cli"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">CLI reference</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/appendix/release-notes"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Release notes</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#general-settings" class="table-of-contents__link toc-highlight">General Settings</a></li><li><a href="#model-settings" class="table-of-contents__link toc-highlight">Model Settings</a></li><li><a href="#recomputation" class="table-of-contents__link toc-highlight">Recomputation</a></li><li><a href="#cpu-ram-centric-training" class="table-of-contents__link toc-highlight">CPU-RAM Centric Training</a></li><li><a href="#offloading-options-legacy" class="table-of-contents__link toc-highlight">Offloading Options (Legacy)</a></li><li><a href="#multi-gpu-training-zero-options" class="table-of-contents__link toc-highlight">Multi-GPU Training (ZeRO) Options</a></li><li><a href="#multi-node-distributed-training" class="table-of-contents__link toc-highlight">Multi-Node Distributed Training</a></li><li><a href="#hardware-settings" class="table-of-contents__link toc-highlight">Hardware Settings</a></li><li><a href="#mixed-precision--recipe-options" class="table-of-contents__link toc-highlight">Mixed Precision &amp; Recipe Options</a><ul><li><a href="#fp8-recipe-options" class="table-of-contents__link toc-highlight">FP8 Recipe Options</a></li><li><a href="#fp4nvfp4-recipe-options" class="table-of-contents__link toc-highlight">FP4/NVFP4 Recipe Options</a></li><li><a href="#layer-quantization-skip-options" class="table-of-contents__link toc-highlight">Layer Quantization Skip Options</a></li></ul></li><li><a href="#optimizer-settings" class="table-of-contents__link toc-highlight">Optimizer Settings</a><ul><li><a href="#adamw-8-bit-optimizer-parameters" class="table-of-contents__link toc-highlight">AdamW 8-bit Optimizer Parameters</a></li><li><a href="#normuon-optimizer-parameters" class="table-of-contents__link toc-highlight">NorMuon Optimizer Parameters</a></li></ul></li><li><a href="#training-loop-settings" class="table-of-contents__link toc-highlight">Training Loop Settings</a></li><li><a href="#dataset-settings" class="table-of-contents__link toc-highlight">Dataset Settings</a><ul><li><a href="#dataset-configuration-options" class="table-of-contents__link toc-highlight">Dataset Configuration Options</a></li></ul></li><li><a href="#memory-optimization-settings" class="table-of-contents__link toc-highlight">Memory Optimization Settings</a></li><li><a href="#lora-settings" class="table-of-contents__link toc-highlight">LoRA Settings</a></li><li><a href="#moe-settings" class="table-of-contents__link toc-highlight">MoE Settings</a></li><li><a href="#qlora-settings" class="table-of-contents__link toc-highlight">QLoRA Settings</a></li><li><a href="#chat-template-settings" class="table-of-contents__link toc-highlight">Chat Template Settings</a></li><li><a href="#logging--reporting" class="table-of-contents__link toc-highlight">Logging &amp; Reporting</a><ul><li><a href="#wandb-weights--biases-settings" class="table-of-contents__link toc-highlight">WandB (Weights &amp; Biases) Settings</a></li><li><a href="#aim-settings" class="table-of-contents__link toc-highlight">Aim Settings</a></li></ul></li><li><a href="#debugging-options" class="table-of-contents__link toc-highlight">Debugging Options</a></li><li><a href="#training-diagnostics--automation" class="table-of-contents__link toc-highlight">Training Diagnostics &amp; Automation</a></li><li><a href="#recipe-comparison" class="table-of-contents__link toc-highlight">Recipe Comparison</a></li><li><a href="#example-configuration" class="table-of-contents__link toc-highlight">Example Configuration</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Work mode (operators)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/work">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/run-agent">Run an agent</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/review-sessions">Review sessions</a></li><li class="footer__item"><a class="footer__link-item" href="/work/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Develop mode (builders)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/develop">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/loop/overview">The builder loop</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/features/skills-and-experts">Skills &amp; Experts</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Repos</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/invergent-ai/surogates" target="_blank" rel="noopener noreferrer" class="footer__link-item">Runtime (surogates)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="footer__link-item">Training framework (surogate)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate-hub" target="_blank" rel="noopener noreferrer" class="footer__link-item">Artifact store (surogate-hub)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 Invergent. All rights reserved.</div></div></div></footer></div>
+</body>
+</html>

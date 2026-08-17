@@ -1,0 +1,27 @@
+{
+  "id": "develop/features/browser-profiles",
+  "title": "Browser profiles",
+  "description": "A browser profile is a saved, encrypted browser login that an agent can reuse, so it stays signed in to a site across sessions instead of logging in every time.",
+  "source": "@site/docs/develop/features/browser-profiles.md",
+  "sourceDirName": "develop/features",
+  "slug": "/develop/features/browser-profiles",
+  "permalink": "/develop/features/browser-profiles",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 13,
+  "frontMatter": {
+    "title": "Browser profiles",
+    "sidebar_position": 13
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Agent browser",
+    "permalink": "/develop/features/browser"
+  },
+  "next": {
+    "title": "Media generation",
+    "permalink": "/develop/features/media-generation"
+  }
+}

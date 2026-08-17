@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-guides/optimizers" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.9.2">
+<title data-rh="true">Optimizers | Surogate</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.surogate.ai/guides/optimizers"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Optimizers | Surogate"><meta data-rh="true" name="description" content="Surogate supports two optimizers for training: AdamW 8-bit and NorMuon. Both optimizers use 8-bit quantized state storage to reduce memory consumption while maintaining training stability."><meta data-rh="true" property="og:description" content="Surogate supports two optimizers for training: AdamW 8-bit and NorMuon. Both optimizers use 8-bit quantized state storage to reduce memory consumption while maintaining training stability."><link data-rh="true" rel="icon" href="/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://docs.surogate.ai/guides/optimizers"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/guides/optimizers" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.surogate.ai/guides/optimizers" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://K46M9C3QXR-dsn.algolia.net" crossorigin="anonymous"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Optimizers","item":"https://docs.surogate.ai/guides/optimizers"}]}</script><link rel="preconnect" href="https://www.google-analytics.com">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7YRDGYZN0R"></script>
+<script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-7YRDGYZN0R",{})</script>
+
+
+
+<link rel="search" type="application/opensearchdescription+xml" title="Surogate" href="/opensearch.xml">
+
+
+<meta name="keywords" content="Surogate, AgentOps, agents, LLM, MCP, training, fine-tuning, RL, evaluations">
+<meta name="description" content="Documentation for Surogate Ops — operator and builder tracks. Build reliable autonomous agents.">
+<meta name="og:type" content="website">
+<meta name="og:url" content="https://docs.surogate.ai">
+<meta name="og:title" content="Surogate Documentation">
+<meta name="og:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="og:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:secure_url" content="https://docs.surogate.ai/img/social-card.jpg">
+<meta name="og:image:alt" content="Surogate">
+<meta name="og:locale" content="en_US">
+<meta name="og:image:type" content="image/jpeg">
+<meta name="twitter:site" content="surogate_ai">
+<meta name="twitter:creator" content="surogate_ai">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://docs.surogate.ai">
+<meta name="twitter:title" content="Surogate Documentation">
+<meta name="twitter:description" content="Operator and builder documentation for Surogate Ops.">
+<meta name="twitter:image" content="https://docs.surogate.ai/img/social-card.jpg">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.064a1307.css">
+<script src="/assets/js/runtime~main.5374f7b7.js" defer="defer"></script>
+<script src="/assets/js/main.c60b3980.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/logo-black.svg" alt="logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo-white.svg" alt="logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Documentation</b></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">About<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://ops.surogate.ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Login<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><a href="https://x.com/surogate_ai" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Follow us on X<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a><div class="navbarSearchContainer_Bca1"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search (Meta+k)" aria-keyshortcuts="Meta+k"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8" stroke="currentColor" fill="none" stroke-width="1.4"></circle><path d="m21 21-4.3-4.3" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/old-docs"><span title="Welcome" class="linkLabel_WmDU">Welcome</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/about/how-it-works"><span title="About Surogate" class="categoryLinkLabel_W154">About Surogate</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/how-it-works"><span title="How Surogate Works" class="linkLabel_WmDU">How Surogate Works</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/adaptive-training"><span title="Adaptive Training System" class="linkLabel_WmDU">Adaptive Training System</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/dsl"><span title="DSL Language" class="linkLabel_WmDU">DSL Language</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/about/automatic-differentiation"><span title="Automatic Differentiation" class="linkLabel_WmDU">Automatic Differentiation</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/getting-started/installation"><span title="Getting Started" class="categoryLinkLabel_W154">Getting Started</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/installation"><span title="Installation" class="linkLabel_WmDU">Installation</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/training-modes"><span title="Training Modes" class="linkLabel_WmDU">Training Modes</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-pretraining"><span title="Quickstart: Pretraining (PT)" class="linkLabel_WmDU">Quickstart: Pretraining (PT)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-sft"><span title="Quickstart: Supervised Fine-Tuning (SFT)" class="linkLabel_WmDU">Quickstart: Supervised Fine-Tuning (SFT)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/getting-started/quickstart-grpo"><span title="Quickstart: RL Training (GRPO)" class="linkLabel_WmDU">Quickstart: RL Training (GRPO)</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="true" href="/examples"><span title="Examples Library" class="categoryLinkLabel_W154">Examples Library</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/examples"><span title="Examples Library" class="linkLabel_WmDU">Examples Library</span></a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/examples/pt/qwen3"><span title="Pre-training (PT)" class="categoryLinkLabel_W154">Pre-training (PT)</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/examples/sft/qwen3-lora"><span title="Fine-tuning (SFT)" class="categoryLinkLabel_W154">Fine-tuning (SFT)</span></a></div></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/guides/configuration"><span title="User Guides" class="categoryLinkLabel_W154">User Guides</span></a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/configuration"><span title="Configuration" class="linkLabel_WmDU">Configuration</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/datasets"><span title="Datasets" class="linkLabel_WmDU">Datasets</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/guides/optimizers"><span title="Optimizers" class="linkLabel_WmDU">Optimizers</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/precision-and-recipes"><span title="Precision &amp; Recipes" class="linkLabel_WmDU">Precision &amp; Recipes</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/qlora"><span title="Quantized LoRA (QLoRA)" class="linkLabel_WmDU">Quantized LoRA (QLoRA)</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/metrics"><span title="Training Metrics &amp; Monitoring" class="linkLabel_WmDU">Training Metrics &amp; Monitoring</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/moe"><span title="Mixture-of-Experts (MoE) Models" class="linkLabel_WmDU">Mixture-of-Experts (MoE) Models</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/multi-gpu"><span title="Multi-GPU Training" class="linkLabel_WmDU">Multi-GPU Training</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/multi-node"><span title="Multi-Node Training" class="linkLabel_WmDU">Multi-Node Training</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/offloading"><span title="Offloading in Surogate" class="linkLabel_WmDU">Offloading in Surogate</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/long-context"><span title="Long Context Training" class="linkLabel_WmDU">Long Context Training</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/memory"><span title="Memory" class="linkLabel_WmDU">Memory</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/debugging"><span title="Debugging training issues" class="linkLabel_WmDU">Debugging training issues</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/rl-environments"><span title="RL Environments" class="linkLabel_WmDU">RL Environments</span></a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/guides/rl-training"><span title="RL Training (GRPO)" class="linkLabel_WmDU">RL Training (GRPO)</span></a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/reference/benchmarks"><span title="Technical Reference" class="categoryLinkLabel_W154">Technical Reference</span></a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="categoryLink_byQd menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/appendix/release-notes"><span title="Appendix" class="categoryLinkLabel_W154">Appendix</span></a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">User Guides</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Optimizers</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Optimizers</h1></header>
+<p>Surogate supports two optimizers for training: <strong>AdamW 8-bit</strong> and <strong>NorMuon</strong>. Both optimizers use 8-bit quantized state storage to reduce memory consumption while maintaining training stability.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="selecting-an-optimizer">Selecting an Optimizer<a href="#selecting-an-optimizer" class="hash-link" aria-label="Direct link to Selecting an Optimizer" title="Direct link to Selecting an Optimizer" translate="no">​</a></h2>
+<p>Use the <code>optimizer</code> configuration option to select which optimizer to use:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">optimizer</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> adamw_8bit  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Default</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># or</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">optimizer</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> normuon</span><br></span></code></pre></div></div>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="adamw-8-bit">AdamW 8-bit<a href="#adamw-8-bit" class="hash-link" aria-label="Direct link to AdamW 8-bit" title="Direct link to AdamW 8-bit" translate="no">​</a></h2>
+<p>AdamW 8-bit is the default optimizer in Surogate. It implements the AdamW algorithm with 8-bit blockwise quantization for optimizer states, following the bitsandbytes approach.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-it-works">How It Works<a href="#how-it-works" class="hash-link" aria-label="Direct link to How It Works" title="Direct link to How It Works" translate="no">​</a></h3>
+<p>AdamW maintains two state tensors per parameter:</p>
+<ul>
+<li class=""><strong>First moment (m)</strong>: Exponential moving average of gradients</li>
+<li class=""><strong>Second moment (v)</strong>: Exponential moving average of squared gradients</li>
+</ul>
+<p>These states are quantized to 8-bit using dynamic block quantization with per-block absmax scaling. This reduces optimizer state memory by approximately 4x compared to full-precision AdamW while maintaining training quality.</p>
+<p>The update rule is:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">m = β₁ · m + (1 - β₁) · g</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">v = β₂ · v + (1 - β₂) · g²</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">p = p - lr · m / (√v + ε) - lr · wd · p</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="configuration-options">Configuration Options<a href="#configuration-options" class="hash-link" aria-label="Direct link to Configuration Options" title="Direct link to Configuration Options" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>learning_rate</code></td><td><code>2e-4</code></td><td>Initial learning rate</td></tr><tr><td><code>adamw_beta1</code></td><td><code>0.9</code></td><td>Exponential decay rate for first moment</td></tr><tr><td><code>adamw_beta2</code></td><td><code>0.999</code></td><td>Exponential decay rate for second moment</td></tr><tr><td><code>adamw_epsilon</code></td><td><code>1e-8</code></td><td>Small constant for numerical stability</td></tr><tr><td><code>weight_decay</code></td><td><code>0.1</code></td><td>Weight decay coefficient (decoupled from gradient)</td></tr></tbody></table>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="example-configuration">Example Configuration<a href="#example-configuration" class="hash-link" aria-label="Direct link to Example Configuration" title="Direct link to Example Configuration" translate="no">​</a></h3>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">optimizer</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> adamw_8bit</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">learning_rate</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2e-4</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">adamw_beta1</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.9</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">adamw_beta2</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.999</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">adamw_epsilon</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1e-8</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">weight_decay</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.1</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="when-to-use-adamw">When to Use AdamW<a href="#when-to-use-adamw" class="hash-link" aria-label="Direct link to When to Use AdamW" title="Direct link to When to Use AdamW" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>General fine-tuning</strong>: Works well for most fine-tuning tasks</li>
+<li class=""><strong>LoRA training</strong>: Recommended for adapter-based training</li>
+<li class=""><strong>Stability</strong>: More stable for small learning rates and noisy gradients</li>
+<li class=""><strong>Compatibility</strong>: Well-understood behavior, extensive research backing</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="normuon">NorMuon<a href="#normuon" class="hash-link" aria-label="Direct link to NorMuon" title="Direct link to NorMuon" translate="no">​</a></h2>
+<p>NorMuon (Normalized Momentum with Orthogonalization) is an advanced optimizer that applies orthogonalized momentum updates to 2D weight matrices. It is inspired by the Muon optimizer and uses the Polar Express algorithm for efficient matrix orthogonalization.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-it-works-1">How It Works<a href="#how-it-works-1" class="hash-link" aria-label="Direct link to How It Works" title="Direct link to How It Works" translate="no">​</a></h3>
+<p>NorMuon uses a <strong>hybrid approach</strong>:</p>
+<ul>
+<li class=""><strong>2D weight matrices</strong> (attention projections, MLP weights): Updated using orthogonalized momentum</li>
+<li class=""><strong>0D/1D parameters</strong> (embeddings, layer norms, biases, lm_head): Updated using standard AdamW 8-bit</li>
+</ul>
+<p>For 2D weights, the algorithm performs these steps each update:</p>
+<ol>
+<li class=""><strong>Momentum update</strong>: Smooth gradients with exponential moving average</li>
+<li class=""><strong>Polar Express orthogonalization</strong>: Transform the momentum matrix to its nearest orthogonal matrix using Newton-Schulz iterations</li>
+<li class=""><strong>Variance reduction</strong>: Apply Adafactor-style adaptive scaling based on row/column statistics</li>
+<li class=""><strong>Cautious weight decay</strong>: Apply weight decay only when the update direction aligns with the parameter sign</li>
+</ol>
+<p>The orthogonalization helps maintain well-conditioned weight matrices during training, which can improve convergence for transformer models.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="configuration-options-1">Configuration Options<a href="#configuration-options-1" class="hash-link" aria-label="Direct link to Configuration Options" title="Direct link to Configuration Options" translate="no">​</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>learning_rate</code></td><td><code>2e-4</code></td><td>Learning rate for AdamW parameters (embeddings, norms, lm_head)</td></tr><tr><td><code>normuon_momentum</code></td><td><code>0.95</code></td><td>Momentum coefficient (β₁) for NorMuon 2D updates</td></tr><tr><td><code>normuon_beta2</code></td><td><code>0.95</code></td><td>EMA coefficient for variance estimation</td></tr><tr><td><code>normuon_cautious_wd</code></td><td><code>true</code></td><td>Enable cautious (sign-aware) weight decay</td></tr><tr><td><code>weight_decay</code></td><td><code>0.1</code></td><td>Weight decay coefficient</td></tr></tbody></table>
+<p>NorMuon automatically applies a learning rate multiplier based on weight shape: <code>√(max(1, rows/cols))</code>. This boosts the effective learning rate for weights with more inputs than outputs.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="example-configuration-1">Example Configuration<a href="#example-configuration-1" class="hash-link" aria-label="Direct link to Example Configuration" title="Direct link to Example Configuration" translate="no">​</a></h3>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">optimizer</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> normuon</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">learning_rate</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">2e-4</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">normuon_momentum</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.95</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">normuon_beta2</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.95</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">normuon_cautious_wd</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token boolean important" style="color:rgb(255, 88, 116)">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">weight_decay</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">0.1</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="when-to-use-normuon">When to Use NorMuon<a href="#when-to-use-normuon" class="hash-link" aria-label="Direct link to When to Use NorMuon" title="Direct link to When to Use NorMuon" translate="no">​</a></h3>
+<ul>
+<li class=""><strong>Full fine-tuning</strong>: Can provide better convergence for full model training</li>
+<li class=""><strong>Pre-training</strong>: Designed for training transformers from scratch</li>
+<li class=""><strong>Large models</strong>: Benefits from orthogonalization are more pronounced in larger models</li>
+<li class=""><strong>Multi-GPU training</strong>: Fully supported with data-parallel training</li>
+</ul>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="cautious-weight-decay">Cautious Weight Decay<a href="#cautious-weight-decay" class="hash-link" aria-label="Direct link to Cautious Weight Decay" title="Direct link to Cautious Weight Decay" translate="no">​</a></h3>
+<p>When <code>normuon_cautious_wd</code> is enabled (default), weight decay is only applied when the update direction agrees with the parameter sign:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token plain">mask = sign(update) == sign(param)</span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain">p = p - lr · wd · p · mask - lr · update</span><br></span></code></pre></div></div>
+<p>This prevents weight decay from fighting against the gradient direction, which can improve training stability.</p>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="common-options">Common Options<a href="#common-options" class="hash-link" aria-label="Direct link to Common Options" title="Direct link to Common Options" translate="no">​</a></h2>
+<p>These options apply to both optimizers:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>max_grad_norm</code></td><td><code>0.0</code></td><td>Maximum gradient norm for clipping (0 = disabled)</td></tr><tr><td><code>gradient_accumulation_steps</code></td><td><code>4</code></td><td>Number of micro-steps before optimizer update</td></tr><tr><td><code>warmup_steps</code></td><td><code>0</code></td><td>Linear warmup steps from 0 to learning_rate</td></tr><tr><td><code>warmup_ratio</code></td><td><code>0.0</code></td><td>Warmup as fraction of total steps</td></tr><tr><td><code>lr_scheduler_type</code></td><td><code>linear</code></td><td>Learning rate schedule: <code>linear</code>, <code>cosine</code>, or <code>wsd</code></td></tr><tr><td><code>cooldown_steps</code></td><td><code>0</code></td><td>Linear cooldown steps at end of training</td></tr><tr><td><code>final_lr_fraction</code></td><td><code>0.0</code></td><td>Final LR as fraction of initial (for cooldown)</td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="memory-considerations">Memory Considerations<a href="#memory-considerations" class="hash-link" aria-label="Direct link to Memory Considerations" title="Direct link to Memory Considerations" translate="no">​</a></h2>
+<p>Both optimizers use 8-bit quantized states, consuming approximately:</p>
+<ul>
+<li class=""><strong>AdamW 8-bit</strong>: ~2 bytes per parameter (1 byte for m, 1 byte for v, plus absmax overhead)</li>
+<li class=""><strong>NorMuon</strong>: ~2 bytes per parameter for 2D weights, ~2 bytes per parameter for AdamW-managed parameters</li>
+</ul>
+<p>Additional memory for NorMuon:</p>
+<ul>
+<li class="">Variance buffers: O(max(rows, cols)) per 2D weight tensor</li>
+<li class="">Polar Express workspace: Temporary buffers for matrix operations</li>
+</ul>
+<p>For memory-constrained scenarios, consider:</p>
+<ul>
+<li class=""><code>offload_optimizer: true</code> - Store optimizer state in pinned host memory</li>
+<li class="">Increase <code>gradient_accumulation_steps</code> to reduce activation memory</li>
+</ul>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="performance-comparison">Performance Comparison<a href="#performance-comparison" class="hash-link" aria-label="Direct link to Performance Comparison" title="Direct link to Performance Comparison" translate="no">​</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Aspect</th><th>AdamW 8-bit</th><th>NorMuon</th></tr></thead><tbody><tr><td>Memory</td><td>~2 bytes/param</td><td>~2 bytes/param + workspace</td></tr><tr><td>Speed</td><td>Faster</td><td>~15% slower due to orthogonalization</td></tr><tr><td>Stability</td><td>Very stable</td><td>Stable with proper hyperparameters</td></tr><tr><td>Best for</td><td>LoRA, general fine-tuning</td><td>Full fine-tuning, pre-training</td></tr></tbody></table>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="multi-gpu-training">Multi-GPU Training<a href="#multi-gpu-training" class="hash-link" aria-label="Direct link to Multi-GPU Training" title="Direct link to Multi-GPU Training" translate="no">​</a></h2>
+<p>Both optimizers support multi-GPU training with data parallelism. Gradients are synchronized across GPUs before the optimizer step, and each GPU maintains its own shard of the optimizer state when using ZeRO optimization.</p>
+<p>Configure multi-GPU training with:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#bfc7d5;--prism-background-color:#292d3e"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#bfc7d5;background-color:#292d3e"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#bfc7d5"><span class="token key atrule">gpus</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">4</span><span class="token plain">  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># Number of GPUs to use</span><span class="token plain"></span><br></span><span class="token-line" style="color:#bfc7d5"><span class="token plain"></span><span class="token key atrule">zero_level</span><span class="token punctuation" style="color:rgb(199, 146, 234)">:</span><span class="token plain"> </span><span class="token number" style="color:rgb(247, 140, 108)">1</span><span class="token plain">  </span><span class="token comment" style="color:rgb(105, 112, 152);font-style:italic"># ZeRO optimization level (1, 2, or 3)</span><br></span></code></pre></div></div>
+<hr>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="see-also">See also<a href="#see-also" class="hash-link" aria-label="Direct link to See also" title="Direct link to See also" translate="no">​</a></h2>
+<ul>
+<li class=""><a class="" href="/reference/config">Config reference</a></li>
+<li class=""><a class="" href="/guides/memory">Memory</a></li>
+<li class=""><a class="" href="/old-docs">Back to docs index</a></li>
+</ul></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/guides/datasets"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Datasets</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/guides/precision-and-recipes"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Precision &amp; Recipes</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#selecting-an-optimizer" class="table-of-contents__link toc-highlight">Selecting an Optimizer</a></li><li><a href="#adamw-8-bit" class="table-of-contents__link toc-highlight">AdamW 8-bit</a><ul><li><a href="#how-it-works" class="table-of-contents__link toc-highlight">How It Works</a></li><li><a href="#configuration-options" class="table-of-contents__link toc-highlight">Configuration Options</a></li><li><a href="#example-configuration" class="table-of-contents__link toc-highlight">Example Configuration</a></li><li><a href="#when-to-use-adamw" class="table-of-contents__link toc-highlight">When to Use AdamW</a></li></ul></li><li><a href="#normuon" class="table-of-contents__link toc-highlight">NorMuon</a><ul><li><a href="#how-it-works-1" class="table-of-contents__link toc-highlight">How It Works</a></li><li><a href="#configuration-options-1" class="table-of-contents__link toc-highlight">Configuration Options</a></li><li><a href="#example-configuration-1" class="table-of-contents__link toc-highlight">Example Configuration</a></li><li><a href="#when-to-use-normuon" class="table-of-contents__link toc-highlight">When to Use NorMuon</a></li><li><a href="#cautious-weight-decay" class="table-of-contents__link toc-highlight">Cautious Weight Decay</a></li></ul></li><li><a href="#common-options" class="table-of-contents__link toc-highlight">Common Options</a></li><li><a href="#memory-considerations" class="table-of-contents__link toc-highlight">Memory Considerations</a></li><li><a href="#performance-comparison" class="table-of-contents__link toc-highlight">Performance Comparison</a></li><li><a href="#multi-gpu-training" class="table-of-contents__link toc-highlight">Multi-GPU Training</a></li><li><a href="#see-also" class="table-of-contents__link toc-highlight">See also</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Work mode (operators)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/work">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/run-agent">Run an agent</a></li><li class="footer__item"><a class="footer__link-item" href="/work/workflow/review-sessions">Review sessions</a></li><li class="footer__item"><a class="footer__link-item" href="/work/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Develop mode (builders)</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/develop">Welcome</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/loop/overview">The builder loop</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/features/skills-and-experts">Skills &amp; Experts</a></li><li class="footer__item"><a class="footer__link-item" href="/develop/use-cases">Use cases</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Repos</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/invergent-ai/surogates" target="_blank" rel="noopener noreferrer" class="footer__link-item">Runtime (surogates)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate" target="_blank" rel="noopener noreferrer" class="footer__link-item">Training framework (surogate)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li><li class="footer__item"><a href="https://github.com/invergent-ai/surogate-hub" target="_blank" rel="noopener noreferrer" class="footer__link-item">Artifact store (surogate-hub)<svg width="13.5" height="13.5" aria-label="(opens in new tab)" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 Invergent. All rights reserved.</div></div></div></footer></div>
+</body>
+</html>

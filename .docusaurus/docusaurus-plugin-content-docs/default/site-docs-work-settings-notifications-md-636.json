@@ -1,0 +1,27 @@
+{
+  "id": "work/settings/notifications",
+  "title": "Notifications",
+  "description": "Choose which platform events reach you, and over which channel, at /work/settings/notifications (shared with Dev mode at /studio/settings/notifications).",
+  "source": "@site/docs/work/settings/notifications.md",
+  "sourceDirName": "work/settings",
+  "slug": "/work/settings/notifications",
+  "permalink": "/work/settings/notifications",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 5,
+  "frontMatter": {
+    "title": "Notifications",
+    "sidebar_position": 5
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Project settings",
+    "permalink": "/work/settings/project"
+  },
+  "next": {
+    "title": "Team & users",
+    "permalink": "/work/settings/team"
+  }
+}

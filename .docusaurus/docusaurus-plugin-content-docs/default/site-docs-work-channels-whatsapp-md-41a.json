@@ -1,0 +1,27 @@
+{
+  "id": "work/channels/whatsapp",
+  "title": "WhatsApp",
+  "description": "Puts the agent on a WhatsApp business number via Meta's official WhatsApp Business Cloud API. Conversations are one-to-one (no groups, no threads), and the agent only ever replies — it never starts a conversation.",
+  "source": "@site/docs/work/channels/whatsapp.md",
+  "sourceDirName": "work/channels",
+  "slug": "/work/channels/whatsapp",
+  "permalink": "/work/channels/whatsapp",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "title": "WhatsApp",
+    "sidebar_position": 4
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Telegram",
+    "permalink": "/work/channels/telegram"
+  },
+  "next": {
+    "title": "Website widget",
+    "permalink": "/work/channels/website-widget"
+  }
+}

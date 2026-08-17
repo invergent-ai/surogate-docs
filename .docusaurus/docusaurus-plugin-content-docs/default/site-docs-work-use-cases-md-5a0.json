@@ -1,0 +1,27 @@
+{
+  "id": "work/use-cases",
+  "title": "Use cases",
+  "description": "Five end-to-end walk-throughs you can adapt for your own work. Each one combines several Work-mode features.",
+  "source": "@site/docs/work/use-cases.md",
+  "sourceDirName": "work",
+  "slug": "/work/use-cases",
+  "permalink": "/work/use-cases",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 100,
+  "frontMatter": {
+    "title": "Use cases",
+    "sidebar_position": 100
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Monetize your agents",
+    "permalink": "/work/monetize"
+  },
+  "next": {
+    "title": "Glossary",
+    "permalink": "/work/reference/glossary"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "develop/reference/coordination",
+  "title": "Coordination & the board",
+  "description": "How a session becomes a strict coordinator that delegates instead of doing the work itself, and how the fan-out of workers it spawns coordinate through a shared, verified board.",
+  "source": "@site/docs/develop/reference/coordination.md",
+  "sourceDirName": "develop/reference",
+  "slug": "/develop/reference/coordination",
+  "permalink": "/develop/reference/coordination",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 6,
+  "frontMatter": {
+    "title": "Coordination & the board",
+    "sidebar_position": 6
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Background jobs",
+    "permalink": "/develop/reference/background-jobs"
+  },
+  "next": {
+    "title": "Glossary",
+    "permalink": "/develop/reference/glossary"
+  }
+}

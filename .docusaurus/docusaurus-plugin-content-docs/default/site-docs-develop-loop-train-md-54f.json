@@ -1,0 +1,27 @@
+{
+  "id": "develop/loop/train",
+  "title": "Train phase",
+  "description": "You have a corpus of marked sessions. Now use them to make the agent better.",
+  "source": "@site/docs/develop/loop/train.md",
+  "sourceDirName": "develop/loop",
+  "slug": "/develop/loop/train",
+  "permalink": "/develop/loop/train",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "title": "Train phase",
+    "sidebar_position": 4
+  },
+  "sidebar": "developSidebar",
+  "previous": {
+    "title": "Observe phase",
+    "permalink": "/develop/loop/observe"
+  },
+  "next": {
+    "title": "Redeploy phase",
+    "permalink": "/develop/loop/redeploy"
+  }
+}

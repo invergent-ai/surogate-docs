@@ -1,0 +1,27 @@
+{
+  "id": "work/quickstart",
+  "title": "Quickstart",
+  "description": "A working agent on your team's Slack in 10 minutes. No code, no setup.",
+  "source": "@site/docs/work/quickstart.md",
+  "sourceDirName": "work",
+  "slug": "/work/quickstart",
+  "permalink": "/work/quickstart",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "title": "Quickstart",
+    "sidebar_position": 2
+  },
+  "sidebar": "workSidebar",
+  "previous": {
+    "title": "Welcome",
+    "permalink": "/work"
+  },
+  "next": {
+    "title": "Run an agent",
+    "permalink": "/work/workflow/run-agent"
+  }
+}

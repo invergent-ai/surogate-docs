@@ -1,0 +1,23 @@
+{
+  "id": "about/adaptive-training",
+  "title": "Adaptive Training System",
+  "description": "Surogate includes a built-in adaptive training system that monitors your training run in real time and provides actionable diagnostics. It detects problems like loss plateaus, gradient explosions, MoE routing collapse, and inefficient compute usage — then tells you exactly what to fix.",
+  "source": "@site/docs/about/adaptive-training.md",
+  "sourceDirName": "about",
+  "slug": "/about/adaptive-training",
+  "permalink": "/about/adaptive-training",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "How Surogate Works",
+    "permalink": "/about/how-it-works"
+  },
+  "next": {
+    "title": "DSL Language",
+    "permalink": "/about/dsl"
+  }
+}

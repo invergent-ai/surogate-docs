@@ -1,0 +1,23 @@
+{
+  "id": "appendix/compatibility",
+  "title": "Compatibility",
+  "description": "This page summarizes practical compatibility constraints for typical installs.",
+  "source": "@site/docs/appendix/compatibility.md",
+  "sourceDirName": "appendix",
+  "slug": "/appendix/compatibility",
+  "permalink": "/appendix/compatibility",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "mySidebar",
+  "previous": {
+    "title": "Glossary",
+    "permalink": "/appendix/glossary"
+  },
+  "next": {
+    "title": "FAQ",
+    "permalink": "/appendix/faq"
+  }
+}

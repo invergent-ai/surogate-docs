@@ -1,0 +1,18 @@
+{
+  "id": "develop/features/agents",
+  "title": "Agents",
+  "description": "The Agents page (Develop mode) is the densest screen in the platform. Every knob here changes how your agent behaves.",
+  "source": "@site/docs/develop/features/agents.md",
+  "sourceDirName": "develop/features",
+  "slug": "/develop/features/agents",
+  "permalink": "/develop/features/agents",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "title": "Agents",
+    "sidebar_position": 1
+  }
+}

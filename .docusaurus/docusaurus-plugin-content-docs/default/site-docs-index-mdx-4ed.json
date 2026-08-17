@@ -1,0 +1,22 @@
+{
+  "id": "index",
+  "title": "Surogate Trainer Documentation (legacy)",
+  "description": "<Figure width=\"40%\"",
+  "source": "@site/docs/index.mdx",
+  "sourceDirName": ".",
+  "slug": "/old-docs",
+  "permalink": "/old-docs",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "slug": "/old-docs",
+    "title": "Surogate Trainer Documentation (legacy)"
+  },
+  "sidebar": "mySidebar",
+  "next": {
+    "title": "How Surogate Works",
+    "permalink": "/about/how-it-works"
+  }
+}
