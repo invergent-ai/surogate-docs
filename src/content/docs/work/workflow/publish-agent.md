@@ -2,22 +2,33 @@
 title: Publish your agent
 ---
 
-The **Publish** page — reached from an agent's left navigation, directly under **Configure** (`/work/agents/{id}/publish?tab=...`) — is the outward-facing half of an agent. Where [Configure](/work/workflow/configure-agent/) sets what the agent *is*, including the channels it is reachable on, Publish covers its public face and its audience.
+The **Publish** page — reached from an agent's left navigation, directly under **Configure** (`/work/agents/{id}/publish?tab=...`) — is the outward-facing half of an agent. Where [Configure](/work/workflow/configure-agent/) sets what the agent *is*, Publish covers its public face, the channels it is reachable on, and its audience.
 
 | Tab | What you set here |
 |---|---|
 | **Landing page** | A public marketing page for the agent, composed from blocks |
+| **Channels** | Web, Slack, Telegram, WhatsApp, and website-widget connections |
 | **Users** | End-users who can chat with this agent, and self-registration |
 | **Insights** | How those end-users are actually using it |
 | **Monetize** | Charge for access via Stripe Connect (Pro plan) |
 
 Each tab remembers itself in the URL (`?tab=...`), so a refresh or a shared link lands on the same tab. System agents (like the platform copilot) have no Publish page.
 
-On a phone the page is a drill-down: an index names the four tabs, and tapping one opens it with a way back.
+On a phone the page is a drill-down: an index names the tabs, and tapping one opens it with a way back.
 
 ## Landing page
 
 A public page at `/landing/<agent-slug>`, built from an ordered list of blocks. It is the page you send people to; its buttons lead to your pricing page or straight into a chat. See [Landing page](/work/workflow/landing-page/) for the full builder.
+
+## Channels
+
+Connect the agent to where your people already work. Each channel card shows an **Active** / **Off** status and a **Connect** or **Manage** button.
+
+- **Web** — the always-on hosted chat page; copy its endpoint URL once the agent is deployed. See [Web](/work/channels/web/).
+- **Slack** — a guided **Connect Slack** wizard (bot scopes, event subscriptions, signing secret, bot token). The **Manage** view auto-saves options: **Require @mention**, **Mode** (Team member / Personal assistant), **Allow Bots** (None / Mentions only / All), **Reply in thread**, **Reply broadcast**, **Free-response channels**, plus **Surogate Mate** follow-the-channel and ambient-mode toggles. See [Slack](/work/channels/slack/).
+- **Telegram** — a **Connect Telegram** wizard (BotFather token). **Manage** options: **Require @mention**, **Mode**, **Reply Threading** (First chunk only / All chunks / Off), **Message Reactions**, and **Per-User Group Chats**. See [Telegram](/work/channels/telegram/).
+- **WhatsApp** — a **Connect WhatsApp** wizard (Meta Cloud API credentials: Phone Number ID, Access Token, App Secret, WABA ID), then a callback URL + verify token to register in Meta. **Manage** option: **Mode**. See [WhatsApp](/work/channels/whatsapp/).
+- **Website** — an embeddable chat bubble. Set **Allowed origins**, copy the **Embed code**, cap **Messages per chat**, and reveal the **Publishable key** under Advanced. See [Website widget](/work/channels/website-widget/).
 
 ## Users
 

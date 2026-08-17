@@ -33,7 +33,7 @@ Templates ship without your team's content, so the agent doesn't know your produ
 
 ## 3. Publish to Slack
 
-Click **Configure** in the left nav, then open the **Channels** tab. Find the **Slack** row and toggle the switch ON.
+Click **Publish** in the left nav, then open the **Channels** tab. Find the **Slack** row and toggle the switch ON.
 
 Paste your Slack credentials:
 

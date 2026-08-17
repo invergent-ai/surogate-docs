@@ -10,7 +10,7 @@ Nothing external. The platform issues a **publishable key** (prefixed `surg_wk_�
 
 ## Configuration
 
-Open the agent → **Configure** in the left nav → the **Channels** tab → find the **Website** card → **Connect**. The connect screen asks for your **Allowed origins**, then you click **Enable widget**.
+Open the agent → **Publish** in the left nav → the **Channels** tab → find the **Website** card → **Connect**. The connect screen asks for your **Allowed origins**, then you click **Enable widget**.
 
 | Field | What it does |
 |---|---|
@@ -61,7 +61,16 @@ Behaviour is otherwise identical, including the allowed-origins check. Passing `
 
 ## Visitors are anonymous
 
-Each browser session gets a UUID stored in localStorage, so subsequent visits from the same browser resume the same Surogate session. The widget doesn't require your visitors to have Surogate accounts.
+The widget doesn't require your visitors to have Surogate accounts. Identity is the HttpOnly session cookie the server issues at bootstrap and nothing else — the widget stores nothing in `localStorage`, so a visitor who clears cookies or arrives in a private window is a new visitor.
+
+Whether a returning visitor lands back in their previous conversation depends on the agent's **Multi session** capability, on Configure → Capabilities:
+
+| Multi session | What a page reload does |
+|---|---|
+| **Off** | The visitor returns to the same conversation, as long as their cookie is still valid and the origin and key are unchanged. |
+| **On** (default) | Every load starts a fresh conversation. The cookie survives, the history does not — and an anonymous visitor has no chat list to navigate back with. |
+
+If your widget is a support bubble people return to mid-task, turn Multi session off for that agent.
 
 ## When the widget says "origin not allowed"
 

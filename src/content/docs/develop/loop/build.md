@@ -12,7 +12,7 @@ Everything you declare about the agent before users start using it: its identity
 | **Develop dashboard → Quick Actions → Deploy Agent** | Same dialog, launched from the dashboard. |
 | **REST API** `POST /v1/agents` | Programmatic. Useful when cloning an existing agent's config dict. |
 
-Skills, knowledge bases, MCP servers, and channels are added afterwards on the **Configure** page.
+Skills, knowledge bases and MCP servers are added afterwards on the **Configure** page; channels on **Publish**.
 
 ## The agent's anatomy
 
@@ -100,7 +100,7 @@ Three categories of attached resources. The agent's **Configure** page manages a
 
 ### 5. Channels
 
-Where users reach the agent. **Configure → Channels** section. Web is always on; Slack, Telegram, Website widget toggle on/off with credentials. See [Agents](/develop/features/agents/) for per-channel config.
+Where users reach the agent. **Publish → Channels** section. Web is always on; Slack, Telegram, Website widget toggle on/off with credentials. See [Agents](/develop/features/agents/) for per-channel config.
 
 ### 6. Governance & Saga
 
