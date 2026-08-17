@@ -19,7 +19,6 @@ Each tab saves independently. Most tabs surface a **SAVE** button (which flashes
 | **Coding** | GitHub repos and coding-agent plans (only when `/code` is enabled) |
 | **Model** | Serving model plus summary / vision / image / video role models |
 | **Governance** | Policy enforcement, tool allow/deny, web & browser egress, SSH, EU AI Act AI disclosure |
-| **Channels** | Web, Slack, Telegram, WhatsApp, and website-widget connections |
 
 System agents (like the platform copilot) hide the **Identity**, **Capabilities**, and **Governance** tabs, and non-admins see a "managed by platform administrators" notice instead of the tabs. The **Coding** tab appears only when the agent's coding capability (`/code`) is turned on in **Capabilities**.
 
@@ -138,13 +137,3 @@ The agent's guardrails — and they are **enforced**: the composed policy is che
 - **EU AI Act transparency** — an **AI disclosure** toggle ("Tell end-users they are talking to an AI. Art. 50 of the EU AI Act requires this from 2 Aug 2026 on every channel.") and a **Disclosure level**: **Basic** (short AI notice before the first interaction), **Enhanced** (adds a capability and limitation summary), **Full** (complete Art. 50 disclosure with legal references), or **None** (no disclosure text — not compliant for end-user chat). How each channel delivers the disclosure is covered in [Governance & AI disclosure](/work/workflow/governance/).
 
 A denial is returned to the model as a tool error and recorded as a `policy.denied` event, visible per session under **Sessions → POLICIES**.
-
-## Channels
-
-Connect the agent to where your people already work. Each channel card shows an **Active** / **Off** status and a **Connect** or **Manage** button.
-
-- **Web** — the always-on hosted chat page; copy its endpoint URL once the agent is deployed. See [Web](/work/channels/web/).
-- **Slack** — a guided **Connect Slack** wizard (bot scopes, event subscriptions, signing secret, bot token). The **Manage** view auto-saves options: **Require @mention**, **Mode** (Team member / Personal assistant), **Allow Bots** (None / Mentions only / All), **Reply in thread**, **Reply broadcast**, **Free-response channels**, plus **Surogate Mate** follow-the-channel and ambient-mode toggles. See [Slack](/work/channels/slack/).
-- **Telegram** — a **Connect Telegram** wizard (BotFather token). **Manage** options: **Require @mention**, **Mode**, **Reply Threading** (First chunk only / All chunks / Off), **Message Reactions**, and **Per-User Group Chats**. See [Telegram](/work/channels/telegram/).
-- **WhatsApp** — a **Connect WhatsApp** wizard (Meta Cloud API credentials: Phone Number ID, Access Token, App Secret, WABA ID), then a callback URL + verify token to register in Meta. **Manage** option: **Mode**. See [WhatsApp](/work/channels/whatsapp/).
-- **Website** — an embeddable chat bubble. Set **Allowed origins**, copy the **Embed code**, cap **Messages per chat**, and reveal the **Publishable key** under Advanced. See [Website widget](/work/channels/website-widget/).

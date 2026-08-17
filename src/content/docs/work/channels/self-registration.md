@@ -104,7 +104,7 @@ Skip this step and your users will see *"This domain is not authorized."* the mo
 ## Step 5 — Turn the switch on for an agent
 
 1. Open the agent you want self-registration enabled for.
-2. **Configure** in the left nav → **Users** tab.
+2. **Publish** in the left nav → **Users** tab.
 3. Flip **Let anyone sign up**.
 
 The switch is disabled until your project has a Firebase config saved. When it's disabled you'll see a small **Set up in Settings** link next to it — click to jump straight to Settings → Authentication.

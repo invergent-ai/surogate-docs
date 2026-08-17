@@ -18,7 +18,7 @@ In current builds the template catalog is nearly empty — there's a single **Ne
 | **Description** | Short summary. Seeds the agent's persona block on the Configure page. |
 | **Model** | Defaults to `Surogate`. Switch later from Configure. |
 
-Click **CREATE AGENT**. Status moves `deploying` → `running` in 10-90 seconds. Once running, switch to the agent's Configure page to attach skills, knowledge bases, MCP servers, and channels.
+Click **CREATE AGENT**. Status moves `deploying` → `running` in 10-90 seconds. Once running, switch to the agent's Configure page to attach skills, knowledge bases and MCP servers, and its Publish page for channels.
 
 ## Why the catalog is empty
 

@@ -38,7 +38,7 @@ When the agent's **Multi session** capability is off, each user gets one dedicat
 Two modes:
 
 1. **Anonymous** (default): visitors use the agent without an account. Each browser session gets a UUID stored locally; subsequent visits resume the same Surogate session.
-2. **Authorised users only**: open the agent → **Configure** in the left nav → the **Users** tab → **Add user** for each authorised email — or turn on [self-registration](/work/channels/self-registration/).
+2. **Authorised users only**: open the agent → **Publish** in the left nav → the **Users** tab → **Add user** for each authorised email — or turn on [self-registration](/work/channels/self-registration/).
 
 For authorised users, they sign in with the credentials you set (email + password, Google SSO, or GitHub SSO). Signed-in turns are metered against the user's [per-user allowance](/work/monetize/#how-usage-is-spent); when a limit is hit, the composer shows a clear message — with a buy link on monetized agents.
 

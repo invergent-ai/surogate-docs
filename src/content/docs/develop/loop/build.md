@@ -12,7 +12,7 @@ Everything you declare about the agent before users start using it: its identity
 | **Develop dashboard → Quick Actions → Deploy Agent** | Same dialog, launched from the dashboard. |
 | **REST API** `POST /v1/agents` | Programmatic. Useful when cloning an existing agent's config dict. |
 
-Skills, knowledge bases, MCP servers, and channels are added afterwards on the **Configure** page.
+Skills, knowledge bases and MCP servers are added afterwards on the **Configure** page; channels on **Publish**.
 
 ## The agent's anatomy
 
