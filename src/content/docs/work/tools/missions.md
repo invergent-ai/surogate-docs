@@ -39,9 +39,9 @@ Each mission row carries a status badge:
 |---|---|
 | **Running · _n_/_max_** | Actively iterating; shows the current iteration out of the maximum. |
 | **Needs revision** | The last evaluation asked for another pass. |
-| **Paused** | Automatic continuation is stopped; the mission is retained. A mission also pauses **itself** when the evaluator returns unreadable output three times in a row, or when its token budget runs out. |
+| **Paused** | Automatic continuation is stopped; the mission is retained. A mission also pauses **itself** when the evaluator returns unreadable output three times in a row, when its token budget runs out, or when it is [waiting for you to accept or reject a new rubric](#when-the-rubric-is-the-problem). |
 | **Satisfied** | The goal was met. |
-| **Blocked** | Stopped — the agent needs external input it can't get. The evaluator is also told to return this instead of repeating the same guidance round after round, so *Blocked* can mean the run was going in circles. A coordinator that goes quiet and stays quiet is blocked too, after three unanswered nudges. |
+| **Blocked** | Stopped — the agent needs external input it can't get. The evaluator is also told to return this instead of repeating the same guidance round after round, so *Blocked* can mean the run was going in circles. A coordinator that goes quiet and stays quiet is blocked too, after three unanswered nudges. Before settling on *Blocked*, the evaluator may [propose a new rubric](#when-the-rubric-is-the-problem) instead. |
 | **Failed** | Stopped — the goal was judged unreachable. |
 | **Max iterations** | The iteration budget was exhausted. |
 | **Cancelled** | The mission was cancelled. |
@@ -76,10 +76,34 @@ Missions are steered from the chat, not from this page. Which verbs apply depend
 | `/mission cancel --cascade [reason]` | End the mission **and** interrupt every worker still running. |
 | `/mission budget <count>` | Set or change the token ceiling; replies with the new ceiling and how much is already spent. |
 | `/mission budget none` | Remove the ceiling (`off`, `clear` and `unlimited` also work). |
+| `/mission accept` | Approve a [proposed rubric](#when-the-rubric-is-the-problem) and put the mission back to work. |
+| `/mission reject [reason]` | Turn the proposal down. The mission ends with the verdict that was waiting behind it. |
 
 A run started with `/goal` uses `/goal status`, `/goal pause`, `/goal resume` and `/goal clear` instead; a run started with `/auto-research` uses `/auto-research status`, `pause`, `resume` and `cancel [--cascade]`.
 
-The families don't share verbs: `/mission` has no `clear`, `/goal` has no `cancel`, and `/auto-research` has no `budget`. An unrecognised verb is read as the text of a *new* run — `/mission clear` fails with a missing-rubric error, and `/goal cancel` would start a goal called "cancel".
+The families don't share verbs: `/mission` has no `clear`, `/goal` has no `cancel`, `/auto-research` has no `budget`, and `accept` / `reject` are `/mission`-only. An unrecognised verb is read as the text of a *new* run — `/mission clear` fails with a missing-rubric error, and `/goal cancel` would start a goal called "cancel".
+
+## When the rubric is the problem
+
+Sometimes a mission stalls not because the work is going badly but because the **rubric was written wrong** — it asks for a file the build never produces, contradicts itself, or names something that was never part of what you asked for. A rubric like that can't be satisfied by any amount of work.
+
+When the evaluator is about to end a mission as *Blocked* or *Failed* and judges the rubric itself to be the defect, it can propose a replacement instead of giving up. The mission **pauses** and the agent shows you three things: the rubric you have now, the rubric it proposes, and the evidence from the finished work that convinced it. Nothing is graded and no evaluator time is spent while it waits.
+
+You then decide:
+
+| You type | What happens |
+|---|---|
+| `/mission accept` | The proposed rubric replaces the old one and the mission resumes. Work already completed still counts — the mission does not start over. |
+| `/mission reject [reason]` | The proposal is declined and the mission ends with the verdict it was holding (*Blocked* or *Failed*). Your reason is recorded. |
+| `/mission resume` | Also declines the proposal, and puts the mission back to work against the **original** rubric. |
+
+Three rules keep this from becoming a way for the agent to grade itself:
+
+- **Only the evaluator writes the proposed rubric**, and only the evaluator — the agent relays it to you word for word and cannot change a character of what `/mission accept` commits.
+- **Only you approve it.** There is no automatic path; a mission sits paused until you answer.
+- **What you originally asked for never changes.** Only the rubric — how the work is checked — can be amended. A mission accepts at most **two** amendments in its lifetime, so it can't negotiate its way down to something trivially easy.
+
+Accepting does not hand the mission more runway: its iteration count carries over, so a mission that nearly exhausted its budget getting the target wrong may need `/mission budget` to finish the job.
 
 ## The token budget
 
