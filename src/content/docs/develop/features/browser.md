@@ -19,6 +19,8 @@ The capability is also the prerequisite for **selling browsing time** on a monet
 
 ## Browser tools
 
+![A browsing turn: the agent navigates, the pane reports ready, and it answers from the page](../../../../assets/screenshots/work-chat-browser-thread.png)
+
 Browser tools are registered under the `browser` toolset. Every call passes through governance before it runs (including URL checks on navigation).
 
 | Tool | Purpose |
@@ -68,6 +70,8 @@ Accrual is **wall-clock while the browser is open**, not per tool call — round
 Exempt from the buyer meter: sessions run by the operator (Studio chat, API service accounts, scheduled runs) and [browser-profile](/develop/features/browser-profiles) capture sessions — those draw only on the project wallet.
 
 ## Live view
+
+![The live browser pane, mirroring the page the agent is on, with Take control and Close](../../../../assets/screenshots/work-chat-browser-pane.png)
 
 Once a session provisions a browser, the web chat UI shows a live browser pane so you can watch the agent work in real time. See the [Web channel](/work/channels/web) for where this pane appears.
 

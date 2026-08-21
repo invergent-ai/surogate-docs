@@ -52,6 +52,8 @@ Registered with source `huggingface`, the chosen `quantization`, and a `revision
 
 ### OpenRouter
 
+![The OpenRouter source: the model id field autocompletes against the catalogue, with context sizes](../../../../assets/screenshots/dev-models-openrouter-form.png)
+
 Point at a model hosted by OpenRouter and use it as the backing endpoint.
 
 | Field | Required | Notes |
@@ -77,6 +79,8 @@ Registered with source `url`, engine `openai_compat`, and the endpoint (plus API
 
 ## The model detail page
 
+![A served model: its status, throughput and latency counters, deployment info, connected agents and model card](../../../../assets/screenshots/dev-models-detail.png)
+
 Deploying drops you on the model's detail page. The header shows the display name, a source badge, and a status pill — `Creating` (amber), `Serving` (green), `Stopped`, or `Error`; proxy models show a permanent `Proxy` pill. Action buttons live top-right: **Stop** / **Start** (or **Restart** after an error), **View job** (jumps to the serving job in the workload queue), and **Delete**. When a served model is up, a green **"Serving — ready to use"** banner offers to switch it on for an agent.
 
 Up to six tabs:
@@ -93,6 +97,8 @@ Up to six tabs:
 Period selector (**Last hour / Last 24h / Last 30d**) driving five KPIs — Tokens/sec, Avg Latency, Total Tokens, Requests, Success Rate — sparkline charts for throughput / latency / total tokens / requests, and a prompt-vs-completion token breakdown.
 
 ### Config
+
+![The Config tab: generation defaults with presets, and the serving parameters passed to the backend](../../../../assets/screenshots/dev-models-config.png)
 
 The serving configuration. For **served** models it has three parts:
 
@@ -119,6 +125,8 @@ Served models only. Lists the fine-tuned models derived from this base — each 
 Send prompts to the model right from the detail page. Proxy models work immediately; a served model has to be running first (otherwise you get a "start to test" prompt).
 
 ## Starting a model
+
+![The models list, filterable by source and status](../../../../assets/screenshots/dev-models-list.png)
 
 **Start** is disabled until CONFIG is complete — for served models that means an engine plus a GPU (or a `kubernetes`/`ssh`/llama.cpp setup where the GPU is resolved at schedule time). Then:
 
