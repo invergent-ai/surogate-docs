@@ -6,6 +6,8 @@ The **Usage** tab shows what your project has consumed this billing period, how 
 
 ## Wallet balances
 
+![The Usage tab: the monthly meter, the browsing, compute and media wallets, and usage per agent](../../../../assets/screenshots/work-settings-usage.png)
+
 Each consumable resource is a prepaid **wallet** (your plan grants a monthly balance; top-ups add more; usage drains it in real time). Each card shows the remaining balance with a progress bar against your plan's grant and a detail line — `of <grant> monthly · renews <date>`, plus `· N from top-ups` when a rolled-over top-up balance exists:
 
 | Wallet | What it meters |
@@ -30,6 +32,8 @@ A table breaks consumption down for the selected range — presets **This month 
 Each row shows token columns **Prompt**, **Completion**, and **Total**, so you can see exactly which agent and which model is spending your allowance. An **Include non-agent usage** switch adds platform calls made outside agent sessions. Traffic from agents on a non-Surogate model is excluded from this view.
 
 ## Hub storage
+
+![Hub and workspace storage, broken down by what is using it](../../../../assets/screenshots/work-settings-storage.png)
 
 A separate section reports your project's **Hub storage**: used vs quota, remaining, when it was last reconciled, a per-type share bar, and per-repo rows (models, datasets, skills, knowledge bases, and other). An **estimate** badge means the Hub hasn't reconciled the project yet — the figure is a fast estimate that may lag the authoritative count. See [Data Hub](/develop/features/hub) for what lives in each repo.
 

@@ -38,6 +38,8 @@ Example:
 
 ## Connecting your plan
 
+![Settings → Profile → Coding Agents, where you connect your own Claude Code or Codex plan](../../../../assets/screenshots/work-settings-coding-agents.png)
+
 Connections are stored **per user**, encrypted in the credential vault, one entry per provider. There is deliberately no shared fallback — if you personally haven't connected a plan, `/code` reads as "not connected" and never borrows anyone else's.
 
 Run `/code login <claude|codex>` for instructions, then paste the credential in **Settings → Coding Agents**:

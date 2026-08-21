@@ -28,6 +28,8 @@ Click **Connect Slack**. There is no separate save button — the connect step a
 
 ## Options (the Slack "Manage" screen)
 
+![The Slack Manage screen: mention, mode, bot, threading and free-response-channel options](../../../../assets/screenshots/work-channel-slack-options.png)
+
 Once connected, the Slack card shows **Manage**. The options there auto-save as you change them:
 
 | Option | What it does |
@@ -40,6 +42,8 @@ Once connected, the Slack card shows **Manage**. The options there auto-save as 
 | **Free-response channels** | Comma-separated Slack **channel IDs** (not names, e.g. `C0123ABCD`) where it answers without being @mentioned. |
 
 The Slack manage screen also has a **Surogate Mate** section (Follow / Ambient) — see [Proactive engagement](/work/channels/proactive/).
+
+![The Surogate Mate section: follow-the-channel and ambient mode](../../../../assets/screenshots/work-channel-slack-mate.png)
 
 ## What users see
 

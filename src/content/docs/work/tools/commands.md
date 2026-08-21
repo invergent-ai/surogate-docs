@@ -6,6 +6,8 @@ Slash commands are shortcuts you type into the chat composer to steer the agent'
 
 ## Typing a command
 
+![The command palette listing every slash command enabled for the agent](../../../../assets/screenshots/work-chat-commands.png)
+
 In any chat with an agent, type `/` as the **first character** of a message, then the command name and any arguments:
 
 ```

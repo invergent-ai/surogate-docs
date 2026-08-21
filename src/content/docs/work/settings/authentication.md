@@ -8,6 +8,8 @@ Projects are hidden from the everyday UX — each account works against a single
 
 ## BYO Firebase auth
 
+![The Firebase Auth card: web config fields and the sign-in provider switches](../../../../assets/screenshots/work-settings-authentication.png)
+
 Bring your own Firebase project so end users can self-register against the agents in this project. Every value on this form is **public** Firebase web config — it ships to each agent's web app at runtime. Surogate never sees your end users' passwords or OAuth client secrets.
 
 BYO Firebase is a **paid feature**. On a Free-tier project the form is shown but locked (read-only), with an upgrade prompt linking to Billing. The gate is enforced server-side, not just in the UI: saving *or removing* a config from a Free-tier project is rejected with an "upgrade to configure end-user sign-in" error even when called through the API directly.

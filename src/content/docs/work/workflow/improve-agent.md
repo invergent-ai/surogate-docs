@@ -6,6 +6,8 @@ Start from the signal: the agent's **Metrics** tab ([Configure → Metrics](/wor
 
 Three levers, in increasing order of effort:
 
+![The Metrics tab, where the Flagged count points at the sessions worth triaging](../../../../assets/screenshots/work-metrics-cards.png)
+
 1. **Mark sessions** — 👍 / 👎 the ones that matter
 2. **Attach the right resources** — skills, KBs, or MCP servers for the gaps you're seeing
 3. **Edit the persona** — SOUL.md changes how the agent behaves in every conversation
@@ -13,6 +15,8 @@ Three levers, in increasing order of effort:
 ## 1. Mark sessions
 
 In the THREAD view of any session, hover an assistant turn and click 👍 or 👎.
+
+![The thumbs-up and thumbs-down controls under an assistant turn](../../../../assets/screenshots/work-chat-feedback.png)
 
 | Mark | What it becomes |
 |---|---|

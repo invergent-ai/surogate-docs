@@ -50,6 +50,8 @@ The **curator** is an LLM that reads your raw documents and produces a structure
 
 ## Creating a KB
 
+![The create-knowledge-base form: display name, slug, description and the curator model](../../../../assets/screenshots/work-kb-create.png)
+
 **Library → Knowledge Bases → NEW KNOWLEDGE BASE**
 
 Fields:
@@ -125,6 +127,7 @@ Open the agent → **Configure** in the left nav → the **Knowledge Bases** tab
 The agent's system prompt grows by:
 
 ```
+
 ## Available Knowledge Bases
 
 - acme-product-docs: Product documentation, runbooks, known-issues database.

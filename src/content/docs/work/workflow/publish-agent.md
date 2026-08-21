@@ -14,13 +14,19 @@ The **Publish** page — reached from an agent's left navigation, directly under
 
 Each tab remembers itself in the URL (`?tab=...`), so a refresh or a shared link lands on the same tab. System agents (like the platform copilot) have no Publish page.
 
+![The Publish tab bar](../../../../assets/screenshots/work-publish-tabs.png)
+
 On a phone the page is a drill-down: an index names the tabs, and tapping one opens it with a way back.
 
 ## Landing page
 
+![The landing-page link, its publish switch and the look picker](../../../../assets/screenshots/work-landing-link.png)
+
 A public page at `/landing/<agent-slug>`, built from an ordered list of blocks. It is the page you send people to; its buttons lead to your pricing page or straight into a chat. See [Landing page](/work/workflow/landing-page/) for the full builder.
 
 ## Channels
+
+![The Channels tab: Web and Slack active, Telegram, WhatsApp and Website ready to connect](../../../../assets/screenshots/work-publish-channels.png)
 
 Connect the agent to where your people already work. Each channel card shows an **Active** / **Off** status and a **Connect** or **Manage** button.
 
@@ -31,6 +37,8 @@ Connect the agent to where your people already work. Each channel card shows an 
 - **Website** — an embeddable chat bubble. Set **Allowed origins**, copy the **Embed code**, cap **Messages per chat**, and reveal the **Publishable key** under Advanced. See [Website widget](/work/channels/website-widget/).
 
 ## Users
+
+![The Users tab: the self-registration switch and the agent's end-user list](../../../../assets/screenshots/work-publish-users.png)
 
 Manage the people who can chat with this agent — separate from your Surogate team. A **Let anyone sign up** toggle controls self-registration (available only when the project has Firebase auth configured and is on a paid plan).
 

@@ -2,11 +2,13 @@
 title: Configure your agent
 ---
 
-The **Configure** page — reached from an agent's left navigation (`/work/agents/{id}/settings?tab=...`) — is the core agent-building surface: ten tabs that control who the agent is, what it can do, which model runs it, and where people reach it.
+The **Configure** page — reached from an agent's left navigation (`/work/agents/{id}/settings?tab=...`) — is the core agent-building surface: nine tabs that control who the agent is, what it can do, which model runs it, and where people reach it.
 
 Getting the agent *to* people — its landing page, end-users, usage insights and pricing — lives on the sibling [Publish](/work/workflow/publish-agent/) page instead.
 
 Each tab saves independently. Most tabs surface a **SAVE** button (which flashes a green **Saved** confirmation) or an amber **Unsaved changes** bar with **Save** / **Discard changes** when a field is dirty; a few toggles save the moment you flip them. Where noted, changes apply to **new sessions only** or reach live sessions on their next turn.
+
+![The Configure tab bar](../../../../assets/screenshots/work-configure-tabs.png)
 
 | Tab | What you set here |
 |---|---|
@@ -24,6 +26,8 @@ System agents (like the platform copilot) hide the **Identity**, **Capabilities*
 
 ## Metrics
 
+![The Metrics tab: 24-hour stat cards and the seven-day conversations card](../../../../assets/screenshots/work-metrics-cards.png)
+
 A read-only overview of the agent's health and footprint — no editable fields. It refreshes itself every minute while visible and shows:
 
 - **Four 24-hour stat cards**, each with an ⓘ tooltip: **Requests — 24h** (count, last-request time; the tooltip shows the derived hourly rate), **Error rate** (share of model-gateway calls with HTTP ≥ 400, "N of M failed"), **Latency** (average round-trip, with **p95** in the detail line), and **Tokens — 24h** (total; the tooltip breaks out prompt/completion and average per call).
@@ -34,7 +38,11 @@ A read-only overview of the agent's health and footprint — no editable fields.
 
 Empty states are honest: an agent on a **self-deployed model** points you to that model's own Models page instead of showing empty cards, and a zero-traffic agent says charts appear after the first conversation. A **BYO model active** banner appears when the agent runs on your own model, noting that token traffic isn't billed by Surogate.
 
+![Hourly charts for requests, errors, latency and tokens](../../../../assets/screenshots/work-metrics-charts.png)
+
 ## Identity
+
+![The Identity tab: name, locked slug, description and the SOUL.md editor](../../../../assets/screenshots/work-configure-identity.png)
 
 Who the agent is. Two cards, each with its own **SAVE**.
 
@@ -50,6 +58,8 @@ Who the agent is. Two cards, each with its own **SAVE**.
 
 ## Capabilities
 
+![The capability toggles: brainstorming gate, live browser and multi session](../../../../assets/screenshots/work-configure-capabilities.png)
+
 Toggle the agent's built-in behaviors. The Brainstorming gate, Live browser, and slash-command switches save the moment you flip them; the Saga card collects its toggle and number fields behind its own **Save** button. Changes reach live sessions on their next turn.
 
 | Capability | What it does |
@@ -60,6 +70,8 @@ Toggle the agent's built-in behaviors. The Brainstorming gate, Live browser, and
 | **Saga** | Tracks multi-step tool chains and rolls back completed steps when a later step fails. Exposes **Step timeout (s)**, **Max retries**, and **Retry delay (s)** |
 
 **Slash commands** — a master switch turns all built-in chat commands on or off at once, with individual toggles below:
+
+![The slash-command switches, with a master toggle and one row per command](../../../../assets/screenshots/work-configure-slash-commands.png)
 
 | Command | What it enables |
 |---|---|
@@ -86,13 +98,19 @@ The **Browse Library** view offers search and multi-select cards; **Attach selec
 
 ## Skills
 
+![Adding a skill: start from a template, write from scratch, or import a file](../../../../assets/screenshots/work-configure-add-skill.png)
+
 Attach reusable skills to the agent. The header reads **Attach a skill** with an **Add skill** button. Attached skills list their name and origin (e.g. "Your copy · from template"), an optional **expert** badge, and **Edit** / **Detach** actions.
 
 Adding a skill offers three routes: **Start from a template** (recommended, with a searchable category-filtered browser), **Write from scratch**, or **Import a file** (`.md` / `.zip` drag-and-drop). The scratch and edit forms expose **Name** (slug), **Display name**, **Description**, **Trigger** (comma-separated keywords), **Tags**, an **Is Expert** switch, and the **Content (SKILL.md)** body. **Browse Library** attaches skills you already have.
 
+![The skill template browser: categories, a searchable list and a preview of the selected skill](../../../../assets/screenshots/work-configure-skill-templates.png)
+
 See [Skills](/work/library/skills/) for authoring guidance.
 
 ## Tools
+
+![The Tools tab: attach from your library, add a Composio toolkit, or connect an MCP server](../../../../assets/screenshots/work-configure-tools.png)
 
 Connect external systems (Slack, Stripe, your own APIs) as MCP servers. The heading is **Tools**, with a **Key vault** button for stored credentials. Connected tools list their name, status, and **Manage** / **Disconnect** actions; Composio toolkits add a per-agent OAuth **Connect** control.
 
@@ -101,6 +119,8 @@ Three ways to add a tool:
 - **From your Library** — attach an MCP server you already registered.
 - **Toolkits** — attach from the searchable Composio catalog.
 - **Add an MCP server** (recommended) — the **AddServerForm**: **Name**, **What it does**, and a **Connection type** of *Remote endpoint (HTTP)* (adds **Web address (URL)**, an **API key / OAuth** sign-in choice, and **API key**) or *Local command (stdio)* (adds **Command** and **Environment** KEY=value pairs), plus a **Timeout (seconds)**.
+
+![The add-server form for a remote MCP endpoint](../../../../assets/screenshots/work-configure-add-mcp.png)
 
 The **Key vault** stores API keys (masked, with **Update** and **Remove**). See [MCP servers](/work/library/mcp-servers/).
 
@@ -112,6 +132,8 @@ Only visible when the agent's coding capability (`/code`) is enabled in **Capabi
 - **Coding agents** — agent-owned Claude Code / Codex plans connected under the agent's own service account.
 
 ## Model
+
+![The Model tab: the serving model plus the summary, vision, image and video role models](../../../../assets/screenshots/work-configure-model.png)
 
 Choose which models power the agent. Every chooser except the serving model defaults to **Platform default**; dirty fields glow amber, and a single **SAVE** commits the tab.
 
@@ -126,6 +148,8 @@ Choose which models power the agent. Every chooser except the serving model defa
 Platform-model media generation draws on the project's **media wallet** (see [Usage](/work/settings/usage/)); BYO image/video models aren't metered by Surogate. A wired image or video model is also what allows selling **media credits** on the [Monetize](/work/monetize/) tab.
 
 ## Governance
+
+![The policy-enforcement switch and the allowed/denied tool lists](../../../../assets/screenshots/work-governance-tools.png)
 
 The agent's guardrails — and they are **enforced**: the composed policy is checked before every tool call the agent makes. An **Unsaved changes** bar collects edits across the cards and clears on a successful save ("Governance settings saved."). Edits reach live sessions on their **next wake** — no redeploy needed.
 

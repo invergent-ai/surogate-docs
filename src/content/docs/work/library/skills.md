@@ -8,6 +8,8 @@ A **skill** is a small markdown file (a `SKILL.md`) that tells the agent how to 
 
 ## Where skills live
 
+![The Skills library: every skill in the workspace, with the selected SKILL.md rendered beside the list](../../../../assets/screenshots/work-library-skills.png)
+
 **Library → Skills & Tools → Skills tab.** (The page is titled "Skills & Tools" and carries two tabs: **Skills** and **MCP Servers**.) Layout:
 
 - **Left rail** — a search box (`Search skills…`), a **New skill** button, then the list of every skill in your workspace. Each row shows an icon, the display name, and a `version · used by N agents` line.

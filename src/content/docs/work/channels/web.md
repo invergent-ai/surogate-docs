@@ -19,6 +19,8 @@ A clean, branded chat UI with:
 
 This is the customer-facing Web UI — a separate React app from `ops.surogate.ai`. Each user only sees what they're allowed to see (their sessions, their files).
 
+![The Web channel is always active and carries the hosted chat URL](../../../../assets/screenshots/work-publish-channels.png)
+
 If the agent's **AI disclosure** is on (Configure → Governance), a disclosure banner is shown before interaction — **Accept** records a `disclosure.confirmed` event, **Decline** blocks interaction. See [Governance & AI disclosure](/work/workflow/governance/).
 
 ### Answering the agent's questions
