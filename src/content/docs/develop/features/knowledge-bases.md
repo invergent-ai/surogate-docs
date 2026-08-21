@@ -8,6 +8,8 @@ For the operator's view, see [Work mode → Knowledge bases](/work/library/knowl
 
 ## How a KB works (architecturally)
 
+![Creating a knowledge base: name, slug, description and the curator model](../../../../assets/screenshots/work-kb-create.png)
+
 ```
 Source files (markdown, PDF, CSV)
         │
@@ -116,6 +118,7 @@ curl -X POST http://localhost:8000/api/agents/{agent_id}/knowledge-bases \
 The agent's system prompt gains:
 
 ```
+
 ## Available Knowledge Bases
 
 - acme-product-docs: Product documentation, runbooks, known-issues database.

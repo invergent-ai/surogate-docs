@@ -27,6 +27,8 @@ Plus four action buttons:
 
 ## Persona — SOUL.md
 
+![The Identity tab, where SOUL.md is edited](../../../../assets/screenshots/work-configure-identity.png)
+
 Up to 20,000 characters of markdown injected at the top of every system prompt for this agent.
 
 ```markdown
@@ -147,6 +149,8 @@ Add via **+ ADD USER**. Edit / Disable / Delete via the row menu.
 For bulk operations (>20 users), use the REST API.
 
 ## CONFIG tab — the deepest screen
+
+![The Configure tab bar](../../../../assets/screenshots/work-configure-tabs.png)
 
 Sections:
 

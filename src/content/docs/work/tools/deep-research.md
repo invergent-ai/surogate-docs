@@ -6,6 +6,8 @@ title: Deep research (`/deep-research`)
 
 ## Basic use
 
+![`/deep-research` in the command palette](../../../../assets/screenshots/work-chat-commands.png)
+
 In any chat with an agent:
 
 ```

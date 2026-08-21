@@ -47,6 +47,8 @@ You'll need a project on the **Pro plan or higher** with **BYO Firebase Auth** c
 
 ### Step 1 — Connect your Stripe account
 
+![The Monetize tab: the five selling steps and the Stripe Connect status](../../../assets/screenshots/work-monetize-stripe.png)
+
 Open the agent's **Publish** page and click the **$ Monetize** tab. A **How selling works** guide walks the five steps (Connect Stripe → Finish onboarding → Enable buyer sign-in → Pick pricing and add offers → Share with buyers) and dismisses itself once selling is live.
 
 Click **Connect Stripe** and follow Stripe's Express onboarding:
@@ -72,6 +74,8 @@ Under **Settings → Authentication tab → BYO Firebase auth**, configure your 
 If you skip this step the buyer paywall shows *"buyer authentication is not configured."*
 
 ### Step 3 — Pick a pricing model
+
+![The four pricing models: free, subscription, one-time packs, or both](../../../assets/screenshots/work-monetize-pricing.png)
 
 Back on the Monetize tab, the **Pricing model** cards offer four choices:
 
@@ -143,6 +147,8 @@ Enforcement is real, per turn, pinned from the payment receipt:
 - A pinned **model tier** swaps the buyer's session onto the matching platform model.
 
 ## Free trial and per-user limits
+
+![The per-user usage cap and the What’s included package selector](../../../assets/screenshots/work-monetize-limits.png)
 
 Two cards on the Monetize tab, depending on your pricing model — both carry their own **What's included** composer, which sets the **default package** applied to users with no active purchase. These cards save the moment you change them.
 

@@ -4,13 +4,17 @@ sidebar:
   label: Training
 ---
 
-The Training page launches fine-tuning runs. Two methods can be created and launched from Studio — **SFT** and **GRPO** — each with their own configuration.
+The Training page launches fine-tuning runs. The method picker offers **SFT**, **Preference (DPO)**, **Reinforcement (GRPO)** and **Knowledge Distillation**; SFT and GRPO are the two documented in depth below.
 
-> **Studio vs. the engine.** Studio launches SFT and GRPO runs only. Pretraining (PT) and full-parameter fine-tuning are handled directly by the `surogate` engine CLI (`surogate sft` / `surogate grpo` and friends) and are not exposed in the Studio training pipeline. The `DPO` and `PPO` methods appear in the API schema but are rejected at run-create time — only SFT and GRPO runs can actually be created and started.
+> **Studio vs. the engine.** Pretraining (PT) and full-parameter fine-tuning are handled directly by the `surogate` engine CLI (`surogate sft` / `surogate grpo` and friends) and are not exposed in the Studio training pipeline. **DPO** and **Knowledge Distillation** are newer picker entries that this page does not yet cover.
 
-## Two methods
+## The methods
+
+![The four training methods: supervised fine-tune, preference, reinforcement, and distillation](../../../../assets/screenshots/dev-training-methods.png)
 
 ### SFT — Supervised Fine-Tuning
+
+![An SFT run: the experiment it belongs to, the base model, and the dataset](../../../../assets/screenshots/dev-training-sft-source.png)
 
 Standard supervised fine-tuning from labeled trajectories. Most common path.
 
@@ -39,6 +43,8 @@ Use when:
 - You have a dataset of (input → expected output) pairs
 - You want a model that mimics the patterns in your data
 - The base model gets the right structure but wrong details
+
+![Hyperparameters, adapter and precision, and the cloud backend the run lands on](../../../../assets/screenshots/dev-training-sft-hyperparams.png)
 
 ### GRPO — Group Relative Policy Optimisation
 
@@ -88,6 +94,8 @@ Two guardrails run at these boundaries:
 - **Pre-start validation (422).** START runs the same validator that drives the frontend's Start button; if the config has errors (missing GPU blocks, unset dataset, etc.) it returns `422` and the run stays queued.
 
 ### Experiments and the Data Hub
+
+![An experiment groups runs and becomes its own Data Hub repository](../../../../assets/screenshots/dev-training-new-experiment.png)
 
 Every run belongs to an **experiment**, and each experiment maps to a repo in the Data Hub. Individual runs are **branches** in that repo — the platform creates the experiment repo on first use and a per-run branch at create time, then commits the run's artifacts (checkpoints, metrics) to that branch as training progresses.
 

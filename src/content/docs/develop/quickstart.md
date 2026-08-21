@@ -98,6 +98,8 @@ Never invent an oncall name. If you don't know who owns it, write
 
 ## 5. Smoke-test from the UI
 
+![The Develop dashboard, where the deployed agent shows up once it is running](../../../assets/screenshots/dev-dashboard.png)
+
 Click **CHAT** → paste an incident description:
 
 > *"PagerDuty firing — 'auth-service' returning 502 to 30% of requests for the last 10 minutes."*

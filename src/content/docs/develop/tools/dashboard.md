@@ -8,6 +8,8 @@ The **Dashboard** is the builder home at `/studio` — a dense workspace overvie
 
 ## Top widgets
 
+![The Develop dashboard](../../../../assets/screenshots/dev-dashboard.png)
+
 - **Active Agents** — running / deploying / error breakdown
 - **Tokens today** — total LLM tokens consumed in the last 24h
 - **Success Rate** — % of sessions completed without crashing or being denied

@@ -46,6 +46,8 @@ A searchable list shows each user's email and auth provider (Email & password / 
 
 ## Insights
 
+![The Insights tab: user, message and token totals, and the overview report](../../../../assets/screenshots/work-publish-insights.png)
+
 The end-user intelligence view: one row per provisioned end-user, with totals for users, messages and tokens across the top. Rows with conversations expand into **Stats** (an activity chart, message and token cards) and **Report** (an LLM-written activity report) panels.
 
 An **Overview** card holds the two report prompts — one for the cross-user overview, one for per-user reports, tuned independently — and generates an overview across the users you select; each user row can carry its own guidance override. Reports are generated once by hand and then kept fresh automatically as users keep talking.

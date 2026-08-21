@@ -6,6 +6,8 @@ Everything you declare about the agent before users start using it: its identity
 
 ## Creation paths
 
+![The template catalog, or Start from scratch on the Empty Agent card](../../../../assets/screenshots/work-templates-browse.png)
+
 | Path | How |
 |---|---|
 | **Templates → Start from scratch** | The current builds ship an empty template catalog. **Start from scratch** opens the DEPLOY NEW AGENT dialog; fill Display Name / Slug / Description / Model, click CREATE AGENT. |

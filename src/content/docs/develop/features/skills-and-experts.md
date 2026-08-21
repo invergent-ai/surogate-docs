@@ -10,6 +10,8 @@ This chapter covers both. For the operator's walk-through of writing a skill in 
 
 ## `SKILL.md` format
 
+![The skills library, with the selected SKILL.md rendered beside the list](../../../../assets/screenshots/work-library-skills.png)
+
 Markdown with YAML frontmatter:
 
 ```markdown
@@ -180,6 +182,8 @@ Skills are addressed by `skill_id`, not by name. An API-created skill gets its o
 Validation errors return `422 Unprocessable Entity`.
 
 ## Publishing — versioning
+
+![Publishing a skill tags a version agents can pin to](../../../../assets/screenshots/work-skill-publish.png)
 
 When you PUBLISH a skill, you tag a version in the skill's [Hub](/develop/features/hub/) repo. Tags are immutable. Editing creates a new draft; the next PUBLISH creates `v0.1.1`, `v0.2.0`, etc.
 

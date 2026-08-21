@@ -16,6 +16,8 @@ Expanding a row shows its description and an auth-mode badge — **API Key** or 
 
 ## Connecting a tool
 
+![The Composio toolkit catalog, filtered by search](../../../../assets/screenshots/work-toolkits-catalog.png)
+
 1. Open the **Integrations** page for the agent.
 2. Find the service (search or browse by category).
 3. Click **Connect** on its row. The button shows "Connecting" while it works.

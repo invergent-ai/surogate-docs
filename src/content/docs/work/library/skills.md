@@ -8,6 +8,8 @@ A **skill** is a small markdown file (a `SKILL.md`) that tells the agent how to 
 
 ## Where skills live
 
+![A skill’s Repository tab: its Data Hub files, commits, branches and tags](../../../../assets/screenshots/work-skill-repository.png)
+
 ![The Skills library: every skill in the workspace, with the selected SKILL.md rendered beside the list](../../../../assets/screenshots/work-library-skills.png)
 
 **Library → Skills & Tools → Skills tab.** (The page is titled "Skills & Tools" and carries two tabs: **Skills** and **MCP Servers**.) Layout:
@@ -92,6 +94,8 @@ The minimum skill (see the `tldr` example above) is a working skill: fill in **F
 Skill detail → **Edit**. You can change everything except the **name** (the slug is locked once the skill exists). Saving rewrites the skill's `SKILL.md` on the Hub and republishes the bundle of every agent that has the skill attached, so an edit reaches the runtime — but only on the **next** session.
 
 ## Publishing — versioning your skill
+
+![Publishing a skill tags a version other agents can pin to](../../../../assets/screenshots/work-skill-publish.png)
 
 Every skill is stored in a small git-backed repo in the Hub under your project. Click **Publish** on a skill to create a tag such as `v1.0.0`. Why this matters:
 

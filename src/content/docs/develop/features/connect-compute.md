@@ -28,6 +28,8 @@ The Cloud tab stacks a few cards:
 
 ### Workload Queue tab
 
+![The workload queue](../../../../assets/screenshots/dev-compute-queue.png)
+
 A **live** table of everything running on your behalf — not a mockup. It merges four real backend sources, scoped to the active project:
 
 - **Training runs** → shown as **SFT** (SFT/DPO) or **GRPO** (GRPO/PPO).
@@ -69,6 +71,8 @@ The Policies view (`/studio/compute/policies`) lists auto-scaling & resource pol
 - Optional **max spend** and **cooldown** values.
 
 ## Connecting a cloud provider
+
+![The provider catalog on the Cloud tab](../../../../assets/screenshots/dev-compute-providers.png)
 
 Click a card in the Cloud tab's **Connect a provider** grid. That opens the connect page at `/studio/connect-cloud?provider=<key>`.
 

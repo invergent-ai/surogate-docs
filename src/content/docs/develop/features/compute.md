@@ -10,6 +10,8 @@ This page is the conceptual overview — *what* the providers are, the differenc
 
 ## The three views
 
+![The Cloud view: connected providers, active instances, and spend by job type](../../../../assets/screenshots/dev-compute-overview.png)
+
 | View | Path | State |
 |---|---|---|
 | **Cloud** | `/studio/compute/cloud` | **Live.** Connected providers, active cloud instances, cloud spend, and the provider connect grid. |
@@ -19,6 +21,8 @@ This page is the conceptual overview — *what* the providers are, the differenc
 Only **Cloud** and **Workload Queue** appear in the tab bar. Policies is a real page in the section but isn't a tab, and nothing on it is enforced — see [Connect compute → Policies](/develop/features/connect-compute/#policies).
 
 ## Providers offered
+
+![The providers you can connect, from the big clouds to your own SSH hosts](../../../../assets/screenshots/dev-compute-providers.png)
 
 Nine backends are supported. Eight are managed clouds; the ninth (**SSH / On-prem**) is the bring-your-own path.
 
@@ -71,6 +75,8 @@ An SSH backend is treated as a **fleet** rather than a billed cloud: in the Clou
 When you start any of these in the platform UI you pick a provider (or the bundled/local cluster); the platform handles provisioning, staging, and teardown.
 
 ## Workload Queue
+
+![The workload queue, filterable by job type, with status and location per workload](../../../../assets/screenshots/dev-compute-queue.png)
 
 The Workload Queue is a **live** table — it isn't a mockup. It reads real state from four sources and unifies them into one project-scoped list:
 

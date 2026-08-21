@@ -30,6 +30,8 @@ You can also open the page pre-filled by arriving with a `?q=…` query — it a
 
 ## Using a template
 
+![The template catalog, filtered by category](../../../../assets/screenshots/work-templates-browse.png)
+
 1. Click a template card to open its **preview** dialog.
 2. In the preview, click **Use** (also available directly on the card).
 3. The agent is created in your active project with the template's skills attached. You'll see a confirmation like "_Template name_ created with its skills attached," and you're taken to the new agent.

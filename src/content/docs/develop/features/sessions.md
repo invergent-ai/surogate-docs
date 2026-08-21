@@ -10,6 +10,8 @@ For the operator's lighter walk-through, see [Work mode → Review what your age
 
 ## The six detail tabs
 
+![The TOOLS tab with a call expanded to its arguments and result](../../../../assets/screenshots/work-session-tools.png)
+
 | Tab | Use it for |
 |---|---|
 | **THREAD** | The conversation as the user saw it. Markdown renders; artifacts display inline; files are downloadable. |
@@ -37,6 +39,8 @@ These flip when corresponding events fire during the session:
 Use them to slice traffic. Combine on the Sessions list — "sessions in the last 7 days where saga compensated AND the user thumb-downed."
 
 ## Reading the EVENTS log
+
+![The THREAD tab: the conversation as the user saw it](../../../../assets/screenshots/work-session-thread.png)
 
 Each row is a typed event with a JSON payload. For the canonical list of event types and what their payloads contain, see [Event types](/develop/reference/event-types/).
 

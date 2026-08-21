@@ -43,6 +43,8 @@ The prompt is checked before the schedule is saved. Prompts carrying prompt-inje
 
 ## Layout
 
+![The Scheduled work page with its Active and History views](../../../../assets/screenshots/work-scheduled-work.png)
+
 The page has a header with an **ACTIVE** / **HISTORY** toggle, over a table of schedules.
 
 | Column | What it shows |

@@ -69,6 +69,8 @@ The cheap changes are the ones you'll do most. The expensive ones earn their cos
 
 ## Where in the UI
 
+![The Develop-mode navigation, where each phase of the loop lives](../../../../assets/screenshots/dev-nav.png)
+
 Each phase touches different parts of `ops.surogate.ai`:
 
 | Phase | UI surfaces |
