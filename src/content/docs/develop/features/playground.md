@@ -10,6 +10,8 @@ Open it from the Develop sidebar, or land directly on a model with `/studio/play
 
 ## Only serving models appear
 
+![The playground: a served model answering, with the parameters panel beside it](../../../../assets/screenshots/dev-playground.png)
+
 The model picker lists **only models that are serving** — models whose status is `running`, plus proxy (BYO-LLM) models. Anything not currently served is hidden.
 
 If nothing is serving, the page shows an empty state ("Start a model to use the playground.") with an **OPEN MODELS →** button that takes you to `/studio/models`. Start a model there first, then come back.
@@ -27,6 +29,8 @@ At the top of the workspace a dropdown shows the selected model (with a green "s
 The center pane is a chat thread. Type a prompt and the model streams its response token by token. Conversations are held per model, so each model you pick has its own thread history.
 
 ## Parameters panel
+
+![Temperature, top-p, top-k, max tokens and repetition penalty, with presets below](../../../../assets/screenshots/dev-playground-parameters.png)
 
 The right-hand **Parameters** panel controls sampling. Each is a slider:
 

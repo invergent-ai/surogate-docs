@@ -40,6 +40,8 @@ The composer rejects a pick that breaks any of these caps *before* uploading, an
 
 ## Choosing a browser profile
 
+![When the agent drives the browser, the pane opens beside the thread](../../../../assets/screenshots/work-chat-browser-pane.png)
+
 ![The Add menu, where attachments and the session’s browser profile are picked](../../../../assets/screenshots/work-chat-composer-tools.png)
 
 When an agent has the [Agent browser](/develop/features/browser) enabled, the composer shows a **browser-profile selector** (an ID-card icon). Use it to start the session with a saved, already-logged-in [browser profile](/develop/features/browser-profiles) so the agent browses as you — signed in to the sites you captured — instead of starting from a blank browser.
