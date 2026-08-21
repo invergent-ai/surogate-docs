@@ -26,6 +26,8 @@ Run a chat  →  Review the session  →  Mark good/bad  →  Improve the agent 
 
 Each step has its own chapter:
 
+![The Agents page in Work mode, with one card per agent showing status, chat count, attached skills and channels](../../../assets/screenshots/work-agents-grid.png)
+
 | Chapter | Answers |
 |---|---|
 | [Run an agent](/work/workflow/run-agent/) | Open a session, chat, watch the workspace |

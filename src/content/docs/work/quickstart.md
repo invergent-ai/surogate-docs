@@ -6,22 +6,32 @@ A working agent on your team's Slack in **10 minutes**. No code, no setup.
 
 ## 1. Create the agent
 
-From the **Agents** page (left nav under WORK) or from the **Dashboard's "CREATE ANOTHER AGENT"** card, you land on the **Templates** page.
+From the **Agents** page (left nav) click the **+ Create agent** card and you land on the **Templates** page.
 
-The template catalog is currently empty. Click **Start from scratch** at the top of the page — a **DEPLOY NEW AGENT** dialog opens.
+The template catalog carries a few dozen ready-made agents across categories like marketing, sales, support and engineering. Describe what you need at the top and the catalog narrows to what fits, or take one of the quick starts.
+
+![Describe what you need at the top of the Templates page, or pick one of the quick starts](../../../assets/screenshots/work-templates-describe.png)
+
+Or browse the catalogue yourself, filtered by category. To start with nothing attached, take **Start from scratch** on the **Empty Agent** card.
+
+![The template catalog, filtered by category, with the Empty Agent card first](../../../assets/screenshots/work-templates-browse.png)
 
 Fill in:
 
 | Field | What to put |
 |---|---|
-| **Display Name** | e.g. `Acme Support Bot` |
-| **Slug** | auto-generated from the name. Becomes `acme-support-bot.cloud.surogate.ai`. Locked once you confirm. |
-| **Description** | one sentence — what the agent does |
+| **Agent name** | e.g. `Acme Support Bot` |
+| **What does this agent do?** | one or two sentences — this shapes the persona and shows on the overview page |
+| **URL slug** | auto-generated from the name. Becomes `acme-support-bot.cloud.surogate.ai`. Locked after creation. |
 | **Model** | leave as `Surogate` (the platform default) |
 
 Click **CREATE AGENT**. The agent provisions in ~30 seconds; status flips from `deploying` to `running`.
 
+![The new-agent form: agent name, what it does, an auto-generated URL slug and the model picker](../../../assets/screenshots/work-create-agent-form.png)
+
 You land on the agent's **Overview** page with its public URL, stats, channels, and recent sessions.
+
+![The agent's Overview page: knowledge, skills, tools, channels and model, each with its next step](../../../assets/screenshots/work-agent-overview-cards.png)
 
 ## 2. Have your first conversation
 
@@ -29,20 +39,24 @@ On the agent's Overview page, click **New chat** in the left navigation (between
 
 The chat opens. Type a question, press Enter — the agent streams its response. Tool calls (KB searches, web fetches) appear inline so you can see what it did.
 
+![A chat thread: the question, the tool calls the agent made, and its answer](../../../assets/screenshots/work-chat-thread.png)
+
 Templates ship without your team's content, so the agent doesn't know your product yet. Step 4 fixes that.
 
 ## 3. Publish to Slack
 
-Click **Publish** in the left nav, then open the **Channels** tab. Find the **Slack** row and toggle the switch ON.
+Click **Publish** in the left nav, then open the **Channels** tab. Find the **Slack** card and click **Connect** — a guided wizard walks you through it.
 
-Paste your Slack credentials:
+![The Channels tab with Web and Slack active, and Telegram, WhatsApp and Website ready to connect](../../../assets/screenshots/work-publish-channels.png)
+
+The wizard asks for your Slack credentials:
 
 - **App Token** — `xapp-…` from your Slack app's **App-Level Tokens** (scope `connections:write`)
 - **Bot Token** — `xoxb-…` from **OAuth & Permissions**
 
 Don't have a Slack app yet? Create one at [api.slack.com/apps](https://api.slack.com/apps) → enable **Socket Mode** → add bot scopes (`chat:write`, `app_mentions:read`, `im:read`, `im:write`, `channels:history`, `groups:history`, `users:read`) → install to your workspace.
 
-Click **SAVE CHANNELS**. Within a few seconds, the bot is online in Slack. DM it or `@mention` it in a channel.
+Finish the wizard and the card flips to **Active** within a few seconds. DM the bot or `@mention` it in a channel.
 
 ## 4. Make it smarter (optional but worth it)
 
@@ -72,11 +86,15 @@ than guessing.
 
 Save. New chats pick up the new persona; in-progress sessions keep the old one (by design).
 
+![The Identity tab: basic info, the SOUL.md editor, and the unsaved-changes bar](../../../assets/screenshots/work-configure-identity.png)
+
 ## 5. Watch what it does
 
 Every chat is a **session**. Open **Sessions** in the left nav → pick a session.
 
 For each session, hover assistant turns and click 👍 or 👎. This is the signal you use to improve the agent over time — see [Improve your agent](/work/workflow/improve-agent/).
+
+![The Sessions list, filtered by quality flags, showing one session marked Positive](../../../assets/screenshots/work-sessions-list.png)
 
 ## What you've done in 10 minutes
 

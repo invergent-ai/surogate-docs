@@ -23,6 +23,8 @@ Once the page is live, **saving publishes immediately**. There is no separate dr
 
 ## Blocks
 
+![The block editor: an expanded hero block above the collapsed features, steps and section blocks](../../../../assets/screenshots/work-landing-blocks.png)
+
 A page is an ordered list of blocks. Add one with the **+** between any two blocks — a page is written top-down, and the section you want next is rarely the last one. Each block collapses to a single row so a long page stays navigable, and can be moved with the arrows or deleted. Deleting a block you have written into asks first.
 
 | Block | What it is |

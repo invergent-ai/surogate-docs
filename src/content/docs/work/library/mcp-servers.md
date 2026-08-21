@@ -8,6 +8,8 @@ You wire a server up once in the Library; any agent in your workspace can then a
 
 ## The MCP Servers tab
 
+![The MCP Servers tab: the vault, the server list and the selected server’s transport, auth and exposed tools](../../../../assets/screenshots/work-library-mcp.png)
+
 **Library → Skills & Tools → MCP Servers tab.**
 
 - **Left rail** — a **Vault** button at the top (a lock icon, showing how many keys are stored), a search box, then the list of every server. Each row shows the server name and a `TRANSPORT · LAYER · N tools` line, with a green dot when the server is enabled.
@@ -16,6 +18,8 @@ You wire a server up once in the Library; any agent in your workspace can then a
 Click any server to open its detail panel; click **Add server** (top right) to create one.
 
 ## Adding a server
+
+![The add-server form for a remote MCP endpoint](../../../../assets/screenshots/work-configure-add-mcp.png)
 
 Click **Add server**. The form ("Add a server — connect an MCP endpoint, its tools become available to your agents"):
 

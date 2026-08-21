@@ -52,6 +52,8 @@ Configure → Governance doesn't render this list yet, and **saving that form re
 
 ## Network controls: three separate planes
 
+![The web and browser egress card: a default action plus per-domain rules](../../../../assets/screenshots/work-governance-egress.png)
+
 "Default action: deny" on the egress card does **not** mean the agent can't reach the internet. Three independent planes exist:
 
 1. **Web & browser egress (your policy)** — governs only the URL arguments of `web_extract` and `browser_navigate`. Domain matching is glob-based (`*.acme.com`); CIDR ranges are not supported, and a `udp` rule never matches a URL.
@@ -61,6 +63,8 @@ Configure → Governance doesn't render this list yet, and **saving that form re
 SSH targets additionally get a per-session Kubernetes NetworkPolicy pinning their egress.
 
 ## AI disclosure (EU AI Act, Art. 50)
+
+![The AI disclosure toggle and its four disclosure levels](../../../../assets/screenshots/work-governance-disclosure.png)
 
 From **2 Aug 2026**, Art. 50 of the EU AI Act requires telling end users they are talking to an AI, on every channel. Turn on **AI disclosure** in Configure → Governance and pick a level:
 

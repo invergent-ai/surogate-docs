@@ -6,6 +6,8 @@ The inbox surfaces items the agent has explicitly raised to *you*. If it's empty
 
 ## The five item kinds
 
+![The inbox with its Active, Updates and History views, and nothing waiting](../../../../assets/screenshots/work-inbox.png)
+
 ### `input_required` — the agent called `ask_user_question`
 
 Up to 5 multiple-choice questions; you submit answers. Example:

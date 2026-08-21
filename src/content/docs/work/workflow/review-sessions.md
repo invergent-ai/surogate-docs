@@ -24,6 +24,8 @@ Search box: title, ID, model
 
 The filter chips are your shortcut to finding **specific kinds** of sessions:
 
+![The session filters: quality chips plus status, channel, range and sort](../../../../assets/screenshots/work-sessions-filters.png)
+
 - 👎 — sessions a user thumbed-down (problems)
 - 👍 — sessions a user thumbed-up (good examples)
 - **Denied** — sessions where the governance gate blocked a tool call
@@ -32,7 +34,9 @@ The filter chips are your shortcut to finding **specific kinds** of sessions:
 
 ## The session detail page
 
-Click a session → six tabs of detail:
+![A session header: title, agent, channel, message and tool-call counts, tokens, duration and quality flag](../../../../assets/screenshots/work-session-header.png)
+
+Click a session → the detail view, with its tabs across the top:
 
 | Tab | What it shows |
 |---|---|
@@ -46,6 +50,8 @@ Click a session → six tabs of detail:
 ### THREAD — what the user saw
 
 The cleanest view. If you want to share a session with a teammate, copy the link from this tab.
+
+![The THREAD tab: the conversation as the user saw it, with each tool call named inline](../../../../assets/screenshots/work-session-thread.png)
 
 You can also click 👍 / 👎 on any assistant turn. The mark becomes a quality flag on the session and feeds into training-data extraction later.
 
@@ -69,6 +75,8 @@ The user-visible answer is the **last** `llm.response` — the earlier ones narr
 You'll spot whether the LLM understood the question, whether it searched the right KB, whether tool calls succeeded.
 
 ### TOOLS — just the calls
+
+![The TOOLS tab with one call expanded to show its arguments and result](../../../../assets/screenshots/work-session-tools.png)
 
 When you specifically care about what the agent **did** (not what it said), this tab filters out everything except tool calls and results.
 

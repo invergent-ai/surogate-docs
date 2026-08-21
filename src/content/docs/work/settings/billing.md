@@ -4,6 +4,8 @@ title: Billing
 
 ## Plans
 
+![The four plans with the current one marked, and the enterprise contact row beneath](../../../../assets/screenshots/work-settings-billing-plans.png)
+
 The plan cards in the app read their limits live from the platform's plan catalog, so what you see there is always what's enforced. For orientation:
 
 | Plan | Monthly | Agents | Tokens / mo | Workspace | Hub | Web browsing | Compute | Media | Support |
@@ -36,6 +38,8 @@ One-shot, never expire until used, consumed **before** plan allowance:
 | Media generation | **$2.00 per $1 of image/video generation** (chips: $5 / $20 / $50) |
 
 ## Add-ons (recurring)
+
+![The recurring add-ons, each with a stepper and a monthly price](../../../../assets/screenshots/work-settings-billing-addons.png)
 
 Raise your monthly ceiling, renewing until removed:
 

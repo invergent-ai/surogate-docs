@@ -17,6 +17,8 @@ Three patterns:
 
 ## Adding a user
 
+![The Users tab: self-registration, search, Add user, and the agent's existing end users](../../../../assets/screenshots/work-publish-users.png)
+
 Open the agent → **Configure** in the left nav → the **Users** tab → **Add user**:
 
 | Field | Notes |
