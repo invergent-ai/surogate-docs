@@ -19,6 +19,8 @@ Sessions are your source of truth. Every conversation, tool call, LLM response, 
 
 ## Filter, don't scroll
 
+![Session filters: quality chips plus status, channel, range and sort](../../../../assets/screenshots/work-sessions-filters.png)
+
 The Sessions list supports filter chips and a search box; both compose into URL params so you can bookmark filtered views.
 
 - **By quality flag** — chips for Denied / Overridden / Crashed / 👍 / 👎

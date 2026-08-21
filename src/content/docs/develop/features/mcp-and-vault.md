@@ -30,6 +30,8 @@ This is the structural fix for "what if my agent leaks an API key" — the agent
 
 ## Two transports
 
+![Registering a remote MCP endpoint](../../../../assets/screenshots/work-configure-add-mcp.png)
+
 The blocks below show the shape of a server's stored config — the same fields the Studio form (or `/api/mcp-servers`) writes into the registry. There is no config file on disk to edit.
 
 ### Stdio
@@ -160,6 +162,8 @@ At runtime the proxy resolves each ref from the Vault and injects it into the ou
 Vault credentials are encrypted at rest with Fernet (AES-128-CBC + HMAC-SHA256). The symmetric key lives in a K8s cluster secret.
 
 ## Where MCP servers are registered
+
+![The MCP Servers tab: the vault, the server list, and a server’s transport and exposed tools](../../../../assets/screenshots/work-library-mcp.png)
 
 The registry is exclusively DB-backed — the `mcp_servers` table, written by the Studio UI and `/api/mcp-servers`. There are no on-disk config layers.
 

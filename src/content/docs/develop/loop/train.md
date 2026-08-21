@@ -83,6 +83,8 @@ For details on each source type, see [Datasets](/develop/features/datasets/).
 
 ## Training runs
 
+![The four training methods](../../../../assets/screenshots/dev-training-methods.png)
+
 The **Training** page handles fine-tuning runs. Two methods:
 
 | Method | What it is | When |

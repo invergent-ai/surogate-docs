@@ -8,6 +8,8 @@ See [Skills](/develop/features/skills-and-experts/) for what a skill is; this pa
 
 ## Starting a run
 
+![Starting an optimization run: target agent, workload source, optimizer and judge models, and the search budget](../../../../assets/screenshots/work-skill-optimize.png)
+
 Optimization is started from the **Optimize** dialog for a skill. It asks for:
 
 | Field | What it is |

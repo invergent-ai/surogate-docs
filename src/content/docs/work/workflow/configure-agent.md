@@ -102,6 +102,8 @@ The **Browse Library** view offers search and multi-select cards; **Attach selec
 
 Attach reusable skills to the agent. The header reads **Attach a skill** with an **Add skill** button. Attached skills list their name and origin (e.g. "Your copy · from template"), an optional **expert** badge, and **Edit** / **Detach** actions.
 
+![Attached skills, each showing where it came from, with Edit and Detach](../../../../assets/screenshots/work-configure-skills-attached.png)
+
 Adding a skill offers three routes: **Start from a template** (recommended, with a searchable category-filtered browser), **Write from scratch**, or **Import a file** (`.md` / `.zip` drag-and-drop). The scratch and edit forms expose **Name** (slug), **Display name**, **Description**, **Trigger** (comma-separated keywords), **Tags**, an **Is Expert** switch, and the **Content (SKILL.md)** body. **Browse Library** attaches skills you already have.
 
 ![The skill template browser: categories, a searchable list and a preview of the selected skill](../../../../assets/screenshots/work-configure-skill-templates.png)

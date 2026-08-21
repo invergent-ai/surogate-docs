@@ -22,6 +22,8 @@ The login state itself (`storage_state`) is encrypted before it is written and d
 
 ## How a profile is created
 
+![Browser Profiles under Settings → Profile, each with its own authentication setup](../../../../assets/screenshots/work-settings-browser-profiles.png)
+
 Creating a usable profile is a three-step, interactive flow — you log in by hand once, and the profile keeps that login:
 
 1. CREATE — an empty named profile is created for the caller's principal.
@@ -31,6 +33,8 @@ Creating a usable profile is a three-step, interactive flow — you log in by ha
 Capture is deliberately narrow: it can only export from the dedicated setup session bound to that specific profile, and only for the person who holds control of it — it cannot export login state out of an ordinary agent session.
 
 ## How a profile is attached
+
+![Picking the profile a session drives the browser with](../../../../assets/screenshots/work-chat-composer-tools.png)
 
 To use a profile, a session is bound to it (its `profile_id` travels in the session config). On the first `browser_*` tool call, the runtime looks up the profile for the session's principal, decrypts its storage state, and injects it into the fresh browser so it starts logged in. The profile's `last_used_at` is updated each time it is loaded.
 

@@ -50,6 +50,8 @@ These values are **not secret**. Firebase web config is designed to ship in clie
 
 ## Step 2 — Tell Surogate about your Firebase project
 
+![Settings → Authentication: the Firebase web config and the sign-in provider switches](../../../../assets/screenshots/work-settings-authentication.png)
+
 1. Open **Settings → Authentication tab → BYO Firebase auth** (the card sits on the Authentication tab; if it's missing you're on the Free plan — upgrade first).
 2. Fill in:
 
@@ -102,6 +104,8 @@ Firebase only lets sign-ins happen from domains it knows about. By default it al
 Skip this step and your users will see *"This domain is not authorized."* the moment they click any sign-in button.
 
 ## Step 5 — Turn the switch on for an agent
+
+![The Users tab, where Let anyone sign up turns self-registration on for one agent](../../../../assets/screenshots/work-publish-users.png)
 
 1. Open the agent you want self-registration enabled for.
 2. **Publish** in the left nav → **Users** tab.

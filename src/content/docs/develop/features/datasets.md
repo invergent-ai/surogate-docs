@@ -8,6 +8,8 @@ A dataset is a versioned corpus you use for training and evaluation. Every datas
 
 ## Four ways to bring a dataset
 
+![The four dataset sources: chats, uploaded files, synthetic generation, or a Hugging Face repo](../../../../assets/screenshots/dev-dataset-sources.png)
+
 Click **NEW DATASET** (or, on an empty list, **+ New dataset**) to open the source chooser at `/studio/datasets/create`. It's a grid of cards, each routing to a dedicated builder page:
 
 | Card | Builder page | What it does | Backend |
@@ -28,6 +30,8 @@ Every finished dataset lands in your list as `building` → `ready`, versioned i
 The most common source: build a dataset from observed agent traffic. Two builder pages share this source — a simple form and a filter-rich advanced form — and both call the same endpoint.
 
 ### From chats (simple) — `/studio/datasets/from-chats`
+
+![Building a dataset from chats: agents, quality filters, format, and PII scrubbing](../../../../assets/screenshots/dev-dataset-from-chats.png)
 
 The form reached from the list's **Import from chats**. When you arrive from a Sessions selection it's pre-filled with those chats; otherwise it draws from the project's recent chats and focuses on the agent with the most matching chats.
 
@@ -203,6 +207,8 @@ Token stats are computed for chat uploads, pair uploads, single-text uploads, fr
 
 ## Dataset detail page
 
+![A dataset’s overview: row and token counts, PII scan, and its provenance](../../../../assets/screenshots/dev-dataset-detail.png)
+
 Open a dataset to see four tabs: **Overview**, **Samples**, **Pipeline**, and **Repository**.
 
 ### Overview
@@ -279,6 +285,8 @@ For preference learning (DPO, RLHF). Requires both good and bad examples for the
 Raw transcripts for analysis. Not used directly in training.
 
 ## Datasets for evaluation
+
+![The dataset list, filterable by source and status](../../../../assets/screenshots/dev-datasets-list.png)
 
 When you want a dataset specifically for **evaluation** rather than training, use:
 

@@ -12,6 +12,8 @@ A mission is a saved goal the agent keeps iterating on until an evaluator decide
 
 ## Layout
 
+![The Missions page, listing the goals and missions an agent is working toward](../../../../assets/screenshots/work-missions.png)
+
 The page has a header and two panes:
 
 - **Header** — the title "Missions" with a subtitle, plus an **ACTIVE** / **HISTORY** toggle on the right.

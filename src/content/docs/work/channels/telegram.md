@@ -14,6 +14,8 @@ Simpler than Slack — one bot token and you're up.
 
 ## Configuration in Surogate
 
+![The Connect Telegram walkthrough: create a bot with BotFather, then paste its token](../../../../assets/screenshots/work-channel-telegram-connect.png)
+
 Open the agent → **Publish** in the left nav → the **Channels** tab → find the **Telegram** card → **Connect**. A short walkthrough (BotFather → `/newbot` → copy token) ends in a single **Bot Token** field. Paste the token and click **Connect Telegram**. Once connected, the bot's `@username` is shown.
 
 There is no separate save button — connecting and every later option change save automatically.

@@ -44,6 +44,8 @@ Selecting a sub-agent shows:
 
 ## Creating a sub-agent
 
+![The new sub-agent form: name, category, and the AGENT.md frontmatter it expects](../../../../assets/screenshots/work-subagent-new.png)
+
 1. Click **New** at the top of the list.
 2. In the **New sub-agent** dialog, fill in:
    - **Name** — must match the `name` field in the frontmatter (e.g. `code-reviewer`).

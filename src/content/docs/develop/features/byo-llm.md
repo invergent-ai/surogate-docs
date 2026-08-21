@@ -8,6 +8,8 @@ When the BYO LLM toggle is on, the platform routes LLM calls through your own pr
 
 ## When to enable
 
+![The URL source is how your own OpenAI-compatible endpoint enters the platform](../../../../assets/screenshots/dev-models-deploy-sources.png)
+
 - **Existing contract with an LLM provider**: you've already negotiated rates with OpenAI / Anthropic / Together / your-vendor — keep using them.
 - **Self-hosted models**: you serve via vLLM in your own cluster.
 - **Compliance**: you need LLM calls to stay within your VPC / on-prem.

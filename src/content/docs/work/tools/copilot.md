@@ -8,6 +8,8 @@ A drawer opens with a chat composer. Ask in natural language; the Copilot calls 
 
 ## What it can do
 
+![The Surogate Copilot panel, opened over the workspace](../../../../assets/screenshots/work-copilot-panel.png)
+
 Read operations (always enabled):
 
 - *"What agents do I have running?"*

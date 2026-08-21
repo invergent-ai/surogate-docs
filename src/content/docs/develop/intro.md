@@ -9,6 +9,8 @@ For designing agents, writing skills, training experts, running evaluations, int
 
 ## How the platform is built
 
+![The Develop-mode navigation: library, training and compute](../../../assets/screenshots/dev-nav.png)
+
 Surogate is built on open-source components you can run and inspect yourself:
 
 | Repo | Role | License |
@@ -22,6 +24,8 @@ When you deploy an agent at `<slug>.cloud.surogate.ai`, the platform wraps the r
 This documentation focuses on the platform surface — what you can do through `ops.surogate.ai`. For runtime internals, see the [runtime architecture reference](/develop/reference/runtime-architecture/).
 
 ## The builder loop
+
+![The Develop dashboard: agent, token and success-rate counters, deployed agents, and quick actions](../../../assets/screenshots/dev-dashboard.png)
 
 ```
        ┌─────────────────────────────────────┐

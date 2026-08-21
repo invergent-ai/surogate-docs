@@ -8,6 +8,8 @@ Evaluations test models and agents against benchmarks. Two paths: pick from the 
 
 ## The benchmarks catalog
 
+![The benchmark catalog, grouped into nine categories](../../../../assets/screenshots/dev-eval-benchmarks.png)
+
 Click **BROWSE BENCHMARKS** in the Evaluations page. 40 benchmarks grouped into 9 categories:
 
 | Category | Examples |
@@ -37,6 +39,8 @@ Your own custom benchmarks sit in the same catalog alongside the built-ins. They
 
 ## Custom Benchmark builder
 
+![Opening a category lists its benchmarks with their sample counts, selectable as a batch](../../../../assets/screenshots/dev-eval-benchmark-list.png)
+
 When the built-in benchmarks don't match your use case, score one of your own datasets instead. **NEW EVALUATION** → **Custom Benchmark**.
 
 - **Name** and **Description** — what the benchmark tests.
@@ -62,6 +66,8 @@ There's no judge-model field here: the judge is configured once per run, not per
 **Delete** is only offered while nothing has ever used the benchmark, so it's the way out for one you created by mistake. Once any run has referenced it — running or long finished — deleting refuses and points you at archive instead, because removing it would strip it out of those runs' benchmark lists and orphan their results.
 
 ## The 3-step NEW EVALUATION wizard
+
+![The evaluation wizard: select benchmarks, configure, then run](../../../../assets/screenshots/dev-eval-new-wizard.png)
 
 Whether built-in or custom:
 

@@ -26,6 +26,8 @@ The **per-wake freeze** is the key safety property: the governance gate is compo
 
 ## Hub versioning
 
+![Every skill, dataset and model is a Data Hub repository with commits, branches and tags](../../../../assets/screenshots/dev-hub-repo-files.png)
+
 Every artifact (skill, KB, dataset, model, environment) is a Hub repo. That means:
 
 - Every change has a **commit** with author + message

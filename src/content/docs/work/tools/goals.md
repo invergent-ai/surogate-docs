@@ -6,6 +6,8 @@ title: Goals (`/goal`)
 
 ## The basic shape
 
+![The Missions page tracks the goals and missions an agent is working toward](../../../../assets/screenshots/work-missions.png)
+
 In any chat session:
 
 ```

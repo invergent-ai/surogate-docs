@@ -8,6 +8,8 @@ These behaviors are grouped under SUROGATE MATE and are configured per channel. 
 
 ## The settings
 
+![Surogate Mate on the Slack Manage screen: follow-the-channel and ambient mode](../../../../assets/screenshots/work-channel-slack-mate.png)
+
 | Setting | UI label | What it does |
 |---|---|---|
 | `follow_enabled` | FOLLOW THE CHANNEL | Build durable context from *all* channel activity, not just messages that @mention the agent. |

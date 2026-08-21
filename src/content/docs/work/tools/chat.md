@@ -6,6 +6,8 @@ The chat is where you actually talk to an agent — type a message, watch it rea
 
 ## Sending a message
 
+![A chat thread: the question, the tool calls the agent made, and its answer](../../../../assets/screenshots/work-chat-thread.png)
+
 Type in the composer (the placeholder reads **Send a message...**) and press Enter to send. Shift+Enter inserts a newline instead of sending, so a message can span multiple lines.
 
 Once you send, the agent's reply **streams back token by token** in the thread as it thinks and works. While a turn is running, the send button becomes a **stop** control — click it to interrupt the agent mid-turn. When the turn finishes, the composer is ready for your next message.
@@ -38,6 +40,8 @@ The composer rejects a pick that breaks any of these caps *before* uploading, an
 
 ## Choosing a browser profile
 
+![The Add menu, where attachments and the session’s browser profile are picked](../../../../assets/screenshots/work-chat-composer-tools.png)
+
 When an agent has the [Agent browser](/develop/features/browser) enabled, the composer shows a **browser-profile selector** (an ID-card icon). Use it to start the session with a saved, already-logged-in [browser profile](/develop/features/browser-profiles) so the agent browses as you — signed in to the sites you captured — instead of starting from a blank browser.
 
 A few rules, because a profile is bound to a session at creation:
@@ -66,6 +70,8 @@ A **Simple / Advanced** toggle sits in the composer footer. It changes how much 
 Switching to Simple keeps the agent's behaviour identical; it only trims the transcript. The quick-launch buttons are an Advanced-only convenience — the slash menu itself is always available by typing `/` (see below), in either view.
 
 ## Slash commands from chat
+
+![The command palette listing every slash command enabled for the agent](../../../../assets/screenshots/work-chat-commands.png)
 
 The composer supports slash commands. Type `/` as the **first character** of a message and a menu opens with the built-in commands and any skills attached to the agent; keep typing to filter. Everything after the command name is passed as its arguments.
 

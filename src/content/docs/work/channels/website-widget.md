@@ -10,6 +10,8 @@ Nothing external. The platform issues a **publishable key** (prefixed `surg_wk_�
 
 ## Configuration
 
+![Connecting the website widget: the allowed origins the chat bubble may load on](../../../../assets/screenshots/work-channel-website-connect.png)
+
 Open the agent → **Publish** in the left nav → the **Channels** tab → find the **Website** card → **Connect**. The connect screen asks for your **Allowed origins**, then you click **Enable widget**.
 
 | Field | What it does |

@@ -8,6 +8,8 @@ This chapter covers what builders should know that operators don't need: where i
 
 ## What the Copilot does for you
 
+![The Surogate Copilot panel](../../../../assets/screenshots/work-copilot-panel.png)
+
 It exposes the platform's tools as natural-language commands. Instead of clicking through CONFIG / KNOWLEDGE & TOOLS / channels, you describe what you want and the Copilot calls the corresponding tools.
 
 ### Read operations (always on)

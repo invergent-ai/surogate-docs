@@ -12,6 +12,8 @@ A repository is identified as `{namespace}/{name}`, where the namespace is a sta
 
 ## What's stored in the Hub
 
+![The Data Hub, filtered by repository type](../../../../assets/screenshots/dev-hub-repos.png)
+
 Every repo carries a `metadata.type` tag so the Hub UI and the rest of the platform can tell repos apart. The types are defined in `core/hub/surogate_hub.py`:
 
 | `metadata.type` | Repo name pattern | Contents |
@@ -67,6 +69,8 @@ Every repo — regardless of type — exposes the same git-like structure:
 Artifacts are referenced elsewhere in the platform with a **hub_ref** string of the form `namespace/repo@branch[:sub]`, where `:sub` optionally points at a folder or a single file (`core/hub/hub_ref.py`). A model attached to a serving deployment, a skill attached to an agent, or a dataset attached to a training run is stored as one of these refs — pinning both the repo and the exact branch/tag.
 
 ## The repo detail page
+
+![A repository at a branch, with its files, commits, branches and tags](../../../../assets/screenshots/dev-hub-repo-files.png)
 
 Click any repo on the Hub to open its explorer. Across the top:
 

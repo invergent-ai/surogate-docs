@@ -8,6 +8,8 @@ The Models page is where you register and serve the LLM endpoints your agents ca
 
 ## The four sources
 
+![Deploying a model: local hub, Hugging Face, OpenRouter, or any OpenAI-compatible URL](../../../../assets/screenshots/dev-models-deploy-sources.png)
+
 The deploy flow opens on **"Where is the model coming from?"** — four cards:
 
 | Source | What it is | When to use |
@@ -34,6 +36,8 @@ Serve a model that already lives in your hub — this is where trained runs land
 Registered with source `local_hub` and a `hub_ref` of `repo@revision`.
 
 ### Hugging Face
+
+![The Hugging Face source: repository, revision and the display name agents will see](../../../../assets/screenshots/dev-models-hf-form.png)
 
 Pull a public base or fine-tune from the HF Hub.
 
