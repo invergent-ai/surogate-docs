@@ -147,11 +147,11 @@ By cause: "missing facts," "wrong tone," "wrong tool," "wrong workflow." Each bu
 - "Wrong workflow" → write a skill (or update an existing one).
 - "Wrong tool" → detach problem skills/MCP servers on the Configure page.
 
-**5. Verify with replay**.
+**5. Verify**.
 
-- For the worst thumb-down sessions, click REPLAY in the session view.
-- Replay walks through your old user messages with the new agent config.
-- Side-by-side diff shows where the new behaviour diverges. Confirm it's better.
+- Start a fresh session and re-ask the questions that produced the worst thumb-downs. An existing session keeps the config it started with, so it will not show the change.
+- Compare against the old session side by side — both stay in the Sessions list.
+- For more than a handful of cases, score them as a batch instead: see the follow-up below.
 
 ### Follow-up
 

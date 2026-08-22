@@ -187,6 +187,8 @@ When ON, the governance gate evaluates **every tool call** against the composed 
 
 ### Saga (multi-step rollback)
 
+The Saga card is hidden unless the deployment sets `saga_ui_enabled` on the server — it is off on the hosted platform and opted into on-prem. The behaviour below applies wherever it is exposed.
+
 ```yaml
 enabled: true
 default_step_timeout: 300

@@ -95,7 +95,7 @@ Versioning is what makes agent improvement durable and auditable:
 
 - **Reproducibility** — a session records which version of each skill, KB, and model it used (skill bundles are tagged `v1`, `v2`, … on every publish, and the runtime fetches by version — see `agent_bundles.py`). If a problem shows up, you can re-run against the exact same versions.
 - **Rollback** — every version is preserved as a commit or tag. Roll a skill or model back to a known-good version without losing the newer one.
-- **Replay** — because a `hub_ref` pins `repo@branch-or-tag`, you can replay a session against a specific historical version to see whether a change caused a regression.
+- **Bisect a regression** — because a `hub_ref` pins `repo@branch-or-tag`, you can point an agent back at a specific historical version and re-ask the failing question to see whether a change caused it.
 - **Audit** — the commit log and tags are an immutable record of what changed, when, and by whom — for training runs, the run name tag is the permanent handle to that run's outputs.
 
 ## Operations

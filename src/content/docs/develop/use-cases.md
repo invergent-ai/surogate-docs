@@ -556,7 +556,7 @@ For each MCP server that mutates external state, the server must expose an undo 
 
 The MCP server's tool definition signals which undo tool corresponds to which forward tool.
 
-**3. Enable Saga on the agent**.
+**3. Enable Saga on the agent**. (The Saga card only appears where the deployment sets `saga_ui_enabled` — on-prem opt-in, off on the hosted platform.)
 
 CONFIG → Saga → toggle ON. Settings:
 - `default_step_timeout: 300`

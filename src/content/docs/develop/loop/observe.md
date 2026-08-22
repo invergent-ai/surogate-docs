@@ -47,13 +47,15 @@ GET /v1/sessions/{id}/events?after=<last_id>
 
 The API channel returns the same data as the UI's EVENTS tab. See [Event types](/develop/reference/event-types/) for what each event payload contains.
 
-## Replay = regression testing
+## Regression testing
 
-The THREAD view's **Replay** button forks a session: it re-runs your user messages against the **current** agent config and shows where new responses diverge from the original.
+There is no one-click replay. Build the regression loop out of the pieces that exist:
 
-Pattern: keep a "regression set" of 10-50 thumb-downed sessions. Before any major change, replay them. Ship only when the diff is favourable.
+1. Keep a "regression set" of 10-50 thumbed-down sessions — the 👎 filter is exactly this list.
+2. Turn it into a dataset (**Dev → Sessions** → select → **Add to dataset**), or an eval benchmark from that dataset.
+3. Before any major change, re-run the benchmark against the new config and compare scores.
 
-Programmatic equivalent: `POST /v1/sessions/{id}/replay` with optional `config_override`.
+See [Evaluations](/develop/features/evaluations/) for the scoring half. For a single conversation, start a fresh session and ask the same question — an existing session keeps the config it started with.
 
 ## Capture signal as a dataset
 
