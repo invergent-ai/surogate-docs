@@ -190,7 +190,7 @@ When you PUBLISH a skill, you tag a version in the skill's [Hub](/develop/featur
 Sessions record which version of each skill they used. You can:
 
 - Roll back to a previous tag
-- Replay sessions against a different skill version (regression testing)
+- Pin an agent to a different skill version and re-run your regression set against it
 - Audit "which skill version was active for session X"
 
 ---

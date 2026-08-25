@@ -4,9 +4,11 @@ sidebar:
   label: Training
 ---
 
-The Training page launches fine-tuning runs. The method picker offers **SFT**, **Preference (DPO)**, **Reinforcement (GRPO)** and **Knowledge Distillation**; SFT and GRPO are the two documented in depth below.
+The Training page launches fine-tuning runs. Four methods can be created and started — **SFT**, **DPO**, **GRPO** and **DISTILL** — and the method picker offers exactly those four. SFT and GRPO are documented in depth below.
 
-> **Studio vs. the engine.** Pretraining (PT) and full-parameter fine-tuning are handled directly by the `surogate` engine CLI (`surogate sft` / `surogate grpo` and friends) and are not exposed in the Studio training pipeline. **DPO** and **Knowledge Distillation** are newer picker entries that this page does not yet cover.
+> **Studio vs. the engine.** Pretraining (PT) and full-parameter fine-tuning are handled directly by the `surogate` engine CLI (`surogate sft` / `surogate grpo` and friends) and are not exposed in the Studio training pipeline. `PPO` exists in the API schema but is rejected at run-create time with *"PPO not yet supported"*.
+
+**DPO** and **DISTILL** both ride the SFT path rather than having a pipeline of their own: DPO is an SFT config plus a `loss: {type: dpo}` block over `{prompt, chosen, rejected}` rows, and DISTILL is an SFT config plus a `distillation:` block naming a teacher model. Run-create rejects either one if that block is missing.
 
 ## The methods
 

@@ -52,13 +52,16 @@ The agent picks. You describe what you want.
 
 ![The composer with the Commands, Skills and Scheduled Tasks shortcuts above it](../../../../assets/screenshots/work-chat-composer.png)
 
-| Control | What it does |
-|---|---|
-| Text field + Submit | Send a message |
-| **Commands** | Slash commands: `/clear`, `/compress`, `/goal`, `/loop` |
-| **Skills** | Invoke a skill by name: `/<skill-name>` |
-| **Scheduled Tasks** | View `/loop` schedules for this agent |
-| **Add** (`+`) | Attach a file to the message (CSV, screenshot, document, …) |
+| Control | What it does | Always visible? |
+|---|---|---|
+| Text field + Submit | Send a message | yes |
+| **Add** (`+`) | Attach a file to the message (CSV, screenshot, document, …), and pick the session's browser profile | yes |
+| **Simple / Advanced** | Switch between the conversation alone and every step the agent took | yes |
+| **Commands** | Slash commands: `/clear`, `/compress`, `/goal`, `/loop` | **Advanced only** |
+| **Skills** | Invoke a skill by name: `/<skill-name>` | **Advanced only** |
+| **Scheduled Tasks** | View `/loop` schedules for this agent | **Advanced only**, and only when `/loop` is enabled for the agent |
+
+The three shortcut buttons sit above the composer and appear only in **Advanced** view — in Simple view the composer is just the text field, the **+** and the view switch. You can always type the slash command directly instead; the palette opens as soon as the message starts with `/`.
 
 `/goal` is documented in [Goals](/work/tools/goals/). The Copilot (`⌘+/`) is in [Copilot](/work/tools/copilot/).
 

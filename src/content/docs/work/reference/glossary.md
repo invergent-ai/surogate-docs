@@ -36,7 +36,6 @@ Every Surogate term you'll see in Work mode, in one place.
 | **Platform floor** | The always-on, non-configurable governance layer: workspace path containment and path-argument hygiene. No agent policy can relax it. |
 | **Pricing model** | How an agent charges: Free, Subscription, One-time packs, or Both. |
 | **Quality flags** | Per-session tags: 👍 / 👎 (user feedback), `policy.denied`, `harness.crash`, `saga.compensated`, `expert.override`, `expert.endorse`. |
-| **Replay** | Fork a session: re-run your user messages against the new agent config to see if the new behaviour is better. |
 | **Session** | One conversation between a user and an agent. Records everything. Survives crashes. |
 | **Skill** | A small markdown file telling the agent how to handle a specific kind of request. Reusable. |
 | **Tool** | A capability the agent can invoke — `kb_read_page`, `web_search`, `read_file`, `terminal`, `browser_navigate`, etc. The agent decides which to use. |

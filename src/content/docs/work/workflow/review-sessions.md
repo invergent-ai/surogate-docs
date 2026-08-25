@@ -4,7 +4,7 @@ sidebar:
   label: Sessions
 ---
 
-Every conversation is a **session** — fully recorded, replayable, and inspectable. Open the **Sessions** page to review what your agent did: when something looks wrong, or to find good examples for improving your agent.
+Every conversation is a **session** — fully recorded and inspectable. Open the **Sessions** page to review what your agent did: when something looks wrong, or to find good examples for improving your agent.
 
 ## Find a session
 
@@ -36,16 +36,15 @@ The filter chips are your shortcut to finding **specific kinds** of sessions:
 
 ![A session header: title, agent, channel, message and tool-call counts, tokens, duration and quality flag](../../../../assets/screenshots/work-session-header.png)
 
-Click a session → the detail view, with its tabs across the top:
+Click a session → the detail view, with its tabs across the top. **Work mode shows three**:
 
 | Tab | What it shows |
 |---|---|
 | **THREAD** | The conversation as the user saw it. Markdown renders, artifacts display, files are downloadable. |
-| **EVENTS** | The full ordered log: user messages, LLM responses, tool calls, results, governance decisions. The "raw" view. |
-| **TOOLS** | A filtered EVENTS view showing only tool calls and their results. |
+| **TOOLS** | Only the tool calls and their results. |
 | **SKILLS** | Which skills loaded into the session, and which the agent actually used. |
-| **POLICIES** | Any governance decisions (denied tool calls, prompt-injection blocks). |
-| **METADATA** | Counters (turns, tokens, cost), quality flags, attached config. |
+
+The three audit tabs — **EVENTS**, **POLICIES** and **METADATA** — are deliberately Develop-mode-only. Open the same session from **Dev → Sessions** to get them, along with multi-select and **Add to dataset**. They're documented in [Sessions (Develop mode)](/develop/features/sessions/).
 
 ### THREAD — what the user saw
 
@@ -131,19 +130,11 @@ The seven quality flags drive everything downstream:
 
 Filter the Sessions list by any combination of these to slice your traffic.
 
-## Replay
-
-In the THREAD view, **Replay** forks the session: it creates a new one with the same starting state, replays your user messages one by one, and shows where the new agent's response diverges from the original.
-
-Useful when you've just changed a skill or SOUL.md and want to confirm the change doesn't regress past good answers.
-
 ## Export
 
-Three options from the METADATA tab:
+**Copy session URL** from the THREAD tab to share a session with a teammate — only people in your tenant can open it.
 
-- **Copy session URL** — share with a teammate (only people in your tenant can access it)
-- **Export events JSON** — download the full event log for offline analysis
-- **Add to dataset** — capture this session's transcript into a dataset you can use later (the **Develop mode** docs cover dataset usage in depth)
+The rest lives in Develop mode. **Dev → Sessions** adds a checkbox per row and an **Add to dataset** action that captures the selected transcripts into a dataset; the full event log is on that view's **METADATA** tab. See [Datasets](/develop/features/datasets/) for what to do with them.
 
 ## Sessions across channels
 
@@ -153,7 +144,7 @@ A session can have messages from multiple channels — a user starts on Web, con
 
 By default sessions are kept **forever** (compliance, training-data extraction). Mostly that's free — the storage is dominated by event log rows.
 
-If you need to delete a session (GDPR right-to-be-forgotten, customer data lifecycle): METADATA tab → Delete. Soft-deletes the row. For bulk deletes by date, ask your admin.
+If you need to delete a session (GDPR right-to-be-forgotten, customer data lifecycle), use the trash icon beside it in the agent's session list, or the **METADATA** tab in Develop mode. Soft-deletes the row. For bulk deletes by date, ask your admin.
 
 ## What's next
 

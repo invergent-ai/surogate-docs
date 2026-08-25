@@ -14,7 +14,7 @@ Each tab saves independently. Most tabs surface a **SAVE** button (which flashes
 |---|---|
 | **Metrics** | Read-only dashboard: traffic, errors, latency, tokens, conversations, connected resources |
 | **Identity** | Name, slug, description, and the SOUL.md persona |
-| **Capabilities** | Brainstorming gate, live browser, Saga, and the built-in slash commands |
+| **Capabilities** | Brainstorming gate, live browser, multi-session, the built-in slash commands, and Saga where the deployment enables it |
 | **Knowledge Bases** | Attach KBs the agent can search, in grounding or reference mode |
 | **Skills** | Attach, write, import, and edit skills |
 | **Tools** | Connect MCP servers, Composio toolkits, and manage the key vault |
@@ -60,14 +60,14 @@ Who the agent is. Two cards, each with its own **SAVE**.
 
 ![The capability toggles: brainstorming gate, live browser and multi session](../../../../assets/screenshots/work-configure-capabilities.png)
 
-Toggle the agent's built-in behaviors. The Brainstorming gate, Live browser, and slash-command switches save the moment you flip them; the Saga card collects its toggle and number fields behind its own **Save** button. Changes reach live sessions on their next turn.
+Toggle the agent's built-in behaviors. The Brainstorming gate, Live browser, Multi session and slash-command switches save the moment you flip them; the Saga card, where present, collects its toggle and number fields behind its own **Save** button. Changes reach live sessions on their next turn.
 
 | Capability | What it does |
 |---|---|
 | **Brainstorming gate** | Forces a short design/brainstorm pass with the user before creative or implementation work. Turn off for an agent that should act immediately |
 | **Live browser support** | Lets the agent drive a real browser (navigate, click, type, screenshot). Off removes the browser tools — and hides the end-user Browser Profiles tab |
 | **Multi session** | Lets each user open multiple sessions with the agent. When off, every user gets one dedicated conversation per channel — web, Slack, Telegram or website — and always returns to it; their other sessions are hidden until you turn this back on. End users see a **Chat** button instead of "New chat" |
-| **Saga** | Tracks multi-step tool chains and rolls back completed steps when a later step fails. Exposes **Step timeout (s)**, **Max retries**, and **Retry delay (s)** |
+| **Saga** | Tracks multi-step tool chains and rolls back completed steps when a later step fails. Exposes **Step timeout (s)**, **Max retries**, and **Retry delay (s)**. **Hidden unless the deployment opts in** (`saga_ui_enabled` on the server) — it is off on the hosted platform and available on-prem |
 
 **Slash commands** — a master switch turns all built-in chat commands on or off at once, with individual toggles below:
 

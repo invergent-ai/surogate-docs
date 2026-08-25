@@ -21,6 +21,8 @@ For the operator's lighter walk-through, see [Work mode → Review what your age
 | **POLICIES** | Governance denials (`policy.denied`), plus allowed calls when the deployment enables `governance.log_allowed`. AI-disclosure events (`disclosure.presented` / `disclosure.confirmed`) appear in EVENTS. |
 | **METADATA** | Counters (turns, tokens, cost, duration), the 7 quality flags, the agent's frozen config snapshot at session start. |
 
+All six are Develop-mode tabs. Work mode's Sessions page shows only **THREAD**, **TOOLS** and **SKILLS** — open a session from **Dev → Sessions** when you need the audit three.
+
 The Sessions list page has filters for: agent, status (Active / Completed / Failed / Archived), and chips for each quality flag (Denied, Overridden, Crashed, 👍, 👎). Filters compose into URL params, so you can bookmark a filtered view.
 
 ## The 7 quality flags
