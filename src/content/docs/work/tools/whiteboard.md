@@ -10,7 +10,7 @@ It is a view of an ordinary session, not a separate product. The same agent, the
 
 The whiteboard is a **per-agent capability**, off by default. Turn it on in the agent's **Configure → Capabilities** panel, on the card titled **Whiteboard**. When it is off the agent has no board at all, and no drawing tool.
 
-Once it is on, a **Whiteboard** entry appears in the agent's navigation, beside Chat and Inbox — that opens a board session at `/work/agents/<agentId>/whiteboard`.
+Once it is on, a **Whiteboard** entry appears in the agent's navigation beside Chat and Inbox. That is the way in: a board is a session *created* as a board, so an ordinary chat cannot be switched into one. **New board** in the action bar starts a fresh one; otherwise the Whiteboard entry picks up your most recent board where you left it.
 
 ## Switching between the board and the transcript
 
@@ -27,8 +27,8 @@ The rail on the left of the canvas holds the tools:
 | Tool | What it does |
 | --- | --- |
 | **Pen** | Draw. |
-| **Eraser** | Rub out ink. The ring under the cursor shows how wide it is. |
-| **Text** | Click to open a text box and type — handy when handwriting would be misread. **Ctrl/Cmd+Enter** or a click away commits it; **Esc** discards it. |
+| **Eraser** | Rub out anything under it, the agent's work included. The ring under the cursor shows the bite radius — four times the selected width. Undoable like any other stroke. |
+| **Text** | Click to open a text box and type. **Ctrl/Cmd+Enter** or a click away commits it; **Esc** discards it. Typed text is handed to the agent as text, so unlike handwriting it can never be misread — worth using for anything fiddly. |
 | **Answer box** | Reserve a space for the agent's answer. See [Telling the agent where to write](#telling-the-agent-where-to-write). |
 | **Select** | Click an object to select it, drag to move it, drag a corner handle to resize it. Drag on empty canvas to lasso several objects. |
 | **Pan** | Drag to move around the board. |
@@ -39,6 +39,10 @@ Moving around the board:
 
 - **Zoom** with the mouse wheel.
 - **Pan** with the **middle mouse button** at any time, whatever tool you are holding — no need to switch to the Pan tool and back.
+
+Keyboard: **Ctrl/Cmd+Z** undoes, **Ctrl/Cmd+Shift+Z** redoes, and **Delete** or **Backspace** removes the selection.
+
+The faint blue numbered grid under your ink is not part of the drawing — it is the same grid the agent is told about, so you can see the board the way it does.
 
 ## Asking
 
@@ -75,7 +79,7 @@ Two ways to place one:
 - Pick the **Answer box** tool, then **click** to drop a default-sized box, or **drag** to size one yourself. A text box opens underneath it so you can add a **hint** — a line saying what belongs there. Leave it blank if the space speaks for itself.
 - **Right-click** anywhere on the canvas, whatever tool you are holding. This drops a box straight away, with no hint prompt — the fast path.
 
-A box carries a small robot glyph so it reads as *the agent's space*. Boxes are labelled `S1`, `S2`, … so the agent can refer to them.
+A click-placed box takes its left edge at the click point and centres vertically on it — so clicking just after an `=` puts the box exactly where the answer reads. Each box carries a small robot glyph so it reads as *the agent's space*, and they are labelled `S1`, `S2`, … so the agent can refer to them.
 
 The agent fits its answer into the box — text shrinks to fit, a sketch scales in — and **the box disappears**, replaced by the answer. A turn that would leave a box empty is rejected before it reaches your board, so the agent cannot answer beside the space you set aside.
 
@@ -91,9 +95,11 @@ They exist so the agent can say *"to the right of A1"* or *"replace B1"* instead
 
 ### Readings, and correcting them
 
-Under a cluster of your ink you may see a small italic line — the agent's **reading** of it, its transcription of your handwriting (`∫(1/x)dx =`). It is stored against exactly the strokes it covers and handed back on every later turn, so the agent reads your handwriting once rather than re-guessing it every time.
+Under a cluster of your ink you may see a small italic line — the agent's **reading** of it, its transcription of your handwriting (`∫(1/x)dx =`). It is stored against exactly the strokes it covers and handed back on every later turn, so the agent reads your handwriting once rather than re-guessing it every time. Add a stroke to the cluster and it counts as new writing, to be read again.
 
-If a reading is wrong, fix it: pick the **Select** tool and click the reading text. **Your correction outranks anything the agent reads later** — it will not silently revert to its own transcription.
+The colour tells you where it came from: **grey** is the agent's reading, **green** is one you corrected.
+
+If a reading is wrong, fix it: pick the **Select** tool and click the reading text itself — a box opens with the current reading in it. **Your correction outranks anything the agent reads later**, so it will not silently revert. Submitting an empty box clears the reading instead, and the ink is treated as unread.
 
 Correcting a reading is usually the fastest fix when an answer is wrong for a strange reason: an agent that read `∫` as `S` was answering the question it saw.
 
