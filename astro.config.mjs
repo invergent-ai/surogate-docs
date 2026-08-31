@@ -173,6 +173,7 @@ export default defineConfig({
                 'work/workflow/landing-page',
                 'work/workflow/governance',
                 'work/tools/chat',
+                'work/tools/whiteboard',
                 'work/tools/commands',
                 'work/tools/goals',
                 'work/tools/missions',
