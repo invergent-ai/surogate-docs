@@ -79,7 +79,7 @@ Two ways to place one:
 - Pick the **Answer box** tool, then **click** to drop a default-sized box, or **drag** to size one yourself. A text box opens underneath it so you can add a **hint** — a line saying what belongs there. Leave it blank if the space speaks for itself.
 - **Right-click** anywhere on the canvas, whatever tool you are holding. This drops a box straight away, with no hint prompt — the fast path.
 
-A click-placed box takes its left edge at the click point and centres vertically on it — so clicking just after an `=` puts the box exactly where the answer reads. Each box carries a small robot glyph so it reads as *the agent's space*, and they are labelled `S1`, `S2`, … so the agent can refer to them.
+A click-placed box takes its left edge at the click point and centres vertically on it — so clicking just after an `=` puts the box exactly where the answer reads. Each box carries the Surogate rabbit so it reads as *the agent's space*, and they are labelled `S1`, `S2`, … so the agent can refer to them.
 
 The agent fits its answer into the box — text shrinks to fit, a sketch scales in — and **the box disappears**, replaced by the answer. A turn that would leave a box empty is rejected before it reaches your board, so the agent cannot answer beside the space you set aside.
 
