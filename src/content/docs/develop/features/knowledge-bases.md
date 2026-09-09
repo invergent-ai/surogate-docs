@@ -2,7 +2,7 @@
 title: Knowledge Bases
 ---
 
-A KB is a curated corpus the agent can browse at runtime via `kb_list_pages` / `kb_read_page`. Where a skill teaches the agent **how** to do something, a KB tells it **what it knows**.
+A KB is a curated corpus the agent can search and read at runtime via `kb_search_pages`, `kb_list_pages` and `kb_read_page`. Where a skill teaches the agent **how** to do something, a KB tells it **what it knows**.
 
 For the operator's view, see [Work mode → Knowledge bases](/work/library/knowledge-bases).
 
@@ -31,7 +31,7 @@ Source files (markdown, PDF, CSV)
    Agent's session context grows by relevant pages
 ```
 
-The curator does the work of distilling, structuring, cross-referencing — agents don't read raw documents at runtime, they search the curated wiki.
+The curator distills and links the material into a wiki. Hybrid search covers passages from both original sources and generated pages. Agents can read exact source passages, expand to the parent document, or follow a PDF section tree to its page ranges.
 
 ## What a KB carries
 
@@ -44,7 +44,7 @@ The curator does the work of distilling, structuring, cross-referencing — agen
 | **Status** | `error` (no successful compile yet) → `compiling` → `active` |
 | **Counters** | sources, wiki pages, attached agents |
 
-The compiled wiki is versioned in the Hub — every COMPILE produces a new commit you can roll back to.
+Published artifacts are versioned in Hub. Search results and reads refer to the same published content. A failed compile preserves the previous publication; changing a Hub branch alone does not roll back the search registry.
 
 ## Five source types
 
@@ -89,23 +89,22 @@ Compile time: 30s to several minutes per source.
 
 ### When compile fails
 
-Failures are isolated per file: a bad source is marked `error` with its own recorded error message (shown inline in the SOURCES list), healthy sources continue, and a wiki is still produced from the survivors. The compile as a whole still reports `failed` when any file failed — so `error` means "at least one source failed", not "nothing was built".
+A failed source is marked `error` with its recorded message in the SOURCES list. Source, concept-generation, upload or publication failures leave the previous published knowledge available. Successfully prepared summaries are checkpointed for a retry; a PDF retry also recovers its extracted source and section tree.
 
 - **Retry the failing file** — transient failures (curator LLM rate limits) are common, and files a dead compile left locked are requeued automatically on every finalize path, so retry never reports "no files to compile"
-- **Reduce source size** — split large documents into chapter-sized chunks. PDFs above a page threshold route through the long-document indexer; other source types are summarised directly with input bounded to ~240k characters as a head-and-tail excerpt (the middle of an oversized non-PDF file is absent from its summary)
+- **Reduce source size** — splitting large documents into chapters can shorten individual retries. Long PDFs use the section-tree indexer; oversized documents and sections are summarized in parts, then combined so the summary process covers the full text.
 - **Check format** — corrupt PDFs and non-UTF-8 markdown choke the parser
 - **Read the per-file error** — it names the actual reason
 
 ## Wiki search
 
-The same search the agent uses at runtime:
+After attaching a KB, agents use `kb_search_pages` for hybrid lexical/vector search across their permitted knowledge bases, then `kb_read_page` to read the matching pages. Validate retrieval by asking the attached agent representative questions and inspecting its search and read tool results.
 
-```bash
-curl "http://localhost:8000/api/knowledge-bases/{id}/wiki/search?q=refund+policy" \
-  -H "Authorization: Bearer $TOKEN"
-```
+Search hits include a `passage_id` when an exact evidence passage is available. Pass it to `kb_read_page` with the returned KB ID and path. Omit it to expand the document; use `pages` for a PDF range. Reads report the published version and location.
 
-Returns ranked wiki pages with snippets. Pre-test your KB before attaching to an agent — if the right pages don't surface for typical queries, the curator didn't extract what you need.
+Deleting a source file retires its dependent searchable evidence. Existing KBs need a full rebuild to populate source passages and provenance.
+
+The wiki browser's "Search wiki" field filters page titles locally; it does not run the agent's retrieval pipeline.
 
 ## Attach to an agent
 
@@ -125,7 +124,7 @@ The agent's system prompt gains:
   Browse via kb_list_pages("acme-product-docs"), then kb_read_page(path).
 ```
 
-Plus the agent's tool catalogue grows by `kb_list_pages` and `kb_read_page`.
+Plus the agent's tool catalogue grows by `kb_search_pages`, `kb_list_pages` and `kb_read_page`.
 
 ## REST API
 
@@ -140,7 +139,6 @@ Plus the agent's tool catalogue grows by `kb_list_pages` and `kb_read_page`.
 | `DELETE` | `/api/knowledge-bases/{id}/sources/{source_id}` | Remove source |
 | `POST` | `/api/knowledge-bases/{id}/compile` | Trigger compile |
 | `GET` | `/api/knowledge-bases/{id}/wiki` | Browse wiki |
-| `GET` | `/api/knowledge-bases/{id}/wiki/search?q=` | Search wiki |
 
 ## What's next
 
