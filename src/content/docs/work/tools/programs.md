@@ -72,7 +72,7 @@ At each slot the runtime opens an **occurrence** and writes one row per user on 
 1. **Skipped users are recorded first.** A user whose permission has been withdrawn, whose number is gone, or whose previous check-in is still open (*Previous check-in still open*) gets a row with that reason and is not messaged.
 2. **The opener goes out** to everyone else — the approved template on WhatsApp, or the opener message as a direct message from the bot on Slack — through the same delivery path as the agent's replies. Permission is re-checked at the moment of sending, so a withdrawal between the slot and the send still holds.
 3. **The reply deadline starts** when the opener is handed over. Meta's delivery reports move the row from *Queued* to *Sent* and *Delivered*, or to *Failed* with Meta's reason. Slack confirms the post and sends no delivery receipts, so a Slack row stops at *Sent*.
-4. **When the user replies**, the message lands in their own WhatsApp conversation with the agent, and the agent is told to run the Program's skill with them now. Only a first reply within the deadline counts; the conversation then continues as an ordinary WhatsApp chat inside Meta's 24-hour window.
+4. **When the user replies**, the message lands in their own conversation with the agent — the WhatsApp chat, or the Slack direct message — and the agent is told to run the Program's skill with them now. Only a first reply within the deadline counts; the conversation then continues as an ordinary chat, on WhatsApp inside Meta's 24-hour window.
 5. **The agent closes the check-in** with `checkin_outcome` — *Completed* when it got the answers, *Declined* when the person refused or asked to be left alone. If something in the answers needs a human, it calls `checkin_escalate`, which raises **Check-in needs your attention** in the responsible operator's Inbox without ending the check-in.
 6. **The deadline sweep** records what never finished. A delivered opener nobody answered becomes *No reply by deadline*. A reply the agent never closed becomes *Answered, not finished*. An opener that never reached the user goes back to *Not started*, so one failed send never blocks that user's next check-in.
 
@@ -115,6 +115,6 @@ The filters above the table (**Everyone**, **Failures**, **Skipped users**, **No
 ## What's next
 
 - [WhatsApp](/work/channels/whatsapp/) for the connection and the Templates screen.
-- [Users](/work/channels/users/) for enrolling users by phone.
+- [Users](/work/channels/users/) for enrolling users by phone or linking their Slack member.
 - [Skills](/work/library/skills/) for writing the questions.
 - [Inbox](/work/tools/inbox/) for where escalations arrive.

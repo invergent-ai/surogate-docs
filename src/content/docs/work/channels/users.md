@@ -38,7 +38,7 @@ A user added with a phone number is bound to that number on WhatsApp straight aw
 
 - **Give the country code.** The number is normalised to WhatsApp's own form (digits only, no `+`, no trunk `0`), so `+40 (0)746 148 303` and `0040746148303` both become the same number. A number without a country code is refused.
 - **One number, one person, per organisation.** If the number already belongs to another user, the form says so and does nothing; it never moves a number silently. Use that existing user, or change their number first.
-- **Permission is recorded, not assumed.** The checkbox stores who granted permission and when. It is shown next to each user in the list. Leaving it unticked still creates the user; they can chat with the agent, but no Program will message them, and the activation gate names them as a blocker. WhatsApp's business messaging policy requires this opt-in, and your own obligations for health information are yours to confirm before a operational rollout.
+- **Permission is recorded, not assumed.** The checkbox stores who granted permission and when. It is shown next to each user in the list. Leaving it unticked still creates the user; they can chat with the agent, but no Program will message them, and the activation gate names them as a blocker. WhatsApp's business messaging policy requires this opt-in, and any obligations that apply to what your check-ins ask about are yours to confirm before rolling out.
 - **Withdrawing permission** is done from the person's **Edit** form; see [Permission to message first](#permission-to-message-first).
 
 ### Linking a Slack member
