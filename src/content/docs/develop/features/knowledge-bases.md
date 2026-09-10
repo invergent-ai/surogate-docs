@@ -96,11 +96,51 @@ A failed source is marked `error` with its recorded message in the SOURCES list.
 - **Check format** — corrupt PDFs and non-UTF-8 markdown choke the parser
 - **Read the per-file error** — it names the actual reason
 
+### Document identity and ingestion diagnostics
+
+Expand **Document identity and ingestion** under a source file to see extracted
+titles, identifiers, explicit editions and aliases with their source quotations.
+This works across document types and languages. Filename and content claims are
+kept separately; disagreements are flagged, and matching identifiers never
+automatically merge documents. Edition strings are preserved without inferring
+dates from codes.
+
+Identity extraction uses a bounded sample from the beginning and end of the
+source and separate optional model calls for filename and content. Quotes are checked
+against extracted source text, but identity interpretation can still be incomplete
+or incorrect. Agents should read the source before selecting a document or edition.
+
+Identity extraction uses the configured base model by default; bulk summaries
+keep using the summary model. Operators can set `kb_identity_llm_profile: summary`
+to use the summary model for both. The base profile can cost more per source.
+An identifier that exactly equals the complete filename stem is also confirmed
+in code, preserving punctuation and version suffixes.
+
+The same disclosure shows the latest ingestion attempt's warnings and failures,
+including pages with no extracted text, failed or limited image captioning,
+section-index fallback, rejected identity claims and missing embeddings at
+publication. Diagnostic counts include a few examples. A blank PDF page can be
+intentional, so inspect the original before treating it as missing content.
+
+Published identity remains available when a later compile fails. The ingestion
+report records the latest attempt, not a full history or current health status;
+an embedding backfill may have repaired an earlier warning. Existing sources
+receive this metadata when compiled again; rebuild the KB to populate all files.
+
 ## Wiki search
 
 After attaching a KB, agents use `kb_search_pages` for hybrid lexical/vector search across their permitted knowledge bases, then `kb_read_page` to read the matching pages. Validate retrieval by asking the attached agent representative questions and inspecting its search and read tool results.
 
+For a known document, use `kb_search_pages(query="DOC-003", mode="documents")`
+to look up an exact filename, title, identifier or explicit alias. Results make
+ambiguity and filename/content conflicts explicit. Case and whitespace are
+normalized; punctuation, accents and edition differences remain meaningful.
+If identity lookup finds nothing, search content with `mode="passages"` (the
+default). Both modes use the same permitted KB scope.
+
 Search hits include a `passage_id` when an exact evidence passage is available. Pass it to `kb_read_page` with the returned KB ID and path. Omit it to expand the document; use `pages` for a PDF range. Reads report the published version and location.
+
+For table headings or clauses continued around a passage, pass `context="surrounding"` together with `passage_id`. The reader keeps the passage and expands its PDF page and immediate neighbors within a budget. Markdown sources receive a window around the passage. The default is 8,000 source characters, with a maximum of 24,000; `limit` sets the budget. Each slice reports its original location and marks omitted text. Use a parent read or PDF `pages` range for further context; `surrounding` cannot be combined with `pages` or `offset`.
 
 Deleting a source file retires its dependent searchable evidence. Existing KBs need a full rebuild to populate source passages and provenance.
 
