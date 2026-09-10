@@ -14,7 +14,7 @@ Each tab saves independently. Most tabs surface a **SAVE** button (which flashes
 |---|---|
 | **Metrics** | Read-only dashboard: traffic, errors, latency, tokens, conversations, connected resources |
 | **Identity** | Name, slug, description, and the SOUL.md persona |
-| **Capabilities** | Brainstorming gate, live browser, multi-session, the built-in slash commands, and Saga where the deployment enables it |
+| **Capabilities** | Brainstorming gate, live browser, multi-session, Programs, the built-in slash commands, and Saga where the deployment enables it |
 | **Knowledge Bases** | Attach KBs the agent can search, in grounding or reference mode |
 | **Skills** | Attach, write, import, and edit skills |
 | **Tools** | Connect MCP servers, Composio toolkits, and manage the key vault |
@@ -67,6 +67,7 @@ Toggle the agent's built-in behaviors. The Brainstorming gate, Live browser, Mul
 | **Brainstorming gate** | Forces a short design/brainstorm pass with the user before creative or implementation work. Turn off for an agent that should act immediately |
 | **Live browser support** | Lets the agent drive a real browser (navigate, click, type, screenshot). Off removes the browser tools — and hides the end-user Browser Profiles tab |
 | **Multi session** | Lets each user open multiple sessions with the agent. When off, every user gets one dedicated conversation per channel — web, Slack, Telegram or website — and always returns to it; their other sessions are hidden until you turn this back on. End users see a **Chat** button instead of "New chat" |
+| **Programs** | Scheduled WhatsApp check-ins. Each Program sends an approved opener on a cadence, runs a skill when the person replies, and records the outcome. Turning it on adds **Programs** to the agent's navigation. It cannot be turned off while a Program is active — pause them first, because the runtime stops running the agent's Programs the moment the capability is off. See [Programs](/work/tools/programs/) |
 | **Saga** | Tracks multi-step tool chains and rolls back completed steps when a later step fails. Exposes **Step timeout (s)**, **Max retries**, and **Retry delay (s)**. **Hidden unless the deployment opts in** (`saga_ui_enabled` on the server) — it is off on the hosted platform and available on-prem |
 
 **Slash commands** — a master switch turns all built-in chat commands on or off at once, with individual toggles below:

@@ -178,6 +178,7 @@ export default defineConfig({
                 'work/tools/goals',
                 'work/tools/missions',
                 'work/tools/scheduled-work',
+                'work/tools/programs',
                 'work/tools/deep-research',
                 'work/tools/code',
                 'work/tools/sub-agents',
