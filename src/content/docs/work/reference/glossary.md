@@ -36,7 +36,7 @@ Every Surogate term you'll see in Work mode, in one place.
 | **Persona (SOUL.md)** | The agent's identity, tone, and rules. Up to 20,000 characters. Edited in the CONFIG tab. |
 | **Platform floor** | The always-on, non-configurable governance layer: workspace path containment and path-argument hygiene. No agent policy can relax it. |
 | **Pricing model** | How an agent charges: Free, Subscription, One-time packs, or Both. |
-| **Program (check-in)** | A scheduled check-in: a skill, a cadence (weekdays and local times in a named zone), a WhatsApp sender, an approved opener and a roster of patients. Activates only when every patient is reachable. |
+| **Program (check-in)** | A scheduled check-in: a skill, a cadence (weekdays and local times in a named zone), a channel and sender (WhatsApp or Slack), an opener and a roster of users. Activates only when every user is reachable. |
 | **Quality flags** | Per-session tags: 👍 / 👎 (user feedback), `policy.denied`, `harness.crash`, `saga.compensated`, `expert.override`, `expert.endorse`. |
 | **Session** | One conversation between a user and an agent. Records everything. Survives crashes. |
 | **Skill** | A small markdown file telling the agent how to handle a specific kind of request. Reusable. |

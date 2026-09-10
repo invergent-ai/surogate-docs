@@ -89,6 +89,18 @@ Once linked, the same person on Web and Slack sees the same agent, same memory, 
 
 When the agent asks a question (`ask_user_question`), Slack shows a modal — typed replies aren't converted into answers here (unlike Web and Telegram); the bot nudges toward the modal instead. On monetized agents, Slack is a **sellable channel**: a buyer whose package excludes it gets a short notice with their buy link.
 
+## Programs on Slack
+
+A [Program](/work/tools/programs/) can open a conversation with a workspace member on a schedule: the bot posts your opener as a direct message, waits for the reply, and runs the Program's skill when it comes.
+
+What it needs, beyond a connected channel:
+
+- **Personal assistant mode** on this channel's Manage screen. In Team member mode every sender shares one identity, so a reply could not be attributed to the enrolled user; the activation gate refuses a Program on a channel in that mode.
+- **Each user linked to their workspace member**, from the agent's Users tab: **Link Slack member** opens the workspace directory. See [Linking a Slack member](/work/channels/users/#linking-a-slack-member).
+- **Permission to message them first**, recorded on that binding.
+
+No channel membership is needed: a direct message reaches any member of the workspace the app is installed in. No new scopes either; `chat:write`, `im:write` and `users:read` from the setup above cover posting, opening the direct message and listing members. A member who leaves the workspace is caught at activation, and a send to someone Slack cannot reach shows as *Failed* on that user's row with Slack's reason.
+
 ## Multi-workspace
 
 Each Slack workspace needs its own Slack app + its own credentials. To run the same agent across multiple workspaces, create multiple agents in Surogate (each pointing at its workspace's app), or use the API channel for cross-workspace routing.

@@ -103,7 +103,7 @@ Both are **Slack-only**: on a session whose effective channel isn't Slack (Teleg
 | `checkin_outcome` | Record how a scheduled check-in ended — `outcome` (`completed` or `declined`), optional `note` for the operator's run history. Closes the check-in; messages nobody |
 | `checkin_escalate` | Raise the check-in to the responsible operator — `reason`. Lands in that operator's Inbox as an `action_required` item titled "Check-in needs your attention"; does not end the check-in |
 
-Both are offered on channel sessions only, and only do anything inside a conversation a Program opened: the invitation is looked up by session, and elsewhere they return an error. The agent is told to call them by the synthetic `[Check-in]` message that arrives with the patient's reply. See [Programs](/work/tools/programs/).
+Both are offered on channel sessions only, and only do anything inside a conversation a Program opened: the invitation is looked up by session, and elsewhere they return an error. The agent is told to call them by the synthetic `[Check-in]` message that arrives with the user's reply. See [Programs](/work/tools/programs/).
 
 ## GitHub & coding
 

@@ -25,7 +25,8 @@ Open the agent → **Configure** in the left nav → the **Users** tab → **Add
 |---|---|
 | **Email** | The user's login email. Required unless you give a phone number |
 | **Phone** | Their WhatsApp number with country code, e.g. `+40 746 148 303`. Required unless you give an email. See [Enrolling by phone](#enrolling-by-phone-whatsapp) |
-| **Permission to message them** | A checkbox: they have agreed to be contacted by the agent on WhatsApp. Needed before a [Program](/work/tools/programs/) can message them |
+| **Slack member** | Optional — pick the person from the agent's Slack workspace. See [Linking a Slack member](#linking-a-slack-member) |
+| **Permission to message them first** | A checkbox: the agent may open a conversation with them on the channel you bound. Needed before a [Program](/work/tools/programs/) can include them |
 | **Display name** | Optional — what shows up in chat. Defaults to the email's local part. |
 | **Password** | Optional — set one for password login, or leave empty for SSO / self-registration |
 
@@ -33,12 +34,22 @@ Click **Send invite** — a user with an email gets a link to chat with this age
 
 ### Enrolling by phone (WhatsApp)
 
-A user added with a phone number is bound to that number on WhatsApp straight away, with no pairing code: their first message from that number reaches the agent as them, and a check-in Program can open a conversation with them. This is how a clinic enrols patients.
+A user added with a phone number is bound to that number on WhatsApp straight away, with no pairing code: their first message from that number reaches the agent as them, and a check-in Program can open a conversation with them. This is how you enrol people for a Program.
 
 - **Give the country code.** The number is normalised to WhatsApp's own form (digits only, no `+`, no trunk `0`), so `+40 (0)746 148 303` and `0040746148303` both become the same number. A number without a country code is refused.
 - **One number, one person, per organisation.** If the number already belongs to another user, the form says so and does nothing; it never moves a number silently. Use that existing user, or change their number first.
-- **Permission is recorded, not assumed.** The checkbox stores who granted permission and when. It is shown next to each user in the list. Leaving it unticked still creates the user; they can chat with the agent, but no Program will message them, and the activation gate names them as a blocker. WhatsApp's business messaging policy requires this opt-in, and your own obligations for health information are yours to confirm before a clinical rollout.
-- **Withdrawing permission** is not yet available from this tab or the API. The runtime re-checks permission at every send, so a withdrawal takes effect the moment it is recorded: queued check-ins are cancelled and future runs skip the patient with a reason. Re-activating a Program never restores it.
+- **Permission is recorded, not assumed.** The checkbox stores who granted permission and when. It is shown next to each user in the list. Leaving it unticked still creates the user; they can chat with the agent, but no Program will message them, and the activation gate names them as a blocker. WhatsApp's business messaging policy requires this opt-in, and any obligations that apply to what your check-ins ask about are yours to confirm before rolling out.
+- **Withdrawing permission** is done from the person's **Edit** form; see [Permission to message first](#permission-to-message-first).
+
+### Linking a Slack member
+
+A Program on Slack reaches a person through their workspace **member id**, the way WhatsApp reaches them through a phone number. Bind it from the person's row: **Link Slack member** opens the agent's workspace directory, searchable by name or email, and stores the member you pick. The email is shown so you can recognise the right person; it is never used to match automatically, because a person's Slack email often differs from the one they were enrolled with.
+
+The app has to be installed in that workspace, which connecting the [Slack channel](/work/channels/slack/) already does, and the person has to be a member of it. Someone who has already paired their own Slack account with the agent is bound already; you only record permission.
+
+### Permission to message first
+
+Permission is recorded per bound channel, with who granted it and when, and shown on the row. **Edit** a person to grant or withdraw it for WhatsApp and Slack separately. The runtime re-checks permission every time it is about to send, so a withdrawal takes effect at once: queued check-ins to that person are cancelled and future runs skip them with a reason. Re-activating a Program never restores it.
 
 ## Identity across channels
 
