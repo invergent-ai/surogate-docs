@@ -23,15 +23,26 @@ Open the agent → **Configure** in the left nav → the **Users** tab → **Add
 
 | Field | Notes |
 |---|---|
-| **Email** | The user's login email (required) |
+| **Email** | The user's login email. Required unless you give a phone number |
+| **Phone** | Their WhatsApp number with country code, e.g. `+40 746 148 303`. Required unless you give an email. See [Enrolling by phone](#enrolling-by-phone-whatsapp) |
+| **Permission to message them** | A checkbox: they have agreed to be contacted by the agent on WhatsApp. Needed before a [Program](/work/tools/programs/) can message them |
 | **Display name** | Optional — what shows up in chat. Defaults to the email's local part. |
 | **Password** | Optional — set one for password login, or leave empty for SSO / self-registration |
 
-Click **Send invite** — the user gets an email with a link to chat with this agent. The auth provider (Email & password, Google, or GitHub) shows up per user in the list once they sign in; SSO providers are configured project-wide through [Self-registration](/work/channels/self-registration/), not on this form.
+Click **Send invite** — a user with an email gets a link to chat with this agent. A user added with only a phone number receives nothing: the agent recognises them when they write, or when a Program writes to them. The auth provider (Email & password, Google, or GitHub) shows up per user in the list once they sign in; SSO providers are configured project-wide through [Self-registration](/work/channels/self-registration/), not on this form.
+
+### Enrolling by phone (WhatsApp)
+
+A user added with a phone number is bound to that number on WhatsApp straight away, with no pairing code: their first message from that number reaches the agent as them, and a check-in Program can open a conversation with them. This is how a clinic enrols patients.
+
+- **Give the country code.** The number is normalised to WhatsApp's own form (digits only, no `+`, no trunk `0`), so `+40 (0)746 148 303` and `0040746148303` both become the same number. A number without a country code is refused.
+- **One number, one person, per organisation.** If the number already belongs to another user, the form says so and does nothing; it never moves a number silently. Use that existing user, or change their number first.
+- **Permission is recorded, not assumed.** The checkbox stores who granted permission and when. It is shown next to each user in the list. Leaving it unticked still creates the user; they can chat with the agent, but no Program will message them, and the activation gate names them as a blocker. WhatsApp's business messaging policy requires this opt-in, and your own obligations for health information are yours to confirm before a clinical rollout.
+- **Withdrawing permission** is not yet available from this tab or the API. The runtime re-checks permission at every send, so a withdrawal takes effect the moment it is recorded: queued check-ins are cancelled and future runs skip the patient with a reason. Re-activating a Program never restores it.
 
 ## Identity across channels
 
-A user on the Web endpoint is one identity. If they also use Slack, Telegram, or WhatsApp, their channel identities link to this same user. They see the same sessions across all channels.
+A user on the Web endpoint is one identity. If they also use Slack, Telegram, or WhatsApp, their channel identities link to this same user. They see the same sessions across all channels. A user enrolled with a phone number already has their WhatsApp identity, so they are never asked to pair.
 
 Linking is prompted only when the channel is in **Personal assistant** mode (in **Team member** mode everyone shares the agent's identity and is never prompted). An unknown sender gets a private message from the bot with an 8-character pairing code (like `A3F7-K9M2`) and a link to the agent app's `/link` page — they sign in there, enter the code, and the identities pair. Codes live **10 minutes**, are single-use, and are minted at most once per user per 10 minutes; if the private message can't be delivered, the still-live code is re-sent on their next message. Users can also start from the web side: **Settings → Connected Channels → Link a channel**.
 

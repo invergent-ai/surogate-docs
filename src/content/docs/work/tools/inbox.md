@@ -20,6 +20,8 @@ You can also answer by simply **typing a reply in the chat session** (web and Te
 
 Browser login walls, MFA, CAPTCHA, OAuth approval, file pickers, manual web actions. Open the session to interact with the agent's browser; click **I completed this** when done. The session wakes up.
 
+A check-in [Program](/work/tools/programs/) escalation lands here too, titled **Check-in needs your attention**, with the agent's reason as the body. It is addressed to the operator who activated the Program. Open the session to read the patient's answers; the check-in itself keeps going.
+
 ### `task_complete` — long-running session finished
 
 Informational. Producers: `/goal`, `/mission`, `/loop`. Acknowledge or open to inspect.
