@@ -61,7 +61,7 @@ The list shows every template on the account, including ones created outside Sur
 
 **The questions do not go in the template.** Meta reviews template text, so every wording change means another approval round. Keep the opener short and stable; the questions live in the Program's [skill](/work/library/skills/), where you can edit them freely. Once the user replies, the agent asks them as ordinary messages inside the 24-hour window that the reply opens.
 
-Meta's review usually takes minutes to hours, sometimes longer. Registration submits the template; come back to this screen to see whether it was approved. A Program refuses to activate while its template is not approved.
+On Slack the opener is plain text you write on the Program; only WhatsApp needs Meta's approval. Meta's review usually takes minutes to hours, sometimes longer. Registration submits the template; come back to this screen to see whether it was approved. A Program refuses to activate while its template is not approved.
 
 ## What users see
 

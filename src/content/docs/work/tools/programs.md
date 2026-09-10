@@ -2,21 +2,21 @@
 title: Programs
 ---
 
-A **Program** is a scheduled check-in the agent starts. On a cadence you set, it sends each enrolled person an approved WhatsApp message, waits for their reply, runs a skill with them when they answer, and records how it went. Checking in with a group of people on a schedule, morning and evening, is the case it was built for.
+A **Program** is a scheduled check-in the agent starts. On a cadence you set, it sends each enrolled person an opener, a Meta-approved template on WhatsApp or a message you write on Slack, waits for their reply, runs a skill with them when they answer, and records how it went. Checking in with a group of people on a schedule, morning and evening, is the case it was built for.
 
-A Program is five things: a **skill** (the questions), a **cadence** (which weekdays, at which local times, in which timezone), a **WhatsApp sender**, an **opener** (the Meta-approved template that starts the conversation), and a **roster** of users. Ops holds that configuration; the agent runtime does the sending and keeps the per-user record.
+A Program is five things: a **skill** (the questions), a **cadence** (which weekdays, at which local times, in which timezone), a **channel and sender**, an **opener** (the message that starts the conversation), and a **roster** of users. Ops holds that configuration; the agent runtime does the sending and keeps the per-user record.
 
 Open it from an agent's left navigation (**Programs**, under the agent) or go to `/work/agents/<agentId>/programs`. The entry appears only when the Programs capability is on for that agent.
 
-Programs run on WhatsApp only. Telegram cannot be used because a bot may not write first there, and the website widget has no number to write to.
+Programs run on **WhatsApp** and **Slack**, the two channels where the agent can start a conversation. Telegram cannot be used because a bot may not write first there, and the website widget has no address to write to.
 
 ## Before you start
 
 Five things have to be in place, and the activation gate checks every one of them:
 
-1. **WhatsApp connected**, with the **WhatsApp Business Account ID** filled in — see [WhatsApp](/work/channels/whatsapp/). The account id is what the Templates screen and the activation gate talk to Meta with.
-2. **An approved template** — the opener. Register it under **Publish → Channels → WhatsApp → Manage → Templates** and wait for Meta to approve it; see [Templates](/work/channels/whatsapp/#templates-the-check-in-opener). Keep it short and fixed: *Time for your check-in. Reply to begin.* The questions do not go in it.
-3. **Users enrolled by phone, with permission** — add them on the agent's **Users** tab with a phone number and the **Permission to message them** box ticked; see [Enrolling by phone](/work/channels/users/#enrolling-by-phone-whatsapp).
+1. **A connected channel** — WhatsApp with its **Business Account ID** filled in, or Slack in **Personal assistant** mode; see [WhatsApp](/work/channels/whatsapp/) and [Programs on Slack](/work/channels/slack/#programs-on-slack).
+2. **An opener.** On WhatsApp, an approved template: register it under **Publish → Channels → WhatsApp → Manage → Templates** and wait for Meta to approve it; see [Templates](/work/channels/whatsapp/#templates-the-check-in-opener). On Slack, a sentence you write on the Program; nothing to approve. Either way keep it short: *Time for your check-in. Reply to begin.* The questions do not go in it.
+3. **Users bound and permitted** — a phone number for WhatsApp, a linked Slack member for Slack, and **Permission to message them first**; see [Users](/work/channels/users/).
 4. **A skill with the questions** — an ordinary [skill](/work/library/skills/) available to the agent. The agent runs it when the user replies, so write it as the conversation you want held: what to ask, in what order, what counts as done, and when to escalate.
 5. **The capability on** — **Configure → Capabilities → Programs**. It is off by default because a Program messages real people on a schedule.
 
@@ -30,9 +30,11 @@ Click **New Program** and fill in the form. Saving creates a **draft**; nothing 
 |---|---|
 | **Name** | For your own list, e.g. *Post-op daily check-in*. |
 | **Skill** | The skill reference the agent runs on reply, e.g. `post-op-checkin`. |
-| **WhatsApp phone number id** | Meta's id for the sending number, the same value as the channel's **Phone Number ID**. |
-| **Template (the opener)** | The approved template's name, e.g. `daily_checkin`. |
-| **Template language** | The template's language code, e.g. `en_US`. A template is approved per language; name and language have to match what Meta shows. |
+| **Channel** | WhatsApp or Slack, among the channels this agent has connected. |
+| **Sender** | Filled in from the connection: the WhatsApp number's id, or the Slack app. |
+| **Template (the opener)** | WhatsApp only. The approved template's name, e.g. `daily_checkin`. |
+| **Template language** | WhatsApp only. The template's language code, e.g. `en_US`. A template is approved per language; name and language have to match what Meta shows. |
+| **Opener message** | Slack only. The text the bot posts to start the check-in. |
 | **Days** | The weekdays it fires. |
 | **Times of day** | One or more local times, `HH:MM` on a 24-hour clock, e.g. `09:00, 21:00`. |
 | **Timezone** | A named zone such as `Europe/Bucharest`. An offset like `+03:00` is refused: it cannot follow daylight-saving changes. |
@@ -53,10 +55,11 @@ The roster is the denominator every run counts against: a user who cannot be rea
 - the Programs capability is off for this agent;
 - no weekday, no time, an unparseable time, or an offset instead of a named timezone;
 - no skill, or no sender number;
-- no template, or a template name without its language;
+- on WhatsApp, no template, or a template name without its language;
 - the template is not on this WhatsApp account, or Meta reports it as anything other than approved;
+- on Slack, no opener message, Slack not connected for that sender, or its channel in Team member mode;
 - the roster is empty;
-- a user on the roster has no phone number, or has not given permission.
+- a user on the roster has no phone number (WhatsApp) or no linked Slack member (Slack), has not given permission, or has since left the Slack workspace.
 
 Whoever activates a Program becomes its **responsible operator**: escalations from its check-ins land in that person's [Inbox](/work/tools/inbox/).
 
@@ -67,8 +70,8 @@ Once active, the row shows the **next run** in the Program's timezone. Edits tha
 At each slot the runtime opens an **occurrence** and writes one row per user on the roster.
 
 1. **Skipped users are recorded first.** A user whose permission has been withdrawn, whose number is gone, or whose previous check-in is still open (*Previous check-in still open*) gets a row with that reason and is not messaged.
-2. **The opener goes out** to everyone else, as the approved template, through the same delivery path as the agent's replies. Permission is re-checked at the moment of sending, so a withdrawal between the slot and the send still holds.
-3. **The reply deadline starts** when the opener is handed over. Meta's delivery reports move the row from *Queued* to *Sent* and *Delivered*, or to *Failed* with Meta's reason.
+2. **The opener goes out** to everyone else — the approved template on WhatsApp, or the opener message as a direct message from the bot on Slack — through the same delivery path as the agent's replies. Permission is re-checked at the moment of sending, so a withdrawal between the slot and the send still holds.
+3. **The reply deadline starts** when the opener is handed over. Meta's delivery reports move the row from *Queued* to *Sent* and *Delivered*, or to *Failed* with Meta's reason. Slack confirms the post and sends no delivery receipts, so a Slack row stops at *Sent*.
 4. **When the user replies**, the message lands in their own WhatsApp conversation with the agent, and the agent is told to run the Program's skill with them now. Only a first reply within the deadline counts; the conversation then continues as an ordinary WhatsApp chat inside Meta's 24-hour window.
 5. **The agent closes the check-in** with `checkin_outcome` — *Completed* when it got the answers, *Declined* when the person refused or asked to be left alone. If something in the answers needs a human, it calls `checkin_escalate`, which raises **Check-in needs your attention** in the responsible operator's Inbox without ending the check-in.
 6. **The deadline sweep** records what never finished. A delivered opener nobody answered becomes *No reply by deadline*. A reply the agent never closed becomes *Answered, not finished*. An opener that never reached the user goes back to *Not started*, so one failed send never blocks that user's next check-in.
@@ -105,7 +108,7 @@ The filters above the table (**Everyone**, **Failures**, **Skipped users**, **No
 
 ## Limits in this release
 
-- WhatsApp only; one fixed-text opener per Program, in one language; no variables in the template.
+- One opener per Program: a fixed-text template in one language on WhatsApp, one message on Slack.
 - No reminder after a missed check-in. The next slot simply comes round.
 - While your Meta app is in development mode, Meta delivers only to the numbers on its recipient list, so a Program appears to work for you and fail for everyone else. That is Meta's restriction, not the gate's.
 
