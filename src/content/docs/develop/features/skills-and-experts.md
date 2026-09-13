@@ -19,12 +19,9 @@ Markdown with YAML frontmatter:
 name: code_reviewer
 description: Reviews code for quality, security, and best practices
 trigger: review code, code review, check this code
-tools: [read_file, search_files, write_file]
 type: skill                    # default; use 'expert' for model-backed
 tags: [security, quality]
-platforms: ["linux", "macos"]
 requires_tools: [read_file]
-fallback_for_tools: []
 ---
 
 You are a code reviewer. When asked to review code:
@@ -46,10 +43,9 @@ You are a code reviewer. When asked to review code:
 | `name` | string | yes | Lowercase, alphanumeric + hyphens, 1-64 chars |
 | `description` | string | yes | Shown to the LLM in `skills_list` |
 | `trigger` | string \| list | recommended | Keywords/phrases matched against the user message |
-| `tools` | list | no | Tools this skill uses (for progressive disclosure) |
+| `tools` | list | no | For `type: expert`, the tools the expert may call in its mini-loop. On a regular skill it is author metadata only; the runtime does not read it. Use `requires_tools` to gate on tool availability. |
 | `type` | string | no | `skill` (default) or `expert` |
 | `tags` | list | no | Metadata for categorisation |
-| `platforms` | list | no | Restrict to OSes `["linux", "macos", "windows"]` |
 | `requires_tools` | list | no | Hidden unless ALL listed tools are available |
 | `fallback_for_tools` | list | no | Hidden when ALL listed tools are available |
 | `enabled` | bool | no | Parsed but not enforced — a skill file loads whether or not it is set |
