@@ -142,7 +142,6 @@ Say you want a `kubectl-diagnose` skill that runs `kubectl describe ...` and ana
 name: kubectl-diagnose
 description: Diagnose K8s pod issues by running kubectl describe and analysing output
 trigger: pod is failing, k8s issue, debug pod, kubectl, why isn't this running
-tools: [terminal]
 requires_tools: [terminal]
 ---
 
