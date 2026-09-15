@@ -228,7 +228,9 @@ There are two ways to get one:
 - **Fork a catalogue entry.** The platform ships curated environments — grade-school maths, multiple choice, science questions, and calculator tool use. Picking one copies its implementation into your project as a new Hub repo, with its arguments in an editable `CONFIG` dict beside it. From that point it is an ordinary environment of yours, and you can change it.
 - **Bring your own.** Push a verifiers package to an `Environments` repo in the Hub.
 
-One constraint either way: an environment may import only what the trainer image already ships. There is no installer for an environment's own dependencies, so a package needing something outside that set will not run.
+Constraints:
+
+- An environment may import only what the trainer image already ships. There is no installer for an environment's own dependencies, so a package needing something outside that set will not run.
 
 ## REST API
 
