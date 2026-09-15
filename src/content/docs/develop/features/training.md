@@ -196,7 +196,7 @@ The tab set depends on the method.
 
 | Tab | What it shows | Methods |
 |---|---|---|
-| **Overview** | Status and progress, the loss charts, throughput, and the archived training log (kept server-side, so it survives the GPU being released). A DISTILL run also charts KD Loss here | All |
+| **Overview** | Status and progress, the loss charts, throughput, and the training log. A DISTILL run also charts KD Loss here | All |
 | **Configuration** | Base model, hyperparameters, adapter and precision, compute. The method's own card lives here too: Preference Loss for DPO, Distillation for DISTILL | All |
 | **Datasets** | What it trains on | SFT, DPO, DISTILL |
 | **Checkpoints** | Saved steps you can resume or merge from | SFT, DPO, DISTILL |
