@@ -192,20 +192,18 @@ Every run belongs to an **experiment**, and each experiment maps to a repo in th
 
 ## Run detail page
 
-The tab set depends on the method. Logs and metric charts both live inside **Overview**; there is no separate Logs or Metrics tab.
+The tab set depends on the method.
 
-**SFT, DPO and DISTILL runs:**
-
-| Tab | What it shows |
-|---|---|
-| **Overview** | Status and progress, the loss charts, throughput, and the archived training log (kept server-side, so it survives the GPU being released). A DISTILL run also charts KD Loss here |
-| **Configuration** | Base model, hyperparameters, adapter and precision, compute — editable while the run is queued. The method's own card lives here too: Preference Loss for DPO, Distillation for DISTILL |
-| **Datasets** | What it trains on, with a sample preview |
-| **Checkpoints** | Saved steps you can resume or merge from |
-| **Lineage** | Where the weights and the data came from |
-| **Repository** | Files and commits in the run's Data Hub branch |
-
-**GRPO runs** get a different set: **Overview**, **Configuration**, **Environment** (in Environment mode), **Rollouts** — periodically sampled with prompt, completion, reward and advantage, from `GET /api/training-runs/{id}/rollouts` — and **Repository**.
+| Tab | What it shows | Methods |
+|---|---|---|
+| **Overview** | Status and progress, the loss charts, throughput, and the archived training log (kept server-side, so it survives the GPU being released). A DISTILL run also charts KD Loss here | All |
+| **Configuration** | Base model, hyperparameters, adapter and precision, compute. The method's own card lives here too: Preference Loss for DPO, Distillation for DISTILL | All |
+| **Datasets** | What it trains on | SFT, DPO, DISTILL |
+| **Checkpoints** | Saved steps you can resume or merge from | SFT, DPO, DISTILL |
+| **Lineage** | Where the weights and the data came from | SFT, DPO, DISTILL |
+| **Environment** | The registered environment the run scores against | GRPO, Environment mode |
+| **Rollouts** | Periodically sampled rollouts with prompt, completion, reward and advantage — from `GET /api/training-runs/{id}/rollouts` | GRPO |
+| **Repository** | Files and commits in the run's Data Hub branch | All |
 
 ## Stopping a run
 
