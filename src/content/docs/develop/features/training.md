@@ -50,8 +50,6 @@ Use when:
 
 ### DPO — Direct Preference Optimisation
 
-> 📸 **Screenshot needed:** the DPO method card on the New Run page, and the Preference Loss card on a DPO run's Configuration tab (the one with the beta slider).
-
 Trains on **preferences** rather than on a single target answer. Each row gives the model a prompt with two completions — one preferred, one not — and the objective pushes probability toward the preferred one relative to a frozen copy of the base model.
 
 DPO rides the SFT path: it is an SFT config plus a `loss` block, dispatched to its own trainer entrypoint (`surogate dpo`).
@@ -115,8 +113,6 @@ The backend resolves exactly two GRPO reward paths:
 
 ### DISTILL — Knowledge Distillation
 
-> 📸 **Screenshot needed:** three shots. (1) the Knowledge Distillation method card on the New Run page; (2) a DISTILL run's Configuration tab showing the Teacher field and the Distillation Loss card with its RESOLVED OBJECTIVE box; (3) a completed DISTILL run's Overview tab showing the KD Loss chart beside Training Loss (CE).
-
 Compresses a large **teacher** model into a smaller **student** by training the student to reproduce the teacher's output distribution, not just the dataset's answers. The teacher's "nearly right" alternatives carry information a hard label throws away.
 
 DISTILL rides the SFT path: it is an SFT config plus a `distillation:` block naming the teacher. Run-create rejects a DISTILL run without one.
@@ -162,18 +158,7 @@ A distillation run minimises `ce_weight × loss + kd_weight × kd_loss`, and the
 - **KD Loss** — how close the student is to the teacher's distribution. This is the half distillation is for.
 - **Training Loss (CE)** — plain cross-entropy against the dataset's own answers, exactly as in SFT.
 
-Cross-entropy is *reported* on every distillation run, but at the default 0.50/0.50 weights it is only half of what is being optimised. The **Pure distillation** preset sets `ce_weight: 0`, at which point it is not in the objective at all — the chart is then labelled *"Training Loss (CE, not optimised)"*, and a rising cross-entropy there is not a failing run.
-
-For the same reason, a distillation run's **best loss** figure is cross-entropy wherever it appears, so it is shown as *"Best loss (CE)"*. It is not the quantity the run minimised, and it is not comparable with an SFT run's best loss even though both are labelled a loss.
-
-#### Teacher checks before the GPU is booked
-
-Clicking START on a DISTILL run runs two checks that need the Hub, before anything is provisioned:
-
-- **The teacher resolves.** A teacher id that cannot be loaded is refused with a 422 rather than discovered inside the container after a model download.
-- **The teacher shares the student's tokenizer.** This is the one that cannot be caught later. Distillation records the teacher's answers as token ids and feeds them straight into the student, so two different tokenizers mean every id is read against the wrong text. Such a run does not fail — it completes, bills, and publishes a model trained on noise. Pick a teacher from the same family as the student.
-
-Both fail **open**: if the Hub cannot be reached the run is allowed to start rather than blocked on a network blip.
+At the default 0.50/0.50 weights cross-entropy is only half the objective, and the **Pure distillation** preset (`ce_weight: 0`) takes it out entirely. So a climbing CE curve on a distillation run is not necessarily a failing one — check KD Loss, which is the half that matters.
 
 Use when:
 
