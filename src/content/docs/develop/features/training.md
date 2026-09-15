@@ -213,7 +213,7 @@ STOP button on the run detail page (`POST /api/training-runs/{id}/stop`). This a
 
 For GRPO Environment mode, you need a registered environment. The Hub has an `Environments` repo type for these.
 
-An environment is a **[verifiers](https://github.com/willccbb/verifiers) package**, not a class implementing a gym-style step loop. It is a Python package whose `__init__.py` exposes a `load_environment(...)` function returning the environment object:
+An environment is a **[verifiers](https://github.com/willccbb/verifiers) package**, not a class implementing a gym-style step loop. It is a Python package whose `__init__.py` exposes a `load_environment(...)` function:
 
 ```python
 # my_environment/__init__.py
@@ -221,9 +221,14 @@ def load_environment(**kwargs):
     ...  # returns a verifiers environment
 ```
 
-The platform stages that package into the training container before the run starts, so a missing or unloadable environment stops the run early rather than mid-training.
+The platform stages that package into the training container before training starts, so a missing or unloadable environment stops the run early rather than part-way through.
 
-`ruler_task` is the one system environment that ships with the platform — it backs RULER mode and is wired in for you. Everything else comes from the **environment catalogue**, which offers curated environments you can fork and edit into your own.
+There are two ways to get one:
+
+- **Fork a catalogue entry.** The platform ships curated environments — grade-school maths, multiple choice, science questions, and calculator tool use. Picking one copies its implementation into your project as a new Hub repo, with its arguments in an editable `CONFIG` dict beside it. From that point it is an ordinary environment of yours, and you can change it.
+- **Bring your own.** Push a verifiers package to an `Environments` repo in the Hub.
+
+One constraint either way: an environment may import only what the trainer image already ships. There is no installer for an environment's own dependencies, so a package needing something outside that set will not run.
 
 ## REST API
 
