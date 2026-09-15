@@ -4,7 +4,7 @@ sidebar:
   label: Training
 ---
 
-The Training page launches fine-tuning runs. Four methods can be created and started — **SFT**, **DPO**, **GRPO** and **DISTILL** — and the method picker offers exactly those four. SFT and GRPO are documented in depth below.
+The Training page launches fine-tuning runs. Four methods can be created and started — **SFT**, **DPO**, **GRPO** and **DISTILL** — and the method picker offers exactly those four. Each is documented in depth below.
 
 > **Studio vs. the engine.** Pretraining (PT) and full-parameter fine-tuning are handled directly by the `surogate` engine CLI (`surogate sft` / `surogate grpo` and friends) and are not exposed in the Studio training pipeline. `PPO` exists in the API schema but is rejected at run-create time with *"PPO not yet supported"*.
 
@@ -48,6 +48,40 @@ Use when:
 
 ![Hyperparameters, adapter and precision, and the cloud backend the run lands on](../../../../assets/screenshots/dev-training-sft-hyperparams.png)
 
+### DPO — Direct Preference Optimisation
+
+Trains on **preferences** rather than on a single target answer. Each row gives the model a prompt with two completions — one preferred, one not — and the objective pushes probability toward the preferred one relative to a frozen copy of the base model.
+
+DPO rides the SFT path: it is an SFT config plus a `loss` block, dispatched to its own trainer entrypoint (`surogate dpo`).
+
+Configuration:
+
+```
+Method: DPO
+Base model: ...
+Dataset: rows of {prompt, chosen, rejected}
+Preference loss (config.loss):
+  - type: dpo             (required — run-create rejects a DPO run without it)
+  - dpo_beta              How hard to pull away from the reference model (> 0)
+  - reference_free        Score without a frozen reference copy
+  - target_margin         Required gap between chosen and rejected (needs reference_free)
+  - length_norm           Normalise by completion length
+  - span_mask             Score only the spans that differ
+```
+
+Four constraints are enforced before a run can start, and each mirrors the trainer:
+
+- **LoRA is required.** Each pair is scored against the frozen base, so there has to be a base to freeze. A full fine-tune has no reference to compare against — use SFT for that.
+- **`per_device_train_batch_size` must be even.** A chosen/rejected pair is two rows, so an odd batch would split a pair across steps.
+- **`target_margin` requires `reference_free: true`.** The margin is defined against a reference-free score.
+- **Dataset entries are `type: preference`**, or carry no type at all. Any other value parses and then fails inside the container.
+
+Use when:
+
+- You have pairs of better/worse answers rather than single correct ones
+- The quality you want is comparative — tone, helpfulness, style
+- SFT gets the shape right but you want to push it away from a specific failure mode
+
 ### GRPO — Group Relative Policy Optimisation
 
 Reinforcement learning from rewards. Newer, more complex.
@@ -77,6 +111,61 @@ The backend resolves exactly two GRPO reward paths:
 - **Environment** — the run points at a registered verifiers environment (`config.environment_id`) that computes deterministic rewards. Example: math problems where correctness is verifiable.
 - **RULER** — an LLM judge scores each rollout. The dialog supplies a dataset of prompts plus a system prompt (`config.ruler_task_args`), which the platform wires into a built-in `ruler_task` environment. The judge can be **external** (your own OpenAI-compatible endpoint + API key) or **colocated** (a vLLM judge that runs on the training fleet and consumes its own GPU blocks). Good for subjective rewards (helpfulness, tone).
 
+### DISTILL — Knowledge Distillation
+
+Compresses a large **teacher** model into a smaller **student** by training the student to reproduce the teacher's output distribution, not just the dataset's answers. The teacher's "nearly right" alternatives carry information a hard label throws away.
+
+DISTILL rides the SFT path: it is an SFT config plus a `distillation:` block naming the teacher. Run-create rejects a DISTILL run without one.
+
+#### The capture pass
+
+A distillation run has **two phases**, and the first is usually the longer one:
+
+```
+1. Capture   The teacher is loaded and run once over the whole dataset.
+             For every token it records its top-K next-token logprobs into a
+             .kd sidecar file, stored alongside the tokenised shards.
+2. Train     The student trains on those sidecars. The teacher is gone by now;
+             it is not held in memory during training.
+```
+
+Capture happens **once**, not per epoch, and its cost scales with the teacher's size and the dataset, not with your epoch count. On a reference run a 1.7B teacher over ~295k tokens took about 100 seconds on one L4, against 70 seconds for the training that followed.
+
+Two consequences worth planning around:
+
+- **The teacher must fit on one card.** Capture loads the whole teacher onto a single device and does not shard it, so adding GPUs does not make a larger teacher fit. The run form warns when the teacher looks too large for the selected GPU.
+- **Sidecars are large.** Roughly `6 × top_k` bytes per token. At the default `top_k: 64` that is ~384 bytes per token, which is far bigger than the token shards themselves — a 295k-token dataset produces about 113 MB. The storage table on the run form estimates this before you start.
+
+Configuration:
+
+```
+Method: DISTILL
+Base model: the student — the model you are training
+Dataset: any SFT-shaped dataset
+Distillation (config.distillation):
+  - teacher_model         Required. Must share the student's tokenizer.
+  - top_k                 Logprobs stored per token, 1..1024 (default 64)
+  - temperature           Softens the teacher's distribution, > 0
+  - kd_weight             Weight of the KD (KL) term, >= 0
+  - ce_weight             Weight of the plain cross-entropy term.
+                          Defaults to 1 - kd_weight.
+```
+
+#### The objective, and the two loss curves
+
+A distillation run minimises `ce_weight × loss + kd_weight × kd_loss`, and the run's Overview shows both halves:
+
+- **KD Loss** — how close the student is to the teacher's distribution. This is the half distillation is for.
+- **Training Loss (CE)** — plain cross-entropy against the dataset's own answers, exactly as in SFT.
+
+At the default 0.50/0.50 weights cross-entropy is only half the objective, and the **Pure distillation** preset (`ce_weight: 0`) takes it out entirely. So a climbing CE curve on a distillation run is not necessarily a failing one — check KD Loss, which is the half that matters.
+
+Use when:
+
+- You want a small model that behaves like a much larger one
+- You have the larger model available and the budget to run it once over your data
+- Plain SFT on the same data plateaus below the quality you need
+
 ## Training run lifecycle
 
 Creating a run and launching it are **two separate steps**: `POST /api/training-runs` records a queued run (and validates the request), then `POST /api/training-runs/{id}/start` submits it to compute. This lets you create a run, tweak its config, and only then launch.
@@ -103,14 +192,18 @@ Every run belongs to an **experiment**, and each experiment maps to a repo in th
 
 ## Run detail page
 
-| Tab | What it shows |
-|---|---|
-| **OVERVIEW** | Status, dataset, base model, hyperparameters, ETA, current epoch |
-| **LOGS** | Training log output (archived server-side, so it survives the GPU being released) |
-| **METRICS** | Train loss, eval loss (if eval split), learning rate, throughput — from `GET /api/training-runs/{id}/metrics` |
-| **ROLLOUTS** | (GRPO only) Periodically-sampled rollouts with prompt, completion, reward, and advantage — from `GET /api/training-runs/{id}/rollouts` |
-| **CHECKPOINTS** | Per-epoch model snapshots |
-| **OUTPUT** | The final trained model with its endpoint when serving starts |
+The tab set depends on the method.
+
+| Tab | What it shows | Methods |
+|---|---|---|
+| **Overview** | Status and progress, the loss charts, throughput, and the training log. A DISTILL run also charts KD Loss here | All |
+| **Configuration** | Base model, hyperparameters, adapter and precision, compute. The method's own card lives here too: Preference Loss for DPO, Distillation for DISTILL | All |
+| **Datasets** | What it trains on | SFT, DPO, DISTILL |
+| **Checkpoints** | Saved steps you can resume or merge from | SFT, DPO, DISTILL |
+| **Lineage** | Where the weights and the data came from | SFT, DPO, DISTILL |
+| **Environment** | The registered environment the run scores against | GRPO, Environment mode |
+| **Rollouts** | Periodically sampled rollouts with prompt, completion, reward and advantage — from `GET /api/training-runs/{id}/rollouts` | GRPO |
+| **Repository** | Files and commits in the run's Data Hub branch | All |
 
 ## Stopping a run
 
@@ -120,23 +213,24 @@ STOP button on the run detail page (`POST /api/training-runs/{id}/stop`). This a
 
 For GRPO Environment mode, you need a registered environment. The Hub has an `Environments` repo type for these.
 
-An environment is a Python class implementing:
+An environment is a **[verifiers](https://github.com/willccbb/verifiers) package**, not a class implementing a gym-style step loop. It is a Python package whose `__init__.py` exposes a `load_environment(...)` function:
 
 ```python
-class MyEnvironment:
-    def reset(self) -> Observation:
-        ...
-
-    def step(self, action) -> tuple[Observation, Reward, Done, Info]:
-        ...
-
-    def compute_reward(self, trajectory) -> float:
-        ...
+# my_environment/__init__.py
+def load_environment(**kwargs):
+    ...  # returns a verifiers environment
 ```
 
-The platform ships several built-in environments (math, code-execution, multi-step planning). Custom ones live in `tenant-{org_id}/shared/agents/environments/`.
+The platform stages that package into the training container before training starts, so a missing or unloadable environment stops the run early rather than part-way through.
 
-🚧 The RL Environments page in the UI shows an empty "No environments yet" sidebar in current builds; this surface is partially wired.
+There are two ways to get one:
+
+- **Fork a catalogue entry.** The platform ships curated environments — grade-school maths, multiple choice, science questions, and calculator tool use. Picking one copies its implementation into your project as a new Hub repo, with its arguments in an editable `CONFIG` dict beside it. From that point it is an ordinary environment of yours, and you can change it.
+- **Bring your own.** Push a verifiers package to an `Environments` repo in the Hub.
+
+Constraints:
+
+- An environment may import only what the trainer image already ships. There is no installer for an environment's own dependencies, so a package needing something outside that set will not run.
 
 ## REST API
 
