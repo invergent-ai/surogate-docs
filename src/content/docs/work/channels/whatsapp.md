@@ -6,33 +6,48 @@ Puts the agent on a WhatsApp business number via Meta's official **WhatsApp Busi
 
 ## What you need
 
-A Meta app and a business phone number:
+A Meta app with a business phone number on it:
 
-1. Create a Meta app with the **"Connect with customers through WhatsApp"** use case.
+1. Create a Meta app with the **"Connect with customers through WhatsApp"** use case. Meta creates a **WhatsApp Business Account** (WABA) along with it.
 2. In **Business Settings**, add a **System user** and generate a token with expiration **Never**, scoped to `whatsapp_business_messaging`, `whatsapp_business_management`, and `business_management`. Don't ship the token from the API Setup page — that one expires after 24 hours and the channel stops working silently.
+
+You will also need the app's **App Secret** and the **WhatsApp Business Account ID**; the table below says where to find each. You never need the phone number's ID — Surogate reads it from the business account.
 
 ## Configuration in Surogate
 
-![The Connect WhatsApp walkthrough: the Meta app steps and the four credential fields](../../../../assets/screenshots/work-channel-whatsapp-connect.png)
+![The Connect WhatsApp walkthrough: the Meta app steps and the credential fields](../../../../assets/screenshots/work-channel-whatsapp-connect.png)
 
-Open the agent → **Publish** in the left nav → the **Channels** tab → find the **WhatsApp** card ("Reply to people on WhatsApp") → **Connect**. The wizard walks the Meta steps and asks for four credentials:
+Open the agent → **Publish** in the left nav → the **Channels** tab → find the **WhatsApp** card ("Reply to people on WhatsApp") → **Connect**. The wizard has five steps.
+
+**1. Create the Meta app** — as described above.
+
+**2. Set the Meta app's webhook.** The wizard shows a **Callback URL** and a **Verify token**, each with a **Copy** button. In Meta, open **WhatsApp › Configuration › Edit webhook**, paste both, and click **Verify and save**. Then click **Manage** on the webhook fields and subscribe to **`messages`**.
+
+This is needed once per Meta app, and the two values are the same for every agent. Meta refuses to connect a number until the app has this webhook — see [When WhatsApp stops working](#when-whatsapp-stops-working).
+
+:::note[Self-hosted Surogate]
+Meta calls the callback URL from the internet. On a self-hosted deployment, the URL's host needs a public DNS record and must accept HTTPS from outside your network. If **Verify and save** fails, ask your administrator to check that first.
+:::
+
+**3. Generate the system-user token** — as described above.
+
+**4. Paste your credentials:**
 
 | Field | Where it comes from |
 |---|---|
-| **Phone Number ID** | Meta's internal ID for your number (15–17 digits), shown just below the "From" dropdown in API Setup — *not* the phone number itself |
 | **Access Token** | The system-user token (`EAA…`) |
-| **App Secret** | 32 lowercase hex characters, from the app's settings |
-| **WhatsApp Business Account ID** | Your WABA ID. Optional for replying; **required** for [Templates](#templates-the-check-in-opener) and therefore for [Programs](/work/tools/programs/) |
+| **App Secret** | 32 lowercase hex characters, from **App settings › Basic**. It must belong to the same Meta app as the token |
+| **WhatsApp Business Account ID** | Shown on **WhatsApp › API Setup**, and in Business Settings under **Accounts › WhatsApp accounts** |
 
-**Connect here first — then register the webhook in Meta.** The webhook handshake needs the channel to exist, so the order matters. After connecting, the Manage screen shows:
+**Find phone numbers** is optional: it lists the numbers on the business account. If the account holds more than one, pick the one the agent should answer on; with a single number, connecting picks it for you.
 
-- **Callback URL** — paste into **Meta › WhatsApp › Configuration › Edit webhook**.
-- **Verify Token** — paste alongside the callback URL, click Verify and save. Don't rotate it later — that breaks the webhook Meta has already verified.
-- Then click **Manage** on the webhook fields and subscribe to **`messages`** — skipping this is the classic "verified but nothing arrives".
+**5. Connect.** Connecting subscribes the business account to your Meta app and points it at this agent's own callback, which Meta verifies on the spot. If Meta refuses, the channel stays off and the wizard shows Meta's reason.
 
 While your Meta app is in development mode, Meta only delivers messages from numbers on its recipient list (five maximum, under **API Setup › To**) — that's a Meta restriction, separate from the agent's own access rules.
 
 ## Options (the WhatsApp "Manage" screen)
+
+The **Webhook** card checks with Meta that your app is still subscribed to the business account; **Re-check** asks again. If it says the app is not subscribed, Meta delivers nothing — **Reconnect** to fix it.
 
 One option, auto-saved:
 
@@ -75,9 +90,10 @@ On monetized agents, WhatsApp is a **sellable channel** — a buyer whose packag
 
 ## When WhatsApp stops working
 
-- **Webhook verified but nothing arrives** — you didn't subscribe to the `messages` webhook field in Meta. Fix under WhatsApp › Configuration.
+- **Connecting fails with `(#100) Before override the current callback uri, your app must be subscribed…`** — the Meta app has no webhook of its own yet, or it isn't subscribed to `messages`. Do step 2 of the wizard, then connect again.
+- **Meta can't verify the callback URL** — in step 2 or when connecting. Meta either couldn't reach the URL or got a different verify token. Paste the token exactly as the wizard shows it; on a self-hosted deployment, check that the URL is reachable from the internet.
+- **Connected, but messages never arrive** — the App Secret comes from a different Meta app than the access token, so Surogate can't verify Meta's signature and discards every message. **Reconnect** with the token and secret from the same app.
 - **Worked for a day, then went silent** — you pasted the 24-hour token from API Setup instead of a permanent system-user token. Generate the system-user token and **Reconnect**.
-- **"Bad object id" delivery errors** — usually a phone number pasted into the **Phone Number ID** field; it needs Meta's internal ID.
 - **Replies fail after a quiet day** — Meta's 24-hour customer-service window: the business can only message a user within 24 hours of that user's last message. The conversation resumes when the user writes again.
 - **A Program's openers all show "Failed" with a `132001` or template error** — the template named on the Program no longer exists, or is not approved, on this account. Check its status under **Templates**, then pause and re-activate the Program so the gate re-checks it.
 - **Templates button says WhatsApp is not configured** — the connection has no **WhatsApp Business Account ID**. **Reconnect** and fill it in.
