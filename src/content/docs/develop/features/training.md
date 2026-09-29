@@ -34,9 +34,14 @@ Training parameters (carried in the run's config):
   - Adapter: lora / qlora (set lora + lora_rank in config), or full
 Compute:
   - Backend: dstack (kubernetes / cloud) or Modal
-  - Accelerators: e.g. GPU:1, H100:8
+  - Accelerators: e.g. RTX-PRO-6000:1 on Modal, or GPU:2 on an SSH fleet
   - Spot instances + region (optional)
 ```
+
+Training runs on **Blackwell GPUs** (RTX PRO 6000 and the RTX 50-series). Picking
+anything else is refused when you press Start, before any instance is
+provisioned, and Studio says so under the compute picker as soon as you select
+it. Serving and evaluations are not restricted this way.
 
 The adapter choice (LoRA / QLoRA rank, or full) is not a dedicated form field — it's carried in the run's free-form `config` dict alongside the rest of the trainer settings, so the launcher can pass it straight through to the trainer.
 
@@ -103,6 +108,13 @@ Use when:
 - You have a clear reward signal (math correctness, code compiles, ...)
 - The desired behaviour can be measured, not just imitated
 - You want exploration beyond your training data
+
+**GRPO needs at least two GPUs**, one for the rollout server and one for the
+trainer, which is why it is the only method with a GPU block split. Modal cannot
+currently provide that for training: the only Blackwell GPU it offers is
+single-GPU. Run GRPO on an SSH or cloud fleet instead, where the fleet size is
+taken from the block split rather than fixed when you pick the instance. Start
+says so if you try, before anything is provisioned.
 
 #### RL Modes
 
