@@ -79,7 +79,7 @@ curl -X POST https://<your Studio host>/api/v1/agents/<agentId>/enrollments \
 - A handle the agent does not know yet makes a new person of this agent. Enrolling someone again updates their enrollment and makes it active.
 - `contacts` (up to 10) links people who answer for them, as confirmed contacts.
 
-The response is the enrollment: the person with their handles, the journey, `status`, `anchor_date`, `day` (negative before the anchor), `timezone`, `preferred_channel`, `current_step`, `next_send_at`, `last_reply_at` and `enrolled_by`.
+The response is the enrollment: the person with their handles, the journey, `status`, `anchor_date`, `day` (negative before the anchor), `timezone`, `preferred_channel`, `current_step`, `next_send_at`, `last_reply_at` and `enrolled_by` (`api` for an enrolment made through this API).
 
 ### A step
 
