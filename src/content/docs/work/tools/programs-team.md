@@ -35,7 +35,7 @@ Choose what they get and can do too (see below); a new member starts with everyt
 
 ### What a member gets and can do
 
-Each member has two lists of checkboxes, each with an **Everything** box, plus an **Everything** shortcut for both and **Same as…** to copy another member's choices:
+When adding or editing a member, the **What they get and can do** card shows a plain summary; **Change** opens two lists of checkboxes, each with an **Everything** box, plus an **Everything** shortcut for both and **Same as…** to copy another member's choices:
 
 | Gets told about | Can do |
 |---|---|
