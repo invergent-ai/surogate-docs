@@ -140,6 +140,10 @@ The rest lives in Develop mode. **Dev → Sessions** adds a checkbox per row and
 
 A session can have messages from multiple channels — a user starts on Web, continues on Slack. The session detail shows them in order with a small channel badge per message.
 
+Channels are named and drawn the same way everywhere in Studio: **Web chat**, **API**, **Website widget**, **WhatsApp**, **Slack**, **Telegram**, **Voice** and **Teams**. The channel filter on Sessions lists every channel the agents in view have, plus any the conversations used, each with how many sessions it holds. The Users tab, Insights, the Inbox and the Programs **People** tab filter by the same channels, with counts; a channel with nothing in it yet stays listed, dimmed.
+
+A person's name in a session opens their person panel — the same one Users, the Inbox and Programs open — with their channels, journeys, timeline, contacts, other conversations and escalations. **Their conversations** on a user's row, or **Open conversation** on an escalation, lands here filtered to them. Sessions, Users and Programs keep themselves current while they are open; there is nothing to refresh.
+
 ## Sessions retention
 
 By default sessions are kept **forever** (compliance, training-data extraction). Mostly that's free — the storage is dominated by event log rows.
