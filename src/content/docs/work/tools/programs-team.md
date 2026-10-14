@@ -70,7 +70,7 @@ A third kind comes from the platform rather than the agent: **missed replies**, 
 
 Each member gets the kinds they receive, on their first channel, falling back to their others. On WhatsApp outside the 24-hour window an alert opens with your approved alert template (chosen under **Settings → Channels → WhatsApp**).
 
-**An urgent alert can be a phone call.** A member alerted on Voice is phoned from the agent's number; the agent reads the alert out and asks them to say yes or press 1 to confirm. A call that is busy, unanswered, declined, or answered without a yes or a 1 sends the same alert at once on the member's next alert channel.
+**An urgent alert can be a phone call.** A member alerted on Voice is phoned from the agent's number; the agent reads the alert out and asks them to say yes or press 1 to confirm (the voice line's **After an urgent alert on a call** wording, editable with its other lines). A call that is busy, unanswered, declined, or answered without a yes or a 1 sends the same alert at once on the member's next alert channel.
 
 **An unopened urgent alert is sent again, once.** If no team member has read an urgent alert on WhatsApp after 30 minutes, it goes out again to the whole team, starting *🔴 Reminder, not yet opened after 30 minutes*, so a colleague can act when the first one is away from their phone. Read means WhatsApp's own read receipt.
 

@@ -153,7 +153,7 @@ These live on the **Settings** tab, in the **Journey** card.
 
 **Send a test.** Pick a step and a team member: the step's opener (its template on WhatsApp, else its default wording) goes to them now, on the first of the step's channels they can be reached on. *Queued. It arrives within a minute.*
 
-**Dry run.** Pick a **Start date** and a number of **Days** (up to 90, default 14): the list shows, day by day in the journey's timezone, what one person starting that day would get. Nothing is sent. It shows a future start date's days-before steps too.
+**Dry run.** Pick a **Start date** and a number of **Days** (up to 90, default 14): the list shows, day by day in the journey's timezone, what one person starting that day would get. A step sent only after silence is marked as such (*only if silent 3 days*). Nothing is sent. It shows a future start date's days-before steps too.
 
 **Activate** turns on every step that is not already active. If something changed since you opened the panel, the refusal lists every problem at once.
 
@@ -202,7 +202,7 @@ Click a person to open their panel. The same panel opens from Users, Sessions, I
 - **Timeline** — newest first: enrolled, paused, ended, each step with its delivery and answer, the label the agent recorded, form answers field by field, escalations and team messages. Each links to its conversation.
 - **Contacts** — see below.
 - **Conversations** and **Escalations** for this person.
-- **Edit details** — name, **Answered by**, **Start date (day 0)** (with **Approximate**), **Phase**, **Timezone** (*The journey's* or their own) and **Preferred channel** (*No preference* or one of their channels).
+- **Edit details** — name, **Answered by**, **Start date (day 0)** (with **Approximate**), **Phase**, **Timezone** (*The journey's* or their own) and **Preferred channel** (*No preference* or one of their channels). A preferred channel is accepted only where the agent has a sender and the person has an account and has agreed to be contacted.
 
 ### Followed people and their contacts
 
@@ -255,7 +255,6 @@ General settings first, then each channel:
 
 Microsoft Teams and email cannot be used for Programs yet. Outbound calls are switched on for the platform by your administrator, with an outbound phone line (SIP trunk) for the agent's number.
 
-<!-- TODO verify: the voice line's acknowledge wording ("Please say yes, or press 1, to confirm you got this.") is not editable in Studio's voice line editor as of ops 1b6ca0dc; document it if it becomes editable. -->
 
 ## Limits in this release
 
