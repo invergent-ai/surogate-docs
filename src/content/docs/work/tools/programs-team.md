@@ -88,7 +88,7 @@ Escalations are recorded even when they come from a conversation outside any jou
 
 ## In the Inbox
 
-Every escalation also lands in the Studio [Inbox](/work/tools/inbox/), titled **Needs your attention: <person>**, addressed to the operator responsible: whoever activated the step it came from, or, outside a step, whoever last changed the team. The item reads *🔴 Urgent* or *🟡 Needs attention* with the person's name, and opens to **What happened**, the last messages of **The conversation**, **What the agent knows about them**, **Open conversation**, **View person**, **Claim** and **Resolve**. Claim and Resolve act on the same record as the Escalations tab. You cannot answer in the person's own chat from an Inbox item.
+Every escalation also lands in the Studio [Inbox](/work/tools/inbox/), titled **Needs your attention: <person>**, addressed to the operator responsible: whoever activated the step it came from, or, outside a step, whoever last changed the team. The item reads *🔴 Urgent* or *🟡 Needs attention* with the person's name, and opens to **What happened**, the last messages of **The conversation**, **What the agent knows about them**, **Open conversation**, **View person**, **Claim** and **Resolve**. Claim and Resolve act on the same record as the Escalations tab, and resolving an escalation anywhere (Studio, the Inbox or a team member's chat) closes its Inbox item. You cannot answer in the person's own chat from an Inbox item.
 
 ## Team commands in chat
 
