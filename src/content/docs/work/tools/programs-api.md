@@ -52,7 +52,7 @@ All paths are under the Base URL.
 | `PATCH /enrollments/{person}/{journey}` | write | Change it: `status` (`active`, `paused`, `ended`) with `status_reason`, `anchor_date`, `anchor_approximate`, `phase`, `timezone`, `preferred_channel`. |
 | `GET /steps` | read | Steps sent, oldest first, filtered by `since`, `journey` and `person`, paged. |
 | `GET /escalations` | read | Escalations, filtered by `since` and `state` (`open` or `resolved`), paged. |
-| `POST /messages/{message_id}/status` | write | Your app reports a message's `status`: `delivered`, `read` or `failed` (with `error`). |
+| `POST /messages/{message_id}/status` | write | Your app reports a message's `status`: `delivered`, `read` or `failed` (with `error`). Answers `200` with `message_id`, `status` and `tracked`; `409` only in the first minute after delivery, while the platform catches up — retry then. |
 | `POST /people/{person}/messages` | write | Your app passes on the person's reply: `text`, optional `in_reply_to` and `form`. |
 
 Paged lists return `{"items": [...], "next_cursor": "..."}`; pass `next_cursor` back as `cursor` until it is `null`. The OpenAPI schema lists these under the tag *journeys public API*.
@@ -159,7 +159,7 @@ A person enrolled with an `api` handle is reached through your app instead of a 
 2. Show it in your app, then report what happened: `POST /messages/{message_id}/status` with `delivered`, `read` or `failed`. A failed message moves the step to the person's next channel, if they have one.
 3. When they answer, `POST /people/api:<your id>/messages` with their `text` (and `form` answers, if any). It answers the step waiting for them and wakes the agent. A message the safety screen refuses is answered `422` with the reason.
 
-If your webhook stays unreachable after its retries, the message is failed and the step tries the person's other channels. Removing the webhook does the same for messages still waiting.
+If your webhook stays unreachable after its retries, the message is failed and the step tries the person's other channels. Removing the webhook, switching it off, or unticking `message.deliver` does the same for messages still waiting, so the agent tries the person's other channels. Other events wait until the webhook is on again.
 
 ## What's next
 
