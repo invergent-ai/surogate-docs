@@ -146,13 +146,38 @@ Enforcement is real, per turn, pinned from the payment receipt:
 - **Excluded skills** behave exactly like skills that don't exist; a slash command for an excluded capability answers *"/x is disabled for this agent."* (the same wording as an agent-level disable).
 - A pinned **model tier** swaps the buyer's session onto the matching platform model.
 
+## The Free plan and trials without a card
+
+### The Free plan
+
+In Subscription and Both modes, **Add a Free plan** (*People sign up with no card and get a monthly allowance; they can upgrade anytime.*) composes a plan at no price, with the same fields and **What's included** package as a paid plan. It has no Stripe product behind it. An agent has at most one, listed first with a **Free** badge, priced *Free · renews monthly*.
+
+On the buy page it comes first, marked *No card needed · upgrade anytime*. **Start free** puts the signed-in buyer on it at once, with no checkout. Their allowance renews each month, counted from the day they started, on their first use after the month ends. When a month's allowance is spent, the chat says *You have used this month's free allowance. Upgrade to keep chatting.* with the buy link.
+
+Buying a paid plan replaces the Free plan. When a paid plan ends (cancelled, or a trial that ran out without a card), the buyer drops back to the Free plan if the agent still has one. A Free plan replaces the one-time **Free trial** allowance below: with a Free plan live, everyone signs up for it instead, and that card is hidden.
+
+### Trials on paid plans
+
+A paid plan can offer **Free trial (days)**, up to 90 days. On the buy page the plan reads *N days free, no card needed* and its button **Start N days free**. Checkout starts the trial without asking for a card:
+
+- While it runs, the buy page shows *Free trial · N days left* and *Add a card under Manage subscription to keep your plan when the trial ends.*
+- A few days before the end, the buyer is reminded once on a channel the agent may write to them first on (one where they agreed to be contacted): *Your free trial of {plan} ends on {date}. To keep it, add a card here: {link}* (your own wording under Programs → Settings → Messages, where Programs is on).
+- **With a card added**, the plan simply continues and is charged from then on.
+- **Without one**, the trial is cancelled at its end and they move to your Free plan, or lose access if you have none. The buy page then says *Your free trial has ended. Pick a plan below to keep chatting.*
+
+One trial per person per plan: a buyer who already had a plan's trial sees a plain **Subscribe** for it.
+
+### Subscribers
+
+The **Subscribers** card lists *everyone on a plan, on a trial, or holding extra usage*, each with their plan (or *Extra usage only*) and status: **Free**, **Trialing** with the days left, **Active**, **Past due**, **Unpaid**, **Canceled**, **Incomplete** or **Expired**.
+
 ## Free trial and per-user limits
 
 ![The per-user usage cap and the What’s included package selector](../../../assets/screenshots/work-monetize-limits.png)
 
 Two cards on the Monetize tab, depending on your pricing model — both carry their own **What's included** composer, which sets the **default package** applied to users with no active purchase. These cards save the moment you change them.
 
-- **Free trial** (Subscription and Both modes): a switch plus a size picker (default **50,000 tokens ≈ 50 messages**). *One-time* — when a user's trial usage runs out they're prompted to subscribe (or buy usage) to keep going; it never refills, and a **lapsed subscriber gets no second trial**. The buy page advertises it: *"Try it free first: every new user gets ~N messages of one-time trial usage."*
+- **Free trial** (Subscription and Both modes, when there is no Free plan): a switch plus a size picker (default **50,000 tokens ≈ 50 messages**). *One-time* — when a user's trial usage runs out they're prompted to subscribe (or buy usage) to keep going; it never refills, and a **lapsed subscriber gets no second trial**. The buy page advertises it: *"Try it free first: every new user gets ~N messages of one-time trial usage."*
 - **Per-user usage limit** (Free mode): cap how much each user may chat per month, drawn from your own subscription. **Unlimited** (the default) means no per-user cap.
 
 One rule worth reading twice: on a **monetized** agent, leaving the trial off means **zero free usage — a purchase is required before the first message**. Only free-mode agents default to uncapped.
