@@ -109,6 +109,7 @@ Both are **Slack-only**: on a session whose effective channel isn't Slack (Teleg
 | `followup_withdraw_consent` | Stop messages to the one writing on this channel, the moment they ask |
 | `send_form` | Send a published WhatsApp form instead of asking its questions one by one |
 | `team_overview`, `team_message_person`, `team_update_person`, `team_enroll_person` | Team only: a digest of everyone followed, a message to a person word for word, changes to someone's follow-up, enrolling someone. Each change is previewed and confirmed first |
+| `team_escalation` | Team only: take (`claim`) or `resolve` an escalation, by person or the latest alert received; the rest of the team is told |
 
 A due step, a reply to it and its deadline each wake the agent with a step context block (journey, step, the person's day and local date, who is writing, recent outcomes, why it is awake). The agent writes nothing by answering `NO_MESSAGE`. See [Programs](/work/tools/programs/) and [Team and escalations](/work/tools/programs-team/#team-commands-in-chat).
 
