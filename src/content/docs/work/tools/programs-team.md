@@ -8,7 +8,7 @@ The **Team** and **Escalations** tabs on an agent's [Programs](/work/tools/progr
 
 The team is the list of colleagues told when the agent escalates or someone stops replying. Each row shows the member, what they get and can do in plain words (*Everything*, or e.g. *Urgent + attention alerts; can message people*), what they handle, whether they can be alerted on their first channel (e.g. *WhatsApp on*), and **Edit** and **Remove**. Someone the agent follows can never join the team: they would receive everyone else's alerts.
 
-Below the list are the **Shared alert place** and **Add team member**, and under the team, **Recent alerts and messages** sent in your organisation's name.
+A **Members | Recent alerts** switch at the top shows one at a time. **Members** lists the team, then the **Shared alert place** and **Add team member**. **Recent alerts** lists the alerts and messages sent in your organisation's name, each linking to the person it was about and to Escalations.
 
 ### Adding a team member
 
