@@ -101,7 +101,7 @@ Each step sent (one per recipient) reads:
 
 ## Webhook
 
-Under **Manage API access → Programs API → Webhook**, give an HTTPS **URL** on a public address, tick the **Events** you want (all by default), and **Turn on the webhook**. The **signing secret** (`whsec_…`) is shown **once**, in that response; copy it before you click **I've saved it**. Afterwards you can **Send a test** (a `ping` event), **Rotate secret** (the old one stops signing at once), untick **Send events** to pause, or **Remove** it. **Recent deliveries** lists each post with its status, HTTP answer and tries.
+Under **Manage API access → Programs API → Webhook**, give an HTTPS **URL** on a public address, tick the **Events** you want (all by default), and **Turn on the webhook**. The **signing secret** (`whsec_…`) is shown **once**, in that response; copy it before you click **I've saved it**. Afterwards you can **Send a test** (a `ping` event), **Rotate secret** (the old one stops signing at once), untick **Send events** to pause, or **Remove** it. **Recent deliveries** lists each post with its status, HTTP answer and tries; a failed one has **Retry now** (except a `message.deliver`, which has already gone to the person another way).
 
 | Event | Sent when |
 |---|---|

@@ -196,7 +196,7 @@ People in a journey (active or paused), their confirmed contacts and your team n
 
 Click a person to open their panel. The same panel opens from Users, Sessions, Inbox and Escalations.
 
-- **Message** sends them your text word for word, in your name, on the channel the agent would use. Inside their quiet hours it waits, and Studio says when it will reach them in their own time; tick **Send now, even in their quiet hours** to send it at once.
+- **Message** sends them your text word for word, in your name, on the channel the agent would use. Inside their quiet hours it waits, and Studio says when it will reach them in their own time; tick **Send now, even in their quiet hours** to send it at once. A message already waiting shows *Held for their quiet hours, until …* under **Messages and alerts**, with **Send now**.
 - **Pause**, **Resume** and **End** ask for a reason.
 - **Channels** shows each account and its consent. **Link Telegram** makes a start link; see [Linking a person safely](#linking-a-person-safely).
 - **What the agent knows** — the agent's memory of this person.

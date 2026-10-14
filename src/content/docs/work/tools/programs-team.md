@@ -8,7 +8,7 @@ The **Team** and **Escalations** tabs on an agent's [Programs](/work/tools/progr
 
 The team is the list of colleagues told when the agent escalates or someone stops replying. Each row shows the member, what they get and can do in plain words (*Everything*, or e.g. *Urgent + attention alerts; can message people*), what they handle, whether they can be alerted on their first channel (e.g. *WhatsApp on*), and **Edit** and **Remove**. Someone the agent follows can never join the team: they would receive everyone else's alerts.
 
-A **Members | Recent alerts** switch at the top shows one at a time. **Members** lists the team, then the **Shared alert place** and **Add team member**. **Recent alerts** lists the alerts and messages sent in your organisation's name, each linking to the person it was about and to Escalations.
+A **Members | Recent alerts** switch at the top shows one at a time. **Members** lists the team, then the **Shared alert place** and **Add team member**. **Recent alerts** lists the alerts and messages sent in your organisation's name, each linking to the person it was about and to Escalations. A message held for someone's quiet hours says *Held for their quiet hours, until …* and has **Send now**.
 
 ### Adding a team member
 
@@ -54,7 +54,7 @@ A new member starts with everything, and so does anyone added before these choic
 
 ### Shared alert place
 
-A Slack channel the whole team watches can receive alerts too, besides each member. Give the **Slack channel ID** (in Slack, under the channel's name → About) and an optional **Name**, then **Add**. Invite the agent's Slack app to the channel first. A shared place receives urgent alerts, attention alerts and missed replies.
+A Slack channel the whole team watches can receive alerts too, besides each member. Search the workspace's channels under **Slack channel** and **Add** one; a channel the app is not in yet says **Invite the app first**, so invite the agent's Slack app there. If the channels cannot be listed, **Type a channel ID instead** (in Slack, under the channel's name → About) with an optional **Name**. A shared place receives urgent alerts, attention alerts and missed replies.
 
 It needs Slack connected on the agent.
 
