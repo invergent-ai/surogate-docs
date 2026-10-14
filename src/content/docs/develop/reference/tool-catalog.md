@@ -113,6 +113,15 @@ Both are **Slack-only**: on a session whose effective channel isn't Slack (Teleg
 
 A due step, a reply to it and its deadline each wake the agent with a step context block (journey, step, the person's day and local date, who is writing, recent outcomes, why it is awake). The agent writes nothing by answering `NO_MESSAGE`. See [Programs](/work/tools/programs/) and [Team and escalations](/work/tools/programs-team/#team-commands-in-chat).
 
+## Office documents
+
+| Tool | Use for |
+|---|---|
+| `office_read` | Read a Word document (`.docx`) through the agent's own live editor session, with everyone's latest edits — `view` `outline` (default, paged with `start`), `block` (`target`) or `search` (`query`). Gives each block's id and hash, comment threads, tracked changes, and who else has it open |
+| `office_edit` | Edit a Word document live — `ops` applied all or none: `insert`, `replace`, `delete`, `move`, `comment`, `reply`, `resolve`, with Markdown content, placeholder (`pending`), chart and image blocks. A block changed since it was read is refused, so the user's edit wins. A missing document is created blank |
+
+Both exist only where the platform runs a document server and `runtime-office`. While a document is open in the editor, it is changed only through `office_edit`. See [Office documents](/work/tools/office-documents/).
+
 ## GitHub & coding
 
 | Tool | Use for |
