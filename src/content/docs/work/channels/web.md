@@ -35,6 +35,12 @@ A user's inbox is scoped to **the user**, not to the agent whose app they happen
 
 When the agent's **Multi session** capability is off, each user gets one dedicated conversation and always returns to it: no "New chat", no session list — the sidebar shows a **Chat** button that reopens their conversation from anywhere in the app (their other sessions stay hidden until the capability is turned back on).
 
+### Messages from Programs
+
+Web chat cannot interrupt anyone, so when a [Programs](/work/tools/programs/) journey step is due for a signed-in person reached only here, it waits in their conversation and shows as the agent's message on their next visit. A single-session agent opens that conversation; a multi-session one lists it. Their reply answers the step like on any other channel.
+
+When the agent's **Browser notifications** switch is on (Programs → Settings → Channels → Web chat), the chat offers, after the person's first message and never on a first visit, to **Notify me** when the agent writes, even with the page closed; **Not now** keeps the offer away for 30 days. They can turn it on or off for that browser under **Settings → Profile → Notifications**. A notification opens that conversation. While the tab is in the background, a new message from the agent flashes the tab title until they look.
+
 ## Who can sign in
 
 Two modes:
@@ -52,7 +58,7 @@ Signed-in users get their own **Settings** page with up to five tabs — three o
 |---|---|---|
 | **Profile** | Always | Display name (editable), email (read-only — *"Your sign-in email cannot be changed here."*), member-since, and password controls (below) |
 | **Connected Channels** | The agent has at least one active messaging channel (Slack / Telegram / WhatsApp) | Linked channel identities, per-row unlink, **Link a channel** |
-| **Plan & Usage** | Always | Their plan and renewal date, usage / browsing / media balances, "Your plan includes …", and your offers — see [Monetize](/work/monetize/#your-buy-page) |
+| **Plan & Usage** | Always | Their plan (a Free plan, or a running trial with its end date) and renewal date, **Start free** when the agent has a Free plan, usage / browsing / media balances, "Your plan includes …", and your offers — see [Monetize](/work/monetize/#your-buy-page) |
 | **Coding Agents** | The `/code` command is enabled | Their coding-agent plans |
 | **Browser Profiles** | Live browser support is on | Their saved browser logins |
 

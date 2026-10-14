@@ -96,14 +96,31 @@ Availability: each tool is **dropped from the agent's toolset entirely** when no
 
 Both are **Slack-only**: on a session whose effective channel isn't Slack (Telegram, WhatsApp, website, web) they return an error rather than a result, so allow-listing them on a non-Slack agent buys nothing. Ambient sessions count as Slack. Inbound attachments on the other channels still reach the workspace through the normal attachment path.
 
-## Check-in Programs
+## Programs
 
 | Tool | Use for |
 |---|---|
-| `checkin_outcome` | Record how a scheduled check-in ended — `outcome` (`completed` or `declined`), optional `note` for the operator's run history. Closes the check-in; messages nobody |
-| `checkin_escalate` | Raise the check-in to the responsible operator — `reason`. Lands in that operator's Inbox as an `action_required` item titled "Check-in needs your attention"; does not end the check-in |
+| `step_outcome` | Close a journey step — `outcome` (`completed`, `declined`, or `skipped` with the reason in `note`), optional `label` (the business's category for the answers, e.g. `green` or `red`). Messages nobody. `checkin_outcome` is its older name: the runtime still accepts it, and a tool policy that names it is rewritten to `step_outcome` |
+| `escalate` | Raise something to the team now — `reason`, `severity` (`red` when the person got urgent instructions, else `yellow`), optional `to` (team members by name, chosen by what they handle). Reaches the team on their channels and the responsible operator's Inbox; recorded in the Escalations queue |
+| `followup_enroll` | Enrol the person writing, or someone they write for, in a journey, after they agreed to be contacted on this channel |
+| `followup_status` | The journeys offered and the enrolments of the person writing |
+| `followup_update` | Correct the person's start date, name, who answers for them, phase, timezone or preferred channel; pause or end their follow-up |
+| `followup_contacts` | List, add, remove or confirm the people who answer for the person followed; never linked on a name or a newcomer's word alone |
+| `followup_withdraw_consent` | Stop messages to the one writing on this channel, the moment they ask |
+| `send_form` | Send a published WhatsApp form instead of asking its questions one by one |
+| `team_overview`, `team_message_person`, `team_update_person`, `team_enroll_person` | Team only: a digest of everyone followed, a message to a person word for word, changes to someone's follow-up, enrolling someone. Each change is previewed and confirmed first |
+| `team_escalation` | Team only: take (`claim`) or `resolve` an escalation, by person or the latest alert received; the rest of the team is told |
 
-Both are offered on channel sessions only, and only do anything inside a conversation a Program opened: the invitation is looked up by session, and elsewhere they return an error. The agent is told to call them by the synthetic `[Check-in]` message that arrives with the user's reply. See [Programs](/work/tools/programs/).
+A due step, a reply to it and its deadline each wake the agent with a step context block (journey, step, the person's day and local date, who is writing, recent outcomes, why it is awake). The agent writes nothing by answering `NO_MESSAGE`. See [Programs](/work/tools/programs/) and [Team and escalations](/work/tools/programs-team/#team-commands-in-chat).
+
+## Office documents
+
+| Tool | Use for |
+|---|---|
+| `office_read` | Read a Word document (`.docx`) through the agent's own live editor session, with everyone's latest edits — `view` `outline` (default, paged with `start`), `block` (`target`) or `search` (`query`). Gives each block's id and hash, comment threads, tracked changes, and who else has it open |
+| `office_edit` | Edit a Word document live — `ops` applied all or none: `insert`, `replace`, `delete`, `move`, `comment`, `reply`, `resolve`, with Markdown content, placeholder (`pending`), chart and image blocks. A block changed since it was read is refused, so the user's edit wins. A missing document is created blank |
+
+Both exist only where the platform runs a document server and `runtime-office`. While a document is open in the editor, it is changed only through `office_edit`. See [Office documents](/work/tools/office-documents/).
 
 ## GitHub & coding
 

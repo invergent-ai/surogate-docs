@@ -87,19 +87,19 @@ The first time a Slack user messages the bot:
 
 Once linked, the same person on Web and Slack sees the same agent, same memory, same sessions — and shares the same per-user usage allowance, so switching channels never resets a limit.
 
-When the agent asks a question (`ask_user_question`), Slack shows a modal — typed replies aren't converted into answers here (unlike Web and Telegram); the bot nudges toward the modal instead. On monetized agents, Slack is a **sellable channel**: a buyer whose package excludes it gets a short notice with their buy link.
+When the agent asks a question (`ask_user_question`) with up to five short choices, such as a yes/no confirmation, the choices are buttons in the message: one tap answers it and the message turns into the answer. Free-text questions, longer or more choices, and several questions at once keep the **Answer** button, which opens a form. Typed replies aren't converted into answers here (unlike Web and Telegram); the bot nudges toward the buttons or the form instead. On monetized agents, Slack is a **sellable channel**: a buyer whose package excludes it gets a short notice with their buy link.
 
 ## Programs on Slack
 
-A [Program](/work/tools/programs/) can open a conversation with a workspace member on a schedule: the bot posts your opener as a direct message, waits for the reply, and runs the Program's skill when it comes.
+[Programs](/work/tools/programs/) can reach a workspace member first: when a journey step is due, the agent writes it as a direct message from the app, at any time and with no template, then follows up on the reply. Team members can be alerted on Slack too, and a Slack channel can be the team's [shared alert place](/work/tools/programs-team/#shared-alert-place).
 
 What it needs, beyond a connected channel:
 
-- **Personal assistant mode** on this channel's Manage screen. In Team member mode every sender shares one identity, so a reply could not be attributed to the enrolled user; the activation gate refuses a Program on a channel in that mode.
-- **Each user linked to their workspace member**, from the agent's Users tab: **Link Slack member** opens the workspace directory. See [Linking a Slack member](/work/channels/users/#linking-a-slack-member).
+- **Personal assistant mode** on this channel's Manage screen. In Team member mode every sender shares one identity, so a reply could not be attributed to the person; a step on a channel in that mode is refused at activation.
+- **Each person linked to their workspace member**, from the agent's Users tab: **Link Slack member** opens the workspace directory. See [Linking a Slack member](/work/channels/users/#linking-a-slack-member). A person can also be added by their Slack member alone, without an email or phone.
 - **Permission to message them first**, recorded on that binding.
 
-No channel membership is needed: a direct message reaches any member of the workspace the app is installed in. No new scopes either; `chat:write`, `im:write` and `users:read` from the setup above cover posting, opening the direct message and listing members. A member who leaves the workspace is caught at activation, and a send to someone Slack cannot reach shows as *Failed* on that user's row with Slack's reason.
+No channel membership is needed: a direct message reaches any member of the workspace the app is installed in. No new scopes either; `chat:write`, `im:write` and `users:read` from the setup above cover posting, opening the direct message and listing members. A member who leaves the workspace is caught at activation, and a send to someone Slack cannot reach shows as *Failed* with Slack's reason, and the step moves to the person's next channel if they have one. Slack sends no delivery receipts, so a post Slack accepted counts as delivered.
 
 ## Multi-workspace
 

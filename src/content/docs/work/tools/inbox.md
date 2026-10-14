@@ -20,7 +20,7 @@ You can also answer by simply **typing a reply in the chat session** (web and Te
 
 Browser login walls, MFA, CAPTCHA, OAuth approval, file pickers, manual web actions. Open the session to interact with the agent's browser; click **I completed this** when done. The session wakes up.
 
-A check-in [Program](/work/tools/programs/) escalation lands here too, titled **Check-in needs your attention**, with the agent's reason as the body. It is addressed to the operator who activated the Program. Open the session to read the user's answers; the check-in itself keeps going.
+An escalation from [Programs](/work/tools/programs/) lands here too, titled **Needs your attention: <person>** and marked *🔴 Urgent* or *🟡 Needs attention*. It opens to what happened, the last messages of the conversation, what the agent knows about the person, **Claim** and **Resolve**; these act on the same record as the Programs **Escalations** tab. See [Team and escalations](/work/tools/programs-team/#in-the-inbox).
 
 ### `task_complete` — long-running session finished
 

@@ -27,7 +27,7 @@ Bracketed items are **tool calls** — the agent searching a KB, calling an API,
 
 ![The workspace pane, where the files an agent creates or downloads show up](../../../../assets/screenshots/work-chat-workspace.png)
 
-When the agent writes files, downloads documents, or generates artifacts, a workspace pane appears on the right with every file it touched. Markdown / code / CSV / images preview in-browser; download saves locally.
+When the agent writes files, downloads documents, or generates artifacts, a workspace pane appears on the right with every file it touched. Markdown / code / CSV / images preview in-browser; Word, Excel, PowerPoint and PDF files open in an office editor (see [Office documents](/work/tools/office-documents/)); download saves locally.
 
 Files persist for the lifetime of the session and survive sandbox restarts. They're cleared when the session ends or resets.
 

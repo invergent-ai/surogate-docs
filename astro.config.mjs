@@ -163,6 +163,7 @@ export default defineConfig({
           items: [
             'work',
             'work/quickstart',
+            'work/whats-new',
             {
               label: 'Agents',
               collapsed: true,
@@ -173,12 +174,15 @@ export default defineConfig({
                 'work/workflow/landing-page',
                 'work/workflow/governance',
                 'work/tools/chat',
+                'work/tools/office-documents',
                 'work/tools/whiteboard',
                 'work/tools/commands',
                 'work/tools/goals',
                 'work/tools/missions',
                 'work/tools/scheduled-work',
                 'work/tools/programs',
+                'work/tools/programs-team',
+                'work/tools/programs-api',
                 'work/tools/deep-research',
                 'work/tools/code',
                 'work/tools/sub-agents',

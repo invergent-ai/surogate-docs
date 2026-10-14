@@ -28,6 +28,16 @@ Write operations (live — with a confirmation step for risky actions, see below
 
 The Copilot calls the platform's REST API on your behalf. You see the same effects as if you'd clicked through the UI.
 
+## Programs, people and the team
+
+The Copilot can run an agent's [Programs](/work/tools/programs/) for you: list and build journeys and their steps, review a journey and dry-run it, send a test, activate or pause it, read its stats, and register WhatsApp templates. It can find and add people, make a Telegram start link, enrol people, change their follow-up, link their contacts, read their timeline and message them; set up the team (what each member gets told about, can do and handles, and a Slack channel picked from the workspace as its shared alert place), change the wording and channels on Settings, and claim or resolve escalations. It also reads and answers your Inbox, reads an agent's Insights, manages the plans on Monetize, and builds the agent's [landing page](/work/workflow/landing-page/), including formatted text and image framing.
+
+It knows what you are looking at: on the Programs page it is told which tab, journey and person you have open, so *"why didn't this step go out?"* needs no further context.
+
+**`/build-program`** is a playbook for setting a program up end to end. The Copilot interviews you one question at a time (who is followed and why, the date day 0 counts from, the rhythm, what each answer means and which is urgent, the channels, the team, the language of every message), inspects what the agent already has, and writes a plan for you to approve. Only then does it build: the step skills, any missing WhatsApp templates, the journey as a draft, the team and the wording. It reviews and dry-runs the journey and summarises what is live and what is still a draft, with a test script.
+
+Activating a journey, sending a test, enrolling, messaging a person and changing the team always wait for your yes. It never enrols real people on its own.
+
 ## The CLARIFY confirmation
 
 For **destructive or expensive operations**, the Copilot is required to ask first. You'll see a Yes/No confirmation card inside the chat:
@@ -84,4 +94,4 @@ If the Copilot returns 401 ("Invalid base LLM token"), it's an admin-side config
 
 ## What's next
 
-Other tools: [Goals (`/goal`)](/work/tools/goals/), [Inbox](/work/tools/inbox/).
+Other tools: [Goals (`/goal`)](/work/tools/goals/), [Inbox](/work/tools/inbox/), [Programs](/work/tools/programs/).

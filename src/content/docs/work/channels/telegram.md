@@ -49,6 +49,12 @@ Same model as Slack — a `(platform=telegram, platform_user_id=12345)` row in t
 
 When the agent asks a question (`ask_user_question`), the user can answer via the widget **or just type a reply** — text matching a choice label selects it, anything else is recorded as "Other". Questions expire after 30 minutes. On monetized agents, Telegram is a **sellable channel**: a buyer whose package excludes it gets a short notice with their buy link.
 
+## Reaching people first
+
+A Telegram bot may only write to someone who has started it, and never sees phone numbers. So for [Programs](/work/tools/programs/) the person comes to the bot: **Link Telegram** (on the person's panel, on the agent's Users tab, or when adding a team member) makes a one-use start link that works for 48 hours. Whoever opens it and presses **Start** is asked *Are you {name}?* and is linked only on **Yes**; the person (on their other channel) and the team are told either way. Pressing Start also records their agreement to be messaged there.
+
+From then on, journey steps and team alerts can reach them on Telegram, with no template. A team member added on Telegram shows as *Pending: waiting for them to press Start* until they do.
+
 ## When the Telegram bot stops responding
 
 The most common cause: **another instance is consuming Telegram updates**. Telegram only delivers each update once. If you have a dev environment also running with the same bot token, only one of them gets the messages. Stop the other.
