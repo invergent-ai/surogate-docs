@@ -35,6 +35,12 @@ A user's inbox is scoped to **the user**, not to the agent whose app they happen
 
 When the agent's **Multi session** capability is off, each user gets one dedicated conversation and always returns to it: no "New chat", no session list — the sidebar shows a **Chat** button that reopens their conversation from anywhere in the app (their other sessions stay hidden until the capability is turned back on).
 
+### Messages from Programs
+
+Web chat cannot interrupt anyone, so when a [Programs](/work/tools/programs/) journey step is due for a signed-in person reached only here, it waits in their conversation and shows as the agent's message on their next visit. A single-session agent opens that conversation; a multi-session one lists it. Their reply answers the step like on any other channel.
+
+<!-- TODO verify: browser notifications for web chat. Studio has the per-agent switch (Programs → Settings → Channels → Web chat → Browser notifications, shown when the platform has push keys) and the runtime sends pushes, but the web chat's own "allow notifications" control is not built yet in surogates web/. Document what the person sees once it ships. -->
+
 ## Who can sign in
 
 Two modes:

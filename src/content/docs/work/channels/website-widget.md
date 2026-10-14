@@ -74,6 +74,8 @@ Whether a returning visitor lands back in their previous conversation depends on
 
 If your widget is a support bubble people return to mid-task, turn Multi session off for that agent.
 
+Because visitors are anonymous, the agent cannot write to them first: [Programs](/work/tools/programs/) never reach anyone through the widget. To follow up with people from your own site, reach them on a messaging channel, or from your app through the [Programs API](/work/tools/programs-api/#people-in-your-own-app).
+
 ## When the widget says "origin not allowed"
 
 The page's exact URL isn't in your **Allowed origins** list. Add it on the Manage screen (it auto-saves) and reload the page.
