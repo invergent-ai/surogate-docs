@@ -25,7 +25,7 @@ title: What's new
 - Choose directly what each member **gets told about** and **can do**, with **Everything** shortcuts and **Same as…** another member, plus what each member **handles**, which the agent reads to route an alert.
 - A **shared alert place**, such as a Slack channel.
 - **Urgent** and **attention** alerts; an urgent alert nobody opened is sent again once. An urgent alert can phone a team member, and one nobody confirms on the phone goes straight to their next channel.
-- The **Escalations** tab and the Inbox share one record, with **Claim** and **Resolve**.
+- The **Escalations** tab and the Inbox share one record, with **Claim** and **Resolve**. Team members can also take or resolve an escalation from their own chat, and their colleagues are told.
 
 See [Team and escalations](/work/tools/programs-team/).
 

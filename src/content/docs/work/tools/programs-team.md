@@ -46,6 +46,7 @@ Each member has two lists of checkboxes, each with an **Everything** box, plus a
 | **Daily report** | **Edit details** |
 | **Delivery failures** | **See full phone numbers** |
 | | **Manage the team** |
+| | Take and resolve escalations from chat |
 
 A new member starts with everything, and so does anyone added before these choices existed. Replies to a member's own requests always reach them, whatever they get told about. The same lists apply in Studio and when they talk to the agent in chat (see [Team commands in chat](#team-commands-in-chat)): a member who cannot do something is told so in plain words.
 
@@ -80,7 +81,7 @@ Quiet hours never hold alerts to the team.
 
 The queue of everything escalated, **Open** or **Resolved**. Each item shows its severity (**Red**, **Yellow**, **Missed replies**, or **Nobody told** when no one could be reached), the person (click to open their panel), the channel, the step if it came from one, the agent's reason, when, and **Unclaimed** or **Owner: …**. **Open conversation** jumps to the conversation it came from.
 
-- **Claim** makes you the owner, so colleagues see it is being handled.
+- **Claim** makes you the owner, so colleagues see it is being handled. Team members can do the same from their own chat (see [Team commands in chat](#team-commands-in-chat)).
 - **Resolve** closes it and moves it to **Resolved**. Resolving also closes its Inbox item.
 
 Escalations are recorded even when they come from a conversation outside any journey, or from someone the agent does not know yet.
@@ -99,10 +100,10 @@ A team member can work with the agent from their own chat on any channel they ar
 | `team_message_person` | Send a person their message, word for word, on the person's preferred or last-used channel. The agent shows a preview first and sends only after a yes. Inside the person's quiet hours the message waits, and the preview says when it will arrive in the person's local time; they can ask to send it now. |
 | `team_update_person` | Pause, resume or end someone's follow-up, correct their start date, name, who answers for them, timezone or preferred channel. Previewed first, changed only after a yes. |
 | `team_enroll_person` | Enrol someone by WhatsApp number, Slack member, a Telegram start link, or as someone the agent already knows. Previewed first. |
+| `team_escalation` | Take an escalation (*"I'll handle Ion"*) or mark it resolved (*"done"*), on the same record as the Escalations tab. Without a name it is the person in the latest alert they received. The colleagues who got that alert are told who took or resolved it. |
 
 Whoever enrols someone by number or Slack member vouches for their consent; the welcome message goes out at once.
 
-<!-- TODO verify: claiming and resolving an escalation from chat (design round 2, item C: "owner/claim/resolve from Studio and from chat (team tool), and the rest of the team told who took it") is not in the runtime's team tools as of 4a3d69c64. Document once a tool ships. -->
 
 ## What's next
 
