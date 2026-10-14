@@ -206,7 +206,9 @@ Click a person to open their panel. The same panel opens from Users, Sessions, I
 
 ### Followed people and their contacts
 
-The person in a journey is the one followed, a person of their own even without a phone. **Contacts** are people who answer for them, such as a relative or a carer, each with their own channels and a relation in your words (*daughter*, *carer*). Their answers count for the person, and the agent knows who answered: the panel says *Answers for …* on a contact's own panel.
+The person in a journey is the one followed, a person of their own even without a phone. **Contacts** are people who answer for them, such as a relative or a carer, each with their own channels and a relation in your words (*daughter*, *carer*).
+
+**Every step goes to the person and to every confirmed contact**, each on the channel chosen for them. An answer from any of them answers the step for all: the other copies read *Answered by a contact*, and the agent knows who answered. While any copy is still waiting for an answer, the next step waits too. Stats and missed-reply alerts count people, not copies. The person and their contacts share one record and memory, which the agent sees from any of their conversations. A contact's own panel says *Answers for …*.
 
 A contact is linked:
 
@@ -218,7 +220,6 @@ A link waiting for that confirmation shows **Confirm link**; **Remove** stops th
 
 Example: in a health follow-up, Ana enrols her father; he becomes the followed person with his own number, and Ana is his contact with the relation *daughter*. An alert about him names him and says Ana reported it.
 
-<!-- TODO verify: steps are not yet sent to contacts. Checked at surogates ebce7ae1c: commit 2b44ebfa3's message says each step goes to the person and every confirmed contact, but surogates/programs/materialize.py still writes one ProgramInvitationRow per enrolled person (user_id only, no person_user_id) and nothing calls followup_store.recipients_for(); only attach_reply's answered_by_other and the funnel's person counting are in place. Once materialize fans out, add: "Every step goes to the person and to every confirmed contact, each on their own channel; an answer from any of them answers it for all." -->
 
 ### Linking a person safely
 

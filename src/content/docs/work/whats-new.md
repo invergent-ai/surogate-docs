@@ -15,7 +15,7 @@ title: What's new
 - **The agent writes each step.** When a step is due, the agent writes it in the person's conversation, following the step's skill, or decides it is not needed. When the reply deadline passes, it looks again and decides: a nudge, an alert, a pause, or nothing.
 - **Review & activate**, with a checklist, a **test send** to a team member and a **dry run** of what one person would get. **Stats** shows each step's sent, delivered, read, replied, completed, no-reply, failed and skipped counts.
 - **Each person on their own channel and clock.** A step goes to the person's preferred channel, else the one they last used, else the step's own, and moves to their other channels if it cannot be delivered. Per-person timezones, **quiet hours** and **Finish after N days** are set per journey.
-- **Followed people and their contacts.** Relatives or carers can be linked to a person, never on a name alone. See [Followed people and their contacts](/work/tools/programs/#followed-people-and-their-contacts).
+- **Followed people and their contacts.** Relatives or carers can be linked to a person, never on a name alone. Every step reaches them too, and an answer from any of them answers it for all. See [Followed people and their contacts](/work/tools/programs/#followed-people-and-their-contacts).
 - **More channels.** Telegram (through a 48-hour start link that asks *Are you …?*), Slack, phone calls from the agent's voice number, steps that wait in web chat with browser notifications, and people reached in your own app.
 - **People who say STOP** are no longer written to on that channel, at once.
 
