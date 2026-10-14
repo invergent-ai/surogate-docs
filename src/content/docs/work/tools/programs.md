@@ -188,6 +188,8 @@ One row per person and journey: **Person** (with their number and who answers fo
 
 Filter by **All / Active / Paused / Ended**, by journey, by stage, by channel, or search by name or number. **Export CSV** downloads every step sent (one row per step and recipient, with delivery, read time, response, label, form answers and escalation), for one journey or all.
 
+People in a journey (active or paused), their confirmed contacts and your team never need a plan on a [monetized](/work/monetize/#people-you-bring-in-never-need-a-plan) agent: they can write on any channel, unmetered.
+
 **Enrol someone** picks a person the agent already knows, a journey and **Day 0**. It is offered once at least one journey is active. The agent can also enrol people in conversation, with their consent; a package can enrol its buyer; and your own software can enrol people through the [Programs API](/work/tools/programs-api/).
 
 ### The person panel

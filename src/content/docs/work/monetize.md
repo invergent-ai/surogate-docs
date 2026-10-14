@@ -156,6 +156,10 @@ On the buy page it comes first, marked *No card needed · upgrade anytime*. **St
 
 Buying a paid plan replaces the Free plan. When a paid plan ends (cancelled, or a trial that ran out without a card), the buyer drops back to the Free plan if the agent still has one. A Free plan replaces the one-time **Free trial** allowance below: with a Free plan live, everyone signs up for it instead, and that card is hidden.
 
+### People you bring in never need a plan
+
+Your own team on [Programs](/work/tools/programs/), anyone in an active or paused journey on the agent, and their confirmed contacts pass every plan and package check on every channel, and their usage is not metered against a plan. Plans are for strangers who come to the agent on their own. A stranger with no plan who writes to an agent that has a Free plan is told *Choose a plan to keep chatting with this assistant; there is a free one.* with a **Start free** link; without a Free plan, they are told a subscription is needed. *Your current plan doesn't include this channel* is kept for someone whose plan leaves the channel out.
+
 ### Trials on paid plans
 
 A paid plan can offer **Free trial (days)**, up to 90 days. On the buy page the plan reads *N days free, no card needed* and its button **Start N days free**. Checkout starts the trial without asking for a card:
