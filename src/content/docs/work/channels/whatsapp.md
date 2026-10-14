@@ -2,7 +2,7 @@
 title: WhatsApp
 ---
 
-Puts the agent on a WhatsApp business number via Meta's official **WhatsApp Business Cloud API**. Conversations are one-to-one (no groups, no threads). In conversation the agent **only replies**; the one message it can send first is a check-in [Program](/work/tools/programs/)'s opener, which has to be a Meta-approved **template** — see [Templates](#templates-the-check-in-opener) below.
+Puts the agent on a WhatsApp business number via Meta's official **WhatsApp Business Cloud API**. Conversations are one-to-one (no groups, no threads). Inside the 24-hour window that a person's last message opens, the agent writes freely. Outside it, Meta lets a business open a conversation only with a **template** it approved, which is how [Programs](/work/tools/programs/) and team alerts reach people first — see [Templates](#templates-the-opener) below.
 
 ## What you need
 
@@ -59,24 +59,41 @@ Photos, voice notes, and documents are ingested automatically as attachments (up
 
 The agent can send files back as native WhatsApp attachments, within Meta's caps: **5 MB** for images, **16 MB** for video and audio, **100 MB** for documents. Attachments arrive uncaptioned — any sentence that goes with a file is sent as its own message just before it. Long replies are split at natural boundaries to fit WhatsApp's 4,096-character message limit.
 
-## Templates (the check-in opener)
+## Templates (the opener)
 
-Meta only lets a business send the *first* message of a conversation, or any message outside the 24-hour service window, as a **message template** it has approved. That is what a check-in Program needs to open the conversation, so the **Manage** screen has a **Templates** button.
+Meta only lets a business send the *first* message of a conversation, or any message outside the 24-hour service window, as a **message template** it has approved. That is what a journey step, a team alert or your message to someone uses to open a closed conversation, so the **Manage** screen has a **Templates** button.
 
 The list shows every template on the account, including ones created outside Surogate, with **Meta's real status** — `APPROVED`, `PENDING`, `REJECTED`, or whatever else Meta reports, passed through unchanged. A rejected template shows Meta's reason. Only an `APPROVED` template can be sent.
 
-**Register a template** with four fields:
+**New template** opens the form:
 
 | Field | Notes |
 |---|---|
-| **Name** | Lowercase letters, digits and underscores, e.g. `daily_checkin`. This is the name you pick in a Program. |
-| **Language** | A Meta language code, e.g. `en_US` or `ro`. A Program names the template *and* the language. |
-| **Category** | `UTILITY` for check-ins. |
-| **Body** | Fixed text, no variables. Example: *Time for your check-in. Reply to begin.* |
+| **Name** | Lowercase letters, digits and underscores, e.g. `daily_checkin`. Meta rejects anything else. |
+| **Language** | A Meta language code, e.g. `en_US` or `ro`. A step names the template *and* the language. |
+| **Category** | `UTILITY` for follow-up messages. |
+| **Header (optional)** | Up to 60 characters. |
+| **Body** | Fixed text, no variables, up to 1,024 characters. Example: *Time for a quick update. Reply to begin.* |
+| **Footer (optional)** | Up to 60 characters. |
+| **Quick-reply buttons (optional)** | Up to 10 buttons, 25 characters each. |
+| **Form button** | Optional: a button that opens one of your published [forms](#forms), with its **Button text** and the screen it **Opens on**. |
 
-**The questions do not go in the template.** Meta reviews template text, so every wording change means another approval round. Keep the opener short and stable; the questions live in the Program's [skill](/work/library/skills/), where you can edit them freely. Once the user replies, the agent asks them as ordinary messages inside the 24-hour window that the reply opens.
+**Submit for approval** sends it to Meta. If Meta finds problems, the form lists every one of them.
 
-On Slack the opener is plain text you write on the Program; only WhatsApp needs Meta's approval. Meta's review usually takes minutes to hours, sometimes longer. Registration submits the template; come back to this screen to see whether it was approved. A Program refuses to activate while its template is not approved.
+**The questions do not go in the template.** Meta reviews template text, so every wording change means another approval round. Keep the opener short and stable; what the agent asks lives in the step's [skill](/work/library/skills/), where you can edit it freely. Once the person replies, the agent carries on in its own words inside the 24-hour window that the reply opens.
+
+Meta's review usually takes minutes to hours, sometimes longer; come back to this screen to see whether it was approved. A journey refuses to go live while one of its WhatsApp steps has no approved template. Pick which templates open a closed chat for team alerts, your messages and welcomes under **Programs → Settings → Channels**.
+
+## Forms
+
+The **Forms** button on the **Manage** screen lists the account's native WhatsApp forms (Meta calls them Flows). **New form** takes a **Name** and the **Flow JSON**; with **Publish if Meta finds no errors** ticked it is published straight away, otherwise it is saved as a draft with Meta's problems listed. A draft has **Publish**; a published form has **Deprecate**.
+
+On a published form, tick **Agent may send this form** and fill in:
+
+- **When to send it** — the agent reads this to decide, e.g. *Send when someone asks to change their appointment.*
+- **Button text** — the button the person taps to open the form.
+
+The agent then sends the form in conversation when it fits, and reads the answers when the person submits it. A template can also open a form directly, through its form button, and a journey step can pass values into it (**Data passed to the form**).
 
 ## What users see
 
@@ -95,7 +112,7 @@ On monetized agents, WhatsApp is a **sellable channel** — a buyer whose packag
 - **Connected, but messages never arrive** — the App Secret comes from a different Meta app than the access token, so Surogate can't verify Meta's signature and discards every message. **Reconnect** with the token and secret from the same app.
 - **Worked for a day, then went silent** — you pasted the 24-hour token from API Setup instead of a permanent system-user token. Generate the system-user token and **Reconnect**.
 - **Replies fail after a quiet day** — Meta's 24-hour customer-service window: the business can only message a user within 24 hours of that user's last message. The conversation resumes when the user writes again.
-- **A Program's openers all show "Failed" with a `132001` or template error** — the template named on the Program no longer exists, or is not approved, on this account. Check its status under **Templates**, then pause and re-activate the Program so the gate re-checks it.
+- **A step's sends all show "Failed" with a `132001` or template error** — the template named on the step no longer exists, or is not approved, on this account. Check its status under **Templates**, then pause the journey and **Review & activate** it again so the checklist re-checks it.
 - **Templates button says WhatsApp is not configured** — the connection has no **WhatsApp Business Account ID**. **Reconnect** and fill it in.
 
 ## Reconnecting and disconnecting
@@ -105,4 +122,4 @@ On monetized agents, WhatsApp is a **sellable channel** — a buyer whose packag
 
 ## What's next
 
-For embedding chat on your website: [Website widget](/work/channels/website-widget/). To have the agent open conversations on a schedule: [Programs](/work/tools/programs/).
+For embedding chat on your website: [Website widget](/work/channels/website-widget/). To have the agent reach people first: [Programs](/work/tools/programs/).
