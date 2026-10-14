@@ -2,9 +2,7 @@
 title: What's new
 ---
 
-<!-- TODO verify: put the release's version numbers (ops and runtime) and date in the heading below once the release is cut. -->
-
-## October 2026
+## October 14, 2026: Surogate 1.14.10 (runtime 2.18.1)
 
 ### Programs: journeys, a team and escalations, on any channel
 
