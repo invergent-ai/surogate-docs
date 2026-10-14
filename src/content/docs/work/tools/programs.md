@@ -218,7 +218,7 @@ A link waiting for that confirmation shows **Confirm link**; **Remove** stops th
 
 Example: in a health follow-up, Ana enrols her father; he becomes the followed person with his own number, and Ana is his contact with the relation *daughter*. An alert about him names him and says Ana reported it.
 
-<!-- TODO verify: steps are not yet sent to contacts. The runtime has the contacts store and the "answered by someone else" state, but materialize.py does not fan a step out to recipients_for() yet (E2E row 16 pending). Once committed, add: "Every step goes to the person and to every confirmed contact, each on their own channel; an answer from any of them answers it for all." -->
+<!-- TODO verify: steps are not yet sent to contacts. Checked at surogates ebce7ae1c: commit 2b44ebfa3's message says each step goes to the person and every confirmed contact, but surogates/programs/materialize.py still writes one ProgramInvitationRow per enrolled person (user_id only, no person_user_id) and nothing calls followup_store.recipients_for(); only attach_reply's answered_by_other and the funnel's person counting are in place. Once materialize fans out, add: "Every step goes to the person and to every confirmed contact, each on their own channel; an answer from any of them answers it for all." -->
 
 ### Linking a person safely
 
