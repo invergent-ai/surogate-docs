@@ -53,4 +53,12 @@ The same person panel opens from Users, Sessions, the Inbox and Programs, and ev
 
 See [Monetize](/work/monetize/#the-free-plan-and-trials-without-a-card).
 
-<!-- TODO verify: the landing page editor (blocks, images adjusted by URL, rich text, previews, templates) is in progress, uncommitted in surogate-ops. Add its entry once committed. -->
+### Landing page editor
+
+- A live **Phone** / **Desktop** preview beside the forms; click a section to edit it.
+- New blocks: **Testimonials**, **Gallery**, **FAQ**, **Video** and **Contact**, a second button on the hero and call to action, and **Hide from page** for any block.
+- Images are still linked, never uploaded, and can now be framed: focal point, zoom, turn and mirror, with alt text.
+- A formatting toolbar for prose, drag to reorder, undo and redo for the whole page, and drafts that save themselves until the page is live.
+- Three more layouts: **The local service**, **The course** and **Link in bio**.
+
+See [Landing page](/work/workflow/landing-page/).
