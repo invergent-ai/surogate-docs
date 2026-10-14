@@ -37,7 +37,7 @@ Six things you'll work with:
 | Max | ✅ |
 | Enterprise | ✅ |
 
-If you drop below Pro, your agent's storefront degrades to **free mode**: the buy page shows no offers ("This agent is not currently accepting purchases."), the Monetize panel collapses to an **Upgrade to Pro** prompt, and the agent behaves as a free agent. Takedown actions still work below the gate — you can always set the mode to Free, deactivate or delete offers, and disconnect Stripe. Stripe keeps charging and granting existing subscriptions the whole time, and re-upgrading restores your catalog intact.
+If you drop below Pro, your agent's paid offers drop out (an agent with a [Free plan](#the-free-plan) keeps offering it, on the buy page and in the app); without a Free plan the storefront degrades to **free mode**: the buy page shows no offers ("This agent is not currently accepting purchases."), the Monetize panel collapses to an **Upgrade to Pro** prompt, and the agent behaves as a free agent. Takedown actions still work below the gate — you can always set the mode to Free, deactivate or delete offers, and disconnect Stripe. Stripe keeps charging and granting existing subscriptions the whole time, and re-upgrading restores your catalog intact.
 
 Upgrade under [Settings → Billing](/work/settings/billing/).
 
@@ -150,7 +150,7 @@ Enforcement is real, per turn, pinned from the payment receipt:
 
 ### The Free plan
 
-In Subscription and Both modes, **Add a Free plan** (*People sign up with no card and get a monthly allowance; they can upgrade anytime.*) composes a plan at no price, with the same fields and **What's included** package as a paid plan. It has no Stripe product behind it. An agent has at most one, listed first with a **Free** badge, priced *Free · renews monthly*.
+In Subscription and Both modes, **Add a Free plan** (*People sign up with no card and get a monthly allowance; they can upgrade anytime.*) composes a plan at no price, with the same fields and **What's included** package as a paid plan. It has no Stripe product behind it, so it needs **neither a connected Stripe account nor the Pro plan**: you can pick a pricing model and offer a Free plan before connecting Stripe. Paid plans and packs still need both. An agent has at most one, listed first with a **Free** badge, priced *Free · renews monthly*.
 
 On the buy page it comes first, marked *No card needed · upgrade anytime*. **Start free** puts the signed-in buyer on it at once, with no checkout. Inside the agent's web app, **Settings → Plan & Usage** lists it first with the same **Start free**. Their allowance renews each month, counted from the day they started, on their first use after the month ends. When a month's allowance is spent, the chat says *You have used this month's free allowance. Upgrade to keep chatting.* with the buy link.
 
