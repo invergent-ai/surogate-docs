@@ -6,7 +6,7 @@ The **Team** and **Escalations** tabs on an agent's [Programs](/work/tools/progr
 
 ## Team tab
 
-The team is the list of colleagues told when the agent escalates or someone stops replying. Each row shows the member, their role, what they handle, whether they can be alerted on their first channel (e.g. *WhatsApp on*), and **Edit** and **Remove**. Someone the agent follows can never join the team: they would receive everyone else's alerts.
+The team is the list of colleagues told when the agent escalates or someone stops replying. Each row shows the member, what they get and can do in plain words (*Everything*, or e.g. *Urgent + attention alerts; can message people*), what they handle, whether they can be alerted on their first channel (e.g. *WhatsApp on*), and **Edit** and **Remove**. Someone the agent follows can never join the team: they would receive everyone else's alerts.
 
 Below the list are the **Shared alert place** and **Add team member**, and under the team, **Recent alerts and messages** sent in your organisation's name.
 
@@ -22,7 +22,7 @@ Below the list are the **Shared alert place** and **Add team member**, and under
 | **Studio inbox only** | Nothing | **Send alerts to my Studio inbox**: alerts land in your Studio Inbox and nobody is messaged. |
 | **Someone already here** | Search by name or number | Someone the agent already knows, on the channel they use. |
 
-Pick a **Role** too (see below). Adding a member records their consent to alerts on that channel.
+Choose what they get and can do too (see below); a new member starts with everything. Adding a member records their consent to alerts on that channel.
 
 ### Editing a member
 
@@ -31,21 +31,23 @@ Pick a **Role** too (see below). Adding a member records their consent to alerts
 - **Name**.
 - **How they are reached** — change their WhatsApp number, choose or change their Slack member, or link Telegram with a start link. Adding a way to reach them records their consent to alerts there.
 - **Alert them first on** — the channel tried first. If that fails, the agent tries their other channels.
-- **Role** and permissions, **Handles**, then **Save permissions**.
+- **What they get and can do**, and **Handles**, then **Save**.
 
-### Roles and permissions
+### What a member gets and can do
 
-Each member has what they **Receive** and what they **Can do**, from a role you can then edit item by item (it shows as **Custom** once changed):
+Each member has two lists of checkboxes, each with an **Everything** box, plus an **Everything** shortcut for both and **Same as…** to copy another member's choices:
 
-| | Full | Assistant | Alerts only |
-|---|:-:|:-:|:-:|
-| Receives **Urgent alerts**, **Attention alerts** | ✓ | ✓ | ✓ |
-| Receives **Missed replies**, **New people enrolled**, **Daily report**, **Delivery failures** | ✓ | ✓ | – |
-| Can **See people and reports**, **Message a person**, **Enroll**, **Pause, resume or end**, **Edit details** | ✓ | ✓ | – |
-| Can **See full phone numbers** | ✓ | ✓ | ✓ |
-| Can **Manage the team** | ✓ | – | – |
+| Gets told about | Can do |
+|---|---|
+| **Urgent alerts** | **See people and reports** |
+| **Attention alerts** | **Message a person** |
+| **Missed replies** | **Enroll people** |
+| **New people enrolled** | **Pause, resume or end** |
+| **Daily report** | **Edit details** |
+| **Delivery failures** | **See full phone numbers** |
+| | **Manage the team** |
 
-A member added before roles existed is **Full**. Replies to a member's own requests always reach them, whatever they receive. The same rules apply in Studio and when they talk to the agent in chat (see [Team commands in chat](#team-commands-in-chat)).
+A new member starts with everything, and so does anyone added before these choices existed. Replies to a member's own requests always reach them, whatever they get told about. The same lists apply in Studio and when they talk to the agent in chat (see [Team commands in chat](#team-commands-in-chat)): a member who cannot do something is told so in plain words.
 
 **Handles** is a short note in your words, e.g. *medication questions, weekday mornings*. The agent reads it to choose who to alert: it can address an escalation to the members whose handles fit, and alerts everyone who receives that kind when it does not. Empty means anything.
 
@@ -67,6 +69,8 @@ The agent raises an escalation with a severity:
 A third kind comes from the platform rather than the agent: **missed replies**, when a person has not answered the last N steps of a journey (set on each step as **Alert the team after**).
 
 Each member gets the kinds they receive, on their first channel, falling back to their others. On WhatsApp outside the 24-hour window an alert opens with your approved alert template (chosen under **Settings → Channels → WhatsApp**).
+
+**An urgent alert can be a phone call.** A member alerted on Voice is phoned from the agent's number; the agent reads the alert out and asks them to say yes or press 1 to confirm. A call that is busy, unanswered, declined, or answered without a yes or a 1 sends the same alert at once on the member's next alert channel.
 
 **An unopened urgent alert is sent again, once.** If no team member has read an urgent alert on WhatsApp after 30 minutes, it goes out again to the whole team, starting *🔴 Reminder, not yet opened after 30 minutes*, so a colleague can act when the first one is away from their phone. Read means WhatsApp's own read receipt.
 
