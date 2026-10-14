@@ -238,7 +238,7 @@ A person who writes **STOP** (or *unsubscribe*, *opt out*, and a few equivalents
 General settings first, then each channel:
 
 - **Journey** — the selected journey's timezone, quiet hours and **Finish after**; see [above](#quiet-hours-timezones-and-finishing).
-- **Messages** — your wording, on every channel: the welcome sent once someone joins, the notices to your team (a message did not arrive, an urgent alert not yet opened, someone joined through a purchase, …) and the checkout fields. Empty fields use the default shown; words in braces such as `{name}` are filled in.
+- **Messages** — your wording, on every channel, each named by purpose with a line on when it is used. First what people read (**Welcome**, and what they are told when someone takes or resolves their escalation: **Someone is on it**, **It was dealt with**), then **To your team** (e.g. **Your message did not arrive**, **Urgent alert not opened**), **Plans and limits** (e.g. **Free trial ending**, **Free allowance used**, **Channel not in their plan**) and **Checkout fields**. Empty fields use the default shown; words in braces such as `{name}` are filled in.
 - **Packages** — which journey a package's buyer joins. A package pointing at a journey that is not active warns that a buyer would join but hear nothing.
 - **Channels** — each connected channel the agent writes first on, and the account it sends from. On WhatsApp: which approved template opens a closed chat for **An alert to the team**, **Your message to someone** and **A welcome after a purchase**, plus the wording used when a WhatsApp message cannot go out. **Manage templates** opens the Templates screen.
 

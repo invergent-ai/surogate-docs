@@ -46,7 +46,7 @@ Each member has two lists of checkboxes, each with an **Everything** box, plus a
 | **Daily report** | **Edit details** |
 | **Delivery failures** | **See full phone numbers** |
 | | **Manage the team** |
-| | Take and resolve escalations from chat |
+| | **Take and resolve escalations** |
 
 A new member starts with everything, and so does anyone added before these choices existed. Replies to a member's own requests always reach them, whatever they get told about. The same lists apply in Studio and when they talk to the agent in chat (see [Team commands in chat](#team-commands-in-chat)): a member who cannot do something is told so in plain words.
 
