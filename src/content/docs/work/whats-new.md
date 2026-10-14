@@ -41,6 +41,10 @@ Enrol people, read their steps and escalations, and receive signed webhook event
 
 Templates can have a header, a footer, quick-reply buttons and a form button. The new **Forms** screen publishes native WhatsApp forms the agent can send. See [WhatsApp](/work/channels/whatsapp/).
 
+### Office documents in the editor
+
+Word documents, spreadsheets, presentations and PDFs in an agent's workspace now open in a full office editor beside the chat, in Studio and in the agent's web app. Edits save back into the workspace, and everyone with a document open sees each other's changes live. In a Word document the agent can work alongside you with `office_read` and `office_edit`: its changes appear under its name as it makes them, and your edits always win. See [Office documents](/work/tools/office-documents/).
+
 ### One person, one channel list, across Studio
 
 The same person panel opens from Users, Sessions, the Inbox and Programs, and every list filters by the same channels with counts. Lists keep themselves current. See [Review sessions](/work/workflow/review-sessions/#sessions-across-channels) and [Users](/work/channels/users/#managing-existing-users).
