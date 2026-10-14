@@ -163,6 +163,7 @@ export default defineConfig({
           items: [
             'work',
             'work/quickstart',
+            'work/whats-new',
             {
               label: 'Agents',
               collapsed: true,

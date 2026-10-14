@@ -184,7 +184,7 @@ Under the journey switcher, **Fixed lists of people** holds schedules that are n
 
 <!-- TODO verify: add a screenshot of the People tab (work-programs-people.png) once the release is deployed. -->
 
-One row per person and journey: **Person**, **Journey and step** (the journey, their day and current step), **Next send** (in their own time), **Last reply** (on any channel), **Channels** and **Status**. Each channel chip is green when they agreed to be contacted there.
+One row per person and journey: **Person** (with their number and who answers for them, e.g. *with Ana (daughter)*), **Journey and step** (the journey, their day and current step), **Next send** (in their own time), **Last reply** (on any channel), **Channels** and **Status**. Each channel chip is green when they agreed to be contacted there.
 
 Filter by **All / Active / Paused / Ended**, by journey, by stage, by channel, or search by name or number. **Export CSV** downloads every step sent (one row per step and recipient, with delivery, read time, response, label, form answers and escalation), for one journey or all.
 
