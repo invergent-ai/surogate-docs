@@ -166,7 +166,7 @@ These live on the **Settings** tab, in the **Journey** card.
 
 ### A step's recent runs
 
-An open step shows its **Recent runs**: one line per send time with chips such as *12/14 sent*, *7 replied*, *5 no reply*, *1 escalated*. Expand a run to see one row per person, filtered by **Escalated**, **No reply**, **Failures** or **Skipped**, each with:
+An open step shows its **Recent runs**: one line per send time with chips such as *12/14 sent*, *7 replied*, *5 no reply*, *1 escalated*, *2 not needed* (the agent decided no message was needed) and *1 handled by agent* (a missed reply the agent dealt with itself). Expand a run to see one row per person, filtered by **Escalated**, **No reply**, **Failures** or **Skipped**, each with:
 
 | | Values |
 |---|---|
