@@ -31,12 +31,15 @@ Every Surogate term you'll see in Work mode, in one place.
 | **Message (usage unit)** | ≈ 1,000 tokens — one question plus the agent's answer. The unit commerce surfaces display; storage stays token-denominated. |
 | **Model tier** | Basic or Pro — which platform model class a buyer's package entitles them to. Strongest tier wins across planes. |
 | **Offer** | A plan or pack you sell on one agent: price + usage + browsing time + media credits + a package. |
-| **Opener (template)** | The one fixed, Meta-approved WhatsApp message a Program sends to start a check-in. The questions are not in it; they live in the Program's skill. |
+| **Opener (template)** | The fixed, Meta-approved WhatsApp message that opens a conversation outside the 24-hour window, for a journey step, a team alert or a message from the team. The questions are not in it; they live in the step's skill. |
 | **Package** | What a purchase unlocks beyond usage: capabilities, channels, KBs, connected tools, skills, model tier. Snapshotted at purchase. |
 | **Persona (SOUL.md)** | The agent's identity, tone, and rules. Up to 20,000 characters. Edited in the CONFIG tab. |
 | **Platform floor** | The always-on, non-configurable governance layer: workspace path containment and path-argument hygiene. No agent policy can relax it. |
 | **Pricing model** | How an agent charges: Free, Subscription, One-time packs, or Both. |
-| **Program (check-in)** | A scheduled check-in: a skill, a cadence (weekdays and local times in a named zone), a channel and sender (WhatsApp or Slack), an opener and a roster of users. Activates only when every user is reachable. |
+| **Programs** | The agent page where it reaches people first: the people it follows, the journeys that write to them, the team, escalations and settings. |
+| **Journey** | A set of steps inside Programs that every person in it gets, counted from their own start date (day 0). |
+| **Step** | One message or call in a journey: when, on which channel, and the skill the agent follows with the reply. |
+| **Escalation** | Something the agent raised for a person on the team, urgent or needing attention; claimed and resolved from Programs or the Inbox. |
 | **Quality flags** | Per-session tags: 👍 / 👎 (user feedback), `policy.denied`, `harness.crash`, `saga.compensated`, `expert.override`, `expert.endorse`. |
 | **Session** | One conversation between a user and an agent. Records everything. Survives crashes. |
 | **Skill** | A small markdown file telling the agent how to handle a specific kind of request. Reusable. |
