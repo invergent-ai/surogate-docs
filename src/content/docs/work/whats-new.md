@@ -45,4 +45,12 @@ Templates can have a header, a footer, quick-reply buttons and a form button. Th
 
 The same person panel opens from Users, Sessions, the Inbox and Programs, and every list filters by the same channels with counts. Lists keep themselves current. See [Review sessions](/work/workflow/review-sessions/#sessions-across-channels) and [Users](/work/channels/users/#managing-existing-users).
 
-<!-- TODO verify: Monetize (a Free plan as a package with no card, trials without a card and what happens at their end, the upgrade path) and the landing page editor (blocks, images adjusted by URL, rich text, previews, templates) are in progress, uncommitted in surogate-ops as of 2026-10-14 14:55. Add their entries once committed. -->
+### Monetize: a Free plan and trials without a card
+
+- **A Free plan**: a plan at no price that people start on your buy page with no card, renewing monthly; it leads the buy page, and a buyer whose paid plan ends drops back to it.
+- **Card-free trials on paid plans**: up to 90 days free, a reminder before the end, and if no card is added the trial is cancelled and the buyer moves to the Free plan.
+- A **Subscribers** list with each buyer's plan and status.
+
+See [Monetize](/work/monetize/#the-free-plan-and-trials-without-a-card).
+
+<!-- TODO verify: the landing page editor (blocks, images adjusted by URL, rich text, previews, templates) is in progress, uncommitted in surogate-ops. Add its entry once committed. -->
