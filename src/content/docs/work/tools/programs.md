@@ -171,8 +171,8 @@ An open step shows its **Recent runs**: one line per send time with chips such a
 | | Values |
 |---|---|
 | **Delivery** | *Queued*, *Sent*, *Delivered*, *Failed*, *Undelivered*, *Skipped*, *Cancelled* |
-| **Response** | *Not started*, *Awaiting reply*, *Replied*, *In progress*, *Completed*, *Declined*, *Answered, not finished*, *No reply by deadline* |
-| **Escalation** | *Escalated*, *Escalation failed* |
+| **Response** | *Not started*, *Awaiting reply*, *Replied*, *In progress*, *Completed*, *Declined*, *Answered, not finished*, *No reply by deadline*, *Agent decided no message was needed* (with its note), *Answered by a contact* |
+| **Escalation** | *Escalated*, *Escalation failed*, *Agent handled the missed reply* |
 
 Delivery and response are separate because they are separate facts: a failed send never reads as a person who stayed silent. Click a person to open their panel, or open the conversation.
 
@@ -194,7 +194,7 @@ Filter by **All / Active / Paused / Ended**, by journey, by stage, by channel, o
 
 Click a person to open their panel. The same panel opens from Users, Sessions, Inbox and Escalations.
 
-- **Message** sends them your text word for word, in your name, on the channel the agent would use. Inside their quiet hours it waits until they end.
+- **Message** sends them your text word for word, in your name, on the channel the agent would use. Inside their quiet hours it waits, and Studio says when it will reach them in their own time; tick **Send now, even in their quiet hours** to send it at once.
 - **Pause**, **Resume** and **End** ask for a reason.
 - **Channels** shows each account and its consent. **Link Telegram** makes a start link; see [Linking a person safely](#linking-a-person-safely).
 - **What the agent knows** — the agent's memory of this person.
@@ -249,18 +249,16 @@ General settings first, then each channel:
 | **Slack** | Yes | A direct message from the agent's Slack app, at any time; no templates. Needs **Personal assistant** mode. See [Slack](/work/channels/slack/#programs-on-slack). |
 | **Telegram** | Yes, once they started the bot | The agent can write only to someone who pressed **Start**; a start link does that. No templates. See [Telegram](/work/channels/telegram/). |
 | **Voice** | Yes, as a phone call | A step on Voice is a call from the agent's number: the agent talks it through and what they say is recorded like a reply. Busy, no answer or declined counts as failed, so the step moves to the next channel. Quiet hours apply to people; an urgent alert can ring a team member at any hour. Needs an outbound line on the number. |
-| **Web chat** | Waits for their visit | A due step waits in the person's web chat and shows on their next visit. |
+| **Web chat** | Waits for their visit | A due step waits in the person's web chat and shows on their next visit. With **Browser notifications** on (Settings → Channels, when the platform has push set up), people who allowed notifications are told in their browser. |
 | **Your app (API)** | Through your webhook | Steps for people you reach in your own app go to your webhook, and your app reports delivery and replies back. See [Programs API](/work/tools/programs-api/). |
 | **Website widget** | No | Its visitors are anonymous, so there is no one to write to. |
 
-Microsoft Teams and email cannot be used for Programs yet.
+Microsoft Teams and email cannot be used for Programs yet. Outbound calls are switched on for the platform by your administrator, with an outbound phone line (SIP trunk) for the agent's number.
 
-<!-- TODO verify: voice outbound needs a trunk; confirm how an operator gives a number its outbound line in Studio (ops phone_numbers.outbound_trunk_id or the platform env SUROGATES_VOICE_OUTBOUND_TRUNK_ID) and whether the voice line's "acknowledge" wording is editable in Studio (not in voice-channel-view.tsx as of 2026-10-14). -->
-<!-- TODO verify: web chat browser notifications. Settings → Channels shows "Browser notifications" when the platform has push keys, but the web chat's own "allow notifications" control is not built yet (surogates web/). Document the person's side once it ships. -->
+<!-- TODO verify: the voice line's acknowledge wording ("Please say yes, or press 1, to confirm you got this.") is not editable in Studio's voice line editor as of ops 1b6ca0dc; document it if it becomes editable. -->
 
 ## Limits in this release
 
-- A person given a new timezone can be reached one send late: their zone is read when a step fires.
 - Branching between steps is not configured: the agent decides what happens next, with its tools and the person's history.
 - While your Meta app is in development mode, Meta delivers only to the numbers on its recipient list, so steps seem to work for you and fail for everyone else.
 

@@ -100,7 +100,7 @@ Both are **Slack-only**: on a session whose effective channel isn't Slack (Teleg
 
 | Tool | Use for |
 |---|---|
-| `step_outcome` | Close a journey step — `outcome` (`completed`, `declined`, or `skipped` with the reason in `note`), optional `label` (the business's category for the answers, e.g. `green` or `red`). Messages nobody. `checkin_outcome` is its older name, still accepted |
+| `step_outcome` | Close a journey step — `outcome` (`completed`, `declined`, or `skipped` with the reason in `note`), optional `label` (the business's category for the answers, e.g. `green` or `red`). Messages nobody. `checkin_outcome` is its older name: the runtime still accepts it, and a tool policy that names it is rewritten to `step_outcome` |
 | `escalate` | Raise something to the team now — `reason`, `severity` (`red` when the person got urgent instructions, else `yellow`), optional `to` (team members by name, chosen by what they handle). Reaches the team on their channels and the responsible operator's Inbox; recorded in the Escalations queue |
 | `followup_enroll` | Enrol the person writing, or someone they write for, in a journey, after they agreed to be contacted on this channel |
 | `followup_status` | The journeys offered and the enrolments of the person writing |

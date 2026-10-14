@@ -39,7 +39,7 @@ When the agent's **Multi session** capability is off, each user gets one dedicat
 
 Web chat cannot interrupt anyone, so when a [Programs](/work/tools/programs/) journey step is due for a signed-in person reached only here, it waits in their conversation and shows as the agent's message on their next visit. A single-session agent opens that conversation; a multi-session one lists it. Their reply answers the step like on any other channel.
 
-<!-- TODO verify: browser notifications for web chat. Studio has the per-agent switch (Programs → Settings → Channels → Web chat → Browser notifications, shown when the platform has push keys) and the runtime sends pushes, but the web chat's own "allow notifications" control is not built yet in surogates web/. Document what the person sees once it ships. -->
+When the agent's **Browser notifications** switch is on (Programs → Settings → Channels → Web chat), the chat offers, after the person's first message and never on a first visit, to **Notify me** when the agent writes, even with the page closed; **Not now** keeps the offer away for 30 days. They can turn it on or off for that browser under **Settings → Profile → Notifications**. A notification opens that conversation. While the tab is in the background, a new message from the agent flashes the tab title until they look.
 
 ## Who can sign in
 

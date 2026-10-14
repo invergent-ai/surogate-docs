@@ -16,18 +16,22 @@ title: What's new
 - **Review & activate**, with a checklist, a **test send** to a team member and a **dry run** of what one person would get. **Stats** shows each step's sent, delivered, read, replied, completed, no-reply, failed and skipped counts.
 - **Each person on their own channel and clock.** A step goes to the person's preferred channel, else the one they last used, else the step's own, and moves to their other channels if it cannot be delivered. Per-person timezones, **quiet hours** and **Finish after N days** are set per journey.
 - **Followed people and their contacts.** Relatives or carers can be linked to a person, never on a name alone. See [Followed people and their contacts](/work/tools/programs/#followed-people-and-their-contacts).
-- **More channels.** Telegram (through a 48-hour start link that asks *Are you …?*), Slack, phone calls from the agent's voice number, steps that wait in web chat, and people reached in your own app.
+- **More channels.** Telegram (through a 48-hour start link that asks *Are you …?*), Slack, phone calls from the agent's voice number, steps that wait in web chat with browser notifications, and people reached in your own app.
 - **People who say STOP** are no longer written to on that channel, at once.
 
 ### Team and escalations
 
 - Add team members on WhatsApp, Slack, Telegram, or the Studio inbox only, and edit their name, channels and the channel they are alerted on first.
-- **Roles**: Full, Assistant and Alerts only, editable item by item, plus what each member **handles**, which the agent reads to route an alert.
+- Choose directly what each member **gets told about** and **can do**, with **Everything** shortcuts and **Same as…** another member, plus what each member **handles**, which the agent reads to route an alert.
 - A **shared alert place**, such as a Slack channel.
-- **Urgent** and **attention** alerts; an urgent alert nobody opened is sent again once.
+- **Urgent** and **attention** alerts; an urgent alert nobody opened is sent again once. An urgent alert can phone a team member, and one nobody confirms on the phone goes straight to their next channel.
 - The **Escalations** tab and the Inbox share one record, with **Claim** and **Resolve**.
 
 See [Team and escalations](/work/tools/programs-team/).
+
+### The copilot runs Programs
+
+The Platform Copilot can now build and run Programs, People, the Team, Escalations, Monetize and the Inbox for you, and knows which Programs tab, journey and person you have open. `/build-program` walks you through setting up a whole program. See [Copilot](/work/tools/copilot/).
 
 ### Programs API and webhooks
 
