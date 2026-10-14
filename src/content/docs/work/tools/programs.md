@@ -233,7 +233,7 @@ A person is never matched on a name. Accounts are linked by:
 
 ### Stop and opt-out
 
-A person who writes **STOP** (or *unsubscribe*, *opt out*, and a few equivalents in other languages) on a channel is honoured before the agent even reads it: their permission on that channel is withdrawn and, for a followed person, their follow-up ends. The agent also stops when someone asks in their own words. A contact who stops just stops receiving the steps. The team is told once.
+A person who writes **STOP** (or *unsubscribe*, *opt out*, and a few equivalents in other languages) on a channel is honoured before the agent even reads it: their permission on that channel is withdrawn and, for a followed person, their follow-up ends. The agent also stops when someone asks in their own words. A contact who stops just stops receiving the steps. The team is told once. A team member's "stop" is not an opt-out: it reaches the agent as an ordinary message, so they keep getting alerts.
 
 ## Settings tab
 
