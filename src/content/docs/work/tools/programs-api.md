@@ -78,6 +78,7 @@ curl -X POST https://<your Studio host>/api/v1/agents/<agentId>/enrollments \
 - `consent.granted` must be `true`: enrolling records that **you** collected the person's consent to be contacted, on each handle you give, with your key and `consent.text` as the record.
 - A handle the agent does not know yet makes a new person of this agent. Enrolling someone again updates their enrollment and makes it active.
 - `contacts` (up to 10) links people who answer for them, as confirmed contacts.
+- Everything is checked before anything is written: a refused enrolment (an unknown timezone, a preferred channel they cannot be reached on, a team member as the person) creates no person, contact or consent.
 
 The response is the enrollment: the person with their handles, the journey, `status`, `anchor_date`, `day` (negative before the anchor), `timezone`, `preferred_channel`, `current_step`, `next_send_at`, `last_reply_at` and `enrolled_by` (`api` for an enrolment made through this API).
 
@@ -157,7 +158,7 @@ A person enrolled with an `api` handle is reached through your app instead of a 
 
 1. When the agent writes to them (a step, an alert, a message from the team), your webhook gets a `message.deliver` event whose `data` holds the `text`, the `external_id` (your id), the kind (`step`, `alert`, `message` or `form`) and a `message_id`.
 2. Show it in your app, then report what happened: `POST /messages/{message_id}/status` with `delivered`, `read` or `failed`. A failed message moves the step to the person's next channel, if they have one.
-3. When they answer, `POST /people/api:<your id>/messages` with their `text` (and `form` answers, if any). It answers the step waiting for them and wakes the agent. A message the safety screen refuses is answered `422` with the reason.
+3. When they answer, `POST /people/api:<your id>/messages` with their `text` (and `form` answers, if any). It answers the step waiting for them and wakes the agent. The same rules apply as on any other channel: a bare STOP opts them out of messages through your app, and an answer to a question the agent asked is taken as the answer. A message the safety screen refuses is answered `422` with the reason.
 
 If your webhook stays unreachable after its retries, the message is failed and the step tries the person's other channels. Removing the webhook, switching it off, or unticking `message.deliver` does the same for messages still waiting, so the agent tries the person's other channels. Other events wait until the webhook is on again.
 
