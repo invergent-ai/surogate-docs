@@ -87,7 +87,7 @@ The first time a Slack user messages the bot:
 
 Once linked, the same person on Web and Slack sees the same agent, same memory, same sessions — and shares the same per-user usage allowance, so switching channels never resets a limit.
 
-When the agent asks a question (`ask_user_question`), Slack shows a modal — typed replies aren't converted into answers here (unlike Web and Telegram); the bot nudges toward the modal instead. On monetized agents, Slack is a **sellable channel**: a buyer whose package excludes it gets a short notice with their buy link.
+When the agent asks a question (`ask_user_question`) with up to five short choices, such as a yes/no confirmation, the choices are buttons in the message: one tap answers it and the message turns into the answer. Free-text questions, longer or more choices, and several questions at once keep the **Answer** button, which opens a form. Typed replies aren't converted into answers here (unlike Web and Telegram); the bot nudges toward the buttons or the form instead. On monetized agents, Slack is a **sellable channel**: a buyer whose package excludes it gets a short notice with their buy link.
 
 ## Programs on Slack
 
