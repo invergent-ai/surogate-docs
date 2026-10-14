@@ -58,7 +58,7 @@ Signed-in users get their own **Settings** page with up to five tabs — three o
 |---|---|---|
 | **Profile** | Always | Display name (editable), email (read-only — *"Your sign-in email cannot be changed here."*), member-since, and password controls (below) |
 | **Connected Channels** | The agent has at least one active messaging channel (Slack / Telegram / WhatsApp) | Linked channel identities, per-row unlink, **Link a channel** |
-| **Plan & Usage** | Always | Their plan (a Free plan, or a running trial with its end date) and renewal date, usage / browsing / media balances, "Your plan includes …", and your offers — see [Monetize](/work/monetize/#your-buy-page) |
+| **Plan & Usage** | Always | Their plan (a Free plan, or a running trial with its end date) and renewal date, **Start free** when the agent has a Free plan, usage / browsing / media balances, "Your plan includes …", and your offers — see [Monetize](/work/monetize/#your-buy-page) |
 | **Coding Agents** | The `/code` command is enabled | Their coding-agent plans |
 | **Browser Profiles** | Live browser support is on | Their saved browser logins |
 

@@ -84,7 +84,7 @@ Back on the Monetize tab, the **Pricing model** cards offer four choices:
 | **Free** | No charge. The default. |
 | **Subscription** | Buyers must hold an active subscription. Best for *all you can eat* pricing. |
 | **One-time packs** | Usage or feature packs bought once. They never expire. Best for casual users and add-ons. |
-| **Both** | Buyers can subscribe *or* buy packs. Subscription usage is spent first; pack usage kicks in when it runs out. |
+| **Both** | Buyers subscribe, and packs top up their plan: a buyer needs a plan first, and the Free plan counts. Until they hold one, the buy page locks the packs (*Packs top up a plan. Pick a plan above first — the Free plan counts.*). Subscription usage is spent first; pack usage kicks in when it runs out. |
 
 You can change the mode at any time. Offers of a kind the current mode doesn't sell are collapsed in the list behind a note — *"N live plans hidden — not sold under this pricing model, but still active for existing buyers"* — and can be revealed (dimmed) so **Edit / Deactivate stay reachable** without flipping the mode back, which would put them on sale again. Existing buyers keep billing either way.
 
@@ -152,7 +152,7 @@ Enforcement is real, per turn, pinned from the payment receipt:
 
 In Subscription and Both modes, **Add a Free plan** (*People sign up with no card and get a monthly allowance; they can upgrade anytime.*) composes a plan at no price, with the same fields and **What's included** package as a paid plan. It has no Stripe product behind it. An agent has at most one, listed first with a **Free** badge, priced *Free · renews monthly*.
 
-On the buy page it comes first, marked *No card needed · upgrade anytime*. **Start free** puts the signed-in buyer on it at once, with no checkout. Their allowance renews each month, counted from the day they started, on their first use after the month ends. When a month's allowance is spent, the chat says *You have used this month's free allowance. Upgrade to keep chatting.* with the buy link.
+On the buy page it comes first, marked *No card needed · upgrade anytime*. **Start free** puts the signed-in buyer on it at once, with no checkout. Inside the agent's web app, **Settings → Plan & Usage** lists it first with the same **Start free**. Their allowance renews each month, counted from the day they started, on their first use after the month ends. When a month's allowance is spent, the chat says *You have used this month's free allowance. Upgrade to keep chatting.* with the buy link.
 
 Buying a paid plan replaces the Free plan. When a paid plan ends (cancelled, or a trial that ran out without a card), the buyer drops back to the Free plan if the agent still has one. A Free plan replaces the one-time **Free trial** allowance below: with a Free plan live, everyone signs up for it instead, and that card is hidden.
 
