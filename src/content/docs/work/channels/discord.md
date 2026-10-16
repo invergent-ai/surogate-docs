@@ -29,7 +29,8 @@ The options save automatically as you change them.
 | **Require @mention** (default ON) | In servers, the agent answers only when it is @mentioned or someone replies to it. Direct messages always get an answer. |
 | **Free-response channels** | Channel IDs (right-click a channel → **Copy Channel ID**, with Developer Mode on) where it answers every message without a mention. |
 | **Read every message** | Asks Discord for the Message Content intent. Needed only for free-response channels. Switch the intent on in the Developer Portal first, or Discord refuses the connection. |
-| **Mode** | **Team member**: everyone talks to a shared agent identity. **Personal assistant**: each person links their own Surogate account. |
+
+Everyone on Discord talks to the agent as a shared team member; each person still has their own conversation and appears under **Users**.
 
 Images and files people send reach the agent as attachments. Long answers are split at Discord's 2,000-character limit, and in servers the agent replies to the message that asked.
 

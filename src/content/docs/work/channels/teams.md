@@ -30,13 +30,9 @@ People find the bot through a Teams app. On the Teams screen, **Download app pac
 
 **Try it** opens a chat with the bot once the app is installed for you. In a channel or group chat, @mention it: Teams delivers channel and group messages to a bot only when it is mentioned; one-to-one chats always reach it.
 
-## Options
+## How it answers
 
-| Option | What it does |
-|---|---|
-| **Mode** | **Team member**: colleagues talk to a shared agent identity. **Personal assistant** links each person's Surogate account; on Teams, use Team member for now. |
-
-Answers support Markdown (lists, tables, code). Images the agent produces are shown inline; other files are not sent on Teams yet.
+Colleagues talk to the agent as a shared team member; each person still has their own conversation and appears under **Users**. Answers support Markdown (lists, tables, code). Images the agent produces are shown inline; other files are not sent on Teams yet.
 
 ## Reaching people first
 
