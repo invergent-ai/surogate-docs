@@ -7,7 +7,7 @@ The **Publish** page — reached from an agent's left navigation, directly under
 | Tab | What you set here |
 |---|---|
 | **Landing page** | A public marketing page for the agent, composed from blocks |
-| **Channels** | Web, Slack, Telegram, WhatsApp, and website-widget connections |
+| **Channels** | Web, WhatsApp, Slack, Telegram, Discord, Microsoft Teams, website-widget and voice connections |
 | **Users** | End-users who can chat with this agent, and self-registration |
 | **Insights** | How those end-users are actually using it |
 | **Monetize** | Charge for access via Stripe Connect (Pro plan) |
@@ -26,14 +26,21 @@ A public page at `/landing/<agent-slug>`, built from an ordered list of blocks. 
 
 ## Channels
 
-![The Channels tab: Web and Slack active, Telegram, WhatsApp and Website ready to connect](../../../../assets/screenshots/work-publish-channels.png)
+![The Channels tab: the Live list with each connection and its activity, and Add a channel](../../../../assets/screenshots/work-publish-channels.png)
 
-Connect the agent to where your people already work. Each channel card shows an **Active** / **Off** status and a **Connect** or **Manage** button.
+Connect the agent to where your people already work. The tab opens with a one-line summary (how many channels the agent answers on, and its conversations in the last 7 days) and two lists:
+
+- **Live** — each connected channel with what it is connected to (the number, the Slack workspace, the bot, the site) and its activity, such as *12 chats · 6m ago*. Click a row to manage it.
+- **Add a channel** — everything not connected yet, each with a **Connect** button.
+
+Every manage screen has **Try it**: a link that opens a real chat with the agent on that channel, and for WhatsApp and Telegram a QR code to open it on your phone.
 
 - **Web** — the always-on hosted chat page; copy its endpoint URL once the agent is deployed. See [Web](/work/channels/web/).
 - **Slack** — a guided **Connect Slack** wizard (bot scopes, event subscriptions, signing secret, bot token). The **Manage** view auto-saves options: **Require @mention**, **Mode** (Team member / Personal assistant), **Allow Bots** (None / Mentions only / All), **Reply in thread**, **Reply broadcast**, **Free-response channels**, plus **Surogate Mate** follow-the-channel and ambient-mode toggles. See [Slack](/work/channels/slack/).
 - **Telegram** — a **Connect Telegram** wizard (BotFather token). **Manage** options: **Require @mention**, **Mode**, **Reply Threading** (First chunk only / All chunks / Off), **Message Reactions**, and **Per-User Group Chats**. See [Telegram](/work/channels/telegram/).
 - **WhatsApp** — a **Connect WhatsApp** wizard: set the Meta app's webhook from the callback URL + verify token it shows, then paste the Meta Cloud API credentials (Access Token, App Secret, WABA ID). **Manage**: a webhook check and the **Mode** option. See [WhatsApp](/work/channels/whatsapp/).
+- **Discord** — a **Connect Discord** walkthrough (one bot token), then an **Add to a server** install link. **Manage**: **Require @mention**, **Free-response channels**, **Read every message**, **Mode**. See [Discord](/work/channels/discord/).
+- **Microsoft Teams** — a **Connect Microsoft Teams** walkthrough (Azure Bot App ID, tenant ID, client secret, and the messaging endpoint to paste), then **Download app package** to upload in Teams. See [Microsoft Teams](/work/channels/teams/).
 - **Website** — an embeddable chat bubble. Set **Allowed origins**, copy the **Embed code**, cap **Messages per chat**, and reveal the **Publishable key** under Advanced. See [Website widget](/work/channels/website-widget/).
 
 ## Users
