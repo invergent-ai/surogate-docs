@@ -2,7 +2,7 @@
 title: Members and roles
 ---
 
-The **Members** tab lists the people in your active project and what each of them may do. Every member has one of three roles: **Viewer**, **Editor** or **Owner**. Owners add people, change roles and remove members. Anyone can leave.
+The **Members** tab lists the people in your active project and what each of them may do. Every member has one of three roles: **Viewer**, **Editor** or **Owner**. Owners add people, change roles and remove members. Anyone can leave, except the last owner.
 
 The tab is in Settings and shows the active project; switch projects first to manage another (see [The project switcher](#the-project-switcher)).
 
