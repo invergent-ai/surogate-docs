@@ -122,7 +122,7 @@ A finished run can be exported as a standalone report via `GET /api/eval-runs/{i
 
 ## Leaderboard
 
-The **Leaderboard** button (shown once the project has a run) opens the latest score per model on each benchmark across completed evaluations; the same data is at `GET /api/leaderboard`.
+The **Leaderboard** button (shown once the project has a run) opens the latest score per model on each benchmark across the project's completed evaluations; the same data is at `GET /api/leaderboard`.
 
 ## Side-by-side: A/B evaluation
 
