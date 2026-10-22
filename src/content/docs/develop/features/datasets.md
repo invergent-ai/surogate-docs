@@ -246,7 +246,7 @@ Previews the first 20 rows via `GET /api/datasets/{id}/samples?limit=20&split=<s
 
 ### Configuration
 
-The recipe the dataset was built from: for a chats dataset its agents, quality, time range, channel, skill, minimum words, format and PII setting; for a synthetic one its teacher and judge models, temperatures, dedup and format. While the dataset is a draft, editors can change it and press **Save changes**. Once it is built the tab is a read-only record, and so it is for viewers. A dataset created before configuration history shows "Not recorded".
+The recipe the dataset was built from: for a chats dataset its agents, quality, time range, channel, skill, minimum words, format and PII setting; for a synthetic one its teacher and judge models, temperatures, dedup and format. While the dataset is a draft, editors can change it and press **Save changes**. Once it is built the tab is a read-only record, and so it is for viewers.
 
 ### Pipeline
 

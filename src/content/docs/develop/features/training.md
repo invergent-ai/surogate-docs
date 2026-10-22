@@ -263,7 +263,7 @@ The Training page has three tabs: **Experiments**, **Runs** and **Environments**
 
 The tab header has two buttons. Everyone in the project sees **Browse environments**. **+ New environment** and the row menu are for editors; viewers see them disabled with a lock.
 
-- **Browse environments.** Opens the catalogue, grouped into category cards by domain. Open a card, or search by name or description, then click an entry to preview what the model sees, how it is scored and its configuration. **Add to project** copies it into your project as an editable environment.
+- **Browse environments.** Opens the catalogue, grouped into category cards by domain. Open a card, or search by name or description, then click an entry to preview what the model sees, how it is scored and its configuration. **Add to project** copies it into your project as an editable environment. It is for editors; viewers see it disabled.
 - **+ New environment.** Two modes. **Start from a curated environment** picks a catalogue entry and **Add to project**. **Start from a template** scaffolds source you edit yourself: **Single-turn QA**, **Code + Tests**, **Multi-turn Agent** or **Blank**. Give it a **Module name** (lowercase, fixed after creation), a **Display name**, a **Domain** (Math, Code, Reasoning, Tool use or Custom, only a label for filtering) and a description, then **Save draft**.
 
 Opening an environment shows its repository with an **Info** tab. The header has **Validate**, **Publish**, **Save** (name and description) and **Delete**. These are for editors; viewers see read-only fields and disabled buttons.
