@@ -134,7 +134,7 @@ Fields:
 - **Quality threshold** (default `0.8`, range 0–1).
 - **Format** — **SFT pairs**. **Raw completions** is present but disabled, marked *Coming soon*.
 
-Clicking **Build dataset** does four things: it calls `POST /api/datasets/synthetic` to provision the dataset shell (`kind=synthetic`, `status=building`) and an empty Hub repo, composes a runnable starter pipeline from your answers, saves it, and starts the run. You land on the dataset's **PIPELINE** tab with the run already in flight.
+**Save draft** stores the recipe as a [draft](#drafts) without running it. Clicking **Quick build** does four things: it calls `POST /api/datasets/synthetic` to provision the dataset shell (`kind=synthetic`, `status=building`) and an empty Hub repo, composes a runnable starter pipeline from your answers, saves it, and starts the run. You land on the dataset's **PIPELINE** tab with the run already in flight.
 
 The starter pipeline it composes:
 
@@ -209,7 +209,7 @@ Token stats are computed for chat uploads, pair uploads, single-text uploads, fr
 
 ![A dataset’s overview: row and token counts, PII scan, and its provenance](../../../../assets/screenshots/dev-dataset-detail.png)
 
-Open a dataset to see up to five tabs: **Overview**, **Samples**, **Configuration**, **Pipeline** and **Repository**. **Configuration** is missing for uploads and imported repositories, which have no recorded recipe. **Pipeline** is for editors only; viewers see the recipe on **Configuration** instead.
+Open a dataset to see up to five tabs: **Overview**, **Samples**, **Configuration**, **Pipeline** and **Repository**. **Configuration** appears only for datasets with a recorded recipe: those built from conversations or synthetic generation, and their clones. Uploads, imported repositories, expert traces and older datasets have none. **Pipeline** is for editors only; viewers see the recipe on **Configuration** instead.
 
 ### Overview
 
@@ -292,8 +292,8 @@ Raw transcripts for analysis. Not used directly in training.
 
 A draft is a dataset recipe that hasn't been built, so it has no rows yet. Its status is **Draft**.
 
-- **Create one.** Press **Save draft** on the from-chats page, or **Clone** an existing dataset.
-- **Clone.** The header of a dataset's detail page has a **Clone** button. It asks for a name (default `<name>-copy`), then creates a draft with the same source, filters and format. A synthetic dataset's pipeline is copied too, including hand edits. Nothing is built until you press **Build**. A built dataset's configuration is frozen, so cloning is how you get "the same recipe with one thing different". Uploads and imported repositories have no recipe, so they have no **Clone**. Editors only.
+- **Create one.** Press **Save draft** on the from-chats or synthetic page, or **Clone** an existing dataset.
+- **Clone.** The header of a dataset's detail page has a **Clone** button. It asks for a name (default `<name>-copy`), then creates a draft with the same source, filters and format. A synthetic dataset's pipeline is copied too, including hand edits. Nothing is built until you press **Build**. A built dataset's configuration is frozen, so cloning is how you get "the same recipe with one thing different". Datasets without a recorded recipe (uploads, imported repositories, expert traces and older datasets) have no **Clone**. Editors only.
 - **Edit and build.** A draft opens on its **Configuration** tab. Change the recipe, then press **Build** in the header (**Generate** for a synthetic draft, which starts a generation run). The **Samples** tab says "No samples yet" until then.
 - **Failed or cancelled builds.** A dataset whose build errored or was cancelled before writing any rows is treated like a draft, so **Build** or **Generate** comes back.
 

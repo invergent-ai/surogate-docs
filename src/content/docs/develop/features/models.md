@@ -92,7 +92,7 @@ A reference to a key that was removed later shows as **(missing)** until you pic
 
 ![A served model: its status, throughput and latency counters, deployment info, connected agents and model card](../../../../assets/screenshots/dev-models-detail.png)
 
-Deploying drops you on the model's detail page. The header shows the display name, a source badge, and a status pill: `Creating` (amber), `Serving` (green), `Stopped`, or `Error`; proxy models show a permanent `Proxy` pill. Next to the name, the pencil (**Rename**) edits it in place: press Enter or click away to save, Esc to cancel. Renaming needs the editor role or higher, an empty name is refused, and it changes only the display name. Action buttons live top-right: **Stop** / **Start** (or **Restart** after an error), **View job** (jumps to the serving job in the workload queue), and **Delete**. When a served model is up, a green **"Serving — ready to use"** banner offers to switch it on for an agent.
+Deploying drops you on the model's detail page. The header shows the display name, a source badge, and a status pill: `Creating` (amber), `Serving` (green), `Stopped`, or `Error`; proxy models show a permanent `Proxy` pill. Next to the name, the pencil (**Rename**) edits it in place: press Enter or click away to save, Esc to cancel. Saving an empty name restores the old one. Renaming needs the editor role or higher: viewers can open **Rename**, but the save is refused. It changes only the display name. Action buttons live top-right: **Stop** / **Start** (or **Restart** after an error), **View job** (jumps to the serving job in the workload queue), and **Delete**. When a served model is up, a green **"Serving — ready to use"** banner offers to switch it on for an agent.
 
 Up to six tabs:
 
