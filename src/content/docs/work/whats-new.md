@@ -6,7 +6,7 @@ title: What's new
 
 ### Discord and Microsoft Teams
 
-Your agent can now talk to people on two more channels. Set each up from the agent's settings, and see every connection on the new **Channels** page. See [Discord](/work/channels/discord/) and [Microsoft Teams](/work/channels/teams/).
+Your agent can now talk to people on two more channels. Add each from the agent's **Publish → Channels** tab, under **Add a channel**; the tab's **Live** list shows every connection and its activity (see [Channels](/work/workflow/publish-agent/#channels)). See [Discord](/work/channels/discord/) and [Microsoft Teams](/work/channels/teams/).
 
 ### Office documents: more formats, comment mentions and templates
 
