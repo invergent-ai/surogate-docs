@@ -116,7 +116,7 @@ Each key in the list shows its name, the start of the key, when it was created a
 
 A key spends from your own plan, so treat it like staff access: giving it out gives away spend.
 
-Anyone on the project can see the key list. Creating and revoking need the **editor** role or higher; a viewer sees **Create key** and **Revoke** switched off. See [Members and roles](/work/settings/members/).
+Anyone on the project can see the key list. Creating and revoking need the **editor** role or higher ([what each role can do](/work/settings/members/#what-each-role-can-do)).
 
 ### Conversations
 
