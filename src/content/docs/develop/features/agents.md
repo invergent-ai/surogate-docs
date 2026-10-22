@@ -15,7 +15,7 @@ An agent bundles six things, configured through five tabs:
 | **OVERVIEW** | Four 24h stat cards (requests, error rate, latency incl. p95, tokens) + four hourly bar charts, a Conversations — last 7 days card, and the Connected skills/MCPs card. |
 | **KNOWLEDGE & TOOLS** | Attach / detach Skills, Knowledge Bases, MCP Servers; per-row DETACH; ATTACH dropdown. |
 | **USERS** | Per-agent end-user accounts. Add Web users, set passwords or SSO, manage display names. |
-| **CHANNELS** | Web (always on), Slack (App ID, Signing Secret and Bot Token, threading, mention requirements), Telegram (Bot token, DM/group toggles), WhatsApp (access token, app secret, Business Account ID), Website widget (publishable key, allowed origins, embed code, session message cap). |
+| **CHANNELS** | Web (always on), Slack (credentials, threading, mentions), Telegram (Bot token, DM/group toggles), WhatsApp (access token, app secret, Business Account ID), Website widget (publishable key, allowed origins, embed code, session message cap). |
 | **CONFIG** | Persona (SOUL.md), Tool Access, Web & Browser Egress, EU AI Act Transparency, Saga, Session Reset, Environment Variables. |
 
 Plus four action buttons:
@@ -98,7 +98,7 @@ Multiple skills with the same name resolve by precedence: **user-specific overri
 
 ## CHANNELS tab — multi-channel deployment
 
-This tab has sections for [Web](/work/channels/web/) (always on), [Slack](/work/channels/slack/), [Telegram](/work/channels/telegram/), [WhatsApp](/work/channels/whatsapp/) and the [Website widget](/work/channels/website-widget/); the last four toggle. [Discord](/work/channels/discord/) and [Microsoft Teams](/work/channels/teams/) are connected from their own screens under Work's Channels, and Voice (phone calls) is listed there too.
+Sections for [Web](/work/channels/web/) (always on), [Slack](/work/channels/slack/), [Telegram](/work/channels/telegram/), [WhatsApp](/work/channels/whatsapp/) and the [Website widget](/work/channels/website-widget/) (the last four toggle). [Discord](/work/channels/discord/) and [Microsoft Teams](/work/channels/teams/) are connected from Work's Channels screen, where Voice (phone calls) is also listed.
 
 ### Web
 
@@ -106,19 +106,7 @@ Always on. Endpoint: `https://<slug>.cloud.surogate.ai`. End-user accounts are m
 
 ### Slack
 
-Toggle ON, paste credentials. Slack connects over webhooks, so you also paste the Request URLs the form shows into your Slack app's Event Subscriptions (see [Slack](/work/channels/slack/)):
-
-- **App ID**: from your Slack app's Basic Information
-- **Signing Secret**: from Basic Information
-- **Bot Token** — `xoxb-...` with at minimum `chat:write`, `app_mentions:read`, `im:read`, `im:write`, `channels:history`, `groups:history`, `files:read`, `users:read`
-
-Behaviour settings:
-
-- **Require @mention** (default ON) — bot only responds in channels when @mentioned
-- **Allow Bots**: `None` / `Mentions only` / `All`
-- **Reply in Thread** (default ON) — responses inside the thread
-- **Reply Broadcast** (default OFF) — when on, thread replies also post to the channel
-- **Free Response Channels** — comma-separated channel IDs where no @mention is needed (dedicated bot channels)
+Toggle ON, then paste the App ID, Signing Secret and Bot Token. Behaviour options: Require @mention (default ON), Allow Bots (`None` / `Mentions only` / `All`), Reply in Thread (default ON), Reply Broadcast (default OFF) and Free Response Channels (comma-separated channel IDs where no @mention is needed). See [Slack](/work/channels/slack/) for setup, scopes and Request URLs.
 
 ### Telegram
 
