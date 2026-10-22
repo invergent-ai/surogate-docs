@@ -14,7 +14,7 @@ Each consumable resource is a prepaid **wallet** (your plan grants a monthly bal
 |---|---|
 | **Tokens** | LLM tokens (prompt + completion), across every agent |
 | **Web-browsing minutes** | Agent browser time (shown in hours), wall-clock while a browser is open, summed per session |
-| **Compute credits** | GPU time for training runs, datasets, and evaluations |
+| **Compute credits** | GPU time for training runs and datasets. Evaluations don't use credits |
 | **Media** | Image & video generation, in dollars of provider spend — a flat few cents per image, a video at its real provider cost |
 
 Grants come from the live plan catalog, so the cards can't drift from what's enforced. Unlimited (internal/enterprise) allowances render as **"Unlimited"** with no bar. On **BYO LLM**, the tokens card keeps showing the balance but drops the grant framing and the progress bar — the monthly token grant is deliberately zero because you pay your own provider.
