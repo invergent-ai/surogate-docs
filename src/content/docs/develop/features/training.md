@@ -6,7 +6,7 @@ sidebar:
 
 The Training page launches fine-tuning runs. Four methods can be created and started — **SFT**, **DPO**, **GRPO** and **DISTILL** — and the method picker offers exactly those four. Each is documented in depth below.
 
-> **Studio vs. the engine.** Pretraining (PT) and full-parameter fine-tuning are handled directly by the `surogate` engine CLI (`surogate sft` / `surogate grpo` and friends) and are not exposed in the Studio training pipeline. `PPO` exists in the API schema but is rejected at run-create time with *"PPO not yet supported"*.
+> **Studio vs. the engine.** Pretraining (PT) is handled directly by the `surogate` engine CLI (`surogate sft` / `surogate grpo` and friends) and is not exposed in the Studio training pipeline. Full fine-tuning is available for SFT and DISTILL: turn **Enable LoRA** off (see below). DPO and GRPO are LoRA only. `PPO` exists in the API schema but is rejected at run-create time with *"PPO not yet supported"*.
 
 **DPO** and **DISTILL** both ride the SFT path rather than having a pipeline of their own: DPO is an SFT config plus a `loss: {type: dpo}` block over `{prompt, chosen, rejected}` rows, and DISTILL is an SFT config plus a `distillation:` block naming a teacher model. Run-create rejects either one if that block is missing.
 
@@ -43,7 +43,7 @@ anything else is refused when you press Start, before any instance is
 provisioned, and Studio says so under the compute picker as soon as you select
 it. Serving and evaluations are not restricted this way.
 
-The adapter choice (LoRA / QLoRA rank, or full) is not a dedicated form field — it's carried in the run's free-form `config` dict alongside the rest of the trainer settings, so the launcher can pass it straight through to the trainer.
+**Full fine-tune is the Enable LoRA toggle turned off.** On the new-run form the **Adapter** switch (**LoRA** or **Full**) does the same for SFT and DISTILL, and LoRA is the default. On the run's **Configuration** tab it is the **Enable LoRA** toggle in the LoRA section; with it off, the rank, alpha, dropout and target-module controls dim, because they only apply to an adapter. The choice is stored as `lora` in the run's free-form `config` dict alongside the rest of the trainer settings, so the launcher can pass it straight through to the trainer. DPO has no such switch and GRPO's is locked on (both below).
 
 Use when:
 
@@ -76,7 +76,7 @@ Preference loss (config.loss):
 
 Four constraints are enforced before a run can start, and each mirrors the trainer:
 
-- **LoRA is required.** Each pair is scored against the frozen base, so there has to be a base to freeze. A full fine-tune has no reference to compare against — use SFT for that.
+- **LoRA is required.** Each pair is scored against the frozen base, so there has to be a base to freeze. A full fine-tune has no reference to compare against — use SFT for that. The form therefore hides the **Adapter** switch and the **Enable LoRA** toggle for DPO.
 - **`per_device_train_batch_size` must be even.** A chosen/rejected pair is two rows, so an odd batch would split a pair across steps.
 - **`target_margin` requires `reference_free: true`.** The margin is defined against a reference-free score.
 - **Dataset entries are `type: preference`**, or carry no type at all. Any other value parses and then fails inside the container.
@@ -115,6 +115,8 @@ currently provide that for training: the only Blackwell GPU it offers is
 single-GPU. Run GRPO on an SSH or cloud fleet instead, where the fleet size is
 taken from the block split rather than fixed when you pick the instance. Start
 says so if you try, before anything is provisioned.
+
+GRPO is also LoRA only for now. Its **Enable LoRA** toggle is shown but locked on, and its tooltip says full-parameter RL is not available yet: train an adapter, or full fine-tune with SFT and start the GRPO run from that model.
 
 #### RL Modes
 
@@ -195,6 +197,7 @@ Two guardrails run at these boundaries:
 
 - **Plan-tier gating (402).** If the project's plan doesn't include training, both create and start return `402` with an "upgrade in Settings → Billing" message.
 - **Pre-start validation (422).** START runs the same validator that drives the frontend's Start button; if the config has errors (missing GPU blocks, unset dataset, etc.) it returns `422` and the run stays queued.
+- **Dataset check (422).** START also checks each local dataset the run uses, before anything is provisioned or credits are reserved. It refuses the run if the dataset no longer exists, belongs to a different project, is not **ready** yet (the message gives its status and says to wait for the build or pick another), or has no stored copy to train from (re-create or re-upload it). It also refuses a dataset that lacks a column its declared type needs. The `422` message lists each problem as `datasets: ...`. A dataset whose type is left on auto and has no column Studio recognises only gets a warning. DISTILL runs also get a teacher tokenizer check and GRPO runs an environment check. If a check itself can't run (for example the Hub is slow to answer), Start goes ahead rather than blocking.
 
 ### Experiments and the Data Hub
 
@@ -216,6 +219,20 @@ The tab set depends on the method.
 | **Environment** | The registered environment the run scores against | GRPO, Environment mode |
 | **Rollouts** | Periodically sampled rollouts with prompt, completion, reward and advantage — from `GET /api/training-runs/{id}/rollouts` | GRPO |
 | **Repository** | Files and commits in the run's Data Hub branch | All |
+
+### Header actions
+
+The buttons at the top of the run detail page depend on the run's status. Viewers without edit access see them disabled.
+
+| Button | Shown when | What it does |
+|---|---|---|
+| **Start** / **Retry** | Queued (Start), failed or cancelled (Retry) | Launches the run |
+| **Stop** | Provisioning or running | Aborts the run |
+| **Publish to Hub** | Completed, and the run's artifacts are not yet in the Hub | Commits them to the run's Hub branch |
+| **Evaluate** | Completed | Opens the new-evaluation wizard with this run's adapter already selected |
+| **Merge** or **Promote** | Completed | Writes the merged model to a new Hub repository (you pick the repo name and branch). It reads **Merge** when the adapter still has to be merged into the base, which runs as a background job; the dialog's **Force** option skips the 30B-parameter safety cap. It reads **Promote** when the trainer already merged the adapter during the run, and then only copies those weights, with no GPU needed. The button is disabled while a merge for the run is in flight or done |
+| **Clone** | Any status | Asks for a name, then creates a new queued run in the same experiment with the same base model, datasets, configuration and compute. Press **Start** on the copy when ready |
+| **Delete** | Any status | Deletes the run after a confirmation |
 
 ## Stopping a run
 
