@@ -62,7 +62,7 @@ Click **New skill** in the Skills tab. This opens an **Add a skill** panel. Choo
 | **From scratch** | A form: Name, Display Name, Description, Trigger, Tags, and a markdown editor for the content. |
 | **Import** | Drop in a `SKILL.md` file or a `.zip` archive (e.g. one exported from [agentskills.io](https://agentskills.io)). Every file in the archive is uploaded to the skill's repository. |
 
-An imported `.zip` that includes a `SKILL.graph.json` (any zip made by **Export** from a canvas skill) stays a canvas skill, editable on the canvas. A graph file that isn't valid is dropped, and the skill imports as plain markdown. Importing needs the editor role.
+An imported `.zip` that includes a `SKILL.graph.json` (any zip made by **Export** from a canvas skill) stays a canvas skill, editable on the canvas. Importing needs the editor role.
 
 All three land the skill in your workspace Library; from the agent's own Skills & Tools tab (see below) they additionally auto-attach it to that agent.
 

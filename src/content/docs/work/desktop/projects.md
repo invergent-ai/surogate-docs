@@ -5,16 +5,14 @@ sidebar:
 ---
 
 :::note
-Projects here are not the projects of Studio. A Studio project is the workspace you and your team share, with its members, agents and billing (see [Members and roles](/work/settings/members/)). A project in Surogate Desktop is one piece of ongoing work: a conversation that plans it, and threads that do it.
+Projects here are not the projects of Studio, the workspace you and your team share (see [Members and roles](/work/settings/members/)). They exist in Surogate Desktop only; the agent's web app has no Projects page.
 :::
 
 A project in [Surogate Desktop](/work/desktop/overview/) is a coordinator chat plus the threads it hands work to. You talk to the coordinator about what you want. It splits the work into threads. Each thread is its own chat, with its own work to do. You can follow them all from one place, answer the ones that need you, and mark them done.
 
-Projects are in Surogate Desktop only. The agent's web app has no Projects page.
-
 ## What you need
 
-The agent must have **Multi session** on. It is a switch in the agent's **Configure** page, under **Capabilities**, and it is on by default. People who can edit the agent can change it (see [Capabilities](/work/workflow/configure-agent/#capabilities)). With it off, the agent keeps one conversation per user and has no projects. The agent answers project requests with "This agent keeps a single conversation, so it has no projects."
+The agent needs **Multi session** on (default), a switch under **Capabilities** in its **Configure** page that people who can edit the agent can change (see [Capabilities](/work/workflow/configure-agent/#capabilities)). With it off, the agent keeps one conversation per user, has no projects, and says so when asked for one.
 
 ## Create a project
 
@@ -22,7 +20,8 @@ Open **Projects** in the sidebar, then press **New project**. The dialog asks fo
 
 - **Name.** Up to 256 characters.
 - **Goal.** What the project is for, up to 2000 characters. The coordinator and its threads see it.
-- **Folder.** Press **Choose…** and pick a folder on this computer. The coordinator works in the folder itself. Each thread works in a copy of it. Surogate shows its usual sheet to confirm the folder and choose **Work freely** or **Ask every time** (see [Approvals](/work/desktop/overview/#approvals)). The threads ask the same way. The same folders are refused as for any chat (see [Folders that are refused](/work/desktop/overview/#folders-that-are-refused)). The field shows only when the agent lets chats work on folders of this computer. Otherwise the project lives in the cloud.
+- **Folder.** Press **Choose…** and pick a folder on this computer. The coordinator works in the folder itself and each thread in a copy of it. The field shows only when the agent lets chats work on folders of this computer; otherwise the project lives in the cloud.
+- **Folder checks.** Surogate shows its usual sheet to confirm the folder and choose **Work freely** or **Ask every time** (see [Approvals](/work/desktop/overview/#approvals)), and the threads ask the same way. Some folders are refused (see [Folders that are refused](/work/desktop/overview/#folders-that-are-refused)).
 
 Press **Create project**. Its conversation opens.
 
@@ -50,7 +49,7 @@ A thread the coordinator proposes for your own computer, in a project that has n
 
 Each thread is a full chat, with its own sandbox, working on one piece of the project. In a project with a folder, a thread works in its own copy of it. When the thread's turn ends, its changes are applied to the folder. The copy keeps threads from tripping over each other's files.
 
-A thread saves the files it makes under `threads/<title>/`, where `<title>` is the thread's title. They appear in the project's **Library**.
+A thread saves the files it makes under `threads/<title>/`. They appear in the project's **Library**.
 
 A thread cannot start deep research, auto research or experiments yet. Ask for those outside a project.
 

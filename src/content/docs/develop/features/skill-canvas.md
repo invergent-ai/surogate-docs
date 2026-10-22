@@ -2,9 +2,9 @@
 title: Skill canvas
 ---
 
-A **procedure skill** is a skill you build as a flowchart. You lay out the steps on a canvas, and Studio compiles them into the numbered `SKILL.md` body the agent reads. Use it when the order of steps, the branches, or the checks between them matter. For a skill that is just guidance, a plain markdown skill is simpler. See [Skills & Experts](/develop/features/skills-and-experts/) for the markdown format and [Work mode → Skills](/work/library/skills/) for the library.
+A **procedure skill** is a skill you build as a flowchart. You lay out the steps on a canvas, and Studio compiles them into the numbered instructions the agent reads. Use it when the order of steps, the branches, or the checks between them matter. For a skill that is just guidance, a plain markdown skill is simpler.
 
-The skill stores the flowchart in `SKILL.graph.json` beside its `SKILL.md`. The body of `SKILL.md` is generated from the graph. You can't edit it by hand, and its **Edit** form shows an **Edit on canvas** link in place of the content box.
+The flowchart is saved with the skill, and the instructions are generated from it. You can't edit them by hand: the skill's **Edit** form shows an **Edit on canvas** link in place of the content box.
 
 ## Open the canvas
 
@@ -17,7 +17,7 @@ Only new skills can use the canvas. A skill written as markdown can't be convert
 
 Later, open the skill's detail page and click **Edit on canvas**. A canvas skill left before its first save shows **Build on canvas** instead.
 
-The canvas needs a wide screen. On a phone it shows "The procedure canvas needs a wider screen."
+The canvas needs a wide screen; on a phone it says so.
 
 ## The layout
 
@@ -28,12 +28,20 @@ The top bar has a **Skills** back button, the skill name, and these controls:
 | Agent picker (**Check against agent**) | Picks the agent the checks and **Try it** use. **No agent** skips the agent-specific checks. |
 | **Draft from description** | Has the platform LLM draft a graph from a description. |
 | **Auto-arrange** | Lays the steps out again. |
-| **Compiled** / **Hide compiled** | Shows the compiled **SKILL.md** body in a drawer under the canvas. |
+| **Compiled** / **Hide compiled** | Shows the compiled instructions in a drawer under the canvas. |
 | **Save** | Saves the graph. Off until you change something. |
 
-The left column, **Add a step**, has one button per step type. The middle is the canvas: drag steps, connect them by dragging from one to the next, select a step or an edge to change it. The right column holds the inspector for the selected step, then **Checks**, **Bundle files** and **Try it**.
+- **Left column, Add a step.** One button per step type.
+- **Middle, the canvas.** Drag steps, connect them by dragging from one to the next, select a step or an edge to change it.
+- **Right column.** The inspector for the selected step, then **Checks**, **Bundle files** and **Try it**.
 
-New canvas skills start with one **Step** joined to one **End**. A new step lands below the selected one. The start step is marked **start**. Select another step and click **Make this the start step** to move it. While other steps exist, the start step can't be deleted. Leaving the page with unsaved changes asks first.
+A new canvas skill starts with one **Step** joined to one **End**, and a new step lands below the selected one. The start step is marked **start**; select another step and click **Make this the start step** to move it. While other steps exist, the start step can't be deleted. Leaving the page with unsaved changes asks first.
+
+## Draft from description
+
+Click **Draft from description**, describe the procedure (at least 20 characters), and click **Draft**. The platform LLM returns a graph, which is laid out and put on the canvas. If the canvas already has work, you're asked before it is replaced. Nothing is saved until you click **Save**.
+
+It needs the platform LLM to be configured. If it isn't, the dialog says "The platform LLM is not configured."
 
 ## The eight step types
 
@@ -61,7 +69,7 @@ Names in **Tool**, **Bundle file** and **Target** are free text. The box suggest
 
 The **Checks** panel reports problems as you edit. Click a finding to select its step. Two kinds exist.
 
-**Problems that block saving.** These are structural and show a red **blocks saving** tag, and **Save** stays off until they are fixed. Examples: a required field left empty, more than one outgoing edge on a step that isn't a **Decision**, a `fail` edge on anything but a **Verify**, an edge out of an **End**, too many steps or edges. The server enforces the same rules and refuses a bad graph. The save-failed message points you to the Checks panel.
+**Problems that block saving.** These are structural and show a red **blocks saving** tag, and **Save** stays off until they are fixed. Examples: a required field left empty, more than one outgoing edge on a step that isn't a **Decision**, a `fail` edge on anything but a **Verify**, an edge out of an **End**, too many steps or edges. The server refuses a bad graph too, and the save-failed message points you to the Checks panel.
 
 **Findings.** These never block saving. They are computed against the skill, its bundle and the chosen agent.
 
@@ -82,16 +90,6 @@ The **Checks** panel reports problems as you edit. Click a finding to select its
 
 With no agent chosen, the panel says the tool, channel and delegate checks are skipped.
 
-## Draft from description
-
-Click **Draft from description**, describe the procedure (at least 20 characters), and click **Draft**. The platform LLM returns a graph, which is laid out and put on the canvas. If the canvas already has work, you're asked before it is replaced. Nothing is saved until you click **Save**.
-
-It needs the platform LLM to be configured. If it isn't, the dialog says "The platform LLM is not configured."
-
-## Bundle files
-
-**Bundle files** manages the supporting files a **File** step points at. Pick a folder (`scripts/`, `templates/`, `references/` or `assets/`), click **Add files**, and upload. Each file in the list has **Edit** (text files only) and **Delete**. Changes apply to the skill's repository at once, not when you click **Save**.
-
 ## Try it
 
 **Try it** runs your unsaved draft on a real agent, so you can see how it behaves before you save or publish.
@@ -104,11 +102,15 @@ This is a real session on the agent. It uses the agent's model like any chat. No
 
 While it runs, steps light up on the canvas, and a list shows each step visited, its time, and any tool calls. **Stop watching** stops following the run but not the session. **Open session** opens it on the **Skill path** tab.
 
+## Bundle files
+
+**Bundle files** manages the supporting files a **File** step points at. Pick a folder (`scripts/`, `templates/`, `references/` or `assets/`), click **Add files**, and upload. Each file in the list has **Edit** (text files only) and **Delete**. Changes apply to the skill's repository at once, not when you click **Save**.
+
 ## How the agent follows it
 
-The compiled body begins with a short preamble and then numbered steps, each headed with its id, such as `Step 3 (s3)`. The agent is told to call the `skill_step` tool before it starts a step (`started`), when it finishes one (`completed`), and for branches it doesn't take (`skipped`).
+The compiled instructions are numbered steps, each headed with its id, such as `Step 3 (s3)`. The agent is asked to report each step as it starts, finishes or skips it, with the `skill_step` tool.
 
-The graph is not enforced. The agent reads the procedure and is asked to report its progress; nothing stops it from stepping outside the flowchart. `skill_step` is offered to a session only when a procedure skill is in that session's catalog, and the canvas doesn't offer it as a tool to place in a step.
+The graph is not enforced. Nothing stops the agent from stepping outside the flowchart, and the canvas doesn't offer `skill_step` as a tool to place in a step.
 
 ## The Skill path tab
 
@@ -119,7 +121,11 @@ The tab shows the first procedure skill the session used. If the agent never rep
 ## Limits
 
 - At most 500 steps and 1000 edges per graph.
-- A canvas skill's body can't be edited as text, and a markdown skill can't be converted to a canvas.
-- [Skill optimization](/develop/features/skill-optimization/) isn't available for canvas skills: starting a run or applying a result is refused, because it would edit the body as text and detach it from the graph.
+- [Skill optimization](/develop/features/skill-optimization/) isn't available for canvas skills.
 
 To move a canvas skill between projects, use **Export**, then **New skill** and **Import** under **Write markdown**. See [Export a skill](/work/library/skills/#export-a-skill).
+
+## See also
+
+- [Skills & Experts](/develop/features/skills-and-experts/) for the markdown format.
+- [Work mode → Skills](/work/library/skills/) for the library.

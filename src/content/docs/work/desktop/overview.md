@@ -6,14 +6,6 @@ sidebar:
 
 Surogate Desktop is an app for your computer. It lets your agent work on a folder you choose, use your own browser and show you the web apps it starts. You chat with the agent as usual. The agent still thinks in the cloud; the app is its hands on your machine.
 
-## What it does
-
-- **Works on a folder.** Point a chat at a folder. The agent reads, writes and organizes the files in it, and runs commands there.
-- **Uses your browser.** The agent drives Chrome, Edge, Brave or Vivaldi, already installed on your computer, in a profile of its own.
-- **Previews web apps.** When the agent starts a web app, it can open it in the browser for you, once you allow it.
-- **Asks before it acts.** In a chat set to **Ask every time**, you approve each command and each file change first.
-- **Runs projects.** A project is a coordinator chat that hands work to threads, each a chat of its own. See [Projects](/work/desktop/projects/).
-
 ## Get it
 
 On Linux (Ubuntu 24.04 LTS or a later LTS release, 64-bit Intel or AMD), run:
@@ -22,12 +14,12 @@ On Linux (Ubuntu 24.04 LTS or a later LTS release, 64-bit Intel or AMD), run:
 curl -fsSL https://surogate.ai/desktop/install.sh | bash
 ```
 
-Then open Surogate from your applications.
+Then open Surogate from your applications. [Sign in](#sign-in) and start a chat on a folder (see [Working on a folder](#working-on-a-folder)).
 
-The script takes options after `bash -s --`:
+Options go after `bash -s --`, as in `curl -fsSL https://surogate.ai/desktop/install.sh | bash -s -- --uninstall`:
 
-- `--version <x.y.z>` installs that release, to go back to an earlier one: `curl -fsSL https://surogate.ai/desktop/install.sh | bash -s -- --version <x.y.z>`.
-- `--uninstall` removes Surogate Desktop. It asks before it deletes your sign-in and the agent's browser profiles. Your folders are never touched. The full command is `curl -fsSL https://surogate.ai/desktop/install.sh | bash -s -- --uninstall`.
+- `--version <x.y.z>` installs that release, to go back to an earlier one.
+- `--uninstall` removes Surogate Desktop. It asks before it deletes your sign-in and the agent's browser profiles. Your folders are never touched.
 - `--ca-cert <file>` makes Surogate Desktop, the agent's browser and its commands trust your company's certificate authority (a PEM file). Use it if your network inspects encrypted traffic.
 
 macOS (Apple Silicon) and Windows versions are coming soon. Their downloads are not published yet.
@@ -40,6 +32,10 @@ The first time, the app asks for your agent's address (for example `https://agen
 
 Signing in adds the computer to the agent's list under [Settings > Devices](#devices).
 
+## What it does
+
+Point a chat at a folder and the agent reads, writes and organizes the files in it and runs commands there. It drives a browser already installed on your computer, in a profile of its own, and can open the web apps it starts once you allow it. A project is a coordinator chat that hands work to threads, each a chat of its own. See [Projects](/work/desktop/projects/).
+
 ## Working on a folder
 
 Start a new chat in the app. When you send the first message, Surogate shows a sheet, **Work in** the folder, where you:
@@ -50,14 +46,14 @@ Start a new chat in the app. When you send the first message, Surogate shows a s
 
 The agent sees only this folder. Its file tools reach nothing else of yours. Its commands run in a small virtual machine on your computer, with the folder shared into it only while the chat is working. That is slower on a computer without hardware virtualization (Intel VT-x or AMD-V, turned on in the firmware settings), but it still works.
 
-The sheet also tells you that the files the agent reads and what its commands print are sent to the agent in the cloud, and can stay in the conversation.
+The sheet also says that the files the agent reads and what its commands print go to the agent in the cloud and can stay in the conversation.
 
 ### Folders that are refused
 
 Surogate refuses a folder, and says why, when it:
 
 - is your home folder, or holds it (including `/`).
-- is, holds or lies inside a folder of credentials in your home: `.ssh`, `.aws`, `.gnupg`, `.kube`, `.docker`, `.azure` or `.config/gh`.
+- is, holds or lies inside a credentials folder in your home: `.ssh`, `.aws`, `.gnupg`, `.kube`, `.docker`, `.azure` or `.config/gh`.
 - is, holds or lies inside the app's own data or cache, or where the agent's browser runs.
 - is inside one of the computer's system folders, or one where the sandbox keeps its own tools (such as `/usr` or `/etc`).
 - has `*`, `?`, `[` or `]` in its path.
@@ -77,7 +73,7 @@ In **Ask every time**, reading never asks: looking at files, listing folders, se
 
 Two things ask in both modes:
 
-- **Network access.** Commands reach the package registries they need, and your computer's own services stay out of reach. For any other site, your local network included, Surogate asks. **Allow** lets through the connections waiting now, and later ones ask again. **Allow all its ports for this chat** lets that site through, on every port, for the rest of the chat. In the browser's prompt, **Allow for this chat** does the same for the browser.
+- **Network access.** Commands reach the package registries they need. Any other site, your local network included, asks. **Allow** covers the connections waiting now; later ones ask again. **Allow all its ports for this chat** lets that site through on every port for the rest of the chat. In the browser's prompt, **Allow for this chat** does the same for the browser.
 - **The browser.** The first time a chat uses your browser, and each time it would open a port of the chat's own web app in it.
 
 In **Ask every time**, every action the agent takes on a page asks too: opening an address, running a script, clicking, typing, dragging, uploading a file, and downloads. Reading the page does not.
@@ -98,7 +94,7 @@ To preview a web app the agent started, allow the port when Surogate asks.
 
 If the computer is off, asleep or offline, a chat that needs it shows **Waiting for** and the computer's name. The work pauses. When the computer is back, it carries on. An operation that already ran is not run again.
 
-At most 20 chats can wait on one computer. Past that, a new local operation fails at once with "Too many sessions are waiting for" the computer.
+Past 20 waiting chats, a new local operation fails at once with "Too many sessions are waiting for" the computer.
 
 Quit the app and the computer goes away too. To keep it available, leave **Keep running when the window is closed** on in Settings (it keeps Surogate in the tray), and turn on **Start at login**.
 
@@ -107,7 +103,7 @@ Quit the app and the computer goes away too. To keep it available, leave **Keep 
 In the agent's web app, open **Settings** and the **Devices** tab. It shows only for an agent that lets chats work on folders of a computer.
 
 - **Computers** lists each computer that can work on folders through this agent, with when it was added, reauthorized and last seen. **Revoke** stops it at once and cancels what it was doing. Its chats say **Local access revoked** until you restore the computer in Surogate on that computer.
-- **Surogate Desktop sign-ins** lists each sign-in with **End**, which signs that Surogate Desktop out. The list shows only to a sign-in made in the last 10 minutes. Otherwise it asks you to sign in again.
+- **Surogate Desktop sign-ins** lists each sign-in with **End**, which signs that Surogate Desktop out. It shows only for a sign-in made in the last 10 minutes; otherwise it asks you to sign in again.
 
 When a computer is added or reauthorized, a banner in the web app says "`<computer>` can now work on folders of your computer through `<agent>`" for 7 days. **Review** opens the Devices tab. Dismissing the banner hides it in that browser only.
 
@@ -117,9 +113,8 @@ When a computer is added or reauthorized, a banner in the web app says "`<comput
 - **Quick entry.** A small window to start a new chat from anywhere. On Linux the shortcut is Ctrl+Alt+Space in an X11 session. In a Wayland session there is no shortcut: open it from the tray.
 - **Notifications.** When Surogate's window is hidden or behind another app, it notifies you of new items in your inbox, of a chat that finished, and when it needs an answer ("Surogate is asking you something"). Clicking one opens that chat. A flood of them becomes one notice that opens the inbox.
 - **Settings.** Appearance, **Start at login**, **Keep running when the window is closed**, **Developer mode**, your account, **This computer** (name, connection, sandbox) and **Browser**.
-- **Uninstall.** On Linux, run `curl -fsSL https://surogate.ai/desktop/install.sh | bash -s -- --uninstall`.
+- **Uninstall.** See the options under [Get it](#get-it).
 
 ## Limits and good to know
 
 - **Company networks.** Programs in the sandbox use the system's certificates, which include your company's CA, but Java keeps its own store. Add the CA there yourself if the agent's Java programs need it. A proxy your computer must name is not used for the connection to Surogate: if that proxy is your only way out, the computer cannot be linked.
-- **Work freely saves downloads and uploads without asking.** Set the chat to **Ask every time** to approve each one.
