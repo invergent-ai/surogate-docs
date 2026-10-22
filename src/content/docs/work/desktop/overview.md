@@ -42,7 +42,7 @@ Point a chat at a folder and the agent reads, writes and organizes the files in 
 
 ## Working on a folder
 
-Start a new chat in the app. When the agent lets chats work on folders of a computer and has **Multi session** on (see [Capabilities](/work/workflow/configure-agent/#capabilities)), the line under the composer says the chat works in a folder on this computer. **Choose another folder** and **Use the last folder** on that line switch between picking a folder and the one you used last. Otherwise the line says why, and the chat works in the cloud.
+Start a new chat in the app. When the agent lets chats work on folders of a computer and has **Multi session** on (see [Capabilities](/work/workflow/configure-agent/#capabilities)), the line under the composer says the chat works in a folder on this computer. **Choose another folder** and **Use the last folder** on that line switch between picking a folder and the one you used last. With **Multi session** off, no line is shown and the chat works in the cloud. If the agent can't use folders on this computer, the line says why and the chat works in the cloud.
 
 When you send the first message, Surogate shows a sheet, **Work in** the folder, where you:
 
