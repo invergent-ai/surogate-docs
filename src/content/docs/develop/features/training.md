@@ -189,7 +189,7 @@ Creating a run and launching it are **two separate steps**: `POST /api/training-
 2. Start         Click START → pre-start validation runs, then GPUs are provisioned
 3. Run           Training executes (5min to days depending on dataset + model size)
 4. Monitor       Logs, metrics, rollouts, checkpoints via the run detail page
-5. Complete      The run's output lands in the Models page as a new entry; to turn a LoRA run's adapter into a standalone model, use **Merge** (or **Promote**, when the trainer already merged it) on the run's page
+5. Complete      The run's output lands in the Models page as a new entry; to turn a LoRA run's adapter into a standalone model, first **Publish to Hub**, then use **Merge** (or **Promote**, when the trainer already merged it) on the run's page
 6. Optional      Activate as an expert via the expert lifecycle
 ```
 
@@ -229,8 +229,8 @@ The buttons at the top of the run detail page depend on the run's status. Viewer
 | **Start** / **Retry** | Queued (Start), failed or cancelled (Retry) | Launches the run |
 | **Stop** | Provisioning or running | Aborts the run |
 | **Publish to Hub** | Completed, and the run's artifacts are not yet in the Hub | Commits them to the run's Hub branch |
-| **Evaluate** | Completed | Opens the new-evaluation wizard with this run's adapter already selected |
-| **Merge** or **Promote** | Completed | Writes the merged model to a new Hub repository (you pick repo name and branch). **Merge** when the adapter still needs merging (background job; **Force** skips the 30B-parameter cap); **Promote** when the trainer already merged it (copies weights, no GPU). Disabled while a merge is in flight or done |
+| **Evaluate** | Completed | Opens the new-evaluation wizard; for a LoRA run, its adapter is already selected |
+| **Merge** or **Promote** | Completed (LoRA runs) | Needs the run published first (**Publish to Hub**); without that the dialog does nothing. Writes the merged model to a new Hub repository (you pick repo name and branch). **Merge** when the adapter still needs merging (background job; **Force** skips the 30B-parameter cap); **Promote** when the trainer already merged it (copies weights, no GPU). Disabled while a merge is in flight or done |
 | **Clone** | Any status | Asks for a name, then creates a new queued run in the same experiment with the same base model, datasets, configuration and compute. Press **Start** on the copy when ready |
 | **Delete** | Any status | Deletes the run after a confirmation |
 
