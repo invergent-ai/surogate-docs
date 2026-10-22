@@ -56,6 +56,8 @@ The table columns are:
 
 Click any row to open the workload detail (logs, metrics). Opening a workload replaces the header with the detail view.
 
+While a workload is active, a red button at the top of the detail view stops it, after you confirm in a dialog. Its label depends on the type: **Stop** for serving and eval, **Cancel run** for SFT, GRPO and synthetic runs, **Cancel** for tasks. Stopping a training run tears down its compute and keeps the run as cancelled. Once a workload has finished, the button becomes **Delete** (synthetic runs have none).
+
 ### Policies
 
 :::note[Preview]
@@ -115,7 +117,7 @@ Connecting cloud providers isn't available on the Free plan — the form is repl
 | **Vast.ai** | API Key |
 | **SSH / On-prem** | SSH user (default `ubuntu`) · SSH port (default `22`) · Private key (pasted) · Host · optional bastion / proxy jump (hostname, port, user, key) |
 
-The **SSH / On-prem** form lists host requirements up front (Docker pre-installed; CUDA 12.1 + NVIDIA Container Toolkit on GPU hosts; passwordless sudo; `AllowTcpForwarding yes`; firewall allowing SSH). On connect it probes each host and reports whether it's reachable and what GPUs it found (e.g. `2× H100 (80GB) · 160GB total`), so you can confirm before running workloads. Editing a saved fleet (`?fleet_id=`) pre-fills everything except the private key (leave blank to keep the saved key).
+The **SSH / On-prem** form lists host requirements up front (Docker pre-installed; CUDA 13 (driver 580 or newer) + NVIDIA Container Toolkit on GPU hosts; passwordless sudo; the SSH server running with `AllowTcpForwarding yes`; firewall allowing SSH and forbidding other external connections). On connect it probes each host and reports whether it's reachable and what GPUs it found (e.g. `2× H100 (80GB) · 160GB total`), so you can confirm before running workloads. Editing a saved fleet (`?fleet_id=`) pre-fills everything except the private key (leave blank to keep the saved key).
 
 ## Backend offers — browsing instance types & prices
 

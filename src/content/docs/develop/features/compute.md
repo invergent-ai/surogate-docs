@@ -59,7 +59,7 @@ What you provide (full field list in [Connect compute](/develop/features/connect
 - The **host** address.
 - Optionally a **bastion / proxy jump** (its own hostname, port, user, and key) for hosts you reach through a jump box.
 
-Each host must have Docker pre-installed, CUDA 12.1 + the NVIDIA Container Toolkit on GPU hosts, passwordless sudo, `AllowTcpForwarding yes` in `sshd_config`, and a firewall that allows SSH. On connect, the platform **probes each host** and reports reachability plus the GPUs it found (e.g. `2× H100 (80GB) · 160GB total`), so you can confirm the fleet before running anything.
+Each host must have Docker pre-installed, CUDA 13 (driver 580 or newer) + the NVIDIA Container Toolkit on GPU hosts, passwordless sudo, `AllowTcpForwarding yes` in `sshd_config`, and a firewall that allows SSH. On connect, the platform **probes each host** and reports reachability plus the GPUs it found (e.g. `2× H100 (80GB) · 160GB total`), so you can confirm the fleet before running anything.
 
 An SSH backend is treated as a **fleet** rather than a billed cloud: in the Cloud tab its row shows a host count and total GPU count (not an hourly cost), and **removing it only drops the saved configuration — no hosts are touched**. You can edit a saved fleet later; the private key is kept unless you paste a new one.
 
