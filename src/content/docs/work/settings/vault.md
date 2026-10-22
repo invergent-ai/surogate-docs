@@ -2,24 +2,9 @@
 title: Vault
 ---
 
-The **Vault** holds the keys and tokens your project's agents use: API keys for tools, channel tokens, coding-agent and git credentials. Each key has a name. You save the value once; Surogate encrypts it and never shows it again.
+The **Vault** holds the keys and tokens your project's agents use: API keys for tools, channel tokens, coding-agent and git credentials. Each key has a name. You save the value once and it is never shown again.
 
 Open **Settings**, then **Vault**. The tab is in both Dev and Work mode and shows the active project's keys, so switch projects first to see another's.
-
-## Who can change it
-
-Everyone in the project can open the tab and see which keys exist. To change anything you need the project [**Editor** role](/work/settings/members/#what-each-role-can-do). For a **Viewer**, **Add key** is switched off with the hint **Viewers can't change this project**, and the **Update** and **Remove** buttons don't show.
-
-## The key list
-
-The header counts the keys (**3 keys**). Each row shows the key's name, then **Used by** the agent, user or part of Surogate that uses it, or **Not used**, and when it was added.
-
-Two kinds of key don't show a way to change them:
-
-- Keys that belong to one agent's own account, such as an agent's git token. They are listed for information only, with no **Update** or **Remove**.
-- Tokens the platform mints for itself. These aren't listed at all.
-
-An empty vault says so. Keys also land here by themselves when you connect a tool or a channel.
 
 ## Add a key
 
@@ -35,11 +20,23 @@ Choose **Update** on the key's row, enter the new value and choose **Save**. The
 
 ## Remove a key
 
-Choose **Remove**. Before it deletes anything, Studio checks what still uses the key and lists any running agent's tools and any active channel that does. Stop those agents or disconnect the channel first; a key in use can't be removed. A key owned by a system agent is refused too.
+Choose **Remove**. Before it deletes anything, Studio checks what still uses the key and lists any running agent's tools and any active channel that does. Stop those agents or disconnect the channel first; a key in use can't be removed. A key owned by a system agent can't be removed either.
+
+## The key list
+
+The header counts the keys (**3 keys**). Each row shows the key's name, then **Used by** the agent, user or part of Surogate that uses it, or **Not used**, and when it was added.
+
+Keys that belong to one agent's own account, such as its git token, are listed for information only, with no **Update** or **Remove**. Tokens the platform mints for itself aren't listed at all.
+
+An empty vault says so. Keys also land here by themselves when you connect a tool or a channel.
+
+## Who can change it
+
+Everyone in the project can open the tab and see which keys exist. Changing anything needs the **Editor** role ([what each role can do](/work/settings/members/#what-each-role-can-do)). For a **Viewer**, **Add key** is switched off with the hint **Viewers can't change this project**, and **Update** and **Remove** don't show.
 
 ## Where keys are used
 
-A key is stored by name and everything else refers to it by that name, so the agent's sandbox never holds the value.
+Everything else refers to a key by its name, so the agent's sandbox never holds the value.
 
 - **MCP servers.** Adding a remote MCP server with an **API key** saves the key here, named after the server, and the server keeps only a reference. The proxy adds the key to each call. See [MCP servers](/work/library/mcp-servers/) and [MCP & Vault](/develop/features/mcp-and-vault/). The **Vault** entry on the MCP Servers tab and the **Key vault** button on an agent's **Tools** section both open this tab.
 - **Model deploy forms.** Models that Surogate only forwards to (an OpenRouter or URL model) pick their API key from the vault. See [Models](/develop/features/models/#the-key-picker).

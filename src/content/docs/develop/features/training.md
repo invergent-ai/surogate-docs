@@ -261,12 +261,12 @@ There are two ways to get one:
 
 The Training page has three tabs: **Experiments**, **Runs** and **Environments**. The Environments tab lists your project's environments with a search box. Each row shows the name and module, a domain chip, the version, and a status pill. Click a row to open it. The row's **...** menu has **Rename** and **Delete**.
 
-The tab header has two buttons. Everyone in the project sees **Browse environments**. **+ New environment** and the row menu are for editors; viewers see them disabled with a lock.
+The tab header has two buttons, **Browse environments** and **+ New environment**. Everything except **Browse environments** is editor-only (including **Add to project**, the row menu, **Validate**, **Publish**, **Save** and **Delete**); viewers see it disabled.
 
-- **Browse environments.** Opens the catalogue, grouped into category cards by domain. Open a card, or search by name or description, then click an entry to preview what the model sees, how it is scored and its configuration. **Add to project** copies it into your project as an editable environment. It is for editors; viewers see it disabled.
-- **+ New environment.** Two modes. **Start from a curated environment** picks a catalogue entry and **Add to project**. **Start from a template** scaffolds source you edit yourself: **Single-turn QA**, **Code + Tests**, **Multi-turn Agent** or **Blank**. Give it a **Module name** (lowercase, fixed after creation), a **Display name**, a **Domain** (Math, Code, Reasoning, Tool use or Custom, only a label for filtering) and a description, then **Save draft**.
+- **Browse environments.** Opens the catalogue, grouped into category cards by domain. Open a card, or search by name or description, then click an entry to preview what the model sees, how it is scored and its configuration. **Add to project** copies it into your project as an editable environment.
+- **+ New environment.** **Start from a curated environment** picks a catalogue entry and **Add to project**. **Start from a template** scaffolds source you edit yourself: **Single-turn QA**, **Code + Tests**, **Multi-turn Agent** or **Blank**. Give it a **Module name** (lowercase, fixed after creation), a **Display name**, a **Domain** (Math, Code, Reasoning, Tool use or Custom, only a label for filtering) and a description, then **Save draft**.
 
-Opening an environment shows its repository with an **Info** tab. The header has **Validate**, **Publish**, **Save** (name and description) and **Delete**. These are for editors; viewers see read-only fields and disabled buttons.
+Opening an environment shows its repository with an **Info** tab. The header has **Validate**, **Publish**, **Save** (name and description) and **Delete**. Viewers see read-only fields.
 
 ### Validation
 
@@ -280,7 +280,7 @@ Validation imports the environment in the trainer image and builds it, so proble
 | **Could not be checked** | The check itself didn't run (for example the cluster was unavailable). This says nothing about your environment |
 | No chip | It has never been validated. This is true of every environment created before validation existed, and of a fresh template until you validate or publish it |
 
-Only **Validation failed** blocks a GRPO run. Creating a GRPO Environment run against a failed commit is refused with a `400` that names the first problems and points to the environment's page. Changing a run's environment or version is checked the same way, while saving other settings on a run that already points at a failing version still works. The check happens when the run is created or its environment is changed, not again at **Start**, so an environment that fails after that is still startable. Publishing a failed version asks for confirmation, and the dialog warns that it can't be selected for a run.
+Only **Validation failed** blocks a GRPO run. Creating a GRPO Environment run against a failed commit is refused with an error that names the first problems and points to the environment's page. Changing a run's environment or version is checked the same way, while saving other settings on a run that already points at a failing version still works. The check happens when the run is created or its environment is changed, not again at **Start**, so an environment that fails after that is still startable. Publishing a failed version asks for confirmation, and the dialog warns that it can't be selected for a run.
 
 Constraints:
 

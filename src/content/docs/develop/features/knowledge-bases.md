@@ -125,7 +125,7 @@ receive this metadata when compiled again; rebuild the KB to populate all files.
 
 ## Detail tabs
 
-Open a knowledge base to see four tabs: **Overview**, **Sources**, **Review** and **Configure**. Viewers can read every tab but cannot change anything: **Build**, **Delete**, source changes and Configure are disabled for them, and the server refuses their writes.
+Open a knowledge base to see four tabs: **Overview**, **Sources**, **Review** and **Configure**. Viewers can read every tab but see **Build**, **Delete**, source changes and Configure disabled, and the server refuses their writes ([what each role can do](/work/settings/members/#what-each-role-can-do)).
 
 ### Overview
 
@@ -136,13 +136,19 @@ The stat cards (Sources, Wiki pages, Files, Attached to) sit above the **KB heal
 - When statement conflicts are open, a line shows the count and **Review statement conflicts**.
 - Health refreshes with **Refresh**, and again when the latest build or the source count changes.
 
-**Referenced by** is also on each file in the **Sources** tab. It is read-only: confirmed links, possible matches, review decisions and wiki pages that depend on the file, the documents with incoming links (each with **Open document review**), and a warning when link extraction is incomplete. Removing a source opens the same dialog as **Remove source** with the impact first. The server checks that the preview is current, so a stale confirmation is refused.
+**Referenced by** is also on each file in the **Sources** tab. It is read-only: confirmed links, possible matches, review decisions and wiki pages that depend on the file, the documents with incoming links (each with **Open document review**), and a warning when link extraction is incomplete. Removing a source opens the same dialog as **Remove source** with the impact first. If the impact changed since the preview, confirm again.
 
 ### Review
 
 Two sub-tabs.
 
-**Identities & links** is the document review queue. Filters: **Needs review**, **Decision history** or **All references**; **All issue types**, **Identity** or **Document links**; and a filename filter. An identity item shows the identifiers and editions extracted from a file. Tick the ones you verified and click **Confirm identity**. A link item is a reference from one document to another. Pick the target document from the suggestions or by searching, then **Confirm link**, or click **Reject reference**. Both need the "I checked the source evidence" box, and you can add an optional reason. **Undo decision** reverts a decision. A decision applies to the document versions reviewed; a changed source or target needs another review.
+**Identities & links** is the document review queue. Filters: **Needs review**, **Decision history** or **All references**; **All issue types**, **Identity** or **Document links**; and a filename filter. To review an item:
+
+1. For an identity item, which shows the identifiers and editions extracted from a file, tick the ones you verified and click **Confirm identity**.
+2. For a link item, a reference from one document to another, pick the target document from the suggestions or by searching, then click **Confirm link** or **Reject reference**.
+3. Tick "I checked the source evidence" (required for both) and optionally add a reason.
+
+**Undo decision** reverts a decision. A decision applies to the document versions reviewed; a changed source or target needs another review.
 
 **Statement conflicts** compares statements that disagree across documents. Filters: **Open conflicts**, **Reviewed comparisons** or **All comparisons**, plus a filename filter. Each comparison shows both quotations and a **Review decision**:
 
@@ -154,7 +160,7 @@ Two sub-tabs.
 
 A reason is required, and you confirm that you checked both quotations. **Save decision** stores it, and **Undo latest decision** reverts it. Agents see unresolved disagreements and your current decision when they read either source. If the sources change, the comparison shows **Sources changed** and is archived. Statement conflicts are produced by **Semantic analysis** (see Configure).
 
-Saving a review decision, like every other write on this page, needs the editor role in the project.
+Saving a review decision needs the editor role, like every other write on this page.
 
 ### Configure
 

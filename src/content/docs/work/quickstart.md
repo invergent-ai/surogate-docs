@@ -107,7 +107,11 @@ The **Getting started** row in the left nav, under **Sessions**, opens a checkli
 
 Once those are done, four optional steps unlock: **Edit capabilities**, **Attach a skill**, **Attach a tool** and **Connect a channel**. Each step has a button that takes you to the right screen.
 
-The checklist only counts what you do while following it, so an agent you made earlier doesn't tick a step. Progress is kept in your browser. Close the panel with the **X** at any time; the row stays in the nav, shows how many steps are done, and turns to **Onboarding complete** at the end. **Skip onboarding** in the guide's coach bubbles ends the tour, and you can pick it up again from this row. Develop mode has its own checklist: import a dataset, train a model, serve it, evaluate the training and test it in the playground.
+- The checklist only counts what you do while following it, so an agent you made earlier doesn't tick a step.
+- Progress is kept in your browser.
+- Close the panel with the **X** at any time. The row stays in the nav, shows how many steps are done, and turns to **Onboarding complete** at the end.
+- **Skip onboarding** in the guide's coach bubbles ends the tour, and you can pick it up again from this row.
+- Develop mode has its own checklist: import a dataset, train a model, serve it, evaluate the training and test it in the playground.
 
 ## What you've done in 10 minutes
 

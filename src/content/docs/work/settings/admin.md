@@ -2,13 +2,15 @@
 title: Admin settings
 ---
 
-Platform administrators get two more tabs in Settings: **Users**, to manage every account on the installation, and **Phone numbers**, the pool of numbers agents take for the [Voice channel](/work/channels/voice/). Nobody else sees them. This holds in every mode, Dev and Work, SaaS and enterprise.
+Platform administrators get two more tabs in Settings: **Users**, to manage every account on the installation, and **Phone numbers**, the pool of numbers agents take for the [Voice channel](/work/channels/voice/). Nobody else sees them. This holds in every mode.
 
 To be an administrator, a user needs the **Admin** role. Project roles (see [Members and roles](/work/settings/members/)) don't grant it.
 
 ## Users
 
-**Users** lists every account on the platform, 25 to a page. Each row shows the username and display name, email, roles, how the user signs in (**Auth**), last login (**Never** if they haven't signed in) and when the account was created.
+**Users** lists every platform account, 25 to a page. These are the people who sign in to Surogate, not an agent's end users (see [Users](/work/channels/users/)). From here you can edit an account, change its billing, impersonate it, or switch it off or delete it.
+
+Each row shows the username and display name, email, roles, how the user signs in (**Auth**), last login (**Never** if they haven't signed in) and when the account was created.
 
 Find people with the search box, which matches username, email and name. Use the role filter to show only **Admin**, **Skill author**, **DevOps** or **Developer** accounts. **Clear filters** resets both.
 
@@ -21,10 +23,8 @@ Each row has four actions: **Edit**, **Billing**, **Impersonate** and **Delete**
 - **Display name**, **Email**, **Title**, **Company** and **Bio** (180 characters at most). The username can't be changed. For a user who signs in through Firebase, changing the email here doesn't change it in Firebase.
 - **Transaction fee %**: Surogate's cut of each sale when this user [monetizes an agent](/work/monetize/). Leave it empty to use the platform default of 5%. Enter a number from 0 to 100, with up to two decimals.
 - **Roles**: toggle **Admin**, **Skill author**, **DevOps** and **Developer**. Removing **Admin** from the last admin is refused.
-- **Active**: clear it to switch the account off. The user keeps all their data but can't sign in. This is how you off-board someone, because deleting a user who owns projects is refused.
+- **Active**: clear it to switch the account off. The user keeps all their data but can't sign in. This is how you off-board someone, because deleting a user who owns projects is refused. The last admin and your own account can't be deactivated.
 - **Reset password**, on enterprise installations only. It issues a one-time password, shown once, and signs the user out everywhere. They must change it at next sign-in.
-
-The last admin can't be deactivated, and you can't deactivate yourself.
 
 ### Billing
 
@@ -32,10 +32,12 @@ The last admin can't be deactivated, and you can't deactivate yourself.
 
 The dialog has four sections:
 
-- **Plan**: choose Free, Standard, Pro, Max, Enterprise or Staff, then **Save plan**.
-- **Credits top-up**: for each of **Tokens**, **Browser minutes**, **Compute credits** and **Media credits**, it shows the plan balance and the top-up balance. Enter a whole number above zero and choose **Add**.
-- **Bring-your-own LLM**: a switch (**Active** or **Inactive**) with **Save BYO**.
-- **Add-ons**: set the quantity of **Extra concurrent agents**, **Extra workspace GB** and **Extra hub GB**, then **Save**. On the Enterprise and Staff plans the section says add-ons have no effect.
+| Section | What it sets |
+|---|---|
+| **Plan** | Free, Standard, Pro, Max, Enterprise or Staff, then **Save plan**. |
+| **Credits top-up** | For each of **Tokens**, **Browser minutes**, **Compute credits** and **Media credits**, it shows the plan balance and the top-up balance. Enter a whole number above zero and choose **Add**. |
+| **Bring-your-own LLM** | A switch (**Active** or **Inactive**) with **Save BYO**. |
+| **Add-ons** | The quantity of **Extra concurrent agents**, **Extra workspace GB** and **Extra hub GB**, then **Save**. On the Enterprise and Staff plans the section says add-ons have no effect. |
 
 ### Impersonate
 
