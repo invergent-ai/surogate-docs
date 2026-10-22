@@ -33,7 +33,7 @@ Connect the agent to where your people already work. The tab opens with a one-li
 - **Live** — each connected channel with what it is connected to (the number, the Slack workspace, the bot, the site) and its activity, such as *12 chats · 6m ago*. Click a row to manage it.
 - **Add a channel** — everything not connected yet, each with a **Connect** button.
 
-Every manage screen has **Try it**: a link that opens a real chat with the agent on that channel, and for WhatsApp and Telegram a QR code to open it on your phone.
+Every manage screen except Voice has **Try it**: a link that opens a real chat with the agent on that channel, and for WhatsApp and Telegram a QR code to open it on your phone.
 
 - **Web** — the always-on hosted chat page; copy its endpoint URL once the agent is deployed. See [Web](/work/channels/web/).
 - **Slack** — a guided **Connect Slack** wizard (bot scopes, event subscriptions, signing secret, bot token). The **Manage** view auto-saves options: **Require @mention**, **Mode** (Team member / Personal assistant), **Allow Bots** (None / Mentions only / All), **Reply in thread**, **Reply broadcast**, **Free-response channels**, plus **Surogate Mate** follow-the-channel and ambient-mode toggles. See [Slack](/work/channels/slack/).
@@ -41,6 +41,7 @@ Every manage screen has **Try it**: a link that opens a real chat with the agent
 - **WhatsApp** — a **Connect WhatsApp** wizard: set the Meta app's webhook from the callback URL + verify token it shows, then paste the Meta Cloud API credentials (Access Token, App Secret, WABA ID). **Manage**: a webhook check and the **Mode** option. See [WhatsApp](/work/channels/whatsapp/).
 - **Discord** — a **Connect Discord** walkthrough (one bot token), then an **Add to a server** install link. **Manage**: **Require @mention**, **Free-response channels**, **Read every message**. See [Discord](/work/channels/discord/).
 - **Microsoft Teams** — a **Connect Microsoft Teams** walkthrough (Azure Bot App ID, tenant ID, client secret, and the messaging endpoint to paste), then **Download app package** to upload in Teams. See [Microsoft Teams](/work/channels/teams/).
+- **Voice**: a **Phone number** from the numbers Surogate provides, then **Save and connect**. **Manage**: language and voice, the greeting and fixed lines, background sound, call limits, pronunciations, **Remember callers**, and **Recent calls**. It has no **Try it** link: call the number. See [Voice](/work/channels/voice/).
 - **Website** — an embeddable chat bubble. Set **Allowed origins**, copy the **Embed code**, cap **Messages per chat**, and reveal the **Publishable key** under Advanced. See [Website widget](/work/channels/website-widget/).
 
 ## Users

@@ -230,7 +230,7 @@ Example: in a health follow-up, Ana enrols her father; he becomes the followed p
 
 A person is never matched on a name. Accounts are linked by:
 
-- **The exact number.** A WhatsApp number given with its country code is that person on WhatsApp. On a voice line with **Remember callers** on, a call from exactly that number is the same person too, with the same record, memory and journeys. Without that switch every call stays its own, because caller ID can be faked.
+- **The exact number.** A WhatsApp number given with its country code is that person on WhatsApp. On a [voice line](/work/channels/voice/#callers) with **Remember callers** on, a call from exactly that number is the same person too, with the same record, memory and journeys. Without that switch every call stays its own, because caller ID can be faked.
 - **A Telegram start link.** A Telegram bot never sees phone numbers and may only write to someone who started it, so the person comes to the bot. **Link Telegram** (on the person panel, on the Users tab, or when adding a team member) makes a one-use link that works for **48 hours**. Whoever opens it and presses **Start** is asked *Are you {name}?* and is linked only on **Yes**. The person (on their other channel) and the team are told either way.
 - **A confirmation by a known contact**, as above.
 

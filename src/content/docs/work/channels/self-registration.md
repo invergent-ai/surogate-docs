@@ -14,7 +14,7 @@ You only need to set this up **once per project**. After that, every agent in th
 
 Self-registration is **available on the Standard plan and above**. Projects on the Free plan see the configuration screen but can't edit it — there's an inline upgrade prompt on the Authentication tab.
 
-You need to be the **project owner** to configure Firebase. Editors and viewers can see whether self-registration is on for an agent but can't change the project-level Firebase settings.
+You need to be the [**project owner**](/work/settings/members/#what-each-role-can-do) to configure Firebase. Editors and viewers can see whether self-registration is on for an agent but can't change the project-level Firebase settings.
 
 ## The big picture
 
@@ -177,7 +177,7 @@ The hostname your agent's web app runs on isn't in Firebase's authorized-domains
 Three things to check, in order:
 
 1. **You're on the Free plan.** Self-registration requires Standard or above — the Authentication tab shows an upgrade banner. Upgrade and the toggle becomes editable.
-2. **You're not the project owner.** Editors and viewers can see the toggle but can't flip it. Ask the project owner.
+2. **You're not the project [owner](/work/settings/members/#what-each-role-can-do).** Only owners can flip **Let anyone sign up**: the switch first checks the project's Firebase settings, which only owners can read. Ask the project owner.
 3. **You configured Firebase but didn't save it.** Re-open **Settings → Authentication tab → BYO Firebase auth** and confirm the green *configured* badge is showing. If not, click **Save Firebase**.
 
 ### Self-registered users were locked out after I removed Firebase

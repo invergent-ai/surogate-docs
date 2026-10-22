@@ -4,7 +4,7 @@ title: Authentication
 
 The **Authentication** tab holds end-user sign-in configuration for your active project, at `/work/settings/authentication` (shared with Dev mode at `/studio/settings/authentication`).
 
-Projects are hidden from the everyday UX — each account works against a single default project — so this tab always acts on whichever project is active in the navbar. If no project is active, it shows "No active project. Pick a project from the navbar to manage its settings." The only knob today is **BYO Firebase auth**; more per-project authentication settings will land here over time.
+This tab always acts on the active project; switch projects with the [project switcher](/work/settings/members/#the-project-switcher). If no project is active, it shows "No active project. Pick a project from the navbar to manage its settings." The only knob today is **BYO Firebase auth**; more per-project authentication settings will land here over time.
 
 ## BYO Firebase auth
 

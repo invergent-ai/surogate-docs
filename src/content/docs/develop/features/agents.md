@@ -98,7 +98,7 @@ Multiple skills with the same name resolve by precedence: **user-specific overri
 
 ## CHANNELS tab — multi-channel deployment
 
-Sections for [Web](/work/channels/web/) (always on), [Slack](/work/channels/slack/), [Telegram](/work/channels/telegram/), [WhatsApp](/work/channels/whatsapp/) and the [Website widget](/work/channels/website-widget/) (the last four toggle). [Discord](/work/channels/discord/) and [Microsoft Teams](/work/channels/teams/) are connected from Work's Channels screen, where Voice (phone calls) is also listed.
+Sections for [Web](/work/channels/web/) (always on), [Slack](/work/channels/slack/), [Telegram](/work/channels/telegram/), [WhatsApp](/work/channels/whatsapp/) and the [Website widget](/work/channels/website-widget/) (the last four toggle). [Discord](/work/channels/discord/) and [Microsoft Teams](/work/channels/teams/) are connected from Work's Channels screen, where [Voice](/work/channels/voice/) (phone calls) is also listed.
 
 ### Web
 

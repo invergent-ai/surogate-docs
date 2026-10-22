@@ -18,6 +18,14 @@ Your agent can now talk to people on [Discord](/work/channels/discord/) and [Mic
 
 A journey step has a new **Send once per person** checkbox in its **When** section. The step fires on the first matching day inside its window, then stays quiet for that person, even if they are enrolled again. See [Steps](/work/tools/programs/#steps).
 
+### Project roles
+
+Every project member now has a role, Viewer, Editor or Owner, that decides what they can see and change. See [what each role can do](/work/settings/members/#what-each-role-can-do).
+
+### Now documented
+
+Two earlier features are now documented: [voice](/work/channels/voice/) and [API access for web chat](/work/channels/web/#api-access).
+
 ## October 14, 2026: Surogate 1.14.10 (runtime 2.18.1)
 
 ### Programs: journeys, a team and escalations, on any channel
