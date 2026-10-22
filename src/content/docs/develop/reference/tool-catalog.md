@@ -2,13 +2,13 @@
 title: Tool catalog
 ---
 
-Every built-in tool an agent can call. These are the names the Governance policy accepts in **Allowed tools / Denied tools**, except the tools marked below as offered only in a particular setting. The catalog mirrors the runtime's tool registry, which is the source of truth, and unknown names are rejected on save. (`execute_code` and `web_crawl` are not tools; the shell entry point is `terminal`.)
+Every built-in tool an agent can call. These are the names the Governance policy accepts in **Allowed tools / Denied tools**, except the tools listed in the paragraph after the coordination note below. The catalog mirrors the runtime's tool registry, which is the source of truth, and unknown names are rejected on save. (`execute_code` and `web_crawl` are not tools; the shell entry point is `terminal`.)
 
 You don't pick which tool the agent uses for a given turn — the agent does. You decide which tools to **expose**.
 
 The coordination self-tools (`worker_complete`, `worker_block`, `worker_context`, `share_note`, `read_board`, `expand_note`, `unblock_task`, `cancel_task`) are listed below for completeness but are **not configurable** in the allow/deny lists — denying them could strand blocked work, so the policy API refuses them.
 
-The project thread tools (`start_thread`, `message_thread`, `stop_thread`, `list_threads`, `read_thread`, `resolve_thread`, `propose_threads`) are protected in the same way. `end_call` is offered on phone calls only: an allowlist admits it automatically and a denylist can still block it at runtime, but the policy API does not list its name. The policy API also does not list `whiteboard_draw`, `browser_upload_file`, `office_read` or `office_edit`, so they cannot be named in either list, and an allowlist does not admit them.
+Some tools can't be added to an agent's allow or deny list. The project thread tools (`start_thread`, `message_thread`, `stop_thread`, `list_threads`, `read_thread`, `resolve_thread`, `propose_threads`) are always available to a project's coordinator. `end_call` is always available on a phone call, and an allowlist doesn't block it. `whiteboard_draw`, `browser_upload_file`, `office_read` and `office_edit` can't be named in either list, so an agent that uses an allowlist doesn't get them.
 
 ## File I/O
 
@@ -92,7 +92,7 @@ Availability: each tool is **dropped from the agent's toolset entirely** when no
 | `kb_list_pages` | List all pages in a knowledge base, grouped by page type (index / summary / concept) |
 | `kb_read_page` | Read the full markdown content of a single wiki page |
 
-Offered only when the agent has a knowledge base attached (and the plan includes knowledge bases).
+Offered only when the agent has a knowledge base attached (and, on a monetized agent, the buyer's package includes it).
 
 ## Channel history
 

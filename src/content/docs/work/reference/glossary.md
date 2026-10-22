@@ -24,7 +24,7 @@ Every Surogate term you'll see in Work mode, in one place.
 | **Goal (`/goal`)** | A slash command that defines an outcome. The agent keeps working until an evaluator says satisfied / failed / blocked, or 20 iterations are used. |
 | **Governance policy** | An agent's enforced guardrails: tool allow/deny, web & browser egress, and AI disclosure — checked before every tool call, on top of the always-on platform floor. |
 | **Inbox** | A per-user queue of items the agent has pushed up for attention — `ask_user_question` prompts, action requests, completion notices. |
-| **Knowledge base (KB)** | A curated corpus of documents the agent can browse at runtime via `kb_list_pages` / `kb_read_page`. Sources → Curator → Wiki. |
+| **Knowledge base (KB)** | A curated corpus of documents the agent can browse at runtime via `kb_search_pages` / `kb_list_pages` / `kb_read_page`. Sources → Curator → Wiki. |
 | **Loop (`/loop`)** | A slash command that schedules a prompt to run on a recurring basis (fixed or dynamic interval). |
 | **MCP server** | An external system the agent can use as a tool — GitHub, Slack, your CRM, internal APIs. Follows the open Model Context Protocol. |
 | **Media credits** | The prepaid media wallet, in dollars of provider spend for image/video generation. Also sellable to buyers on offers. |

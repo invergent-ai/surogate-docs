@@ -38,7 +38,7 @@ For more complex multi-step recipes (fine-tune an expert, build an MCP server, A
 
 - Click **New chat** in the agent's left nav (between Publish and Inbox).
 - Ask 5 representative questions: pricing, features, "how do I…?", troubleshooting, refund policy.
-- Open the session afterwards from **Sessions** in the WORK sidebar — confirm the agent called the KB tools (`kb_list_pages` / `kb_read_page`) and grounded its answers.
+- Open the session afterwards from **Sessions** in the WORK sidebar — confirm the agent called the KB tools (`kb_search_pages` / `kb_list_pages` / `kb_read_page`) and grounded its answers.
 
 **5. Customise the persona.**
 

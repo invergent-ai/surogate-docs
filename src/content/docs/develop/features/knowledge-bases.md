@@ -27,7 +27,7 @@ Source files (markdown, PDF, CSV)
    │   (Hub-versioned)           │
    └─────────────┬───────────────┘
                  │
-                 ▼  kb_list_pages / kb_read_page at runtime
+                 ▼  kb_search_pages / kb_list_pages / kb_read_page at runtime
    Agent's session context grows by relevant pages
 ```
 

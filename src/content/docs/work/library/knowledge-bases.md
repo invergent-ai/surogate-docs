@@ -43,7 +43,7 @@ You add SOURCES (files, URLs, etc.)
    └─────────────┬───────────────┘
                  │
                  ↓
-   Agent calls kb_list_pages / kb_read_page at runtime
+   Agent calls kb_search_pages / kb_list_pages / kb_read_page at runtime
 ```
 
 The **curator** is an LLM that reads your raw documents and produces a structured wiki. At runtime the agent doesn't read the raw documents — it searches the curated wiki. Much cleaner than naive chunk-retrieval RAG.
@@ -135,7 +135,7 @@ The agent's system prompt grows by:
   Browse via kb_list_pages("acme-product-docs"), then kb_read_page(path).
 ```
 
-Plus the agent gains `kb_list_pages` and `kb_read_page` as available tools. The LLM uses them automatically — you don't need to write a skill to invoke them.
+Plus the agent gains `kb_search_pages`, `kb_list_pages` and `kb_read_page` as available tools. The LLM uses them automatically — you don't need to write a skill to invoke them.
 
 ## Updating a KB
 
