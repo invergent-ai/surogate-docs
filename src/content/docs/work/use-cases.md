@@ -203,10 +203,10 @@ Press **⌘+/** anywhere in `ops.surogate.ai` and ask:
 
 | Question | What the Copilot does |
 |---|---|
-| *"What agents do I have, and how many sessions did each have yesterday?"* | Calls `list_agents` and `recent_failures`, summarises |
+| *"What agents do I have, and how many sessions did each have this week?"* | Calls `list_agents`, then `get_agent_insights` (last 7 days) for each, summarises |
 | *"Show me my customer-support-bot's attached skills and KBs."* | Calls `get_agent` |
 | *"Find sessions from the last 7 days where people got stuck."* | Searches sessions with `find_sessions`, presents links |
-| *"Create a skill called `weekly-summary` that produces 5-bullet summaries."* | Generates the skill content, calls `create_skill`, returns the new skill ID |
+| *"Create a skill called `weekly-summary` that produces 5-bullet summaries."* | Interviews you one question at a time, checks your existing skills, shows a plan for your approval, then calls `create_skill`, reads it back and links it |
 | *"Attach `acme-product` KB to `acme-support-bot`."* | Calls `attach_kb_to_agent` |
 | *"Scale `acme-support-bot` to 3 replicas."* | Asks you in the chat first (`ask_user_question`), then calls `scale_agent` |
 | *"Delete the `test-summarizer-bot` agent."* | Asks you in the chat first, naming the agent, then calls `delete_agent` |

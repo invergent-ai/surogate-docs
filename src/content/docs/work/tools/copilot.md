@@ -13,7 +13,7 @@ A drawer opens with a chat composer. Ask in natural language; the Copilot calls 
 Look things up:
 
 - *"What agents do I have running?"*
-- *"Which agent had the most sessions yesterday?"*
+- *"Which agent had the most sessions this week?"*
 - *"Find conversations where people got stuck on pricing."*
 - *"Show me the latest training run for sql-writer."*
 - *"What skills does my customer-support-bot have attached?"*
@@ -37,7 +37,7 @@ It follows a written build guide for each kind of thing: agents, skills, knowled
 
 ## Asking the docs
 
-You can ask it how the platform works: *"What does the Compute page do?"* It looks the answer up in the product documentation instead of answering from memory. When you ask from a page, it knows which page you have open.
+You can ask it how the platform works: *"What does the Compute page do?"* It looks the answer up in the product documentation instead of answering from memory. When you ask from a page, it knows which page you have open and, for pages that have one, which doc covers it.
 
 ## Programs, people and the team
 
@@ -52,7 +52,7 @@ It knows what you are looking at: on the Programs page it is told which tab, jou
 
 **`/build-program`** is a playbook for setting a program up end to end. The Copilot interviews you one question at a time (who is followed and why, the date day 0 counts from, the rhythm, what each answer means and which is urgent, the channels, the team, the language of every message), inspects what the agent already has, and writes a plan for you to approve. Only then does it build: the step skills, any missing WhatsApp templates, the journey as a draft, the team and the wording. It reviews and dry-runs the journey and summarises what is live and what is still a draft, with a test script.
 
-Activating a journey, sending a test, enrolling, messaging a person and changing the team always wait for your yes. Its instructions forbid enrolling real people without your yes, and the enrol tool itself asks for that confirmation.
+Activating a journey, sending a test, enrolling, messaging a person and changing the team need an explicit confirmation step, which the Copilot is instructed to take only after you say yes to that exact action. Called without it, the tool refuses and changes nothing.
 
 ## How it asks before acting
 
@@ -75,7 +75,7 @@ The Copilot drawer keeps a history menu in its header (the clock/history icon). 
 
 - **It has no browser.** It works from the platform's own tools, not the open web. If you want to scrape or navigate a site, use a regular agent with `browser_*` tools.
 - **It can't make images or videos.** Use a regular agent for media.
-- **It can't set up things that need secrets or money for you.** It explains the steps and links the page: connecting channels (WhatsApp, Slack, Telegram, Discord, Microsoft Teams), creating or revoking API keys and webhook secrets, Stripe Connect onboarding, your workspace's billing and plan, and inviting workspace members.
+- **It won't set up things that need secrets or money for you.** Its instructions have it explain the steps and link the page instead: connecting channels (WhatsApp, Slack, Telegram, Discord, Microsoft Teams), creating or revoking API keys and webhook secrets, Stripe Connect onboarding, your workspace's billing and plan, and inviting workspace members. It can still change an agent's environment variables, where channel keys live, but it asks you first and never repeats secret values back.
 - **It can't change your password** or other account settings. Those go through Settings.
 
 ## When the Copilot misbehaves

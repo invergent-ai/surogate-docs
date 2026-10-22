@@ -32,7 +32,7 @@ Besides those, it can use a few built-in tools: `ask_user_question`, `create_art
 
 ### Looking things up
 
-`search_docs` ranks sections of the product documentation. Its top results carry the matching section's text, so most answers need no second call. `read_doc` reads a page or one section of it by path, and `list_docs` lists every page. The documentation is a bundled snapshot of the Work and Develop pages, so it can lag the live site. When you ask from a page, the runtime tells the Copilot which doc belongs to it.
+`search_docs` ranks sections of the product documentation. Its top results carry the matching section's text, so most answers need no second call. `read_doc` reads a page or one section of it by path, and `list_docs` lists every page. The documentation is a bundled snapshot of the Work and Develop pages, so it can lag the live site. When you ask from a Studio page that has a doc, the page tells the Copilot which doc covers it. Pages without one give no doc hint.
 
 `find_sessions` finds conversations by what was said in them. With no agent named it searches the current project's agents; with an agent named, only that agent. Either way you need the editor or owner role on the project (or to be a platform admin); a viewer gets no results. `search` looks across resources by name and ID in the current project, or in every project you are a member of.
 
@@ -58,13 +58,13 @@ An approved plan does not cover these. Each one needs its own yes.
 ## What the Copilot won't do
 
 - **It has no browser tool.** By design it works from the platform's own tools, not the open web. It is not a research agent.
-- **It has no tools for secrets, keys or workspace billing.** It guides you to the page instead: connecting channels that need credentials, creating or revoking API keys and webhook secrets, Stripe Connect onboarding, workspace billing and plan changes, and inviting members.
+- **Its instructions have it guide you, not act, for secrets, keys and workspace billing.** It links the page and explains the steps: connecting channels that need credentials, creating or revoking API keys and webhook secrets, Stripe Connect onboarding, workspace billing and plan changes, and inviting members. This is an instruction, not a missing tool: `set_agent_env_vars` can write an agent's environment variables, which carry channel keys, and the Copilot is instructed to ask you first and never echo secret values back.
 - **It does not decide governance approvals.** Those stay in the Inbox.
 - **It can't make images or videos.**
 
 ## Programmatic equivalents
 
-Every Copilot operation maps to a REST API endpoint. If you're building automation, prefer the API directly — the Copilot is for interactive use, not headless pipelines. See the API reference sections under each feature ([Agents](/develop/features/agents/), [Skills & Experts](/develop/features/skills-and-experts/), [Datasets](/develop/features/datasets/), etc.).
+Every Copilot operation maps to a REST API endpoint, except the docs and guide tools (`search_docs`, `read_doc`, `list_docs`, `read_guide`), which read the documentation and build guides bundled with the Copilot. If you're building automation, prefer the API directly: the Copilot is for interactive use, not headless pipelines. See the API reference sections under each feature ([Agents](/develop/features/agents/), [Skills & Experts](/develop/features/skills-and-experts/), [Datasets](/develop/features/datasets/), etc.).
 
 ## Failure modes you'll see
 
