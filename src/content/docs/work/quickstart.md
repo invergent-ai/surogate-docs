@@ -45,13 +45,13 @@ Templates ship without your team's content, so the agent doesn't know your produ
 
 ## 3. Publish to Slack
 
-Click **Publish** in the left nav, then open the **Channels** tab. Find **Slack** under **Add a channel** and click **Connect** — a guided wizard walks you through it.
+Click **Publish** in the left nav, then open the **Channels** tab. Find **Slack** under **Add a channel** and click **Connect**. A guided wizard walks you through it.
 
-![The Channels tab with Web and Slack active, and Telegram, WhatsApp and Website ready to connect](../../../assets/screenshots/work-publish-channels.png)
+![The Channels tab with Web and Slack live, and Telegram, WhatsApp and Website ready to connect](../../../assets/screenshots/work-publish-channels.png)
 
 The wizard asks for your Slack credentials:
 
-- **App ID** and **Signing Secret** — from your Slack app's **Basic Information**
+- **App ID** and **Signing Secret**: from your Slack app's **Basic Information**
 - **Bot Token** — `xoxb-…` from **OAuth & Permissions**
 
 Don't have a Slack app yet? Create one at [api.slack.com/apps](https://api.slack.com/apps) → add bot scopes (`chat:write`, `app_mentions:read`, `im:read`, `im:write`, `channels:history`, `groups:history`, `files:read`, `users:read`) → paste the Request URLs the wizard shows into **Event Subscriptions** → install to your workspace.

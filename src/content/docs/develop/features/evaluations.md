@@ -77,12 +77,12 @@ Pick the benchmark(s). You can select multiple to run in batch.
 
 ### Step 2 — Configure
 
-- **Target** — what's being evaluated: a **Model**, an **Agent**, or an **Adapter**. **Adapter** scores a LoRA adapter you trained, without you deploying it first. The run sets up a temporary base-plus-adapter deployment for its own use. A training run's **Evaluate** button opens this wizard with that run's adapter already selected.
+- **Target**: what's being evaluated, either a **Model**, an **Agent**, or an **Adapter**. **Adapter** scores a LoRA adapter you trained, without you deploying it first. The run sets up a temporary base-plus-adapter deployment for its own use. A training run's **Evaluate** button opens this wizard with that run's adapter already selected.
 - **Compare model** — an optional second target. Set one and the run scores both, and the report gains per-subset deltas between them. See [A/B evaluation](#side-by-side-ab-evaluation).
 - **Judge LLM** — if the benchmark uses an LLM judge (most do for subjective metrics):
   - **External** — OpenRouter / Anthropic / OpenAI / your endpoint, with a base URL and an API key.
-  - **Colocated** — runs the judge on GPUs in the eval pod, so it needs no API key. The run waits for the judge to load. A **GPUs** setting picks how many GPUs the judge gets.
-- **Pass threshold** — shown for benchmarks scored on a graded scale. Out of 10, and a sample scoring at or above it counts as a pass. It defaults to 8.0.
+  - **Colocated**: runs the judge on GPUs in the eval pod, so it needs no API key. The run waits for the judge to load. A **GPUs** setting picks how many GPUs the judge gets.
+- **Pass threshold**: shown for benchmarks scored on a graded scale. Out of 10, and a sample scoring at or above it counts as a pass. It defaults to 8.0.
 - **Per-benchmark options** — sample **limit** for a quick run (e.g. 100 instead of the full set), **few-shot** count, and **subsets** where the benchmark has them.
 - **MCP service credentials** — benchmarks that drive real services (MCPMark, for one) ask for a credential per service.
 
@@ -159,7 +159,7 @@ Runs live under `/api/eval-runs`; the benchmark catalog under `/api/benchmarks`;
 | `PATCH` | `/api/eval-runs/{id}` | Edit a run — `409` while it's running |
 | `DELETE` | `/api/eval-runs/{id}` | Delete a run |
 | `POST` | `/api/eval-runs/{id}/copy` | Clone the config into a new draft |
-| `POST` | `/api/eval-runs/{id}/start` | Launch — `402` if the plan lacks evaluations |
+| `POST` | `/api/eval-runs/{id}/start` | Launch: `402` if the plan lacks evaluations |
 | `POST` | `/api/eval-runs/{id}/stop` | Stop a running eval |
 | `GET` | `/api/eval-runs/{id}/scores` | Per-benchmark scores |
 | `GET` | `/api/eval-runs/{id}/samples` | Per-sample breakdown |

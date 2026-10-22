@@ -108,14 +108,14 @@ Always on. Endpoint: `https://<slug>.cloud.surogate.ai`. End-user accounts are m
 
 Toggle ON, paste credentials. Slack connects over webhooks, so you also paste the Request URLs the form shows into your Slack app's Event Subscriptions (see [Slack](/work/channels/slack/)):
 
-- **App ID** — from your Slack app's Basic Information
-- **Signing Secret** — from Basic Information
+- **App ID**: from your Slack app's Basic Information
+- **Signing Secret**: from Basic Information
 - **Bot Token** — `xoxb-...` with at minimum `chat:write`, `app_mentions:read`, `im:read`, `im:write`, `channels:history`, `groups:history`, `files:read`, `users:read`
 
 Behaviour settings:
 
 - **Require @mention** (default ON) — bot only responds in channels when @mentioned
-- **Allow Bots** — `None` / `Mentions only` / `All`
+- **Allow Bots**: `None` / `Mentions only` / `All`
 - **Reply in Thread** (default ON) — responses inside the thread
 - **Reply Broadcast** (default OFF) — when on, thread replies also post to the channel
 - **Free Response Channels** — comma-separated channel IDs where no @mention is needed (dedicated bot channels)
