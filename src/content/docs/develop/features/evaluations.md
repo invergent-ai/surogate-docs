@@ -77,11 +77,12 @@ Pick the benchmark(s). You can select multiple to run in batch.
 
 ### Step 2 — Configure
 
-- **Target** — the model or agent being evaluated.
+- **Target** — what's being evaluated: a **Model**, an **Agent**, or an **Adapter**. **Adapter** scores a LoRA adapter you trained, without you deploying it first. The run sets up a temporary base-plus-adapter deployment for its own use. A training run's **Evaluate** button opens this wizard with that run's adapter already selected.
 - **Compare model** — an optional second target. Set one and the run scores both, and the report gains per-subset deltas between them. See [A/B evaluation](#side-by-side-ab-evaluation).
 - **Judge LLM** — if the benchmark uses an LLM judge (most do for subjective metrics):
   - **External** — OpenRouter / Anthropic / OpenAI / your endpoint, with a base URL and an API key.
-  - **Colocated** — a model already in the platform's Models page.
+  - **Colocated** — runs the judge on GPUs in the eval pod, so it needs no API key. The run waits for the judge to load. A **GPUs** setting picks how many GPUs the judge gets.
+- **Pass threshold** — shown for benchmarks scored on a graded scale. Out of 10, and a sample scoring at or above it counts as a pass. It defaults to 8.0.
 - **Per-benchmark options** — sample **limit** for a quick run (e.g. 100 instead of the full set), **few-shot** count, and **subsets** where the benchmark has them.
 - **MCP service credentials** — benchmarks that drive real services (MCPMark, for one) ask for a credential per service.
 
@@ -93,7 +94,7 @@ Confirm the target + judge + benchmark. Click **Start evaluation**.
 
 ## Run lifecycle
 
-Creating and running are **two steps**: the wizard first saves the run as a **draft** (`POST /api/eval-runs`), then launches it (`POST /api/eval-runs/{id}/start`). Both boundaries are gated: `402` if the project's plan doesn't include evaluations, or if it's out of ML-compute credits.
+Creating and running are **two steps**: the wizard first saves the run as a **draft** (`POST /api/eval-runs`), then launches it (`POST /api/eval-runs/{id}/start`). Both boundaries are gated: `402` if the project's plan doesn't include evaluations. Evaluations don't use credits, so an empty credit balance never blocks a run.
 
 - **Edit** — a run stays editable until it's running; `PATCH` returns `409` on a running one. Switching a run's target between a model and an agent clears the one you moved away from.
 - **Stop** — `POST /api/eval-runs/{id}/stop` halts a running eval.
@@ -111,11 +112,17 @@ A run report with:
 - **Comparison** — if you ran the same benchmark on a previous model, side-by-side scores
 - **Drift detection** — when re-running on the same model, alerts on regressions
 
+### Watching a run and filtering the list
+
+While a run is going, its page shows live progress: how many rows are scored out of the total, the running score, the pass rate so far, and an estimated time left. Rows the runner couldn't score are counted as errored. The run list's status filter offers **All statuses**, **Completed**, **Running**, **Queued**, **Failed**, **Cancelled** and **Draft**.
+
 ### Export a report
 
 A finished run can be exported as a standalone report via `GET /api/eval-runs/{id}/export?format=html` (or `format=md`). The download bundles the run's scores, compare/previous deltas, and metadata (model, judge, compute, duration) into a single HTML or Markdown file you can share outside Studio.
 
 ## Leaderboard
+
+The **Leaderboard** button at the top of the Evaluations page opens the same view: the latest score per model on each benchmark, across the project's completed evaluations. The button appears once the project has at least one run.
 
 `GET /api/leaderboard` aggregates completed eval runs across the project (or a single project scope) into a ranked view, so you can see how each model/agent stacks up on the benchmarks you've run without opening each run individually.
 
@@ -152,7 +159,7 @@ Runs live under `/api/eval-runs`; the benchmark catalog under `/api/benchmarks`;
 | `PATCH` | `/api/eval-runs/{id}` | Edit a run — `409` while it's running |
 | `DELETE` | `/api/eval-runs/{id}` | Delete a run |
 | `POST` | `/api/eval-runs/{id}/copy` | Clone the config into a new draft |
-| `POST` | `/api/eval-runs/{id}/start` | Launch — `402` if out of ML-compute credits |
+| `POST` | `/api/eval-runs/{id}/start` | Launch — `402` if the plan lacks evaluations |
 | `POST` | `/api/eval-runs/{id}/stop` | Stop a running eval |
 | `GET` | `/api/eval-runs/{id}/scores` | Per-benchmark scores |
 | `GET` | `/api/eval-runs/{id}/samples` | Per-sample breakdown |
