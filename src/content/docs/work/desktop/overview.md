@@ -12,6 +12,7 @@ Surogate Desktop is an app for your computer. It lets your agent work on a folde
 - **Uses your browser.** The agent drives Chrome, Edge, Brave or Vivaldi, already installed on your computer, in a profile of its own.
 - **Previews web apps.** When the agent starts a web app, it can open it in the browser for you, once you allow it.
 - **Asks before it acts.** In a chat set to **Ask every time**, you approve each command and each file change first.
+- **Runs projects.** A project is a coordinator chat that hands work to threads, each a chat of its own. See [Projects](/work/desktop/projects/).
 
 ## Get it
 
