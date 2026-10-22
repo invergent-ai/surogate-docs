@@ -73,6 +73,7 @@ Point at any OpenAI-compatible endpoint you already run.
 | **Endpoint URL** | yes | Your vLLM, OpenAI, Anthropic, or any OpenAI-compatible server — e.g. `https://expert-pool.your-cluster.svc:8000/v1`. |
 | **Model name** | — | Passed verbatim to the endpoint (e.g. `expert-router`). |
 | **API key** | — | Optional. Picked from the Vault (see [The key picker](#the-key-picker)). |
+| **Context window** | — | Tokens the model accepts, as a whole number. Agents compact their context against it. Blank uses 128K. |
 | **Display name** | — | e.g. `expert-pool`. |
 
 Registered with source `url`, engine `openai_compat`, and the endpoint (plus a reference to the Vault key, if you picked one) in the serving config. Also a proxy model — usable immediately.
@@ -85,13 +86,13 @@ On OpenRouter and URL models the API key is a dropdown of the keys in your proje
 - Each Vault key by name, with the agent that uses it when there is one. Keys that belong to a single agent's own account aren't offered.
 - **+ New key…**: opens a name and value; **Save** adds the key to the Vault and selects it.
 
-A reference to a key that was removed later shows as **(missing)** until you pick another. The server also refuses a deploy or save that names a key not in the Vault. The same picker is on the **Config** tab of a proxy model, as **API key**.
+A reference to a key that was removed later shows as **(missing)** until you pick another. The server also refuses a deploy or save that names a key not in the Vault. The same picker is on the **Config** tab of a proxy model, as **API key**, next to **Context window**, which you can change there later.
 
 ## The model detail page
 
 ![A served model: its status, throughput and latency counters, deployment info, connected agents and model card](../../../../assets/screenshots/dev-models-detail.png)
 
-Deploying drops you on the model's detail page. The header shows the display name, a source badge, and a status pill — `Creating` (amber), `Serving` (green), `Stopped`, or `Error`; proxy models show a permanent `Proxy` pill. Action buttons live top-right: **Stop** / **Start** (or **Restart** after an error), **View job** (jumps to the serving job in the workload queue), and **Delete**. When a served model is up, a green **"Serving — ready to use"** banner offers to switch it on for an agent.
+Deploying drops you on the model's detail page. The header shows the display name, a source badge, and a status pill — `Creating` (amber), `Serving` (green), `Stopped`, or `Error`; proxy models show a permanent `Proxy` pill. Next to the name, the pencil (**Rename**) edits it in place: press Enter or click away to save, Esc to cancel. Renaming needs the editor role or higher, an empty name is refused, and it changes only the display name. Action buttons live top-right: **Stop** / **Start** (or **Restart** after an error), **View job** (jumps to the serving job in the workload queue), and **Delete**. When a served model is up, a green **"Serving — ready to use"** banner offers to switch it on for an agent.
 
 Up to six tabs:
 
