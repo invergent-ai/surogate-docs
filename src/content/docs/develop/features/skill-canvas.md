@@ -96,7 +96,7 @@ It needs the platform LLM to be configured. If it isn't, the dialog says "The pl
 
 **Try it** runs your unsaved draft on a real agent, so you can see how it behaves before you save or publish.
 
-1. Pick an agent in the top bar. The skill must already be attached to that agent, and the agent must be running.
+1. Pick an agent in the top bar. The skill must already be [attached to that agent](/work/library/skills/#attach-to-an-agent), and the agent must be running.
 2. Type a **Prompt**. The skill name is added for you. Use **Attach files** to give it input files.
 3. Click **Run**. It stays off while the graph has blocking problems or a run is in progress.
 
@@ -122,4 +122,4 @@ The tab shows the first procedure skill the session used. If the agent never rep
 - A canvas skill's body can't be edited as text, and a markdown skill can't be converted to a canvas.
 - [Skill optimization](/develop/features/skill-optimization/) isn't available for canvas skills: starting a run or applying a result is refused, because it would edit the body as text and detach it from the graph.
 
-To move a canvas skill between projects, use **Export** and **Import skill**. See [Export a skill](/work/library/skills/#export-a-skill).
+To move a canvas skill between projects, use **Export**, then **New skill** and **Import** under **Write markdown**. See [Export a skill](/work/library/skills/#export-a-skill).

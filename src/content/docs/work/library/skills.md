@@ -15,7 +15,7 @@ A **skill** is a small markdown file (a `SKILL.md`) that tells the agent how to 
 **Library → Skills & Tools → Skills tab.** (The page is titled "Skills & Tools" and carries two tabs: **Skills** and **MCP Servers**.) Layout:
 
 - **Left rail** — a search box (`Search skills…`), a **New skill** button, then the list of every skill in your workspace. Each row shows an icon, the display name, and a `version · used by N agents` line.
-- **Right pane**: detail for the selected skill: the display name + a version chip, a **Used by N agents** line, **Edit / Optimize / Publish / Export / Delete**, its tags, and inner **Content / Repository** tabs.
+- **Right pane**: detail for the selected skill, with the display name + a version chip, a **Used by N agents** line, **Edit / Optimize / Publish / Export / Delete** (a canvas skill's first button reads **Edit details**), its tags, and inner **Content / Repository** tabs.
 
 The **Content** tab renders the skill's frontmatter (name / description / trigger) above the rendered markdown body. The **Repository** tab (shown once the skill has been provisioned in the Hub) opens a file browser over the skill's git-backed repo.
 

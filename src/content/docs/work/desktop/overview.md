@@ -26,8 +26,8 @@ Then open Surogate from your applications.
 
 The script takes options after `bash -s --`:
 
-- `--version <x.y.z>` installs that release, to go back to an earlier one.
-- `--uninstall` removes Surogate Desktop. It asks before it deletes your sign-in and the agent's browser profiles. Your folders are never touched.
+- `--version <x.y.z>` installs that release, to go back to an earlier one: `curl -fsSL https://surogate.ai/desktop/install.sh | bash -s -- --version <x.y.z>`.
+- `--uninstall` removes Surogate Desktop. It asks before it deletes your sign-in and the agent's browser profiles. Your folders are never touched. The full command is `curl -fsSL https://surogate.ai/desktop/install.sh | bash -s -- --uninstall`.
 - `--ca-cert <file>` makes Surogate Desktop, the agent's browser and its commands trust your company's certificate authority (a PEM file). Use it if your network inspects encrypted traffic.
 
 macOS (Apple Silicon) and Windows versions are coming soon. Their downloads are not published yet.
@@ -77,12 +77,12 @@ In **Ask every time**, reading never asks: looking at files, listing folders, se
 
 Two things ask in both modes:
 
-- **Network access.** Commands reach the package registries they need, and your computer's own services stay out of reach. For any other site, your local network included, Surogate asks. **Allow for this session** lets that site through, on every port, for the rest of the chat.
+- **Network access.** Commands reach the package registries they need, and your computer's own services stay out of reach. For any other site, your local network included, Surogate asks. **Allow** lets through the connections waiting now, and later ones ask again. **Allow all its ports for this chat** lets that site through, on every port, for the rest of the chat. In the browser's prompt, **Allow for this chat** does the same for the browser.
 - **The browser.** The first time a chat uses your browser, and each time it would open a port of the chat's own web app in it.
 
 In **Ask every time**, every action the agent takes on a page asks too: opening an address, running a script, clicking, typing, dragging, uploading a file, and downloads. Reading the page does not.
 
-Switch the mode from the bar. Going to **Asks every time** is immediate. Going to **Works freely** opens Surogate Desktop's own confirmation, because only the app can make a chat less safe. A prompt also has **Stop asking**, which makes the chat work freely.
+Switch the mode from the bar. Going to **Asks every time** is immediate. Going to **Works freely** opens Surogate Desktop's own confirmation, because only the app can make a chat less safe. An action's prompt also has **Allow and stop asking**, which allows that action and makes the chat work freely.
 
 In **Work freely**, downloads from a page and the agent's uploads happen without a prompt.
 
@@ -117,7 +117,7 @@ When a computer is added or reauthorized, a banner in the web app says "`<comput
 - **Quick entry.** A small window to start a new chat from anywhere. On Linux the shortcut is Ctrl+Alt+Space in an X11 session. In a Wayland session there is no shortcut: open it from the tray.
 - **Notifications.** When Surogate's window is hidden or behind another app, it notifies you of new items in your inbox, of a chat that finished, and when it needs an answer ("Surogate is asking you something"). Clicking one opens that chat. A flood of them becomes one notice that opens the inbox.
 - **Settings.** Appearance, **Start at login**, **Keep running when the window is closed**, **Developer mode**, your account, **This computer** (name, connection, sandbox) and **Browser**.
-- **Uninstall.** On Linux, run the install script with `--uninstall`.
+- **Uninstall.** On Linux, run `curl -fsSL https://surogate.ai/desktop/install.sh | bash -s -- --uninstall`.
 
 ## Limits and good to know
 
