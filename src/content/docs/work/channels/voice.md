@@ -63,13 +63,13 @@ Open **Phone lines it says on its own** to reword the fixed sentences the agent 
 | **When the call cannot start** | Then it hangs up. |
 | **When every line is taken** | Then it hangs up. This is the busy line. |
 | **Reading out choices** | When the agent offers choices. Keep `{}` where the choices go. |
-| **After an urgent alert on a call** | How to confirm it was heard, for example say yes or press 1. Only used on calls the agent places, not on calls you receive. |
+| **After an urgent alert on a call** | How to confirm it was heard, for example say yes or press 1. Only used for urgent alerts the agent phones out. It has no effect on calls you receive. |
 
 ## Background sound
 
 What callers hear around the agent. The default is **Silent**: only the voice. Or pick one of 13 places, each with a preview button that plays the room on its own:
 
-Clinic front desk, Dental practice, Pharmacy counter, Restaurant reservations, Hotel reception, Beauty salon, Car service, Accounting or law office, Bank or insurance desk, Sales or support team, Delivery or taxi dispatch, School office, Small business, home office.
+"Clinic front desk"; "Dental practice"; "Pharmacy counter"; "Restaurant reservations"; "Hotel reception"; "Beauty salon"; "Car service"; "Accounting or law office"; "Bank or insurance desk"; "Sales or support team"; "Delivery or taxi dispatch"; "School office"; "Small business, home office".
 
 When a place is chosen, these appear:
 
