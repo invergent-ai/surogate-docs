@@ -85,7 +85,7 @@ Emitted on the coordinator chat session; the mission dashboard polls them.
 | `policy.allowed` | Two shapes. Gate pass-through, emitted only when the deployment enables `governance.log_allowed` (off by default; doubles event volume): `tool`, `check: "governance_gate"`, `timestamp`. Approved retry of a gated call: `tool_name`, `reason: "human approval"`, `tool_call_id` |
 | `disclosure.presented` | A messaging channel (Slack / Telegram / WhatsApp) posted the AI disclosure as the first message of a new conversation. Payload: `level`, `channel`, `delivery: "channel_message"` |
 | `disclosure.confirmed` | A web user accepted the disclosure banner. Payload: `level`, `source: "web_banner"` |
-| `security.injection_blocked` | The prompt-injection detector refused a user message. The request gets a 422 and no `user.message` is recorded, so this event is what shows the block in the timeline. Payload: `source`, `explanation`, `threat_level` |
+| `security.injection_blocked` | The prompt-injection detector refused a user message sent through the sessions API (web chat, API channel, and comment mentions in office documents, which go the same way); `/code` commands are not screened. The request gets a 422 and no `user.message` is recorded, so this event is what shows the block in the timeline. Payload: `source` (`web_channel` or `api_channel`), `explanation`, `threat_level`, `confidence`, `injection_type`, `matched_patterns` (up to 10), `content_preview` (first 2000 characters) |
 
 A denial of a tool named in the policy's `require_approval` list is **overridable**: alongside `policy.denied` it emits `inbox.governance_gate` and hands the model `policy_blocked_overridable` rather than a hard error, so the call can be retried after a human decides.
 
