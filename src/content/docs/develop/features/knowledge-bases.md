@@ -39,7 +39,7 @@ The curator distills and links the material into a wiki. Hybrid search covers pa
 |---|---|
 | **Name** | Unique within your org |
 | **Description** | Free-form |
-| **Curator model** | Locked at creation — can't be changed later. Default works for most cases; pick a smarter model (Claude Sonnet 4.6, GPT-5) at creation for highly technical content. |
+| **Curator model** | Set in the **Configure** tab. Defaults to Surogate; see [Curator model](#curator-model). |
 | **Sources** | List of files / S3 prefixes / GitHub repos / Notion pages / URLs (only File works in current builds) |
 | **Status** | `error` (no successful compile yet) → `compiling` → `active` |
 | **Counters** | sources, wiki pages, attached agents |
@@ -62,11 +62,7 @@ When the other source types ship, they'll have continuous sync (re-compile on de
 
 ## Curator model
 
-Locked at KB creation. Can't be changed later. Common choices:
-
-- **Surogate default** — fine for most cases
-- **Claude Sonnet 4.6** — better for highly technical content
-- **GPT-5** — alternative
+Not chosen at creation. Change it later in the **Configure** tab of the KB. The choices are **Surogate** (the default), **Surogate Pro**, and any model deployed in the KB's project. A change applies to the next compile; use **Rebuild** to redo pages an earlier model wrote.
 
 The curator runs once per source on COMPILE. The cost is dominated by the size of the source corpus.
 
@@ -127,6 +123,53 @@ report records the latest attempt, not a full history or current health status;
 an embedding backfill may have repaired an earlier warning. Existing sources
 receive this metadata when compiled again; rebuild the KB to populate all files.
 
+## Detail tabs
+
+Open a knowledge base to see four tabs: **Overview**, **Sources**, **Review** and **Configure**. Viewers can read every tab but cannot change anything: **Build**, **Delete**, source changes and Configure are disabled for them, and the server refuses their writes.
+
+### Overview
+
+The stat cards (Sources, Wiki pages, Files, Attached to) sit above the **KB health** card. Its summary line lists only what is true: failed documents, documents with warnings, queued documents, and search entries that need embeddings. During a build it reports the build instead.
+
+- **Needs attention** lists documents with ingestion problems, 25 per page. Each row has **Retry document** (confirmation first, because it uses model credits), **Review document** (opens the Review tab on that file) and **Referenced by** (the change-impact dialog). **Retry N documents** retries every retryable row on the page.
+- **Recent builds** lists the compile runs.
+- When statement conflicts are open, a line shows the count and **Review statement conflicts**.
+- Health refreshes with **Refresh**, and again when the latest build or the source count changes.
+
+**Referenced by** is also on each file in the **Sources** tab. It is read-only: confirmed links, possible matches, review decisions and wiki pages that depend on the file, the documents with incoming links (each with **Open document review**), and a warning when link extraction is incomplete. Removing a source opens the same dialog as **Remove source** with the impact first. The server checks that the preview is current, so a stale confirmation is refused.
+
+### Review
+
+Two sub-tabs.
+
+**Identities & links** is the document review queue. Filters: **Needs review**, **Decision history** or **All references**; **All issue types**, **Identity** or **Document links**; and a filename filter. An identity item shows the identifiers and editions extracted from a file. Tick the ones you verified and click **Confirm identity**. A link item is a reference from one document to another. Pick the target document from the suggestions or by searching, then **Confirm link**, or click **Reject reference**. Both need the "I checked the source evidence" box, and you can add an optional reason. **Undo decision** reverts a decision. A decision applies to the document versions reviewed; a changed source or target needs another review.
+
+**Statement conflicts** compares statements that disagree across documents. Filters: **Open conflicts**, **Reviewed comparisons** or **All comparisons**, plus a filename filter. Each comparison shows both quotations and a **Review decision**:
+
+- Sources conflict, needs correction
+- Both apply under different conditions
+- Use statement A for this comparison
+- Use statement B for this comparison
+- Incorrect comparison
+
+A reason is required, and you confirm that you checked both quotations. **Save decision** stores it, and **Undo latest decision** reverts it. Agents see unresolved disagreements and your current decision when they read either source. If the sources change, the comparison shows **Sources changed** and is archived. Statement conflicts need **Semantic analysis** turned on in Configure.
+
+Saving a review decision, like every other write on this page, needs the editor role in the project.
+
+### Configure
+
+Settings save as soon as you change them and apply to the next compile. They are locked while a build runs, and for viewers.
+
+| Setting | What it does |
+|---|---|
+| **Language** | The language the wiki is written in. It also picks the OCR model for scanned PDFs. Only English and Romanian have OCR support; other languages are marked "no OCR support" and fall back to English OCR, which garbles accents. A change affects documents added afterwards until you rebuild. |
+| **Curator model** | The model that reads each document and writes the wiki: **Surogate**, **Surogate Pro** or a deployed model. |
+| **Vision model** | Describes figures extracted from PDFs. **Platform default** or a deployed model. It must accept images. |
+| **Semantic analysis** | Extracts references and stated facts, then compares statements across documents. Feeds link review and statement conflicts. It is the slowest part of a compile. |
+| **Concept pages** | Writes pages that gather what many documents say about one topic. Slow on large KBs; without them, answers that combine many documents take longer. |
+
+**Rebuild knowledge base** appears at the bottom when the KB has sources. **Build** only processes new documents and missing search vectors. Rebuild re-curates every document from scratch, including text extraction, summaries, analysis and the wiki, so use it to apply a changed setting to documents already processed. When some documents were curated with a different curator model, language or prompt, a note says how many. The confirmation dialog shows how many documents will be processed, warns that it can take hours on a large KB and uses model credits, and notes that statement reviews need re-checking afterwards. Confirm with **Rebuild everything**.
+
 ## Wiki search
 
 After attaching a KB, agents use `kb_search_pages` for hybrid lexical/vector search across their permitted knowledge bases, then `kb_read_page` to read the matching pages. Validate retrieval by asking the attached agent representative questions and inspecting its search and read tool results.
@@ -172,7 +215,7 @@ Plus the agent's tool catalogue grows by `kb_search_pages`, `kb_list_pages` and 
 |---|---|---|
 | `GET` | `/api/knowledge-bases` | List |
 | `GET` | `/api/knowledge-bases/{id}` | Detail |
-| `POST` | `/api/knowledge-bases` | Create. Body: `{name, description, curator_model}` |
+| `POST` | `/api/knowledge-bases` | Create. Body: `{name, display_name, description, curator_language}` |
 | `DELETE` | `/api/knowledge-bases/{id}` | Delete (pre-flight: warns if attached to agents) |
 | `GET` | `/api/knowledge-bases/{id}/sources` | List sources |
 | `POST` | `/api/knowledge-bases/{id}/sources` | Add source (multipart for File, JSON for others) |

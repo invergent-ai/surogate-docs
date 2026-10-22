@@ -44,7 +44,7 @@ The skill is now versioned in the Hub at `p-{project}/skill-triage-incident` wit
 **Library → Knowledge Bases → NEW KNOWLEDGE BASE**:
 
 - Name: `incident-runbooks`
-- Curator model: default
+- Language: English (or the language of your documents)
 - **CREATE**
 
 Add sources (`SOURCES → ADD SOURCE`): drop in 3–10 markdown files that describe your incident-response procedures.

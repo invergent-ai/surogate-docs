@@ -64,7 +64,7 @@ Two quick wins, both on the **Configure** page:
 
 ### Add a knowledge base
 
-In the left nav under **LIBRARY**, click **Knowledge Bases** → **NEW KNOWLEDGE BASE**. Name it (e.g. `acme-product`) and pick a curator model. Add a few `.md` or `.pdf` sources, click **COMPILE**, wait for status `active`.
+In the left nav under **LIBRARY**, click **Knowledge Bases** → **NEW KNOWLEDGE BASE**. Name it (e.g. `acme-product`) and pick its language. Add a few `.md` or `.pdf` sources, click **COMPILE**, wait for status `active`.
 
 Back on the agent's **Configure** page → **Knowledge Bases** tab → **+ ATTACH KNOWLEDGE BASE** → pick the new KB.
 

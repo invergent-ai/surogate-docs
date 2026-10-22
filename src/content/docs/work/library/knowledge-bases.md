@@ -58,12 +58,12 @@ Fields:
 
 - **Name** — `acme-product-docs`
 - **Description** — what's in here, who should use it
-- **Curator model** — locked at creation, can't be changed later. The default is fine for most uses. Pick a smarter model (e.g. Claude Sonnet) for highly technical content.
+- **Language**: the language the wiki is written in. It also picks the OCR model for scanned PDFs, so choose it now.
 
 Click **CREATE**. The KB starts in `error` status — that's normal until you add sources and compile.
 
-:::caution[Curator model is locked]
-Once you pick a curator model and create the KB, you can't change it. If you need a different curator, create a new KB.
+:::tip[Curator model]
+You don't pick a curator model at creation. The default is fine for most uses. To use a smarter model for highly technical content, change it later in the KB's **Configure** tab, then use **Rebuild knowledge base** to redo pages already written. See [Develop mode](/develop/features/knowledge-bases/#detail-tabs) for the Review and Configure tabs.
 :::
 
 ## Adding sources
