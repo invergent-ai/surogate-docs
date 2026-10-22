@@ -98,7 +98,7 @@ Compile takes 30 seconds to a few minutes per source.
 
 A single bad file **no longer takes the whole compile down**: healthy sources continue through the pipeline and a wiki is still produced from them, while each failing file shows **its own error message inline in the SOURCES list** with a per-file retry.
 
-Read the status carefully, though — the KB still reports `error` when *any* file failed. That now means "at least one source failed", not "nothing was built": check the WIKI tab, it's often already usable.
+Read the status carefully, though: the KB still reports `error` when *any* file failed. That now means "at least one source failed", not "nothing was built": open the wiki from the **Wiki pages** stat card, it's often already usable.
 
 If a file shows an error:
 
@@ -111,7 +111,7 @@ If failures persist, switch to **Develop mode** for the deeper troubleshooting s
 
 ## Browsing the wiki
 
-After a successful compile, the **Wiki pages** stat card on the KB detail becomes clickable (whole card, amber hover) and opens the wiki. The **WIKI** tab shows:
+After a successful compile, the **Wiki pages** stat card on the KB detail becomes clickable (whole card, amber hover) and opens the wiki. The wiki view shows:
 
 - **Synthesis pages** — cross-source ("Pricing across all products", "All known issues by severity")
 - **Per-source pages** — organised by content, not by original file boundaries
@@ -159,7 +159,7 @@ You have a product, `acme-shop`, and you want a customer-support agent to know y
 1. Create a KB `acme-product`.
 2. Add sources: `getting-started.md`, `pricing.md`, `faq.md`, `known-issues.csv`.
 3. COMPILE. Wait. Status: `active`.
-4. Browse the WIKI → confirm relevant content surfaces for typical questions.
+4. Open the wiki from the **Wiki pages** stat card → confirm relevant content surfaces for typical questions.
 5. Deploy a new agent (Templates page → **Start from scratch** → fill in the dialog) or pick an existing one.
 6. Open the agent → Configure → Knowledge Bases tab → attach `acme-product`.
 7. Open a chat → ask: *"What's included in the Pro plan?"*

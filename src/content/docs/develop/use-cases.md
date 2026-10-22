@@ -29,7 +29,7 @@ You need a corpus of clean trajectories. Aim for ≥100 sessions for a viable tr
 
 **2. Convert your skill to an expert (draft state)**.
 
-Library → Skills & Tools → your skill → EDIT. Add to the frontmatter:
+**Library → Skills & Tools** (in Develop mode, open `/studio/skills`) → your skill → EDIT. Add to the frontmatter:
 
 ```yaml
 type: expert
@@ -203,7 +203,7 @@ For Surogate's MCP proxy to authenticate, register a client in your OAuth provid
 
 **3. Add the MCP server in Surogate**.
 
-Library → Skills & Tools → MCP SERVERS → ADD SERVER:
+**Library → Skills & Tools** (in Develop mode, open `/studio/skills`) → MCP SERVERS tab → ADD SERVER:
 
 ```yaml
 name: acme-internal-api

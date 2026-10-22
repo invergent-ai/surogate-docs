@@ -22,7 +22,7 @@ For more complex multi-step recipes (fine-tune an expert, build an MCP server, A
 - Name `acme-product`, brief description, leave the language as English.
 - SOURCES → ADD SOURCE → upload each markdown / PDF, one at a time.
 - COMPILE. Wait 30s–3min. Status: `active`.
-- Verify in the WIKI tab — search a typical question, confirm relevant content surfaces.
+- Verify in the wiki (click the **Wiki pages** stat card on the KB Overview): search a typical question, confirm relevant content surfaces.
 
 **2. Create the agent.**
 
@@ -177,7 +177,7 @@ By cause: "missing facts," "wrong tone," "wrong tool," "wrong workflow." Each bu
 
 **4. Verify the wiki.**
 
-- Open the KB → **Wiki** tab → search a real customer question. Confirm:
+- Open the KB → click the **Wiki pages** stat card → search a real customer question. Confirm:
   - Wiki page surfaces if the answer is in the docs
   - Ticket resolution surfaces if there's a relevant past case
   - Cross-source synthesis page combines both
