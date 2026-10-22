@@ -233,6 +233,7 @@ export default defineConfig({
                 'work/settings/usage',
                 'work/settings/billing',
                 'work/settings/members',
+                'work/settings/admin',
               ],
             },
             'work/tools/copilot',

@@ -9,7 +9,7 @@ Your agent answers phone calls. Callers dial a number, the agent greets them, li
 ## What you need
 
 - The project [**editor** role](/work/settings/members/#what-each-role-can-do). Viewers can read but not change it. For a system agent you need to be an administrator.
-- A free number. You pick one of the numbers Surogate provides. You can't bring your own number. If none is free, the page says "No free numbers right now. An admin adds them under Settings → Phone numbers."
+- A free number. You pick one of the numbers Surogate provides. You can't bring your own number. If none is free, the page says "No free numbers right now. An admin adds them under Settings → Phone numbers." (see [Admin settings](/work/settings/admin/#phone-numbers))
 - For any language other than Romanian: a speech provider. A hosted provider needs your account's key saved in the project's Vault; for **Hugging Face or your own server** a key is optional. See [Language and voice](#language-and-voice).
 
 ## Configuration in Surogate
