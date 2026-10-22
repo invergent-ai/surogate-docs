@@ -64,7 +64,7 @@ Two quick wins, both on the **Configure** page:
 
 ### Add a knowledge base
 
-In the left nav under **LIBRARY**, click **Knowledge Bases** → **NEW KNOWLEDGE BASE**. Name it (e.g. `acme-product`) and pick its language. Add a few `.md` or `.pdf` sources, click **COMPILE**, wait for status `active`.
+In the left nav under **LIBRARY**, click **Knowledge Bases** → **NEW KNOWLEDGE BASE**. Name it (e.g. `acme-product`) and pick its language. Add a few `.md` or `.pdf` sources, click **Build**, wait for status `active`.
 
 Back on the agent's **Configure** page → **Knowledge Bases** tab → **+ ATTACH KNOWLEDGE BASE** → pick the new KB.
 
@@ -110,7 +110,7 @@ Once those are done, four optional steps unlock: **Edit capabilities**, **Attach
 - The checklist only counts what you do while following it, so an agent you made earlier doesn't tick a step.
 - Progress is kept in your browser.
 - Close the panel with the **X** at any time. The row stays in the nav, shows how many steps are done, and turns to **Onboarding complete** at the end.
-- **Skip onboarding** in the guide's coach bubbles ends the tour, and you can pick it up again from this row.
+- **Skip onboarding** in the guide's coach bubbles turns off the onboarding everywhere, including the Develop tutorial. You can pick it up again from this row.
 - Develop mode has its own checklist: import a dataset, train a model, serve it, evaluate the training and test it in the playground.
 
 ## What you've done in 10 minutes

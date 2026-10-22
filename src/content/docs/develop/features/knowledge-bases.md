@@ -125,7 +125,7 @@ receive this metadata when compiled again; rebuild the KB to populate all files.
 
 ## Detail tabs
 
-Open a knowledge base to see four tabs: **Overview**, **Sources**, **Review** and **Configure**. Viewers can read every tab but see **Build**, **Delete**, source changes and Configure disabled, and the server refuses their writes ([what each role can do](/work/settings/members/#what-each-role-can-do)).
+Open a knowledge base to see four tabs: **Overview**, **Sources**, **Review** and **Configure**. Viewers can read every tab. **Build**, **Delete**, source changes and the Configure settings are disabled for them. **Retry document**, **Retry N documents** and the review buttons (**Confirm identity**, **Confirm link**, **Reject reference**, **Undo decision**, **Save decision**, **Undo latest decision**) stay clickable, but the server refuses them ([what each role can do](/work/settings/members/#what-each-role-can-do)).
 
 ### Overview
 
@@ -136,7 +136,7 @@ The stat cards (Sources, Wiki pages, Files, Attached to) sit above the **KB heal
 - When statement conflicts are open, a line shows the count and **Review statement conflicts**.
 - Health refreshes with **Refresh**, and again when the latest build or the source count changes.
 
-**Referenced by** is also on each file in the **Sources** tab. It is read-only: confirmed links, possible matches, review decisions and wiki pages that depend on the file, the documents with incoming links (each with **Open document review**), and a warning when link extraction is incomplete. Removing a source opens the same dialog as **Remove source** with the impact first. If the impact changed since the preview, confirm again.
+**Referenced by** is also on each file in the **Sources** tab. It is read-only: confirmed links, possible matches, review decisions and wiki pages that depend on the file, the documents with incoming links (each with **Open document review**), and a warning when link extraction is incomplete. Removing a source opens this dialog in removal mode, with the impact first. If document links or reviews in the knowledge base changed since the preview, the removal is refused: the dialog shows the error and reloads the preview, so confirm again against the new one.
 
 ### Review
 
@@ -174,7 +174,7 @@ Settings save as soon as you change them and apply to the next compile. They are
 | **Semantic analysis** | Extracts references and stated facts, then compares statements across documents. Feeds link review and statement conflicts. It is the slowest part of a compile. |
 | **Concept pages** | Writes pages that gather what many documents say about one topic. Slow on large KBs; without them, answers that combine many documents take longer. |
 
-**Rebuild knowledge base** appears at the bottom when the KB has sources. **Build** only processes new documents and missing search vectors. Rebuild re-curates every document from scratch, including text extraction, summaries, analysis and the wiki, so use it to apply a changed setting to documents already processed. When some documents were curated with a different curator model, language or prompt, a note says how many. The confirmation dialog shows how many documents will be processed, warns that it can take hours on a large KB and uses model credits, and notes that statement reviews need re-checking afterwards. Confirm with **Rebuild everything**.
+**Rebuild knowledge base** appears at the bottom when the KB has sources. **Build** only processes new documents and missing search vectors. Rebuild re-curates every document from scratch, including text extraction, summaries, analysis and the wiki, so use it to apply a changed setting to documents already processed. When some documents were curated with a different curator model, language or prompt, a note says how many. The confirmation dialog shows how many documents will be processed, warns that it can take hours on a large KB and uses model credits, and says "Reviews remain valid only while their source and target versions still match." When statement comparisons are affected, it also says how many and that reviews will need re-checking. Confirm with **Rebuild everything**.
 
 ## Wiki search
 
