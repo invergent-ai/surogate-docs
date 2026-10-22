@@ -177,7 +177,7 @@ The hostname your agent's web app runs on isn't in Firebase's authorized-domains
 Three things to check, in order:
 
 1. **You're on the Free plan.** Self-registration requires Standard or above — the Authentication tab shows an upgrade banner. Upgrade and the toggle becomes editable.
-2. **You're not the project owner.** Editors and viewers can see the toggle but can't flip it. Ask the project owner.
+2. **You're a viewer.** Owners and editors can flip the **Let anyone sign up** switch; viewers can see it but can't. Ask an owner or editor.
 3. **You configured Firebase but didn't save it.** Re-open **Settings → Authentication tab → BYO Firebase auth** and confirm the green *configured* badge is showing. If not, click **Save Firebase**.
 
 ### Self-registered users were locked out after I removed Firebase
