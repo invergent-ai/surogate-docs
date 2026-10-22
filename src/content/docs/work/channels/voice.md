@@ -8,7 +8,7 @@ Your agent answers phone calls. Callers dial a number, the agent greets them, li
 
 ## What you need
 
-- The project **editor** role. Viewers can open the Voice screen and read its settings and calls, but not change them. For a system agent you need to be an administrator.
+- The project [**editor** role](/work/settings/members/#what-each-role-can-do). Viewers can open the Voice screen and read its settings and calls, but not change them. For a system agent you need to be an administrator.
 - A free number. You pick one of the numbers Surogate provides. You can't bring your own number. If none is free, the list is empty and an administrator has to add more.
 - For any language other than Romanian: an account at a speech provider, with its key saved in the project's Vault. See [Language and voice](#language-and-voice).
 

@@ -14,7 +14,7 @@ You only need to set this up **once per project**. After that, every agent in th
 
 Self-registration is **available on the Standard plan and above**. Projects on the Free plan see the configuration screen but can't edit it — there's an inline upgrade prompt on the Authentication tab.
 
-You need to be the **project owner** to configure Firebase. Editors and viewers can see whether self-registration is on for an agent but can't change the project-level Firebase settings.
+You need to be the [**project owner**](/work/settings/members/) to configure Firebase. Editors and viewers can see whether self-registration is on for an agent but can't change the project-level Firebase settings.
 
 ## The big picture
 
