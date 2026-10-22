@@ -125,7 +125,7 @@ Three ways to add a tool:
 
 ![The add-server form for a remote MCP endpoint](../../../../assets/screenshots/work-configure-add-mcp.png)
 
-The **Key vault** stores API keys (masked, with **Update** and **Remove**). See [MCP servers](/work/library/mcp-servers/).
+The **Key vault** button opens **Settings → Vault**, where API keys are stored (masked, with **Update** and **Remove**). See [Vault](/work/settings/vault/) and [MCP servers](/work/library/mcp-servers/).
 
 ## Coding
 

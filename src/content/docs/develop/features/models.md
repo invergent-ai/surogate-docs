@@ -59,10 +59,10 @@ Point at a model hosted by OpenRouter and use it as the backing endpoint.
 | Field | Required | Notes |
 |---|---|---|
 | **Model id** | yes | Type to filter OpenRouter's catalog (shows each model's context length) or paste an id — e.g. `openai/gpt-4o`, `anthropic/claude-3.5-sonnet`. |
-| **OpenRouter API key** | — | Optional. Left blank, it falls back to your workspace OpenRouter key in the Vault. Stored masked. |
+| **OpenRouter API key** | yes | Picked from the Vault (see [The key picker](#the-key-picker)). **Deploy** stays off until you choose one. |
 | **Display name** | — | e.g. `gpt-4o (judge)`. |
 
-Registered with source `openrouter`, engine `openrouter`, and the API key (if given) in the serving config's Vault-backed secret. This is a proxy model — no GPU, no serving config.
+Registered with source `openrouter`, engine `openrouter`, and a reference to the Vault key you picked in the serving config. This is a proxy model — no GPU, no serving config.
 
 ### URL
 
@@ -72,10 +72,20 @@ Point at any OpenAI-compatible endpoint you already run.
 |---|---|---|
 | **Endpoint URL** | yes | Your vLLM, OpenAI, Anthropic, or any OpenAI-compatible server — e.g. `https://expert-pool.your-cluster.svc:8000/v1`. |
 | **Model name** | — | Passed verbatim to the endpoint (e.g. `expert-router`). |
-| **API key** | — | Optional; stored in the Vault. Shown masked. |
+| **API key** | — | Optional. Picked from the Vault (see [The key picker](#the-key-picker)). |
 | **Display name** | — | e.g. `expert-pool`. |
 
-Registered with source `url`, engine `openai_compat`, and the endpoint (plus API key if given) in the serving config. Also a proxy model — usable immediately.
+Registered with source `url`, engine `openai_compat`, and the endpoint (plus a reference to the Vault key, if you picked one) in the serving config. Also a proxy model — usable immediately.
+
+### The key picker
+
+On OpenRouter and URL models the API key is a dropdown of the keys in your project's [Vault](/work/settings/vault/), not a text box. The model stores only a reference to the key, never its value. The choices are:
+
+- **Select a key** (OpenRouter) or **No key** (URL): none chosen.
+- Each Vault key by name, with the agent that uses it when there is one. Keys that belong to a single agent's own account aren't offered.
+- **+ New key…**: opens a name and value; **Save** adds the key to the Vault and selects it.
+
+A reference to a key that was removed later shows as **(missing)** until you pick another. The server also refuses a deploy or save that names a key not in the Vault. The same picker is on the **Config** tab of a proxy model, as **API key**.
 
 ## The model detail page
 
