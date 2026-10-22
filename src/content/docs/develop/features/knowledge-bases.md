@@ -8,7 +8,7 @@ For the operator's view, see [Work mode → Knowledge bases](/work/library/knowl
 
 ## How a KB works (architecturally)
 
-![Creating a knowledge base: name, slug, description and the curator model](../../../../assets/screenshots/work-kb-create.png)
+![Creating a knowledge base: display name, slug, description and language](../../../../assets/screenshots/work-kb-create.png)
 
 ```
 Source files (markdown, PDF, CSV)
@@ -20,7 +20,7 @@ Source files (markdown, PDF, CSV)
    │   structured knowledge,     │
    │   deduplicates              │
    └─────────────┬───────────────┘
-                 │ COMPILE (POST /api/knowledge-bases/{id}/compile)
+                 │ COMPILE (POST /api/knowledge-bases/{id}/compiles)
                  ▼
    ┌─────────────────────────────┐
    │   Wiki — searchable index   │
@@ -69,7 +69,7 @@ The curator runs once per source on COMPILE. The cost is dominated by the size o
 ## Compile
 
 ```bash
-curl -X POST http://localhost:8000/api/knowledge-bases/{id}/compile \
+curl -X POST http://localhost:8000/api/knowledge-bases/{id}/compiles \
   -H "Authorization: Bearer $TOKEN"
 ```
 
@@ -152,7 +152,7 @@ Two sub-tabs.
 - Use statement B for this comparison
 - Incorrect comparison
 
-A reason is required, and you confirm that you checked both quotations. **Save decision** stores it, and **Undo latest decision** reverts it. Agents see unresolved disagreements and your current decision when they read either source. If the sources change, the comparison shows **Sources changed** and is archived. Statement conflicts need **Semantic analysis** turned on in Configure.
+A reason is required, and you confirm that you checked both quotations. **Save decision** stores it, and **Undo latest decision** reverts it. Agents see unresolved disagreements and your current decision when they read either source. If the sources change, the comparison shows **Sources changed** and is archived. Statement conflicts are produced by **Semantic analysis** (see Configure).
 
 Saving a review decision, like every other write on this page, needs the editor role in the project.
 
@@ -220,8 +220,10 @@ Plus the agent's tool catalogue grows by `kb_search_pages`, `kb_list_pages` and 
 | `GET` | `/api/knowledge-bases/{id}/sources` | List sources |
 | `POST` | `/api/knowledge-bases/{id}/sources` | Add source (multipart for File, JSON for others) |
 | `DELETE` | `/api/knowledge-bases/{id}/sources/{source_id}` | Remove source |
-| `POST` | `/api/knowledge-bases/{id}/compile` | Trigger compile |
-| `GET` | `/api/knowledge-bases/{id}/wiki` | Browse wiki |
+| `POST` | `/api/knowledge-bases/{id}/compiles` | Trigger a compile (`?rebuild=true` for a rebuild) |
+| `POST` | `/api/knowledge-bases/{id}/compiles/stop` | Stop the active compile |
+| `GET` | `/api/knowledge-bases/{id}/compiles` | List compiles |
+| `GET` | `/api/knowledge-bases/{id}/wiki/pages` | List wiki pages |
 
 ## What's next
 

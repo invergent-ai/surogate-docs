@@ -50,13 +50,14 @@ The **curator** is an LLM that reads your raw documents and produces a structure
 
 ## Creating a KB
 
-![The create-knowledge-base form: display name, slug, description and the curator model](../../../../assets/screenshots/work-kb-create.png)
+![The create-knowledge-base form: display name, slug, description and language](../../../../assets/screenshots/work-kb-create.png)
 
 **Library → Knowledge Bases → NEW KNOWLEDGE BASE**
 
 Fields:
 
-- **Name** — `acme-product-docs`
+- **Display Name**: `Acme product docs`
+- **Slug**: `acme-product-docs`, filled in from the display name until you edit it. It can't be changed later.
 - **Description** — what's in here, who should use it
 - **Language**: the language the wiki is written in. It also picks the OCR model for scanned PDFs, so choose it now.
 
