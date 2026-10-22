@@ -21,6 +21,8 @@ Open the agent → **Publish** in the left nav → the **Channels** tab → find
    - Slash Command Request URL — `https://channels.surogate.ai/slack/<APP_ID>/commands`
 
    Also subscribe to these bot events: `message.im`, `app_mention`, `message.channels`.
+
+   Slack may not be able to verify the Request URL yet, because Surogate rejects requests until the Signing Secret is saved. If so, finish **Connect Slack** below, then click **Retry** in Slack.
 4. **Install to your workspace** (OAuth & Permissions → *Install to Workspace*) and copy the **Bot User OAuth Token** (starts with `xoxb-`).
 5. **Paste your credentials** — the **Signing Secret** (Basic Information) and the **Bot Token** (`xoxb-…`).
 

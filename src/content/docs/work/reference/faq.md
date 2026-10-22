@@ -38,9 +38,9 @@ Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (w
 
 **Telegram bot replies once then stops.** Another instance is consuming Telegram updates. Stop the other instance — Telegram only delivers each update once.
 
-**Website widget says "origin not allowed".** Page URL isn't in the Allowed Origins list. Add the exact URL → SAVE. No wildcards.
+**Website widget says "origin not allowed".** Page URL isn't in the Allowed Origins list. Add the exact URL on the widget's Manage screen (it saves automatically). No wildcards.
 
-**COPY button on the publishable key is disabled.** SAVE CHANNELS first — the key isn't deployed until then.
+**Can't find the publishable key.** It appears under **Advanced** on the Website widget's Manage screen, which opens once you click **Enable widget**.
 
 ## Copilot
 

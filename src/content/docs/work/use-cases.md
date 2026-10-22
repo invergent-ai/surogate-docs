@@ -61,10 +61,9 @@ Never disclose internal ticket IDs. Never make legally binding statements.
 
 **6. Publish to your website.**
 
-- Publish → the **Channels** tab → toggle **Website** ON.
-- Add your domain to Allowed Origins (e.g. `https://acme.com`, `https://www.acme.com`).
-- SAVE.
-- COPY the publishable key. Click **Embed code** to reveal the script tag.
+- Publish → the **Channels** tab → find **Website widget** under **Add a channel** → **Connect**.
+- Add your domain to Allowed origins (e.g. `https://acme.com`, `https://www.acme.com`), then click **Enable widget**. It saves automatically.
+- On the Manage screen, copy the **Embed code** snippet (the publishable key is under **Advanced**).
 - Paste the script tag into your website's HTML before `</body>`.
 
 Your support bot is live. Visitors hit a chat bubble in the bottom-right. The bot answers from your KB.
@@ -93,10 +92,10 @@ Your support bot is live. Visitors hit a chat bubble in the bottom-right. The bo
 
 **2. Configure in Surogate.**
 
-- Open `acme-support-bot` → Publish → the **Channels** tab → toggle **Slack** ON.
-- Paste App ID, Signing Secret and Bot Token.
-- Defaults are fine for most: Require @mention ON, Reply in Thread ON.
-- SAVE.
+- Open `acme-support-bot` → Publish → the **Channels** tab → find **Slack** under **Add a channel** → **Connect**.
+- Enter your App ID. The wizard then shows the Request URLs to paste into your Slack app's Event Subscriptions (see [Slack](/work/channels/slack/)).
+- Paste the Signing Secret and Bot Token, then click **Connect Slack**. There is no separate save step.
+- Defaults are fine for most (Require @mention ON, Reply in thread ON); change them later on the Slack Manage screen.
 
 **3. Verify.**
 
