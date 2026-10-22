@@ -210,6 +210,8 @@ export default defineConfig({
                 'work/channels/slack',
                 'work/channels/telegram',
                 'work/channels/whatsapp',
+                'work/channels/discord',
+                'work/channels/teams',
                 'work/channels/website-widget',
                 'work/channels/users',
                 'work/channels/self-registration',
