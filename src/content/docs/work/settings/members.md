@@ -98,7 +98,7 @@ Owners see the paused schedules and missions in a **Paused work** list under the
 
 In Dev mode, the top of the navigation shows the active project and your role in it. Choose it to open a list of your projects, each with your role. Pick one to switch. Everything in the app, including the Members tab, then shows that project.
 
-The list ends with **New project**, which asks for a **Name** and a **Color**. You become its owner. **New project** is not offered in enterprise mode, where only platform administrators create projects.
+The list ends with **New project**, which asks for a **Name** and a **Color**. You become its owner. In enterprise mode, only platform administrators are offered **New project**.
 
 The Work navigation has no switcher. Work uses the project you last picked, which your browser remembers, so switch in Dev mode first.
 
