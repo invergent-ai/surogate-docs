@@ -15,7 +15,7 @@ Click an office file in the [workspace pane](/work/workflow/run-agent/#the-works
 | `.docx`, `.xlsx`, `.pptx`, `.pdf` | Open for editing |
 | `.doc`, `.odt`, `.rtf`, `.xls`, `.ods`, `.ppt`, `.odp` | Open read-only (the editor converts them to show them) |
 
-A document also opens read-only when the chat itself is read-only, and in a scheduled run's conversation. Documents in a folder on a computer connected through Surogate Desktop open too; your saves land on the computer, and wait there if it is offline or has not yet allowed the save.
+A document also opens read-only when the chat itself is read-only, and in a scheduled run's conversation. Documents in a folder on a computer connected through [Surogate Desktop](/work/desktop/overview/) open too; your saves land on the computer, and wait there if it is offline or has not yet allowed the save.
 
 A chat your own app creates through the API (`POST /v1/api/sessions`, see [API channel sessions](/develop/features/sessions/#api-channel-sessions-are-different)) has no file pane, so the agent there gets no `office_read` or `office_edit` and answers no comment mentions. If your app shows the session's workspace and editor beside its own chat, create the session with `"config": {"file_pane": true}`: the agent then gets both tools and answers mentions as it does here.
 

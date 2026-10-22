@@ -220,6 +220,11 @@ export default defineConfig({
               ],
             },
             {
+              label: 'Surogate Desktop',
+              collapsed: true,
+              items: ['work/desktop/overview'],
+            },
+            {
               label: 'Settings',
               collapsed: true,
               items: [
