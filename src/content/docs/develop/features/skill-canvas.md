@@ -61,7 +61,7 @@ Names in **Tool**, **Bundle file** and **Target** are free text. The box suggest
 
 The **Checks** panel reports problems as you edit. Click a finding to select its step. Two kinds exist.
 
-**Problems that block saving.** These are structural and show a red **blocks saving** tag, and **Save** stays off until they are fixed. Examples: a required field left empty, more than one outgoing edge on a step that isn't a **Decision**, a `fail` edge on anything but a **Verify**, an edge out of an **End**, too many steps or edges. The server enforces the same rules and answers a bad graph with a refusal, shown as "Save failed, see Checks".
+**Problems that block saving.** These are structural and show a red **blocks saving** tag, and **Save** stays off until they are fixed. Examples: a required field left empty, more than one outgoing edge on a step that isn't a **Decision**, a `fail` edge on anything but a **Verify**, an edge out of an **End**, too many steps or edges. The server enforces the same rules and refuses a bad graph. The save-failed message points you to the Checks panel.
 
 **Findings.** These never block saving. They are computed against the skill, its bundle and the chosen agent.
 
@@ -100,7 +100,7 @@ It needs the platform LLM to be configured. If it isn't, the dialog says "The pl
 2. Type a **Prompt**. The skill name is added for you. Use **Attach files** to give it input files.
 3. Click **Run**. It stays off while the graph has blocking problems or a run is in progress.
 
-This is a real session on the agent. It uses the agent's model like any chat, and it appears under Sessions. Nothing is published: the draft travels as an override for that one session. If the runtime doesn't allow draft overrides, the panel says the published version ran.
+This is a real session on the agent. It uses the agent's model like any chat. Nothing is published: the draft travels as an override for that one session. If the runtime doesn't allow draft overrides, the panel says the published version ran.
 
 While it runs, steps light up on the canvas, and a list shows each step visited, its time, and any tool calls. **Stop watching** stops following the run but not the session. **Open session** opens it on the **Skill path** tab.
 
@@ -121,6 +121,5 @@ The tab shows the first procedure skill the session used. If the agent never rep
 - At most 500 steps and 1000 edges per graph.
 - A canvas skill's body can't be edited as text, and a markdown skill can't be converted to a canvas.
 - [Skill optimization](/develop/features/skill-optimization/) isn't available for canvas skills: starting a run or applying a result is refused, because it would edit the body as text and detach it from the graph.
-- The canvas has no undo or redo.
 
 To move a canvas skill between projects, use **Export** and **Import skill**. See [Export a skill](/work/library/skills/#export-a-skill).
