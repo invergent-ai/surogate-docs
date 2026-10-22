@@ -81,7 +81,7 @@ Pick the benchmark(s). You can select multiple to run in batch.
 - **Compare model** — an optional second target. Set one and the run scores both, and the report gains per-subset deltas between them. See [A/B evaluation](#side-by-side-ab-evaluation).
 - **Judge LLM** — if the benchmark uses an LLM judge (most do for subjective metrics):
   - **External** — OpenRouter / Anthropic / OpenAI / your endpoint, with a base URL and an API key.
-  - **Colocated**: runs the judge on GPUs in the eval pod, so it needs no API key. The run waits for the judge to load. A **GPUs** setting picks how many GPUs the judge gets.
+  - **Colocated**: runs the judge on GPUs in the eval pod, so it needs no API key. Give it a judge model id from Hugging Face or the Data Hub. The run waits for the judge to load. A **GPUs** setting picks how many GPUs the judge gets.
 - **Pass threshold**: shown for benchmarks scored on a graded scale. Out of 10, and a sample scoring at or above it counts as a pass. It defaults to 8.0.
 - **Per-benchmark options** — sample **limit** for a quick run (e.g. 100 instead of the full set), **few-shot** count, and **subsets** where the benchmark has them.
 - **MCP service credentials** — benchmarks that drive real services (MCPMark, for one) ask for a credential per service.
@@ -94,7 +94,7 @@ Confirm the target + judge + benchmark. Click **Start evaluation**.
 
 ## Run lifecycle
 
-Creating and running are **two steps**: the wizard first saves the run as a **draft** (`POST /api/eval-runs`), then launches it (`POST /api/eval-runs/{id}/start`). Both boundaries are gated: `402` if the project's plan doesn't include evaluations. Evaluations don't use credits, so an empty credit balance never blocks a run.
+Creating and running are **two steps**: the wizard first saves the run as a **draft** (`POST /api/eval-runs`), then launches it (`POST /api/eval-runs/{id}/start`). Both boundaries are gated: `402` if the project's plan doesn't include evaluations. Evaluation runs themselves don't use credits, so an empty credit balance doesn't block one. The exception is an **Adapter** target: its temporary deployment uses compute credits like any deployment, and an empty balance can stop it from starting.
 
 - **Edit** — a run stays editable until it's running; `PATCH` returns `409` on a running one. Switching a run's target between a model and an agent clears the one you moved away from.
 - **Stop** — `POST /api/eval-runs/{id}/stop` halts a running eval.
