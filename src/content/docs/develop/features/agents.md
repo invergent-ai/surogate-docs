@@ -15,7 +15,7 @@ An agent bundles six things, configured through five tabs:
 | **OVERVIEW** | Four 24h stat cards (requests, error rate, latency incl. p95, tokens) + four hourly bar charts, a Conversations — last 7 days card, and the Connected skills/MCPs card. |
 | **KNOWLEDGE & TOOLS** | Attach / detach Skills, Knowledge Bases, MCP Servers; per-row DETACH; ATTACH dropdown. |
 | **USERS** | Per-agent end-user accounts. Add Web users, set passwords or SSO, manage display names. |
-| **CHANNELS** | Web (always on), Slack (App + Bot tokens, threading, mention requirements), Telegram (Bot token, DM/group toggles), Website widget (publishable key, allowed origins, embed code, session message cap). |
+| **CHANNELS** | Web (always on), Slack (App + Bot tokens, threading, mention requirements), Telegram (Bot token, DM/group toggles), WhatsApp (access token, app secret, Business Account ID), Website widget (publishable key, allowed origins, embed code, session message cap). |
 | **CONFIG** | Persona (SOUL.md), Tool Access, Web & Browser Egress, EU AI Act Transparency, Saga, Session Reset, Environment Variables. |
 
 Plus four action buttons:
@@ -98,7 +98,7 @@ Multiple skills with the same name resolve by precedence: **user-specific overri
 
 ## CHANNELS tab — multi-channel deployment
 
-Four channel types. Web is always on; the others toggle.
+This tab has sections for [Web](/work/channels/web/) (always on), [Slack](/work/channels/slack/), [Telegram](/work/channels/telegram/), [WhatsApp](/work/channels/whatsapp/) and the [Website widget](/work/channels/website-widget/); the last four toggle. [Discord](/work/channels/discord/) and [Microsoft Teams](/work/channels/teams/) are connected from their own screens under Work's Channels, and Voice (phone calls) is listed there too.
 
 ### Web
 
@@ -121,7 +121,11 @@ Behaviour settings:
 
 ### Telegram
 
-Toggle ON, paste Bot Token (`123456:ABC-DEF...`). DM-only vs allow-in-groups. Forum topic support. Media handling (photos, voice notes via transcription, documents).
+Toggle ON, paste Bot Token (`123456:ABC-DEF...`). DM-only vs allow-in-groups. Forum topic support. Media handling: photos, documents, audio and video arrive as attachments. Voice notes arrive as audio files the agent can't transcribe; there is no speech-to-text on this channel.
+
+### WhatsApp
+
+Toggle ON, paste the access token, app secret and WhatsApp Business Account ID. Voice notes arrive as audio files the agent can't transcribe. See [WhatsApp](/work/channels/whatsapp/) for the full setup.
 
 ### Website widget
 
