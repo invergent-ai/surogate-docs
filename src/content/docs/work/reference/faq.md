@@ -46,8 +46,6 @@ Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (w
 
 **401 "Invalid base LLM token".** Admin-side config issue — the platform's default LLM credentials aren't provisioned for your tenant.
 
-**Copilot loops on `read_resource`.** Known bug — the tool is in the Copilot's allowlist but unimplemented. Phrase the question to avoid enumeration, e.g. "What KBs does `customer-support-bot` have?" instead of "list my KBs".
-
 ## Billing
 
 **Upgraded but limits didn't increase.** Stripe webhooks usually deliver instantly; can lag 30-60s. Refresh the Billing tab.
