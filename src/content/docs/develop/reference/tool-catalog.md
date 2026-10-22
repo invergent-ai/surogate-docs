@@ -117,8 +117,8 @@ A due step, a reply to it and its deadline each wake the agent with a step conte
 
 | Tool | Use for |
 |---|---|
-| `office_read` | Read a Word document (`.docx`) through the agent's own live editor session, with everyone's latest edits — `view` `outline` (default, paged with `start`), `block` (`target`) or `search` (`query`). Gives each block's id and hash, comment threads, tracked changes, and who else has it open |
-| `office_edit` | Edit a Word document live — `ops` applied all or none: `insert`, `replace`, `delete`, `move`, `comment`, `reply`, `resolve`, with Markdown content, placeholder (`pending`), chart and image blocks. A block changed since it was read is refused, so the user's edit wins. A missing document is created blank |
+| `office_read` | Read a Word document (`.docx`), spreadsheet (`.xlsx`), presentation (`.pptx`) or PDF (`.pdf`) through the agent's own live editor session, with everyone's latest edits — `view` `outline` (default, paged with `start`), `block` (`target`; for other types `range`, `slide` or `page`) or `search` (`query`). Gives each block's id and hash, comment threads, tracked changes in Word, and who else has it open |
+| `office_edit` | Edit a `.docx`, `.xlsx`, `.pptx` or `.pdf` live — `ops` applied all or none. Word: `insert`, `replace`, `delete`, `move`, `comment`, `reply`, `resolve`, with Markdown content, placeholder (`pending`), chart and image blocks. Spreadsheet: `set`, `format`, `chart`, `sheet`. Deck: `slides`, `text`, `notes`, `order`, `remove`. PDF: `pages`, `fill`, `add_field`, `redact`, `annotate`. In the other types `reply` and `resolve` work on existing comment threads. A block changed since it was read is refused, so the user's edit wins. A missing document is created blank |
 
 Both exist only where the platform runs a document server and `runtime-office`. While a document is open in the editor, it is changed only through `office_edit`. See [Office documents](/work/tools/office-documents/).
 
