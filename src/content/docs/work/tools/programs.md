@@ -87,7 +87,6 @@ Steps are shown on a vertical timeline grouped **Before**, **Day 0**, **Week 1**
 | **On day** / **From day** · **Until day** | Counted from the person's start date. **Negative days come before it**: day -1 is the day before. An empty **Until day** means no end. |
 | **On these days** | The weekdays a repeating step fires on. |
 | **Send once per person** | Fires on the first matching day in the step's window, then never again for that person, even if re-enrolled. Not offered on a **Once** step with a single time. |
-
 | **At** | One or more local times. **Add a time** for twice a day. |
 | **Timezone** | People with their own zone get the step at this time in theirs. |
 | **Only some people** | Optional: **Only people in these stages** (a label you or the agent put on a person, comma-separated) and **Only if they have not written for** N days, for an "are you still there?" message. |
