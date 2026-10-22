@@ -21,7 +21,7 @@ Open **Projects** in the sidebar, then press **New project**. The dialog asks fo
 - **Name.** Up to 256 characters.
 - **Goal.** What the project is for, up to 2000 characters. The coordinator and its threads see it.
 - **Folder.** Press **Choose…** and pick a folder on this computer. The coordinator works in the folder itself and each thread in a copy of it. The field shows only when the agent lets chats work on folders of this computer; otherwise the project lives in the cloud.
-- **Folder checks.** Surogate shows its usual sheet to confirm the folder and choose **Work freely** or **Ask every time** (see [Approvals](/work/desktop/overview/#approvals)), and the threads ask the same way. Some folders are refused (see [Folders that are refused](/work/desktop/overview/#folders-that-are-refused)).
+After you pick the folder, Surogate shows its usual sheet to confirm it and choose **Work freely** or **Ask every time** (see [Approvals](/work/desktop/overview/#approvals)). The threads ask the same way as the coordinator. Some folders are refused (see [Folders that are refused](/work/desktop/overview/#folders-that-are-refused)).
 
 Press **Create project**. Its conversation opens.
 
@@ -47,7 +47,9 @@ Ask for what you want in the project's conversation. The coordinator answers wit
 
 A thread the coordinator proposes for your own computer, in a project that has no folder, shows **Allow** (to work in a folder of this computer) or **Run in the cloud instead**.
 
-Each thread is a full chat, with its own sandbox, working on one piece of the project. In a project with a folder, a thread works in its own copy of it. When the thread's turn ends, its changes are applied to the folder. The copy keeps threads from tripping over each other's files.
+Each thread is a full chat, with its own sandbox, working on one piece of the project. In a project with a folder, a thread works in its own copy of it. When the thread's turn ends, its changes are applied to the folder. The copy keeps threads from tripping over each other's files. If the same file changed in the folder meanwhile, the thread asks you.
+
+A thread's copy leaves out `.env` files, `node_modules/`, `.venv/`, build output and caches, and none of them comes back from the thread. For work that needs them, use a chat on the folder.
 
 A thread saves the files it makes under `threads/<title>/`. They appear in the project's **Library**.
 
