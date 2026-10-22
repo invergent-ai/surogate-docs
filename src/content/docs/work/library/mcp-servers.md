@@ -12,7 +12,7 @@ You wire a server up once in the Library; any agent in your workspace can then a
 
 **Library → Skills & Tools → MCP Servers tab.**
 
-- **Left rail** — a **Vault** entry at the top (a lock icon, marked **In Settings**, which opens **Settings → Vault**), a search box, then the list of every server. Each row shows the server name and a `TRANSPORT · LAYER · N tools` line, with a green dot when the server is enabled.
+- **Left rail**: a **Vault** entry at the top (a lock icon, marked **In Settings**, which opens **Settings → Vault**), a search box, then the list of every server. Each row shows the server name and a `TRANSPORT · LAYER · N tools` line, with a green dot when the server is enabled.
 - **Right pane** — the selected server's detail: name + transport/layer chips, an Enabled/Disabled status with the number of connected agents, **Disable/Enable · Edit · Delete**, the connection details, the auth method, the security-scan result, and the list of exposed tools.
 
 Click any server to open its detail panel; click **Add server** (top right) to create one.

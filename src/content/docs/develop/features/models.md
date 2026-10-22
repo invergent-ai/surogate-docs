@@ -62,7 +62,7 @@ Point at a model hosted by OpenRouter and use it as the backing endpoint.
 | **OpenRouter API key** | yes | Picked from the Vault (see [The key picker](#the-key-picker)). **Deploy** stays off until you choose one. |
 | **Display name** | — | e.g. `gpt-4o (judge)`. |
 
-Registered with source `openrouter`, engine `openrouter`, and a reference to the Vault key you picked in the serving config. This is a proxy model — no GPU, no serving config.
+Registered with source `openrouter`, engine `openrouter`, and a reference to the Vault key you picked in the serving config. This is a proxy model: no GPU, no serving config.
 
 ### URL
 
@@ -76,7 +76,7 @@ Point at any OpenAI-compatible endpoint you already run.
 | **Context window** | — | Tokens the model accepts, as a whole number. Agents compact their context against it. Blank uses 128K. |
 | **Display name** | — | e.g. `expert-pool`. |
 
-Registered with source `url`, engine `openai_compat`, and the endpoint (plus a reference to the Vault key, if you picked one) in the serving config. Also a proxy model — usable immediately.
+Registered with source `url`, engine `openai_compat`, and the endpoint (plus a reference to the Vault key, if you picked one) in the serving config. Also a proxy model, usable immediately.
 
 ### The key picker
 
@@ -92,7 +92,7 @@ A reference to a key that was removed later shows as **(missing)** until you pic
 
 ![A served model: its status, throughput and latency counters, deployment info, connected agents and model card](../../../../assets/screenshots/dev-models-detail.png)
 
-Deploying drops you on the model's detail page. The header shows the display name, a source badge, and a status pill — `Creating` (amber), `Serving` (green), `Stopped`, or `Error`; proxy models show a permanent `Proxy` pill. Next to the name, the pencil (**Rename**) edits it in place: press Enter or click away to save, Esc to cancel. Renaming needs the editor role or higher, an empty name is refused, and it changes only the display name. Action buttons live top-right: **Stop** / **Start** (or **Restart** after an error), **View job** (jumps to the serving job in the workload queue), and **Delete**. When a served model is up, a green **"Serving — ready to use"** banner offers to switch it on for an agent.
+Deploying drops you on the model's detail page. The header shows the display name, a source badge, and a status pill: `Creating` (amber), `Serving` (green), `Stopped`, or `Error`; proxy models show a permanent `Proxy` pill. Next to the name, the pencil (**Rename**) edits it in place: press Enter or click away to save, Esc to cancel. Renaming needs the editor role or higher, an empty name is refused, and it changes only the display name. Action buttons live top-right: **Stop** / **Start** (or **Restart** after an error), **View job** (jumps to the serving job in the workload queue), and **Delete**. When a served model is up, a green **"Serving — ready to use"** banner offers to switch it on for an agent.
 
 Up to six tabs:
 

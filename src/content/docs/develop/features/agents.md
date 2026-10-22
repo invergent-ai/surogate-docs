@@ -12,7 +12,7 @@ An agent bundles six things, configured through six tabs (five on enterprise ins
 
 | Tab | What lives here |
 |---|---|
-| **OVERVIEW** | Four 24h stat cards (requests, error rate, latency incl. p95, tokens) + four hourly bar charts, a Conversations card for the last 7 days (Sessions, Resolved, Flagged, Time worked), and the Connected skills/MCPs card. |
+| **OVERVIEW** | Four 24h stat cards (requests, error rate, latency incl. p95, tokens) + four hourly bar charts, a Conversations card for the last 7 days (Sessions, Resolved, Flagged, and Time worked when available), and the Connected skills/MCPs card. |
 | **KNOWLEDGE & TOOLS** | Attach / detach Skills, Knowledge Bases, MCP Servers; per-row DETACH; ATTACH dropdown. |
 | **USERS** | Per-agent end-user accounts. Add Web users, set passwords or SSO, manage display names. |
 | **CHANNELS** | Web (always on), Slack (credentials, threading, mentions), Telegram (Bot token, DM/group toggles), WhatsApp (access token, app secret, Business Account ID), Website widget (publishable key, allowed origins, embed code, session message cap). |

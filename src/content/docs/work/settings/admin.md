@@ -20,7 +20,7 @@ Each row has four actions: **Edit**, **Billing**, **Impersonate** and **Delete**
 
 - **Display name**, **Email**, **Title**, **Company** and **Bio** (180 characters at most). The username can't be changed. For a user who signs in through Firebase, changing the email here doesn't change it in Firebase.
 - **Transaction fee %**: Surogate's cut of each sale when this user [monetizes an agent](/work/monetize/). Leave it empty to use the platform default of 5%. Enter a number from 0 to 100, with up to two decimals.
-- **Roles**: toggle **Admin**, **Skill author**, **DevOps** and **Developer**.
+- **Roles**: toggle **Admin**, **Skill author**, **DevOps** and **Developer**. Removing **Admin** from the last admin is refused.
 - **Active**: clear it to switch the account off. The user keeps all their data but can't sign in. This is how you off-board someone, because deleting a user who owns projects is refused.
 - **Reset password**, on enterprise installations only. It issues a one-time password, shown once, and signs the user out everywhere. They must change it at next sign-in.
 
