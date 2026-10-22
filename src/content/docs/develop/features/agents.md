@@ -106,11 +106,11 @@ Always on. Endpoint: `https://<slug>.cloud.surogate.ai`. End-user accounts are m
 
 ### Slack
 
-Toggle ON, then paste the App ID, Signing Secret and Bot Token. Behaviour options: Require @mention (default ON), Allow Bots (`None` / `Mentions only` / `All`), Reply in Thread (default ON), Reply Broadcast (default OFF) and Free Response Channels (comma-separated channel IDs where no @mention is needed). See [Slack](/work/channels/slack/) for setup, scopes and Request URLs.
+Toggle ON, then paste the App ID, Signing Secret and Bot Token. Options: Require @mention (default ON), Mode (`Team member` / `Personal assistant`), Allow Bots (`None` / `Mentions only` / `All`), Reply in Thread (default ON), Reply Broadcast (default OFF) and Free Response Channels (comma-separated channel IDs where no @mention is needed). See [Slack](/work/channels/slack/) for setup, scopes and Request URLs.
 
 ### Telegram
 
-Toggle ON, paste Bot Token (`123456:ABC-DEF...`). DM-only vs allow-in-groups. Forum topic support. Media handling: photos, documents, audio and video arrive as attachments. Voice notes arrive as audio files the agent can't transcribe; there is no speech-to-text on this channel.
+Toggle ON, paste Bot Token (`123456:ABC-DEF...`). Options: Require @mention, Mode (`Team member` / `Personal assistant`), Reply Threading (`First chunk only` / `All chunks` / `Off`), Message Reactions, Per-User Group Sessions. Media handling: photos, documents, audio and video arrive as attachments. Voice notes arrive as audio files the agent can't transcribe; there is no speech-to-text on this channel.
 
 ### WhatsApp
 

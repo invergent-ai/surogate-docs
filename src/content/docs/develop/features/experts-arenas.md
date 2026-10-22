@@ -6,7 +6,7 @@ An **arena** is a supervised, multi-agent run: a *coordinator* agent drives a se
 
 For the conceptual model of experts and skills, see [Skills & experts](/develop/features/skills-and-experts/). This page describes the planned "where do I watch and steer a run" surface.
 
-:::note[Preview]
+:::note[Coming soon]
 Experts and arenas haven't shipped and aren't in Studio yet. There is no Arenas screen, and the Experts screen is hidden from Studio builds. This page describes the planned screens, so names, layout and controls may change before release.
 :::
 

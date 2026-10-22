@@ -88,11 +88,11 @@ Steps are shown on a vertical timeline grouped **Before**, **Day 0**, **Week 1**
 | **On these days** | The weekdays a repeating step fires on. |
 | **Send once per person** | Fires on the first matching day in the step's window, then never again for that person, even if re-enrolled. Not offered on a **Once** step with a single time. |
 
-Skipped, cancelled or failed sends don't count, so the next matching day tries again. A copy received as someone else's contact doesn't count as theirs. The timeline shows *once per person* on the step.
-
 | **At** | One or more local times. **Add a time** for twice a day. |
 | **Timezone** | People with their own zone get the step at this time in theirs. |
 | **Only some people** | Optional: **Only people in these stages** (a label you or the agent put on a person, comma-separated) and **Only if they have not written for** N days, for an "are you still there?" message. |
+
+Skipped, cancelled or failed sends don't count, so the next matching day tries again. A copy received as someone else's contact doesn't count as theirs. The timeline shows *once per person* on the step.
 
 **Channel & content**
 

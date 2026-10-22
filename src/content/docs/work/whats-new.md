@@ -10,7 +10,7 @@ Your agent can now talk to people on [Discord](/work/channels/discord/) and [Mic
 
 ### Office documents: more formats, comment mentions and templates
 
-- **Live editing for every format.** The agent now works alongside you in Word documents, spreadsheets, presentations and PDFs, not only Word. Its changes appear under its name as it makes them. See [what the agent can do live](/work/tools/office-documents/#what-the-agent-can-do-live).
+- **Live editing for Word, spreadsheets, presentations and PDFs.** The agent now works alongside you in Word documents, spreadsheets, presentations and PDFs, not only Word. Its changes appear under its name as it makes them. See [what the agent can do live](/work/tools/office-documents/#what-the-agent-can-do-live).
 - **Comment mentions.** @-mention the agent in a comment in an open document and it reaches the chat as your message. The agent answers in the comment thread and resolves it. See [Comment mentions](/work/tools/office-documents/#comment-mentions).
 - **Templates for new files.** New Word, spreadsheet and slide files start from built-in templates. PDFs have none. See [Templates for new files](/work/tools/office-documents/#templates-for-new-files).
 

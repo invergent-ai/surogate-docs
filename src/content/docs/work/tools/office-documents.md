@@ -28,7 +28,7 @@ While a document is open in the editor, the editor is the only thing that writes
 In a Word document (`.docx`), spreadsheet (`.xlsx`), presentation (`.pptx`) or PDF (`.pdf`), the agent works through its own editor session, alongside you:
 
 - **`office_read`** reads the document as it stands, with everyone's latest edits: an outline of its blocks (a spreadsheet's sheets, a presentation's slides, a PDF's pages), one block, range, slide or page in full, or a search for words, plus its comment threads and, in Word, tracked changes, and who else has it open.
-- **`office_edit`** changes it. Headings, lists and tables use the document's own styles.
+- **`office_edit`** changes it. In Word, headings, lists and tables use the document's own styles.
   - Word: insert, replace, re-word in place keeping the formatting, delete or move blocks, and add comments. It can also add charts (bar, column, line, pie and more) and images from the workspace, and plant placeholder sections that say what will go there before filling them in one by one.
   - Spreadsheet: sets cells, formulas and formats, adds charts and manages sheets.
   - Presentation: writes slides and speaker notes.
