@@ -96,13 +96,13 @@ Open the agent → **Publish** → **Channels** → the **Web chat & API** row u
 
 ### Connection
 
-Once the agent is deployed and running, **Connection** shows three values, each with a **Copy** button:
+**Connection** shows three values, each with a **Copy** button:
 
 - **Base URL**: `https://<agent-slug>.cloud.surogate.ai/v1/api`.
 - **Model**: the agent's name.
 - **Python**: a ready snippet that uses the `openai` package with that base URL and model, sends "Hello" and prints the reply. Replace `YOUR_KEY` with a key from below.
 
-Until the agent is running, this card says the endpoint becomes available once the agent is deployed and running.
+Requests get an answer only while the agent is running. A stopped agent refuses them (HTTP 503) until you start it again.
 
 ### Keys
 

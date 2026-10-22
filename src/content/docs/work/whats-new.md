@@ -24,7 +24,7 @@ Every project member now has a role, Viewer, Editor or Owner, that decides what 
 
 ### Now documented
 
-Two earlier features now have their own pages: [voice](/work/channels/voice/) and [API access for web chat](/work/channels/web/#api-access).
+Two earlier features are now documented: [voice](/work/channels/voice/) and [API access for web chat](/work/channels/web/#api-access).
 
 ## October 14, 2026: Surogate 1.14.10 (runtime 2.18.1)
 

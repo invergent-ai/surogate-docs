@@ -20,7 +20,7 @@ The words this page uses:
 ## Before you start
 
 1. **Turn the capability on**: **Configure → Capabilities → Programs**. It is off by default because Programs message real people. While any step is active, turning it off is refused; pause the journeys first.
-2. **Connect a channel the agent can write first on**: WhatsApp, Slack, Telegram, or [Voice](/work/channels/voice/) with an outbound line. Web chat and your own app through the [Programs API](/work/tools/programs-api/) also count. See [How each channel reaches people](#how-each-channel-reaches-people).
+2. **Connect a channel the agent can write first on**: WhatsApp, Slack, Telegram, or Voice with an outbound line. Web chat and your own app through the [Programs API](/work/tools/programs-api/) also count. See [How each channel reaches people](#how-each-channel-reaches-people).
 3. **On WhatsApp, have an approved template.** Outside its 24-hour window WhatsApp opens a chat only with a text Meta approved. Register one under **Publish → Channels**: open the **WhatsApp** row under **Live**, then **Templates**; see [Templates](/work/channels/whatsapp/#templates-the-opener).
 4. **Attach a skill with the instructions.** An ordinary [skill](/work/library/skills/) on the agent: what to ask, what counts as done, when to alert the team. A step names the skill it follows.
 5. **Add yourself to the team** under the **Team** tab, so a test send has somewhere to go and escalations reach someone.
@@ -254,7 +254,7 @@ General settings first, then each channel:
 | **WhatsApp** | Yes | Outside the 24-hour window only an approved template can open the chat; inside it the agent writes freely. Templates can carry quick-reply buttons and a **form button** that opens a native WhatsApp form. Reports delivered and read. See [WhatsApp](/work/channels/whatsapp/). |
 | **Slack** | Yes | A direct message from the agent's Slack app, at any time; no templates. Needs **Personal assistant** mode. See [Slack](/work/channels/slack/#programs-on-slack). |
 | **Telegram** | Yes, once they started the bot | The agent can write only to someone who pressed **Start**; a start link does that. No templates. See [Telegram](/work/channels/telegram/). |
-| [**Voice**](/work/channels/voice/) | Yes, as a phone call | A step on Voice is a call from the agent's number: the agent talks it through and what they say is recorded like a reply. Busy, no answer or declined counts as failed, so the step moves to the next channel. Quiet hours apply to people; an urgent alert can ring a team member at any hour. Needs an outbound line on the number. |
+| **Voice** | Yes, as a phone call | A step on Voice is a call from the agent's number: the agent talks it through and what they say is recorded like a reply. Busy, no answer or declined counts as failed, so the step moves to the next channel. Quiet hours apply to people; an urgent alert can ring a team member at any hour. Needs an outbound line on the number. |
 | **Web chat** | Waits for their visit | A due step waits in the person's web chat and shows on their next visit. With **Browser notifications** on (Settings → Channels, when the platform has push set up), people who allowed notifications are told in their browser. |
 | **Your app (API)** | Through your webhook | Steps for people you reach in your own app go to your webhook, and your app reports delivery and replies back. See [Programs API](/work/tools/programs-api/). |
 | **Website widget** | No | Its visitors are anonymous, so there is no one to write to. |
