@@ -14,15 +14,19 @@ On Linux (Ubuntu 24.04 LTS or a later LTS release, 64-bit Intel or AMD), run:
 curl -fsSL https://surogate.ai/desktop/install.sh | bash
 ```
 
-Then open Surogate from your applications. [Sign in](#sign-in) and start a chat on a folder (see [Working on a folder](#working-on-a-folder)).
+The script asks for `sudo` once. Then open Surogate from your applications. [Sign in](#sign-in) and start a chat on a folder (see [Working on a folder](#working-on-a-folder)).
 
 Options go after `bash -s --`, as in `curl -fsSL https://surogate.ai/desktop/install.sh | bash -s -- --uninstall`:
 
 - `--version <x.y.z>` installs that release, to go back to an earlier one.
 - `--uninstall` removes Surogate Desktop. It asks before it deletes your sign-in and the agent's browser profiles. Your folders are never touched.
-- `--ca-cert <file>` makes Surogate Desktop, the agent's browser and its commands trust your company's certificate authority (a PEM file). Use it if your network inspects encrypted traffic.
+- `--ca-cert <file>` makes Surogate Desktop, the agent's browser and its commands trust your company's certificate authority (a PEM file). Use it if your network inspects encrypted traffic. Give the file to `curl` as well:
 
-macOS (Apple Silicon) and Windows versions are coming soon. Their downloads are not published yet.
+  ```bash
+  curl --cacert company-ca.pem -fsSL https://surogate.ai/desktop/install.sh | bash -s -- --ca-cert company-ca.pem
+  ```
+
+Today Surogate Desktop is available for Linux. macOS and Windows builds aren't published yet.
 
 Surogate Desktop checks for updates when it starts and every 6 hours. When one is ready, the sidebar says **Update available** and **Restart to update** installs it. An administrator on the computer has to approve the install. Without one, the sidebar says "An administrator needs to install this update."
 
@@ -38,9 +42,11 @@ Point a chat at a folder and the agent reads, writes and organizes the files in 
 
 ## Working on a folder
 
-Start a new chat in the app. When you send the first message, Surogate shows a sheet, **Work in** the folder, where you:
+Start a new chat in the app. When the agent lets chats work on folders of a computer and has **Multi session** on (see [Capabilities](/work/workflow/configure-agent/#capabilities)), the line under the composer says the chat works in a folder on this computer. **Choose another folder** and **Use the last folder** on that line switch between picking a folder and the one you used last. Otherwise the line says why, and the chat works in the cloud.
 
-1. Check the folder, or press **Change…** to pick another. The line under the composer says whether it offers the folder you used last.
+When you send the first message, Surogate shows a sheet, **Work in** the folder, where you:
+
+1. Check the folder, or press **Change…** to pick another.
 2. Choose how it works: **Work freely** or **Ask every time** (see [Approvals](#approvals)).
 3. Press **Use this folder**.
 
@@ -73,7 +79,7 @@ In **Ask every time**, reading never asks: looking at files, listing folders, se
 
 Two things ask in both modes:
 
-- **Network access.** Commands reach the package registries they need. Any other site, your local network included, asks. **Allow** covers the connections waiting now; later ones ask again. **Allow all its ports for this chat** lets that site through on every port for the rest of the chat. In the browser's prompt, **Allow for this chat** does the same for the browser.
+- **Network access.** Commands reach the package registries they need, and the computer's own services stay out of reach of both the commands and the browser. Any other site, your local network included, asks. **Allow** covers the connections waiting now; later ones ask again. **Allow all its ports for this chat** lets that site through on every port for the rest of the chat. In the browser's prompt, **Allow for this chat** does the same for the browser.
 - **The browser.** The first time a chat uses your browser, and each time it would open a port of the chat's own web app in it.
 
 In **Ask every time**, every action the agent takes on a page asks too: opening an address, running a script, clicking, typing, dragging, uploading a file, and downloads. Reading the page does not.
@@ -103,7 +109,7 @@ Quit the app and the computer goes away too. To keep it available, leave **Keep 
 In the agent's web app, open **Settings** and the **Devices** tab. It shows only for an agent that lets chats work on folders of a computer.
 
 - **Computers** lists each computer that can work on folders through this agent, with when it was added, reauthorized and last seen. **Revoke** stops it at once and cancels what it was doing. Its chats say **Local access revoked** until you restore the computer in Surogate on that computer.
-- **Surogate Desktop sign-ins** lists each sign-in with **End**, which signs that Surogate Desktop out. It shows only for a sign-in made in the last 10 minutes; otherwise it asks you to sign in again.
+- **Surogate Desktop sign-ins** lists each sign-in with **End**, which signs that Surogate Desktop out. You see the list only when your own sign-in to the web app is less than 10 minutes old; otherwise it asks you to sign in again.
 
 When a computer is added or reauthorized, a banner in the web app says "`<computer>` can now work on folders of your computer through `<agent>`" for 7 days. **Review** opens the Devices tab. Dismissing the banner hides it in that browser only.
 
@@ -112,7 +118,7 @@ When a computer is added or reauthorized, a banner in the web app says "`<comput
 - **Tray.** The tray menu has **Show Surogate**, **Quick entry**, the computer's name, **Settings…** and **Quit Surogate**.
 - **Quick entry.** A small window to start a new chat from anywhere. On Linux the shortcut is Ctrl+Alt+Space in an X11 session. In a Wayland session there is no shortcut: open it from the tray.
 - **Notifications.** When Surogate's window is hidden or behind another app, it notifies you of new items in your inbox, of a chat that finished, and when it needs an answer ("Surogate is asking you something"). Clicking one opens that chat. A flood of them becomes one notice that opens the inbox.
-- **Settings.** Appearance, **Start at login**, **Keep running when the window is closed**, **Developer mode**, your account, **This computer** (name, connection, sandbox) and **Browser**.
+- **Settings.** Appearance, **Start at login**, **Keep running when the window is closed**, **Developer mode**, your account, **This computer** (name, connection, sandbox), **Browser** and **Folders and permissions**. **Folders and permissions** lists each folder chats work on and each chat on it, with its mode, the sites it may reach, its use of the browser, the ports of its own servers the browser may open and its background processes. **Take back** withdraws an allowance and **Stop** ends a process.
 - **Uninstall.** See the options under [Get it](#get-it).
 
 ## Limits and good to know
