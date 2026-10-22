@@ -45,7 +45,7 @@ Templates ship without your team's content, so the agent doesn't know your produ
 
 ## 3. Publish to Slack
 
-Click **Publish** in the left nav, then open the **Channels** tab. Find the **Slack** card and click **Connect** — a guided wizard walks you through it.
+Click **Publish** in the left nav, then open the **Channels** tab. Find **Slack** under **Add a channel** and click **Connect** — a guided wizard walks you through it.
 
 ![The Channels tab with Web and Slack active, and Telegram, WhatsApp and Website ready to connect](../../../assets/screenshots/work-publish-channels.png)
 
@@ -56,7 +56,7 @@ The wizard asks for your Slack credentials:
 
 Don't have a Slack app yet? Create one at [api.slack.com/apps](https://api.slack.com/apps) → enable **Socket Mode** → add bot scopes (`chat:write`, `app_mentions:read`, `im:read`, `im:write`, `channels:history`, `groups:history`, `users:read`) → install to your workspace.
 
-Finish the wizard and the card flips to **Active** within a few seconds. DM the bot or `@mention` it in a channel.
+Finish the wizard and Slack moves to the **Live** list within a few seconds. DM the bot or `@mention` it in a channel.
 
 ## 4. Make it smarter (optional but worth it)
 

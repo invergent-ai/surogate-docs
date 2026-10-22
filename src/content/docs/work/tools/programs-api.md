@@ -6,7 +6,7 @@ Your own software can work with an agent's [Programs](/work/tools/programs/): en
 
 ## Keys and access
 
-The Programs API uses the agent's own API keys, the same ones its OpenAI-compatible API takes. Open the agent → **Publish** → **Channels** → the Web card → **Manage API access**. Create a key there if you have none (it is shown once), then scroll to **Programs API**:
+The Programs API uses the agent's own API keys, the same ones its OpenAI-compatible API takes. Open the agent → **Publish** → **Channels** → the **Web chat & API** row under **Live** → **API access**. Create a key there if you have none (it is shown once), then scroll to **Programs API**:
 
 - **Endpoint** shows the **Base URL**, `https://<your Studio host>/api/v1/agents/<agentId>`, and a `curl` example.
 - **What each key may do** sets, per key: **No access to journeys**, **Read people, steps and escalations** (`journeys:read`), or **Read, enroll and change people** (`journeys:write`, which includes read). A key with no access keeps working on the chat API only.
@@ -23,7 +23,7 @@ curl https://<your Studio host>/api/v1/agents/<agentId>/journeys \
 |---|---|
 | `401` | No key, or not a valid key. |
 | `404` | The agent does not exist, or the key belongs to another agent. |
-| `403` | The key lacks the scope; grant it under **Manage API access**. |
+| `403` | The key lacks the scope; grant it under **API access**. |
 
 ## Naming a person
 
@@ -102,7 +102,7 @@ Each step sent (one per recipient) reads:
 
 ## Webhook
 
-Under **Manage API access → Programs API → Webhook**, give an HTTPS **URL** on a public address, tick the **Events** you want (all by default), and **Turn on the webhook**. The **signing secret** (`whsec_…`) is shown **once**, in that response; copy it before you click **I've saved it**. Afterwards you can **Send a test** (a `ping` event), **Rotate secret** (the old one stops signing at once), untick **Send events** to pause, or **Remove** it. **Recent deliveries** lists each post with its status, HTTP answer and tries; a failed one has **Retry now** (except a `message.deliver`, which has already gone to the person another way).
+Under **Web chat & API → API access → Programs API → Webhook**, give an HTTPS **URL** on a public address, tick the **Events** you want (all by default), and **Turn on the webhook**. The **signing secret** (`whsec_…`) is shown **once**, in that response; copy it before you click **I've saved it**. Afterwards you can **Send a test** (a `ping` event), **Rotate secret** (the old one stops signing at once), untick **Send events** to pause, or **Remove** it. **Recent deliveries** lists each post with its status, HTTP answer and tries; a failed one has **Retry now** (except a `message.deliver`, which has already gone to the person another way).
 
 | Event | Sent when |
 |---|---|

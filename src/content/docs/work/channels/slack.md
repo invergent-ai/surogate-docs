@@ -10,7 +10,7 @@ Surogate connects to Slack over **webhooks** (Event Subscriptions), not Socket M
 
 ## Configuration in Surogate
 
-Open the agent → **Publish** in the left nav → the **Channels** tab → find the **Slack** card → **Connect**. That opens a step-by-step walkthrough:
+Open the agent → **Publish** in the left nav → the **Channels** tab → find **Slack** under **Add a channel** → **Connect**. That opens a step-by-step walkthrough:
 
 1. **Create a Slack app** at [api.slack.com/apps](https://api.slack.com/apps) → *Create New App* → *From scratch*.
 2. **Add Bot Token Scopes** (OAuth & Permissions → Bot Token Scopes):
@@ -30,7 +30,7 @@ Click **Connect Slack**. There is no separate save button — the connect step a
 
 ![The Slack Manage screen: mention, mode, bot, threading and free-response-channel options](../../../../assets/screenshots/work-channel-slack-options.png)
 
-Once connected, the Slack card shows **Manage**. The options there auto-save as you change them:
+Once connected, Slack moves to the **Live** list. Click its row to manage it. The options there auto-save as you change them:
 
 | Option | What it does |
 |---|---|
