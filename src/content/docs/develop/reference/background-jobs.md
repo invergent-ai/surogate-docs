@@ -72,7 +72,7 @@ The runtime schedules several sweepers (as Kubernetes CronJobs or long-running l
 | Board maintenance | ~5 min | Expires lapsed board claims and purges old/orphaned notes. See [Coordination & the board](/develop/reference/coordination/#lifecycle) |
 | Inbox expiry | ~5 min | Marks pending inbox items non-actionable once their owning session is terminal |
 | Platform workspace cleanup | ~6 h | Iterates every agent and deletes orphaned session-workspace prefixes in object storage |
-| Browser reaper | ~15 s | Probes each agent browser in the registry. One that fails two sweeps in a row is pruned and its session gets `browser.destroyed`. It never destroys containers, and browsers younger than 30 s are skipped |
+| Browser reaper | ~15 s | Probes each agent browser; two failed probes in a row prune it and emit `browser.destroyed`. Skips browsers under 30 s old; never destroys containers |
 | Device transfers | ~5 min | Deletes device transfers nothing will read again, and a user's own computer requests once they have been closed for a while |
 | Office saves | ~2 s | Lands saves from the document editor, and about once a minute closes editing sessions that were never opened or whose chats are gone. Runs only when the office feature is enabled |
 | Training collector | on demand | Exports successful expert-delegation and skill-invocation trajectories from the event log as JSONL to the tenant bucket, for external fine-tuning |

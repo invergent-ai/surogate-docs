@@ -2,11 +2,13 @@
 title: Tool catalog
 ---
 
-Every built-in tool an agent can call. These are the names the Governance policy accepts in **Allowed tools / Denied tools**, except the tools listed in the paragraph after the coordination note below. The catalog mirrors the runtime's tool registry, which is the source of truth, and unknown names are rejected on save. (`execute_code` and `web_crawl` are not tools; the shell entry point is `terminal`.)
+Every built-in tool an agent can call. These are the names the Governance policy accepts in **Allowed tools / Denied tools**, except the tools in [Tools you can't add to a list](#tools-you-cant-add-to-a-list). The catalog mirrors the runtime's tool registry, which is the source of truth, and unknown names are rejected on save. (`execute_code` and `web_crawl` are not tools; the shell entry point is `terminal`.)
 
 You don't pick which tool the agent uses for a given turn — the agent does. You decide which tools to **expose**.
 
 The coordination self-tools (`worker_complete`, `worker_block`, `worker_context`, `share_note`, `read_board`, `expand_note`, `unblock_task`, `cancel_task`) are listed below for completeness but are **not configurable** in the allow/deny lists — denying them could strand blocked work, so the policy API refuses them.
+
+### Tools you can't add to a list
 
 Some tools can't be added to an agent's allow or deny list. The project thread tools (`start_thread`, `message_thread`, `stop_thread`, `list_threads`, `read_thread`, `resolve_thread`, `propose_threads`) are always available to a project's coordinator. `end_call` is always available on a phone call, and an allowlist doesn't block it. `whiteboard_draw`, `browser_upload_file`, `office_read` and `office_edit` can't be named in either list, so an agent that uses an allowlist doesn't get them.
 

@@ -20,7 +20,7 @@ A journey step has a new **Send once per person** checkbox in its **When** secti
 
 ### The copilot answers from the docs
 
-The [copilot](/work/tools/copilot/#asking-the-docs) now searches the documentation, reads the text of the matching section, and opens its own build guides when it builds an agent, skill or knowledge base, instead of answering from memory.
+The [copilot](/work/tools/copilot/#asking-the-docs) now answers from the product documentation and opens its own build guides when it builds something.
 
 ### Project roles
 

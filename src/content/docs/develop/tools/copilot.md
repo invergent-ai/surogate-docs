@@ -10,7 +10,7 @@ This chapter covers what builders should know that operators don't need: where i
 
 ![The Surogate Copilot panel](../../../../assets/screenshots/work-copilot-panel.png)
 
-It exposes the platform's tools as natural-language commands. Instead of clicking through CONFIG / KNOWLEDGE & TOOLS / channels, you describe what you want and the Copilot calls the corresponding tools. There are 116 of them, served by the ops MCP server `surogate-ops-copilot` at `/api/copilot/mcp`. The Copilot's agent definition allowlists exactly those tools, so anything not listed there is invisible to it. The areas, with the main tools in each:
+It exposes the platform's tools as natural-language commands. Instead of clicking through CONFIG / KNOWLEDGE & TOOLS / channels, you describe what you want and the Copilot calls the corresponding tools. There are over 100 of them (served by the ops MCP server at `/api/copilot/mcp`). The Copilot's agent definition lists exactly the tools below, and a tool not on that list is not shown to the model. The areas, with the main tools in each:
 
 | Area | Main tools |
 |---|---|

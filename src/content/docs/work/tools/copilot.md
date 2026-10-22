@@ -41,7 +41,12 @@ You can ask it how the platform works: *"What does the Compute page do?"* It loo
 
 ## Programs, people and the team
 
-The Copilot can run an agent's [Programs](/work/tools/programs/) for you: list and build journeys and their steps, review a journey and dry-run it, send a test, activate or pause it, read its stats, and register WhatsApp templates. It can find and add people, make a Telegram start link, enrol people, change their follow-up, link their contacts, read their timeline and message them; set up the team (what each member gets told about, can do and handles, and a Slack channel picked from the workspace as its shared alert place), change the wording and channels on Settings, and claim or resolve escalations. It also reads and answers your Inbox, reads an agent's Insights, manages the plans on Monetize, and builds the agent's [landing page](/work/workflow/landing-page/), including formatted text and image framing.
+The Copilot works across these areas:
+
+- **Programs:** run an agent's [Programs](/work/tools/programs/). List and build journeys and their steps, review a journey and dry-run it, send a test, activate or pause it, read its stats, and register WhatsApp templates.
+- **People:** find and add people, make a Telegram start link, enrol people, change their follow-up, link their contacts, read their timeline and message them.
+- **Team:** set up the team (what each member gets told about, can do and handles, and a Slack channel picked from the workspace as its shared alert place), change the wording and channels on Settings, and claim or resolve escalations.
+- **Also:** read and answer your Inbox, read an agent's Insights, manage the plans on Monetize, and build the agent's [landing page](/work/workflow/landing-page/), including formatted text and image framing.
 
 It knows what you are looking at: on the Programs page it is told which tab, journey and person you have open, so *"why didn't this step go out?"* needs no further context.
 
@@ -51,25 +56,16 @@ Activating a journey, sending a test, enrolling, messaging a person and changing
 
 ## How it asks before acting
 
-It asks with a question in the chat and waits for your answer. Its instructions tell it to ask first for:
+It asks with a question in the chat and waits for your answer before it:
 
-- starting training, deploying a model and compiling a knowledge base (they cost GPU time or model usage);
-- any delete, naming the resource it is about to delete;
-- scaling an agent to more replicas, and starting an agent that is in the `error` state;
-- changing an agent's environment variables, its policy or its browser setting;
-- connecting an MCP server that runs a command on the runtime;
-- overwriting a skill or sub-agent that already has that name.
+- spends GPU time or model usage (training, deploying a model, compiling a knowledge base), deletes anything, scales an agent up, or changes an agent's environment variables, policy or browser setting;
+- overwrites a skill or sub-agent that already has that name, or connects an MCP server that runs a command on the runtime.
 
 Building a new thing inside a plan you approved does not ask again. The plan was the yes.
 
-Anything that reaches real people or real money is stricter. The tool itself refuses to run until the Copilot calls it again with an explicit confirmation, which its instructions allow only after you say yes to that exact action. A yes to the plan does not cover it. That covers:
+Anything that reaches real people or real money is stricter: activating a journey, sending a test, enrolling or messaging a person, changing the team, and changing plans on Monetize. The tool itself refuses to run until the Copilot calls it again with an explicit confirmation, which its instructions allow only after you say yes to that exact action. A yes to the plan does not cover it.
 
-- activating or pausing a journey, deleting a journey or a step, sending a test, and registering a WhatsApp template;
-- enrolling a person, changing their status, changing their contacts, and messaging them (you approve the exact text);
-- changing the team and the Programs settings;
-- creating, changing or deleting a plan on Monetize, and changing the selling mode.
-
-Governance approvals in the Inbox are never the Copilot's to decide. It sends you to the Inbox page.
+Governance approvals in the Inbox are never the Copilot's to decide. It sends you to the Inbox page. For the exact tools and how each check works, see [Develop mode → Copilot](/develop/tools/copilot/#how-it-asks-before-acting).
 
 ## Conversation history
 
