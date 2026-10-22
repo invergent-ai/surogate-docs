@@ -87,7 +87,7 @@ Recommended starting points:
 
 | Agent type | Allow | Deny |
 |---|---|---|
-| Customer support | `web_search`, `kb_list_pages`, `kb_read_page`, `memory`, `ask_user_question`, `create_artifact` | `terminal`, `process`, `run_coding_agent`, `write_file`, `patch` |
+| Customer support | `web_search`, `kb_search_pages`, `kb_list_pages`, `kb_read_page`, `memory`, `ask_user_question`, `create_artifact` | `terminal`, `process`, `run_coding_agent`, `write_file`, `patch` |
 | Data analyst | All (default) | `cron_*` if no scheduling needed |
 | Code reviewer | `read_file`, `search_files`, `list_files`, `web_search` | `write_file`, `patch`, `terminal` |
 | Internal admin bot | Denylist only — agent needs broad access | Targeted denies (e.g. `delete_*` tools) |

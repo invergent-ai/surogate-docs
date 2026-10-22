@@ -2,11 +2,13 @@
 title: Tool catalog
 ---
 
-Every built-in tool an agent can call. These are exactly the names the Governance policy accepts in **Allowed tools / Denied tools**. The catalog mirrors the runtime's tool registry, which is the source of truth, and unknown names are rejected on save. (`execute_code` and `web_crawl` are not tools; the shell entry point is `terminal`.)
+Every built-in tool an agent can call. These are the names the Governance policy accepts in **Allowed tools / Denied tools**, except the tools marked below as offered only in a particular setting. The catalog mirrors the runtime's tool registry, which is the source of truth, and unknown names are rejected on save. (`execute_code` and `web_crawl` are not tools; the shell entry point is `terminal`.)
 
 You don't pick which tool the agent uses for a given turn — the agent does. You decide which tools to **expose**.
 
 The coordination self-tools (`worker_complete`, `worker_block`, `worker_context`, `share_note`, `read_board`, `expand_note`, `unblock_task`, `cancel_task`) are listed below for completeness but are **not configurable** in the allow/deny lists — denying them could strand blocked work, so the policy API refuses them.
+
+The project thread tools (`start_thread`, `message_thread`, `stop_thread`, `list_threads`, `read_thread`, `resolve_thread`, `propose_threads`) are protected in the same way. `end_call` is offered on phone calls only: an allowlist admits it automatically and a denylist can still block it at runtime, but the policy API does not list its name. The policy API also does not list `whiteboard_draw`, `browser_upload_file`, `office_read` or `office_edit`, so they cannot be named in either list, and an allowlist does not admit them.
 
 ## File I/O
 
@@ -45,6 +47,7 @@ Session-scoped browser. Supports **user-control handoff** for login / MFA / CAPT
 | `browser_evaluate` | Run JavaScript in the page and return its value — a whole table, a hidden input, every option of a `<select>` in one call |
 | `browser_click`, `browser_type`, `browser_press_key` | Interact |
 | `browser_scroll`, `browser_drag`, `browser_wait` | Navigate / wait |
+| `browser_upload_file` | Give files from the chat's folder to the page's file input (up to 10). Click the upload button or the file input first. Offered only in a Surogate Desktop chat on a folder of the user's computer, not in cloud sessions |
 | `browser_screenshot` | Save PNG to workspace |
 | `browser_close` | Close the session's browser |
 
@@ -79,13 +82,17 @@ Availability: each tool is **dropped from the agent's toolset entirely** when no
 | `skill_view` | Read a specific skill's body |
 | `skill_manage` | Create / update / delete skills from inside a session |
 | `consult_expert` | Delegate to a configured expert (model-backed skill) |
+| `skill_step` | Mark where the agent is in a numbered procedure skill: `started`, `completed` or `skipped` for a step id such as `s3`. It only records the step, which the skill's path replay shows. Offered only when an attached skill has a procedure graph, even if an allowlist predates the skill |
 
 ## Knowledge base
 
 | Tool | Use for |
 |---|---|
+| `kb_search_pages` | Hybrid search (keywords plus meaning) across the agent's attached knowledge bases. Returns ranked source and wiki passages with their KB, path and title; the agent reads the best hits with `kb_read_page`. Falls back to keyword matching if the embedding provider is down |
 | `kb_list_pages` | List all pages in a knowledge base, grouped by page type (index / summary / concept) |
 | `kb_read_page` | Read the full markdown content of a single wiki page |
+
+Offered only when the agent has a knowledge base attached (and the plan includes knowledge bases).
 
 ## Channel history
 
@@ -95,6 +102,18 @@ Availability: each tool is **dropped from the agent's toolset entirely** when no
 | `fetch_channel_file` | Fetch a file shared in this Slack channel (by name or Slack file id) into the workspace |
 
 Both are **Slack-only**: on a session whose effective channel isn't Slack (Telegram, WhatsApp, website, web) they return an error rather than a result, so allow-listing them on a non-Slack agent buys nothing. Ambient sessions count as Slack. Inbound attachments on the other channels still reach the workspace through the normal attachment path.
+
+## Phone calls
+
+| Tool | Use for |
+|---|---|
+| `end_call` | End the phone call once the caller says goodbye or the conversation is finished; the agent says one short goodbye first and the call hangs up when it has been spoken. Offered only on voice calls |
+
+## Whiteboard
+
+| Tool | Use for |
+|---|---|
+| `whiteboard_draw` | Draw on the shared whiteboard canvas: text, formulas, simple sketches, filling an empty box the user drew, or placing an artifact. Offered only in whiteboard sessions of an agent with the whiteboard enabled |
 
 ## Programs
 
@@ -157,6 +176,20 @@ Ambient channel:
 | Tool | Use for |
 |---|---|
 | `mate_ambient_post` | Post a proactive, confidence-gated message into the channel during an ambient review (Surogate Mate) |
+
+Project threads (a project's coordinator only; see below):
+
+| Tool | Use for |
+|---|---|
+| `start_thread` | Start a thread: a separate agent session that does one piece of the project's work in its own workspace and reports back. Returns at once |
+| `message_thread` | Send a follow-up to a thread; a finished thread runs again with what it already knows |
+| `stop_thread` | Stop a working thread; a follow-up starts it again |
+| `list_threads` | List the project's threads with where each stands and its status line |
+| `read_thread` | Read a thread's latest report, its files and any question it waits on the user to answer |
+| `resolve_thread` | Mark a thread's work done; it moves to Resolved. A follow-up reopens it |
+| `propose_threads` | Propose threads for the user to start instead of starting them, including work on the user's computer, which only the user can start |
+
+Only a project's coordinator is offered the thread tools. Threads themselves and ordinary chats are not.
 
 Hard depth limit: 2 levels of orchestration beneath the root coordinator.
 
@@ -228,7 +261,7 @@ Lists take **exact tool names** — there is no prefix or wildcard matching. Com
 
 | Agent type | Suggested |
 |---|---|
-| Customer support | Allow: `kb_list_pages`, `kb_read_page`, `web_search`, `ask_user_question`, `create_artifact`, `memory`. Deny: `terminal`, `write_file`, `patch` |
+| Customer support | Allow: `kb_search_pages`, `kb_list_pages`, `kb_read_page`, `web_search`, `ask_user_question`, `create_artifact`, `memory`. Deny: `terminal`, `write_file`, `patch` |
 | Code assistant | Allow: read tools + `web_search` + `github`. Deny: `write_file`, `patch`, `terminal` |
 | Data analyst | Allow everything. Deny: `cron_create`, `cron_delete`, `cron_list` if no scheduling |
 | Internal automation bot | Start with denylist only, gate the dangerous ones explicitly |

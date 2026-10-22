@@ -37,7 +37,7 @@ Each agent has an allowlist of built-in tools set in its CONFIG tab:
 
 | Tool | Purpose |
 |---|---|
-| `kb_list_pages`, `kb_read_page` | Browse and read any KB attached to this agent |
+| `kb_search_pages`, `kb_list_pages`, `kb_read_page` | Search, browse and read any KB attached to this agent |
 | `web_search`, `web_extract` | Public web research (Tavily / Exa) |
 | `read_file`, `write_file`, `patch` | Read and modify workspace files |
 | `terminal`, `process` | Shell + code execution in the isolated sandbox |

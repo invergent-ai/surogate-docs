@@ -73,7 +73,7 @@ In Develop mode, with the agent selected, open the **KNOWLEDGE & TOOLS** tab in 
 
 Then open the **CONFIG** tab → **Tool Access** section:
 
-- **Allowed**: `kb_list_pages`, `kb_read_page`, `read_file`, `web_search`, `create_artifact`
+- **Allowed**: `kb_search_pages`, `kb_list_pages`, `kb_read_page`, `read_file`, `web_search`, `create_artifact`
 - **Denied**: `terminal`, `process`, `run_coding_agent`, `write_file`, `patch` (this agent shouldn't be running code)
 
 Open **CONFIG** → **SOUL.md**:
@@ -107,7 +107,7 @@ Click **CHAT** → paste an incident description:
 Confirm in the EVENTS tab:
 
 - The skill triggered (you'll see `skill.invoked` for `triage-incident`)
-- `kb_list_pages` / `kb_read_page` fired against `incident-runbooks`
+- `kb_search_pages` / `kb_read_page` fired against `incident-runbooks`
 - The response is structured JSON + a runbook reference
 
 If not, check SKILLS tab — did the skill load? Are the triggers specific enough? Iterate.
