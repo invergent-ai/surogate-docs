@@ -2,7 +2,7 @@
 title: Tool catalog
 ---
 
-Every built-in tool an agent can call. These are exactly the names the Governance policy accepts in **Allowed tools / Denied tools** — the catalog is generated from the runtime's real tool registry, and unknown names are rejected on save. (`execute_code` and `web_crawl` are not tools; the shell entry point is `terminal`.)
+Every built-in tool an agent can call. These are exactly the names the Governance policy accepts in **Allowed tools / Denied tools**. The catalog mirrors the runtime's tool registry, which is the source of truth, and unknown names are rejected on save. (`execute_code` and `web_crawl` are not tools; the shell entry point is `terminal`.)
 
 You don't pick which tool the agent uses for a given turn — the agent does. You decide which tools to **expose**.
 

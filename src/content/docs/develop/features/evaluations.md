@@ -77,7 +77,7 @@ Pick the benchmark(s). You can select multiple to run in batch.
 
 ### Step 2 — Configure
 
-- **Target**: what's being evaluated, either a **Model**, an **Agent**, or an **Adapter**. **Adapter** scores a LoRA adapter you trained, without you deploying it first. The run sets up a temporary base-plus-adapter deployment for its own use. A training run's **Evaluate** button opens this wizard with that run's adapter already selected.
+- **Target**: what's being evaluated, either a **Model**, an **Agent**, or an **Adapter**. **Adapter** scores a LoRA adapter you trained without deploying it first (the run sets up a temporary deployment). A training run's **Evaluate** button preselects its adapter.
 - **Compare model** — an optional second target. Set one and the run scores both, and the report gains per-subset deltas between them. See [A/B evaluation](#side-by-side-ab-evaluation).
 - **Judge LLM** — if the benchmark uses an LLM judge (most do for subjective metrics):
   - **External** — OpenRouter / Anthropic / OpenAI / your endpoint, with a base URL and an API key.
@@ -122,9 +122,7 @@ A finished run can be exported as a standalone report via `GET /api/eval-runs/{i
 
 ## Leaderboard
 
-The **Leaderboard** button at the top of the Evaluations page opens the same view: the latest score per model on each benchmark, across the project's completed evaluations. The button appears once the project has at least one run.
-
-`GET /api/leaderboard` aggregates completed eval runs across the project (or a single project scope) into a ranked view, so you can see how each model/agent stacks up on the benchmarks you've run without opening each run individually.
+The **Leaderboard** button (shown once the project has a run) opens the latest score per model on each benchmark across completed evaluations; the same data is at `GET /api/leaderboard`.
 
 ## Side-by-side: A/B evaluation
 

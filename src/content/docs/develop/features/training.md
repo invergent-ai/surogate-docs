@@ -43,7 +43,7 @@ anything else is refused when you press Start, before any instance is
 provisioned, and Studio says so under the compute picker as soon as you select
 it. Serving and evaluations are not restricted this way.
 
-**Full fine-tune is the Enable LoRA toggle turned off.** On the new-run form the **Adapter** switch (**LoRA** or **Full**) does the same for SFT and DISTILL, and LoRA is the default. On the run's **Configuration** tab it is the **Enable LoRA** toggle in the LoRA section; with it off, the rank, alpha, dropout and target-module controls dim, because they only apply to an adapter. The choice is stored as `lora` in the run's free-form `config` dict alongside the rest of the trainer settings, so the launcher can pass it straight through to the trainer. DPO has no such switch and GRPO's is locked on (both below).
+**Full fine-tune is the Enable LoRA toggle turned off.** The new-run form shows it as an **Adapter** switch (**LoRA** by default, or **Full**) for SFT and DISTILL. On the run's **Configuration** tab, turning it off dims the rank, alpha, dropout and target-module controls. DPO has no switch and GRPO's is locked on (both below).
 
 Use when:
 
@@ -197,7 +197,7 @@ Two guardrails run at these boundaries:
 
 - **Plan-tier gating (402).** If the project's plan doesn't include training, both create and start return `402` with an "upgrade in Settings → Billing" message.
 - **Pre-start validation (422).** START runs the same validator that drives the frontend's Start button; if the config has errors (missing GPU blocks, unset dataset, etc.) it returns `422` and the run stays queued.
-- **Dataset check (422).** START also checks each local dataset the run uses, before anything is provisioned or credits are reserved. It refuses the run if the dataset no longer exists, belongs to a different project, is not **ready** yet (the message gives its status and says to wait for the build or pick another), or has no stored copy to train from (re-create or re-upload it). It also refuses a dataset that lacks a column its declared type needs. The `422` message lists each problem as `datasets: ...`. A dataset whose type is left on auto and has no column Studio recognises only gets a warning. DISTILL runs also get a teacher tokenizer check and GRPO runs an environment check. If a check itself can't run (for example the Hub is slow to answer), Start goes ahead rather than blocking.
+- **Dataset check (422).** **Start** checks each local dataset before provisioning or reserving credits. It refuses the run if the dataset is missing, in another project, not **ready** (the message gives its status and says to wait for the build or pick another), has no stored copy (re-create or re-upload it), or lacks a column its declared type needs. The `422` lists each problem as `datasets: ...`. A dataset of auto type with no recognised column only warns. DISTILL also gets a teacher tokenizer check and GRPO an environment check. If a check can't run (for example the Hub is slow), Start proceeds.
 
 ### Experiments and the Data Hub
 
@@ -230,7 +230,7 @@ The buttons at the top of the run detail page depend on the run's status. Viewer
 | **Stop** | Provisioning or running | Aborts the run |
 | **Publish to Hub** | Completed, and the run's artifacts are not yet in the Hub | Commits them to the run's Hub branch |
 | **Evaluate** | Completed | Opens the new-evaluation wizard with this run's adapter already selected |
-| **Merge** or **Promote** | Completed | Writes the merged model to a new Hub repository (you pick the repo name and branch). It reads **Merge** when the adapter still has to be merged into the base, which runs as a background job; the dialog's **Force** option skips the 30B-parameter safety cap. It reads **Promote** when the trainer already merged the adapter during the run, and then only copies those weights, with no GPU needed. The button is disabled while a merge for the run is in flight or done |
+| **Merge** or **Promote** | Completed | Writes the merged model to a new Hub repository (you pick repo name and branch). **Merge** when the adapter still needs merging (background job; **Force** skips the 30B-parameter cap); **Promote** when the trainer already merged it (copies weights, no GPU). Disabled while a merge is in flight or done |
 | **Clone** | Any status | Asks for a name, then creates a new queued run in the same experiment with the same base model, datasets, configuration and compute. Press **Start** on the copy when ready |
 | **Delete** | Any status | Deletes the run after a confirmation |
 
