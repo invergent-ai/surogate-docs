@@ -21,7 +21,7 @@ The words this page uses:
 
 1. **Turn the capability on**: **Configure → Capabilities → Programs**. It is off by default because Programs message real people. While any step is active, turning it off is refused; pause the journeys first.
 2. **Connect a channel the agent can write first on**: WhatsApp, Slack, Telegram, or Voice with an outbound line. Web chat and your own app through the [Programs API](/work/tools/programs-api/) also count. See [How each channel reaches people](#how-each-channel-reaches-people).
-3. **On WhatsApp, have an approved template.** Outside its 24-hour window WhatsApp opens a chat only with a text Meta approved. Register one under **Publish → Channels → WhatsApp → Manage → Templates**; see [Templates](/work/channels/whatsapp/#templates-the-opener).
+3. **On WhatsApp, have an approved template.** Outside its 24-hour window WhatsApp opens a chat only with a text Meta approved. Register one under **Publish → Channels**: open the **WhatsApp** row under **Live**, then **Templates**; see [Templates](/work/channels/whatsapp/#templates-the-opener).
 4. **Attach a skill with the instructions.** An ordinary [skill](/work/library/skills/) on the agent: what to ask, what counts as done, when to alert the team. A step names the skill it follows.
 5. **Add yourself to the team** under the **Team** tab, so a test send has somewhere to go and escalations reach someone.
 
@@ -86,6 +86,7 @@ Steps are shown on a vertical timeline grouped **Before**, **Day 0**, **Week 1**
 | **Sent** | **Once** (on one day) or **Repeating** (over a range of days). |
 | **On day** / **From day** · **Until day** | Counted from the person's start date. **Negative days come before it**: day -1 is the day before. An empty **Until day** means no end. |
 | **On these days** | The weekdays a repeating step fires on. |
+| **Send once per person** | Fires on the first matching day inside the step's window, then stays quiet for that person: *Fires on the first matching day inside the window, then stays quiet for that person.* Use it for a step that must not repeat, such as a daily window where one message is enough. It is not offered on a **Once** step with a single time, which already sends once. The count is per person and step, so enrolling the same person again does not send it again. A send that was skipped, cancelled or failed does not count, so the next matching day tries again. A copy a person got as someone else's contact does not count as theirs. The journey timeline shows *once per person* on the step. |
 | **At** | One or more local times. **Add a time** for twice a day. |
 | **Timezone** | People with their own zone get the step at this time in theirs. |
 | **Only some people** | Optional: **Only people in these stages** (a label you or the agent put on a person, comma-separated) and **Only if they have not written for** N days, for an "are you still there?" message. |
