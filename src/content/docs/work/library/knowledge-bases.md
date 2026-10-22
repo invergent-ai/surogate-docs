@@ -125,14 +125,24 @@ On monetized agents, KBs are also a sellable package dimension — a buyer whose
 
 Open the agent → **Configure** in the left nav → the **Knowledge Bases** tab → **+ ATTACH KNOWLEDGE BASE** → pick the KB.
 
-The agent's system prompt grows by:
+The agent's system prompt grows by a section like this (abridged; `...` marks cut text, shown for a KB attached in the default grounding mode):
 
 ```
+# Available Knowledge Bases
 
-## Available Knowledge Bases
+Retrieval is a loop, not a single step.
+Search, then judge what came back ... Never guess a path; use one returned by search.
+...
+Pass the `id` value below as the `kb_id` argument.
 
-- acme-product-docs: Product documentation, runbooks, known-issues database.
-  Browse via kb_list_pages("acme-product-docs"), then kb_read_page(path).
+## Authoritative (consult first)
+
+These knowledge bases are your authoritative source for the topics they cover. ...
+
+- **acme-product-docs** (id: `<kb id>`)
+  Product documentation, runbooks, known-issues database.
+  Contents:
+  ...
 ```
 
 Plus the agent gains `kb_search_pages`, `kb_list_pages` and `kb_read_page` as available tools. The LLM uses them automatically: you don't need to write a skill to invoke them.
@@ -163,7 +173,7 @@ You have a product, `acme-shop`, and you want a customer-support agent to know y
 5. Deploy a new agent (Templates page → **Start from scratch** → fill in the dialog) or pick an existing one.
 6. Open the agent → Configure → Knowledge Bases tab → attach `acme-product`.
 7. Open a chat → ask: *"What's included in the Pro plan?"*
-8. Watch the EVENTS tab — you'll see a `tool.call` for `kb_read_page`, then a grounded answer.
+8. Watch the EVENTS tab. You'll see a `tool.call` for `kb_search_pages` (its tool description says to search first), then `kb_read_page` for the pages it chose to read, then a grounded answer.
 
 For the full multi-step recipe with screenshots, see [Use cases → Product-support agent with a KB](/work/use-cases/).
 

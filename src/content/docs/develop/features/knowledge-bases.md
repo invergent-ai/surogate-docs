@@ -203,14 +203,24 @@ curl -X POST http://localhost:8000/api/agents/{agent_id}/knowledge-bases \
   -d '{"kb_id": "..."}'
 ```
 
-The agent's system prompt gains:
+The agent's system prompt gains a section like this (abridged; `...` marks cut text, shown for a KB attached in the default grounding mode):
 
 ```
+# Available Knowledge Bases
 
-## Available Knowledge Bases
+Retrieval is a loop, not a single step.
+Search, then judge what came back ... Never guess a path; use one returned by search.
+...
+Pass the `id` value below as the `kb_id` argument.
 
-- acme-product-docs: Product documentation, runbooks, known-issues database.
-  Browse via kb_list_pages("acme-product-docs"), then kb_read_page(path).
+## Authoritative (consult first)
+
+These knowledge bases are your authoritative source for the topics they cover. ...
+
+- **acme-product-docs** (id: `<kb id>`)
+  Product documentation, runbooks, known-issues database.
+  Contents:
+  ...
 ```
 
 Plus the agent's tool catalogue grows by `kb_search_pages`, `kb_list_pages` and `kb_read_page`.
