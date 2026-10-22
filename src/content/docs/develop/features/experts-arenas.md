@@ -4,10 +4,10 @@ title: "Experts & arenas"
 
 An **arena** is a supervised, multi-agent run: a *coordinator* agent drives a set of *participant* agents toward an objective, and the run ends when a success **predicate** is met. It is the platform's mission-control view for agents working together (or against each other) on a goal.
 
-This page documents the Arenas UI at `/studio/arenas`. For the conceptual model of experts and skills, see [Skills & experts](/develop/features/skills-and-experts/) — this page is the complementary "where do I watch and steer a run" surface.
+For the conceptual model of experts and skills, see [Skills & experts](/develop/features/skills-and-experts/). This page describes the planned "where do I watch and steer a run" surface.
 
-:::note[Preview]
-The Arenas screens are a **frontend-only preview**: they render representative sample data with no backend wiring. The layout below reflects the real UI, but the numbers are illustrative and the controls (create arena, pause/resume, terminate, steer, import to dataset) don't yet drive real runs. Treat this page as a design preview of where multi-agent runs will be watched and steered.
+:::note[Coming soon]
+Experts and arenas haven't shipped and aren't in Studio yet. There is no Arenas screen, and the Experts screen is hidden from Studio builds. This page describes the planned screens, so names, layout and controls may change before release.
 :::
 
 ## Arenas list
@@ -53,7 +53,7 @@ An arena ends when its predicate is satisfied. Cards render the predicate as pro
 
 ## Arena detail page
 
-`/studio/arenas/$arenaId` is a three-pane mission-control view. A header strip shows the objective type, workspace repo, creator, and the full objective, with lifecycle actions gated by status:
+The planned arena detail page is a three-pane mission-control view. A header strip shows the objective type, workspace repo, creator, and the full objective, with lifecycle actions gated by status:
 
 - **RESUME** (when paused), **PAUSE** (when running), **TERMINATE** (when running or paused).
 - **IMPORT TO DATASET** — shown for dataset-generation arenas, to pull accepted examples into a dataset.

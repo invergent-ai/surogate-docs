@@ -17,7 +17,7 @@ You will also need the app's **App Secret** and the **WhatsApp Business Account 
 
 ![The Connect WhatsApp walkthrough: the Meta app steps and the credential fields](../../../../assets/screenshots/work-channel-whatsapp-connect.png)
 
-Open the agent → **Publish** in the left nav → the **Channels** tab → find the **WhatsApp** card ("Reply to people on WhatsApp") → **Connect**. The wizard has five steps.
+Open the agent → **Publish** in the left nav → the **Channels** tab → find **WhatsApp** ("Reply to people on WhatsApp") under **Add a channel** → **Connect**. The wizard has five steps.
 
 **1. Create the Meta app** — as described above.
 

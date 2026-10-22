@@ -285,7 +285,7 @@ export default defineConfig({
                 'develop/features/byo-llm',
                 {
                   slug: 'develop/features/experts-arenas',
-                  badge: { text: 'Preview', variant: 'caution' },
+                  badge: { text: 'Coming soon', variant: 'caution' },
                 },
               ],
             },

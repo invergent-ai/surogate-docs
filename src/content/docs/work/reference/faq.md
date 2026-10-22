@@ -34,13 +34,13 @@ Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (w
 
 ## Channels
 
-**Slack bot is silent.** Verify bot scopes (at minimum `app_mentions:read`, `chat:write`, `im:read`, `im:write`, `channels:history`, `groups:history`, `files:read`). Re-install the app after adding scopes. Confirm Socket Mode is on and the App-Level Token has `connections:write`.
+**Slack bot is silent.** Check the bot scopes listed in [Slack](/work/channels/slack/). Re-install the app after adding scopes. Confirm the Event Subscriptions Request URL shows **Verified** in Slack.
 
 **Telegram bot replies once then stops.** Another instance is consuming Telegram updates. Stop the other instance — Telegram only delivers each update once.
 
-**Website widget says "origin not allowed".** Page URL isn't in the Allowed Origins list. Add the exact URL → SAVE. No wildcards.
+**Website widget says "origin not allowed".** Page URL isn't in the Allowed Origins list. Add the exact URL on the widget's Manage screen (it saves automatically). No wildcards.
 
-**COPY button on the publishable key is disabled.** SAVE CHANNELS first — the key isn't deployed until then.
+**Can't find the publishable key.** It appears under **Advanced** on the Website widget's Manage screen, which opens once you click **Enable widget**.
 
 ## Copilot
 

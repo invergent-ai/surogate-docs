@@ -6,7 +6,7 @@ sidebar:
 
 The Training page launches fine-tuning runs. Four methods can be created and started — **SFT**, **DPO**, **GRPO** and **DISTILL** — and the method picker offers exactly those four. Each is documented in depth below.
 
-> **Studio vs. the engine.** Pretraining (PT) and full-parameter fine-tuning are handled directly by the `surogate` engine CLI (`surogate sft` / `surogate grpo` and friends) and are not exposed in the Studio training pipeline. `PPO` exists in the API schema but is rejected at run-create time with *"PPO not yet supported"*.
+> **Studio vs. the engine.** Pretraining (PT) is handled directly by the `surogate` engine CLI (`surogate sft` / `surogate grpo` and friends) and is not exposed in the Studio training pipeline. Full fine-tuning is available for SFT and DISTILL: turn **Enable LoRA** off (see below). DPO and GRPO are LoRA only. `PPO` exists in the API schema but is rejected at run-create time with *"PPO not yet supported"*.
 
 **DPO** and **DISTILL** both ride the SFT path rather than having a pipeline of their own: DPO is an SFT config plus a `loss: {type: dpo}` block over `{prompt, chosen, rejected}` rows, and DISTILL is an SFT config plus a `distillation:` block naming a teacher model. Run-create rejects either one if that block is missing.
 
@@ -31,7 +31,7 @@ Training parameters (carried in the run's config):
   - Learning rate
   - Batch size
   - Precision: BF16 | FP8 | NVFP4
-  - Adapter: lora / qlora (set lora + lora_rank in config), or full
+  - Adapter: LoRA (set lora + lora_rank in config) or Full
 Compute:
   - Backend: dstack (kubernetes / cloud) or Modal
   - Accelerators: e.g. RTX-PRO-6000:1 on Modal, or GPU:2 on an SSH fleet
@@ -43,7 +43,7 @@ anything else is refused when you press Start, before any instance is
 provisioned, and Studio says so under the compute picker as soon as you select
 it. Serving and evaluations are not restricted this way.
 
-The adapter choice (LoRA / QLoRA rank, or full) is not a dedicated form field — it's carried in the run's free-form `config` dict alongside the rest of the trainer settings, so the launcher can pass it straight through to the trainer.
+**Full fine-tune is the Enable LoRA toggle turned off.** The new-run form shows it as an **Adapter** switch (**LoRA** by default, or **Full**) for SFT and DISTILL. On the run's **Configuration** tab, turning it off dims the rank, alpha, dropout and target-module controls. DPO has no switch and GRPO's is locked on (both below).
 
 Use when:
 
@@ -76,7 +76,7 @@ Preference loss (config.loss):
 
 Four constraints are enforced before a run can start, and each mirrors the trainer:
 
-- **LoRA is required.** Each pair is scored against the frozen base, so there has to be a base to freeze. A full fine-tune has no reference to compare against — use SFT for that.
+- **LoRA is required.** Each pair is scored against the frozen base, so there has to be a base to freeze. A full fine-tune has no reference to compare against; use SFT for that. The form therefore hides the **Adapter** switch and the **Enable LoRA** toggle for DPO.
 - **`per_device_train_batch_size` must be even.** A chosen/rejected pair is two rows, so an odd batch would split a pair across steps.
 - **`target_margin` requires `reference_free: true`.** The margin is defined against a reference-free score.
 - **Dataset entries are `type: preference`**, or carry no type at all. Any other value parses and then fails inside the container.
@@ -115,6 +115,8 @@ currently provide that for training: the only Blackwell GPU it offers is
 single-GPU. Run GRPO on an SSH or cloud fleet instead, where the fleet size is
 taken from the block split rather than fixed when you pick the instance. Start
 says so if you try, before anything is provisioned.
+
+GRPO is also LoRA only for now. Its **Enable LoRA** toggle is shown but locked on, and its tooltip says full-parameter RL is not available yet: train an adapter, or full fine-tune with SFT and start the GRPO run from that model.
 
 #### RL Modes
 
@@ -187,7 +189,7 @@ Creating a run and launching it are **two separate steps**: `POST /api/training-
 2. Start         Click START → pre-start validation runs, then GPUs are provisioned
 3. Run           Training executes (5min to days depending on dataset + model size)
 4. Monitor       Logs, metrics, rollouts, checkpoints via the run detail page
-5. Complete      Final model lands in Models page as a new entry
+5. Complete      The run's output lands in the Models page as a new entry; to turn a LoRA run's adapter into a standalone model, first **Publish to Hub**, then use **Merge** (or **Promote**, when the trainer already merged it) on the run's page
 6. Optional      Activate as an expert via the expert lifecycle
 ```
 
@@ -195,6 +197,7 @@ Two guardrails run at these boundaries:
 
 - **Plan-tier gating (402).** If the project's plan doesn't include training, both create and start return `402` with an "upgrade in Settings → Billing" message.
 - **Pre-start validation (422).** START runs the same validator that drives the frontend's Start button; if the config has errors (missing GPU blocks, unset dataset, etc.) it returns `422` and the run stays queued.
+- **Dataset check (422).** **Start** checks each local dataset before provisioning or reserving credits. It refuses the run if the dataset is missing, in another project, not **ready** (the message gives its status and says to wait for the build or pick another), has no stored copy (re-create or re-upload it), or lacks a column its declared type needs. The `422` lists each problem as `datasets: ...`. A dataset of auto type with no recognised column only warns. DISTILL also gets a teacher tokenizer check and GRPO an environment check. If a check can't run (for example the Hub is slow), Start proceeds.
 
 ### Experiments and the Data Hub
 
@@ -216,6 +219,20 @@ The tab set depends on the method.
 | **Environment** | The registered environment the run scores against | GRPO, Environment mode |
 | **Rollouts** | Periodically sampled rollouts with prompt, completion, reward and advantage — from `GET /api/training-runs/{id}/rollouts` | GRPO |
 | **Repository** | Files and commits in the run's Data Hub branch | All |
+
+### Header actions
+
+The buttons at the top of the run detail page depend on the run's status. Viewers without edit access see them disabled.
+
+| Button | Shown when | What it does |
+|---|---|---|
+| **Start** / **Retry** | Queued (Start), failed or cancelled (Retry) | Launches the run |
+| **Stop** | Provisioning or running | Aborts the run |
+| **Publish to Hub** | Completed, and the run's artifacts are not yet in the Hub | Commits them to the run's Hub branch |
+| **Evaluate** | Completed | Opens the new-evaluation wizard; for a LoRA run, its adapter is already selected |
+| **Merge** or **Promote** | Completed (LoRA runs) | Needs the run published first (**Publish to Hub**); without that the dialog does nothing. Writes the merged model to a new Hub repository (you pick repo name and branch). **Merge** when the adapter still needs merging (background job; **Force** skips the 30B-parameter cap); **Promote** when the trainer already merged it (copies weights, no GPU). Disabled while a merge is in flight or done |
+| **Clone** | Any status | Asks for a name, then creates a new queued run in the same experiment with the same base model, datasets, configuration and compute. Press **Start** on the copy when ready |
+| **Delete** | Any status | Deletes the run after a confirmation |
 
 ## Stopping a run
 

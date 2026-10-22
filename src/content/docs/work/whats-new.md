@@ -2,6 +2,22 @@
 title: What's new
 ---
 
+## October 22, 2026: Surogate 1.16.0 (runtime 2.19.5)
+
+### Discord and Microsoft Teams
+
+Your agent can now talk to people on [Discord](/work/channels/discord/) and [Microsoft Teams](/work/channels/teams/); add them from **Publish → Channels**.
+
+### Office documents: more formats, comment mentions and templates
+
+- **Live editing for Word, spreadsheets, presentations and PDFs.** The agent now works alongside you in Word documents, spreadsheets, presentations and PDFs, not only Word. Its changes appear under its name as it makes them. See [what the agent can do live](/work/tools/office-documents/#what-the-agent-can-do-live).
+- **Comment mentions.** @-mention the agent in a comment in an open document and it reaches the chat as your message. The agent answers in the comment thread and resolves it. See [Comment mentions](/work/tools/office-documents/#comment-mentions).
+- **Templates for new files.** New Word, spreadsheet and slide files start from built-in templates. PDFs have none. See [Templates for new files](/work/tools/office-documents/#templates-for-new-files).
+
+### Programs: send a step once per person
+
+A journey step has a new **Send once per person** checkbox in its **When** section. The step fires on the first matching day inside its window, then stays quiet for that person, even if they are enrolled again. See [Steps](/work/tools/programs/#steps).
+
 ## October 14, 2026: Surogate 1.14.10 (runtime 2.18.1)
 
 ### Programs: journeys, a team and escalations, on any channel

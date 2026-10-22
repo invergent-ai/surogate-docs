@@ -15,7 +15,7 @@ An agent bundles six things, configured through five tabs:
 | **OVERVIEW** | Four 24h stat cards (requests, error rate, latency incl. p95, tokens) + four hourly bar charts, a Conversations — last 7 days card, and the Connected skills/MCPs card. |
 | **KNOWLEDGE & TOOLS** | Attach / detach Skills, Knowledge Bases, MCP Servers; per-row DETACH; ATTACH dropdown. |
 | **USERS** | Per-agent end-user accounts. Add Web users, set passwords or SSO, manage display names. |
-| **CHANNELS** | Web (always on), Slack (App + Bot tokens, threading, mention requirements), Telegram (Bot token, DM/group toggles), Website widget (publishable key, allowed origins, embed code, session message cap). |
+| **CHANNELS** | Web (always on), Slack (credentials, threading, mentions), Telegram (Bot token, DM/group toggles), WhatsApp (access token, app secret, Business Account ID), Website widget (publishable key, allowed origins, embed code, session message cap). |
 | **CONFIG** | Persona (SOUL.md), Tool Access, Web & Browser Egress, EU AI Act Transparency, Saga, Session Reset, Environment Variables. |
 
 Plus four action buttons:
@@ -98,7 +98,7 @@ Multiple skills with the same name resolve by precedence: **user-specific overri
 
 ## CHANNELS tab — multi-channel deployment
 
-Four channel types. Web is always on; the others toggle.
+Sections for [Web](/work/channels/web/) (always on), [Slack](/work/channels/slack/), [Telegram](/work/channels/telegram/), [WhatsApp](/work/channels/whatsapp/) and the [Website widget](/work/channels/website-widget/) (the last four toggle). [Discord](/work/channels/discord/) and [Microsoft Teams](/work/channels/teams/) are connected from Work's Channels screen, where Voice (phone calls) is also listed.
 
 ### Web
 
@@ -106,22 +106,15 @@ Always on. Endpoint: `https://<slug>.cloud.surogate.ai`. End-user accounts are m
 
 ### Slack
 
-Toggle ON, paste credentials:
-
-- **App Token** — `xapp-...` with `connections:write` scope (Socket Mode)
-- **Bot Token** — `xoxb-...` with at minimum `chat:write`, `app_mentions:read`, `im:read`, `im:write`, `channels:history`, `groups:history`, `files:read`, `users:read`
-
-Behaviour settings:
-
-- **Require @mention** (default ON) — bot only responds in channels when @mentioned
-- **Allow Bots** — `None` / `DMs only` / `Channels only` / `All`
-- **Reply in Thread** (default ON) — responses inside the thread
-- **Reply Broadcast** (default OFF) — when on, thread replies also post to the channel
-- **Free Response Channels** — comma-separated channel IDs where no @mention is needed (dedicated bot channels)
+Toggle ON, then paste the App ID, Signing Secret and Bot Token. Options: Require @mention (default ON), Mode (`Team member` / `Personal assistant`), Allow Bots (`None` / `Mentions only` / `All`), Reply in Thread (default ON), Reply Broadcast (default OFF) and Free Response Channels (comma-separated channel IDs where no @mention is needed). See [Slack](/work/channels/slack/) for setup, scopes and Request URLs.
 
 ### Telegram
 
-Toggle ON, paste Bot Token (`123456:ABC-DEF...`). DM-only vs allow-in-groups. Forum topic support. Media handling (photos, voice notes via transcription, documents).
+Toggle ON, paste Bot Token (`123456:ABC-DEF...`). Options: Require @mention, Mode (`Team member` / `Personal assistant`), Reply Threading (`First chunk only` / `All chunks` / `Off`), Message Reactions, Per-User Group Sessions. Media handling: photos, documents, audio and video arrive as attachments. Voice notes arrive as audio files the agent can't transcribe; there is no speech-to-text on this channel.
+
+### WhatsApp
+
+Toggle ON, paste the access token, app secret and WhatsApp Business Account ID. Voice notes arrive as audio files the agent can't transcribe. See [WhatsApp](/work/channels/whatsapp/) for the full setup.
 
 ### Website widget
 

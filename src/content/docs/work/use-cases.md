@@ -61,10 +61,9 @@ Never disclose internal ticket IDs. Never make legally binding statements.
 
 **6. Publish to your website.**
 
-- Publish → the **Channels** tab → toggle **Website** ON.
-- Add your domain to Allowed Origins (e.g. `https://acme.com`, `https://www.acme.com`).
-- SAVE.
-- COPY the publishable key. Click **Embed code** to reveal the script tag.
+- Publish → the **Channels** tab → find **Website widget** under **Add a channel** → **Connect**.
+- Add your domain to Allowed origins (e.g. `https://acme.com`, `https://www.acme.com`), then click **Enable widget**. It saves automatically.
+- On the Manage screen, copy the **Embed code** snippet (the publishable key is under **Advanced**).
 - Paste the script tag into your website's HTML before `</body>`.
 
 Your support bot is live. Visitors hit a chat bubble in the bottom-right. The bot answers from your KB.
@@ -83,20 +82,13 @@ Your support bot is live. Visitors hit a chat bubble in the bottom-right. The bo
 
 ### Steps
 
-**1. Create the Slack app.**
-
-- [api.slack.com/apps](https://api.slack.com/apps) → Create New App → From scratch → name it (e.g. `acme-support`) → pick your workspace.
-- Bot Scopes (OAuth & Permissions): `chat:write`, `app_mentions:read`, `im:read`, `im:write`, `channels:history`, `groups:history`, `files:read`, `users:read`.
-- Socket Mode → Enable.
-- Basic Information → App-Level Tokens → Generate → scope `connections:write` → copy `xapp-…`.
-- Install to workspace → copy Bot User OAuth Token `xoxb-…`.
+**1. Create the Slack app.** Name it `acme-support` and follow the setup steps on the [Slack](/work/channels/slack/#configuration-in-surogate) page (scopes, Request URLs, install). Keep the App ID, Signing Secret and Bot User OAuth Token (`xoxb-…`) at hand.
 
 **2. Configure in Surogate.**
 
-- Open `acme-support-bot` → Publish → the **Channels** tab → toggle **Slack** ON.
-- Paste App Token and Bot Token.
-- Defaults are fine for most: Require @mention ON, Reply in Thread ON.
-- SAVE.
+- Open `acme-support-bot` → Publish → the **Channels** tab → find **Slack** under **Add a channel** → **Connect**.
+- Enter your App ID, paste the Request URLs into Slack (see Slack if it can't verify the URL yet), then paste the Signing Secret and Bot Token and click **Connect Slack**.
+- Defaults are fine for most (Require @mention ON, Reply in thread ON); change them later on the Slack Manage screen.
 
 **3. Verify.**
 

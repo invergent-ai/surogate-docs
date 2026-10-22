@@ -2,7 +2,7 @@
 title: Tool catalog
 ---
 
-Every built-in tool an agent can call. These are exactly the names the Governance policy accepts in **Allowed tools / Denied tools** — the catalog is generated from the runtime's real tool registry, and unknown names are rejected on save. (`execute_code` and `web_crawl` are not tools; the shell entry point is `terminal`.)
+Every built-in tool an agent can call. These are exactly the names the Governance policy accepts in **Allowed tools / Denied tools**. The catalog mirrors the runtime's tool registry, which is the source of truth, and unknown names are rejected on save. (`execute_code` and `web_crawl` are not tools; the shell entry point is `terminal`.)
 
 You don't pick which tool the agent uses for a given turn — the agent does. You decide which tools to **expose**.
 
@@ -117,8 +117,8 @@ A due step, a reply to it and its deadline each wake the agent with a step conte
 
 | Tool | Use for |
 |---|---|
-| `office_read` | Read a Word document (`.docx`) through the agent's own live editor session, with everyone's latest edits — `view` `outline` (default, paged with `start`), `block` (`target`) or `search` (`query`). Gives each block's id and hash, comment threads, tracked changes, and who else has it open |
-| `office_edit` | Edit a Word document live — `ops` applied all or none: `insert`, `replace`, `delete`, `move`, `comment`, `reply`, `resolve`, with Markdown content, placeholder (`pending`), chart and image blocks. A block changed since it was read is refused, so the user's edit wins. A missing document is created blank |
+| `office_read` | Read a Word document (`.docx`), spreadsheet (`.xlsx`), presentation (`.pptx`) or PDF (`.pdf`) through the agent's own live editor session, with everyone's latest edits: `view` `outline` (default, paged with `start`), `block` (`target`; for other types `range`, `slide` or `page`) or `search` (`query`). Gives each block's id and hash, comment threads, tracked changes in Word, and who else has it open |
+| `office_edit` | Edit a `.docx`, `.xlsx`, `.pptx` or `.pdf` live: `ops` applied all or none. Word: `insert`, `replace`, `delete`, `move`, `comment`, `reply`, `resolve`, with Markdown content, placeholder (`pending`), chart and image blocks. Spreadsheet: `set`, `format`, `chart`, `sheet`. Deck: `slides`, `text`, `notes`, `order`, `remove`. PDF: `pages`, `fill`, `add_field`, `redact`, `annotate`. In the other types `reply` and `resolve` work on existing comment threads. A block changed since it was read is refused, so the user's edit wins. A missing document is created blank |
 
 Both exist only where the platform runs a document server and `runtime-office`. While a document is open in the editor, it is changed only through `office_edit`. See [Office documents](/work/tools/office-documents/).
 
