@@ -4,51 +4,47 @@ sidebar:
   label: Voice
 ---
 
-Your agent answers phone calls. Callers dial a number, the agent greets them, listens and talks back, and every call is a conversation on the Voice channel. Calls come in to the agent. This page covers receiving calls.
+Your agent answers phone calls. Callers dial a number, the agent greets them, listens and talks back, and every call is a conversation on the Voice channel. This page covers receiving calls.
 
 ## What you need
 
-- The project [**editor** role](/work/settings/members/#what-each-role-can-do). Viewers can open the Voice screen and read its settings and calls, but not change them. For a system agent you need to be an administrator.
+- The project [**editor** role](/work/settings/members/#what-each-role-can-do). Viewers can read but not change it. For a system agent you need to be an administrator.
 - A free number. You pick one of the numbers Surogate provides. You can't bring your own number. If none is free, the page says "No free numbers right now. An admin adds them under Settings → Phone numbers."
 - For any language other than Romanian: an account at a speech provider, with its key saved in the project's Vault. See [Language and voice](#language-and-voice).
 
 ## Configuration in Surogate
 
-Open the agent → **Publish** → the **Channels** tab → **Voice** under **Add a channel** → **Connect**.
+Open the agent → [**Publish** → **Channels**](/work/workflow/publish-agent/#channels) → **Voice** under **Add a channel** → **Connect**.
 
 1. Under **Number**, open **Phone number** and choose a number.
 2. Adjust the sections below, or leave the defaults.
-3. Click **Save and connect**. The status at the top changes from **Off** to **Active**, and calls to the number now reach this agent.
+3. Click **Save and connect**. The status at the top changes from **Off** to **Active**, and calls to the number now reach this agent. (Once connected, the button reads **Save**.)
 
 An agent has one number, and a number belongs to one agent at a time. If someone else takes the number first, Surogate says *This number was just taken. Choose another one.* Choosing a different number and saving frees the old one.
-
-Once connected, the button reads **Save**.
 
 ## Language and voice
 
 **Language** is the language the agent answers in. Surogate's own speech is included for Romanian only. For any other language, connect a provider.
 
-Hearing and speaking are set apart:
+Listening and speaking are set separately:
 
 - **Hears callers with** turns speech into text. Choices: **Surogate, Romanian, included**, ElevenLabs, Cartesia, Deepgram, OpenAI, Gradium, and **Hugging Face or your own server**.
 - **Speaks with** turns the agent's answers into speech. The same choices, plus Fish Audio.
 
-You can use a different provider for each side.
-
 With **Surogate, Romanian, included**, the only extra choice is **Voice**: **Female** or **Male**. Surogate refuses to save another language with its own speech.
 
-With any other provider you use your own account, so it is billed by the provider and callers' audio goes to that provider under your account. Each side shows:
+With any other provider you use your own account, so it is billed by, and callers' audio is sent to, that provider. Each side shows:
 
 - **Server URL**, for **Hugging Face or your own server** only: an OpenAI-compatible address such as `https://your-endpoint/v1`.
 - The provider's **key**, chosen from the project's Vault. A key is needed for every provider except **Hugging Face or your own server**, where it is optional. **Test** checks that the provider accepts it and shows *Connected* or the reason it didn't.
 - **Model**, from a list, or typed in for **Hugging Face or your own server**.
 - For **Speaks with**: the voice. **Choose a voice** opens a list of the account's voices, with a preview, a search and an **Any language** box. ElevenLabs, Cartesia, Gradium and Fish Audio also have a **Library** tab next to **My voices**. For **Hugging Face or your own server** you type the voice name your server uses.
 
-A line whose key is missing from the Vault can't be saved. If a key is removed later, callers hear two short beeps and the call ends, and the call shows as **Provider unavailable** in [Recent calls](#recent-calls).
+A line whose key is missing from the Vault can't be saved. If a key is removed later, callers hear two beeps and the call ends (**Provider unavailable**).
 
 ## How it answers
 
-**Greeting** is the first thing callers hear, up to 500 characters. Leave it empty to use the default for the language. The default says it is a virtual assistant, and so should yours, so callers know they are talking to an AI.
+**Greeting** is the first thing callers hear, up to 500 characters. Leave it empty to use the default for the language. Say it is an AI assistant, as the default does.
 
 ### Phone lines it says on its own
 
@@ -59,15 +55,15 @@ Open **Phone lines it says on its own** to reword the fixed sentences the agent 
 | **While it looks something up** | When the agent starts a lookup without a word. |
 | **When the caller goes quiet** | Asked once, after the silence set in [Call limits](#call-limits). |
 | **When the call ends on its own** | At the time limit, or after the caller stayed silent. |
-| **When one answer fails** | The call goes on. |
-| **When the call cannot start** | Then it hangs up. |
-| **When every line is taken** | Then it hangs up. This is the busy line. |
+| **When one answer fails** | The call goes on |
+| **When the call cannot start** | Hangs up |
+| **When every line is taken** | Hangs up (busy line) |
 | **Reading out choices** | When the agent offers choices. Keep `{}` where the choices go. |
-| **After an urgent alert on a call** | How to confirm it was heard, for example say yes or press 1. Only used for urgent alerts the agent phones out. It has no effect on calls you receive. |
+| **After an urgent alert on a call** | How to confirm an urgent alert phoned out (say yes or press 1). Not used on calls you receive. |
 
 ## Background sound
 
-What callers hear around the agent. The default is **Silent**: only the voice. Or pick one of 13 places, each with a preview button that plays the room on its own:
+What callers hear around the agent. The default is **Silent**: only the voice. Or pick one of 13 places, each with a preview:
 
 "Clinic front desk"; "Dental practice"; "Pharmacy counter"; "Restaurant reservations"; "Hotel reception"; "Beauty salon"; "Car service"; "Accounting or law office"; "Bank or insurance desk"; "Sales or support team"; "Delivery or taxi dispatch"; "School office"; "Small business, home office".
 
@@ -96,11 +92,11 @@ How names should sound. Fill **Written as** and **Said as** (each up to 64 chara
 
 ## Callers
 
-**Remember callers** is off by default. When it is on, the agent keeps what a caller said for their next call from the same number. A call with a hidden number is never remembered. A number can be faked, so the agent never treats it as proof of who someone is.
+**Remember callers** is off by default. When it is on, the agent keeps what a caller said for their next call from the same number. A call with a hidden number is never remembered, and since a number can be faked, the agent never treats it as proof of identity.
 
 ## Try it
 
-There is no **Try it** link on the Voice screen. Call the number from a phone. Until the first call, the screen says *No calls yet. Call* followed by the number *to try it.*
+No **Try it** link: call the number from a phone. Until the first call, the screen says *No calls yet. Call* followed by the number *to try it.*
 
 ## Recent calls
 
@@ -113,19 +109,16 @@ Once a number is connected, **Recent calls** lists the latest calls, newest firs
 | **Length** | Minutes and seconds. |
 | **Outcome** | One of the four below. |
 
-| Outcome | Meaning |
-|---|---|
-| **Completed** | The call took place and ended. |
-| **Lines busy** | Every line was taken, so the caller heard the busy line and the call ended. |
-| **Error** | The call couldn't start. If the agent's conversation couldn't open, the caller hears the **When the call cannot start** line. If Surogate couldn't set up the speech, the caller hears two short beeps. Either way the call ends. |
-| **Provider unavailable** | Your speech provider's key is missing or can't be read, or the provider gave up during the call (a revoked key, no credits left, a service outage). The caller hears two short beeps. |
+- **Completed**: The call took place and ended.
+- **Lines busy**: Every line was taken, so the caller heard the busy line and the call ended.
+- **Error**: The call couldn't start; the caller hears the **When the call cannot start** line, or two beeps if speech setup failed.
+- **Provider unavailable**: Your provider's key is missing or unreadable, or the provider failed mid-call (for example a revoked key, no credits, an outage). Two beeps.
 
 ## Limits
 
-- Surogate's own speech is Romanian only.
-- Only a limited number of calls can be on the line at once across the platform. When they are all taken, the next caller hears the busy line (**When every line is taken**) and the call ends, and it shows as **Lines busy**.
+- Calls on the line at once are capped platform-wide; further callers hear the busy line (**Lines busy**).
 
 ## Reconnecting and disconnecting
 
-- **Disconnect** asks for confirmation. The number goes back to the pool for other agents, and Recent calls is hidden. Your settings are kept.
+- **Disconnect** asks for confirmation. The number goes back to the pool for other agents, and Recent calls is hidden.
 - To connect again, open the Voice screen, choose a number and click **Save and connect**. The settings you had are still there.
