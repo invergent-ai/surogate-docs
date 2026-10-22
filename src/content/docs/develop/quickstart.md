@@ -8,7 +8,7 @@ This walks the full build → expose surface — UI for design, REST API for int
 
 ## 1. Write a skill
 
-**Library → Skills & Tools → NEW SKILL**:
+**Library → Skills & Tools → NEW SKILL** (in Develop mode, which has no nav entry for it, open `/studio/skills`):
 
 ```markdown
 ---
