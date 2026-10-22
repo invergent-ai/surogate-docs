@@ -55,7 +55,7 @@ The proxy also supports **Bearer token** and **no auth** for servers configured 
 
 ## The Vault
 
-The **Vault** entry at the top of the left rail opens **Settings → Vault**, the credential store (see [Vault](/work/settings/vault/)), where API keys, OAuth secrets, and other tokens the proxy needs live. Each entry shows its name and when it was added; you can **Update** it (set a new value) or **Remove** it. Values are write-only: they're never displayed back to you.
+The **Vault** entry at the top of the left rail opens **Settings → Vault**, where the keys the proxy needs live and values are never shown again; see [Vault](/work/settings/vault/).
 
 :::note[Credentials never reach the sandbox]
 The agent's sandbox is the most untrusted component in the platform. Credentials live in the Vault and are injected by the MCP proxy as it forwards each call — even a fully prompt-injected agent can't exfiltrate them.

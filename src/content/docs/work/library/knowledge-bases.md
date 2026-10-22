@@ -64,7 +64,7 @@ Fields:
 Click **CREATE**. The KB starts in `error` status — that's normal until you add sources and compile.
 
 :::tip[Curator model]
-You don't pick a curator model at creation. The default is fine for most uses. To use a smarter model for highly technical content, change it later in the KB's **Configure** tab, then use **Rebuild knowledge base** to redo pages already written. See [Develop mode](/develop/features/knowledge-bases/#detail-tabs) for the Review and Configure tabs.
+You don't pick a curator model at creation. The default is fine for most uses. To use a smarter model for highly technical content, change it later in the KB's **Configure** tab, then use **Rebuild knowledge base** to redo pages already written. See [Develop mode](/develop/features/knowledge-bases/#configure) for the Configure tab.
 :::
 
 ## Adding sources
@@ -98,7 +98,7 @@ Compile takes 30 seconds to a few minutes per source.
 
 A single bad file **no longer takes the whole compile down**: healthy sources continue through the pipeline and a wiki is still produced from them, while each failing file shows **its own error message inline in the SOURCES list** with a per-file retry.
 
-Read the status carefully, though: the KB still reports `error` when *any* file failed. That now means "at least one source failed", not "nothing was built": open the wiki from the **Wiki pages** stat card, it's often already usable.
+Read the status carefully, though: the KB still reports `error` when *any* file failed. That now means "at least one source failed", not "nothing was built": open the wiki from the **Wiki pages** card ([below](#browsing-the-wiki)), it's often already usable.
 
 If a file shows an error:
 

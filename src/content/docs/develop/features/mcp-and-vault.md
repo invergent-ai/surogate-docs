@@ -113,13 +113,7 @@ mcp_servers:
 
 ## The credential vault
 
-**Settings → Vault** is the credential store. The **Vault** entry on the MCP Servers tab links to it. See [Vault](/work/settings/vault/) for the full tab.
-
-| Field | Notes |
-|---|---|
-| **Name** | Vault entry name (e.g. `GITHUB_TOKEN`) — named in an MCP server's `credential_refs` |
-| **Value** | Write-only. You set it, and later **Update** it (store a new value) or **Remove** it — but the value is never displayed back to you. The list API returns names + timestamps only, never the secret. |
-| **Scope** | Project-scoped (= org). Credentials belong to the project; every MCP server in the project can reference them. |
+**Settings → Vault** is the project's credential store; values are write-only and never shown again after saving. The **Vault** entry on the MCP Servers tab links to it. See [Vault](/work/settings/vault/) for the full tab. Entries are named in an MCP server's `credential_refs`, and every MCP server in the project can reference them.
 
 System-owned credentials (used by platform/system agents) are protected: the API refuses to delete them (`403`), and a credential still consumed by a running agent's MCP server can't be deleted until you stop the consumer (`409`, in-use conflict).
 

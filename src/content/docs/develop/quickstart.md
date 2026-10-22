@@ -8,7 +8,7 @@ This walks the full build → expose surface — UI for design, REST API for int
 
 ## 1. Write a skill
 
-**Library → Skills & Tools → NEW SKILL** (in Develop mode, which has no nav entry for it, open `/studio/skills`):
+**Library → Skills & Tools → NEW SKILL** (see [Skills](/develop/features/skills-and-experts/); Develop mode has no nav entry for it, so open `/studio/skills`):
 
 ```markdown
 ---
@@ -49,7 +49,7 @@ The skill is now versioned in the Hub at `p-{project}/skill-triage-incident` wit
 
 Add sources (`SOURCES → ADD SOURCE`): drop in 3–10 markdown files that describe your incident-response procedures.
 
-Click **COMPILE**. Wait until status flips to `active`. Click the **Wiki pages** stat card on the Overview tab to open the wiki, and search it for a typical question to confirm the curator extracted what you need.
+Click **COMPILE**. Wait until status flips to `active`. Open the wiki from the **Wiki pages** card on the Overview tab (see [Browsing the wiki](/work/library/knowledge-bases/#browsing-the-wiki)) and search it for a typical question to confirm the curator extracted what you need.
 
 ## 3. Deploy an agent
 
