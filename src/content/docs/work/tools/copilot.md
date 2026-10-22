@@ -47,7 +47,7 @@ It knows what you are looking at: on the Programs page it is told which tab, jou
 
 **`/build-program`** is a playbook for setting a program up end to end. The Copilot interviews you one question at a time (who is followed and why, the date day 0 counts from, the rhythm, what each answer means and which is urgent, the channels, the team, the language of every message), inspects what the agent already has, and writes a plan for you to approve. Only then does it build: the step skills, any missing WhatsApp templates, the journey as a draft, the team and the wording. It reviews and dry-runs the journey and summarises what is live and what is still a draft, with a test script.
 
-Activating a journey, sending a test, enrolling, messaging a person and changing the team always wait for your yes. It never enrols real people on its own.
+Activating a journey, sending a test, enrolling, messaging a person and changing the team always wait for your yes. Its instructions forbid enrolling real people without your yes, and the enrol tool itself asks for that confirmation.
 
 ## How it asks before acting
 
@@ -62,7 +62,7 @@ It asks with a question in the chat and waits for your answer. Its instructions 
 
 Building a new thing inside a plan you approved does not ask again. The plan was the yes.
 
-Anything that reaches real people or real money is stricter. The tool itself refuses to run until you have said yes to that exact action, and a yes to the plan does not cover it. That covers:
+Anything that reaches real people or real money is stricter. The tool itself refuses to run until the Copilot calls it again with an explicit confirmation, which its instructions allow only after you say yes to that exact action. A yes to the plan does not cover it. That covers:
 
 - activating or pausing a journey, deleting a journey or a step, sending a test, and registering a WhatsApp template;
 - enrolling a person, changing their status, changing their contacts, and messaging them (you approve the exact text);

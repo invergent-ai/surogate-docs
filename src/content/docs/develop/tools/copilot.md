@@ -10,21 +10,21 @@ This chapter covers what builders should know that operators don't need: where i
 
 ![The Surogate Copilot panel](../../../../assets/screenshots/work-copilot-panel.png)
 
-It exposes the platform's tools as natural-language commands. Instead of clicking through CONFIG / KNOWLEDGE & TOOLS / channels, you describe what you want and the Copilot calls the corresponding tools. There are 116 of them, served by the ops MCP server `surogate-ops-copilot` at `/api/copilot/mcp`. The Copilot's agent definition allowlists exactly those tools, so anything not registered there is invisible to it. The areas, with the main tools in each:
+It exposes the platform's tools as natural-language commands. Instead of clicking through CONFIG / KNOWLEDGE & TOOLS / channels, you describe what you want and the Copilot calls the corresponding tools. There are 116 of them, served by the ops MCP server `surogate-ops-copilot` at `/api/copilot/mcp`. The Copilot's agent definition allowlists exactly those tools, so anything not listed there is invisible to it. The areas, with the main tools in each:
 
 | Area | Main tools |
 |---|---|
-| Agents | `list_agents`, `get_agent`, `create_agent`, `update_agent`, `set_agent_env_vars`, `start_agent`, `stop_agent`, `scale_agent`, `delete_agent`; `attach_` / `detach_` for skills, MCP servers and knowledge bases |
-| Skills | `list_skills`, `get_skill`, `create_skill`, `update_skill`, `delete_skill`, `import_skill_from_workspace`, and the skill's files (`list_skill_files`, `read_skill_file`, `write_skill_file`, `delete_skill_file`) |
-| Knowledge bases | `create_knowledge_base`, `delete_knowledge_base`, `create_kb_source`, `list_kb_sources`, `add_workspace_file_to_kb`, `compile_knowledge_base`, `get_kb_compile_status`, `list_kb_wiki_pages`, `read_kb_wiki_page` |
+| Agents | `list_agents`, `get_agent`, `create_agent`, `update_agent`, `start_agent`, `delete_agent`, plus env vars, scaling and `attach_` / `detach_` for skills, MCP servers and knowledge bases |
+| Skills | `list_skills`, `get_skill`, `create_skill`, `update_skill`, `delete_skill`, `import_skill_from_workspace`, plus tools for the skill's files |
+| Knowledge bases | `create_knowledge_base`, `create_kb_source`, `add_workspace_file_to_kb`, `compile_knowledge_base`, `get_kb_compile_status`, `read_kb_wiki_page`, and others for sources, wiki pages and deletion |
 | MCP servers | `list_mcp_servers`, `register_mcp_server`, `update_mcp_server`, `delete_mcp_server`, `list_composio_toolkits` |
 | Sub-agents | `list_sub_agents`, `get_sub_agent`, `create_sub_agent`, `update_sub_agent`, `delete_sub_agent` |
-| Programs | `get_programs_overview`, journeys (`create_journey`, `add_journey_step`, `review_journey`, `simulate_journey`, `activate_journey`, `pause_journey`, `send_journey_test`, `get_journey_funnel`), WhatsApp templates and forms, escalations |
-| People and team | `find_people`, `add_person`, `list_program_people`, `enroll_person`, `message_person`, `get_person_timeline`, `telegram_start_link`, `set_team_member`, `get_program_settings`, `update_program_settings`, Slack lookups |
-| Monetize and landing page | `get_monetize`, `create_plan`, `update_plan`, `replace_plan`, `delete_plan`, `update_monetize_settings`, `get_landing_page`, `update_landing_page` |
+| Programs | `get_programs_overview`, `create_journey`, `add_journey_step`, `simulate_journey`, `activate_journey`, `get_journey_funnel`, and others for journeys, WhatsApp templates and forms, escalations |
+| People and team | `find_people`, `add_person`, `enroll_person`, `message_person`, `get_person_timeline`, `set_team_member`, and others for program settings, Telegram start links and Slack lookups |
+| Monetize and landing page | `get_monetize`, `create_plan`, `update_plan`, `update_monetize_settings`, `get_landing_page`, `update_landing_page`, and others for replacing and deleting plans |
 | Inbox and insights | `list_inbox`, `update_inbox_item`, `get_agent_insights`, `get_user_reports`, `find_sessions` |
 | Datasets | `list_datasets`, `get_dataset`, `create_dataset`, `delete_dataset`, `upload_dataset_from_workspace` |
-| Models and training | `list_models`, `get_model`, `deploy_model`, `stop_serving`, `list_training_runs`, `get_training_run`, `list_experiments`, `start_training`, `cancel_training`, `list_environments`, `create_environment` |
+| Models and training | `list_models`, `deploy_model`, `stop_serving`, `list_training_runs`, `start_training`, `cancel_training`, and others for run details, experiments and environments |
 | Workspace | `get_current_project`, `list_my_projects`, `search`, `recent_failures` |
 | Documentation | `search_docs`, `read_doc`, `list_docs`, `read_guide` |
 
@@ -34,7 +34,7 @@ Besides those, it can use a few built-in tools: `ask_user_question`, `create_art
 
 `search_docs` ranks sections of the product documentation. Its top results carry the matching section's text, so most answers need no second call. `read_doc` reads a page or one section of it by path, and `list_docs` lists every page. The documentation is a bundled snapshot of the Work and Develop pages, so it can lag the live site. When you ask from a page, the runtime tells the Copilot which doc belongs to it.
 
-`find_sessions` finds conversations by what was said in them, across the agents you can see. `search` looks across resources by name and ID in the current project, or in every project you are a member of.
+`find_sessions` finds conversations by what was said in them. With no agent named it searches the current project's agents; with an agent named, only that agent. Either way you need the editor or owner role on the project (or to be a platform admin); a viewer gets no results. `search` looks across resources by name and ID in the current project, or in every project you are a member of.
 
 ### Build guides
 
