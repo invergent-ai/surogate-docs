@@ -16,7 +16,7 @@ Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (w
 
 **Response was wrong.** Thumb-down the turn, then in EVENTS check which tool calls fired (or didn't fire when they should have) and SKILLS to see which skills loaded. Most "wrong answer" issues are missing KB content or a skill that didn't trigger.
 
-**Message rejected with `delimiter_attack`.** The prompt-injection guard found a chat-template control token in the message, such as `<|im_start|>`, `[INST]` or `END SYSTEM`. Pasted code in fenced blocks is no longer flagged. Remove the token, or write it with a space inside.
+**Message rejected with `delimiter_attack`.** The prompt-injection guard found a chat-template control token in the message, such as `<|im_start|>`, `[INST]` or `END SYSTEM`. Pasted code in fenced blocks is no longer flagged. Remove the token, or put a character other than a space inside it (for example `END_SYSTEM`). A space is not enough for `END SYSTEM` and `BEGIN USER`, which match with any spacing.
 
 ## Skills
 

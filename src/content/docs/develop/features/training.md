@@ -280,7 +280,7 @@ Validation imports the environment in the trainer image and builds it, so proble
 | **Could not be checked** | The check itself didn't run (for example the cluster was unavailable). This says nothing about your environment |
 | No chip | It has never been validated. This is true of every environment created before validation existed, and of a fresh template until you validate or publish it |
 
-Only **Validation failed** blocks a GRPO run. Creating a GRPO Environment run against a failed commit is refused with an error that names the first problems and points to the environment's page. Changing a run's environment or version is checked the same way, while saving other settings on a run that already points at a failing version still works. The check happens when the run is created or its environment is changed, not again at **Start**, so an environment that fails after that is still startable. Publishing a failed version asks for confirmation, and the dialog warns that it can't be selected for a run.
+Only **Validation failed** blocks a GRPO run. Creating a GRPO Environment run against a failed commit is refused (`400` from the API) with an error that names the first problems and points to the environment's page. Changing a run's environment or version is checked the same way, while saving other settings on a run that already points at a failing version still works. The check happens when the run is created or its environment is changed, not again at **Start**, so an environment that fails after that is still startable. Publishing a failed version asks for confirmation, and the dialog warns that it can't be selected for a run.
 
 Constraints:
 

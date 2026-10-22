@@ -113,7 +113,7 @@ mcp_servers:
 
 ## The credential vault
 
-**Settings → Vault** is the project's credential store; values are write-only and never shown again after saving. The **Vault** entry on the MCP Servers tab links to it. See [Vault](/work/settings/vault/) for the full tab. Entries are named in an MCP server's `credential_refs`, and every MCP server in the project can reference them.
+**Settings → Vault** is the project's credential store; values are write-only and never shown again after saving, and the list API never returns them. The **Vault** entry on the MCP Servers tab links to it. See [Vault](/work/settings/vault/) for the full tab. Entries are named in an MCP server's `credential_refs`, and every MCP server in the project can reference them.
 
 System-owned credentials (used by platform/system agents) are protected: the API refuses to delete them (`403`), and a credential still consumed by a running agent's MCP server can't be deleted until you stop the consumer (`409`, in-use conflict).
 

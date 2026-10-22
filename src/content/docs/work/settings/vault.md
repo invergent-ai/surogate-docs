@@ -2,7 +2,7 @@
 title: Vault
 ---
 
-The **Vault** holds the keys and tokens your project's agents use: API keys for tools, channel tokens, coding-agent and git credentials. Each key has a name. You save the value once and it is never shown again.
+The **Vault** holds the keys and tokens your project's agents use: API keys for tools, channel tokens, coding-agent and git credentials. Each key has a name. You save the value once; it is stored encrypted and never shown again.
 
 Open **Settings**, then **Vault**. The tab is in both Dev and Work mode and shows the active project's keys, so switch projects first to see another's.
 
