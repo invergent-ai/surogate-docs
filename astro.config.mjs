@@ -212,6 +212,7 @@ export default defineConfig({
                 'work/channels/whatsapp',
                 'work/channels/discord',
                 'work/channels/teams',
+                'work/channels/voice',
                 'work/channels/website-widget',
                 'work/channels/users',
                 'work/channels/self-registration',

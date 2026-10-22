@@ -16,7 +16,7 @@ A Surogate **agent** is a deployed service at `<slug>.cloud.surogate.ai` bundlin
 - **Knowledge bases** — documents it can search at runtime
 - **MCP servers** — connections to external systems (Slack, GitHub, your APIs)
 - **Persona** — the agent's identity, tone, and boundaries. Configure → Identity tab exposes both the short DESCRIPTION field and the full SOUL.md textarea (up to 20,000 characters) in either mode.
-- **Channels** — Web (always on), WhatsApp, Slack, Telegram, Discord, Microsoft Teams, Website widget
+- **Channels** — Web (always on), WhatsApp, Slack, Telegram, Discord, Microsoft Teams, Voice, Website widget
 
 The improvement loop:
 
@@ -34,7 +34,7 @@ Each step has its own chapter:
 | [Review what your agent did](/work/workflow/review-sessions/) | Session detail, quality flags, replay |
 | [Improve your agent](/work/workflow/improve-agent/) | Mark sessions, attach skills/KBs, edit persona |
 
-Plus shorter chapters: **Library** (skills, KBs, MCP servers), **Channels** (Web/WhatsApp/Slack/Telegram/Discord/Teams/Website + end-user accounts, including [self-registration](/work/channels/self-registration/) via your own Firebase), **Conversation tools** (`/goal`, the Copilot, the inbox), **Settings**, [**Monetize**](/work/monetize/) (charge end users via Stripe Connect, Pro+), **Use cases**, **Reference**.
+Plus shorter chapters: **Library** (skills, KBs, MCP servers), **Channels** (Web/WhatsApp/Slack/Telegram/Discord/Teams/Voice/Website + end-user accounts, including [self-registration](/work/channels/self-registration/) via your own Firebase), **Conversation tools** (`/goal`, the Copilot, the inbox), **Settings**, [**Monetize**](/work/monetize/) (charge end users via Stripe Connect, Pro+), **Use cases**, **Reference**.
 
 ## When to flip to Develop mode
 

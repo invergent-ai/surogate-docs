@@ -41,6 +41,7 @@ Every manage screen has **Try it**: a link that opens a real chat with the agent
 - **WhatsApp** — a **Connect WhatsApp** wizard: set the Meta app's webhook from the callback URL + verify token it shows, then paste the Meta Cloud API credentials (Access Token, App Secret, WABA ID). **Manage**: a webhook check and the **Mode** option. See [WhatsApp](/work/channels/whatsapp/).
 - **Discord** — a **Connect Discord** walkthrough (one bot token), then an **Add to a server** install link. **Manage**: **Require @mention**, **Free-response channels**, **Read every message**. See [Discord](/work/channels/discord/).
 - **Microsoft Teams** — a **Connect Microsoft Teams** walkthrough (Azure Bot App ID, tenant ID, client secret, and the messaging endpoint to paste), then **Download app package** to upload in Teams. See [Microsoft Teams](/work/channels/teams/).
+- **Voice** — a **Phone number** from the numbers Surogate provides, then **Save and connect**. **Manage**: language and voice, the greeting and fixed lines, background sound, call limits, pronunciations, **Remember callers**, and **Recent calls**. It has no **Try it** link: call the number. See [Voice](/work/channels/voice/).
 - **Website** — an embeddable chat bubble. Set **Allowed origins**, copy the **Embed code**, cap **Messages per chat**, and reveal the **Publishable key** under Advanced. See [Website widget](/work/channels/website-widget/).
 
 ## Users
