@@ -10,7 +10,7 @@ Your agent answers phone calls. Callers dial a number, the agent greets them, li
 
 - The project [**editor** role](/work/settings/members/#what-each-role-can-do). Viewers can read but not change it. For a system agent you need to be an administrator.
 - A free number. You pick one of the numbers Surogate provides. You can't bring your own number. If none is free, the page says "No free numbers right now. An admin adds them under Settings → Phone numbers."
-- For any language other than Romanian: an account at a speech provider, with its key saved in the project's Vault. See [Language and voice](#language-and-voice).
+- For any language other than Romanian: a speech provider. A hosted provider needs your account's key saved in the project's Vault; for **Hugging Face or your own server** a key is optional. See [Language and voice](#language-and-voice).
 
 ## Configuration in Surogate
 
@@ -20,7 +20,7 @@ Open the agent → [**Publish** → **Channels**](/work/workflow/publish-agent/#
 2. Adjust the sections below, or leave the defaults.
 3. Click **Save and connect**. The status at the top changes from **Off** to **Active**, and calls to the number now reach this agent. (Once connected, the button reads **Save**.)
 
-An agent has one number, and a number belongs to one agent at a time. If someone else takes the number first, Surogate says *This number was just taken. Choose another one.* Choosing a different number and saving frees the old one.
+An agent has one number, and a number belongs to one agent at a time. If someone else takes the number first, or an admin retires it meanwhile, Surogate says *This number was just taken. Choose another one.* Choosing a different number and saving frees the old one.
 
 ## Language and voice
 
@@ -100,7 +100,7 @@ No **Try it** link: call the number from a phone. Until the first call, the scre
 
 ## Recent calls
 
-Once a number is connected, **Recent calls** lists the latest calls, newest first, up to 50:
+Once a number is connected, **Recent calls** lists the latest calls, newest first, up to 50. It also lists calls the agent placed, such as a [Programs](/work/tools/programs/) step or an urgent alert; for those, **Caller** shows the person called.
 
 | Column | Shows |
 |---|---|
