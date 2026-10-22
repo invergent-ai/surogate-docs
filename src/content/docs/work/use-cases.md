@@ -86,14 +86,13 @@ Your support bot is live. Visitors hit a chat bubble in the bottom-right. The bo
 
 - [api.slack.com/apps](https://api.slack.com/apps) → Create New App → From scratch → name it (e.g. `acme-support`) → pick your workspace.
 - Bot Scopes (OAuth & Permissions): `chat:write`, `app_mentions:read`, `im:read`, `im:write`, `channels:history`, `groups:history`, `files:read`, `users:read`.
-- Event Subscriptions → Enable → paste the Request URLs Surogate shows you (see [Slack](/work/channels/slack/)).
 - Basic Information → copy the App ID and Signing Secret.
 - Install to workspace → copy Bot User OAuth Token `xoxb-…`.
 
 **2. Configure in Surogate.**
 
 - Open `acme-support-bot` → Publish → the **Channels** tab → find **Slack** under **Add a channel** → **Connect**.
-- Enter your App ID. The wizard then shows the Request URLs to paste into your Slack app's Event Subscriptions (see [Slack](/work/channels/slack/)).
+- Enter your App ID. The wizard then shows the Request URLs. In your Slack app, turn on Event Subscriptions and paste them (see [Slack](/work/channels/slack/)). If Slack can't verify the URL yet, finish **Connect Slack** below, then click **Retry** in Slack.
 - Paste the Signing Secret and Bot Token, then click **Connect Slack**. There is no separate save step.
 - Defaults are fine for most (Require @mention ON, Reply in thread ON); change them later on the Slack Manage screen.
 
