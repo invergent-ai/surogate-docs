@@ -189,7 +189,7 @@ Creating a run and launching it are **two separate steps**: `POST /api/training-
 2. Start         Click START → pre-start validation runs, then GPUs are provisioned
 3. Run           Training executes (5min to days depending on dataset + model size)
 4. Monitor       Logs, metrics, rollouts, checkpoints via the run detail page
-5. Complete      The run's output lands in the Models page as a new entry; a LoRA run's adapter can be merged there into a standalone model
+5. Complete      The run's output lands in the Models page as a new entry; to turn a LoRA run's adapter into a standalone model, use **Merge** (or **Promote**, when the trainer already merged it) on the run's page
 6. Optional      Activate as an expert via the expert lifecycle
 ```
 
