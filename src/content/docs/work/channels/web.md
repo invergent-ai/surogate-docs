@@ -88,6 +88,44 @@ The slug is set when you deploy the agent (the URL is what your team and custome
 
 You can't change the slug after deployment — only via the dedicated **Rename** button on the agent's Configure page.
 
+## API access
+
+The same endpoint also speaks the OpenAI chat API, so your own software can use the agent from any OpenAI-compatible client or SDK. Every request runs the whole agent, with its skills, tools and memory. Streaming, reasoning and images work as well as plain text.
+
+Open the agent → **Publish** → **Channels** → the **Web chat & API** row under **Live**. The page shows **Chat page** (the link to share) and, under it, **API access**.
+
+### Connection
+
+Once the agent is deployed and running, **Connection** shows three values, each with a **Copy** button:
+
+- **Base URL**: `https://<agent-slug>.cloud.surogate.ai/v1/api`.
+- **Model**: the agent's name.
+- **Python**: a ready snippet that uses the `openai` package with that base URL and model, sends "Hello" and prints the reply. Replace `YOUR_KEY` with a key from below.
+
+Until the agent is running, this card says the endpoint becomes available once the agent is deployed and running.
+
+### Keys
+
+Each key belongs to one agent, and works only on that agent.
+
+1. Type a name in **Name this key (e.g. production)**. A name is required, up to 128 characters.
+2. Click **Create key**.
+3. **Copy your key now** shows the key once. Only a hash is stored, so it cannot be shown again. Copy it, then click **I've saved it**. If you lose it, revoke the key and make a new one.
+
+Each key in the list shows its name, the start of the key, when it was created and when it was last used (**never** until it is first used). **Revoke** stops a key at once, on every copy of the agent that is serving it. With no keys, the list says "No keys yet. Create one to start calling this agent."
+
+A key spends from your own plan, so treat it like staff access: giving it out gives away spend.
+
+Anyone on the project can see the key list. Creating and revoking need the **editor** role or higher; a viewer sees **Create key** and **Revoke** switched off. See [Members and roles](/work/settings/members/).
+
+### Conversations
+
+The agent remembers a conversation across requests. Send the whole message history as usual and it continues in place. If you edit or regenerate, it starts a clean branch. If one key serves several of your own end users, send a different `user` on each request, or set the `X-Surogate-Conversation` header, so their conversations stay apart.
+
+### Programs API
+
+Below the keys is **Programs API**, where each key gets its scopes for journeys and where the webhook is set. See [Programs API and webhooks](/work/tools/programs-api/).
+
 ## Customising the look
 
 For now, branding is limited to:

@@ -6,7 +6,7 @@ Your own software can work with an agent's [Programs](/work/tools/programs/): en
 
 ## Keys and access
 
-The Programs API uses the agent's own API keys, the same ones its OpenAI-compatible API takes. Open the agent → **Publish** → **Channels** → the **Web chat & API** row under **Live** → **API access**. Create a key there if you have none (it is shown once), then scroll to **Programs API**:
+The Programs API uses the agent's own API keys (see [API access](/work/channels/web/#api-access)), the same ones its OpenAI-compatible API takes. Open the agent → **Publish** → **Channels** → the **Web chat & API** row under **Live** → **API access**. Create a key there if you have none (it is shown once), then scroll to **Programs API**:
 
 - **Endpoint** shows the **Base URL**, `https://<your Studio host>/api/v1/agents/<agentId>`, and a `curl` example.
 - **What each key may do** sets, per key: **No access to journeys**, **Read people, steps and escalations** (`journeys:read`), or **Read, enroll and change people** (`journeys:write`, which includes read). A key with no access keeps working on the chat API only.
