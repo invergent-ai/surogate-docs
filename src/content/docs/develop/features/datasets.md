@@ -19,7 +19,7 @@ Click **NEW DATASET** (or, on an empty list, **+ New dataset**) to open the sour
 | **Generate synthetic** | `/studio/datasets/synthetic` | Teacher model generates, judge model filters. | `POST /api/datasets/synthetic` → pipeline run |
 | **Import repository** | `/studio/datasets/import` | Pull a dataset repo from the Hugging Face Hub. | `import_dataset` compute job |
 
-The datasets list also has an **Import from chats** button that jumps straight to the from-chats builder, and **Source** / **Status** filters (All sources · Chats · Expert traces · Synthetic · Upload; All statuses · Ready · Building · Error).
+The datasets list also has an **Import from chats** button that jumps straight to the from-chats builder, and **Source** / **Status** filters (All sources · Chats · Expert traces · Synthetic · Upload; All statuses · Ready · Draft · Building · Error · Cancelled).
 
 Every finished dataset lands in your list as `building` → `ready`, versioned in the Data Hub.
 
@@ -44,9 +44,9 @@ Fields:
 - **Scrub PII** — off by default. See [PII scrubbing](#pii-scrubbing) below.
 - **Estimated output** — `N rows · ~<tokens> tokens` (tokens estimated at ~290 per row).
 
-The page fetches at most the newest 500 chats per agent, and tells you when an agent's list was truncated. A build may post at most 500 chats; above that the summary line asks you to remove an agent or tick **Only good chats**, and **Build dataset** stays disabled.
+The page fetches at most the newest 500 chats per agent, and tells you when an agent's list was truncated. A build may post at most 500 chats; above that the summary line asks you to remove an agent or tick **Only good chats**, and **Quick build** stays disabled (so does **Save draft**).
 
-Click **Build dataset** to kick off the build. You can leave the page while it runs without stopping it, but a from-chats build can't be cancelled once it's started, and it isn't resumable on screen — reloading during a build returns you to the datasets list while the build itself carries on.
+There are two buttons. **Save draft** records the form as a draft dataset without building it (see [Drafts](#drafts)); it works even with zero chats. **Quick build** kicks off the build straight away. You can leave the page while it runs without stopping it, but a from-chats build can't be cancelled once it's started, and it isn't resumable on screen (reloading during a build returns you to the datasets list while the build itself carries on).
 
 ### From chats (advanced) — `/studio/datasets/new`
 
@@ -209,7 +209,7 @@ Token stats are computed for chat uploads, pair uploads, single-text uploads, fr
 
 ![A dataset’s overview: row and token counts, PII scan, and its provenance](../../../../assets/screenshots/dev-dataset-detail.png)
 
-Open a dataset to see four tabs: **Overview**, **Samples**, **Pipeline**, and **Repository**.
+Open a dataset to see up to five tabs: **Overview**, **Samples**, **Configuration**, **Pipeline** and **Repository**. **Configuration** is missing for uploads and imported repositories, which have no recorded recipe. **Pipeline** is for editors only; viewers see the recipe on **Configuration** instead.
 
 ### Overview
 
@@ -220,7 +220,7 @@ Four stat cards across the top:
 - **Avg length** — tokens per sample.
 - **PII** — the scan result. See [PII scrubbing](#pii-scrubbing).
 
-A ready dataset then shows a **This dataset is ready to train on** banner with a **Train on this →** button, which opens the new-run wizard with this dataset already selected.
+A ready dataset then shows a **This dataset is ready to use.** banner with two buttons. **Train on this →** opens the new-run wizard with this dataset already selected. **Use as benchmark →** opens the custom-benchmark form in Evaluations with this dataset already chosen. Both are disabled for viewers.
 
 Below that, two cards:
 
@@ -243,6 +243,10 @@ Figures come from `GET /api/datasets/{id}/stats`, which the Data Hub's stats wor
 Previews the first 20 rows via `GET /api/datasets/{id}/samples?limit=20&split=<split>`. A split selector switches between splits (default `train`, or the first available). Rows that fit the SFT/DPO chat convention render as instruction → response; other rows fall back to a generic key-value column view.
 
 🚧 Known issue: the header counter sometimes shows N samples while the Samples tab shows 0 rows. Workaround: navigate away and back.
+
+### Configuration
+
+The recipe the dataset was built from: for a chats dataset its agents, quality, time range, channel, skill, minimum words, format and PII setting; for a synthetic one its teacher and judge models, temperatures, dedup and format. While the dataset is a draft, editors can change it and press **Save changes**. Once it is built the tab is a read-only record, and so it is for viewers. A dataset created before configuration history shows "Not recorded".
 
 ### Pipeline
 
@@ -284,6 +288,15 @@ For preference learning (DPO, RLHF). Requires both good and bad examples for the
 
 Raw transcripts for analysis. Not used directly in training.
 
+## Drafts
+
+A draft is a dataset recipe that hasn't been built, so it has no rows yet. Its status is **Draft**.
+
+- **Create one.** Press **Save draft** on the from-chats page, or **Clone** an existing dataset.
+- **Clone.** The header of a dataset's detail page has a **Clone** button. It asks for a name (default `<name>-copy`), then creates a draft with the same source, filters and format. A synthetic dataset's pipeline is copied too, including hand edits. Nothing is built until you press **Build**. A built dataset's configuration is frozen, so cloning is how you get "the same recipe with one thing different". Uploads and imported repositories have no recipe, so they have no **Clone**. Editors only.
+- **Edit and build.** A draft opens on its **Configuration** tab. Change the recipe, then press **Build** in the header (**Generate** for a synthetic draft, which starts a generation run). The **Samples** tab says "No samples yet" until then.
+- **Failed or cancelled builds.** A dataset whose build errored or was cancelled before writing any rows is treated like a draft, so **Build** or **Generate** comes back.
+
 ## Datasets for evaluation
 
 ![The dataset list, filterable by source and status](../../../../assets/screenshots/dev-datasets-list.png)
@@ -293,6 +306,8 @@ When you want a dataset specifically for **evaluation** rather than training, us
 - **From Conversations** filtered by 👎 — your worst cases become an eval / regression set.
 - **From Conversations** filtered by 👍 — your best cases become regression checks.
 - **Upload file** with hand-crafted edge cases.
+
+On a ready dataset, **Use as benchmark →** (Overview tab) opens the [custom benchmark](/develop/features/evaluations/#custom-benchmark-builder) form with that dataset already chosen.
 
 Then reference this dataset in the [Evaluation](/develop/features/evaluations/) wizard.
 
