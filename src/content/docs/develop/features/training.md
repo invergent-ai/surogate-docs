@@ -31,7 +31,7 @@ Training parameters (carried in the run's config):
   - Learning rate
   - Batch size
   - Precision: BF16 | FP8 | NVFP4
-  - Adapter: lora / qlora (set lora + lora_rank in config), or full
+  - Adapter: LoRA (set lora + lora_rank in config) or Full
 Compute:
   - Backend: dstack (kubernetes / cloud) or Modal
   - Accelerators: e.g. RTX-PRO-6000:1 on Modal, or GPU:2 on an SSH fleet
@@ -76,7 +76,7 @@ Preference loss (config.loss):
 
 Four constraints are enforced before a run can start, and each mirrors the trainer:
 
-- **LoRA is required.** Each pair is scored against the frozen base, so there has to be a base to freeze. A full fine-tune has no reference to compare against — use SFT for that. The form therefore hides the **Adapter** switch and the **Enable LoRA** toggle for DPO.
+- **LoRA is required.** Each pair is scored against the frozen base, so there has to be a base to freeze. A full fine-tune has no reference to compare against; use SFT for that. The form therefore hides the **Adapter** switch and the **Enable LoRA** toggle for DPO.
 - **`per_device_train_batch_size` must be even.** A chosen/rejected pair is two rows, so an odd batch would split a pair across steps.
 - **`target_margin` requires `reference_free: true`.** The margin is defined against a reference-free score.
 - **Dataset entries are `type: preference`**, or carry no type at all. Any other value parses and then fails inside the container.
@@ -189,7 +189,7 @@ Creating a run and launching it are **two separate steps**: `POST /api/training-
 2. Start         Click START → pre-start validation runs, then GPUs are provisioned
 3. Run           Training executes (5min to days depending on dataset + model size)
 4. Monitor       Logs, metrics, rollouts, checkpoints via the run detail page
-5. Complete      Final model lands in Models page as a new entry
+5. Complete      The run's output lands in the Models page as a new entry; a LoRA run's adapter can be merged there into a standalone model
 6. Optional      Activate as an expert via the expert lifecycle
 ```
 

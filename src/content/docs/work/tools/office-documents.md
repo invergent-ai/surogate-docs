@@ -15,7 +15,7 @@ Click an office file in the [workspace pane](/work/workflow/run-agent/#the-works
 | `.docx`, `.xlsx`, `.pptx`, `.pdf` | Open for editing |
 | `.doc`, `.odt`, `.rtf`, `.xls`, `.ods`, `.ppt`, `.odp` | Open read-only (the editor converts them to show them) |
 
-A document also opens read-only when the chat itself is read-only, and in a scheduled run's conversation. Documents in a folder on a computer open too; your saves land on the computer, and wait there if it is offline or has not yet allowed the save.
+A document also opens read-only when the chat itself is read-only, and in a scheduled run's conversation. Documents in a folder on a computer connected through Surogate Desktop open too; your saves land on the computer, and wait there if it is offline or has not yet allowed the save.
 
 ## Editing and saving
 
@@ -28,7 +28,7 @@ While a document is open in the editor, the editor is the only thing that writes
 In a Word document (`.docx`), spreadsheet (`.xlsx`), presentation (`.pptx`) or PDF (`.pdf`), the agent works through its own editor session, alongside you:
 
 - **`office_read`** reads the document as it stands, with everyone's latest edits: an outline of its blocks (a spreadsheet's sheets, a presentation's slides, a PDF's pages), one block, range, slide or page in full, or a search for words, plus its comment threads and, in Word, tracked changes, and who else has it open.
-- **`office_edit`** changes it: insert, replace, re-word in place keeping the formatting, delete or move blocks; add comments (in Word; in the other types it replies to and resolves existing threads). Headings, lists and tables use the document's own styles. In Word it can also add charts (bar, column, line, pie and more) and images from the workspace, and plant placeholder sections that say what will go there before filling them in one by one. In a spreadsheet it sets cells, formulas and formats, adds charts and manages sheets; in a presentation it writes slides and speaker notes; in a PDF it fills form fields, adds, removes or rotates pages, places notes or stamps and redacts text. It cannot change a PDF's existing text.
+- **`office_edit`** changes it. In Word: insert, replace, re-word in place keeping the formatting, delete or move blocks, and add comments (in the other types it replies to and resolves existing threads). Headings, lists and tables use the document's own styles. In Word it can also add charts (bar, column, line, pie and more) and images from the workspace, and plant placeholder sections that say what will go there before filling them in one by one. In a spreadsheet it sets cells, formulas and formats, adds charts and manages sheets; in a presentation it writes slides and speaker notes; in a PDF it fills form fields, adds, removes or rotates pages, places notes or stamps and redacts text. It cannot change a PDF's existing text.
 
 When the agent edits a document, it opens beside the chat by itself, unless you are looking at another file; on a phone the chat stays in view. Each call's changes appear whole, under the agent's name, and the agent says a short line in the chat between calls. A missing `.docx`, `.xlsx`, `.pptx` or `.pdf` is created blank.
 
@@ -40,7 +40,7 @@ In a Word document, spreadsheet, presentation or PDF open in the file pane, type
 
 ## Templates for new files
 
-When the agent creates a new Word document, spreadsheet or presentation, it starts from a template of the kind you asked for instead of a blank page. Word has report, letter, meeting minutes, proposal, FAQ and how-to guide; spreadsheets have budget, invoice and tracker; presentations have slide layouts (title, statement, big number, cards, table, chart, timeline, closing). The agent adapts the sections to your request and drafts what you describe, but leaves out names, dates and figures you did not give it. A new PDF is created blank. You do not pick a template yourself; ask the agent for the kind of document you want.
+When the agent creates a new Word document, spreadsheet or presentation, it follows a template of the kind you asked for instead of starting from a blank page. Word has report, letter, meeting minutes, proposal, FAQ and how-to guide; spreadsheets have budget, invoice and tracker; presentations have slide layouts (title, statement, big number, cards, table, chart, timeline, closing). The agent adapts the sections to your request and drafts what you describe, but leaves out names, dates and figures you did not give it. A new PDF is created blank. You do not pick a template yourself; ask the agent for the kind of document you want.
 
 ## Self-hosted platforms
 
