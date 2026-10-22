@@ -51,10 +51,10 @@ Click **Publish** in the left nav, then open the **Channels** tab. Find **Slack*
 
 The wizard asks for your Slack credentials:
 
-- **App Token** — `xapp-…` from your Slack app's **App-Level Tokens** (scope `connections:write`)
+- **App ID** and **Signing Secret** — from your Slack app's **Basic Information**
 - **Bot Token** — `xoxb-…` from **OAuth & Permissions**
 
-Don't have a Slack app yet? Create one at [api.slack.com/apps](https://api.slack.com/apps) → enable **Socket Mode** → add bot scopes (`chat:write`, `app_mentions:read`, `im:read`, `im:write`, `channels:history`, `groups:history`, `users:read`) → install to your workspace.
+Don't have a Slack app yet? Create one at [api.slack.com/apps](https://api.slack.com/apps) → add bot scopes (`chat:write`, `app_mentions:read`, `im:read`, `im:write`, `channels:history`, `groups:history`, `files:read`, `users:read`) → paste the Request URLs the wizard shows into **Event Subscriptions** → install to your workspace.
 
 Finish the wizard and Slack moves to the **Live** list within a few seconds. DM the bot or `@mention` it in a channel.
 

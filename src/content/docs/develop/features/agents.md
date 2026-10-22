@@ -15,7 +15,7 @@ An agent bundles six things, configured through five tabs:
 | **OVERVIEW** | Four 24h stat cards (requests, error rate, latency incl. p95, tokens) + four hourly bar charts, a Conversations — last 7 days card, and the Connected skills/MCPs card. |
 | **KNOWLEDGE & TOOLS** | Attach / detach Skills, Knowledge Bases, MCP Servers; per-row DETACH; ATTACH dropdown. |
 | **USERS** | Per-agent end-user accounts. Add Web users, set passwords or SSO, manage display names. |
-| **CHANNELS** | Web (always on), Slack (App + Bot tokens, threading, mention requirements), Telegram (Bot token, DM/group toggles), WhatsApp (access token, app secret, Business Account ID), Website widget (publishable key, allowed origins, embed code, session message cap). |
+| **CHANNELS** | Web (always on), Slack (App ID, Signing Secret and Bot Token, threading, mention requirements), Telegram (Bot token, DM/group toggles), WhatsApp (access token, app secret, Business Account ID), Website widget (publishable key, allowed origins, embed code, session message cap). |
 | **CONFIG** | Persona (SOUL.md), Tool Access, Web & Browser Egress, EU AI Act Transparency, Saga, Session Reset, Environment Variables. |
 
 Plus four action buttons:
@@ -106,15 +106,16 @@ Always on. Endpoint: `https://<slug>.cloud.surogate.ai`. End-user accounts are m
 
 ### Slack
 
-Toggle ON, paste credentials:
+Toggle ON, paste credentials. Slack connects over webhooks, so you also paste the Request URLs the form shows into your Slack app's Event Subscriptions (see [Slack](/work/channels/slack/)):
 
-- **App Token** — `xapp-...` with `connections:write` scope (Socket Mode)
+- **App ID** — from your Slack app's Basic Information
+- **Signing Secret** — from Basic Information
 - **Bot Token** — `xoxb-...` with at minimum `chat:write`, `app_mentions:read`, `im:read`, `im:write`, `channels:history`, `groups:history`, `files:read`, `users:read`
 
 Behaviour settings:
 
 - **Require @mention** (default ON) — bot only responds in channels when @mentioned
-- **Allow Bots** — `None` / `DMs only` / `Channels only` / `All`
+- **Allow Bots** — `None` / `Mentions only` / `All`
 - **Reply in Thread** (default ON) — responses inside the thread
 - **Reply Broadcast** (default OFF) — when on, thread replies also post to the channel
 - **Free Response Channels** — comma-separated channel IDs where no @mention is needed (dedicated bot channels)

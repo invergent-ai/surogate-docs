@@ -34,7 +34,7 @@ Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (w
 
 ## Channels
 
-**Slack bot is silent.** Verify bot scopes (at minimum `app_mentions:read`, `chat:write`, `im:read`, `im:write`, `channels:history`, `groups:history`, `files:read`). Re-install the app after adding scopes. Confirm Socket Mode is on and the App-Level Token has `connections:write`.
+**Slack bot is silent.** Verify bot scopes (at minimum `app_mentions:read`, `chat:write`, `im:read`, `im:write`, `channels:history`, `groups:history`, `files:read`). Re-install the app after adding scopes. Confirm the Event Subscriptions Request URL shows **Verified** in Slack.
 
 **Telegram bot replies once then stops.** Another instance is consuming Telegram updates. Stop the other instance — Telegram only delivers each update once.
 
