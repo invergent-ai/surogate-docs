@@ -82,7 +82,7 @@ Availability: each tool is **dropped from the agent's toolset entirely** when no
 | `skill_view` | Read a specific skill's body |
 | `skill_manage` | Create / update / delete skills from inside a session |
 | `consult_expert` | Delegate to a configured expert (model-backed skill) |
-| `skill_step` | Mark where the agent is in a numbered procedure skill: `started`, `completed` or `skipped` for a step id such as `s3`. It only records the step, which the skill's path replay shows. Offered only when an attached skill has a procedure graph, even if an allowlist predates the skill |
+| `skill_step` | Mark where the agent is in a numbered procedure skill: `started`, `completed` or `skipped` for a step id such as `s3`. It only records the step, which the skill's path replay shows. Offered only when an attached skill has a procedure graph. If the agent uses a Tool Access allowlist, the allowlist must name `skill_step`, or the governance gate refuses the call |
 
 ## Knowledge base
 

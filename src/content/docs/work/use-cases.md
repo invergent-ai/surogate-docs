@@ -38,7 +38,7 @@ For more complex multi-step recipes (fine-tune an expert, build an MCP server, A
 
 - Click **New chat** in the agent's left nav (between Publish and Inbox).
 - Ask 5 representative questions: pricing, features, "how do I…?", troubleshooting, refund policy.
-- Open the session afterwards from **Sessions** in the WORK sidebar — confirm the agent called the KB tools (`kb_search_pages` / `kb_list_pages` / `kb_read_page`) and grounded its answers.
+- Open the session afterwards from **Sessions** in the WORK sidebar. Confirm the agent called the KB tools (`kb_search_pages` / `kb_list_pages` / `kb_read_page`) and grounded its answers.
 
 **5. Customise the persona.**
 
@@ -205,21 +205,21 @@ Press **⌘+/** anywhere in `ops.surogate.ai` and ask:
 |---|---|
 | *"What agents do I have, and how many sessions did each have yesterday?"* | Calls `list_agents` and `recent_failures`, summarises |
 | *"Show me my customer-support-bot's attached skills and KBs."* | Calls `get_agent` |
-| *"Find sessions where the agent thumb-downed in the last 7 days."* | Filters the sessions list, presents links |
+| *"Find sessions where the agent thumb-downed in the last 7 days."* | Searches sessions with `find_sessions`, presents links |
 | *"Create a skill called `weekly-summary` that produces 5-bullet summaries."* | Generates the skill content, calls `create_skill`, returns the new skill ID |
 | *"Attach `acme-product` KB to `acme-support-bot`."* | Calls `attach_kb_to_agent` |
-| *"Scale `acme-support-bot` to 3 replicas."* | Calls `clarify` first (confirmation card), then `scale_agent` |
-| *"Delete the `test-summarizer-bot` agent."* | Calls `clarify` (re-quotes the resource ID), then `delete_agent` |
+| *"Scale `acme-support-bot` to 3 replicas."* | Asks you in the chat first (`ask_user_question`), then calls `scale_agent` |
+| *"Delete the `test-summarizer-bot` agent."* | Asks you in the chat first, naming the agent, then calls `delete_agent` |
 
 ### Behaviours to expect
 
-- **Confirmation cards** before destructive ops or anything that costs money. Click Yes or No.
+- **A question in the chat** before destructive ops or anything that costs money. Answer it before the Copilot goes on.
 - **Links to in-app pages** in responses — clicking jumps you to that resource.
 - **Errors are returned as text** ("Couldn't find a knowledge base named X") rather than the Copilot retrying blindly.
 
 ### Behaviours to avoid
 
-- Don't expect the Copilot to browse the web. By design it's read-only Q&A over your platform; if you ask it to research something external, it'll politely refuse.
+- Don't expect the Copilot to browse the web. By design it works from the platform's own tools; if you ask it to research something external, it'll politely refuse.
 - Don't expect it to know across orgs. It operates inside your current project.
 
 ---

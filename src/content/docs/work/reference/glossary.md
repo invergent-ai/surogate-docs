@@ -8,7 +8,7 @@ Every Surogate term you'll see in Work mode, in one place.
 |---|---|
 | **AI disclosure** | The per-agent EU AI Act (Art. 50) notice telling end users they're talking to an AI — a web banner, or the first message on messaging channels. Levels: Basic / Enhanced / Full / None. |
 | **Agent** | A deployed AI service with a URL like `<slug>.cloud.surogate.ai`. Bundles a model, skills, knowledge bases, MCP servers, persona, and channels. |
-| **CLARIFY** | A built-in confirmation card the agent (or Copilot) shows before destructive or expensive operations. You click Yes or No. |
+| **CLARIFY** | Legacy name for `ask_user_question`: the agent (or Copilot) asks you a question in the chat, with options to pick from or a typed answer. |
 | **Allowance (per-user)** | The usage budget one end user draws from on one agent: a period grant (subscription tier, trial, or free-mode cap; resets on cycle) plus a top-up bucket (token packs; never expires). |
 | **Browsing time** | Metered wall-clock minutes a buyer's agent browser may stay open. Distinct from the project's own web-browsing wallet. |
 | **Buy page** | The hosted storefront at `/buy/<agent-slug>` where buyers sign in, purchase offers, and manage subscriptions. |
