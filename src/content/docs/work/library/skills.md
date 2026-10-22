@@ -15,7 +15,7 @@ A **skill** is a small markdown file (a `SKILL.md`) that tells the agent how to 
 **Library → Skills & Tools → Skills tab.** (The page is titled "Skills & Tools" and carries two tabs: **Skills** and **MCP Servers**.) Layout:
 
 - **Left rail** — a search box (`Search skills…`), a **New skill** button, then the list of every skill in your workspace. Each row shows an icon, the display name, and a `version · used by N agents` line.
-- **Right pane** — detail for the selected skill: the display name + a version chip, a **Used by N agents** line, **Edit / Publish / Delete**, its tags, and inner **Content / Repository** tabs.
+- **Right pane** — detail for the selected skill: the display name + a version chip, a **Used by N agents** line, **Edit / Optimize / Publish / Export / Delete**, its tags, and inner **Content / Repository** tabs.
 
 The **Content** tab renders the skill's frontmatter (name / description / trigger) above the rendered markdown body. The **Repository** tab (shown once the skill has been provisioned in the Hub) opens a file browser over the skill's git-backed repo.
 
@@ -54,7 +54,7 @@ The body must be non-empty — it's the actual instruction set the LLM follows. 
 
 ## Adding a skill
 
-Click **New skill** in the Skills tab. This opens an **Add a skill** panel with a three-way segmented control:
+Click **New skill** in the Skills tab. This opens an **Add a skill** panel. Choose **Write markdown** (the default) or **Procedure canvas**, which builds the skill as a flowchart; see [Skill canvas](/develop/features/skill-canvas/). Under **Write markdown** there is a three-way segmented control:
 
 | Tab | What it is |
 |---|---|
@@ -62,11 +62,17 @@ Click **New skill** in the Skills tab. This opens an **Add a skill** panel with 
 | **From scratch** | A form: Name, Display Name, Description, Trigger, Tags, and a markdown editor for the content. |
 | **Import** | Drop in a `SKILL.md` file or a `.zip` archive (e.g. one exported from [agentskills.io](https://agentskills.io)). Every file in the archive is uploaded to the skill's repository. |
 
+An imported `.zip` that includes a `SKILL.graph.json` (any zip made by **Export** from a canvas skill) stays a canvas skill, editable on the canvas. A graph file that isn't valid is dropped, and the skill imports as plain markdown. Importing needs the editor role.
+
 All three land the skill in your workspace Library; from the agent's own Skills & Tools tab (see below) they additionally auto-attach it to that agent.
 
 :::note[Templates are real, not empty]
 The Browse tab is backed by a live template registry (`/api/skill-templates`) organized into categories. Importing one gives you a full, working starting point you then customize — you're never editing the original.
 :::
+
+### Export a skill
+
+Click **Export** in the skill's header, next to **Publish**, to download the skill as `<name>.zip`. The zip holds every file in the skill's repository under a folder named for the skill, including `SKILL.graph.json` for a canvas skill. **Import** reads that zip back. **Export** is off until the skill has a repository in the Hub. Anyone who can see the skill can export it; the other header buttons need the editor role.
 
 ### Create a skill from a chat
 
