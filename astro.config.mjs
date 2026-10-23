@@ -220,6 +220,11 @@ export default defineConfig({
               ],
             },
             {
+              label: 'Surogate Desktop',
+              collapsed: true,
+              items: ['work/desktop/overview', 'work/desktop/projects'],
+            },
+            {
               label: 'Settings',
               collapsed: true,
               items: [
@@ -281,6 +286,7 @@ export default defineConfig({
               collapsed: true,
               items: [
                 'develop/features/skills-and-experts',
+                'develop/features/skill-canvas',
                 'develop/features/skill-optimization',
                 'develop/features/knowledge-bases',
                 'develop/features/mcp-and-vault',

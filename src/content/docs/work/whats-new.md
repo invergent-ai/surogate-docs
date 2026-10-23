@@ -24,7 +24,13 @@ Every project member now has a role, Viewer, Editor or Owner, that decides what 
 
 ### Now documented
 
-Two earlier features are now documented: [voice](/work/channels/voice/) and [API access for web chat](/work/channels/web/#api-access).
+Earlier features that now have their own pages:
+
+- [Voice](/work/channels/voice/).
+- [API access for web chat](/work/channels/web/#api-access).
+- [Surogate Desktop (Linux)](/work/desktop/overview/): a desktop app that lets your agent work on your own computer.
+- [Projects in Surogate Desktop](/work/desktop/projects/): a coordinator chat that splits a goal into threads.
+- [Skill canvas](/develop/features/skill-canvas/): draw a skill as a flow of steps. See also [Export a skill](/work/library/skills/#export-a-skill).
 
 ## October 14, 2026: Surogate 1.14.10 (runtime 2.18.1)
 

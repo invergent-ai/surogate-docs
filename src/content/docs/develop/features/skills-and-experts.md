@@ -6,7 +6,7 @@ sidebar:
 
 The **Skills & Tools** page (in Work mode's nav) has two tabs — **SKILLS** and **MCP SERVERS**; this chapter is the builder's deep dive into both. A skill is a markdown file (`SKILL.md`) the agent loads into its prompt. An **expert** is a skill whose `type` is `expert` — backed by a fine-tuned model that runs in a bounded mini-loop.
 
-This chapter covers both. For the operator's walk-through of writing a skill in the UI, see [Work mode → Skills](/work/library/skills).
+This chapter covers both. For the operator's walk-through of writing a skill in the UI, see [Work mode → Skills](/work/library/skills). To build a skill as a flowchart with branches and checks, see [Skill canvas](/develop/features/skill-canvas/).
 
 ## `SKILL.md` format
 

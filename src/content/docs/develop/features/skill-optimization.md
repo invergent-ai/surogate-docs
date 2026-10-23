@@ -4,7 +4,7 @@ title: Skill optimization
 
 Skill optimization automatically searches for a better `SKILL.md` for one of your skills. It runs the skill against a target agent, reflects on where it fell short, proposes edited candidates, scores them, and keeps the best. **The live skill is never changed** until you explicitly apply a candidate.
 
-See [Skills](/develop/features/skills-and-experts/) for what a skill is; this page covers optimization runs.
+See [Skills](/develop/features/skills-and-experts/) for what a skill is; this page covers optimization runs. Skills built on the [Skill canvas](/develop/features/skill-canvas/) can't be optimized.
 
 ## Starting a run
 
