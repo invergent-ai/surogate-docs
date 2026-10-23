@@ -234,7 +234,6 @@ export default defineConfig({
                 'work/settings/billing',
                 'work/settings/members',
                 'work/settings/vault',
-                'work/settings/admin',
               ],
             },
             'work/tools/copilot',

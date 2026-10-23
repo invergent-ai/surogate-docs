@@ -91,7 +91,7 @@ The list ends with **New project**, which asks for a **Name** and a **Color**. Y
 
 The Work navigation has no switcher. Work uses the project you last picked, which your browser remembers, so switch in Dev mode first.
 
-In every mode, platform administrators also get the **Users** and **Phone numbers** tabs in Settings. See [Admin settings](/work/settings/admin/).
+In every mode, platform administrators also get the **Users** and **Phone numbers** tabs in Settings. This page doesn't cover them.
 
 ## In enterprise mode
 
