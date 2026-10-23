@@ -26,7 +26,7 @@ Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (w
 
 ## Knowledge bases
 
-**COMPILE reports an error.** One bad file no longer fails the whole compile: healthy sources still produce a wiki, and each failing file shows its own error inline in the SOURCES list with a per-file retry. `error` on the KB means "at least one source failed", so open the wiki from the **Wiki pages** stat card before assuming nothing was built. Persistent per-file failures: reduce source size (split large documents) and verify the file is well-formed.
+**A build reports an error.** One bad file no longer fails the whole build: healthy sources still produce a wiki, and each failing file shows its own error inline in the SOURCES list with a per-file retry. `error` on the KB means "at least one source failed", so open the wiki from the **Wiki pages** stat card before assuming nothing was built. Persistent per-file failures: reduce source size (split large documents) and verify the file is well-formed.
 
 **CSV upload shows 0 samples.** Known issue. Workaround: convert to a markdown-formatted summary and re-upload.
 

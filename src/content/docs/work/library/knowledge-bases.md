@@ -34,7 +34,7 @@ You add SOURCES (files, URLs, etc.)
    │   extracts structured       │
    │   knowledge, deduplicates   │
    └─────────────┬───────────────┘
-                 │ COMPILE
+                 │ BUILD
                  ↓
    ┌─────────────────────────────┐
    │   WIKI — searchable index   │
@@ -81,7 +81,7 @@ Very large documents compile better in chapter-sized chunks. Big PDFs route thro
 
 ## Compiling
 
-Click **COMPILE NOW** (or the COMPILE button at the top of the KB detail).
+Click **Build** at the top of the knowledge base's page (also on the Sources tab).
 
 What happens:
 
@@ -151,9 +151,9 @@ Plus the agent gains `kb_search_pages`, `kb_list_pages` and `kb_read_page` as av
 
 Two patterns:
 
-**Append a new source**: SOURCES → ADD SOURCE → upload → COMPILE.
+**Append a new source**: SOURCES → ADD SOURCE → upload → **Build**.
 
-**Replace existing content**: delete the old source (row action → Delete), add the new file, COMPILE.
+**Replace existing content**: delete the old source (row action → Delete), add the new file, **Build**.
 
 Sources don't auto-sync from their origin. For frequently-changing content, wait for the S3 / GitHub / Notion / URL source types to ship — they'll have continuous-sync.
 
@@ -168,7 +168,7 @@ You have a product, `acme-shop`, and you want a customer-support agent to know y
 
 1. Create a KB `acme-product`.
 2. Add sources: `getting-started.md`, `pricing.md`, `faq.md`, `known-issues.csv`.
-3. COMPILE. Wait. Status: `active`.
+3. **Build**. Wait. Status: `active`.
 4. Open the wiki from the **Wiki pages** stat card → confirm relevant content surfaces for typical questions.
 5. Deploy a new agent (Templates page → **Start from scratch** → fill in the dialog) or pick an existing one.
 6. Open the agent → Configure → Knowledge Bases tab → attach `acme-product`.

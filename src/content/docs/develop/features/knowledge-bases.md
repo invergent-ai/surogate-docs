@@ -20,7 +20,7 @@ Source files (markdown, PDF, CSV)
    │   structured knowledge,     │
    │   deduplicates              │
    └─────────────┬───────────────┘
-                 │ COMPILE (POST /api/knowledge-bases/{id}/compiles)
+                 │ BUILD (POST /api/knowledge-bases/{id}/compiles)
                  ▼
    ┌─────────────────────────────┐
    │   Wiki — searchable index   │
@@ -64,7 +64,7 @@ When the other source types ship, they'll have continuous sync (re-compile on de
 
 Not chosen at creation. Change it later in the **Configure** tab of the KB. The choices are **Surogate** (the default), **Surogate Pro**, and any model deployed in the KB's project. A change applies to the next compile; use **Rebuild** to redo pages an earlier model wrote.
 
-The curator runs once per source on COMPILE. The cost is dominated by the size of the source corpus.
+The curator runs once per source on each **Build**. The cost is dominated by the size of the source corpus.
 
 ## Compile
 

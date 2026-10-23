@@ -21,7 +21,7 @@ For more complex multi-step recipes (fine-tune an expert, build an MCP server, A
 - Library → Knowledge Bases → **NEW KNOWLEDGE BASE**.
 - Name `acme-product`, brief description, leave the language as English.
 - SOURCES → ADD SOURCE → upload each markdown / PDF, one at a time.
-- COMPILE. Wait 30s–3min. Status: `active`.
+- **Build**. Wait 30s to 3min. Status: `active`.
 - Open the wiki from the **Wiki pages** card, search a typical question, and confirm relevant content surfaces ([how](/work/library/knowledge-bases/#browsing-the-wiki)).
 
 **2. Create the agent.**
@@ -72,7 +72,7 @@ Your support bot is live. Visitors hit a chat bubble in the bottom-right. The bo
 
 - Review sessions daily for the first week. Thumb-down anything bad.
 - For bad sessions, check which skill should have fired but didn't — write or fix one.
-- Add new KB sources as your product evolves; click COMPILE to refresh.
+- Add new KB sources as your product evolves; click **Build** to refresh.
 
 ---
 
@@ -173,7 +173,7 @@ By cause: "missing facts," "wrong tone," "wrong tool," "wrong workflow." Each bu
 
 - SOURCES → ADD SOURCE → upload markdown wiki pages one at a time.
 - Then upload the tickets CSV.
-- COMPILE. Wait — large corpuses can take 5+ minutes per source.
+- **Build**. Wait: large corpuses can take 5+ minutes per source.
 
 **4. Verify the wiki.**
 
@@ -188,7 +188,7 @@ By cause: "missing facts," "wrong tone," "wrong tool," "wrong workflow." Each bu
 
 ### Follow-up
 
-- Refresh the ticket CSV monthly. Delete the old source, upload the new one, COMPILE.
+- Refresh the ticket CSV monthly. Delete the old source, upload the new one, **Build**.
 - When S3/GitHub/Notion source types ship, switch to continuous sync.
 
 ---
