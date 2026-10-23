@@ -138,7 +138,7 @@ Switch the mode from the bar. Going to **Asks every time** is immediate. Going t
 
 ## Your browser
 
-The agent's profile is apart from yours. Firefox is not supported. Choose the browser in Surogate's **Settings**, under **Browser** (**Agent's browser**). A change applies the next time the agent's browser starts.
+The agent's browser profile is apart from yours. Firefox is not supported. Choose the browser in Surogate's **Settings**, under **Browser** (**Agent's browser**). A change applies the next time the agent's browser starts.
 
 ## When the computer is away
 
