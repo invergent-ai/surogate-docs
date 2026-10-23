@@ -19,10 +19,10 @@ For more complex multi-step recipes (fine-tune an expert, build an MCP server, A
 **1. Build a knowledge base.**
 
 - Library → Knowledge Bases → **NEW KNOWLEDGE BASE**.
-- Name `acme-product`, brief description, leave curator model as default.
+- Name `acme-product`, brief description, leave the language as English.
 - SOURCES → ADD SOURCE → upload each markdown / PDF, one at a time.
 - COMPILE. Wait 30s–3min. Status: `active`.
-- Verify in the WIKI tab — search a typical question, confirm relevant content surfaces.
+- Open the wiki from the **Wiki pages** card, search a typical question, and confirm relevant content surfaces ([how](/work/library/knowledge-bases/#browsing-the-wiki)).
 
 **2. Create the agent.**
 
@@ -167,7 +167,7 @@ By cause: "missing facts," "wrong tone," "wrong tool," "wrong workflow." Each bu
 **2. Create the KB.**
 
 - Library → Knowledge Bases → NEW KNOWLEDGE BASE → name `acme-support-corpus`.
-- Default curator model is fine for most cases. For very technical content (legal, medical), pick a smarter curator at creation — it's locked after.
+- Default curator model is fine for most cases. For very technical content (legal, medical), switch to a smarter curator model later in the KB's **Configure** tab, then **Rebuild**.
 
 **3. Upload sources.**
 
@@ -177,7 +177,7 @@ By cause: "missing facts," "wrong tone," "wrong tool," "wrong workflow." Each bu
 
 **4. Verify the wiki.**
 
-- Open the KB → **Wiki** tab → search a real customer question. Confirm:
+- Open the wiki from the **Wiki pages** card and search a real customer question. Confirm:
   - Wiki page surfaces if the answer is in the docs
   - Ticket resolution surfaces if there's a relevant past case
   - Cross-source synthesis page combines both

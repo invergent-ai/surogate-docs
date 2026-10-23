@@ -16,7 +16,7 @@ Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (w
 
 **Response was wrong.** Thumb-down the turn, then in EVENTS check which tool calls fired (or didn't fire when they should have) and SKILLS to see which skills loaded. Most "wrong answer" issues are missing KB content or a skill that didn't trigger.
 
-**Message rejected with `delimiter_attack`.** The prompt-injection guard flagged triple-backtick fences. Use 4-space-indented code blocks instead.
+**Message rejected with `delimiter_attack`.** The prompt-injection guard found a chat-template control token in the message, such as `<|im_start|>`, `[INST]` or `END SYSTEM`. Pasted code in fenced blocks is no longer flagged. Remove the token, or put a character other than a space inside it (for example `END_SYSTEM`). A space is not enough for `END SYSTEM` and `BEGIN USER`, which match with any spacing.
 
 ## Skills
 
@@ -26,7 +26,7 @@ Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (w
 
 ## Knowledge bases
 
-**COMPILE reports an error.** One bad file no longer fails the whole compile — healthy sources still produce a wiki, and each failing file shows its own error inline in the SOURCES list with a per-file retry. `error` on the KB means "at least one source failed", so check the WIKI tab before assuming nothing was built. Persistent per-file failures: reduce source size (split large documents) and verify the file is well-formed.
+**COMPILE reports an error.** One bad file no longer fails the whole compile: healthy sources still produce a wiki, and each failing file shows its own error inline in the SOURCES list with a per-file retry. `error` on the KB means "at least one source failed", so open the wiki from the **Wiki pages** stat card before assuming nothing was built. Persistent per-file failures: reduce source size (split large documents) and verify the file is well-formed.
 
 **CSV upload shows 0 samples.** Known issue. Workaround: convert to a markdown-formatted summary and re-upload.
 

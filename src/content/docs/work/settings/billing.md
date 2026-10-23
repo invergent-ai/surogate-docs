@@ -2,6 +2,8 @@
 title: Billing
 ---
 
+The **Billing** tab is hidden for projects on the Staff or Enterprise plan, which carry no subscription, and on enterprise installations (see [In enterprise mode](/work/settings/members/#in-enterprise-mode)). The **Authentication** tab is hidden on enterprise installations too.
+
 ## Plans
 
 ![The four plans with the current one marked, and the enterprise contact row beneath](../../../../assets/screenshots/work-settings-billing-plans.png)

@@ -12,7 +12,7 @@ You wire a server up once in the Library; any agent in your workspace can then a
 
 **Library → Skills & Tools → MCP Servers tab.**
 
-- **Left rail** — a **Vault** button at the top (a lock icon, showing how many keys are stored), a search box, then the list of every server. Each row shows the server name and a `TRANSPORT · LAYER · N tools` line, with a green dot when the server is enabled.
+- **Left rail**: a **Vault** entry at the top (a lock icon, marked **In Settings**, which opens **Settings → Vault**), a search box, then the list of every server. Each row shows the server name and a `TRANSPORT · LAYER · N tools` line, with a green dot when the server is enabled.
 - **Right pane** — the selected server's detail: name + transport/layer chips, an Enabled/Disabled status with the number of connected agents, **Disable/Enable · Edit · Delete**, the connection details, the auth method, the security-scan result, and the list of exposed tools.
 
 Click any server to open its detail panel; click **Add server** (top right) to create one.
@@ -55,7 +55,7 @@ The proxy also supports **Bearer token** and **no auth** for servers configured 
 
 ## The Vault
 
-The **Vault** button at the top of the left rail opens the credential store — where API keys, OAuth secrets, and other tokens the proxy needs live. Each entry shows its name and when it was added; you can **Update** it (set a new value) or **Remove** it. Values are write-only: they're never displayed back to you.
+The **Vault** entry at the top of the left rail opens **Settings → Vault**, where the keys the proxy needs live and values are never shown again; see [Vault](/work/settings/vault/).
 
 :::note[Credentials never reach the sandbox]
 The agent's sandbox is the most untrusted component in the platform. Credentials live in the Vault and are injected by the MCP proxy as it forwards each call — even a fully prompt-injected agent can't exfiltrate them.

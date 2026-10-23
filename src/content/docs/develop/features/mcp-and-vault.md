@@ -4,7 +4,7 @@ title: MCP & Vault
 
 The **Model Context Protocol** (MCP) is an open standard for connecting LLMs to external tools and data. Surogate ships a full MCP client + a credential-injecting proxy + security scanning.
 
-You manage MCP servers in **Skills & Tools → MCP SERVERS tab** (Develop or Work mode). The Vault button at the top of that tab opens the credential store.
+You manage MCP servers in **Skills & Tools → MCP SERVERS tab** (Develop or Work mode). The **Vault** entry at the top of the left rail takes you to the credential store in **Settings → Vault** (see [Vault](/work/settings/vault/)).
 
 ## Architecture
 
@@ -113,13 +113,7 @@ mcp_servers:
 
 ## The credential vault
 
-The **Vault** button on the MCP Servers tab opens the credential store:
-
-| Field | Notes |
-|---|---|
-| **Name** | Vault entry name (e.g. `GITHUB_TOKEN`) — named in an MCP server's `credential_refs` |
-| **Value** | Write-only. You set it, and later **Update** it (store a new value) or **Remove** it — but the value is never displayed back to you. The list API returns names + timestamps only, never the secret. |
-| **Scope** | Project-scoped (= org). Credentials belong to the project; every MCP server in the project can reference them. |
+**Settings → Vault** is the project's credential store; values are write-only and never shown again after saving, and the list API never returns them. The **Vault** entry on the MCP Servers tab links to it. See [Vault](/work/settings/vault/) for the full tab. Entries are named in an MCP server's `credential_refs`, and every MCP server in the project can reference them.
 
 System-owned credentials (used by platform/system agents) are protected: the API refuses to delete them (`403`), and a credential still consumed by a running agent's MCP server can't be deleted until you stop the consumer (`409`, in-use conflict).
 

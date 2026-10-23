@@ -50,7 +50,7 @@ Every manage screen except Voice has **Try it**: a link that opens a real chat w
 
 Manage the people who can chat with this agent — separate from your Surogate team. A **Let anyone sign up** toggle controls self-registration (available only when the project has Firebase auth configured and is on a paid plan).
 
-A searchable list shows each user's email and auth provider (Email & password / Google / GitHub), with **Edit** and **Delete** row actions. **Add user** opens a form with **Email**, an optional **Display name**, and an optional **Password** (leave empty for SSO). See [Per-agent users](/work/channels/users/) and [Self-registration](/work/channels/self-registration/).
+A searchable list shows each person by name, or by phone or email when there is no name. Search matches name or phone, and channel pills filter the list by where people have talked to the agent. Each row's menu has **Open person**, **Their conversations**, **Edit**, **Link Slack member** (when Slack is connected), **Link Telegram** (when a Telegram bot is connected), **Disable** / **Enable** and **Delete**. **Add user** opens a form with **Email**, **Phone** (their WhatsApp number), an optional **Slack member**, **Display name** and an optional **Password**. Give an email, a phone number, or both (a phone-only user needs a **Display name**). Viewers can browse the list and still use **Open person** and **Their conversations**, but **Add user**, the sign-up switch, **Edit**, the link actions, **Disable** / **Enable** and **Delete** are off for them. For every field, the filters and the permission to message first, see [Per-agent users](/work/channels/users/) and [Self-registration](/work/channels/self-registration/).
 
 ## Insights
 

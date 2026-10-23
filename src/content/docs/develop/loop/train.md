@@ -72,10 +72,11 @@ The platform's **Datasets** page sits between observation and training. A datase
 - Generate synthetically (teacher / judge / worker pattern)
 - Build from prior expert training trajectories
 
-Each dataset has four tabs:
+Each dataset has up to five tabs:
 
 - **OVERVIEW** — counts, status
 - **SAMPLES** — preview rows
+- **CONFIGURATION**: the recipe it was built from (shown only when one was recorded)
 - **PIPELINE** — DAG of how this dataset was built
 - **REPOSITORY** — the underlying Hub repo, with branches, commits, and tags
 

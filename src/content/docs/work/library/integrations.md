@@ -4,7 +4,7 @@ title: Integrations
 
 The **Integrations** page connects third-party services (via Composio) to an agent, so it can use tools like Gmail, Slack, GitHub, and more.
 
-Open it at `/work/agents/<agentId>/integrations`, reached from the agent's chat. The page header reads "Integrations — Connect third-party services to enhance your agent's capabilities." A **Back** link returns you to the chat.
+Open it at `/work/agents/<agentId>/integrations`, reached from the agent's chat: click the **Connect your accounts** strip under the message box. The strip shows only when the agent has integrations assigned. The page header reads "Integrations" with the subtitle "Connect third-party services to enhance your agent's capabilities." A **Back** link returns you to the chat.
 
 ## Layout
 

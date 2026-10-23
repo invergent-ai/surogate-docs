@@ -64,7 +64,7 @@ Two quick wins, both on the **Configure** page:
 
 ### Add a knowledge base
 
-In the left nav under **LIBRARY**, click **Knowledge Bases** → **NEW KNOWLEDGE BASE**. Name it (e.g. `acme-product`) and pick a curator model. Add a few `.md` or `.pdf` sources, click **COMPILE**, wait for status `active`.
+In the left nav under **LIBRARY**, click **Knowledge Bases** → **NEW KNOWLEDGE BASE**. Name it (e.g. `acme-product`) and pick its language. Add a few `.md` or `.pdf` sources, click **Build**, wait for status `active`.
 
 Back on the agent's **Configure** page → **Knowledge Bases** tab → **+ ATTACH KNOWLEDGE BASE** → pick the new KB.
 
@@ -95,6 +95,23 @@ Every chat is a **session**. Open **Sessions** in the left nav → pick a sessio
 For each session, hover assistant turns and click 👍 or 👎. This is the signal you use to improve the agent over time — see [Improve your agent](/work/workflow/improve-agent/).
 
 ![The Sessions list, filtered by quality flags, showing one session marked Positive](../../../assets/screenshots/work-sessions-list.png)
+
+## Getting started checklist
+
+The **Getting started** row in the left nav, under **Sessions**, opens a checklist that follows this walkthrough. It opens on its own the first time you reach Work mode. The steps are:
+
+1. **Account created**, already done.
+2. **Create your first agent**.
+3. **Add your knowledge**.
+4. **Talk to your agent**, done when the agent replies.
+
+Once those are done, four optional steps unlock: **Edit capabilities**, **Attach a skill**, **Attach a tool** and **Connect a channel**. Each step has a button that takes you to the right screen.
+
+- The checklist only counts what you do while following it, so an agent you made earlier doesn't tick a step.
+- Progress is kept in your browser.
+- Close the panel with the **X** at any time. The row stays in the nav, shows how many steps are done, and turns to **Onboarding complete** at the end.
+- **Skip onboarding** in the guide's coach bubbles turns off the onboarding everywhere, including the Develop tutorial. You can pick it up again from this row.
+- Develop mode has its own checklist: import a dataset, train a model, serve it, evaluate the training and test it in the playground.
 
 ## What you've done in 10 minutes
 

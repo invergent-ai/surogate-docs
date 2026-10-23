@@ -45,7 +45,7 @@ Every Surogate term you'll see in Work mode, in one place.
 | **Skill** | A small markdown file telling the agent how to handle a specific kind of request. Reusable. |
 | **Tool** | A capability the agent can invoke — `kb_read_page`, `web_search`, `read_file`, `terminal`, `browser_navigate`, etc. The agent decides which to use. |
 | **User (per-agent)** | An end-user account on a specific agent. Different from your operator account. |
-| **Vault** | Encrypted credential storage for MCP servers. Secrets never reach the agent's sandbox. |
+| **Vault** | Encrypted storage for the project's keys and tokens (**Settings → Vault**), used by MCP servers, proxy models and voice providers. Secrets never reach the agent's sandbox. See [Vault](/work/settings/vault/). |
 | **Wallet** | A prepaid consumable balance (tokens, browsing minutes, compute credits, media credits): plan-granted portion resets monthly, top-ups roll over, operations stop at zero. |
 | **Work mode** | The operator-facing surface (`/work/*`) — Agents, Sessions, Library. You're here. |
 

@@ -50,20 +50,21 @@ The **curator** is an LLM that reads your raw documents and produces a structure
 
 ## Creating a KB
 
-![The create-knowledge-base form: display name, slug, description and the curator model](../../../../assets/screenshots/work-kb-create.png)
+![The create-knowledge-base form: display name, slug, description and language](../../../../assets/screenshots/work-kb-create.png)
 
 **Library → Knowledge Bases → NEW KNOWLEDGE BASE**
 
 Fields:
 
-- **Name** — `acme-product-docs`
+- **Display Name**: `Acme product docs`
+- **Slug**: `acme-product-docs`, filled in from the display name until you edit it. It can't be changed later.
 - **Description** — what's in here, who should use it
-- **Curator model** — locked at creation, can't be changed later. The default is fine for most uses. Pick a smarter model (e.g. Claude Sonnet) for highly technical content.
+- **Language**: the language the wiki is written in. It also picks the OCR model for scanned PDFs, so choose it now.
 
 Click **CREATE**. The KB starts in `error` status — that's normal until you add sources and compile.
 
-:::caution[Curator model is locked]
-Once you pick a curator model and create the KB, you can't change it. If you need a different curator, create a new KB.
+:::tip[Curator model]
+You don't pick a curator model at creation. The default is fine for most uses. To use a smarter model for highly technical content, change it later in the KB's **Configure** tab, then use **Rebuild knowledge base** to redo pages already written. See [Develop mode](/develop/features/knowledge-bases/#configure) for the Configure tab.
 :::
 
 ## Adding sources
@@ -97,7 +98,7 @@ Compile takes 30 seconds to a few minutes per source.
 
 A single bad file **no longer takes the whole compile down**: healthy sources continue through the pipeline and a wiki is still produced from them, while each failing file shows **its own error message inline in the SOURCES list** with a per-file retry.
 
-Read the status carefully, though — the KB still reports `error` when *any* file failed. That now means "at least one source failed", not "nothing was built": check the WIKI tab, it's often already usable.
+Read the status carefully, though: the KB still reports `error` when *any* file failed. That now means "at least one source failed", not "nothing was built": open the wiki from the **Wiki pages** card ([below](#browsing-the-wiki)), it's often already usable.
 
 If a file shows an error:
 
@@ -110,7 +111,7 @@ If failures persist, switch to **Develop mode** for the deeper troubleshooting s
 
 ## Browsing the wiki
 
-After a successful compile, the **Wiki pages** stat card on the KB detail becomes clickable (whole card, amber hover) and opens the wiki. The **WIKI** tab shows:
+After a successful compile, the **Wiki pages** stat card on the KB detail becomes clickable (whole card, amber hover) and opens the wiki. The wiki view shows:
 
 - **Synthesis pages** — cross-source ("Pricing across all products", "All known issues by severity")
 - **Per-source pages** — organised by content, not by original file boundaries
@@ -158,7 +159,7 @@ You have a product, `acme-shop`, and you want a customer-support agent to know y
 1. Create a KB `acme-product`.
 2. Add sources: `getting-started.md`, `pricing.md`, `faq.md`, `known-issues.csv`.
 3. COMPILE. Wait. Status: `active`.
-4. Browse the WIKI → confirm relevant content surfaces for typical questions.
+4. Open the wiki from the **Wiki pages** stat card → confirm relevant content surfaces for typical questions.
 5. Deploy a new agent (Templates page → **Start from scratch** → fill in the dialog) or pick an existing one.
 6. Open the agent → Configure → Knowledge Bases tab → attach `acme-product`.
 7. Open a chat → ask: *"What's included in the Pro plan?"*
