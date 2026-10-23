@@ -15,9 +15,9 @@ The Sessions UI's EVENTS tab and the `GET /v1/sessions/{id}/events` API both ret
 | `llm.thinking` | An extracted reasoning block (provider-dependent) — the complete snapshot for the iteration, not a delta | `reasoning` |
 | `llm.response` | The model answered. **The user-visible text is `message.content`** — there is no separate final-answer event | `message` (`{role, content, tool_calls?}`), `model`, `input_tokens`, `output_tokens`, `reasoning_tokens`, `cache_read_tokens`, `finish_reason`, `context_window`; `cost_usd` when the serving model has a catalog rate, `cost_unpriced_model` when it does not |
 | `ask_user_question.response` | The user answered an `ask_user_question` prompt | `tool_call_id`, `responses` |
+| `channel.form` | The agent sent a WhatsApp form with `send_form`. It is delivered to the channel, and it is the record a submitted form's `flow_token` is checked against | `form`, `flow_token`, `interactive` |
 | `iteration.summary` | One LLM iteration finished — a one-line imperative recap | — |
 | `turn.summary` | The final iteration of a turn finished — recap plus curated artifact list | — |
-| `advisor.request` / `advisor.result` / `advisor.failure` | The hidden advisor pass. The executor never sees an advisor tool; these events audit the auxiliary guidance call and its provider usage | — |
 
 ## Tool execution
 
@@ -36,6 +36,7 @@ For most debugging, the EVENTS tab's TOOLS sub-view filters these for you. Progr
 |---|---|---|
 | `skill.invoked` | The harness expanded a `/<skill> …` user message: it loaded the skill server-side and inlined the body before the LLM saw the message. The original text stays in the preceding `user.message` | `skill`, `raw_message`, `staged_at` (workspace path where the skill's supporting files were staged, or `null`); a SkillOpt rollout adds `override_source`, `skillopt_run_id`, `candidate_id`. Emitted at most once per user message — crash-recovery re-expansion does not re-emit |
 | `todo.updated` | The agent wrote its plan via the `todo` tool. The full list is written every time, so recovery reads the latest row rather than folding a delta log | `todos` |
+| `skill.step` | The agent marked a step of a procedure skill as started, completed or skipped, with `skill_step`. The skill canvas replays a session over the skill's graph from these | `skill`, `step`, `status`, `tool_call_id` |
 
 A skill the SKILLS tab shows as loaded but with no `skill.invoked` was simply never slash-invoked — the model was free to reach for it and didn't.
 
@@ -48,6 +49,10 @@ When a session spawns child sessions via `spawn_worker` / `delegate_task` / `spa
 | `worker.spawned` | A child session was created |
 | `worker.complete` | Child finished normally; payload includes the truncated result and optional `metadata`. Also reused for successful `spawn_task` completion, with `task_id` for correlation |
 | `worker.failed` | Child errored or hit its iteration budget |
+| `thread.proposed` | A project's coordinator proposed threads for the user to start, with `propose_threads`. The cards are drawn from this event | `proposal_id`, `threads` |
+| `coordinator.message` | A project coordinator's follow-up to one of its threads. The thread reads it as a message typed into it, but it is never the user's | `content` |
+| `history.redo` | A project thread was told to redo its change to files its landing left out | `files` |
+| `history.redo_held` | The wake for a thread's redo was held back, by its user's limit or because ops was unreachable. The thread rests and its next turn redoes the change | `redo` |
 | `delegation.start` / `delegation.complete` / `delegation.failed` / `delegation.stale` | Detailed observability for `delegate_task` calls |
 | `task.blocked` | A task self-paused via `worker_block` |
 | `task.failed` | A task exhausted its retry budget |
@@ -66,6 +71,8 @@ Emitted on the coordinator chat session; the mission dashboard polls them.
 | `mission.evaluation.start` / `mission.evaluation.end` | One mission evaluation pass |
 | `mission.continuation` | The mission queued another round |
 | `mission.paused` / `mission.resumed` / `mission.cancelled` | Operator-driven mission state changes |
+| `mission.refinement_proposed` | The evaluator proposed a new rubric instead of a verdict, and the mission paused to wait for a decision. This event is where `/mission accept` reads the new rubric from. Payload: `mission_id`, `old_rubric`, `proposed_rubric`, `evidence`, `held_verdict`, `explanation` |
+| `mission.amended` | The operator accepted the proposed rubric with `/mission accept`. Payload: `mission_id`, `old_rubric`, `new_rubric`, `evidence`, `typed_at` |
 | `research.defined` | A research mission was created |
 | `research.harvested` | Branch digests were folded back into the coordinator's conversation. Payload: `run_id`, `folded` |
 | `research.converged` | The convergence check fired. Payload: `run_id`, `level`, `consecutive_non_improving` |
@@ -78,6 +85,7 @@ Emitted on the coordinator chat session; the mission dashboard polls them.
 | `policy.allowed` | Two shapes. Gate pass-through, emitted only when the deployment enables `governance.log_allowed` (off by default; doubles event volume): `tool`, `check: "governance_gate"`, `timestamp`. Approved retry of a gated call: `tool_name`, `reason: "human approval"`, `tool_call_id` |
 | `disclosure.presented` | A messaging channel (Slack / Telegram / WhatsApp) posted the AI disclosure as the first message of a new conversation. Payload: `level`, `channel`, `delivery: "channel_message"` |
 | `disclosure.confirmed` | A web user accepted the disclosure banner. Payload: `level`, `source: "web_banner"` |
+| `security.injection_blocked` | The prompt-injection detector refused a user message sent through the sessions API (web chat, API channel, and comment mentions in office documents, which go the same way); `/code` commands are not screened. The request gets a 422 and no `user.message` is recorded, so this event is what shows the block in the timeline. Payload: `source` (`web_channel` or `api_channel`), `explanation`, `threat_level`, `confidence`, `injection_type`, `matched_patterns` (up to 10), `content_preview` (first 2000 characters) |
 
 A denial of a tool named in the policy's `require_approval` list is **overridable**: alongside `policy.denied` it emits `inbox.governance_gate` and hands the model `policy_blocked_overridable` rather than a hard error, so the call can be retried after a human decides.
 
@@ -135,6 +143,7 @@ The agent raised something to the user:
 | Type | When |
 |---|---|
 | `browser.provisioned` / `browser.destroyed` | An agent browser was allocated or torn down |
+| `browser.unavailable` | A browser tool ran on a local-folder session's computer that has no supported browser |
 | `browser.control_granted` / `browser.control_returned` | A user took over the live browser view, then handed control back |
 | `code.run_started` | A `/code` run began. Carries the source user-event id for crash-recovery idempotency |
 | `code.run_progress` | Coalesced streamed output from the coding agent. Web UI only — never delivered to channels |
@@ -142,6 +151,19 @@ The agent raised something to the user:
 | `code.run_result` | The final message plus token usage |
 
 Credentials never appear in any `code.*` payload.
+
+## Local computer and documents
+
+Emitted on sessions that work in a folder on a user's computer, and on sessions with an open document editor.
+
+| Type | When | Payload |
+|---|---|---|
+| `device.waiting` | The session's work is waiting on its computer: it is offline, or it is making the thread's first copy of the folder | `device_id`, `device_name`, `reason` (`offline` or `copying`), plus `folder` for `copying` |
+| `device.resumed` | The wait ended | `device_id` |
+| `office.saved` | A save from the document editor that had been waiting for its computer landed | `path` |
+| `office.save_waiting` | A save waits for the computer its file is on. Said when the wait starts and again if its reason changes | `path`, `computer`, `reason` (`offline`, or `waiting` for the computer's user to allow it) |
+| `office.save_failed` | A save from the document editor failed | `path`, plus `status` or `attempts`; or `reason: "declined"` and `computer` |
+| `office.conflict` | The file changed outside the editor, so the save landed as a sibling copy and the editors were told to reload | `path`, `conflict_path` |
 
 ## Lifecycle
 

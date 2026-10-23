@@ -21,7 +21,7 @@ For more complex multi-step recipes (fine-tune an expert, build an MCP server, A
 - Library → Knowledge Bases → **NEW KNOWLEDGE BASE**.
 - Name `acme-product`, brief description, leave the language as English.
 - SOURCES → ADD SOURCE → upload each markdown / PDF, one at a time.
-- COMPILE. Wait 30s–3min. Status: `active`.
+- **Build**. Wait 30s to 3min. Status: `active`.
 - Open the wiki from the **Wiki pages** card, search a typical question, and confirm relevant content surfaces ([how](/work/library/knowledge-bases/#browsing-the-wiki)).
 
 **2. Create the agent.**
@@ -38,7 +38,7 @@ For more complex multi-step recipes (fine-tune an expert, build an MCP server, A
 
 - Click **New chat** in the agent's left nav (between Publish and Inbox).
 - Ask 5 representative questions: pricing, features, "how do I…?", troubleshooting, refund policy.
-- Open the session afterwards from **Sessions** in the WORK sidebar — confirm the agent called the KB tools (`kb_list_pages` / `kb_read_page`) and grounded its answers.
+- Open the session afterwards from **Sessions** in the WORK sidebar. Confirm the agent called the KB tools (`kb_search_pages` / `kb_list_pages` / `kb_read_page`) and grounded its answers.
 
 **5. Customise the persona.**
 
@@ -72,7 +72,7 @@ Your support bot is live. Visitors hit a chat bubble in the bottom-right. The bo
 
 - Review sessions daily for the first week. Thumb-down anything bad.
 - For bad sessions, check which skill should have fired but didn't — write or fix one.
-- Add new KB sources as your product evolves; click COMPILE to refresh.
+- Add new KB sources as your product evolves; click **Build** to refresh.
 
 ---
 
@@ -173,7 +173,7 @@ By cause: "missing facts," "wrong tone," "wrong tool," "wrong workflow." Each bu
 
 - SOURCES → ADD SOURCE → upload markdown wiki pages one at a time.
 - Then upload the tickets CSV.
-- COMPILE. Wait — large corpuses can take 5+ minutes per source.
+- **Build**. Wait: large corpuses can take 5+ minutes per source.
 
 **4. Verify the wiki.**
 
@@ -188,7 +188,7 @@ By cause: "missing facts," "wrong tone," "wrong tool," "wrong workflow." Each bu
 
 ### Follow-up
 
-- Refresh the ticket CSV monthly. Delete the old source, upload the new one, COMPILE.
+- Refresh the ticket CSV monthly. Delete the old source, upload the new one, **Build**.
 - When S3/GitHub/Notion source types ship, switch to continuous sync.
 
 ---
@@ -203,24 +203,24 @@ Press **⌘+/** anywhere in `ops.surogate.ai` and ask:
 
 | Question | What the Copilot does |
 |---|---|
-| *"What agents do I have, and how many sessions did each have yesterday?"* | Calls `list_agents` and `recent_failures`, summarises |
+| *"What agents do I have, and how many sessions did each have this week?"* | Calls `list_agents`, then `get_agent_insights` (last 7 days) for each, summarises |
 | *"Show me my customer-support-bot's attached skills and KBs."* | Calls `get_agent` |
-| *"Find sessions where the agent thumb-downed in the last 7 days."* | Filters the sessions list, presents links |
-| *"Create a skill called `weekly-summary` that produces 5-bullet summaries."* | Generates the skill content, calls `create_skill`, returns the new skill ID |
+| *"Find sessions from the last 7 days where people got stuck."* | Searches sessions with `find_sessions`, presents links |
+| *"Create a skill called `weekly-summary` that produces 5-bullet summaries."* | Interviews you one question at a time, checks your existing skills, shows a plan for your approval, then calls `create_skill`, reads it back and links it |
 | *"Attach `acme-product` KB to `acme-support-bot`."* | Calls `attach_kb_to_agent` |
-| *"Scale `acme-support-bot` to 3 replicas."* | Calls `clarify` first (confirmation card), then `scale_agent` |
-| *"Delete the `test-summarizer-bot` agent."* | Calls `clarify` (re-quotes the resource ID), then `delete_agent` |
+| *"Scale `acme-support-bot` to 3 replicas."* | Asks you in the chat first (`ask_user_question`), then calls `scale_agent` |
+| *"Delete the `test-summarizer-bot` agent."* | Asks you in the chat first, naming the agent, then calls `delete_agent` |
 
 ### Behaviours to expect
 
-- **Confirmation cards** before destructive ops or anything that costs money. Click Yes or No.
+- **A question in the chat** before destructive ops or anything that costs money. Answer it before the Copilot goes on.
 - **Links to in-app pages** in responses — clicking jumps you to that resource.
 - **Errors are returned as text** ("Couldn't find a knowledge base named X") rather than the Copilot retrying blindly.
 
 ### Behaviours to avoid
 
-- Don't expect the Copilot to browse the web. By design it's read-only Q&A over your platform; if you ask it to research something external, it'll politely refuse.
-- Don't expect it to know across orgs. It operates inside your current project.
+- Don't expect the Copilot to browse the web. By design it works from the platform's own tools; if you ask it to research something external, it'll politely refuse.
+- Don't expect it to know across orgs. It works in your current project, or across the projects you are a member of.
 
 ---
 

@@ -10,59 +10,65 @@ This chapter covers what builders should know that operators don't need: where i
 
 ![The Surogate Copilot panel](../../../../assets/screenshots/work-copilot-panel.png)
 
-It exposes the platform's tools as natural-language commands. Instead of clicking through CONFIG / KNOWLEDGE & TOOLS / channels, you describe what you want and the Copilot calls the corresponding tools.
+It exposes the platform's tools as natural-language commands. Instead of clicking through CONFIG / KNOWLEDGE & TOOLS / channels, you describe what you want and the Copilot calls the corresponding tools. There are over 100 of them (served by the ops MCP server at `/api/copilot/mcp`). The Copilot's agent definition lists exactly the tools below, and a tool not on that list is not shown to the model. The areas, with the main tools in each:
 
-### Read operations (always on)
-
-- Inventory: "What agents do I have, and how many sessions did each have yesterday?"
-- Lookup: "Show me my customer-support-bot's attached skills, KBs, and current model."
-- Search: "Find sessions where the agent thumb-downed in the last 7 days."
-- Status: "What's the success rate of the sql-writer expert this week?"
-
-### Write operations (gated by CLARIFY confirmation)
-
-The Copilot can create / update / delete most resources you can manage in the UI:
-
-- `create_skill` / `update_skill` / `delete_skill`
-- `create_dataset` / `delete_dataset`
-- `create_knowledge_base` / `delete_knowledge_base`
-- `create_environment`
-- `create_agent` / `start_agent` / `stop_agent` / `scale_agent` / `delete_agent`
-- `attach_skill_to_agent` / `detach_skill_from_agent`
-- `attach_mcp_server_to_agent` / `detach_mcp_server_from_agent`
-- `attach_kb_to_agent` / `detach_kb_from_agent`
-- `deploy_model` / `stop_serving`
-- `start_training` / `cancel_training`
-
-## The CLARIFY confirmation
-
-Before any destructive or expensive operation, the Copilot shows a Yes/No card inside the chat with the specific resource ID it's about to touch. Operations that require this:
-
-| Operation | Why |
+| Area | Main tools |
 |---|---|
-| `delete_*` (any kind) | Irreversible |
-| `start_training` | Burns GPU hours |
-| `deploy_model` | Burns GPU hours |
-| `scale_agent` to higher replicas | Cost increase |
-| `start_agent` on an `error` agent | Triggers a re-deploy |
+| Agents | `list_agents`, `get_agent`, `create_agent`, `update_agent`, `start_agent`, `delete_agent`, plus env vars, scaling and `attach_` / `detach_` for skills, MCP servers and knowledge bases |
+| Skills | `list_skills`, `get_skill`, `create_skill`, `update_skill`, `delete_skill`, `import_skill_from_workspace`, plus tools for the skill's files |
+| Knowledge bases | `create_knowledge_base`, `create_kb_source`, `add_workspace_file_to_kb`, `compile_knowledge_base`, `get_kb_compile_status`, `read_kb_wiki_page`, and others for sources, wiki pages and deletion |
+| MCP servers | `list_mcp_servers`, `register_mcp_server`, `update_mcp_server`, `delete_mcp_server`, `list_composio_toolkits` |
+| Sub-agents | `list_sub_agents`, `get_sub_agent`, `create_sub_agent`, `update_sub_agent`, `delete_sub_agent` |
+| Programs | `get_programs_overview`, `create_journey`, `add_journey_step`, `simulate_journey`, `activate_journey`, `get_journey_funnel`, and others for journeys, WhatsApp templates and forms, escalations |
+| People and team | `find_people`, `add_person`, `enroll_person`, `message_person`, `get_person_timeline`, `set_team_member`, and others for program settings, Telegram start links and Slack lookups |
+| Monetize and landing page | `get_monetize`, `create_plan`, `update_plan`, `update_monetize_settings`, `get_landing_page`, `update_landing_page`, and others for replacing and deleting plans |
+| Inbox and insights | `list_inbox`, `update_inbox_item`, `get_agent_insights`, `get_user_reports`, `find_sessions` |
+| Datasets | `list_datasets`, `get_dataset`, `create_dataset`, `delete_dataset`, `upload_dataset_from_workspace` |
+| Models and training | `list_models`, `deploy_model`, `stop_serving`, `list_training_runs`, `start_training`, `cancel_training`, and others for run details, experiments and environments |
+| Workspace | `get_current_project`, `list_my_projects`, `search`, `recent_failures` |
+| Documentation | `search_docs`, `read_doc`, `list_docs`, `read_guide` |
 
-Routine writes — `create_skill`, `update_skill`, `create_dataset`, `create_knowledge_base`, `stop_agent`, `cancel_training` — don't require CLARIFY. The Copilot proceeds directly.
+Besides those, it can use a few built-in tools: `ask_user_question`, `create_artifact` (for plans, documents and tables), `todo`, and the sandbox file and terminal tools (`read_file`, `write_file`, `patch`, `search_files`, `list_files`, `terminal`), which let it read documents you attach in chat. Its browser tools are switched off.
+
+### Looking things up
+
+`search_docs` ranks sections of the product documentation. Its top results carry the matching section's text, so most answers need no second call. `read_doc` reads a page or one section of it by path, and `list_docs` lists every page. The documentation is a bundled snapshot of the Work and Develop pages, so it can lag the live site. When you ask from a Studio page that has a doc, the page tells the Copilot which doc covers it. Pages without one give no doc hint.
+
+`find_sessions` finds conversations by what was said in them. With no agent named it searches the current project's agents; with an agent named, only that agent. Either way you need the editor or owner role on the project (or to be a platform admin); a viewer gets no results. `search` looks across resources by name and ID in the current project, or in every project you are a member of.
+
+### Build guides
+
+For each kind of build the Copilot has a playbook: `build-agent`, `build-skill`, `build-knowledge-base`, `build-sub-agent`, `connect-mcp` and `build-program`. It opens the guide with `read_guide` before building, along with the checklists and templates the guide cites. The loop is interview, inspect, plan (as an artifact you approve), build in dependency order, read each piece back, summarise with links and a test script. Its instructions forbid creating or updating an agent's prompt before an interview and an approved plan.
+
+## How it asks before acting
+
+Two mechanisms apply.
+
+**It asks in the chat.** The Copilot's instructions have it ask with `ask_user_question` before spend and risky changes: `start_training`, `deploy_model`, `compile_knowledge_base`, any `delete_*`, `scale_agent` to a higher count, `start_agent` on an `error` agent, `set_agent_env_vars`, `update_agent` on `policy` or `browser_enabled`, `register_mcp_server` with `stdio`, and overwriting a skill or sub-agent. This is an instruction to the model. The tools themselves do not check for it.
+
+**The tool refuses without `confirmed=true`.** For actions that message people, start or stop what they receive, spend money or change who can do what, the tool takes a `confirmed` argument. Without it, the tool changes nothing and returns `needs_confirmation` with the action. The Copilot then asks you, quoting the action (and the exact text, for a message), and calls again with `confirmed=true` only after your yes. These tools are:
+
+- `activate_journey`, `pause_journey`, `delete_journey`, `remove_journey_step`, `send_journey_test`, `create_whatsapp_template`
+- `enroll_person`, `update_person_enrollment` (status changes), `manage_person_contacts` (add, confirm, remove), `message_person`
+- `set_team_member`, `remove_team_member`, `update_program_settings` (team, senders, destinations)
+- `create_plan`, `update_plan`, `replace_plan`, `delete_plan`, `update_monetize_settings` (when changing the mode)
+
+An approved plan does not cover these. Each one needs its own yes.
 
 ## What the Copilot won't do
 
-- **It has no browser tool.** By design — it works from the platform's own tools, not the open web; it's not a research agent.
-- **It can't see cross-project state.** Operates inside the current project only.
-- **It can't change billing**, manage Stripe, or rotate your account password.
+- **It has no browser tool.** By design it works from the platform's own tools, not the open web. It is not a research agent.
+- **Its instructions have it guide you, not act, for secrets, keys and workspace billing.** It links the page and explains the steps: connecting channels that need credentials, creating or revoking API keys and webhook secrets, Stripe Connect onboarding, workspace billing and plan changes, and inviting members. This is an instruction, not a missing tool: `set_agent_env_vars` can write an agent's environment variables, which carry channel keys, and the Copilot is instructed to ask you first and never echo secret values back.
+- **It does not decide governance approvals.** Those stay in the Inbox.
+- **It can't make images or videos.**
 
 ## Programmatic equivalents
 
-Every Copilot operation maps to a REST API endpoint. If you're building automation, prefer the API directly — the Copilot is for interactive use, not headless pipelines. See the API reference sections under each feature ([Agents](/develop/features/agents/), [Skills & Experts](/develop/features/skills-and-experts/), [Datasets](/develop/features/datasets/), etc.).
+Every Copilot operation maps to a REST API endpoint, except the docs and guide tools (`search_docs`, `read_doc`, `list_docs`, `read_guide`), which read the documentation and build guides bundled with the Copilot. If you're building automation, prefer the API directly: the Copilot is for interactive use, not headless pipelines. See the API reference sections under each feature ([Agents](/develop/features/agents/), [Skills & Experts](/develop/features/skills-and-experts/), [Datasets](/develop/features/datasets/), etc.).
 
 ## Failure modes you'll see
 
 **401 "Invalid base LLM token"** — the platform's default LLM credential isn't provisioned for your tenant. Admin-side fix.
-
-**Copilot loops on a tool call and times out** — known issue with the `read_resource` enumeration path when asking about KBs. Workaround: scope your question. Instead of "list my KBs" try "what KBs does my customer-support-bot have attached?"
 
 **Copilot returned `{error: ...}` and gave up** — by design. It won't retry blindly on errors. Read the error, fix the underlying issue, re-ask.
 

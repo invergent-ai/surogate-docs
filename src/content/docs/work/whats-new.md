@@ -18,6 +18,10 @@ Your agent can now talk to people on [Discord](/work/channels/discord/) and [Mic
 
 A journey step has a new **Send once per person** checkbox in its **When** section. The step fires on the first matching day inside its window, then stays quiet for that person, even if they are enrolled again. See [Steps](/work/tools/programs/#steps).
 
+### The copilot answers from the docs
+
+The [copilot](/work/tools/copilot/#asking-the-docs) now searches sections of the product documentation and answers from the matching text, and it opens its own build guides when it builds something.
+
 ### Project roles
 
 Every project member now has a role, Viewer, Editor or Owner, that decides what they can see and change. See [what each role can do](/work/settings/members/#what-each-role-can-do).

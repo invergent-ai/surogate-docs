@@ -8,7 +8,7 @@ Every Surogate term you'll see in Work mode, in one place.
 |---|---|
 | **AI disclosure** | The per-agent EU AI Act (Art. 50) notice telling end users they're talking to an AI — a web banner, or the first message on messaging channels. Levels: Basic / Enhanced / Full / None. |
 | **Agent** | A deployed AI service with a URL like `<slug>.cloud.surogate.ai`. Bundles a model, skills, knowledge bases, MCP servers, persona, and channels. |
-| **CLARIFY** | A built-in confirmation card the agent (or Copilot) shows before destructive or expensive operations. You click Yes or No. |
+| **CLARIFY** | Legacy name for `ask_user_question`: the agent (or Copilot) asks you a question in the chat, with options to pick from or a typed answer. |
 | **Allowance (per-user)** | The usage budget one end user draws from on one agent: a period grant (subscription tier, trial, or free-mode cap; resets on cycle) plus a top-up bucket (token packs; never expires). |
 | **Browsing time** | Metered wall-clock minutes a buyer's agent browser may stay open. Distinct from the project's own web-browsing wallet. |
 | **Buy page** | The hosted storefront at `/buy/<agent-slug>` where buyers sign in, purchase offers, and manage subscriptions. |
@@ -24,7 +24,7 @@ Every Surogate term you'll see in Work mode, in one place.
 | **Goal (`/goal`)** | A slash command that defines an outcome. The agent keeps working until an evaluator says satisfied / failed / blocked, or 20 iterations are used. |
 | **Governance policy** | An agent's enforced guardrails: tool allow/deny, web & browser egress, and AI disclosure — checked before every tool call, on top of the always-on platform floor. |
 | **Inbox** | A per-user queue of items the agent has pushed up for attention — `ask_user_question` prompts, action requests, completion notices. |
-| **Knowledge base (KB)** | A curated corpus of documents the agent can browse at runtime via `kb_list_pages` / `kb_read_page`. Sources → Curator → Wiki. |
+| **Knowledge base (KB)** | A curated corpus of documents the agent can browse at runtime via `kb_search_pages` / `kb_list_pages` / `kb_read_page`. Sources → Curator → Wiki. |
 | **Loop (`/loop`)** | A slash command that schedules a prompt to run on a recurring basis (fixed or dynamic interval). |
 | **MCP server** | An external system the agent can use as a tool — GitHub, Slack, your CRM, internal APIs. Follows the open Model Context Protocol. |
 | **Media credits** | The prepaid media wallet, in dollars of provider spend for image/video generation. Also sellable to buyers on offers. |

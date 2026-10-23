@@ -26,11 +26,11 @@ Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (w
 
 ## Knowledge bases
 
-**COMPILE reports an error.** One bad file no longer fails the whole compile: healthy sources still produce a wiki, and each failing file shows its own error inline in the SOURCES list with a per-file retry. `error` on the KB means "at least one source failed", so open the wiki from the **Wiki pages** stat card before assuming nothing was built. Persistent per-file failures: reduce source size (split large documents) and verify the file is well-formed.
+**A build reports an error.** One bad file no longer fails the whole build: healthy sources still produce a wiki, and each failing file shows its own error inline in the SOURCES list with a per-file retry. `error` on the KB means "at least one source failed", so open the wiki from the **Wiki pages** stat card before assuming nothing was built. Persistent per-file failures: reduce source size (split large documents) and verify the file is well-formed.
 
 **CSV upload shows 0 samples.** Known issue. Workaround: convert to a markdown-formatted summary and re-upload.
 
-**Agent doesn't use the KB.** Check the KB status is `active` (compiled successfully). In EVENTS, check whether the LLM called `kb_list_pages` / `kb_read_page` — if not, it didn't think the KB was relevant. Adjusting SOUL.md to mention the KB explicitly helps.
+**Agent doesn't use the KB.** Check the KB status is `active` (compiled successfully). In EVENTS, check whether the LLM called `kb_search_pages` / `kb_list_pages` / `kb_read_page`. If not, it didn't think the KB was relevant. Adjusting SOUL.md to mention the KB explicitly helps.
 
 ## Channels
 
@@ -45,8 +45,6 @@ Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (w
 ## Copilot
 
 **401 "Invalid base LLM token".** Admin-side config issue — the platform's default LLM credentials aren't provisioned for your tenant.
-
-**Copilot loops on `read_resource`.** Known bug — the tool is in the Copilot's allowlist but unimplemented. Phrase the question to avoid enumeration, e.g. "What KBs does `customer-support-bot` have?" instead of "list my KBs".
 
 ## Billing
 

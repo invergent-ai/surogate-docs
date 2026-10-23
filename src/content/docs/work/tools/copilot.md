@@ -10,80 +10,79 @@ A drawer opens with a chat composer. Ask in natural language; the Copilot calls 
 
 ![The Surogate Copilot panel, opened over the workspace](../../../../assets/screenshots/work-copilot-panel.png)
 
-Read operations (always enabled):
+Look things up:
 
 - *"What agents do I have running?"*
-- *"Which agent had the most sessions yesterday?"*
-- *"Find sessions where the agent thumb-downed in the last week."*
+- *"Which agent had the most sessions this week?"*
+- *"Find conversations where people got stuck on pricing."*
 - *"Show me the latest training run for sql-writer."*
 - *"What skills does my customer-support-bot have attached?"*
+- *"What failed this week?"*
 
-Write operations (live — with a confirmation step for risky actions, see below):
+Build and change things:
 
 - *"Create a skill called `weekly-summary` that produces 5-bullet summaries."*
 - *"Attach the `acme-product` KB to my customer-support-bot."*
+- *"Connect this MCP server to my agent."*
 - *"Scale customer-support-bot to 5 replicas."*
-- *"Delete the test-summarizer-bot agent."*
-- *"Start training run with the conversations dataset."*
+- *"Start a training run with the conversations dataset."*
 
-The Copilot calls the platform's REST API on your behalf. You see the same effects as if you'd clicked through the UI.
+The Copilot calls the platform's own tools on your behalf. You see the same effects as if you had clicked through the UI. For the list of tools by area, see [Develop mode → Copilot](/develop/tools/copilot/).
+
+## Building an agent, skill or knowledge base
+
+When you ask it to make something, it does not just start. It interviews you one question at a time (purpose, audience, tone, sources, tools, boundaries), looks at what you already have so it does not duplicate it, and shows a plan for your approval. Only then does it build, one piece at a time, reads each piece back to check it, and ends with links to everything and a few first messages to test with.
+
+It follows a written build guide for each kind of thing: agents, skills, knowledge bases, sub-agents, MCP server connections and Programs.
+
+## Asking the docs
+
+You can ask it how the platform works: *"What does the Compute page do?"* It looks the answer up in the product documentation instead of answering from memory. When you ask from a page, it knows which page you have open and, for pages that have one, which doc covers it.
 
 ## Programs, people and the team
 
-The Copilot can run an agent's [Programs](/work/tools/programs/) for you: list and build journeys and their steps, review a journey and dry-run it, send a test, activate or pause it, read its stats, and register WhatsApp templates. It can find and add people, make a Telegram start link, enrol people, change their follow-up, link their contacts, read their timeline and message them; set up the team (what each member gets told about, can do and handles, and a Slack channel picked from the workspace as its shared alert place), change the wording and channels on Settings, and claim or resolve escalations. It also reads and answers your Inbox, reads an agent's Insights, manages the plans on Monetize, and builds the agent's [landing page](/work/workflow/landing-page/), including formatted text and image framing.
+The Copilot works across these areas:
+
+- **Programs:** run an agent's [Programs](/work/tools/programs/). List and build journeys and their steps, review a journey and dry-run it, send a test, activate or pause it, read its stats, and register WhatsApp templates.
+- **People:** find and add people, make a Telegram start link, enrol people, change their follow-up, link their contacts, read their timeline and message them.
+- **Team:** set up the team (what each member gets told about, can do and handles, and a Slack channel picked from the workspace as its shared alert place), change the wording and channels on Settings, and claim or resolve escalations.
+- **Also:** read and answer your Inbox, read an agent's Insights, manage the plans on Monetize, and build the agent's [landing page](/work/workflow/landing-page/), including formatted text and image framing.
 
 It knows what you are looking at: on the Programs page it is told which tab, journey and person you have open, so *"why didn't this step go out?"* needs no further context.
 
 **`/build-program`** is a playbook for setting a program up end to end. The Copilot interviews you one question at a time (who is followed and why, the date day 0 counts from, the rhythm, what each answer means and which is urgent, the channels, the team, the language of every message), inspects what the agent already has, and writes a plan for you to approve. Only then does it build: the step skills, any missing WhatsApp templates, the journey as a draft, the team and the wording. It reviews and dry-runs the journey and summarises what is live and what is still a draft, with a test script.
 
-Activating a journey, sending a test, enrolling, messaging a person and changing the team always wait for your yes. It never enrols real people on its own.
+Activating a journey, sending a test, enrolling, messaging a person and changing the team need an explicit confirmation step, which the Copilot is instructed to take only after you say yes to that exact action. Called without it, the tool refuses and changes nothing.
 
-## The CLARIFY confirmation
+## How it asks before acting
 
-For **destructive or expensive operations**, the Copilot is required to ask first. You'll see a Yes/No confirmation card inside the chat:
+It asks with a question in the chat and waits for your answer before it:
 
-```
-The Copilot wants to delete agent `test-summarizer-bot`. This will:
+- spends GPU time or model usage (training, deploying a model, compiling a knowledge base), deletes anything, scales an agent up, or changes an agent's environment variables, policy or browser setting;
+- overwrites a skill or sub-agent that already has that name, or connects an MCP server that runs a command on the runtime.
 
-- Remove the agent's URL (test-summarizer-bot.cloud.surogate.ai)
-- Detach 1 skill and 1 knowledge base
-- Preserve session history in the audit log
+Building a new thing inside a plan you approved does not ask again. The plan was the yes.
 
-Proceed?
+Anything that reaches real people or real money is stricter: activating a journey, sending a test, enrolling or messaging a person, changing the team, and changing plans on Monetize. The tool itself refuses to run until the Copilot calls it again with an explicit confirmation, which its instructions allow only after you say yes to that exact action. A yes to the plan does not cover it.
 
-[ Yes, delete ]   [ No, cancel ]
-```
-
-Operations that require CLARIFY:
-
-| Operation | Why |
-|---|---|
-| `delete_*` (any kind) | Irreversible |
-| `start_training` | Burns GPU hours |
-| `deploy_model` | Burns GPU hours |
-| `scale_agent` to higher replicas | Cost increase |
-| `start_agent` when current status is `error` | Triggers a re-deploy |
-
-Routine writes (`create_skill`, `update_skill`, `create_dataset`, `create_knowledge_base`, `stop_agent`, `cancel_training`) **don't** require CLARIFY — the Copilot proceeds directly.
+Governance approvals in the Inbox are never the Copilot's to decide. It sends you to the Inbox page. For the exact tools and how each check works, see [Develop mode → Copilot](/develop/tools/copilot/#how-it-asks-before-acting).
 
 ## Conversation history
 
-The Copilot drawer keeps a history menu in its header (the clock/history icon). Open it to switch between past Copilot conversations, rename them, or start a new chat — each conversation is its own session and resumes where you left off.
+The Copilot drawer keeps a history menu in its header (the clock/history icon). Open it to switch between past Copilot conversations, rename them, or start a new chat. Each conversation is its own session and resumes where you left off.
 
 ## What the Copilot can't do
 
-- **It has no browser tool**. By design — the Copilot works from the platform's own tools, not the open web. If you want to scrape or navigate a site, use a regular agent with `browser_*` tools.
-- **It can't see all sessions in your org** — only the ones in your current project. Use the Sessions view for tenant-wide observability.
-- **It can't change billing**, manage Stripe, change your password, or other deeply personal admin ops. Those still go through Settings.
+- **It has no browser.** It works from the platform's own tools, not the open web. If you want to scrape or navigate a site, use a regular agent with `browser_*` tools.
+- **It can't make images or videos.** Use a regular agent for media.
+- **It won't set up things that need secrets or money for you.** Its instructions have it explain the steps and link the page instead: connecting channels (WhatsApp, Slack, Telegram, Discord, Microsoft Teams), creating or revoking API keys and webhook secrets, Stripe Connect onboarding, your workspace's billing and plan, and inviting workspace members. It can still change an agent's environment variables, where channel keys live; its instructions have it ask you first and never repeat secret values back.
+- **It can't change your password** or other account settings. Those go through Settings.
 
 ## When the Copilot misbehaves
 
-The most common issue: it tries to list resources via a tool that doesn't exist (a known bug — `read_resource` is in its allowlist but not implemented). Workaround: ask the question in a way that doesn't require enumeration. Example:
-
-- ❌ *"Tell me about my knowledge bases."*
-- ✅ *"What knowledge bases does my customer-support-bot have attached?"* (specifies the agent, scopes the lookup)
-
 If the Copilot returns 401 ("Invalid base LLM token"), it's an admin-side config issue. Contact whoever runs your tenant.
+
+If a tool returns an error, it tells you what went wrong instead of retrying blindly. Read the error, fix the cause, and ask again.
 
 ## Keyboard shortcuts
 
