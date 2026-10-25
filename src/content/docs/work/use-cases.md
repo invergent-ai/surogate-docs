@@ -2,7 +2,7 @@
 title: Use cases
 ---
 
-Five end-to-end walk-throughs you can adapt for your own work. Each one combines several Work-mode features.
+Six end-to-end walk-throughs you can adapt for your own work. Each one combines several Work-mode features.
 
 For more complex multi-step recipes (fine-tune an expert, build an MCP server, A/B evaluations), switch to **Develop mode**.
 
@@ -221,6 +221,26 @@ Press **⌘+/** anywhere in `ops.surogate.ai` and ask:
 
 - Don't expect the Copilot to browse the web. By design it works from the platform's own tools; if you ask it to research something external, it'll politely refuse.
 - Don't expect it to know across orgs. It works in your current project, or across the projects you are a member of.
+
+---
+
+## 6. Let the agent work on a folder of your computer
+
+**What you'll do**: have the agent work on files that live on your own computer, such as invoices, reports, data exports or a code repository, without uploading them.
+
+**You'll need**: a computer that runs [Surogate Desktop](/work/desktop/overview/#requirements), and an agent with **Multi session** on.
+
+### Steps
+
+1. Install [Surogate Desktop](/work/desktop/get-started/#1-install-the-app) and connect it to your agent.
+2. Press **New**, ask for the work, for example "Merge these monthly exports into one spreadsheet and flag the rows with missing totals", and send it.
+3. Pick the folder, choose **Ask every time**, and press **Use this folder**.
+4. Approve each command and file change as it asks. Once you trust the work, switch the chat to **Works freely** from its bar.
+
+### Follow-up
+
+- For a larger goal, [start a project](/work/desktop/projects/#create-a-project): its coordinator splits the work into threads, each in its own copy of the folder.
+- Review what changed in the folder. The agent's commands run in a sandbox, and it sees no other folder of yours.
 
 ---
 

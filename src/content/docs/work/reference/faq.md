@@ -42,6 +42,20 @@ Known platform bugs and non-obvious failure modes. Pure UI-orientation issues (w
 
 **Can't find the publishable key.** It appears under **Advanced** on the Website widget's Manage screen, which opens once you click **Enable widget**.
 
+## Surogate Desktop
+
+**A chat shows "Waiting for" and your computer's name.** The chat needs a folder of that computer, and the computer is off, asleep or offline, or Surogate is not running on it. The chat carries on when the computer is back. To keep it available, leave **Keep running when the window is closed** and **Start at login** on in Surogate's Settings. See [When the computer is away](/work/desktop/overview/#when-the-computer-is-away).
+
+**A chat says "Local access revoked".** Someone revoked the computer under **Settings > Devices** in the agent's web app. Restore it in Surogate on that computer. See [Devices](/work/desktop/overview/#devices).
+
+**The agent's commands are slow on Linux.** Surogate says it runs them emulated: the computer has no hardware virtualization, or it is turned off. Turn on Intel VT-x or AMD-V in the computer's firmware settings.
+
+**Surogate refuses a folder.** It refuses your home folder, credentials folders, system folders and a few others, and its message says why. Pick another folder. See [Folders that are refused](/work/desktop/overview/#folders-that-are-refused).
+
+**"An administrator needs to install this update."** Your account may not install updates on this computer. An administrator of the computer has to approve or install the update. See [Updates](/work/desktop/overview/#updates).
+
+**Quick entry's shortcut does nothing.** Another app holds the shortcut, and Surogate's Settings says so; or, on Linux, the session uses Wayland, which gives apps no shortcut. Open quick entry from Surogate's icon instead.
+
 ## Copilot
 
 **401 "Invalid base LLM token".** Admin-side config issue — the platform's default LLM credentials aren't provisioned for your tenant.

@@ -40,7 +40,7 @@ Earlier features that now have their own pages:
 
 - [Voice](/work/channels/voice/).
 - [API access for web chat](/work/channels/web/#api-access).
-- [Surogate Desktop (Linux)](/work/desktop/overview/): a desktop app that lets your agent work on your own computer.
+- [Surogate Desktop (Linux)](/work/desktop/overview/): a desktop app that lets your agent work on your own computer. [Get started](/work/desktop/get-started/) walks through a first chat on a folder and a first project.
 - [Projects in Surogate Desktop](/work/desktop/projects/): a coordinator chat that splits a goal into threads.
 - [Skill canvas](/develop/features/skill-canvas/): draw a skill as a flow of steps. See also [Export a skill](/work/library/skills/#export-a-skill).
 - [Vault](/work/settings/vault/): keep API keys and secrets the platform can use without showing them.

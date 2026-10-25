@@ -37,12 +37,15 @@ Every Surogate term you'll see in Work mode, in one place.
 | **Platform floor** | The always-on, non-configurable governance layer: workspace path containment and path-argument hygiene. No agent policy can relax it. |
 | **Pricing model** | How an agent charges: Free, Subscription, One-time packs, or Both. |
 | **Programs** | The agent page where it reaches people first: the people it follows, the journeys that write to them, the team, escalations and settings. |
+| **Project (Surogate Desktop)** | A coordinator chat in Surogate Desktop that splits a goal into threads and keeps track of them. Not the same as a Studio project, the workspace your team shares. See [Projects in Surogate Desktop](/work/desktop/projects/). |
 | **Journey** | A set of steps inside Programs that every person in it gets, counted from their own start date (day 0). |
 | **Step** | One message or call in a journey: when, on which channel, and the skill the agent follows with the reply. |
 | **Escalation** | Something the agent raised for a person on the team, urgent or needing attention; claimed and resolved from Programs or the Inbox. |
 | **Quality flags** | Per-session tags: 👍 / 👎 (user feedback), `policy.denied`, `harness.crash`, `saga.compensated`, `expert.override`, `expert.endorse`. |
 | **Session** | One conversation between a user and an agent. Records everything. Survives crashes. |
 | **Skill** | A small markdown file telling the agent how to handle a specific kind of request. Reusable. |
+| **Surogate Desktop** | The app for your computer that lets an agent work on a folder you choose, run commands in a sandbox there and use your own browser. See [Surogate Desktop](/work/desktop/overview/). |
+| **Thread** | A chat of its own that a project's coordinator hands a piece of work to. In a project with a folder, it works in its own copy of the folder. |
 | **Tool** | A capability the agent can invoke — `kb_read_page`, `web_search`, `read_file`, `terminal`, `browser_navigate`, etc. The agent decides which to use. |
 | **User (per-agent)** | An end-user account on a specific agent. Different from your operator account. |
 | **Vault** | Encrypted storage for the project's keys and tokens (**Settings → Vault**), used by MCP servers, proxy models and voice providers. Secrets never reach the agent's sandbox. See [Vault](/work/settings/vault/). |
