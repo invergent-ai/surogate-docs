@@ -34,7 +34,7 @@ Each step has its own chapter:
 | [Review what your agent did](/work/workflow/review-sessions/) | Session detail, quality flags, replay |
 | [Improve your agent](/work/workflow/improve-agent/) | Mark sessions, attach skills/KBs, edit persona |
 
-Plus shorter chapters: **Library** (skills, KBs, MCP servers), **Channels** (Web/WhatsApp/Slack/Telegram/Discord/Teams/Voice/Website + end-user accounts, including [self-registration](/work/channels/self-registration/) via your own Firebase), **Conversation tools** (`/goal`, the Copilot, the inbox), **Settings**, [**Monetize**](/work/monetize/) (charge end users via Stripe Connect, Pro+), **Use cases**, **Reference**.
+Plus shorter chapters: **Library** (skills, KBs, MCP servers), **Channels** (Web/WhatsApp/Slack/Telegram/Discord/Teams/Voice/Website + end-user accounts, including [self-registration](/work/channels/self-registration/) via your own Firebase), **Conversation tools** (`/goal`, the Copilot, the inbox), [**Surogate Desktop**](/work/desktop/overview/) (an app that lets the agent work on folders of your computer), **Settings**, [**Monetize**](/work/monetize/) (charge end users via Stripe Connect, Pro+), **Use cases**, **Reference**.
 
 ## When to flip to Develop mode
 

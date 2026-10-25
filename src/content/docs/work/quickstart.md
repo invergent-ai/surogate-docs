@@ -122,3 +122,5 @@ Once those are done, four optional steps unlock: **Edit capabilities**, **Attach
 - Recording every conversation for review and improvement
 
 That's enough to start using it for real work. Come back to [Run an agent](/work/workflow/run-agent/) and [Improve your agent](/work/workflow/improve-agent/) when you want to go deeper.
+
+To let the agent work on files of your own computer, install [Surogate Desktop](/work/desktop/get-started/).

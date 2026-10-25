@@ -6,6 +6,8 @@ sidebar:
 
 Surogate Desktop is an app for your computer. It lets your agent work on a folder you choose, use your own browser and show you the web apps it starts. You chat with the agent as usual. The agent still thinks in the cloud; the app is its hands on your machine. You watch it work and step in whenever you want.
 
+New to it? [Get started](/work/desktop/get-started/) walks you through a first chat on a folder and a first project.
+
 ## What you can do with it
 
 - **Work on your real files.** Point a chat at a folder, and the agent reads, writes and organizes what is in it: documents, spreadsheets, code or data. No uploads and no syncing. The work happens where your files already are. See [Working on a folder](#working-on-a-folder).
@@ -24,14 +26,31 @@ Surogate Desktop is an app for your computer. It lets your agent work on a folde
 
 ## Requirements
 
+Today Surogate Desktop is available for Linux. The macOS and Windows builds aren't published yet.
+
+**On Linux:**
+
 - Ubuntu 24.04 LTS or a later LTS release, on a 64-bit Intel or AMD computer.
 - Hardware virtualization (Intel VT-x or AMD-V), turned on in the firmware settings. Without it Surogate Desktop still works, but runs the agent's commands several times slower.
+
+**On a Mac** (not published yet):
+
+- A Mac with Apple silicon, on macOS 14 Sonoma or later.
+
+**On Windows** (not published yet):
+
+- Windows 11 on a 64-bit PC.
+- Hardware virtualization, turned on in the firmware settings, and Windows's Virtual Machine Platform. The installer turns Virtual Machine Platform on for you.
+- An administrator, to install the app.
+
+**On every computer:**
+
 - For browsing: Google Chrome, Microsoft Edge, Brave or Vivaldi. The Snap build of Chromium is not supported.
 - A Surogate account.
 
-Today Surogate Desktop is available for Linux. macOS and Windows builds aren't published yet.
-
 ## Install
+
+### On Linux
 
 Run:
 
@@ -39,9 +58,35 @@ Run:
 curl -fsSL https://surogate.ai/desktop/install.sh | bash
 ```
 
-The script asks for `sudo` once. Then open Surogate Desktop from your applications, [sign in](#sign-in) and start a chat on a folder (see [Working on a folder](#working-on-a-folder)).
+The script asks for `sudo` once. Then open Surogate from your applications, [sign in](#sign-in) and start a chat on a folder (see [Working on a folder](#working-on-a-folder)).
 
-Surogate Desktop keeps itself up to date. It checks for updates when it starts and every 6 hours. When one is ready, the sidebar says **Update available** and **Restart to update** installs it. An administrator on the computer has to approve the install. Without one, the sidebar says "An administrator needs to install this update."
+### On a Mac
+
+:::note
+The macOS build isn't published yet.
+:::
+
+Open the disk image, `Surogate.dmg`, and drag **Surogate** to **Applications**. Then open Surogate from Applications and [sign in](#sign-in).
+
+### On Windows
+
+:::note
+The Windows build isn't published yet.
+:::
+
+An administrator runs the installer. It installs Surogate for every user of the PC. If Virtual Machine Platform was off, the installer turns it on and asks to restart Windows. Then open Surogate from the Start menu and [sign in](#sign-in).
+
+### Updates
+
+Surogate Desktop keeps itself up to date. It checks for updates when it starts and every 6 hours. When one is ready, the sidebar says **Update available** and **Restart to update** installs it.
+
+- **On Linux**, an administrator on the computer has to approve the install. Without one, the sidebar says "An administrator needs to install this update."
+- **On a Mac**, **Restart to update** quits the app, puts the new version in its place and opens it. If your account may not change the folder Surogate is in, as a standard account may not change Applications, the sidebar says "An administrator needs to install this update". **Download** then opens the disk image, for an administrator to install.
+- **On Windows**, **Restart to update** asks Windows for an administrator's approval, then installs the update and starts the app again.
+
+If threads are still working when you restart to update, the app asks first whether to wait for them.
+
+### Install options on Linux
 
 Options go after `bash -s --`:
 
@@ -59,13 +104,21 @@ Options go after `bash -s --`:
 
 ### On a company network
 
-If your network inspects TLS traffic, or your servers use a certificate authority of their own, give the installer your company's CA certificate (a PEM file) with `--ca-cert`. Give the file to `curl` as well:
+On Linux, if your network inspects TLS traffic, or your servers use a certificate authority of their own, give the installer your company's CA certificate (a PEM file) with `--ca-cert`. Give the file to `curl` as well:
 
 ```bash
 curl --cacert company-ca.pem -fsSL https://surogate.ai/desktop/install.sh | bash -s -- --ca-cert company-ca.pem
 ```
 
 Surogate Desktop, your Chrome, Edge and Brave, and the commands the agent runs then all trust it.
+
+### Remove Surogate Desktop
+
+- **On Linux**, run the installer with `--uninstall` (see [Install options on Linux](#install-options-on-linux)).
+- **On a Mac**, open the menu under your name at the bottom of the sidebar and choose **Remove Surogate from This Mac…**. It asks before it deletes your own data, then quits and moves the app to the Trash. If your account may not change the folder Surogate is in, it removes your own data only, and an administrator removes the app.
+- **On Windows**, open the same menu and choose **Remove Surogate from This Computer…**. Once an administrator approves it, it removes the app for every user of the PC. It asks before it deletes your own data.
+
+Removing the app never touches the folders your chats worked on, or another user's data.
 
 ## Good to know
 
@@ -91,6 +144,20 @@ Your folders stay as they are.
 The first time, the app asks for your agent's address (for example `https://agent.example.com`). Paste it and press **Connect**, then **Continue in your browser** and sign in there. The computer joins that one agent, so the app works with a single agent at a time.
 
 Signing in adds the computer to the agent's list under [Settings > Devices](#devices).
+
+## The app's window
+
+The sidebar has:
+
+- **New**, which starts a new chat.
+- **Projects**, which opens your projects as cards (see [Projects](/work/desktop/projects/)).
+- **Inbox**, **Missions** and **Skills**, the agent's own pages, as in its web app.
+- **Search**, which narrows the lists below to the projects and chats whose names contain what you type.
+- The **Projects** list. A dot on a project's mark means a thread is waiting on you.
+- **Recents**, your chats that are not part of a project, newest first. Older ones load as you scroll down. A laptop mark shows a chat that works on a folder of a computer; point at the chat to see which computer.
+- Your name, at the bottom. It opens a menu with **Settings**, **Account settings**, **Devices**, **Usage**, **Get help**, **Plans and billing**, **Log out** and **Remove this agent…**. On a Mac and on Windows, the menu also has the item that removes the app (see [Remove Surogate Desktop](#remove-surogate-desktop)).
+
+The centre shows the chat or the page you open. In a project, the **Overview** button in the header opens a panel with the project's threads and files. A chat outside a project has no Overview panel.
 
 ## Working on a folder
 
@@ -159,8 +226,13 @@ When a computer is added or reauthorized, a banner in the web app says "`<comput
 
 ## Around the app
 
-- **Tray.** The tray menu has **Show Surogate**, **Quick entry**, the computer's name, **Settings…** and **Quit Surogate**.
-- **Quick entry.** A small window to start a new chat from anywhere. On Linux the shortcut is Ctrl+Alt+Space in an X11 session. In a Wayland session there is no shortcut: open it from the tray.
+- **Tray.** Surogate's icon sits in the tray on Linux, in the menu bar on a Mac and in the notification area on Windows. Its menu has **Show Surogate**, **Quick entry**, the computer's name, **Settings…** and **Quit Surogate**.
+- **Quick entry.** A small window to start a new chat from anywhere. The shortcut is:
+  - Ctrl+Alt+Space on Linux, in an X11 session. In a Wayland session there is no shortcut: open it from the tray.
+  - Option+Space on a Mac.
+  - Ctrl+Alt+Space on Windows.
+
+  If another app already holds the shortcut, Settings says so, and you open quick entry from Surogate's icon.
 - **Notifications.** When Surogate's window is hidden or behind another app, it notifies you of new items in your inbox, of a chat that finished, and when it needs an answer ("Surogate is asking you something"). Clicking one opens that chat. A flood of them becomes one notice that opens the inbox.
 - **Settings.** Appearance, **Start at login**, **Keep running when the window is closed**, **Developer mode**, your account, **This computer** (name, connection, sandbox), **Browser** and **Folders and permissions**. **Folders and permissions** lists each folder chats work on and each chat on it, with its mode, the sites it may reach, its use of the browser, the ports of its own servers the browser may open and its background processes. **Take back** withdraws an allowance and **Stop** ends a process.
-- **Uninstall.** See `--uninstall` under [Install](#install).
+- **Uninstall.** See [Remove Surogate Desktop](#remove-surogate-desktop).
