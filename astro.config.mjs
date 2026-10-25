@@ -169,6 +169,7 @@ export default defineConfig({
               collapsed: true,
               items: [
                 'work/workflow/run-agent',
+                'work/workflow/work-with-documents',
                 'work/workflow/configure-agent',
                 'work/workflow/publish-agent',
                 'work/workflow/landing-page',

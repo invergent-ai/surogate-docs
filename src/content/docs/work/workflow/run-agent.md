@@ -27,7 +27,7 @@ Bracketed items are **tool calls** — the agent searching a KB, calling an API,
 
 ![The workspace pane, where the files an agent creates or downloads show up](../../../../assets/screenshots/work-chat-workspace.png)
 
-When the agent writes files, downloads documents, or generates artifacts, a workspace pane appears on the right with every file it touched. Markdown / code / CSV / images preview in-browser; Word, Excel, PowerPoint and PDF files open in an office editor (see [Office documents](/work/tools/office-documents/)); download saves locally.
+Every chat has a workspace: the files the agent writes, downloads or generates, and the ones you upload. Open **Files** above the composer to see it; it has **Upload files** and **Refresh workspace** buttons, and a download button on each file. Click a file to open it beside the chat. Markdown / code / CSV / images preview in-browser; Word, Excel, PowerPoint and PDF files open in an office editor, where you and the agent can edit them together (see [Work with documents](/work/workflow/work-with-documents/) and [Office documents](/work/tools/office-documents/)).
 
 Files persist for the lifetime of the session and survive sandbox restarts. They're cleared when the session ends or resets.
 
@@ -40,6 +40,7 @@ Each agent has an allowlist of built-in tools set in its CONFIG tab:
 | `kb_search_pages`, `kb_list_pages`, `kb_read_page` | Search, browse and read any KB attached to this agent |
 | `web_search`, `web_extract` | Public web research (Tavily / Exa) |
 | `read_file`, `write_file`, `patch` | Read and modify workspace files |
+| `office_read`, `office_edit` | Read and edit Word documents, spreadsheets, presentations and PDFs live, in the editor beside the chat. Not set in CONFIG: the agent has them in chats with a file pane, where the platform offers the office editor |
 | `terminal`, `process` | Shell + code execution in the isolated sandbox |
 | `vision_analyze` | Image analysis |
 | `browser_*` | Drive a real Chromium browser (with user-handoff for login / MFA) |

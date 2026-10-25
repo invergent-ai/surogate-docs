@@ -2,6 +2,14 @@
 title: What's new
 ---
 
+## October 23, 2026: Surogate 1.19.0 (runtime 2.22.1)
+
+### Office documents: a user guide
+
+- **Work with documents.** A new guide walks through the common tasks: opening a document, asking the agent for a new report, spreadsheet or deck, editing alongside it, mentioning it in a comment, reviewing its changes in Word, filling in a PDF form, and what to do when a save is pending. See [Work with documents](/work/workflow/work-with-documents/).
+- **Comment mentions in Studio.** Mentioning the agent in a comment works in Studio's Work chat, as in the agent's own web app. See [Comment mentions](/work/tools/office-documents/#comment-mentions).
+- **Scripts where there is no editor.** On Slack, WhatsApp and other channels without a document pane, the agent builds and changes office files with its built-in `docx`, `xlsx`, `pptx` and `pdf-forms` skills and sends you the file. See [Files the agent builds with scripts](/work/tools/office-documents/#files-the-agent-builds-with-scripts).
+
 ## October 22, 2026: Surogate 1.16.0 (runtime 2.19.5)
 
 ### Discord and Microsoft Teams

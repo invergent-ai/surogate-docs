@@ -121,6 +121,26 @@ Service-account tokens are honoured only under the `/v1/api/` prefix — every o
 
 See [Use cases → API channel for batch jobs](/develop/use-cases/) for an end-to-end recipe.
 
+## Show the workspace and editor in your own app
+
+An API session has no file pane, so its agent gets no `office_read` or `office_edit` and answers no comment mentions. If your app shows the session's workspace and opens its office documents beside its own chat, say so when you create the session with the service-account token:
+
+```http
+POST /v1/api/sessions
+{"config": {"file_pane": true}}
+```
+
+The agent then edits documents live and answers mentions as it does in the web chat (see [Office documents](/work/tools/office-documents/)). Only `POST /v1/api/sessions` takes the flag; a session started by `POST /v1/api/prompts` has no file pane.
+
+To open a document in the editor, ask for its editor config on behalf of the person who will see it:
+
+| Request | What it does |
+|---|---|
+| `GET /v1/api/sessions/{id}/workspace/editor?path=<path>&theme=light` | Returns `document_server_url`, the signed editor `config`, and `mentionable_users` (the agent, where it answers comments). `theme` is `light` or `dark`; `view=true` opens it read-only |
+| `POST /v1/api/sessions/{id}/workspace/editor/mention` | Tells the chat that a comment mentioned the agent. Body: `path`, `comment_id`, `message` and `emails`, from the editor's `onRequestSendNotify` event. Answers `202` |
+
+Both need the header `X-Surogate-Acting-User-Id`: the person's id in your app, at most 128 characters, without `:`. `X-Surogate-Acting-User-Name` (URL-encoded, at most 200 characters) is the name the editor shows; without it, the id is shown. Load `<document_server_url>/web-apps/apps/api/documents/api.js`, open the editor with `new DocsAPI.DocEditor(<element id>, config)`, and answer its `onRequestUsers` event with `mentionable_users`. The `@invergent/agent-chat-react` SDK does all of this through its adapter's `getWorkspaceEditorConfig` and `notifyWorkspaceEditorMention`.
+
 ## Defining a goal programmatically
 
 An API client sets a goal by posting a `user.define_outcome` event — not by sending `/goal …` as a prompt:
