@@ -153,10 +153,11 @@ export default defineConfig({
           },
         },
       ],
-      // One sidebar, two sibling top-level groups. Order and category labels
-      // are carried over from the deleted sidebars.js. Inner subgroups all
-      // collapse by default: the two tracks now share a single column, so the
-      // ~72 entries cannot all sit expanded as they did with three sidebars.
+      // One sidebar, sibling top-level groups. Order and category labels of the
+      // first two are carried over from the deleted sidebars.js; the third
+      // documents Surogate Keel's two apps. Inner subgroups all collapse by
+      // default: the tracks share a single column, so their entries cannot all
+      // sit expanded as they did with three sidebars.
       sidebar: [
         {
           label: 'Work — for operators',
@@ -329,6 +330,61 @@ export default defineConfig({
                 'develop/reference/background-jobs',
                 'develop/reference/coordination',
                 'develop/reference/glossary',
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Keel — for case work',
+          items: [
+            'keel',
+            'keel/concepts',
+            'keel/quickstart',
+            {
+              label: 'Keel Builder',
+              collapsed: true,
+              items: [
+                'keel/builder/sign-in',
+                'keel/builder/case-types',
+                'keel/builder/drafts',
+                'keel/builder/workflow',
+                'keel/builder/steps',
+                'keel/builder/flow-nodes',
+                'keel/builder/data',
+                'keel/builder/forms',
+                'keel/builder/scenarios',
+                'keel/builder/connections',
+                'keel/builder/case-type-settings',
+                'keel/builder/versions',
+                'keel/builder/publish',
+                'keel/builder/rules',
+                'keel/builder/queues',
+                'keel/builder/settings',
+              ],
+            },
+            {
+              label: 'The business app',
+              collapsed: true,
+              items: [
+                'keel/business/sign-in',
+                'keel/business/work',
+                'keel/business/queues',
+                'keel/business/cases',
+                'keel/business/open-case',
+                'keel/business/agents',
+                'keel/business/watch',
+                'keel/business/supervisors',
+              ],
+            },
+            'keel/systems',
+            {
+              label: 'Reference',
+              collapsed: true,
+              items: [
+                'keel/reference/glossary',
+                'keel/reference/node-kinds',
+                'keel/reference/roles',
+                'keel/reference/faq',
               ],
             },
           ],

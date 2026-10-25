@@ -1,0 +1,119 @@
+---
+title: An open case
+---
+
+A case's page shows where the case is, the steps that are yours to work, who holds the others, its files, its data and its history. It keeps itself current as the case changes. Open a case from the Work page, the Cases page, or a link a colleague sends.
+
+Keel records each time someone opens a case.
+
+## The header
+
+- A breadcrumb: **Cases** / the case number.
+- The case's title, or its number when the case type gives it no title.
+- Under it, the case type and its version, the summary values and the day the case opened, such as `Loan request v3 · €20,000 · opened 20 Oct`.
+- On the right, a button for each **optional action** available now, such as **Ask client for a document**. Pressing it starts the action's step, which then shows like any other step.
+- For supervisors, **More actions** with **Move by hand…**. See [Move a case by hand](/keel/business/supervisors/#move-a-case-by-hand).
+
+Under the header, the **stage bar** shows the case's stages with their dates: done, current and ahead. The current stage names the steps open in it.
+
+## Your task
+
+Each open step that is yours shows first, as a card: **Your task** and the step's name, or **Your vote** for a vote. The card shows the step's service level, and for a vote how many have voted, such as `2 of 5 voted`.
+
+What the card holds depends on the step:
+
+### A step you hold
+
+The card shows the step's form: the fields the step writes, and the choice of **Outcome** (or the label the builders gave it, such as **Decision**).
+
+1. Fill in the fields. A field marked as required for an outcome must be filled before you submit with that outcome.
+2. Choose an outcome.
+3. Press **Submit**.
+
+For a vote, choose your vote and press **Submit vote**. You vote once; the step ends as soon as one choice has the votes it needs.
+
+A file field has an upload. The file is added to the case's files as soon as you add it, and the field holds it. If someone has the file it replaces open, the upload says "Someone has this file open. Add it again once everyone has closed it."
+
+If Keel refuses the submission, the reason shows beside the field it names, or above the form. See [When Keel refuses](#when-keel-refuses).
+
+### A step an agent drafted for you
+
+On a step an agent drafts and you finish, the form opens filled with the agent's draft. Each field it drafted is marked, with "Drafted by *agent*. Nothing is sent until you submit." The mark goes from a field once you change it. Check the draft, change what you need, and submit as usual.
+
+**Ask to revise** sends the agent a note, **What should change**, and asks it to draft again: "*Agent* drafts the step again with your note. Nothing is sent until you submit." It is offered once the agent has stopped working on its draft.
+
+### A step waiting in your queue
+
+"Nobody holds this step yet: it waits in *queue*. Claim it to work on it." Press **Claim**. The step becomes yours, and its form shows.
+
+### A step whose agent asked a question
+
+"*Agent* asked a question", and the queue it went to. **Answer in Work** opens the question on the Work page, where you answer it. **Open its session** shows what the agent was doing, on [Watch](/keel/business/watch/).
+
+## Now: steps others hold
+
+Every other open step shows as a **Now** card, with the step's name and its service level:
+
+| Who holds it | What the card shows |
+|---|---|
+| An agent at work | "*Agent* is working" and how its run stands (**Starting**, **Running**, **Waiting** or **Drafted**); when it started, its goal and deadline; the agent's plan and when it was last active; where its question would go if it needs a person, and whether that includes you. |
+| An agent that asked a question | "*Agent* asked a question", and who holds the question. |
+| A person, a queue or a vote | Who holds it, since when; for a vote, how many have voted. |
+| A system | **Waiting on a system**, and each attempt of its call, with its time and how it went: **Applied**, **Sending**, **The system did not answer in time**, **The system was unavailable**, **Refused by the system** or **The system could not complete this**. |
+| A wait | **Waiting on the client**, **Waiting on a third party**, or **Waiting for** the event, and until when. |
+
+Each card also says what comes **Next**: where each outcome leads and who works it there, and whether you are on that step, such as "Next: Credit committee, 5 members. You are not on that step."
+
+For an agent's step, the card offers:
+
+- **Message the agent**, while the agent is at work and takes messages. "*Agent* reads it while it works on *step*. It is kept in the case's history as your note." Type the **Message** and press **Send**. If the agent cannot take one now, Keel says "*Agent* takes no message now."
+- **Open its session**, which shows the agent's session on [Watch](/keel/business/watch/).
+
+When a case has no open step, the page says **This case is closed.** or **Nothing waits now.**
+
+## Files and documents
+
+Under the steps, the files panel holds the case's files: the files its file fields hold, and the files its agents wrote. The four changed last have tabs of their own; **All *n* files** lists every file, newest first, with its field, who added it, at which step, and when.
+
+Office documents, such as Word, Excel, PowerPoint and PDF files, open in the web editor in the panel. What you can do in a document depends on the case:
+
+- While you hold a step of the case, you can edit.
+- Otherwise you can comment: "You can comment", and who holds editing, such as "You can comment · Ana Marin holds editing".
+- Some documents open read-only: "You can read this document here."
+
+The panel also shows who is in the document now, as "Here now ·" and their names.
+
+Other files show their name and size, with **Download**. When documents cannot open in the editor, the panel says why, such as "Documents open here once a document server is set up. Download the file instead."
+
+## Data, History and Flow
+
+The side panel, beside the steps on a wide screen and under them on a phone, has three tabs.
+
+- **Data**: each field by its label and value. Open a field to see every value it took, who set it (a person, an agent, **Rule**, or **Set by the move to version *n***), when, and at which step or at **Case started**.
+- **History**:
+  - **Your part in this case** first: what you did, latest first, or "You have not worked on this case yet".
+  - Then each step done, latest first: its name and outcome, who did it, when, the rules it applied with their versions, and the **Policies read** by an agent, by policy and page.
+  - **Full history with inputs and outputs** opens every transition of the case, a hundred at a time, each with the values it recorded: the outcome, the fields written, a vote's choice, an answer and a note.
+- **Flow**: the current stage's flowchart, with the path the case took traced through it and its open steps marked as current.
+
+## When Keel refuses
+
+Keel checks every submission. When it refuses one, the form says why:
+
+| Message | Why |
+|---|---|
+| **Choose an outcome first.** / **Choose your vote first.** | Nothing was chosen. |
+| **Some required fields are empty.** | The outcome you chose requires fields you left empty. |
+| **A check on this step did not pass.** | One of the step's checks failed. The builders' message for it follows. |
+| **This is beyond your authority limit.** | The amount is above your limit in the step's scope, or you have no limit there. Ask a supervisor. |
+| **Someone else must finish this step.** | You did an earlier step this one checks (maker-checker). |
+| **You have already voted on this step.** | You voted already. |
+| **The agent is waiting for an answer to its question.** | The step is paused until its agent's question is answered. |
+| **The question was already answered.** | Someone answered it first. |
+| **This step is no longer open.** | The case moved on. |
+| **You cannot do this on this step.** | The step is not yours, or not in one of your queues. |
+| **This case is closed.** | The case closed meanwhile. |
+| **Keel could not apply a rule on this step. Ask your supervisor.** | A condition or rule failed on the case's data. |
+| **This could not be done.** | Any other refusal. |
+
+The [FAQ](/keel/reference/faq/) answers what to do in each case.
