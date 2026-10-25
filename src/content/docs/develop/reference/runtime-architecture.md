@@ -35,8 +35,15 @@ You don't pick where a tool runs — but knowing helps debug behaviour:
 - **In the worker** — fast, no sandbox needed (memory, skill loading, web search, browser, scheduling, sub-agent delegation, `ask_user_question`, `create_artifact`)
 - **In the sandbox** — anything that touches files or runs code (`terminal`, `process`, `read_file`, `write_file`, `patch`)
 - **Through the MCP proxy** — external systems via the Model Context Protocol; credentials injected by the proxy so the sandbox never sees them
+- **In the agent's own editor session** — `office_read` and `office_edit` work through an editor session the platform holds for the agent on each document, so the agent's edits arrive in the same live editor the user has open
 
 See [Tool catalog](/develop/reference/tool-catalog/) for the full list.
+
+## An open document has one writer
+
+While an office document is open in the editor, the editor is its only writer. The agent changes it only through `office_edit`, and a `write_file` or `patch` to it is refused. A call's ops apply all or none, and a target the user changed since the agent read it refuses the call. Every document a turn edited is saved when the turn ends; a save that finds the file changed underneath it lands as a copy beside it and never overwrites.
+
+**What this means for you**: don't build an office file with a script in a chat that has a file pane; the agent's built-in `office` skill does it with `office_edit`, so the user can watch and edit. A skill that must produce a file with scripts, such as a PDF with content, writes a new file. See [Office documents](/work/tools/office-documents/).
 
 ## Multi-agent topology
 
