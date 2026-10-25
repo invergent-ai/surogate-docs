@@ -1,0 +1,91 @@
+---
+title: The Team page and supervisors
+sidebar:
+  label: Team page (supervisors)
+---
+
+Supervisors run the people side of a project. The **Team** page shows "Who works this project: its staff, its queues and its agents." From it, supervisors invite and remove staff, staff the queues, turn agents off and on, and set authority limits. Supervisors also move cases by hand.
+
+The project's owners appoint the first supervisors in Keel Builder (see [Supervisors](/keel/builder/queues/#supervisors)). Staff who are not supervisors have no **Team** row; a link to the page shows "Only the project's supervisors see the team."
+
+## Staff
+
+The **Staff** tab lists the project's staff: each person's **Name**, marked **Supervisor** where they are one, the **Queues** they work, and their **Authority limits**, or **None**.
+
+### Add someone
+
+Two ways:
+
+- **Add from the organisation**: for someone who already has a work account in the project's organisation. Search by name and pick them; people already on the staff show dimmed. Keel says *name* **is on the staff.**
+- **Invite staff**, in the page header: for anyone, by email. "Add a person to this project's staff by their work email." Enter the **Email** and **Name**, then press **Invite**.
+
+The invitation's answer says how the person signs in, and gives a link to send them when there is one:
+
+- **Send *name* this link to set their password.** A new password account gets a set-password link. "It works once, until" the time shown.
+- ***Name* signs in with** Google, GitHub or a password, **using** their email, with a sign-in link, when the project signs in that way.
+- ***Name* is already on the staff.**
+- ***Name* can sign in with the account they have.**, with a sign-in link.
+
+Press **Copy** to copy the link, then **Done**. The dialog shows the link only this once.
+
+Invitations can be refused; see [Queues and supervisors](/keel/builder/queues/#invite-someone-new) for the messages.
+
+### Remove someone
+
+Press **Remove** on their row. Keel asks **Remove *name* from the staff?**: "They leave the project's queues and lose their authority limits." Supervisors cannot be removed here: "The project's builders appoint and demote supervisors." Ask an owner to demote them first.
+
+## Queues and members
+
+The **Queues** tab lists the project's queues in the order Keel serves them. Each shows its name, its serving order, its priority, and who works it. "Serving order and priority are set by the project's builders."
+
+- Press × beside a member to take them out of the queue.
+- Pick someone from **Add a member** to add them. Only the staff are offered. When everyone is a member already, it says "Everyone on the staff works this queue."
+
+A queue no one works says "No one works this queue yet." Its work waits there until someone joins.
+
+From a team queue on the Work page, **Queue settings** opens the same members for that queue.
+
+With no queues, the tab says **This project has no queues yet**: "The project's builders define its queues."
+
+## Agents
+
+The **Agents** tab lists the agents the project's case types use, each with whether it **Works its steps**, and its **Authority limits**.
+
+- Turning the switch off asks **Turn off *agent*?**: "People work each of its steps that opens from now on." Its new steps go to people in the queue that gets its questions; steps it already works carry on. The row then reads **Off since** the date, with who turned it off.
+- Turning it on applies at once.
+
+With no agents, the tab says **No case type of this project uses an agent**.
+
+## Authority limits
+
+An authority limit is the most a person or an agent may approve in a **scope**, such as `lending`. A step with an authority check refuses anyone whose limit in its scope is lower than the case's amount, and anyone with no limit there.
+
+Press **Limits** on a person's row on the **Staff** tab, or on an agent's row on the **Agents** tab. The dialog, **Authority limits of *name***, says "The most *name* may approve in each scope. A change applies at once."
+
+- Each limit held is listed with **Clear**. Clearing asks first: "*Name* may then approve nothing in *scope*."
+- Under **Set a limit**, pick the **Scope** and type the **Amount**, then press **Set limit**. The scopes are those the project's published case types check; each says which step checks it, such as "Checked by Approve the loan in Loan request". An amount is zero or more, with at most six decimal places.
+
+A limit held in a scope no published case type checks now says "No published case type checks it now." If no case type checks any scope yet, the dialog says "No published case type checks an authority limit yet."
+
+## Move a case by hand
+
+A supervisor can move a case to any stage, or to a step of a stage, with a reason. Use it when a case is stuck, or went somewhere it should not have.
+
+1. Open the case and press **More actions**, then **Move by hand…**.
+2. Under **Move to**, pick where the case goes: **From the start of** a stage, or one of the stage's steps, votes or waits.
+3. Type the **Reason**. It is required: "Say why the case moves."
+4. Press **Move case**.
+
+"The case leaves its open steps and goes where you pick. The move and your reason are kept in its history." Keel says **Moved to** the place you picked.
+
+**Move by hand…** is offered on open cases. Steps on a parallel path are not offered, since a case moved onto one would wait at the join for paths no move opens. If a move would leave the case with nothing to do, Keel refuses it and says why.
+
+## What else supervisors see
+
+- **Queue settings** on each team queue of the Work page.
+- **Open Keel Builder** in the bar at the bottom of the left rail, to open the project in Keel Builder. Using it needs a Surogate account that is a member of the project.
+- Everything staff see: supervisors work cases like anyone else.
+
+## What staff who are not supervisors see
+
+Staff see the **Work** and **Cases** pages, start cases, work the steps given to them or their queues, answer agents' questions, delegate and return their items, message agents and watch sessions. They do not see the Team page, **Queue settings**, **Move by hand…** or **Open Keel Builder**.

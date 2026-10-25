@@ -2,6 +2,16 @@
 title: What's new
 ---
 
+## October 25, 2026: Surogate Keel 0.2.1
+
+### A user guide for Keel
+
+[Surogate Keel](/keel/) runs business processes as cases: builders define case types of stages, steps, decisions and rules, and people and agents work cases of them. A new section documents its two apps.
+
+- **Keel Builder**, for builders: [case types and drafts](/keel/builder/case-types/), the [designer's tabs](/keel/builder/workflow/), [dry runs and publishing](/keel/builder/publish/), [moving running cases](/keel/builder/versions/) to a new version, [rules and calendars](/keel/builder/rules/), [queues and supervisors](/keel/builder/queues/), and [service keys and effects](/keel/builder/settings/).
+- **Keel**, the business app, for staff and supervisors: [the Work page](/keel/business/work/), [team queues](/keel/business/queues/), [cases](/keel/business/cases/), [an open case](/keel/business/open-case/), [working with agents](/keel/business/agents/), [Watch](/keel/business/watch/) and [the Team page](/keel/business/supervisors/).
+- A [quickstart](/keel/quickstart/) from an empty project to a worked case, a [glossary](/keel/reference/glossary/), [roles and permissions](/keel/reference/roles/) and an [FAQ](/keel/reference/faq/).
+
 ## October 23, 2026: Surogate 1.19.0 (runtime 2.22.1)
 
 ### Office documents: a user guide
