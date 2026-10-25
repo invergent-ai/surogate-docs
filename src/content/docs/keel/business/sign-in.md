@@ -4,7 +4,7 @@ sidebar:
   label: Sign in and projects
 ---
 
-The business app, **Keel**, is where a project's staff work cases. You sign in with your work account of the project. Your supervisor gives you the address, or a link to set your password.
+The business app, **Keel**, at https://keel-app.surogate.ai, is where a project's staff work cases. You sign in with your work account of the project. Your supervisor gives you the link to your project, or a link to set your password.
 
 ## Your first sign-in: the set-password link
 

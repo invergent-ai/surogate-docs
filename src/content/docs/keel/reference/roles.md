@@ -25,8 +25,6 @@ Keel has two sets of roles, one for each app.
 
 Viewers see **You can view this project. Its editors and owners change it.** in place of the save state.
 
-Keel also lets a platform administrator who is a member of the project do what an owner does. Keel Builder still shows the controls of the role the project switcher shows.
-
 ## The business app
 
 | What | Staff | Supervisor |

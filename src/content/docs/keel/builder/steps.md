@@ -28,7 +28,7 @@ If the agent fails for good, people take the step: it opens as work in the **Rai
 - **A queue**: one of the project's queues. Its members see the step in the queue and claim it.
 - **A person**: one person, found by name. Picking one clears the queue.
 
-With a queue picked, you can turn on **Decided by a vote** instead. Set **Votes needed** and **Out of**; the panel reads, for example, `2 of 3 votes decide`. Every member of the queue may vote, once, choosing one of the step's outcomes. As soon as one outcome has the votes needed, the step ends with it. A vote returns no fields.
+With no person picked, you can turn on **Decided by a vote**. Set **Votes needed** and **Out of**; the panel reads, for example, `2 of 3 votes decide`. Every member of the queue may vote, once, choosing one of the step's outcomes. As soon as one outcome has the votes needed, the step ends with it. A vote returns no fields.
 
 A step with neither a queue nor a person opens with no one to work it: nobody can take it in the business app, and a supervisor has to [move the case by hand](/keel/business/supervisors/#move-a-case-by-hand). Give every person step a queue or a person.
 

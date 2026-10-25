@@ -76,6 +76,7 @@ A set-password link works once, until the time it was given with. Ask the person
 | **This person signs in through another sign-in project and cannot be invited here.** | Their account belongs to another sign-in setup. |
 | **This project has no organisation to invite people into. Ask an administrator.** | The project's business sign-in is not set up. |
 | **This email or name is not accepted.** | The email or the name is not valid. |
+| **Invitations cannot reach the runtime now; try again shortly.** | A temporary problem. Try again, or ask your administrator if it lasts. |
 
 ### Why can I not remove a supervisor?
 
@@ -85,7 +86,7 @@ Supervisors are appointed and demoted by the project's owners in Keel Builder. A
 
 ### Why do I not see Move by hand?
 
-Only supervisors move cases by hand, from **More actions** on the case. It is offered on an open case, and on a case that closed because a step failed.
+Only supervisors move cases by hand, from **More actions** on the case. It is offered on an open case; a closed case has no **More actions**.
 
 ### Why is a step not offered in Move by hand?
 

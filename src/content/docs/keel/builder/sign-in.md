@@ -4,7 +4,7 @@ sidebar:
   label: Sign in and projects
 ---
 
-Keel Builder is where a project's builders design and publish its case types. You sign in with your Surogate account, the one you use in Studio, and you see the projects you are a member of.
+Keel Builder, at https://keel-builder.surogate.ai, is where a project's builders design and publish its case types. You sign in with your Surogate account, the one you use in Studio, and you see the projects you are a member of.
 
 ## Signing in
 

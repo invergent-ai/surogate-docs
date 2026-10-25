@@ -2,7 +2,7 @@
 title: What's new
 ---
 
-## October 25, 2026: Surogate Keel
+## October 25, 2026: Surogate Keel 0.2.1
 
 ### A user guide for Keel
 

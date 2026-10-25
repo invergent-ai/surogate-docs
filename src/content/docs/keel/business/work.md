@@ -34,7 +34,7 @@ Each item shows:
 - its case: number and title;
 - what it needs: the step's name, an agent's question, or **A deadline was missed** for an escalation;
 - why it is here, in a sentence, such as "Assigned to you", "Ana Marin handed it over", "Underwriting agent asks you", "Your vote is owed", or "Escalated to Underwriting";
-- its service level: **On time**, **Due today**, **Past goal** or **Past deadline**. An item done shows when it was done.
+- its service level: **Past deadline**, with how long ago, such as **Past deadline · 2 h**; **Past goal**; **Due today**; the time left to its deadline, such as **3 d left**; or **On time** when it has no deadline. An item done shows when it was done.
 
 ## An item
 

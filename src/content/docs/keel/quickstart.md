@@ -13,7 +13,7 @@ You need:
 
 ## 1. Sign in to Keel Builder
 
-1. Open Keel Builder and sign in with your Surogate username or email and password, or with **Continue with Google** or **Continue with GitHub** where they show.
+1. Open Keel Builder at https://keel-builder.surogate.ai and sign in with your Surogate username or email and password, or with **Continue with Google** or **Continue with GitHub** where they show.
 2. If the project shown is not the one you want, pick it in the switcher at the top of the left rail. The app shows its **Case types** page, which says **No case types yet**.
 
 See [Sign in to Keel Builder](/keel/builder/sign-in/) if the app says you are not a member of any project.
@@ -28,6 +28,10 @@ Cases are worked in the business app, by the project's staff. Make the first sta
 4. The dialog answers with how the person signs in. For a new password account it says **Send *name* this link to set their password** and shows a **Set-password link**. Copy the link, then press **Done**. The link works once.
 
 If the project signs in with Google or GitHub, the dialog shows a **Sign-in link** instead. The person signs in there with the email you entered.
+
+If the email already has an account the project can use, the dialog says so, for example that the person was on the staff already and is now a supervisor, or that they can sign in with the account they have. They sign in with that account, and the set-password part of step 8 does not apply.
+
+Inviting needs the project's business sign-in. If the dialog says **This project has no organisation to invite people into. Ask an administrator.** or **Invitations cannot reach the runtime now; try again shortly.**, you cannot go on with this quickstart until that is fixed. See [why someone cannot be invited](/keel/reference/faq/#why-can-someone-not-be-invited).
 
 ## 3. Create the case type
 

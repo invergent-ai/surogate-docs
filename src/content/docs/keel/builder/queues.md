@@ -42,7 +42,7 @@ Use **Appoint a supervisor**: type two letters of the person's name and pick the
 2. Enter their **Email** and **Name**, and press **Invite**.
 3. Read the answer and send the person what it gives you:
    - **Send *name* this link to set their password.** with a **Set-password link**. The link works once, until the time shown.
-   - ***Name* signs in with** the project's sign-in, **using** their email, with a **Sign-in link**, when the project signs in through Google, GitHub or another Firebase sign-in.
+   - ***Name* signs in with** the project's sign-in, **using** their email, with a **Sign-in link**, when the project signs in through Google, GitHub or another outside sign-in.
    - ***Name* was on the staff already, and is now a supervisor.**
    - ***Name* can sign in with the account they have.** with a **Sign-in link**, for someone whose account already existed.
 4. Press **Done**. The dialog shows the link only this once, so copy it first.
@@ -55,6 +55,7 @@ An invitation can be refused:
 | **This person signs in through another sign-in project and cannot be invited here.** | Their account belongs to a different sign-in setup. |
 | **This project has no organisation to invite people into. Ask an administrator.** | The project's business sign-in is not set up. |
 | **This email or name is not accepted.** | Check the email and the name. |
+| **Invitations cannot reach the runtime now; try again shortly.** | A temporary problem. Try again, or ask your administrator if it lasts. |
 
 ### Demote a supervisor
 

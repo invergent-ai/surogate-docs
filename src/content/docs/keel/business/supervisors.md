@@ -78,7 +78,7 @@ A supervisor can move a case to any stage, or to a step of a stage, with a reaso
 
 "The case leaves its open steps and goes where you pick. The move and your reason are kept in its history." Keel says **Moved to** the place you picked.
 
-**Move by hand…** is offered on open cases, and on a case that closed because a step failed; moving such a case opens it again. Steps on a parallel path are not offered, since a case moved onto one would wait at the join for paths no move opens. If a move would leave the case with nothing to do, Keel refuses it and says why.
+**Move by hand…** is offered on open cases. Steps on a parallel path are not offered, since a case moved onto one would wait at the join for paths no move opens. If a move would leave the case with nothing to do, Keel refuses it and says why.
 
 ## What else supervisors see
 
