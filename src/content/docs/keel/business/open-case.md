@@ -10,7 +10,7 @@ Keel records each time someone opens a case.
 
 - A breadcrumb: **Cases** / the case number.
 - The case's title, or its number when the case type gives it no title.
-- Under it, the case type and its version, the summary values and the day the case opened, such as `Loan request v3 · €20,000 · opened 20 Oct`.
+- Under it, the case type and its version, such as `Loan request v3`, the case's summary values, and the day it opened.
 - On the right, a button for each **optional action** available now, such as **Ask client for a document**. Pressing it starts the action's step, which then shows like any other step.
 - For supervisors, **More actions** with **Move by hand…**. See [Move a case by hand](/keel/business/supervisors/#move-a-case-by-hand).
 

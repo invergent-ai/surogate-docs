@@ -60,7 +60,7 @@ A wait holds the case until something happens. Its panel has three sections.
 
 ## Parallel splits and joins
 
-A **parallel split** starts several paths at once. Its panel, **Starts in parallel**, lists where each path starts; **Add a path** adds one. Steps on parallel paths are open at the same time, and their cards read `Parallel with` and the other paths.
+A **parallel split** starts several paths at once. Its panel, **Starts in parallel**, lists where each path starts; the **Add** menu adds one. Steps on parallel paths are open at the same time, and their cards read `Parallel with` and the other paths.
 
 A **join** waits until every path that leads to it has arrived, then goes on to its **Then**. A join needs at least two paths leading to it; the dry run reports one that could never fire.
 

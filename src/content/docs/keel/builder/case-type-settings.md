@@ -16,23 +16,23 @@ A blank name, or a prefix Keel would refuse, is kept on screen and not saved.
 
 ## Service level of the case
 
-A **Goal** and a **Deadline** for the whole case, counted from its start, with **Count business time** when there is a calendar and **Past the deadline, escalate to** a queue. They work as a step's do; see [Service level](/keel/builder/steps/#service-level). While a case waits on the client, this clock pauses.
+A **Goal** and a **Deadline** for the whole case, counted from its start, with **Count business time** when there is a calendar and **Past the deadline, escalate to** a queue. They work as a step's service level does; see [Service level](/keel/builder/steps/#service-level). While a case waits on the client, this clock pauses.
 
 Each stage has a service level of its own, set with the pencil beside its name on the [board](/keel/builder/workflow/#primary-stages).
 
 ## Pinned rules
 
-The rules each case keeps at the version it started on: "A case keeps the version of each that was in effect when it started." A rule that is not pinned is used at the version in effect when the case reaches it. **Add a pinned rule** adds one. With none, "It pins no rules."
+The rules each case keeps at the version it started on: "A case keeps the version of each that was in effect when it started." A rule that is not pinned is used at the version in effect when the case reaches it. The **Add** menu adds one. With none, "It pins no rules."
 
 ## Knowledge
 
-The knowledge bases the case type's agent steps may use, picked from the project's knowledge bases, which are made in Studio. **Add knowledge** adds one. Each agent step can narrow this list under [May use](/keel/builder/steps/#may-use), never widen it. With none, "Its agent steps use no knowledge."
+The knowledge bases the case type's agent steps may use, picked from the project's knowledge bases, which are made in Studio. The **Add** menu adds one. Each agent step can narrow this list under [May use](/keel/builder/steps/#may-use), never widen it. With none, "Its agent steps use no knowledge."
 
 Business users never see the knowledge bases themselves. In a case's history, what a step read shows as the policy and the page, under **Policies read**.
 
 ## Intake agents
 
-The project's agents that may start a case of this type, picked from the agents made in Studio. **Add an intake agent** adds one. With none, "No agent starts its cases."
+The project's agents that may start a case of this type, picked from the agents made in Studio. The **Add** menu adds one. With none, "No agent starts its cases."
 
 ## Case events
 
@@ -55,4 +55,4 @@ What staff see beside each case's number, such as `{applicant}` for the applican
 
 ## Summary fields
 
-The fields that sum up a case, in order, such as the amount and the term. The case page's header shows them all, and the case list's **Summary** column shows the first. **Add a summary field** adds one; each moves up or down or is removed. With none, "It shows no fields."
+The fields that sum up a case, in order, such as the amount and the term. The case page's header shows them all, and the case list's **Summary** column shows the first. The **Add** menu adds one; each moves up or down or is removed. With none, "It shows no fields."

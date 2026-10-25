@@ -8,13 +8,13 @@ This page takes a project with no case types to a first case that a person works
 
 You need:
 
-- a Surogate account that is an **Owner** of a project in Studio. An editor can do every step except the first; ask an owner to do that one.
+- a Surogate account that is an **Owner** of a project in Studio. An **Editor** can do every step but step 2; ask an owner to do that one.
 - a work email for the person who will work the case. It can be your own: staff accounts are separate from Surogate accounts.
 
 ## 1. Sign in to Keel Builder
 
 1. Open Keel Builder and sign in with your Surogate username or email and password, or with **Continue with Google** or **Continue with GitHub** where they show.
-2. Pick the project in the switcher at the top of the left rail. The app opens its **Case types** page, which says **No case types yet**.
+2. If the project shown is not the one you want, pick it in the switcher at the top of the left rail. The app shows its **Case types** page, which says **No case types yet**.
 
 See [Sign in to Keel Builder](/keel/builder/sign-in/) if the app says you are not a member of any project.
 
@@ -57,8 +57,8 @@ Required fields are what a case must start with: the business app's start form a
 Fill in the panel:
 
 1. Under **Done by**, press **Pick a person** under **A person**, and type two letters of the name of the person you invited. Pick them.
-2. Under **Receives**, use **Add a field it reads** to add **Applicant** and **Amount**.
-3. Under **Must return**, use **Add a field it returns** to add **Review note**.
+2. Under **Receives**, pick **Applicant** from the **Add** menu, then **Amount**.
+3. Under **Must return**, pick **Review note** from the **Add** menu.
 4. Under **Allowed outcomes**, the step has one outcome. Type `Approve` in its **Label**. In **Leads to**, pick **Close as…**, type `Approved` in **Resolution** and press **Close as**.
 5. In **Name an outcome**, type `Decline` and press **Add outcome**. In the new outcome's **Leads to**, pick **Close as…**, type `Declined` and press **Close as**.
 

@@ -25,7 +25,7 @@ A **case** is one running instance of a case type version. It has a number made 
 
 ## Stages
 
-A case is always in one **stage**. The **primary stages** are the normal path, shown left to right on the builder's board. **Alternate stages**, such as Withdrawn or Fraud hold, are stages a case only reaches when an outcome or a person sends it there. A case type with a single stage is simply a flow.
+A case is always in one **stage**. The **primary stages** are the normal path, shown left to right on the builder's board. **Alternate stages**, such as Withdrawn or Fraud hold, are stages a case only reaches when an outcome, a case event or a supervisor sends it there. A case type can have a single stage.
 
 When the last step of a stage leads to **Next stage**, the case enters the next primary stage. After the last primary stage, the case closes as `completed`.
 

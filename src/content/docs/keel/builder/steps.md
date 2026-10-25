@@ -62,7 +62,7 @@ If the connection list is empty, the panel says **The case type has no connectio
 
 ## Receives
 
-The fields the step reads, as chips; a file field is marked `· file`. **Add a field it reads** picks another. An agent gets these values when it starts; staff see them in the case.
+The fields the step reads, as chips; a file field is marked `· file`. The **Add** menu picks another. An agent gets these values when it starts.
 
 ## May use
 
@@ -72,13 +72,13 @@ Only for steps an agent works. Each list starts with everything the agent has:
 - **MCP servers**: the agent's MCP servers;
 - **Knowledge**: the knowledge bases the case type grants on its [Settings tab](/keel/builder/case-type-settings/#knowledge).
 
-Press **Narrow** to keep only some, then add them one by one; the list names what it leaves out as **Not allowed**. **Use everything** drops the narrowing. "A step can narrow these lists, never widen them."
+Press **Narrow** to keep only some, then add them one by one from the **Add** menu; the list names what it leaves out as **Not allowed**. **Use everything** drops the narrowing. "A step can narrow these lists, never widen them."
 
 For tools the agent reaches by a prefix, type the tool's name; a name the agent has no tool by is refused.
 
 ## Must return
 
-The fields the step writes, one row each, with the field's type and whether it is required: **Required**, **Required for** some outcomes, or **Optional**. The row's switch makes it required whatever the outcome. **Add a field it returns** adds another. **Edit form** opens the step's form on the [Forms tab](/keel/builder/forms/).
+The fields the step writes, one row each, with the field's type and whether it is required: **Required**, **Required for** some outcomes, or **Optional**. The row's switch makes it required whatever the outcome. The **Add** menu adds another. **Edit form** opens the step's form on the [Forms tab](/keel/builder/forms/).
 
 A vote reads **A vote returns no fields.**
 
@@ -103,7 +103,7 @@ Each outcome has a **Label**, the words people and agents see, and **Leads to**,
 | **Closed:** *resolution* | The case closes with that resolution. |
 | **Close as…** | Asks for a new **Resolution**, such as `Approved`, then **Close as**. |
 
-When the step writes fields, each outcome also lists the fields it **Requires** beyond those always required. **Add a field it requires** adds one.
+When the step writes fields, each outcome also lists the fields it **Requires** beyond those always required. Its **Add** menu adds one.
 
 Type a label in **Name an outcome** and press **Add outcome** to add one. A step keeps at least one outcome.
 
@@ -135,6 +135,6 @@ Once there is a deadline:
 
 ## The panel's footer
 
-- **Open agent** opens the agents in Studio, for a step an agent works.
+- **Open agent**, for a step an agent works, opens Studio's agents page in a new tab, where agents are changed.
 - **Test this step**, for a step no agent works, dry-runs the draft and lists the [scenarios](/keel/builder/scenarios/) whose expected path passes through the step, each **Passed**, **Failed** or **Not run**. With none, it says **No scenario passes through this step. Add one in Scenarios.**
 - **Remove step** removes the step after asking.

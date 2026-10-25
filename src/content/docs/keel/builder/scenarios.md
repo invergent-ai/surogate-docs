@@ -29,7 +29,7 @@ A scenario has three sections. A failed one shows Keel's message under its name.
 
 ### Steps
 
-The things that happen to the case, in order. Steps count from 0. **Add step** picks the kind:
+The things that happen to the case, in order. Steps count from 0. The **Add** menu under **Steps** picks the kind:
 
 | Kind | What you fill in |
 |---|---|
@@ -48,7 +48,7 @@ Each step has an **At**: a time with its offset, or `+` and a duration after the
 
 What must hold once the steps are played:
 
-- **Path**: the nodes the case must pass through, in order. **Add to the path** adds one. Empty, any path is fine.
+- **Path**: the nodes the case must pass through, in order. The **Add** menu adds one. Empty, it reads **Any path.**
 - **Status**: **Any**, **Open** or **Closed**.
 - **Resolution**: how the case closed, such as `approved`.
 - **Data**: field values the case must hold, as a JSON object.

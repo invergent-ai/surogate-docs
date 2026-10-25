@@ -18,7 +18,7 @@ When an agent needs a person, it **raises a hand**: it asks a question, sometime
 
 Answer it on the Work page: pick your answer or type one, add a note if you like, and press **Send answer**. The agent picks the step up again with your answer, and the note is kept in the case's history. See [Answer an agent's question](/keel/business/work/#answer-an-agents-question).
 
-You can answer a question assigned to you, or one waiting unclaimed in one of your queues. You can also delegate it, or return it to its queue.
+You can answer a question assigned to you, or one waiting unclaimed in one of your queues. A question assigned to you can also be delegated, or returned to its queue.
 
 ## When an agent drafts for you
 

@@ -28,7 +28,7 @@ A layout is a list of sections.
 
 - **Outcome label**: what a step's form calls its choice of outcome, such as `Decision`. Blank, it reads **Outcome**.
 - **Add section** adds a section. Each has a **Title** and **Help**, then its fields in order.
-- In a section, **Add a field** places a field the form may show. Each placed field has:
+- In a section, the **Add** menu places a field the form may show. Each placed field has:
   - **Hint**: how it is shown, such as **Long text** for text, **Money** for a decimal, **Drop-down** or **Choice cards** for a choice, **Checkbox** or **Switch** for yes or no. **Default** lets the field's type decide.
   - **Help**: a line under the field.
   - **Placeholder**: text shown in an empty box.
