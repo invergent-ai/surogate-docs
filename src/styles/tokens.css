@@ -86,4 +86,5 @@
   --sl-font: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --sl-font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --sl-nav-height: 4rem;
+  --sl-sidebar-width: 17.06rem; /* 290px at the 17px root */
 }

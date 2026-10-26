@@ -114,6 +114,7 @@ export default defineConfig({
         Header: './src/components/Header.astro',
         ThemeSelect: './src/components/ThemeToggle.astro',
         MobileMenuFooter: './src/components/MobileMenuFooter.astro',
+        Sidebar: './src/components/Sidebar.astro',
       },
       favicon: '/favicon.svg',
       // Turns any broken internal link or anchor into a build failure. This
