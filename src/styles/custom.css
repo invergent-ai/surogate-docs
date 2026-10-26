@@ -172,3 +172,18 @@ starlight-tabs [role='tab'][aria-selected='true'] {
   font-size: 0.74rem;
   text-transform: none;
 }
+
+/* The home page: its bands run the full width and set their own 1200px measure. */
+html[data-has-hero] .content-panel {
+  padding: 0;
+}
+html[data-has-hero] .content-panel .sl-container {
+  max-width: none;
+  margin: 0;
+}
+html[data-has-hero] .content-panel .sl-container > * + * {
+  margin-top: 0;
+}
+html[data-has-hero] .docs-footer {
+  margin-top: 0;
+}

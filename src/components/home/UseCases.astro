@@ -1,0 +1,141 @@
+---
+// Ten real tasks, five per product, each linking to the guide that does it.
+import AgentsMark from '../brand/AgentsMark.astro';
+import KeelMark from '../brand/KeelMark.astro';
+
+const columns = [
+  {
+    product: 'agents',
+    name: 'Surogate Agents',
+    tasks: [
+      ['Deploy a customer-support agent in 10 minutes', 'Work', '/work/use-cases/#1-deploy-a-customer-support-bot-in-10-minutes'],
+      ['Add Slack so your team can chat with the same agent', 'Work', '/work/use-cases/#2-add-slack-so-your-team-can-chat-with-the-same-agent'],
+      ['Build a knowledge base from your wiki and tickets', 'Work', '/work/use-cases/#4-build-a-product-knowledge-base-from-internal-wiki--tickets'],
+      ["Fine-tune an expert from your agent's sessions", 'Develop', '/develop/use-cases/#1-fine-tune-an-expert-from-your-traffic'],
+      ['Run batch jobs through the API', 'Develop', '/develop/use-cases/#6-integrate-via-the-api-channel-for-batch-jobs'],
+    ],
+  },
+  {
+    product: 'keel',
+    name: 'Keel',
+    tasks: [
+      ['Build a loan request and work your first case', 'Quickstart', '/keel/quickstart/'],
+      ['Route cases by amount with a decision table', 'Keel Builder', '/keel/builder/rules/'],
+      ['Give a team a queue with a serving order', 'Keel Builder', '/keel/builder/queues/'],
+      ['Let an agent work a step and ask when unsure', 'Business app', '/keel/business/agents/'],
+      ['Test a case type with scenarios before you publish', 'Keel Builder', '/keel/builder/scenarios/'],
+    ],
+  },
+] as const;
+---
+
+<section class="band not-content">
+  <div class="inner">
+    <div class="intro">
+      <h2>Start from a real task.</h2>
+      <p>Each guide takes you from an empty project to something that works.</p>
+    </div>
+    <div class="columns">
+      {
+        columns.map((column) => (
+          <div class="column">
+            <div class="head">
+              {column.product === 'agents' ? <AgentsMark size={28} /> : <KeelMark size={28} />}
+              <p>{column.name}</p>
+            </div>
+            {column.tasks.map(([title, where, href]) => (
+              <a class="task" data-docs="task" href={href}>
+                <span class="title">{title}</span>
+                <span class="where">{where}</span>
+              </a>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .band {
+    background: var(--d-soft);
+  }
+  .inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 88px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .intro {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 820px;
+  }
+  h2 {
+    margin: 0;
+    font-size: clamp(1.76rem, 3.4vw, 2.47rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    font-weight: 800;
+    color: var(--d-ink);
+  }
+  .intro p {
+    margin: 0;
+    font-size: 1.12rem;
+    line-height: 1.6;
+    color: var(--d-text);
+  }
+  .columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px 56px;
+  }
+  .column {
+    flex: 1 1 440px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .head p {
+    margin: 0;
+    font-size: 1.12rem;
+    font-weight: 800;
+    color: var(--d-ink);
+  }
+  .task {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 4px 16px;
+    padding: 16px 0;
+    border-top: 1px solid var(--d-line);
+    color: var(--d-ink);
+    text-decoration: none;
+  }
+  .task:hover .title {
+    text-decoration: underline;
+  }
+  .task:focus-visible {
+    outline: 2px solid var(--d-link);
+    outline-offset: 2px;
+  }
+  .title {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .where {
+    font-size: 0.82rem;
+    color: var(--d-text);
+  }
+</style>

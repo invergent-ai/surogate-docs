@@ -1,149 +1,17 @@
 ---
 title: Surogate documentation
-description: Train an autonomous AI agent on the way you already work, deploy it to the people you serve, improve it with expert models trained on its own conversations, and charge for access. Start in Work mode to run agents, or Develop mode to build and train them.
+description: Guides, tutorials and reference for Surogate Agents and Keel.
 template: splash
 hero:
-  # No actions: the two track CTAs are the CardGrid under "Start here", which
-  # carries the same links plus enough description to choose between them.
-  #
-  # The tagline is surogate.ai's brand line verbatim. It deliberately explains
-  # nothing on its own, so the first paragraph below carries the whole
-  # description — keep that paragraph first and keep it concrete.
-  tagline: Multiply yourself.
+  tagline: Guides, tutorials and reference for Surogate Agents and Keel.
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import ProductCards from '../../components/home/ProductCards.astro';
+import UseCases from '../../components/home/UseCases.astro';
+import HelpBand from '../../components/home/HelpBand.astro';
 
-Surogate is a platform for building autonomous AI agents that do real work. Train an agent
-on the way you already work, put it in front of the people you serve, and
-[charge for access](/work/monetize/) if you want to. Everything it does is recorded, and
-that record is what you use to make it better.
+<ProductCards />
 
-## Start here
+<UseCases />
 
-<CardGrid>
-  <Card title="Work mode" icon="comment">
-    Chat with deployed agents, review what they did, attach skills and knowledge
-    bases, publish to Slack or your website. Plain-language workflow guides, no
-    code, no configuration files.
-
-    [Start with Work mode →](/work/) · [Quickstart](/work/quickstart/) · [Use cases](/work/use-cases/)
-  </Card>
-
-  <Card title="Develop mode" icon="puzzle">
-    Design agents, write skills, wire up MCP servers and governance, build
-    datasets, train experts, run evaluations, integrate over the API. Deep
-    configuration and runtime internals.
-
-    [Start with Develop mode →](/develop/) · [Quickstart](/develop/quickstart/) · [Use cases](/develop/use-cases/)
-  </Card>
-
-  <Card title="Surogate Keel" icon="list-format">
-    Run business processes as cases. Builders design case types of stages,
-    steps and rules in Keel Builder; staff and agents work the cases in the
-    business app, with queues, deadlines and authority limits.
-
-    [Start with Keel →](/keel/) · [Quickstart](/keel/quickstart/) · [Glossary](/keel/reference/glossary/)
-  </Card>
-</CardGrid>
-
-## Vibecode your agents
-
-Press **⌘+/** anywhere in the platform and describe what you want. The
-[Copilot](/work/tools/copilot/) creates the agent, attaches the skill or the knowledge
-base, scales the deployment, starts the training run — no forms, no config files. It will
-also just answer questions: what failed this week, which conversations got stuck on pricing,
-how many sessions an agent had in the last 30 days, what a page in the platform does. Most of what the
-sections below describe clicking through, you can ask for instead.
-
-Before destructive or costly operations, such as deleting anything or starting a training run,
-it asks you in the chat first. The [builder's view](/develop/tools/copilot/) lists its tools by
-area, and what it deliberately will not do.
-
-## The improvement loop
-
-You [build](/develop/loop/build/) an agent from configuration rather than code;
-[observe](/develop/loop/observe/) what it actually did in the
-[session log](/develop/features/sessions/) and flag the good and bad turns;
-[train](/develop/loop/train/) either the cheap way — edit a skill, a persona, a knowledge
-base — or the expensive way, by fine-tuning an expert on the sessions you flagged; then
-[redeploy](/develop/loop/redeploy/). [The builder loop](/develop/loop/overview/) walks all
-four phases and gives the end-to-end time for each kind of change; the same cycle without
-the configuration detail is [Improve your agent](/work/workflow/improve-agent/).
-
-## Skills and expert models
-
-A [skill](/develop/features/skills-and-experts/) is a reusable procedure an agent follows
-for a specific task — the steps, the rules, the format of a good answer. Set `type: expert`
-on that same skill and it gains its own fine-tuned model: the skill body becomes the
-expert's system prompt, and the agent consults it in a bounded mini-loop with its own tools
-and iteration budget instead of answering from the general model.
-
-Pairing the two is what makes narrow, repeated tasks reliable. The skill constrains the
-task; the fine-tune specializes a model to exactly that task, trained on trajectories the
-agent has already completed successfully. The platform walks the session log, collects
-those successful trajectories into a versioned dataset, and trains on them — so the
-training data is your own production traffic rather than something you have to author.
-
-The lifecycle is define → collect → train → activate → monitor → retrain. An active expert
-carries its own success-rate stats, so a specialist that degrades shows up in the numbers and
-can be retired in one call rather than quietly making things worse.
-[Skill optimization](/develop/features/skill-optimization/) works the other end of the same
-problem, proposing edited skills, scoring them, and keeping the best.
-
-## Charging for an agent
-
-An agent trained on how you work is worth something to the people you already serve, so
-you can sell access to it. [Monetize an agent](/work/monetize/) and you choose the pricing
-— a monthly subscription, packs of tokens, or both — and set the price yourself.
-
-You are the merchant of record. Buyers pay into **your** Stripe account on your normal
-payout schedule, your business name appears on their card statement, and Surogate takes a
-platform fee rather than holding the money. Buyers do not need a Surogate account of their
-own; they sign in through your agent and the platform enforces the token budget on every
-message. Agent commerce needs the Pro plan or higher — see
-[Billing](/work/settings/billing/) — and buyer sign-in is configured through
-[self-registration](/work/channels/self-registration/).
-
-## Capabilities
-
-Each row links to the page that covers it. Feature pages live in Develop mode; the
-day-to-day usage pages live in Work mode.
-
-| Capability | What it does |
-| --- | --- |
-| [Agents](/develop/features/agents/) | A model, persona, skills, knowledge, tools, and guardrails, deployed as a service your users can talk to. |
-| Channels | The same agent on [web chat](/work/channels/web/), [Slack](/work/channels/slack/), [Telegram](/work/channels/telegram/), [WhatsApp](/work/channels/whatsapp/), [Discord](/work/channels/discord/), [Microsoft Teams](/work/channels/teams/), [Voice](/work/channels/voice/) phone calls, an [embeddable widget](/work/channels/website-widget/), or the API — sharing one [memory](/develop/features/memory/). |
-| [Skills](/develop/features/skills-and-experts/) | Reusable procedures an agent follows for a task — steps, rules, and what a good answer looks like. [Skill optimization](/develop/features/skill-optimization/) proposes edited skills, scores them, and keeps the best. |
-| [Expert models](/develop/features/skills-and-experts/) | A skill backed by its own fine-tuned model, trained on the successful trajectories the agent already produced, consulted in a bounded mini-loop and retired in one call when its success rate drops. |
-| [Knowledge bases](/develop/features/knowledge-bases/) | Document collections searched during the conversation, so answers come from your material with sources attached. |
-| [Tools and credentials](/develop/features/mcp-and-vault/) | MCP servers connect an agent to your systems and to third-party APIs; secrets stay in a vault and are never exposed to the agent's runtime. |
-| [Browser control](/develop/features/browser/) | Agents drive a real Chromium browser and hand control back to a person for login, MFA, or anything needing judgement. |
-| Long-running work | [Missions](/work/tools/missions/) graded against success criteria, [sub-agents](/work/tools/sub-agents/) for delegated parts, an [inbox](/work/tools/inbox/) for approvals, and [arenas](/develop/features/experts-arenas/), coming soon, for supervised multi-agent runs. |
-| [Sessions](/develop/features/sessions/) | Every message, tool call, and result recorded and replayable. [Event types](/develop/reference/event-types/) explains what the log contains; [reviewing sessions](/work/workflow/review-sessions/) is the day-to-day flagging workflow. |
-| [Copilot](/work/tools/copilot/) | An agent that drives the platform itself. Ask in natural language and it calls the platform's tools — creating agents, attaching skills, deploying models, launching training runs — with a confirmation step before anything destructive or expensive. |
-| [Monetization](/work/monetize/) | Sell access to a public agent as a subscription, token packs, or both. You set the price and are the merchant of record; payouts land in your own Stripe account. Pro plan or higher. |
-| [Evaluations](/develop/features/evaluations/) | Score an agent or a model against 40 built-in benchmarks, or a custom benchmark built from your own failed sessions, then A/B two candidates before promoting either. |
-| [Models](/develop/features/models/) | Catalog, serving endpoints with quantization and autoscaling, and versioned rollback — or [bring your own LLM](/develop/features/byo-llm/) per agent. Runs execute on the providers you attach under [Compute](/develop/features/compute/). |
-| [Training](/develop/features/training/) | Supervised fine-tuning, LoRA and QLoRA adapters, mixture-of-experts and long-context runs distributed across several GPUs and nodes, and reinforcement learning against verifiable rewards or an LLM judge. |
-| [Datasets](/develop/features/datasets/) | Training and evaluation sets built from real sessions, uploads, or synthetic generation — profiled, scanned for PII, and versioned in the [Data Hub](/develop/features/hub/). |
-| Security and governance | Guardrails are locked when a session starts and cannot be weakened mid-task, sandboxed code is network-restricted, integrations are scanned for tampering, and every action lands in the event log. See [how the runtime behaves](/develop/reference/runtime-architecture/). |
-
-## Reference
-
-[Tool catalog](/develop/reference/tool-catalog/) ·
-[Event types](/develop/reference/event-types/) ·
-[Background jobs](/develop/reference/background-jobs/) ·
-[Coordination &amp; the board](/develop/reference/coordination/) ·
-[Troubleshooting](/work/reference/faq/) ·
-Glossary for [Work mode](/work/reference/glossary/) and
-[Develop mode](/develop/reference/glossary/)
-
-:::note[Open source]
-Three components are developed in the open under AGPL-3.0:
-[surogates](https://github.com/invergent-ai/surogates) (the agent runtime — harness loop,
-sessions, sandbox, governance, MCP), [surogate](https://github.com/invergent-ai/surogate)
-(the SFT and RL training framework behind expert models), and
-[surogate-hub](https://github.com/invergent-ai/surogate-hub) (versioned storage for
-skills, datasets, and models).
-:::
+<HelpBand />

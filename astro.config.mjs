@@ -65,8 +65,8 @@ export default defineConfig({
   },
   integrations: [
     starlight({
-      title: 'Surogate',
-      description: 'Documentation for Surogate Ops — operator and builder tracks.',
+      title: 'Surogate Docs',
+      description: 'Guides, tutorials and reference for Surogate Agents and Keel.',
       logo: {
         light: './src/assets/logo-black.svg',
         dark: './src/assets/logo-white.svg',
@@ -124,6 +124,7 @@ export default defineConfig({
         PageTitle: './src/components/PageTitle.astro',
         PageSidebar: './src/components/PageSidebar.astro',
         Footer: './src/components/Footer.astro',
+        Hero: './src/components/home/HomeHero.astro',
       },
       favicon: '/favicon.svg',
       // Turns any broken internal link or anchor into a build failure. This
@@ -407,7 +408,7 @@ export default defineConfig({
           attrs: {
             name: 'keywords',
             content:
-              'Surogate, AgentOps, agents, LLM, MCP, training, fine-tuning, RL, evaluations',
+              'Surogate, Surogate Agents, Keel, AI agents, agent platform, business processes, case management, MCP, fine-tuning, documentation',
           },
         },
         {
@@ -433,13 +434,13 @@ export default defineConfig({
         },
         {
           tag: 'meta',
-          attrs: { name: 'twitter:title', content: 'Surogate Documentation' },
+          attrs: { name: 'twitter:title', content: 'Surogate Docs' },
         },
         {
           tag: 'meta',
           attrs: {
             name: 'twitter:description',
-            content: 'Operator and builder documentation for Surogate Ops.',
+            content: 'Guides, tutorials and reference for Surogate Agents and Keel.',
           },
         },
         {
