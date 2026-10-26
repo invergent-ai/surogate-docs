@@ -19,12 +19,11 @@ An agent bundles six things, configured through six tabs (five on enterprise ins
 | **MONETIZE** | Charge end users for access to the agent. See [Monetize your agents](/work/monetize/). |
 | **CONFIG** | Persona (SOUL.md), Tool Access, Web & Browser Egress, EU AI Act Transparency, Saga, Session Reset, Environment Variables. |
 
-Plus four action buttons:
+Plus three action buttons:
 
 - **CHAT** — open a new chat session
-- **STOP / START** — drop replicas to 0, or bring them back
-- **SCALE** — change min/max replicas (auto-scaling target = 40 active sessions per pod)
-- **DELETE** — pre-flight reference check, then tombstone
+- **STOP / START**: turn the agent off or back on (see [STOP and START](#stop-and-start))
+- **DELETE**: deletes the agent (see [DELETE confirmation](#delete-confirmation)); refused while an unfinished synthetic-data run targets it, and for system agents
 
 ## Persona — SOUL.md
 
@@ -221,44 +220,34 @@ Per-agent env vars passed to the sandbox. Use cases:
 
 Don't put secrets here — they're visible in the sandbox. Use the [Vault](/develop/features/mcp-and-vault/).
 
-## SCALE dialog
+## STOP and START
 
-```
-Replicas: 2 (current)
-Min: 1
-Max: 5
-CPU per replica: 500m
-Memory per replica: 1Gi
-HPA target: 40 active sessions per replica
-```
+Agents run on the platform's shared runtime, which serves every agent on demand. An agent has no pods of its own, so there is nothing to scale: no replica count, CPU or memory setting. Only [model deployments](/develop/features/models/) have replicas.
 
-When traffic exceeds 40 active sessions per replica, new pods come up. When below 20 for 5 minutes, they drain.
+STOP turns the agent off. Work already in progress finishes; new sessions and new messages in existing sessions are refused with a "stopped" error. A stopped agent does not count toward your plan's limit on running agents.
+
+START turns it back on. It is refused when the project is already at its plan's limit for running agents or for workspace storage.
 
 ## DELETE confirmation
 
-Standard pattern across the platform — title `DELETE <NAME>`, pre-flight check:
+The dialog is titled **Delete** and the agent's name. It first checks what uses the agent; for an agent that means synthetic-data runs that target it.
 
-```
-Checking for active references…
-No references found. Safe to delete.
+- While a run that isn't finished targets the agent, the dialog lists it and **Delete** stays disabled: cancel the run first. The API refuses the same case with a 409.
+- With none, it says "No references found. Safe to delete." Finished runs are listed under a collapsed **Used in N items** and don't block.
 
-[CANCEL]   [DELETE]
-```
-
-CANCEL is focused by default. If references exist, the modal lists them.
+Deleting removes the agent with its workspace files, session data and API keys, and revokes its service account; it can't be undone. A clean-up step that fails doesn't stop the delete; the server logs it. System agents can't be deleted (403).
 
 ## REST API for agents
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| `GET` | `/api/agents` | List agents |
-| `GET` | `/api/agents/{id_or_slug}` | Agent detail |
-| `POST` | `/api/agents` | Deploy new agent |
-| `PATCH` | `/api/agents/{id}` | Update config |
-| `POST` | `/api/agents/{id}/start` | Bring replicas to min |
-| `POST` | `/api/agents/{id}/stop` | Drop replicas to 0 |
-| `POST` | `/api/agents/{id}/scale` | `{min_replicas, max_replicas}` |
-| `DELETE` | `/api/agents/{id}` | Tombstone (409 if references) |
+| `GET` | `/api/agents/agents` | List agents (filters: `project_id`, `status`, `harness`, `limit`) |
+| `GET` | `/api/agents/agents/{id}` | Agent detail |
+| `POST` | `/api/agents/agents` | Create an agent |
+| `PATCH` | `/api/agents/agents/{id}` | Update config |
+| `POST` | `/api/agents/agents/{id}/start` | Turn the agent on (refused at the plan's limit) |
+| `POST` | `/api/agents/agents/{id}/stop` | Turn the agent off |
+| `DELETE` | `/api/agents/agents/{id}` | Delete the agent and its data, revoke its service account (409 while synthetic runs use it, 403 for a system agent) |
 
 See [Runtime architecture reference](/develop/reference/runtime-architecture/) for full schemas.
 

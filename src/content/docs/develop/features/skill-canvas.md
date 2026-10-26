@@ -94,7 +94,7 @@ With no agent chosen, the panel says the tool, channel and delegate checks are s
 
 **Try it** runs your unsaved draft on a real agent, so you can see how it behaves before you save or publish.
 
-1. Pick an agent in the top bar. The skill must already be [attached to that agent](/work/library/skills/#attach-to-an-agent), and the agent must be running. An agent that runs in its own pod must be redeployed after you attach the skill.
+1. Pick an agent in the top bar. The skill must already be [attached to that agent](/work/library/skills/#attach-to-an-agent), and the agent must be running.
 2. Type a **Prompt**. The skill name is added for you. Use **Attach files** to give it input files.
 3. Click **Run**. It stays off while the graph has blocking problems or a run is in progress.
 
