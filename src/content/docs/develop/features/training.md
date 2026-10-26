@@ -109,7 +109,7 @@ Use when:
 **GRPO needs at least two GPUs**, one for the rollout server and one for the
 trainer, which is why it is the only method with a GPU block split. Modal cannot
 currently provide that for training: the only [supported GPU](#supported-gpus) it
-offers is single-GPU. Run GRPO on an SSH or cloud fleet instead, where the fleet size is
+offers is single-GPU. Run GRPO on an SSH, Kubernetes or cloud fleet instead, where the fleet size is
 taken from the block split rather than fixed when you pick the instance. Start
 says so if you try, before anything is provisioned.
 
