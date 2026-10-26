@@ -1,0 +1,85 @@
+---
+// The sidebar: the product's name and mark, on Surogate Agents pages the
+// Work / Develop switch, then Starlight's page tree for the current track.
+// It replaces the topic list starlight-sidebar-topics would draw.
+import Default from '@astrojs/starlight/components/Sidebar.astro';
+import AgentsMark from './brand/AgentsMark.astro';
+import KeelMark from './brand/KeelMark.astro';
+import { PRODUCT_LABEL, TRACK_HOME, TRACK_LABEL, productFor, trackFor } from '../lib/product.mjs';
+
+const { id } = Astro.locals.starlightRoute;
+const product = productFor(id);
+const track = trackFor(id);
+---
+
+{
+  product && (
+    <div class="product-head" data-docs="product-head">
+      {product === 'agents' ? <AgentsMark size={26} /> : <KeelMark size={26} />}
+      <span>{PRODUCT_LABEL[product]}</span>
+    </div>
+  )
+}
+{
+  product === 'agents' && (
+    <div class="track-switch" data-docs="track-switch">
+      {(['work', 'develop'] as const).map((t) => (
+        <a href={TRACK_HOME[t]} aria-current={t === track ? 'page' : undefined}>
+          {TRACK_LABEL[t]}
+        </a>
+      ))}
+    </div>
+  )
+}
+<Default><slot /></Default>
+
+<style>
+  .product-head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-inline-start: 0.25rem;
+    font-size: 0.94rem;
+    font-weight: 800;
+    color: var(--d-ink);
+  }
+  .track-switch {
+    display: flex;
+  }
+  .track-switch a {
+    flex: 1 1 0;
+    text-align: center;
+    padding: 0.6rem 0;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--d-ink);
+    background: var(--d-surface);
+    border: 1px solid var(--d-cardline);
+  }
+  .track-switch a[aria-current='page'] {
+    background: var(--d-mark);
+    color: var(--d-markink);
+    border-color: var(--d-mark);
+    font-weight: 700;
+  }
+  .track-switch a:focus-visible {
+    outline: 2px solid var(--d-link);
+    outline-offset: 2px;
+  }
+
+  /* Starlight's page tree, as in the mockup: one size for every entry, the current page barred. */
+  :global(.sidebar-content ul a),
+  :global(.sidebar-content ul a.large),
+  :global(.sidebar-content ul .group-label .large) {
+    color: var(--d-text);
+    font-size: var(--sl-text-sm);
+    font-weight: 400;
+  }
+  :global(.sidebar-content ul a[aria-current='page']) {
+    background: var(--d-surface);
+    color: var(--d-ink);
+    font-weight: 700;
+    box-shadow: inset 3px 0 0 var(--d-bar);
+  }
+</style>

@@ -2,6 +2,24 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightLinksValidator from 'starlight-links-validator';
 import starlightLlmsTxt from 'starlight-llms-txt';
+import starlightSidebarTopics from 'starlight-sidebar-topics';
+import rehypeFigure from './src/plugins/rehype-figure.mjs';
+import rehypeLead from './src/plugins/rehype-lead.mjs';
+
+// Expressive Code shows a header strip only on titled blocks. Title every block
+// with its fence language (blank when it has none) so all of them get the strip.
+function languageStrip() {
+  return {
+    name: 'language-strip',
+    hooks: {
+      preprocessMetadata: ({ codeBlock }) => {
+        if (codeBlock.props.title) return;
+        const lang = codeBlock.language;
+        codeBlock.props.title = lang && !['plaintext', 'txt', 'text'].includes(lang) ? lang : '\u00a0';
+      },
+    },
+  };
+}
 
 // NOTE: `trailingSlash` and `build.format` are deliberately unset. Astro's
 // defaults (directory format, trailing slash) are the only combination whose
@@ -10,6 +28,10 @@ import starlightLlmsTxt from 'starlight-llms-txt';
 // them. See specs/2026-07-30-docusaurus-to-starlight-design.md section 7.2.
 export default defineConfig({
   site: 'https://docs.surogate.ai',
+  // Screenshots get visible captions from their alt text; a short opening paragraph becomes the lead.
+  markdown: {
+    rehypePlugins: [rehypeFigure, rehypeLead],
+  },
   // 13 /ops/* entries ported verbatim from the deleted docusaurus.config.js,
   // plus /search -- which was a real page under Algolia and sits in today's
   // sitemap, but does not exist under Pagefind's modal-only search.
@@ -43,8 +65,8 @@ export default defineConfig({
   },
   integrations: [
     starlight({
-      title: 'Surogate',
-      description: 'Documentation for Surogate Ops — operator and builder tracks.',
+      title: 'Surogate Docs',
+      description: 'Guides, tutorials and reference for Surogate Agents and Keel.',
       logo: {
         light: './src/assets/logo-black.svg',
         dark: './src/assets/logo-white.svg',
@@ -58,21 +80,52 @@ export default defineConfig({
         // Self-hosted, replacing the render-blocking Google Fonts @import that
         // the old custom.css opened on every page load.
         '@fontsource/inter/400.css',
+        '@fontsource/inter/500.css',
         '@fontsource/inter/600.css',
+        '@fontsource/inter/700.css',
+        '@fontsource/inter/800.css',
+        '@fontsource/jetbrains-mono/400.css',
+        '@fontsource/jetbrains-mono/600.css',
+        './src/styles/tokens.css',
         './src/styles/custom.css',
       ],
-      social: [
-        {
-          icon: 'github',
-          label: 'GitHub',
-          href: 'https://github.com/invergent-ai/surogate',
+      // Code stays dark in both themes, square, with no terminal window frames.
+      // Every block gets a header strip: the fence's language, or blank, plus Copy.
+      expressiveCode: {
+        themes: ['github-dark-default'],
+        useStarlightDarkModeSwitch: false,
+        defaultProps: { frame: 'code' },
+        plugins: [languageStrip()],
+        styleOverrides: {
+          borderRadius: '0',
+          borderColor: 'var(--d-line)',
+          codeBackground: 'var(--d-codebg)',
+          codeFontFamily: "'JetBrains Mono', ui-monospace, monospace",
+          uiFontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif",
+          frames: {
+            frameBoxShadowCssValue: 'none',
+            editorTabBarBackground: 'var(--d-codebg)',
+            editorActiveTabBackground: 'var(--d-codebg)',
+            editorActiveTabForeground: 'rgba(255, 255, 255, 0.6)',
+            editorActiveTabIndicatorTopColor: 'transparent',
+            editorActiveTabIndicatorBottomColor: 'transparent',
+            editorTabBarBorderBottomColor: 'rgba(255, 255, 255, 0.12)',
+          },
         },
-        { icon: 'x.com', label: 'X', href: 'https://x.com/surogate_ai' },
-      ],
+      },
       editLink: {
         baseUrl: 'https://github.com/invergent-ai/surogate-docs/edit/main/',
       },
-      components: { SocialIcons: './src/components/HeaderLinks.astro' },
+      components: {
+        Header: './src/components/Header.astro',
+        ThemeSelect: './src/components/ThemeToggle.astro',
+        MobileMenuFooter: './src/components/MobileMenuFooter.astro',
+        Sidebar: './src/components/Sidebar.astro',
+        PageTitle: './src/components/PageTitle.astro',
+        PageSidebar: './src/components/PageSidebar.astro',
+        Footer: './src/components/Footer.astro',
+        Hero: './src/components/home/HomeHero.astro',
+      },
       favicon: '/favicon.svg',
       // Turns any broken internal link or anchor into a build failure. This
       // replaces onBrokenLinks: 'warn', under which breakage was invisible --
@@ -81,86 +134,16 @@ export default defineConfig({
       // starlight-llms-txt emits llms.txt / llms-full.txt. There was no
       // AI-crawler surface before, and this is documentation about building
       // agents.
-      plugins: [starlightLinksValidator(), starlightLlmsTxt()],
-      head: [
-        // The old config pointed favicon at img/favicon.ico and the social
-        // cards at /img/social-card.jpg. Neither file ever existed, so the
-        // site shipped with no favicon and broken share previews. Both are
-        // now real brand assets.
+      plugins: [
+        starlightLinksValidator(),
+        starlightLlmsTxt(),
+        // One sidebar per track. Work and Develop are Surogate Agents; Keel is its own product.
+        // Each topic's items are the track's former sidebar group, unchanged and in order.
+        starlightSidebarTopics([
         {
-          tag: 'link',
-          attrs: { rel: 'icon', href: '/favicon.png', type: 'image/png' },
-        },
-        {
-          tag: 'script',
-          attrs: {
-            async: true,
-            src: 'https://www.googletagmanager.com/gtag/js?id=G-7YRDGYZN0R',
-          },
-        },
-        {
-          tag: 'script',
-          content:
-            'window.dataLayer=window.dataLayer||[];' +
-            'function gtag(){dataLayer.push(arguments);}' +
-            "gtag('js',new Date());gtag('config','G-7YRDGYZN0R');",
-        },
-        {
-          tag: 'meta',
-          attrs: {
-            name: 'keywords',
-            content:
-              'Surogate, AgentOps, agents, LLM, MCP, training, fine-tuning, RL, evaluations',
-          },
-        },
-        {
-          tag: 'meta',
-          attrs: {
-            property: 'og:image',
-            content: 'https://docs.surogate.ai/og-card.jpg',
-          },
-        },
-        { tag: 'meta', attrs: { property: 'og:image:alt', content: 'Surogate' } },
-        { tag: 'meta', attrs: { property: 'og:locale', content: 'en_US' } },
-        // Starlight's head builder emits og:title and og:description but NOT
-        // the twitter: equivalents, so these are kept explicitly rather than
-        // dropped as redundant.
-        {
-          tag: 'meta',
-          attrs: { name: 'twitter:card', content: 'summary_large_image' },
-        },
-        { tag: 'meta', attrs: { name: 'twitter:site', content: '@surogate_ai' } },
-        {
-          tag: 'meta',
-          attrs: { name: 'twitter:creator', content: '@surogate_ai' },
-        },
-        {
-          tag: 'meta',
-          attrs: { name: 'twitter:title', content: 'Surogate Documentation' },
-        },
-        {
-          tag: 'meta',
-          attrs: {
-            name: 'twitter:description',
-            content: 'Operator and builder documentation for Surogate Ops.',
-          },
-        },
-        {
-          tag: 'meta',
-          attrs: {
-            name: 'twitter:image',
-            content: 'https://docs.surogate.ai/og-card.jpg',
-          },
-        },
-      ],
-      // One sidebar, sibling top-level groups. Order and category labels of the
-      // first two are carried over from the deleted sidebars.js; the third
-      // documents Surogate Keel's two apps. Inner subgroups all collapse by
-      // default: the tracks share a single column, so their entries cannot all
-      // sit expanded as they did with three sidebars.
-      sidebar: [
-        {
-          label: 'Work — for operators',
+          id: 'work',
+          label: 'Work',
+          link: '/work/',
           items: [
             'work',
             'work/quickstart',
@@ -253,7 +236,9 @@ export default defineConfig({
           ],
         },
         {
-          label: 'Develop — for builders',
+          id: 'develop',
+          label: 'Develop',
+          link: '/develop/',
           items: [
             'develop',
             'develop/quickstart',
@@ -335,7 +320,9 @@ export default defineConfig({
           ],
         },
         {
-          label: 'Keel — for case work',
+          id: 'keel',
+          label: 'Keel',
+          link: '/keel/',
           items: [
             'keel',
             'keel/concepts',
@@ -391,7 +378,80 @@ export default defineConfig({
             },
           ],
         },
+      ]),
       ],
+      head: [
+        // The old config pointed favicon at img/favicon.ico and the social
+        // cards at /img/social-card.jpg. Neither file ever existed, so the
+        // site shipped with no favicon and broken share previews. Both are
+        // now real brand assets.
+        {
+          tag: 'link',
+          attrs: { rel: 'icon', href: '/favicon.png', type: 'image/png' },
+        },
+        {
+          tag: 'script',
+          attrs: {
+            async: true,
+            src: 'https://www.googletagmanager.com/gtag/js?id=G-7YRDGYZN0R',
+          },
+        },
+        {
+          tag: 'script',
+          content:
+            'window.dataLayer=window.dataLayer||[];' +
+            'function gtag(){dataLayer.push(arguments);}' +
+            "gtag('js',new Date());gtag('config','G-7YRDGYZN0R');",
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'keywords',
+            content:
+              'Surogate, Surogate Agents, Keel, AI agents, agent platform, business processes, case management, MCP, fine-tuning, documentation',
+          },
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            property: 'og:image',
+            content: 'https://docs.surogate.ai/og-card.jpg',
+          },
+        },
+        { tag: 'meta', attrs: { property: 'og:image:alt', content: 'Surogate' } },
+        { tag: 'meta', attrs: { property: 'og:locale', content: 'en_US' } },
+        // Starlight's head builder emits og:title and og:description but NOT
+        // the twitter: equivalents, so these are kept explicitly rather than
+        // dropped as redundant.
+        {
+          tag: 'meta',
+          attrs: { name: 'twitter:card', content: 'summary_large_image' },
+        },
+        { tag: 'meta', attrs: { name: 'twitter:site', content: '@surogate_ai' } },
+        {
+          tag: 'meta',
+          attrs: { name: 'twitter:creator', content: '@surogate_ai' },
+        },
+        {
+          tag: 'meta',
+          attrs: { name: 'twitter:title', content: 'Surogate Docs' },
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'twitter:description',
+            content: 'Guides, tutorials and reference for Surogate Agents and Keel.',
+          },
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'twitter:image',
+            content: 'https://docs.surogate.ai/og-card.jpg',
+          },
+        },
+      ],
+
     }),
   ],
 });

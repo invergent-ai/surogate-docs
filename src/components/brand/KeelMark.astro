@@ -1,0 +1,21 @@
+---
+// Keel: a placeholder mark, an aubergine hull and keel on a yellow square,
+// until a real Keel logo exists.
+interface Props {
+  size?: number;
+}
+const { size = 26 } = Astro.props;
+---
+
+<svg class="mark" width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+  <rect width="24" height="24" fill="#ffe845"></rect>
+  <polygon points="3.5,7.5 20.5,7.5 17.5,11.5 6.5,11.5" fill="#2a102d"></polygon>
+  <polygon points="10.6,11.5 13.4,11.5 12.9,19.5 11.1,19.5" fill="#2a102d"></polygon>
+</svg>
+
+<style>
+  .mark {
+    display: block;
+    flex: 0 0 auto;
+  }
+</style>

@@ -1,0 +1,80 @@
+---
+// The home page hero (Starlight's Hero override): the aubergine band with the
+// page title, its tagline and the large search field.
+import Search from '@astrojs/starlight/components/Search.astro';
+
+const { entry } = Astro.locals.starlightRoute;
+const tagline = entry.data.hero?.tagline;
+---
+
+<section class="home-hero not-content">
+  <div class="inner">
+    <h1 id="_top">{entry.data.title}</h1>
+    {tagline && <p class="tagline">{tagline}</p>}
+    <div class="search">
+      <Search />
+    </div>
+  </div>
+</section>
+
+<style>
+  .home-hero {
+    background: #2a102d;
+    color: #ffffff;
+  }
+  .inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 24px 88px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  h1 {
+    margin: 0;
+    font-size: clamp(2.35rem, 5.2vw, 3.76rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 800;
+    color: #ffffff;
+  }
+  .tagline {
+    margin: 0;
+    max-width: 720px;
+    font-size: 1.24rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  .search {
+    max-width: 640px;
+  }
+  .search :global(button[data-open-modal]) {
+    display: flex;
+    width: 100%;
+    max-width: none;
+    height: 56px;
+    gap: 14px;
+    padding: 0 18px;
+    background: var(--d-surface);
+    border: 1px solid var(--d-line);
+    color: var(--d-text);
+  }
+  /* The button's label reads "Search"; the hero's field says "Search the docs". */
+  .search :global(button[data-open-modal] > span) {
+    display: block !important;
+    flex: 1 1 auto;
+    text-align: start;
+    font-size: 0;
+  }
+  .search :global(button[data-open-modal] > span::after) {
+    content: 'Search the docs';
+    font-size: 1rem;
+  }
+  .search :global(button[data-open-modal] kbd) {
+    display: flex;
+    background: transparent;
+    border: 1px solid var(--d-line);
+    color: var(--d-text);
+    font-size: 0.76rem;
+  }
+</style>
