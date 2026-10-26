@@ -1,0 +1,89 @@
+/*
+ * Colour tokens, one set per theme, from the redesign spec
+ * (docs/superpowers/specs/2026-10-26-docs-site-redesign-design.md, "Colour tokens").
+ * Components use the --d-* tokens; Starlight's own variables are mapped onto
+ * them below so its built-in widgets (search, mobile menu, badges, tabs)
+ * follow the same palette.
+ *
+ * Fixed in both themes and therefore not tokens: the nav and home hero
+ * #2a102d, the site footer #1a0a1c, Sign in #ffaf10, decision diamonds #ffe845.
+ */
+:root,
+:root[data-theme='dark'] {
+  --d-bg: #1a0a1c;
+  --d-soft: #211024;
+  --d-surface: #24102a;
+  --d-ink: #ffffff;
+  --d-text: rgba(255, 255, 255, 0.74);
+  --d-line: rgba(255, 255, 255, 0.12);
+  --d-card: #33183a;
+  --d-cardline: rgba(255, 255, 255, 0.16);
+  --d-link: #ffaf10;
+  --d-mark: #ffe845;
+  --d-markink: #2a102d;
+  --d-bar: #ffe845;
+  --d-rule: rgba(255, 255, 255, 0.85);
+  --d-codeinline: rgba(255, 255, 255, 0.1);
+  --d-codebg: #0f0511;
+
+  /* Starlight's grey ramp, rebuilt from the palette: 1 is strongest text, 6 the faintest surface. */
+  --sl-color-white: #ffffff;
+  --sl-color-gray-1: #ece6ee;
+  --sl-color-gray-2: #cfc6d3;
+  --sl-color-gray-3: #9a8ea0;
+  --sl-color-gray-4: #6b5d72;
+  --sl-color-gray-5: #3d2c43;
+  --sl-color-gray-6: #24102a;
+  --sl-color-black: #1a0a1c;
+}
+
+:root[data-theme='light'] {
+  --d-bg: #ffffff;
+  --d-soft: #faf9f7;
+  --d-surface: #ffffff;
+  --d-ink: #2a102d;
+  --d-text: #403e4a;
+  --d-line: #e6e3eb;
+  --d-card: #ebe4ee;
+  --d-cardline: #dcd2e1;
+  --d-link: #9b1f61;
+  --d-mark: #2a102d;
+  --d-markink: #ffffff;
+  --d-bar: #2a102d;
+  --d-rule: #2a102d;
+  --d-codeinline: #ebe4ee;
+  --d-codebg: #1a0a1c;
+
+  --sl-color-white: #2a102d;
+  --sl-color-gray-1: #33263a;
+  --sl-color-gray-2: #403e4a;
+  --sl-color-gray-3: #5e5768;
+  --sl-color-gray-4: #8c8596;
+  --sl-color-gray-5: #cfc9d6;
+  --sl-color-gray-6: #e6e3eb;
+  --sl-color-gray-7: #faf9f7;
+  --sl-color-black: #ffffff;
+}
+
+:root,
+:root[data-theme='dark'],
+:root[data-theme='light'] {
+  --sl-color-bg: var(--d-bg);
+  --sl-color-bg-nav: #2a102d;
+  --sl-color-bg-sidebar: var(--d-soft);
+  --sl-color-bg-inline-code: var(--d-codeinline);
+  --sl-color-hairline: var(--d-line);
+  --sl-color-hairline-light: var(--d-line);
+  --sl-color-hairline-shade: var(--d-line);
+  --sl-color-text: var(--d-text);
+  --sl-color-accent: var(--d-link);
+  --sl-color-accent-high: var(--d-ink);
+  --sl-color-accent-low: var(--d-soft);
+  --sl-color-text-accent: var(--d-link);
+  --sl-color-bg-accent: var(--d-mark);
+  --sl-color-text-invert: var(--d-markink);
+
+  --sl-font: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --sl-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --sl-nav-height: 4rem;
+}

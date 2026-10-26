@@ -4,6 +4,21 @@ import starlightLinksValidator from 'starlight-links-validator';
 import starlightLlmsTxt from 'starlight-llms-txt';
 import starlightSidebarTopics from 'starlight-sidebar-topics';
 
+// Expressive Code shows a header strip only on titled blocks. Title every block
+// with its fence language (blank when it has none) so all of them get the strip.
+function languageStrip() {
+  return {
+    name: 'language-strip',
+    hooks: {
+      preprocessMetadata: ({ codeBlock }) => {
+        if (codeBlock.props.title) return;
+        const lang = codeBlock.language;
+        codeBlock.props.title = lang && !['plaintext', 'txt', 'text'].includes(lang) ? lang : '\u00a0';
+      },
+    },
+  };
+}
+
 // NOTE: `trailingSlash` and `build.format` are deliberately unset. Astro's
 // defaults (directory format, trailing slash) are the only combination whose
 // hrefs, canonical tags, sitemap entries and Pagefind results all agree on
@@ -59,9 +74,39 @@ export default defineConfig({
         // Self-hosted, replacing the render-blocking Google Fonts @import that
         // the old custom.css opened on every page load.
         '@fontsource/inter/400.css',
+        '@fontsource/inter/500.css',
         '@fontsource/inter/600.css',
+        '@fontsource/inter/700.css',
+        '@fontsource/inter/800.css',
+        '@fontsource/jetbrains-mono/400.css',
+        '@fontsource/jetbrains-mono/600.css',
+        './src/styles/tokens.css',
         './src/styles/custom.css',
       ],
+      // Code stays dark in both themes, square, with no terminal window frames.
+      // Every block gets a header strip: the fence's language, or blank, plus Copy.
+      expressiveCode: {
+        themes: ['github-dark-default'],
+        useStarlightDarkModeSwitch: false,
+        defaultProps: { frame: 'code' },
+        plugins: [languageStrip()],
+        styleOverrides: {
+          borderRadius: '0',
+          borderColor: 'var(--d-line)',
+          codeBackground: 'var(--d-codebg)',
+          codeFontFamily: "'JetBrains Mono', ui-monospace, monospace",
+          uiFontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif",
+          frames: {
+            frameBoxShadowCssValue: 'none',
+            editorTabBarBackground: 'var(--d-codebg)',
+            editorActiveTabBackground: 'var(--d-codebg)',
+            editorActiveTabForeground: 'rgba(255, 255, 255, 0.6)',
+            editorActiveTabIndicatorTopColor: 'transparent',
+            editorActiveTabIndicatorBottomColor: 'transparent',
+            editorTabBarBorderBottomColor: 'rgba(255, 255, 255, 0.12)',
+          },
+        },
+      },
       social: [
         {
           icon: 'github',
