@@ -1,0 +1,55 @@
+---
+// The page title with a breadcrumb above it: the product, then for Surogate
+// Agents the track, then the page, ending early on a track's own home page.
+import { PRODUCT_HOME, PRODUCT_LABEL, TRACK_HOME, TRACK_LABEL, productFor, trackFor } from '../lib/product.mjs';
+
+const { id, entry } = Astro.locals.starlightRoute;
+const product = productFor(id);
+const track = trackFor(id);
+const crumbs: { label: string; href?: string }[] = [];
+if (product) {
+  crumbs.push({ label: PRODUCT_LABEL[product], href: PRODUCT_HOME[product] });
+  if (product === 'agents' && track) crumbs.push({ label: TRACK_LABEL[track], href: TRACK_HOME[track] });
+  if (id !== track) crumbs.push({ label: entry.data.title });
+}
+---
+
+{
+  crumbs.length > 0 && (
+    <nav class="breadcrumb" aria-label="Breadcrumb" data-docs="breadcrumb">
+      {crumbs.map((crumb, i) => (
+        <>
+          {i > 0 && <span class="sep" aria-hidden="true">/</span>}
+          {crumb.href && i < crumbs.length - 1 ? <a href={crumb.href}>{crumb.label}</a> : <span>{crumb.label}</span>}
+        </>
+      ))}
+    </nav>
+  )
+}
+<h1 id="_top">{entry.data.title}</h1>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.45rem;
+    margin-top: 1rem;
+    font-size: 0.82rem; /* 14px */
+    color: var(--d-text);
+  }
+  .breadcrumb a {
+    color: var(--d-text);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--d-ink);
+    text-decoration: underline;
+  }
+  .sep {
+    opacity: 0.5;
+  }
+  h1 {
+    margin-top: 0.8rem;
+  }
+</style>

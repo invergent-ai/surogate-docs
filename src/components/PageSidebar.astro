@@ -1,0 +1,41 @@
+---
+// "On this page", with the page's edit link under it (moved here from the footer).
+import Default from '@astrojs/starlight/components/PageSidebar.astro';
+
+const { editUrl, toc } = Astro.locals.starlightRoute;
+---
+
+<Default />
+{
+  toc && editUrl && (
+    <div class="edit sl-hidden lg:sl-block" data-docs="edit-link">
+      <a href={editUrl}>Edit this page</a>
+    </div>
+  )
+}
+
+<style>
+  .edit {
+    padding: 0 var(--sl-sidebar-pad-x) 1rem;
+  }
+  .edit a {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--d-link);
+  }
+  :global(.right-sidebar-panel h2) {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--d-ink);
+  }
+  :global(.right-sidebar-panel starlight-toc a) {
+    color: var(--d-text);
+    border-inline-start: 2px solid var(--d-line);
+    padding-inline-start: 0.7rem;
+  }
+  :global(.right-sidebar-panel starlight-toc a[aria-current='true']) {
+    color: var(--d-ink);
+    font-weight: 700;
+    border-inline-start-color: var(--d-bar);
+  }
+</style>
