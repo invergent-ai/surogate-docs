@@ -107,11 +107,10 @@ Use when:
 - You want exploration beyond your training data
 
 **GRPO needs at least two GPUs**, one for the rollout server and one for the
-trainer, which is why it is the only method with a GPU block split. Modal cannot
-currently provide that for training: the only [supported GPU](#supported-gpus) it
-offers is single-GPU. Run GRPO on an SSH, Kubernetes or cloud fleet instead, where the fleet size is
-taken from the block split rather than fixed when you pick the instance. Start
-says so if you try, before anything is provisioned.
+trainer, which is why it is the only method with a GPU block split. On an SSH,
+Kubernetes or cloud fleet the fleet size is taken from the block split rather
+than fixed when you pick the instance. It cannot run on Modal (see
+[Supported GPUs](#supported-gpus)).
 
 GRPO is also LoRA only for now. Its **Enable LoRA** toggle is shown but locked on, and its tooltip says full-parameter RL is not available yet: train an adapter, or full fine-tune with SFT and start the GRPO run from that model.
 
@@ -185,7 +184,7 @@ What that leaves on each compute:
 
 | Compute | Training GPUs |
 |---|---|
-| **Modal** | Only the RTX PRO 6000. Its other GPUs (B200, H200, H100, A100, L40S, A10, L4, T4) are refused for training. Modal runs the RTX PRO 6000 as a single GPU, so GRPO, which needs two, cannot run there. |
+| **Modal** | Only the RTX PRO 6000. Its other GPUs (B200, H200, H100, A100, L40S, A10, L4, T4) are refused for training. Modal runs the RTX PRO 6000 as a single GPU, so GRPO, which needs two, cannot run there: Start refuses it before anything is provisioned. Run GRPO on an SSH, Kubernetes or cloud fleet. |
 | **SSH or Kubernetes fleet** | Whatever Blackwell sm_120 cards its hosts or nodes have. A GPU name Studio does not recognise, such as a generic `GPU:1`, is not checked. |
 | **Cloud** (dstack) | Offers on RTX PRO 6000 or RTX 50-series cards. Datacenter Blackwell (B200, B300) is a different architecture and is refused. |
 
@@ -198,9 +197,11 @@ Creating a run and launching it are **two separate steps**: `POST /api/training-
 2. Start         Click START → pre-start validation runs, then GPUs are provisioned
 3. Run           Training executes (5min to days depending on dataset + model size)
 4. Monitor       Logs, metrics, rollouts, checkpoints via the run detail page
-5. Complete      The run does not appear on the Models page by itself. On the run's page, Publish to Hub; for a LoRA run, then Merge (or Promote, when the trainer already merged it) into a standalone model. To serve it, add it on the Models page with + Deploy model, then Local Hub
+5. Complete      Does not appear on Models by itself: publish it, then add it on Models
 6. Optional      Activate as an expert via the expert lifecycle
 ```
+
+To serve a finished run, see [Local Hub](/develop/features/models/#local-hub).
 
 Two guardrails run at these boundaries:
 

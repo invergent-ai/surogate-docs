@@ -6,12 +6,12 @@ title: What's new
 
 ### Unanswered questions end the agent's turn
 
-When the agent asks you a question and you don't answer within 30 minutes, its turn now ends. It says in one short line that it will wait for your answer, and anything it had lined up after the question doesn't run. A task's worker doesn't reply; its task is marked blocked until it is unblocked. Your later reply arrives as an ordinary message, and the agent asks again if it still needs the answer. See [Inbox](/work/tools/inbox/) and [User interaction](/develop/reference/tool-catalog/#user-interaction) in the tool catalog.
+When you don't answer an agent's question within 30 minutes, its turn now ends: it says once that it will wait, and asks again when you next write if it still needs the answer. See [Inbox](/work/tools/inbox/#when-nobody-answers) and [When nobody answers](/develop/reference/tool-catalog/#when-nobody-answers) in the tool catalog.
 
 ### The copilot builds datasets, starts training runs and serves models
 
 - **Build guides.** The [copilot](/work/tools/copilot/#datasets-training-and-models) now follows build guides for datasets, training runs and model deployments, as it does for agents and skills.
-- **What it can't do.** It now says plainly that it can't change models beyond starting and stopping them, browse the Data Hub, create RL environments, start GRPO runs or run evaluations, and sends you to the right place instead. See [What the Copilot can't do](/work/tools/copilot/#what-the-copilot-cant-do).
+- **What it can't do.** It now says that it can't change models beyond starting and stopping them, browse the Data Hub, create RL environments, start GRPO runs or run evaluations, and sends you to the right place instead. See [What the Copilot can't do](/work/tools/copilot/#what-the-copilot-cant-do).
 
 ### Docs corrected
 

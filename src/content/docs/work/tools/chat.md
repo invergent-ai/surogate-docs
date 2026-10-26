@@ -58,7 +58,7 @@ The selector only appears for agents that support a live browser. See [Browser p
 
 When the agent calls `ask_user_question`, a tabbed question widget appears in the thread. You can answer via the widget — or **just type your reply in the composer**: while the question is pending, a plain text message is consumed as the answer. Text that exactly matches a choice label (case-insensitive) selects that choice; anything else is recorded as a free-form "Other" answer; a multi-question prompt receives your whole reply against each question.
 
-Exclusions worth knowing: a message with images or attachments is always an ordinary message, the shortcut stops working as the question's 30-minute window closes, and once an answer exists (widget or typed) later messages are ordinary messages again.
+Exclusions worth knowing: a message with images or attachments is always an ordinary message, the shortcut stops working as the question's 30-minute window closes (see [When nobody answers](/work/tools/inbox/#when-nobody-answers)), and once an answer exists (widget or typed) later messages are ordinary messages again.
 
 ## Simple and Advanced view
 

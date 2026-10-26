@@ -25,7 +25,7 @@ If the agent's **AI disclosure** is on (Configure → Governance), a disclosure 
 
 ### Answering the agent's questions
 
-When the agent asks something via `ask_user_question`, a tabbed question widget appears — but users can also just **type their reply in the composer** and it's consumed as the answer: an exact match on a choice label picks that choice, anything else is recorded as "Other". Messages with images or attachments stay ordinary messages, and the shortcut expires with the question (30 minutes).
+When the agent asks something via `ask_user_question`, a tabbed question widget appears, but users can also just **type their reply in the composer** and it's consumed as the answer: an exact match on a choice label picks that choice, anything else is recorded as "Other". Messages with images or attachments stay ordinary messages, and the shortcut expires with the question (30 minutes; see [When nobody answers](/work/tools/inbox/#when-nobody-answers)).
 
 ### The inbox spans a user's agents
 
