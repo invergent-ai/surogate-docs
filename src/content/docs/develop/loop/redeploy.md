@@ -68,15 +68,9 @@ START turns it back on, so new sessions are accepted again. It is refused when t
 
 ## DELETE
 
-The DELETE button on the agent detail. A pre-flight check warns you:
+The Delete button on the agent detail opens a dialog that checks for synthetic-data runs targeting the agent. While one that isn't finished does, **Delete** stays disabled: cancel the run first. See [DELETE confirmation](/develop/features/agents/#delete-confirmation).
 
-- How many attached skills will be detached
-- Any in-flight synthetic runs targeting this agent (cancel them first)
-- Whether end-users on this agent will lose access
-
-CANCEL is focused by default — you have to deliberately click DELETE.
-
-DELETE removes the agent with its workspace files, session data and API keys; it can't be undone. The URL stops responding. Slug is freed (you can reuse it later if you want).
+DELETE removes the agent with its workspace files, session data and API keys, and revokes its service account; it can't be undone. The URL stops responding. Slug is freed (you can reuse it later if you want).
 
 ## Multi-tenant rollout
 

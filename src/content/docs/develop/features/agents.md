@@ -23,7 +23,7 @@ Plus three action buttons:
 
 - **CHAT** — open a new chat session
 - **STOP / START**: turn the agent off or back on (see [STOP and START](#stop-and-start))
-- **DELETE**: checks that nothing is using the agent, then deletes it with its workspace files, session data and API keys
+- **DELETE**: deletes the agent (see [DELETE confirmation](#delete-confirmation)); refused while a synthetic-data run targets it, and for system agents
 
 ## Persona — SOUL.md
 
@@ -230,16 +230,12 @@ START turns it back on. It is refused when the project is already at its plan's 
 
 ## DELETE confirmation
 
-Standard pattern across the platform — title `DELETE <NAME>`, pre-flight check:
+The dialog is titled **Delete** and the agent's name. It first checks what uses the agent; for an agent that means synthetic-data runs that target it.
 
-```
-Checking for active references…
-No references found. Safe to delete.
+- While a run that isn't finished targets the agent, the dialog lists it and **Delete** stays disabled: cancel the run first. The API refuses the same case with a 409.
+- With none, it says "No references found. Safe to delete." Finished runs are listed under a collapsed **Used in N items** and don't block.
 
-[CANCEL]   [DELETE]
-```
-
-CANCEL is focused by default. If references exist, the modal lists them.
+Deleting removes the agent with its workspace files, session data and API keys, and revokes its service account; it can't be undone. A clean-up step that fails doesn't stop the delete; the server logs it. System agents can't be deleted (403).
 
 ## REST API for agents
 
@@ -251,7 +247,7 @@ CANCEL is focused by default. If references exist, the modal lists them.
 | `PATCH` | `/api/agents/agents/{id}` | Update config |
 | `POST` | `/api/agents/agents/{id}/start` | Turn the agent on (refused at the plan's limit) |
 | `POST` | `/api/agents/agents/{id}/stop` | Turn the agent off |
-| `DELETE` | `/api/agents/agents/{id}` | Delete the agent and its data (409 while synthetic runs use it, 403 for a system agent) |
+| `DELETE` | `/api/agents/agents/{id}` | Delete the agent and its data, revoke its service account (409 while synthetic runs use it, 403 for a system agent) |
 
 See [Runtime architecture reference](/develop/reference/runtime-architecture/) for full schemas.
 
