@@ -4,7 +4,7 @@ sidebar:
   label: Team page (supervisors)
 ---
 
-Supervisors run the people side of a project. The **Team** page shows "Who works this project: its staff, its queues and its agents." From it, supervisors invite and remove staff, staff the queues, turn agents off and on, and set authority limits. Supervisors also move cases by hand.
+Supervisors run the people side of a project. The **Team** page shows "Who works this project: its staff, its queues and its agents." From it, supervisors invite and remove staff, staff the queues with people and agents, turn agents off and on, and set authority limits. Supervisors also reassign work items and move cases by hand.
 
 The project's owners appoint the first supervisors in Keel Builder (see [Supervisors](/keel/builder/queues/#supervisors)). Staff who are not supervisors have no **Team** row; a link to the page shows "Only the project's supervisors see the team."
 
@@ -38,8 +38,10 @@ Press **Remove** on their row. Keel asks **Remove *name* from the staff?**: "The
 
 The **Queues** tab lists the project's queues in the order Keel serves them. Each shows its name, its serving order, its priority, and who works it. "Serving order and priority are set by the project's builders."
 
-- Press × beside a member to take them out of the queue.
-- Pick someone from **Add a member** to add them. Only the staff are offered. When everyone is a member already, it says "Everyone on the staff works this queue."
+- Each member shows by name, with a mark for a person or an agent. Press × beside a member to take them out of the queue.
+- Pick someone from **Add a member** to add them: the staff under **People**, and the agents under **Agents**. Agents a supervisor turned off are not offered, and neither are the project's helpers. When everyone is a member already, it says "Everyone on the staff works this queue."
+
+An agent added to a queue takes the queue's waiting items at once, in its serving order, and new ones as they come. See [Agents in queues and as delegates](/keel/business/agents/#agents-in-queues-and-as-delegates).
 
 A queue no one works says "No one works this queue yet." Its work waits there until someone joins.
 
@@ -51,7 +53,7 @@ With no queues, the tab says **This project has no queues yet**: "The project's 
 
 The **Agents** tab lists the agents the project's case types use, each with whether it **Works its steps**, and its **Authority limits**.
 
-- Turning the switch off asks **Turn off *agent*?**: "People work each of its steps that opens from now on." Its new steps go to people in the queue that gets its questions; steps it already works carry on. The row then reads **Off since** the date, with who turned it off.
+- Turning the switch off asks **Turn off *agent*?**: "People work each of its steps that opens from now on." Its new steps go to people in the queue that gets its questions; steps it already works carry on. It is no longer offered as a queue member, a delegate or a Reassign target. The row then reads **Off since** the date, with who turned it off.
 - Turning it on applies at once.
 
 With no agents, the tab says **No case type of this project uses an agent**.
@@ -66,6 +68,10 @@ Press **Limits** on a person's row on the **Staff** tab, or on an agent's row on
 - Under **Set a limit**, pick the **Scope** and type the **Amount**, then press **Set limit**. The scopes are those the project's published case types check; each says which step checks it, such as "Checked by Approve the loan in Loan request". An amount is zero or more, with at most six decimal places.
 
 A limit held in a scope no published case type checks now says "No published case type checks it now." If no case type checks any scope yet, the dialog says "No published case type checks an authority limit yet."
+
+## Reassign an item
+
+A supervisor can give any open work item but a vote to someone on the staff or to an agent, whoever holds it now. Open the item on the Work page and press **Reassign**. See [Reassign an item](/keel/business/work/#reassign-an-item).
 
 ## Move a case by hand
 
@@ -83,9 +89,10 @@ A supervisor can move a case to any stage, or to a step of a stage, with a reaso
 ## What else supervisors see
 
 - **Queue settings** on each team queue of the Work page.
+- **Reassign** on open work items, except votes.
 - **Open Keel Builder** in the bar at the bottom of the left rail, to open the project in Keel Builder. Using it needs a Surogate account that is a member of the project.
 - Everything staff see: supervisors work cases like anyone else.
 
 ## What staff who are not supervisors see
 
-Staff see the **Work** and **Cases** pages, start cases, work the steps given to them or their queues, answer agents' questions, delegate and return their items, message agents and watch sessions. They do not see the Team page, **Queue settings**, **Move by hand…** or **Open Keel Builder**.
+Staff see the **Work** and **Cases** pages, start cases, work the steps given to them or their queues, answer agents' questions, delegate and return their items, message agents and watch sessions. They do not see the Team page, **Queue settings**, **Reassign**, **Move by hand…** or **Open Keel Builder**.

@@ -10,7 +10,7 @@ The **Workflow** tab is where you draw a case type: its stages, the steps in eac
 - the **flow** of the stage you pick, drawn below the board;
 - the **panel** of the node or action you pick, on the right.
 
-Viewers see all of it and change nothing. If no draft is open, your first change asks for one (see [Drafts](/keel/builder/drafts/#starting-a-draft)).
+Viewers see all of it and change nothing. If no draft is open, your first change asks for one (see [Drafts](/keel/builder/drafts/#starting-a-draft)). While the [designer agent](/keel/builder/designer-agent/) takes its turn in the draft, the tab is read-only until the turn ends.
 
 ## The stage board
 

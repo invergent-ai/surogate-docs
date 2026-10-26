@@ -54,6 +54,36 @@ You hold nothing, and your queues have no unclaimed work. If you expected work, 
 
 An agent takes a message only while it is at work on the step with its hand down. It takes none while its question is open, after it failed, or while a supervisor has it turned off.
 
+## Agents and the case agent
+
+### Why does the Case agent tab say "The project's case agent is not set up yet"?
+
+Keel has no case agent for the project, or it is switched off. Keel sets it up when an editor or owner opens the project in Keel Builder. Ask one to open it, then try again.
+
+### Why did the case agent not fill in my form?
+
+It fills in only a form of yours: an open step of the case that you hold, and only when you ask. It fills only the fields that form has, and leaves out a value it is not sure of. A field you changed is yours, and no draft fills it again. A vote has no fields to fill.
+
+### Why can I not give the case agent a file?
+
+The case agent takes no files: "The case agent takes no files. Add them to the case instead." Add the file through a step's file field, then ask about it.
+
+### Why can I not give an item to an agent?
+
+Keel says why: **The agent cannot work this item: the project's case types do not name it, it is switched off, it is one of the project's helpers, only a person may act on the item, or the item has no queue for the agent to return it to.** An agent never takes an escalation, a step an agent drafts for a person, or a step that opened for people because its agent failed or was turned off. See [Agents in queues and as delegates](/keel/business/agents/#agents-in-queues-and-as-delegates).
+
+### Why is an agent not offered in Delegate, Reassign or Add a member?
+
+Only the agents the project's case types use are offered, and none a supervisor turned off. The project's helpers, the case agent and the designer agent, are never offered.
+
+### Why does an agent's run have no Watch?
+
+The run is on a work item the agent took from a queue or was handed. Only the runs of an agent's own steps open on Watch.
+
+### Why does a comment say "The agent was not told about your comment"?
+
+Keel could not pass the comment to the agent. "No agent works a step of yours on this case now." means you hold no step of the case that an agent drafts for you while it is at work.
+
 ## Access
 
 ### Why do I not see the Team page?
@@ -125,6 +155,20 @@ A credential is set on the published connection. A connection new in your draft 
 ### Why is my new agent not in the list?
 
 Agents are made in Studio. Keel Builder reads the project's agents again when you come back to its window, at most once a minute, or when you reload the page.
+
+The project's helpers, the case agent and the designer agent, are never in the list of a step's agents or of intake agents.
+
+### Why is there no "Ask the designer agent"?
+
+It shows in the designer to editors and owners, in an open draft. With **Published** shown, open or start a draft first. Viewers do not see it.
+
+### Why can I not edit while the designer agent works?
+
+While the designer agent takes its turn, the designer is read-only: "The designer agent is working in this draft. You can edit again when its turn ends." The draft bar, **Dry run** and **Review and publish** stay available.
+
+### Why does the designer agent's panel say "The designer agent is switched off in Studio."?
+
+Someone switched the project's designer agent off in Studio. It works again once it is switched on there.
 
 ### Why do running cases still use the old version?
 

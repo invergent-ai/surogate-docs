@@ -9,7 +9,7 @@ sidebar:
 ## Opening Watch
 
 - On a case, press **Open its session** on the card of a step an agent works, or of a step whose agent asked a question.
-- On the Work page, under **Agents at work**, pick an agent and press **Watch** on one of its runs.
+- On the Work page, under **Agents at work**, pick an agent and press **Watch** on a run of one of its steps. A run on a work item, which the agent took from a queue or was handed, has no **Watch**.
 
 The page is titled **Watching** and the agent's name. Under it are the step, the case and "read-only". **Back to the case** returns to the case.
 

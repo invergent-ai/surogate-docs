@@ -53,7 +53,7 @@ Every step has a **performer**: who does the work.
 - **An agent with a person**: the agent drafts the step, and one person checks the draft, changes it if needed, and submits it.
 - **A system**: Keel calls another system's REST API through one of the case type's connections and maps the answer into fields.
 
-People and agents are treated alike. Maker-checker and authority limits apply to both.
+People and agents are treated alike. Maker-checker and authority limits apply to both. An agent can also take a work item as a person does: as a member of a queue, as a delegate, or when a supervisor reassigns the item to it.
 
 ## Outcomes
 
@@ -69,7 +69,7 @@ A step's **form** is made from the fields it writes. The form a case starts with
 
 ## Queues
 
-A **queue** is a shared list of work for a team. Builders define a queue's name, its **serving order** (which work comes first) and its **priority** among queues. Supervisors decide who works each queue. **Get next** hands a person the next item from their queues.
+A **queue** is a shared list of work for a team. Builders define a queue's name, its **serving order** (which work comes first) and its **priority** among queues. Supervisors decide who works each queue: people, agents, or both. **Get next** hands a person the next item from their queues.
 
 ## Service levels and calendars
 
@@ -86,6 +86,15 @@ An **authority check** on a step compares an amount field with the limit of the 
 ## Raised hands
 
 When an agent needs a person, it **raises a hand**: it asks a question, sometimes with answer choices and evidence. The question goes to the queue the step names. The agent waits, without a time limit, until someone answers. The answer, with an optional note, goes back to the agent and into the case's history.
+
+## The project's helpers
+
+Each project has two **helpers**, agents Keel sets up for it:
+
+- the **case agent**, which a person asks about one case in the business app. It answers from the case's data, files and history, and fills in that person's form when they ask. It never submits. See [The case agent](/keel/business/case-agent/).
+- the **designer agent**, which a builder chats with in Keel Builder. It drafts case types in the open draft, as the builder, and never publishes. See [The designer agent](/keel/builder/designer-agent/).
+
+A helper never works a step or a work item, and is never offered as a step's agent or an intake agent.
 
 ## Optional actions and case events
 
