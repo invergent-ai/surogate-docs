@@ -44,6 +44,12 @@ Several builders can work in one draft. When someone else saved the draft since 
 
 Each save replaces the whole file, such as the whole case type, so the last save of a file wins. Press **Load the latest** to read the draft again. If you have changes that are not saved yet, Keel Builder asks first, because loading drops them.
 
+## Working with the designer agent
+
+In the designer, **Ask the designer agent** opens a chat with the project's designer agent, bound to the open draft. The agent works in the draft as you and saves its changes there. It never publishes or discards the draft.
+
+While the agent takes its turn, the designer is read-only: "The designer agent is working in this draft. You can edit again when its turn ends." Your changes not saved yet are saved before its turn starts, and the draft bar stays available. After the turn, **Show changes** lists what it changed, with **Revert** for each file. See [The designer agent](/keel/builder/designer-agent/).
+
 ## Seeing what a draft changes
 
 The **Review and publish** page lists, file by file, what the draft changes compared with what is published. See [Dry run and publish](/keel/builder/publish/).
@@ -62,5 +68,6 @@ The project's owners can discard any draft. An editor can discard a draft they c
 |---|---|---|---|
 | See drafts and their files | Yes | Yes | Yes |
 | Start a draft, change it, dry run it | No | Yes | Yes |
+| Ask the designer agent in a draft | No | Yes | Yes |
 | Publish a draft | No | Yes | Yes |
 | Discard a draft | No | Their own | Any |

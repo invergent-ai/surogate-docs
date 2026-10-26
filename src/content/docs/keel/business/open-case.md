@@ -2,7 +2,7 @@
 title: An open case
 ---
 
-A case's page shows where the case is, the steps that are yours to work, who holds the others, its files, its data and its history. It keeps itself current as the case changes. Open a case from the Work page, the Cases page, or a link a colleague sends.
+A case's page shows where the case is, the steps that are yours to work, who holds the others, its files, its data and its history, and has the case agent to ask about it. It keeps itself current as the case changes. Open a case from the Work page, the Cases page, or a link a colleague sends.
 
 Keel records each time someone opens a case.
 
@@ -36,11 +36,15 @@ A file field has an upload. The file is added to the case's files as soon as you
 
 If Keel refuses the submission, the reason shows beside the field it names, or above the form. See [When Keel refuses](#when-keel-refuses).
 
+When you ask the [case agent](/keel/business/case-agent/) to fill in your form, each field it filled is marked "Drafted by the case agent at your request. Nothing is sent until you submit." It fills only fields you have not changed. The mark goes from a field once you change it.
+
 ### A step an agent drafted for you
 
-On a step an agent drafts and you finish, the form opens filled with the agent's draft. Each field it drafted is marked, with "Drafted by *agent*. Nothing is sent until you submit." The mark goes from a field once you change it. Check the draft, change what you need, and submit as usual.
+On a step an agent drafts and you finish, the card shows "*Agent* is drafting" while it works, with how its run stands and its progress. Then the form opens filled with the agent's draft. Each field it drafted is marked, with "Drafted by *agent*. Nothing is sent until you submit." The mark goes from a field once you change it. Check the draft, change what you need, and submit as usual.
 
-**Ask to revise** sends the agent a note, **What should change**, and asks it to draft again: "*Agent* drafts the step again with your note. Nothing is sent until you submit." It is offered once the agent has stopped working on its draft.
+If you also asked the case agent to fill in the form, the newer draft of each field wins. A field you changed stays yours.
+
+**Ask to revise** sends the agent a note, **What should change**, and asks it to draft again: "*Agent* drafts the step again with your note. Nothing is sent until you submit." It is offered once the agent has stopped working on its draft. Its new draft fills the form afresh.
 
 ### A step waiting in your queue
 
@@ -48,7 +52,7 @@ On a step an agent drafts and you finish, the form opens filled with the agent's
 
 ### A step whose agent asked a question
 
-"*Agent* asked a question", and the queue it went to. **Answer in Work** opens the question on the Work page, where you answer it. **Open its session** shows what the agent was doing, on [Watch](/keel/business/watch/).
+"*Agent* asked a question", the queue it went to, and the agent's progress on the step. **Answer in Work** opens the question on the Work page, where you answer it. **Open its session** shows what the agent was doing, on [Watch](/keel/business/watch/).
 
 ## Now: steps others hold
 
@@ -58,7 +62,7 @@ Every other open step shows as a **Now** card, with the step's name and its serv
 |---|---|
 | An agent at work | "*Agent* is working" and how its run stands (**Starting**, **Running**, **Waiting** or **Drafted**); when it started, its goal and deadline; the agent's plan and when it was last active; where its question would go if it needs a person, and whether that includes you. |
 | An agent that asked a question | "*Agent* asked a question", and who holds the question. |
-| A person, a queue or a vote | Who holds it, since when; for a vote, how many have voted. |
+| A person, an agent given the step, a queue or a vote | Who holds it, by name, since when; for a vote, how many have voted. An agent holds a step people work when it took it from its queue, or someone delegated or reassigned it. See [Agents in queues and as delegates](/keel/business/agents/#agents-in-queues-and-as-delegates). |
 | A system | **Waiting on a system**, and each attempt of its call, with its time and how it went: **Applied**, **Sending**, **The system did not answer in time**, **The system was unavailable**, **Refused by the system** or **The system could not complete this**. |
 | A wait | **Waiting on the client**, **Waiting on a third party**, or **Waiting for** the event, and until when. |
 
@@ -83,17 +87,20 @@ Office documents, such as Word, Excel, PowerPoint and PDF files, open in the web
 
 The panel also shows who is in the document now, as "Here now ·" and their names.
 
+While you hold a step that an agent drafts for you, and the agent is at work on it, the editor offers that agent to mention in a comment. A comment that mentions it reaches the agent, which answers in the comment's thread. If Keel cannot pass the comment on, the panel says "The agent was not told about your comment:" and why, such as "No agent works a step of yours on this case now."
+
 Other files show their name and size, with **Download**. When documents cannot open in the editor, the panel says why, such as "Documents open here once a document server is set up. Download the file instead."
 
-## Data, History and Flow
+## Case agent, Data, History and Flow
 
-The side panel, beside the steps on a wide screen and under them on a phone, has three tabs.
+The side panel, beside the steps on a wide screen and under them on a phone, has four tabs. The case opens on **Data**.
 
+- **Case agent**: your chat with the project's case agent about this case. It answers from the case's data, files and history, and fills in your form when you ask. See [The case agent](/keel/business/case-agent/).
 - **Data**: each field by its label and value. Open a field to see every value it took, who set it (a person, an agent, **Rule**, or **Set by the move to version *n***), when, and at which step or at **Case started**.
 - **History**:
   - **Your part in this case** first: what you did, latest first, or "You have not worked on this case yet".
-  - Then each step done, latest first: its name and outcome, who did it, when, the rules it applied with their versions, and the **Policies read** by an agent, by policy and page.
-  - **Full history with inputs and outputs** opens every transition of the case, a hundred at a time, each with the values it recorded: the outcome, the fields written, a vote's choice, an answer and a note.
+  - Then each step done, latest first: its name and outcome, who did it, when, the rules it applied with their versions, which agent drafted the fields a person submitted, such as "Case agent drafted Amount and Term", and the **Policies read** by an agent, by policy and page.
+  - **Full history with inputs and outputs** opens every transition of the case, a hundred at a time, each with the agents that drafted it and the values it recorded: the outcome, the fields written, a vote's choice, an answer, a note and a message to an agent.
 - **Flow**: the current stage's flowchart, with the path the case took traced through it and its open steps marked as current.
 
 ## When Keel refuses

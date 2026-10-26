@@ -29,7 +29,7 @@ The table lists each key by **Name**, when it was **Created**, and when it was *
 
 ## Effects
 
-An **effect** is work Keel does outside a case after a transition: starting or resuming an agent on a step, or calling another system for a system step. Keel runs each effect, tries again when it fails, and marks it **Failed** when its last attempt fails. Editors and owners see this section.
+An **effect** is work Keel does outside a case after a transition: starting or resuming an agent on a step, starting or stopping an agent's work on a work item, or calling another system for a system step. Keel runs each effect, tries again when it fails, and marks it **Failed** when its last attempt fails. Editors and owners see this section.
 
 The tabs show the effects in one status: **Failed**, **Pending**, **Running**, **Done** or **All**. It opens on **Failed**. The table shows each effect's **Type**, its **Case**, its **Status**, its **Attempts**, its **Last error**, when it was **Created** and when it was **Done**. It never shows the effect's content, which holds case data.
 

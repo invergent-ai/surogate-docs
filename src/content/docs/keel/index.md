@@ -14,8 +14,8 @@ Keel has two web apps. Each has its own sign-in.
 
 | App | Address | Who uses it | What they do there |
 |---|---|---|---|
-| **Keel Builder** | https://keel-builder.surogate.ai | Builders: members of the project in Surogate Studio | Design case types, rules and queues in drafts, check them, publish them. Appoint supervisors, create service keys. |
-| **Keel** (the business app) | https://keel-app.surogate.ai | The project's staff and supervisors | Start cases, work the steps given to them, answer agents' questions, follow cases. Supervisors also manage the team. |
+| **Keel Builder** | https://keel-builder.surogate.ai | Builders: members of the project in Surogate Studio | Design case types, rules and queues in drafts, alone or with the designer agent, check them, publish them. Appoint supervisors, create service keys. |
+| **Keel** (the business app) | https://keel-app.surogate.ai | The project's staff and supervisors | Start cases, work the steps given to them, answer agents' questions, ask the case agent about a case, follow cases. Supervisors also manage the team. |
 
 The two apps show different things. The business app never shows a case type's definition, an agent's configuration, skills, knowledge bases, connections or credentials. Keel Builder has no list of cases.
 
@@ -47,4 +47,5 @@ Running cases stay on the version they started on, unless a builder moves them t
 - [Quickstart](/keel/quickstart/): from an empty project to a worked case.
 - [Keel Builder](/keel/builder/sign-in/): every screen of the builder app.
 - [The business app](/keel/business/sign-in/): the Work page, cases, and the Team page.
+- [The case agent](/keel/business/case-agent/) and [the designer agent](/keel/builder/designer-agent/): the project's two helpers.
 - [Glossary](/keel/reference/glossary/) and [FAQ](/keel/reference/faq/).

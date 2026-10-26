@@ -33,7 +33,7 @@ The address keeps the tab, the filters and the case you preview, so you can shar
 | **Case** | The case number and its title. |
 | **Summary** | The first of the case type's summary values, such as the amount. |
 | **Stage** | The case's stages as a bar, with the current one named. |
-| **Now** | Each open step, with who holds it: a person (you as **You**), a queue, an agent with what it is doing, such as `Document checker · working`, the client with the day of the wait, such as `day 2 of 7`, a third party or a system. A step no one holds reads **Unassigned**. |
+| **Now** | Each open step, with who holds it: a person (you as **You**), an agent that holds it, a queue, an agent at work with what it is doing, such as `Document checker · working`, the client with the day of the wait, such as `day 2 of 7`, a third party or a system. A step no one holds reads **Unassigned**. |
 | **Service level** | **Past deadline**, with how long ago, such as **Past deadline · 2 h**; **Past goal**; **Due today**; the time left to the deadline, such as **3 d left**; or **On time** when there is no deadline. **Waiting on the client** while the client is waited on. |
 | **Updated** | When the case last changed. |
 
@@ -44,7 +44,7 @@ The address keeps the tab, the filters and the case you preview, so you can shar
 Press a row to preview the case beside the list, or in a sheet on a phone:
 
 - its title and summary, and its stages with their dates;
-- **Now**: what the case waits on, with **Open case**; a closed case says **Closed**, and an open one with nothing open says **Nothing waits now**;
+- **Now**: what the case waits on, with **Open case** and **Ask the case agent**, which opens the case on its [Case agent](/keel/business/case-agent/) tab; a closed case says **Closed**, and an open one with nothing open says **Nothing waits now**;
 - **Files**: the case's files, each with who added it and when; each opens the case on that file;
 - **Latest activity**: what happened last, in sentences, newest first, and **Full history**, which opens the case's history.
 

@@ -97,7 +97,7 @@ The case page shows a card **Your task · Review the request**.
 2. Under **Outcome**, choose **Approve**.
 3. Press **Submit**.
 
-The card goes away and the page says **This case is closed.** Open **History** in the side panel to see the step, who did it and its outcome.
+The card goes away and the page says **This case is closed.** Open **History** in the side panel to see the step, who did it and its outcome. The side panel's first tab, **Case agent**, is a chat with the project's case agent about the case.
 
 ## Next steps
 
@@ -105,3 +105,5 @@ The card goes away and the page says **This case is closed.** Open **History** i
 - Add a [decision](/keel/builder/flow-nodes/#decisions) that sends large amounts to a second stage.
 - Give a step to [an agent](/keel/builder/steps/#done-by), and see its work in the [business app](/keel/business/agents/).
 - Write a [scenario](/keel/builder/scenarios/) so every dry run checks the path a case takes.
+- Press **Ask the designer agent** in the designer, and draft a case type from your process documents with [the designer agent](/keel/builder/designer-agent/).
+- Ask [the case agent](/keel/business/case-agent/) about a case, and have it fill in your form.

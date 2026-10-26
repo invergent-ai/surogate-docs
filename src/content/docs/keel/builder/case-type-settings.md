@@ -32,7 +32,7 @@ Business users never see the knowledge bases themselves. In a case's history, wh
 
 ## Intake agents
 
-The project's agents that may start a case of this type, picked from the agents made in Studio. The **Add** menu adds one. With none, "No agent starts its cases."
+The project's agents that may start a case of this type, picked from the agents made in Studio. The **Add** menu adds one; it never offers the project's helpers, the case agent and the designer agent. With none, "No agent starts its cases."
 
 ## Case events
 

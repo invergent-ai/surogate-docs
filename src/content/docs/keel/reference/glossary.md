@@ -8,7 +8,7 @@ Every Keel term in one place. [Concepts](/keel/concepts/) explains how they fit 
 
 | Term | Definition |
 |---|---|
-| **Agent** | A Surogate agent of the project, made in Studio. It can work a step, draft a step for a person, or start cases as an intake agent. |
+| **Agent** | A Surogate agent of the project, made in Studio. It can work a step, draft a step for a person, take work items as a queue member or a delegate, or start cases as an intake agent. |
 | **Agent question** | An agent's raised hand as it shows in work lists. |
 | **Alternate stage** | A stage off the primary path, such as Withdrawn, that a case reaches only when an outcome, a case event or a supervisor sends it there. |
 | **Authority limit** | The most a person or an agent may approve in a scope. Supervisors set it on the Team page. |
@@ -18,6 +18,7 @@ Every Keel term in one place. [Concepts](/keel/concepts/) explains how they fit 
 | **Business time** | Time that counts only working hours on working days, by the case type's calendar. |
 | **Calendar** | A project's working days, working hours, holidays and time zone. A case type can use one. |
 | **Case** | One running instance of a case type version, with its data, files and history. |
+| **Case agent** | The project's helper that answers a person's questions about one case, and fills in their form when they ask. It never submits. |
 | **Case event** | A named signal another system sends to a case. A wait for it moves on; otherwise the case type's event of that name fires. |
 | **Case number** | The case type's number prefix and a count, such as `LR-000001`. |
 | **Case type** | The definition of one kind of case: its fields, stages, flows, forms and settings. Versioned. |
@@ -27,7 +28,8 @@ Every Keel term in one place. [Concepts](/keel/concepts/) explains how they fit 
 | **Connection** | Another system a case type's system steps call: its base URL, authentication and credential. |
 | **Credential** | The secret a connection sends. Set on the published connection, never shown again. |
 | **Decision** | A node that picks a branch from conditions over the case's data. |
-| **Delegate** | Handing an item you hold to someone else on the staff. |
+| **Delegate** | Handing an item you hold to someone else on the staff, or to an agent. |
+| **Designer agent** | The project's helper that drafts case types with a builder in Keel Builder, in the open draft. It never publishes. |
 | **Draft** | A set of changes to the project's definitions, not live until published. |
 | **Dry run** | Every publish check and scenario, run on a draft without publishing it. |
 | **Effect** | Work Keel does outside a case after a transition: starting an agent, or calling a system. |
@@ -36,6 +38,7 @@ Every Keel term in one place. [Concepts](/keel/concepts/) explains how they fit 
 | **Flow** | The nodes of a stage and how its outcomes connect them. |
 | **Form** | What a person fills to start a case or complete a step, made from fields and laid out on the Forms tab. |
 | **Get next** | The button that gives you the first item of Needs me, or else the next unclaimed item of your queues. |
+| **Helper** | One of the two agents Keel sets up for each project: the case agent and the designer agent. A helper never works a step or a work item. |
 | **Intake agent** | An agent allowed to start cases of a case type. |
 | **Join** | A node that waits until every path leading to it has arrived. |
 | **Maker-checker** | A step's rule that it must be done by someone other than whoever did named earlier steps. |
@@ -52,6 +55,7 @@ Every Keel term in one place. [Concepts](/keel/concepts/) explains how they fit 
 | **Publish** | Making a draft live. Each changed case type gets a new version. |
 | **Queue** | A team's shared list of work, with a serving order and a priority. |
 | **Raised hand** | An agent's question to a person, which pauses its step until someone answers. |
+| **Reassign** | A supervisor giving an open work item, other than a vote, to someone on the staff or to an agent. |
 | **Resolution** | How a case closed, such as `approved` or `completed`. |
 | **Rule** | A decision table or scorecard, versioned by when each version takes effect. |
 | **Rule node** | A node that runs a rule and writes its results into fields. |

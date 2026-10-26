@@ -14,7 +14,7 @@ Pick the performer. Changing it keeps what the new performer uses and drops the 
 
 ### An agent
 
-- **Agent**: one of the project's agents, by name. Agents are made and changed in Studio; an agent made there shows here when you come back to the window.
+- **Agent**: one of the project's agents, by name. Agents are made and changed in Studio; an agent made there shows here when you come back to the window. The project's helpers, the case agent and the designer agent, are never offered (see [The project's helpers](/keel/builder/designer-agent/#the-projects-helpers)).
 - **Raised hands go to**: the queue that gets the agent's questions when it needs a person.
 
 The step needs both. Until both are picked, the panel says **Pick its agent to save it.** or **Pick where its raised hands go to save it.**, and nothing is saved.
