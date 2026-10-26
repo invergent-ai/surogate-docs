@@ -226,7 +226,7 @@ Hard depth limit: 2 levels of orchestration beneath the root coordinator.
 
 | Tool | Use for |
 |---|---|
-| `ask_user_question` | Ask the user up to 5 questions (each up to 4 labeled choices + optional "Other") in a tabbed chat widget, and wait for the batched answers. 30-min wait cap. |
+| `ask_user_question` | Ask the user up to 5 questions (each up to 4 labeled choices + optional "Other") in a tabbed chat widget, and wait for the batched answers, for up to 30 minutes. With no answer by then, the turn ends (see below). |
 
 How answers arrive depends on the channel:
 
@@ -238,6 +238,14 @@ How answers arrive depends on the channel:
 | **API service accounts** | Respond route only | Never converted |
 
 Typed-reply mapping: text that exactly matches a choice label (case-insensitive) selects that choice; anything else is recorded as an "Other" answer; a multi-question prompt receives the whole reply against each question. Messages with images or attachments are never converted, and the conversion stops working shortly before the 30-minute cap. Once a response exists for the tool call, later messages are ordinary messages.
+
+When no answer comes within 30 minutes, the tool returns `cancelled: true` with `reason: "timeout"`, and the turn ends there:
+
+- Any tool calls the model queued after the question in the same batch are skipped, not run.
+- The model gets one more reply with tools switched off, asked to say in one short line that it will wait for the answer and nothing else. On Slack, Teams, Telegram, WhatsApp and Discord it is asked to say so in the person's language.
+- The question's inbox item expires, so it no longer takes an answer. A later reply arrives as an ordinary message, and the tool result tells the model to ask again then if it still needs the answer.
+- If a message the model has not read yet arrived during the wait, the turn does not end: it goes on with that message.
+- A task's worker doesn't reply. Its task is marked blocked on the question, as `worker_block` does, and waits for its parent to unblock it. If the block fails, the attempt fails and the task is retried.
 
 ## Inline output
 
