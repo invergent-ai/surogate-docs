@@ -245,7 +245,7 @@ When no answer comes within 30 minutes, the tool returns `cancelled: true` with 
 - The model gets one more reply with tools switched off, asked to say in one short line that it will wait for the answer and nothing else. On Slack, Teams, Telegram, WhatsApp and Discord it is asked to say so in the person's language.
 - The question's inbox item expires, so it no longer takes an answer. A later reply arrives as an ordinary message, and the tool result tells the model to ask again then if it still needs the answer.
 - If a message the model has not read yet arrived during the wait, the turn does not end: it goes on with that message.
-- A task's worker doesn't reply. Its task is marked blocked on the question, as `worker_block` does, and waits for its parent to unblock it. If the block fails, the attempt fails and the task is retried.
+- A task's worker doesn't reply. Its task is marked blocked on the question, as `worker_block` does, and waits for its parent to unblock it. If the block fails, the attempt fails and the task is retried like any failed attempt.
 
 ## Inline output
 
