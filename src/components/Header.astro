@@ -6,10 +6,13 @@ import Search from '@astrojs/starlight/components/Search.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import { PRODUCT_HOME, PRODUCT_LABEL, productFor } from '../lib/product.mjs';
 
-const current = productFor(Astro.locals.starlightRoute.id);
+const { id, hasSidebar } = Astro.locals.starlightRoute;
+const current = productFor(id);
+// Only the home page swaps search for a surogate.ai link: its hero holds the big search field.
+const isHome = id === '';
 ---
 
-<div class="docs-header" data-docs="header">
+<div class="docs-header" data-docs="header" data-has-menu={String(hasSidebar)}>
   <a class="wordmark" href="/">
     <span class="name">Surogate</span><span class="docs">Docs</span>
   </a>
@@ -25,7 +28,7 @@ const current = productFor(Astro.locals.starlightRoute.id);
     }
   </div>
   <div class="tools">
-    {current === null ? <a class="site-link" href="https://surogate.ai">surogate.ai</a> : <Search />}
+    {isHome ? <a class="site-link" href="https://surogate.ai">surogate.ai</a> : <Search />}
     <ThemeToggle />
     <a class="sign-in" href="https://ops.surogate.ai">Sign in</a>
   </div>
@@ -118,10 +121,11 @@ const current = productFor(Astro.locals.starlightRoute.id);
     color: rgba(255, 255, 255, 0.75);
   }
 
+  /* On phones the products and Sign in move to the menu; pages without a menu keep Sign in. */
   @media (max-width: 50rem) {
     .products,
-    .sign-in,
-    .site-link {
+    .site-link,
+    [data-has-menu='true'] .sign-in {
       display: none;
     }
     .docs-header {

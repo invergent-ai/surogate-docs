@@ -1,6 +1,7 @@
 ---
 // Previous / next as two bordered boxes, then the slim site footer. The edit
-// link lives beside "On this page"; it stays here only on pages without one.
+// link lives beside "On this page" on wide screens; below that, and on pages
+// without that list, it stays here.
 import EditLink from '@astrojs/starlight/components/EditLink.astro';
 import Pagination from '@astrojs/starlight/components/Pagination.astro';
 
@@ -10,6 +11,7 @@ const showEdit = !toc && entry.data.template !== 'splash';
 
 <footer class="docs-footer">
   {showEdit && <div class="meta"><EditLink /></div>}
+  {toc && <div class="meta lg:sl-hidden" data-docs="edit-link-footer"><EditLink /></div>}
   <Pagination />
   <div class="site-footer" data-docs="site-footer">
     <span><strong>Surogate</strong> © 2026</span>

@@ -91,7 +91,7 @@ html {
 
 /* Screenshots and their captions */
 .sl-markdown-content figure:not(.frame) {
-  margin: 0;
+  margin: 1.25rem 0 0;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
