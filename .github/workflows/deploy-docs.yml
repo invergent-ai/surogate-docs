@@ -44,6 +44,9 @@ jobs:
       - name: Codemod unit tests
         run: python3 -m unittest discover -s migration -p 'test_*.py' -v
 
+      - name: Unit tests
+        run: npm run test:unit
+
       # starlight-links-validator runs inside the build, so a broken internal
       # link or anchor fails this step and blocks the deploy.
       - name: Build site
@@ -54,6 +57,10 @@ jobs:
 
       - name: Route parity against the frozen baseline
         run: python3 migration/check_routes.py
+
+      # Checks on the built pages: one sidebar per track, the nav, the home page.
+      - name: Site tests
+        run: npm run test:site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
