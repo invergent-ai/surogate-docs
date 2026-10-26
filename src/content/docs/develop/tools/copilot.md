@@ -38,7 +38,7 @@ Besides those, it can use a few built-in tools: `ask_user_question`, `create_art
 
 ### Agents
 
-`get_agent` returns the agent's settings with the skills, knowledge bases and MCP servers attached to it. Long fields such as the system prompt come back shortened; with `full=true` it returns them whole, and `update_agent` refuses a value that still carries the shortening marker, so a cut-off prompt can't be saved back over the real one. `list_knowledge_bases` lists the project's knowledge bases, to find one to attach.
+`get_agent` returns the agent's settings with the skills, knowledge bases and MCP servers attached to it. Long fields such as the system prompt come back shortened; with `full=true` it returns them whole (environment variable values stay hidden either way), and `update_agent` refuses a value that still carries the shortening marker, so a cut-off prompt can't be saved back over the real one. `list_knowledge_bases` lists the project's knowledge bases, to find one to attach.
 
 `start_agent`, `stop_agent` and `delete_agent` run the same checks and steps as the buttons in Studio and wait for the result. Start is refused at the plan's limit for running agents or workspace storage. If delete removes the agent but a clean-up step fails (its workspace files, session data, API keys or service account), the result names that step so the Copilot can tell you.
 

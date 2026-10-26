@@ -62,7 +62,7 @@ Three reasons to STOP an agent:
 - Freeing a slot: a stopped agent doesn't count toward your plan's limit on running agents
 - End of trial: you're winding down
 
-STOP turns the agent off. Sessions in flight finish; new ones are refused with a "stopped" error. All config (skills, KBs, MCPs) stays attached.
+STOP turns the agent off. Work already in progress finishes; new sessions and new messages in existing sessions are refused with a "stopped" error. All config (skills, KBs, MCPs) stays attached.
 
 START turns it back on, so new sessions are accepted again. It is refused when the project is already at its plan's limit for running agents or for workspace storage.
 
@@ -76,7 +76,7 @@ The DELETE button on the agent detail. A pre-flight check warns you:
 
 CANCEL is focused by default — you have to deliberately click DELETE.
 
-DELETE tombstones the agent. Sessions are kept for audit; the URL stops responding. Slug is freed (you can reuse it later if you want).
+DELETE removes the agent with its workspace files, session data and API keys; it can't be undone. The URL stops responding. Slug is freed (you can reuse it later if you want).
 
 ## Multi-tenant rollout
 

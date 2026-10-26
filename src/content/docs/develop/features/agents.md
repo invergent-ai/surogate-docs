@@ -19,11 +19,11 @@ An agent bundles six things, configured through six tabs (five on enterprise ins
 | **MONETIZE** | Charge end users for access to the agent. See [Monetize your agents](/work/monetize/). |
 | **CONFIG** | Persona (SOUL.md), Tool Access, Web & Browser Egress, EU AI Act Transparency, Saga, Session Reset, Environment Variables. |
 
-Plus four action buttons:
+Plus three action buttons:
 
 - **CHAT** — open a new chat session
 - **STOP / START**: turn the agent off or back on (see [STOP and START](#stop-and-start))
-- **DELETE** — pre-flight reference check, then tombstone
+- **DELETE**: checks that nothing is using the agent, then deletes it with its workspace files, session data and API keys
 
 ## Persona — SOUL.md
 
@@ -224,7 +224,7 @@ Don't put secrets here — they're visible in the sandbox. Use the [Vault](/deve
 
 Agents run on the platform's shared runtime, which serves every agent on demand. An agent has no pods of its own, so there is nothing to scale: no replica count, CPU or memory setting. Only [model deployments](/develop/features/models/) have replicas.
 
-STOP turns the agent off. New sessions are refused with a "stopped" error; sessions already running finish. A stopped agent does not count toward your plan's limit on running agents.
+STOP turns the agent off. Work already in progress finishes; new sessions and new messages in existing sessions are refused with a "stopped" error. A stopped agent does not count toward your plan's limit on running agents.
 
 START turns it back on. It is refused when the project is already at its plan's limit for running agents or for workspace storage.
 
@@ -245,13 +245,13 @@ CANCEL is focused by default. If references exist, the modal lists them.
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| `GET` | `/api/agents` | List agents |
-| `GET` | `/api/agents/{id_or_slug}` | Agent detail |
-| `POST` | `/api/agents` | Deploy new agent |
-| `PATCH` | `/api/agents/{id}` | Update config |
-| `POST` | `/api/agents/{id}/start` | Turn the agent on (refused at the plan's limit) |
-| `POST` | `/api/agents/{id}/stop` | Turn the agent off |
-| `DELETE` | `/api/agents/{id}` | Tombstone (409 if references) |
+| `GET` | `/api/agents/agents` | List agents (filters: `project_id`, `status`, `harness`, `limit`) |
+| `GET` | `/api/agents/agents/{id}` | Agent detail |
+| `POST` | `/api/agents/agents` | Create an agent |
+| `PATCH` | `/api/agents/agents/{id}` | Update config |
+| `POST` | `/api/agents/agents/{id}/start` | Turn the agent on (refused at the plan's limit) |
+| `POST` | `/api/agents/agents/{id}/stop` | Turn the agent off |
+| `DELETE` | `/api/agents/agents/{id}` | Delete the agent and its data (409 while synthetic runs use it, 403 for a system agent) |
 
 See [Runtime architecture reference](/develop/reference/runtime-architecture/) for full schemas.
 

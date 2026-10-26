@@ -68,7 +68,7 @@ Saved changes apply to **new sessions only**. In-progress sessions keep their ol
 Three escalating options, only when something's actually broken:
 
 1. **`/clear`** in the composer — wipes the conversation context and destroys the sandbox. Session row stays; the agent starts fresh.
-2. **STOP → START** at the agent level. STOP refuses new sessions while sessions already running finish; START lets new sessions in again. It restarts nothing, since agents run on the shared runtime, so use STOP to take the agent offline while you fix it.
+2. **STOP → START** at the agent level. STOP lets work already in progress finish and refuses new sessions and new messages; START lets them in again. It restarts nothing, since agents run on the shared runtime, so use STOP to take the agent offline while you fix it.
 3. **DELETE → re-deploy** — slug is preserved, everything else resets.
 
 ## Verifying changes

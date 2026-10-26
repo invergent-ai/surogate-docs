@@ -64,7 +64,7 @@ Activating a journey, sending a test, enrolling, messaging a person and changing
 
 It asks with a question in the chat and waits for your answer before it:
 
-- spends GPU time or model usage (training, deploying a model, compiling a knowledge base), deletes anything, scales an agent up, or changes an agent's environment variables, policy or browser setting;
+- spends GPU time or model usage (training, deploying a model, compiling a knowledge base), deletes anything, starts an agent that is in an error state, or changes an agent's environment variables, policy or browser setting;
 - overwrites a skill or sub-agent that already has that name, or connects an MCP server that runs a command on the runtime.
 
 Building a new thing inside a plan you approved does not ask again. The plan was the yes.
@@ -85,8 +85,8 @@ The Copilot drawer keeps a history menu in its header (the clock/history icon). 
 - **It can't make images or videos.** Use a regular agent for media.
 - **It won't set up things that need secrets or money for you.** Its instructions have it explain the steps and link the page instead: connecting channels (WhatsApp, Slack, Telegram, Discord, Microsoft Teams), creating or revoking API keys and webhook secrets, Stripe Connect onboarding, your workspace's billing and plan, and inviting workspace members. It can still change an agent's environment variables, where channel keys live; its instructions have it ask you first and never repeat secret values back.
 - **It can't change your password** or other account settings. Those go through Settings.
-- **It can't change models beyond starting, stopping and redeploying them.** It can't add, edit, scale or delete one.
 - **It can't scale agents.** Agents run on the shared runtime with no replicas, CPU or memory to set; it can start and stop them.
+- **It can't change models beyond starting, stopping and redeploying them.** It can't add, edit, scale or delete one.
 - **It can't browse or change the [Data Hub](/develop/features/hub/).**
 - **It can't create RL environments or start GRPO runs.**
 - **It can't run evaluations.**

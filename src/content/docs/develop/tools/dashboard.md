@@ -10,10 +10,10 @@ The **Dashboard** is the builder home at `/studio` — a dense workspace overvie
 
 ![The Develop dashboard](../../../../assets/screenshots/dev-dashboard.png)
 
-- **Active Agents** — running / deploying / error breakdown
+- **Active agents**: how many of the project's agents are running (system agents left out). Its "deploying" count stays at 0, since starting an agent switches it on at once with no deploy phase
 - **Tokens today** — total LLM tokens consumed in the last 24h
 - **Success Rate** — % of sessions completed without crashing or being denied
-- **Deployed agents**: every agent in the project except system agents, with its model and status and a count of the running ones; click an agent to open it
+- **Deployed agents**: every agent in the project except system agents, with its model and status and a count of the running ones; click an agent to open it. Its replica count usually reads 0 because nothing updates it: agents run on the shared runtime and have no replicas
 
 ## Lower sections
 
