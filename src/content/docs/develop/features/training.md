@@ -186,7 +186,7 @@ What that leaves on each compute:
 | Compute | Training GPUs |
 |---|---|
 | **Modal** | Only the RTX PRO 6000. Its other GPUs (B200, H200, H100, A100, L40S, A10, L4, T4) are refused for training. Modal runs the RTX PRO 6000 as a single GPU, so GRPO, which needs two, cannot run there. |
-| **SSH fleet** | Whatever Blackwell sm_120 cards your hosts have. A GPU name Studio does not recognise is not checked. |
+| **SSH or Kubernetes fleet** | Whatever Blackwell sm_120 cards its hosts or nodes have. A GPU name Studio does not recognise, such as a generic `GPU:1`, is not checked. |
 | **Cloud** (dstack) | Offers on RTX PRO 6000 or RTX 50-series cards. Datacenter Blackwell (B200, B300) is a different architecture and is refused. |
 
 ## Training run lifecycle
