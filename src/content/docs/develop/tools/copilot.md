@@ -14,9 +14,9 @@ It exposes the platform's tools as natural-language commands. Instead of clickin
 
 | Area | Main tools |
 |---|---|
-| Agents | `list_agents`, `get_agent`, `create_agent`, `update_agent`, `start_agent`, `delete_agent`, plus env vars, scaling and `attach_` / `detach_` for skills, MCP servers and knowledge bases |
+| Agents | `list_agents`, `get_agent`, `create_agent`, `update_agent`, `start_agent`, `stop_agent`, `delete_agent`, plus env vars and `attach_` / `detach_` for skills, MCP servers and knowledge bases |
 | Skills | `list_skills`, `get_skill`, `create_skill`, `update_skill`, `delete_skill`, `import_skill_from_workspace`, plus tools for the skill's files |
-| Knowledge bases | `create_knowledge_base`, `create_kb_source`, `add_workspace_file_to_kb`, `compile_knowledge_base`, `get_kb_compile_status`, `read_kb_wiki_page`, and others for sources, wiki pages and deletion |
+| Knowledge bases | `list_knowledge_bases`, `create_knowledge_base`, `create_kb_source`, `add_workspace_file_to_kb`, `compile_knowledge_base`, `get_kb_compile_status`, `read_kb_wiki_page`, and others for sources, wiki pages and deletion |
 | MCP servers | `list_mcp_servers`, `register_mcp_server`, `update_mcp_server`, `delete_mcp_server`, `list_composio_toolkits` |
 | Sub-agents | `list_sub_agents`, `get_sub_agent`, `create_sub_agent`, `update_sub_agent`, `delete_sub_agent` |
 | Programs | `get_programs_overview`, `create_journey`, `add_journey_step`, `simulate_journey`, `activate_journey`, `get_journey_funnel`, and others for journeys, WhatsApp templates and forms, escalations |
@@ -36,6 +36,14 @@ Besides those, it can use a few built-in tools: `ask_user_question`, `create_art
 
 `find_sessions` finds conversations by what was said in them. With no agent named it searches the current project's agents; with an agent named, only that agent. Either way you need the editor or owner role on the project (or to be a platform admin); a viewer gets no results. `search` looks across resources by name and ID in the current project, or in every project you are a member of.
 
+### Agents
+
+`get_agent` returns the agent's settings with the skills, knowledge bases and MCP servers attached to it. Long fields such as the system prompt come back shortened; with `full=true` it returns them whole, and `update_agent` refuses a value that still carries the shortening marker, so a cut-off prompt can't be saved back over the real one. `list_knowledge_bases` lists the project's knowledge bases, to find one to attach.
+
+`start_agent`, `stop_agent` and `delete_agent` run the same checks and steps as the buttons in Studio and wait for the result. Start is refused at the plan's limit for running agents or workspace storage. If delete removes the agent but a clean-up step fails (its workspace files, session data, API keys or service account), the result names that step so the Copilot can tell you.
+
+Agents can't be scaled: they run on the shared runtime with no replicas, CPU or memory to set, and `update_agent` refuses a `resources` field. Only model deployments have replicas.
+
 ### Build guides
 
 For each kind of build the Copilot has a playbook: `build-agent`, `build-skill`, `build-knowledge-base`, `build-sub-agent`, `connect-mcp`, `build-program`, `build-dataset`, `run-training` and `deploy-model`. It opens the guide with `read_guide` before building, along with the checklists and templates the guide cites. The loop is interview, inspect, plan (as an artifact you approve), build in dependency order, read each piece back, summarise with links and a test script. Its instructions forbid creating or updating an agent's prompt before an interview and an approved plan.
@@ -46,7 +54,7 @@ The three ML guides cover what the tools allow. `build-dataset` uploads one work
 
 Two mechanisms apply.
 
-**It asks in the chat.** The Copilot's instructions have it ask with `ask_user_question` before spend and risky changes: `start_training`, `deploy_model`, `compile_knowledge_base`, any `delete_*`, `scale_agent` to a higher count, `start_agent` on an `error` agent, `set_agent_env_vars`, `update_agent` on `policy` or `browser_enabled`, `register_mcp_server` with `stdio`, and overwriting a skill or sub-agent. This is an instruction to the model. The tools themselves do not check for it.
+**It asks in the chat.** The Copilot's instructions have it ask with `ask_user_question` before spend and risky changes: `start_training`, `deploy_model`, `compile_knowledge_base`, any `delete_*`, `start_agent` on an `error` agent, `set_agent_env_vars`, `update_agent` on `policy` or `browser_enabled`, `register_mcp_server` with `stdio`, and overwriting a skill or sub-agent. This is an instruction to the model. The tools themselves do not check for it.
 
 **An unanswered question is not an answer.** A cancelled `ask_user_question` (for example [when nobody answers](/develop/reference/tool-catalog/#when-nobody-answers)) is neither a yes nor a no, for an interview question, a plan approval or a confirmation alike, and the instructions forbid acting on it. If a message or step arrived meanwhile, the Copilot deals with that first and asks again only for what is still missing; otherwise it says in one line that it is waiting and stops, without asking again in that turn.
 
