@@ -4,7 +4,7 @@ sidebar:
   label: Models
 ---
 
-The Models page is where you register and serve the LLM endpoints your agents call. Click **DEPLOY MODEL** at the top of the page to open the deploy flow: first a source picker, then a per-source form, then the model's detail page where you configure and start it.
+The Models page is where you register and serve the LLM endpoints your agents call. Click **+ Deploy model** at the top of the page to open the deploy flow: first a source picker, then a per-source form, then the model's detail page where you configure and start it.
 
 ## The four sources
 
@@ -14,7 +14,7 @@ The deploy flow opens on **"Where is the model coming from?"** — four cards:
 
 | Source | What it is | When to use |
 |---|---|---|
-| **Local Hub** | A model already in your tenant's Hub | After a training run completes, the trained model lands here |
+| **Local Hub** | A model already in your tenant's Hub | A trained model, once its run is published to the Hub (and, for a LoRA run, merged or promoted) |
 | **Hugging Face** | Pull a public model from HF Hub by repo + revision | Public bases, quantized variants |
 | **OpenRouter** | Use OpenRouter as the backing endpoint | Mix-and-match commercial models through one key |
 | **URL** | Any OpenAI-compatible endpoint | Your own vLLM server, Anthropic, OpenAI direct, etc. |
@@ -25,7 +25,7 @@ Every form ends with a **Display name** (shown in the models list and to your ag
 
 ### Local Hub
 
-Serve a model that already lives in your hub — this is where trained runs land.
+Serve a model that already lives in your hub. This is where you pick up a trained model after publishing it from its run's page. A finished run is never added to Models by itself.
 
 | Field | Required | Notes |
 |---|---|---|
@@ -119,7 +119,7 @@ The serving configuration. For **served** models it has three parts:
 - **Generation defaults** — presets (Default / Creative / Precise / Code) plus editable rows: temperature, topP, topK, maxTokens, repetitionPenalty, stopSequences.
 - **Serving parameters** — engine flags as key/value rows. vLLM seeds `max_model_len`, `tensor_parallel_size`, `gpu_memory_utilization`, `quantization`, `enforce_eager`, `attention_backend`, `reasoning_parser`, `tool_call_parser`; llama.cpp seeds `ctx_size`, `threads`, `reasoning_format`. You can add arbitrary parameters — each is passed to the serving command as `--kebab-cased-key`. On Modal, an extra card exposes snapshot mode (CPU+GPU / CPU / off), scale-to-zero window, startup timeout, and max concurrent requests per replica.
 
-A yellow **"Required before serving"** note spells out the gate: **Compute, Engine, and quantization must be set before a model can START.** Settings lock while the model is serving or starting — **Stop to edit**.
+A yellow **"Required before serving"** note spells out the gate. It also names quantization, but Start checks only the **Engine** and the **Compute** target: quantization can stay unset. Settings lock while the model is serving or starting — **Stop to edit**.
 
 **Proxy** models (OpenRouter / URL) have no compute or engine to configure — CONFIG only carries generation defaults and the endpoint/API-key serving fields, and it never locks.
 
@@ -154,7 +154,7 @@ The endpoint then becomes available to your agents (via the agent's model select
 
 ## Scaling replicas
 
-For high-traffic models, scale up in CONFIG (or via the scale endpoint). Each replica is a full GPU pod; the platform serves across them.
+Studio has no control for the replica count. The REST API has one: `POST /api/models/{id}/scale` with a `replicas` count (editor role or higher).
 
 ## Connecting a model to an agent
 

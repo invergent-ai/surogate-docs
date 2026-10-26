@@ -32,7 +32,7 @@ Five shortcut buttons:
 | **New Dataset** | NEW DATASET picker |
 | **Start Training** | The NEW RUN form on the Training page (SFT or GRPO) |
 | **New Eval** | NEW EVALUATION wizard |
-| **Serve Model** | DEPLOY MODEL dialog (Local Hub / HF / OpenRouter / URL) |
+| **Serve Model** | **+ Deploy model** flow (Local Hub / HF / OpenRouter / URL) |
 | **New Expert** | Create an expert (a skill backed by a fine-tuned model) |
 
 Each opens the same modal/wizard you'd reach by navigating to its module page.

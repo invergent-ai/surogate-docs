@@ -103,17 +103,27 @@ Parquet is read as binary — only the footer is fetched, not the whole file —
 
 ### Validation
 
-The server rejects a file the trainer couldn't consume, with a `422` and a specific reason. A row must carry one of three recognised shapes:
+The server rejects a file the trainer couldn't consume, with a `422` and a specific reason. A row must carry one of four recognised shapes:
 
 - **messages** — a `messages`, `conversation`, or `conversations` column.
+- **preference**: a prompt column (any of the query aliases below; a string or a list of turns) plus `chosen` and `rejected`, both plain strings. This is the shape DPO trains on.
 - **pair** — a query column plus a response column (`instruction`/`output`, `question`/`answer`, `prompt`/`completion`, and the other aliases the trainer itself resolves).
-- **text** — a single text-ish column.
+- **text** — a single text-ish column. It uploads, but SFT trains on nothing from it: each row becomes a user turn with no reply, and SFT learns only from replies.
+
+A file with `chosen` and `rejected` and no usable `messages` column or prompt/response pair is refused when:
+
+- `chosen` and `rejected` are lists of messages instead of strings (DPO training needs strings);
+- there is no prompt column (the prompt embedded in both answers is not supported).
+
+KTO-style rows (a prompt, a `completion` and a true/false `label`) are always refused: use paired `chosen`/`rejected` data, or rename `label` if it means something else.
+
+A file with a usable `messages` column beside `chosen`/`rejected` uploads as conversations (`sft`), not as preference pairs.
 
 A dataset also needs **at least 2 usable rows**, since a valid training split can't be carved from fewer. Validation samples the first 50 rows.
 
 ### What happens on build
 
-**Build dataset** uploads the file (multipart `POST /api/datasets/upload` with `project_id`, `display_name`, `scrub_pii`, and the file as `content`). The server creates the dataset (`kind=user`, `source=manual`, `format=sft`), drops the file under `train/<filename>`, seeds a `dataset_dict.json` registering the `train` split, records the text column so token stats can be computed, commits, and flips the dataset to `ready`.
+**Build dataset** uploads the file (multipart `POST /api/datasets/upload` with `project_id`, `display_name`, `scrub_pii`, and the file as `content`). The server creates the dataset (`kind=user`, `source=manual`), drops the file under `train/<filename>`, seeds a `dataset_dict.json` registering the `train` split, records the text column so token stats can be computed, commits, and flips the dataset to `ready`. Its format follows the detected shape: `dpo` for a preference upload, `sft` for everything else.
 
 Uploaded columns are preserved. A file whose first row lacks a key that later rows carry keeps that column — the parquet schema is built from the union of every row's keys, not inferred from row one.
 
