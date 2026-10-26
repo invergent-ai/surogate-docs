@@ -9,6 +9,8 @@ class Topics(unittest.TestCase):
         # The page tree only: the track switch and the topic list above it link to other tracks on purpose.
         pane = section(page(route), '#starlight__sidebar')
         tree = pane[pane.index('<ul class="top-level'):]
+        if 'data-docs="mobile-foot"' in tree:  # the mobile menu's product links follow the tree
+            tree = tree[:tree.index('data-docs="mobile-foot"')]
         return re.findall(r'href="(/[^"#]*)"', tree)
 
     def test_keel_sidebar_has_only_keel_pages(self):

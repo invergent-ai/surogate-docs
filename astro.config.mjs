@@ -107,18 +107,14 @@ export default defineConfig({
           },
         },
       },
-      social: [
-        {
-          icon: 'github',
-          label: 'GitHub',
-          href: 'https://github.com/invergent-ai/surogate',
-        },
-        { icon: 'x.com', label: 'X', href: 'https://x.com/surogate_ai' },
-      ],
       editLink: {
         baseUrl: 'https://github.com/invergent-ai/surogate-docs/edit/main/',
       },
-      components: { SocialIcons: './src/components/HeaderLinks.astro' },
+      components: {
+        Header: './src/components/Header.astro',
+        ThemeSelect: './src/components/ThemeToggle.astro',
+        MobileMenuFooter: './src/components/MobileMenuFooter.astro',
+      },
       favicon: '/favicon.svg',
       // Turns any broken internal link or anchor into a build failure. This
       // replaces onBrokenLinks: 'warn', under which breakage was invisible --
