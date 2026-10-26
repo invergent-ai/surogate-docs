@@ -38,7 +38,7 @@ Compute:
   - Spot instances + region (optional)
 ```
 
-Training runs on Blackwell GPUs only: see [Supported GPUs](#supported-gpus).
+Training runs on Blackwell sm_120 GPUs only: the RTX PRO 6000 and the RTX 50-series (on Modal, only the RTX PRO 6000). See [Supported GPUs](#supported-gpus).
 
 **Full fine-tune is the Enable LoRA toggle turned off.** The new-run form shows it as an **Adapter** switch (**LoRA** by default, or **Full**) for SFT and DISTILL. On the run's **Configuration** tab, turning it off dims the rank, alpha, dropout and target-module controls. DPO has no switch and GRPO's is locked on (both below).
 

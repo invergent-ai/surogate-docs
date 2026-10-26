@@ -154,7 +154,7 @@ The endpoint then becomes available to your agents (via the agent's model select
 
 ## Scaling replicas
 
-Studio has no replica control; the REST API does: `POST /api/models/{id}/scale` with a `replicas` count (editor role or higher).
+Studio has no replica control. The REST API stores a replica count: `POST /api/models/{id}/scale` with a `replicas` count (editor role or higher). It is refused (400) unless the model is serving, and it does not resize the running deployment: the new count takes effect the next time the model is stopped and started.
 
 ## Connecting a model to an agent
 
@@ -186,7 +186,7 @@ All routes are mounted at `/api/models`.
 | `POST` | `/api/models/{id}/start` | Provision and serve |
 | `POST` | `/api/models/{id}/stop` | Drop replicas |
 | `POST` | `/api/models/{id}/restart` | Restart a serving model |
-| `POST` | `/api/models/{id}/scale` | Update replica count |
+| `POST` | `/api/models/{id}/scale` | Store the replica count for the next start |
 | `GET` | `/api/models/{id}/in-use` | Active + historical references to the model |
 | `DELETE` | `/api/models/{id}` | Unregister (409 if anything still references it) |
 | `GET` | `/api/models/artifacts` | List indexed model artifacts (filters incl. `project_id`, `hub_repo`, `hub_ref`, `source_kind`, `limit` ≤ 500) |

@@ -121,13 +121,13 @@ A file with `chosen` and `rejected` and no usable `messages` column or prompt/re
 - `chosen` and `rejected` are lists of messages instead of strings (DPO training needs strings);
 - there is no prompt column (the prompt embedded in both answers is not supported).
 
-KTO-style rows (a prompt, a `completion` and a true/false `label`) are always refused: use paired `chosen`/`rejected` data, or rename `label` if it means something else.
+KTO-style rows (a prompt, a `completion` and a true/false `label`) are refused unless the file already detects as conversations or as preference pairs: use paired `chosen`/`rejected` data, or rename `label` if it means something else.
 
 A file with a usable `messages` column beside `chosen`/`rejected` uploads as conversations (`sft`), not as preference pairs.
 
 ### What happens on build
 
-**Build dataset** uploads the file (multipart `POST /api/datasets/upload` with `project_id`, `display_name`, `scrub_pii`, and the file as `content`). The server creates the dataset (`kind=user`, `source=manual`), drops the file under `train/<filename>`, seeds a `dataset_dict.json` registering the `train` split, records the text column so token stats can be computed, commits, and flips the dataset to `ready`. Its format follows the detected shape (see [Preference (DPO) uploads](#preference-dpo-uploads)).
+**Build dataset** uploads the file (multipart `POST /api/datasets/upload` with `project_id`, `display_name`, `scrub_pii`, and the file as `content`). The server creates the dataset (`kind=user`, `source=manual`) in `building` status and returns at once with it and a job id; Studio polls the job. The Hub work runs later in that background job: it drops the file under `train/<filename>`, seeds a `dataset_dict.json` registering the `train` split, records the text column so token stats can be computed, commits, and flips the dataset to `ready`. Its format follows the detected shape (see [Preference (DPO) uploads](#preference-dpo-uploads)).
 
 Uploaded columns are preserved. A file whose first row lacks a key that later rows carry keeps that column — the parquet schema is built from the union of every row's keys, not inferred from row one.
 

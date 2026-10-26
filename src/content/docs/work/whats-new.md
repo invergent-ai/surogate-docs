@@ -6,7 +6,7 @@ title: What's new
 
 ### Unanswered questions end the agent's turn
 
-When you don't answer an agent's question within 30 minutes, its turn now ends: it says once that it will wait, and asks again when you next write if it still needs the answer. See [Inbox](/work/tools/inbox/#when-nobody-answers) and [When nobody answers](/develop/reference/tool-catalog/#when-nobody-answers) in the tool catalog.
+When you don't answer an agent's question within 30 minutes, its turn now ends: it says once that it will wait, and asks again when you next write if it still needs the answer. If you sent a message the agent hasn't read yet, such as a photo, the turn goes on with that message instead. See [Inbox](/work/tools/inbox/#when-nobody-answers) and [When nobody answers](/develop/reference/tool-catalog/#when-nobody-answers) in the tool catalog.
 
 ### The copilot builds datasets, starts training runs and serves models
 

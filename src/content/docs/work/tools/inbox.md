@@ -24,6 +24,8 @@ If you don't answer within 30 minutes:
 - A later reply is an ordinary message; the agent asks again if it still needs to know.
 - An agent working on a task doesn't reply: its task is marked blocked.
 
+One exception: if you sent the agent a message it hasn't read yet (for example a photo, which isn't taken as an answer), the turn doesn't stop. It goes on with that message.
+
 The full behaviour is in the [tool catalog](/develop/reference/tool-catalog/#when-nobody-answers).
 
 ### `action_required` — the agent needs you to do something outside the chat

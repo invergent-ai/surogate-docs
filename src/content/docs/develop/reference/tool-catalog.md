@@ -226,7 +226,7 @@ Hard depth limit: 2 levels of orchestration beneath the root coordinator.
 
 | Tool | Use for |
 |---|---|
-| `ask_user_question` | Ask the user up to 5 questions (each up to 4 labeled choices + optional "Other") in a tabbed chat widget, and wait for the batched answers, for up to 30 minutes. With no answer by then, the turn ends (see [When nobody answers](#when-nobody-answers)). |
+| `ask_user_question` | Ask the user up to 5 questions (each up to 4 labeled choices, or up to 10 on Slack, Telegram and WhatsApp, + optional "Other") in a tabbed chat widget, and wait for the batched answers, for up to 30 minutes. With no answer by then, the turn ends (see [When nobody answers](#when-nobody-answers)). |
 
 How answers arrive depends on the channel:
 
