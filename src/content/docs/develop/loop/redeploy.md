@@ -19,7 +19,6 @@ Config changes are cheap. Model changes are slightly more involved. The runtime 
 | Channel toggle (Slack on/off) | Save CHANNELS | Seconds — the adapter pod's connection cycles |
 | Model swap | Save CONFIG → Model | New sessions use new model. Existing sessions finish on old model. |
 | Expert endpoint swap | `POST /v1/skills/{name}/activate` with new endpoint | None — base LLM picks up the new endpoint immediately |
-| Replica count change (SCALE) | Click SCALE → new min/max | Pod-level rollout (~30s per replica) |
 | Helm chart change (advanced) | Helm upgrade | Pod cycle (~30-60s per pod) |
 
 The **per-wake freeze** is the key safety property: the governance gate is composed once per wake and frozen for that wake, so nothing that happens mid-turn (including prompt injection) can weaken protection. Governance edits are projected into the agent's runtime config with a version bump and a cache invalidation, so a live session picks up the new policy at its **next wake** — no coordinated rollout needed.
@@ -51,31 +50,21 @@ Same mechanism for KBs and MCP servers — pick a previous tag if available.
 
 For the agent's main model: CONFIG → Model → switch back to the previous selection. For an expert: re-activate with the previous endpoint URL.
 
-## SCALE — handling traffic
+## Traffic
 
-The SCALE button at the top of the agent detail. Three values:
-
-- **Replicas (current)** — how many pods are running this agent right now
-- **Min** — auto-scaling minimum
-- **Max** — auto-scaling maximum
-
-Auto-scaling target: 40 active sessions per replica.
-
-When you scale up, new pods start in ~30 seconds. Existing pods continue serving in-flight sessions. New sessions get distributed across the new fleet.
-
-When you scale down, the platform drains pods (lets active sessions finish) before terminating.
+There is nothing to scale for an agent. Agents run on the platform's shared runtime, which serves every agent on demand, so an agent has no replicas, CPU or memory to set. Only [model deployments](/develop/features/models/) have replicas.
 
 ## STOP / START
 
 Three reasons to STOP an agent:
 
-- Pausing for maintenance — you want users to get a "down for maintenance" response
-- Billing pause — you want to stop incurring runtime costs
-- End-of-trial — you're winding down
+- Pausing for maintenance: you want new sessions refused while you work on it
+- Freeing a slot: a stopped agent doesn't count toward your plan's limit on running agents
+- End of trial: you're winding down
 
-STOP drops replicas to 0. Sessions in-flight finish; new ones aren't accepted. The agent's URL responds with a maintenance message. All config (skills, KBs, MCPs) stays attached.
+STOP turns the agent off. Sessions in flight finish; new ones are refused with a "stopped" error. All config (skills, KBs, MCPs) stays attached.
 
-START brings replicas back to the configured min. Sessions can resume.
+START turns it back on, so new sessions are accepted again. It is refused when the project is already at its plan's limit for running agents or for workspace storage.
 
 ## DELETE
 

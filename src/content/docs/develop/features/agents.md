@@ -22,8 +22,7 @@ An agent bundles six things, configured through six tabs (five on enterprise ins
 Plus four action buttons:
 
 - **CHAT** — open a new chat session
-- **STOP / START** — drop replicas to 0, or bring them back
-- **SCALE** — change min/max replicas (auto-scaling target = 40 active sessions per pod)
+- **STOP / START**: turn the agent off or back on (see [STOP and START](#stop-and-start))
 - **DELETE** — pre-flight reference check, then tombstone
 
 ## Persona — SOUL.md
@@ -221,18 +220,13 @@ Per-agent env vars passed to the sandbox. Use cases:
 
 Don't put secrets here — they're visible in the sandbox. Use the [Vault](/develop/features/mcp-and-vault/).
 
-## SCALE dialog
+## STOP and START
 
-```
-Replicas: 2 (current)
-Min: 1
-Max: 5
-CPU per replica: 500m
-Memory per replica: 1Gi
-HPA target: 40 active sessions per replica
-```
+Agents run on the platform's shared runtime, which serves every agent on demand. An agent has no pods of its own, so there is nothing to scale: no replica count, CPU or memory setting. Only [model deployments](/develop/features/models/) have replicas.
 
-When traffic exceeds 40 active sessions per replica, new pods come up. When below 20 for 5 minutes, they drain.
+STOP turns the agent off. New sessions are refused with a "stopped" error; sessions already running finish. A stopped agent does not count toward your plan's limit on running agents.
+
+START turns it back on. It is refused when the project is already at its plan's limit for running agents or for workspace storage.
 
 ## DELETE confirmation
 
@@ -255,9 +249,8 @@ CANCEL is focused by default. If references exist, the modal lists them.
 | `GET` | `/api/agents/{id_or_slug}` | Agent detail |
 | `POST` | `/api/agents` | Deploy new agent |
 | `PATCH` | `/api/agents/{id}` | Update config |
-| `POST` | `/api/agents/{id}/start` | Bring replicas to min |
-| `POST` | `/api/agents/{id}/stop` | Drop replicas to 0 |
-| `POST` | `/api/agents/{id}/scale` | `{min_replicas, max_replicas}` |
+| `POST` | `/api/agents/{id}/start` | Turn the agent on (refused at the plan's limit) |
+| `POST` | `/api/agents/{id}/stop` | Turn the agent off |
 | `DELETE` | `/api/agents/{id}` | Tombstone (409 if references) |
 
 See [Runtime architecture reference](/develop/reference/runtime-architecture/) for full schemas.

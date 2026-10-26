@@ -78,7 +78,7 @@ Each phase touches different parts of `ops.surogate.ai`:
 | BUILD | Develop dashboard → Quick Actions; Agents page → Configure (Work mode) or CONFIG / KNOWLEDGE & TOOLS tabs (Develop mode); Library (Skills, KBs, MCP & Vault, Models, Hub) |
 | OBSERVE | Sessions list + detail (all 6 tabs); Agent OVERVIEW; Develop dashboard's Recent Conversations feed |
 | TRAIN | Datasets; Training Runs; Evaluations; Hub for artifact versioning |
-| REDEPLOY | Agent → SAVE (config); SCALE; STOP/START; the Hub rolls forward; Models for swapping expert endpoints |
+| REDEPLOY | Agent → SAVE (config); STOP/START; the Hub rolls forward; Models for swapping expert endpoints |
 
 ## Next
 
