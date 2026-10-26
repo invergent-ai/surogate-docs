@@ -68,22 +68,18 @@ const track = trackFor(id);
     outline-offset: 2px;
   }
 
-  /* Starlight's page tree, as in the mockup. */
-  :global(.sidebar-content) {
-    --sl-sidebar-item-padding-inline: 0.85rem;
-  }
-  :global(.sidebar-content a) {
+  /* Starlight's page tree, as in the mockup: one size for every entry, the current page barred. */
+  :global(.sidebar-content ul a),
+  :global(.sidebar-content ul a.large),
+  :global(.sidebar-content ul .group-label .large) {
     color: var(--d-text);
+    font-size: var(--sl-text-sm);
+    font-weight: 400;
   }
-  :global(.sidebar-content a[aria-current='page']) {
+  :global(.sidebar-content ul a[aria-current='page']) {
     background: var(--d-surface);
     color: var(--d-ink);
     font-weight: 700;
     box-shadow: inset 3px 0 0 var(--d-bar);
-  }
-  :global(.sidebar-content .group-label .large) {
-    color: var(--d-text);
-    font-weight: 400;
-    font-size: var(--sl-text-sm);
   }
 </style>

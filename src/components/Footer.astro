@@ -4,11 +4,12 @@
 import EditLink from '@astrojs/starlight/components/EditLink.astro';
 import Pagination from '@astrojs/starlight/components/Pagination.astro';
 
-const { toc } = Astro.locals.starlightRoute;
+const { toc, entry } = Astro.locals.starlightRoute;
+const showEdit = !toc && entry.data.template !== 'splash';
 ---
 
 <footer class="docs-footer">
-  {!toc && <div class="meta"><EditLink /></div>}
+  {showEdit && <div class="meta"><EditLink /></div>}
   <Pagination />
   <div class="site-footer" data-docs="site-footer">
     <span><strong>Surogate</strong> © 2026</span>

@@ -19,7 +19,7 @@ html {
 }
 
 /* Headings and body */
-h1#_top {
+.sl-container > h1#_top {
   font-size: 2.7rem; /* 46px */
   font-weight: 800;
   line-height: 1.05;
@@ -32,26 +32,26 @@ h1#_top {
   line-height: 1.7;
 }
 
-.sl-markdown-content :is(h2, h3, h4) {
+.sl-markdown-content :is(h2, h3, h4):not(:where(.not-content *)) {
   color: var(--d-ink);
   font-weight: 800;
   letter-spacing: -0.02em;
 }
 
-.sl-markdown-content h2 {
+.sl-markdown-content h2:not(:where(.not-content *)) {
   font-size: 1.65rem; /* 28px */
   line-height: 1.2;
 }
 
-.sl-markdown-content h3 {
+.sl-markdown-content h3:not(:where(.not-content *)) {
   font-size: 1.3rem;
 }
 
-.sl-markdown-content strong {
+.sl-markdown-content strong:not(:where(.not-content *)) {
   color: var(--d-ink);
 }
 
-.sl-markdown-content a {
+.sl-markdown-content a:not(:where(.not-content *)) {
   color: var(--d-link);
   font-weight: 600;
 }
@@ -90,7 +90,7 @@ h1#_top {
 }
 
 /* Screenshots and their captions */
-.sl-markdown-content figure {
+.sl-markdown-content figure:not(.frame) {
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -101,7 +101,7 @@ h1#_top {
   border: 1px solid var(--d-line);
 }
 
-.sl-markdown-content figcaption {
+.sl-markdown-content figure:not(.frame) > figcaption {
   font-size: 0.82rem; /* 14px */
   line-height: 1.5;
   color: var(--d-text);
@@ -186,4 +186,19 @@ html[data-has-hero] .content-panel .sl-container > * + * {
 }
 html[data-has-hero] .docs-footer {
   margin-top: 0;
+}
+
+/* The phone "On this page" bar sits on the page colour, not the nav's aubergine. */
+nav:has(#starlight__on-this-page--mobile) {
+  background: var(--d-soft);
+  border-bottom: 1px solid var(--d-line);
+}
+
+/* Copy is always offered, not only on hover. */
+.expressive-code .copy button {
+  opacity: 0.75 !important;
+}
+.expressive-code .copy button:hover,
+.expressive-code .copy button:focus-visible {
+  opacity: 1 !important;
 }
