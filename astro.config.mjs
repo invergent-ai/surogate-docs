@@ -3,6 +3,8 @@ import starlight from '@astrojs/starlight';
 import starlightLinksValidator from 'starlight-links-validator';
 import starlightLlmsTxt from 'starlight-llms-txt';
 import starlightSidebarTopics from 'starlight-sidebar-topics';
+import rehypeFigure from './src/plugins/rehype-figure.mjs';
+import rehypeLead from './src/plugins/rehype-lead.mjs';
 
 // Expressive Code shows a header strip only on titled blocks. Title every block
 // with its fence language (blank when it has none) so all of them get the strip.
@@ -26,6 +28,10 @@ function languageStrip() {
 // them. See specs/2026-07-30-docusaurus-to-starlight-design.md section 7.2.
 export default defineConfig({
   site: 'https://docs.surogate.ai',
+  // Screenshots get visible captions from their alt text; a short opening paragraph becomes the lead.
+  markdown: {
+    rehypePlugins: [rehypeFigure, rehypeLead],
+  },
   // 13 /ops/* entries ported verbatim from the deleted docusaurus.config.js,
   // plus /search -- which was a real page under Algolia and sits in today's
   // sitemap, but does not exist under Pagefind's modal-only search.
