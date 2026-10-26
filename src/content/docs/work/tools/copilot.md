@@ -71,7 +71,7 @@ Building a new thing inside a plan you approved does not ask again. The plan was
 
 Anything that reaches real people or real money is stricter: activating a journey, sending a test, enrolling or messaging a person, changing the team, and changing plans on Monetize. The tool itself refuses to run until the Copilot calls it again with an explicit confirmation, which its instructions allow only after you say yes to that exact action. A yes to the plan does not cover it.
 
-A question you don't answer is neither a yes nor a no, and the Copilot does not act on it. It says in one line that it is waiting for your answer and stops; when you next write, it reads your message and asks again for whatever is still missing. For what happens to a question left open for 30 minutes, see [Inbox](/work/tools/inbox/#input_required--the-agent-called-ask_user_question).
+While a question is open, a reply you type in the web chat is taken as your answer. A question left unanswered for 30 minutes closes (see [Inbox](/work/tools/inbox/)). It is neither a yes nor a no, and the Copilot does not act on it: it says in one line that it is waiting for your answer and stops. When you next write, it reads your message and asks again for whatever is still missing.
 
 Governance approvals in the Inbox are never the Copilot's to decide. It sends you to the Inbox page. For the exact tools and how each check works, see [Develop mode → Copilot](/develop/tools/copilot/#how-it-asks-before-acting).
 
