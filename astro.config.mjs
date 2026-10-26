@@ -283,10 +283,6 @@ export default defineConfig({
                 'develop/features/knowledge-bases',
                 'develop/features/mcp-and-vault',
                 'develop/features/byo-llm',
-                {
-                  slug: 'develop/features/experts-arenas',
-                  badge: { text: 'Coming soon', variant: 'caution' },
-                },
               ],
             },
             {
