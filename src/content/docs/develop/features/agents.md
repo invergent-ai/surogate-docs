@@ -23,7 +23,7 @@ Plus three action buttons:
 
 - **CHAT** — open a new chat session
 - **STOP / START**: turn the agent off or back on (see [STOP and START](#stop-and-start))
-- **DELETE**: deletes the agent (see [DELETE confirmation](#delete-confirmation)); refused while a synthetic-data run targets it, and for system agents
+- **DELETE**: deletes the agent (see [DELETE confirmation](#delete-confirmation)); refused while an unfinished synthetic-data run targets it, and for system agents
 
 ## Persona — SOUL.md
 
