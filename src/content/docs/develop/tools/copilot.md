@@ -24,7 +24,7 @@ It exposes the platform's tools as natural-language commands. Instead of clickin
 | Monetize and landing page | `get_monetize`, `create_plan`, `update_plan`, `update_monetize_settings`, `get_landing_page`, `update_landing_page`, and others for replacing and deleting plans |
 | Inbox and insights | `list_inbox`, `update_inbox_item`, `get_agent_insights`, `get_user_reports`, `find_sessions` |
 | Datasets | `list_datasets`, `get_dataset`, `create_dataset`, `delete_dataset`, `upload_dataset_from_workspace` |
-| Models and training | `list_models`, `deploy_model`, `stop_serving`, `list_training_runs`, `start_training`, `cancel_training`, and others for run details, experiments and environments |
+| Models and training | `list_models`, `get_model`, `deploy_model`, `stop_serving`, `list_training_runs`, `get_training_run`, `list_experiments`, `start_training`, `cancel_training`, `list_environments` |
 | Workspace | `get_current_project`, `list_my_projects`, `search`, `recent_failures` |
 | Documentation | `search_docs`, `read_doc`, `list_docs`, `read_guide` |
 
@@ -38,13 +38,17 @@ Besides those, it can use a few built-in tools: `ask_user_question`, `create_art
 
 ### Build guides
 
-For each kind of build the Copilot has a playbook: `build-agent`, `build-skill`, `build-knowledge-base`, `build-sub-agent`, `connect-mcp` and `build-program`. It opens the guide with `read_guide` before building, along with the checklists and templates the guide cites. The loop is interview, inspect, plan (as an artifact you approve), build in dependency order, read each piece back, summarise with links and a test script. Its instructions forbid creating or updating an agent's prompt before an interview and an approved plan.
+For each kind of build the Copilot has a playbook: `build-agent`, `build-skill`, `build-knowledge-base`, `build-sub-agent`, `connect-mcp`, `build-program`, `build-dataset`, `run-training` and `deploy-model`. It opens the guide with `read_guide` before building, along with the checklists and templates the guide cites. The loop is interview, inspect, plan (as an artifact you approve), build in dependency order, read each piece back, summarise with links and a test script. Its instructions forbid creating or updating an agent's prompt before an interview and an approved plan.
+
+The three ML guides cover what the tools allow. `build-dataset` uploads one workspace file of up to 50 MB with `upload_dataset_from_workspace`; `create_dataset` only registers an empty record, so the guide forbids using it for training data. `run-training` starts SFT, DPO and distillation runs with `start_training`. `deploy-model` starts and stops serving an entry already on Models and switches an agent onto it.
 
 ## How it asks before acting
 
 Two mechanisms apply.
 
 **It asks in the chat.** The Copilot's instructions have it ask with `ask_user_question` before spend and risky changes: `start_training`, `deploy_model`, `compile_knowledge_base`, any `delete_*`, `scale_agent` to a higher count, `start_agent` on an `error` agent, `set_agent_env_vars`, `update_agent` on `policy` or `browser_enabled`, `register_mcp_server` with `stdio`, and overwriting a skill or sub-agent. This is an instruction to the model. The tools themselves do not check for it.
+
+**An unanswered question is not an answer.** When `ask_user_question` comes back cancelled (the runtime ends the turn after 30 minutes, see [Tool catalog](/develop/reference/tool-catalog/#user-interaction)), the instructions say it is neither a yes nor a no, for an interview question, a plan approval or a confirmation alike, and forbid acting on it. If a message or step arrived meanwhile, the Copilot deals with that first and asks again only for what is still missing; otherwise it says in one line that it is waiting and stops, without asking again in that turn.
 
 **The tool refuses without `confirmed=true`.** For actions that message people, start or stop what they receive, spend money or change who can do what, the tool takes a `confirmed` argument. Without it, the tool changes nothing and returns `needs_confirmation` with the action. The Copilot then asks you, quoting the action (and the exact text, for a message), and calls again with `confirmed=true` only after your yes. These tools are:
 
@@ -59,6 +63,10 @@ An approved plan does not cover these. Each one needs its own yes.
 
 - **It has no browser tool.** By design it works from the platform's own tools, not the open web. It is not a research agent.
 - **Its instructions have it guide you, not act, for secrets, keys and workspace billing.** It links the page and explains the steps: connecting channels that need credentials, creating or revoking API keys and webhook secrets, Stripe Connect onboarding, workspace billing and plan changes, and inviting members. This is an instruction, not a missing tool: `set_agent_env_vars` can write an agent's environment variables, which carry channel keys, and the Copilot is instructed to ask you first and never echo secret values back.
+- **Models beyond starting and stopping are Studio work.** No tool adds, edits, scales, restarts or deletes a model, merges or promotes an adapter, or publishes a run to the Hub; the instructions have it say where in Studio each is done.
+- **No Data Hub tools.** It can't browse or change repositories, branches, tags or files; it links [Data Hub](/develop/features/hub/) and explains from its doc.
+- **No RL environments or GRPO.** `start_training` refuses GRPO and PPO, and `create_environment` (which the ops MCP server still serves) is not on the Copilot's list, so no tool creates an environment. It walks the user through the Training page's **Environments** tab and the new-run form, following `run-training`'s `references/grpo.md`, and checks with `list_environments`, which lists the current project's environments, system ones such as `ruler_task` included.
+- **No evaluation tools.** It sends the user to [Evaluations](/develop/features/evaluations/) or the run page's **Evaluate** button.
 - **It does not decide governance approvals.** Those stay in the Inbox.
 - **It can't make images or videos.**
 
