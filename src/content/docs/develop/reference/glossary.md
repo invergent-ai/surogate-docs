@@ -12,7 +12,7 @@ Every Surogate term you'll encounter as a builder.
 | **API Channel** | Programmatic channel. `POST /v1/api/prompts` with a service-account `surg_sk_...` token. Read results off the SSE stream at `/v1/api/sessions/{id}/events` — the JSON `/events/poll` route has no `/v1/api/` alias. |
 | **Approval-required tool** | A tool listed in the agent policy's `require_approval`. The call is blocked and raised as a `governance_gate` inbox item; approving grants that exact call for one hour and one use. An explicit denial is never approvable. |
 | **Channel** | A user-facing interface — Web (always on), Slack, Telegram, Website widget, API. |
-| **CLARIFY** | Legacy name for `ask_user_question`; the response event is `ask_user_question.response`. Renders a tabbed widget with up to 5 questions × 4 choices each; on web/Telegram a typed reply also answers it. 30-min wait cap. |
+| **CLARIFY** | Legacy name for `ask_user_question`; the response event is `ask_user_question.response`. Renders a tabbed widget with up to 5 questions with 4 choices each in the web widget (up to 10 on Slack, Telegram and WhatsApp); on web/Telegram a typed reply also answers it. 30-min wait cap (see [When nobody answers](/develop/reference/tool-catalog/#when-nobody-answers)). |
 | **Coordinator** | A session that spawns sub-agents via `spawn_worker` / `delegate_task` / `spawn_task`. |
 | **Event** | An immutable record in a session's log. See [Event types](/develop/reference/event-types/). |
 | **Expert** | A `SKILL.md` with `type: expert`. Backed by a fine-tuned model + endpoint. The base LLM delegates via `consult_expert`. |

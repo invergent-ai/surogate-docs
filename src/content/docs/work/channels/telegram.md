@@ -47,7 +47,7 @@ Users find your bot in Telegram by its `@username`. They start a DM and just typ
 
 Same model as Slack — a `(platform=telegram, platform_user_id=12345)` row in the channel-identity table links Telegram users to Surogate users. In **Personal assistant** mode, unknown senders get an 8-character pairing code and a link to the agent app's `/link` page (see [Users](/work/channels/users/#identity-across-channels)); the linked identity shares the user's per-user usage allowance across channels.
 
-When the agent asks a question (`ask_user_question`), the user can answer via the widget **or just type a reply** — text matching a choice label selects it, anything else is recorded as "Other". Questions expire after 30 minutes. On monetized agents, Telegram is a **sellable channel**: a buyer whose package excludes it gets a short notice with their buy link.
+When the agent asks a question (`ask_user_question`), the user can answer via the widget **or just type a reply**: text matching a choice label selects it, anything else is recorded as "Other". Questions expire after 30 minutes (see [When nobody answers](/work/tools/inbox/#when-nobody-answers)). On monetized agents, Telegram is a **sellable channel**: a buyer whose package excludes it gets a short notice with their buy link.
 
 ## Reaching people first
 

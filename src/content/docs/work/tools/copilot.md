@@ -33,7 +33,13 @@ The Copilot calls the platform's own tools on your behalf. You see the same effe
 
 When you ask it to make something, it does not just start. It interviews you one question at a time (purpose, audience, tone, sources, tools, boundaries), looks at what you already have so it does not duplicate it, and shows a plan for your approval. Only then does it build, one piece at a time, reads each piece back to check it, and ends with links to everything and a few first messages to test with.
 
-It follows a written build guide for each kind of thing: agents, skills, knowledge bases, sub-agents, MCP server connections and Programs.
+It follows a written build guide for each kind of thing: agents, skills, knowledge bases, sub-agents, MCP server connections, Programs, datasets, training runs and model deployments.
+
+## Datasets, training and models
+
+- *"Turn this file into a dataset."* It uploads one JSONL, JSON, CSV or Parquet file you attach in chat (up to 50 MB), reshaping it first when the change is mechanical. Building a dataset from your agents' chats, generating a synthetic one, importing a Hugging Face repository and scrubbing PII are done on the Datasets page; it sends you there.
+- *"Fine-tune a model on these support conversations."* It interviews you, plans the run and, after your yes, starts an SFT, DPO or distillation run. It follows the run and can cancel it. A Hugging Face dataset can be trained on directly, without a copy in the project.
+- *"Serve my fine-tuned model."* It starts serving a model that is already on the Models page, checks that it serves, stops it, and switches an agent onto it. A finished run is not on Models until you add it (see [Local Hub](/develop/features/models/#local-hub)); it tells you how.
 
 ## Asking the docs
 
@@ -65,6 +71,8 @@ Building a new thing inside a plan you approved does not ask again. The plan was
 
 Anything that reaches real people or real money is stricter: activating a journey, sending a test, enrolling or messaging a person, changing the team, and changing plans on Monetize. The tool itself refuses to run until the Copilot calls it again with an explicit confirmation, which its instructions allow only after you say yes to that exact action. A yes to the plan does not cover it.
 
+While a question is open, a reply you type in the web chat is taken as your answer. A question that closes unanswered (see [Inbox](/work/tools/inbox/#when-nobody-answers)) is neither a yes nor a no: the Copilot doesn't act, says it is waiting, and asks again when you write.
+
 Governance approvals in the Inbox are never the Copilot's to decide. It sends you to the Inbox page. For the exact tools and how each check works, see [Develop mode → Copilot](/develop/tools/copilot/#how-it-asks-before-acting).
 
 ## Conversation history
@@ -77,6 +85,12 @@ The Copilot drawer keeps a history menu in its header (the clock/history icon). 
 - **It can't make images or videos.** Use a regular agent for media.
 - **It won't set up things that need secrets or money for you.** Its instructions have it explain the steps and link the page instead: connecting channels (WhatsApp, Slack, Telegram, Discord, Microsoft Teams), creating or revoking API keys and webhook secrets, Stripe Connect onboarding, your workspace's billing and plan, and inviting workspace members. It can still change an agent's environment variables, where channel keys live; its instructions have it ask you first and never repeat secret values back.
 - **It can't change your password** or other account settings. Those go through Settings.
+- **It can't change models beyond starting, stopping and redeploying them.** It can't add, edit, scale or delete one.
+- **It can't browse or change the [Data Hub](/develop/features/hub/).**
+- **It can't create RL environments or start GRPO runs.**
+- **It can't run evaluations.**
+
+For the last four, it tells you where in Studio to go instead; see [Develop mode → Copilot](/develop/tools/copilot/#what-the-copilot-wont-do).
 
 ## When the Copilot misbehaves
 

@@ -38,10 +38,7 @@ Compute:
   - Spot instances + region (optional)
 ```
 
-Training runs on **Blackwell GPUs** (RTX PRO 6000 and the RTX 50-series). Picking
-anything else is refused when you press Start, before any instance is
-provisioned, and Studio says so under the compute picker as soon as you select
-it. Serving and evaluations are not restricted this way.
+Training runs on Blackwell sm_120 GPUs only: the RTX PRO 6000 and the RTX 50-series (on Modal, only the RTX PRO 6000). See [Supported GPUs](#supported-gpus).
 
 **Full fine-tune is the Enable LoRA toggle turned off.** The new-run form shows it as an **Adapter** switch (**LoRA** by default, or **Full**) for SFT and DISTILL. On the run's **Configuration** tab, turning it off dims the rank, alpha, dropout and target-module controls. DPO has no switch and GRPO's is locked on (both below).
 
@@ -110,11 +107,10 @@ Use when:
 - You want exploration beyond your training data
 
 **GRPO needs at least two GPUs**, one for the rollout server and one for the
-trainer, which is why it is the only method with a GPU block split. Modal cannot
-currently provide that for training: the only Blackwell GPU it offers is
-single-GPU. Run GRPO on an SSH or cloud fleet instead, where the fleet size is
-taken from the block split rather than fixed when you pick the instance. Start
-says so if you try, before anything is provisioned.
+trainer, which is why it is the only method with a GPU block split. On an SSH,
+Kubernetes or cloud fleet the fleet size is taken from the block split rather
+than fixed when you pick the instance. It cannot run on Modal (see
+[Supported GPUs](#supported-gpus)).
 
 GRPO is also LoRA only for now. Its **Enable LoRA** toggle is shown but locked on, and its tooltip says full-parameter RL is not available yet: train an adapter, or full fine-tune with SFT and start the GRPO run from that model.
 
@@ -180,6 +176,18 @@ Use when:
 - You have the larger model available and the budget to run it once over your data
 - Plain SFT on the same data plateaus below the quality you need
 
+## Supported GPUs
+
+Training runs on **Blackwell sm_120 GPUs** only: the RTX PRO 6000 and the RTX 50-series. Picking anything else is refused when you press Start, before any instance is provisioned, and Studio says so under the compute picker as soon as you select it. Serving and evaluations are not restricted this way.
+
+What that leaves on each compute:
+
+| Compute | Training GPUs |
+|---|---|
+| **Modal** | Only the RTX PRO 6000. Its other GPUs (B200, H200, H100, A100, L40S, A10, L4, T4) are refused for training. Modal runs the RTX PRO 6000 as a single GPU, so GRPO, which needs two, cannot run there: Start refuses it before anything is provisioned. Run GRPO on an SSH, Kubernetes or cloud fleet. |
+| **SSH or Kubernetes fleet** | Whatever Blackwell sm_120 cards its hosts or nodes have. A GPU name Studio does not recognise, such as a generic `GPU:1`, is not checked. |
+| **Cloud** (dstack) | Offers on RTX PRO 6000 or RTX 50-series cards. Datacenter Blackwell (B200, B300) is a different architecture and is refused. |
+
 ## Training run lifecycle
 
 Creating a run and launching it are **two separate steps**: `POST /api/training-runs` records a queued run (and validates the request), then `POST /api/training-runs/{id}/start` submits it to compute. This lets you create a run, tweak its config, and only then launch.
@@ -189,9 +197,11 @@ Creating a run and launching it are **two separate steps**: `POST /api/training-
 2. Start         Click START → pre-start validation runs, then GPUs are provisioned
 3. Run           Training executes (5min to days depending on dataset + model size)
 4. Monitor       Logs, metrics, rollouts, checkpoints via the run detail page
-5. Complete      The run's output lands in the Models page as a new entry; to turn a LoRA run's adapter into a standalone model, first **Publish to Hub**, then use **Merge** (or **Promote**, when the trainer already merged it) on the run's page
+5. Complete      Does not appear on Models by itself: publish it, then add it on Models
 6. Optional      Activate as an expert via the expert lifecycle
 ```
+
+To serve a finished run, see [Local Hub](/develop/features/models/#local-hub).
 
 Two guardrails run at these boundaries:
 

@@ -14,7 +14,19 @@ Up to 5 multiple-choice questions; you submit answers. Example:
 
 > "Which Stripe environment should I target?" [Live] [Test] [Other…]
 
-You can also answer by simply **typing a reply in the chat session** (web and Telegram) — a plain text message while the question is pending is consumed as the answer; an exact choice-label match selects that choice, anything else is recorded as "Other". Messages with images or attachments don't count as answers, and neither does deleting the item — the session stays blocked. If you don't answer within 30 minutes the agent gets a `cancelled` signal and decides what to do next; after that, a typed reply is delivered as an ordinary message rather than an answer.
+You can also answer by simply **typing a reply in the chat session** (web and Telegram): a plain text message while the question is pending is consumed as the answer; an exact choice-label match selects that choice, anything else is recorded as "Other". Messages with images or attachments don't count as answers, and neither does deleting the item: the session stays blocked.
+
+#### When nobody answers
+
+If you don't answer within 30 minutes:
+
+- The question closes. The agent says once that it will wait for your answer, and stops.
+- A later reply is an ordinary message; the agent asks again if it still needs to know.
+- An agent working on a task doesn't reply: its task is marked blocked.
+
+One exception: if you sent the agent a message it hasn't read yet (for example a photo, which isn't taken as an answer), the turn doesn't stop. It goes on with that message.
+
+The full behaviour is in the [tool catalog](/develop/reference/tool-catalog/#when-nobody-answers).
 
 ### `action_required` — the agent needs you to do something outside the chat
 

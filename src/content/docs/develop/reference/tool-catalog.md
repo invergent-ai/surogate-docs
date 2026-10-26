@@ -226,7 +226,7 @@ Hard depth limit: 2 levels of orchestration beneath the root coordinator.
 
 | Tool | Use for |
 |---|---|
-| `ask_user_question` | Ask the user up to 5 questions (each up to 4 labeled choices + optional "Other") in a tabbed chat widget, and wait for the batched answers. 30-min wait cap. |
+| `ask_user_question` | Ask the user up to 5 questions (each up to 4 labeled choices, or up to 10 on Slack, Telegram and WhatsApp, + optional "Other") in a tabbed chat widget, and wait for the batched answers, for up to 30 minutes. With no answer by then, the turn ends (see [When nobody answers](#when-nobody-answers)). |
 
 How answers arrive depends on the channel:
 
@@ -238,6 +238,16 @@ How answers arrive depends on the channel:
 | **API service accounts** | Respond route only | Never converted |
 
 Typed-reply mapping: text that exactly matches a choice label (case-insensitive) selects that choice; anything else is recorded as an "Other" answer; a multi-question prompt receives the whole reply against each question. Messages with images or attachments are never converted, and the conversion stops working shortly before the 30-minute cap. Once a response exists for the tool call, later messages are ordinary messages.
+
+### When nobody answers
+
+When no answer comes within 30 minutes, the tool returns `cancelled: true` with `reason: "timeout"`, and the turn ends there:
+
+- Tool calls queued after the question in the same batch are skipped.
+- The model gets one more reply with tools switched off, asked to say only, in one short line, that it will wait (in the person's language on Slack, Teams, Telegram, WhatsApp and Discord).
+- The question's inbox item expires and takes no more answers. A later reply arrives as an ordinary message, and the tool result tells the model to ask again then if it still needs the answer.
+- If a message the model has not read yet arrived during the wait, the turn does not end: it goes on with that message.
+- A task's worker doesn't reply. Its task is marked blocked on the question and waits for its parent to unblock it. If marking it blocked fails, the attempt fails and the task is retried like any failed attempt.
 
 ## Inline output
 
