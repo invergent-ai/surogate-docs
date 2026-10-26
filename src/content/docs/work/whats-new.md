@@ -2,22 +2,6 @@
 title: What's new
 ---
 
-## October 26, 2026: Surogate docs update
-
-### Unanswered questions end the agent's turn
-
-When you don't answer an agent's question within 30 minutes, its turn now ends: it says once that it will wait, and asks again when you next write if it still needs the answer. If you sent a message the agent hasn't read yet, such as a photo, the turn goes on with that message instead. See [Inbox](/work/tools/inbox/#when-nobody-answers) and [When nobody answers](/develop/reference/tool-catalog/#when-nobody-answers) in the tool catalog.
-
-### The copilot builds datasets, starts training runs and serves models
-
-- **Build guides.** The [copilot](/work/tools/copilot/#datasets-training-and-models) now follows build guides for datasets, training runs and model deployments, as it does for agents and skills.
-- **What it can't do.** It now says that it can't change models beyond starting and stopping them, browse the Data Hub, create RL environments, start GRPO runs or run evaluations, and sends you to the right place instead. See [What the Copilot can't do](/work/tools/copilot/#what-the-copilot-cant-do).
-
-### Docs corrected
-
-- A new [Supported GPUs](/develop/features/training/#supported-gpus) section on the training page.
-- Corrections to [Models](/develop/features/models/) and [Datasets](/develop/features/datasets/), including that a finished run doesn't land on Models by itself.
-
 ## October 25, 2026: Surogate Keel 0.2.1
 
 ### A user guide for Keel
