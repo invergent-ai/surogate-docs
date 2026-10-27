@@ -26,7 +26,7 @@ Look things up:
 Build and change things:
 
 - *"Create a skill called `weekly-summary` that produces 5-bullet summaries."*
-- *"Attach the `acme-product` KB to my customer-support-bot as reference material."* It attaches a knowledge base in grounding mode (answer from it and cite it), grounding without citations, or reference mode (consulted when useful).
+- *"Attach the `acme-product` KB to my customer-support-bot as reference material."* It attaches a knowledge base as Grounding (answer from it and cite it), Grounding, no quotes (the same, without citations) or Reference (consulted when useful).
 - *"Connect this MCP server to my agent."*
 - *"Switch customer-support-bot to the `qwen-support` model."*
 - *"Start a training run with the conversations dataset."*
@@ -57,7 +57,7 @@ You can ask it how the platform works: *"What does the Compute page do?"* It loo
 - *"Change its greeting to 'Salut!'."* It changes only what you name and keeps the rest.
 - *"Disconnect its phone line."* The number goes back to the pool and the settings are kept.
 
-Every change to a line, even a small settings edit, needs your yes to that exact change first. It sets up only Surogate's own speech; for another provider it sends you to the [Voice](/work/channels/voice/) screen, since that needs your provider key.
+Every change to a line, even a small settings edit, needs your yes to that exact change first. It can't switch a line to another speech provider, which needs your provider key, so for that it sends you to the [Voice](/work/channels/voice/) screen. Surogate's own speech is Romanian only.
 
 ## Programs, people and the team
 
@@ -101,7 +101,7 @@ The Copilot drawer keeps a history menu in its header (the clock/history icon). 
 - **It can't change your password** or other account settings. Those go through Settings.
 - **It can't scale agents.** Agents run on the shared runtime with no replicas, CPU or memory to set; it can start and stop them.
 - **Some knowledge-base, template and skill work happens in Studio.** It can't change a knowledge base's settings, remove a source or file, or stop or rebuild a compile; it can't create an agent from a [template](/work/workflow/templates/) (it can build a similar one with you, without the template's skills); and it can't publish skill versions, open the skill canvas, or run skill tests or optimization.
-- **It can't add phone numbers to the pool** or set up a speech provider other than Surogate's.
+- **It can't add phone numbers to the pool** or switch a phone line to another speech provider.
 - **It can't change models beyond starting, stopping and redeploying them.** It can't add, edit, scale or delete one.
 - **It can't browse or change the [Data Hub](/develop/features/hub/).**
 - **It can't create RL environments or start GRPO runs.**

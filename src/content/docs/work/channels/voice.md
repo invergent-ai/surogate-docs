@@ -125,4 +125,4 @@ Once a number is connected, **Recent calls** lists the latest calls, newest firs
 
 ## With the Copilot
 
-The [Copilot](/work/tools/copilot/#phone-lines) can read a line, its recent calls and the free numbers, give an agent a number, change its settings and disconnect it, with Surogate's own speech only. It asks you to confirm each change first.
+The [Copilot](/work/tools/copilot/#phone-lines) can read a line, its recent calls and the free numbers, give an agent a number, change its settings and disconnect it. It can't switch the line to another speech provider, since that needs your key. It asks you to confirm each change first.

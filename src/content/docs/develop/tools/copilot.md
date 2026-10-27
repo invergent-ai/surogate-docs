@@ -36,7 +36,7 @@ Besides those, it can use a few built-in tools: `ask_user_question`, `create_art
 
 `search_docs` ranks sections of the product documentation. Its top results carry the matching section's text, so most answers need no second call. `read_doc` reads a page or one section of it by path, and `list_docs` lists every page. The documentation is a bundled snapshot of the Work and Develop pages, so it can lag the live site. When you ask from a Studio page that has a doc, the page tells the Copilot which doc covers it. Pages without one give no doc hint.
 
-`find_sessions` finds conversations by what was said in them. With no agent named it searches the current project's agents; with an agent named, only that agent. Either way you need the editor or owner role on the project (or to be a platform admin); a viewer gets no results. `search` looks across resources in the current project, or in every project you are a member of. It matches the name Studio shows, the internal name and the ID, ignoring case. Its results, like the agent, skill, dataset and model lists, include `display_name`. `list_skills` with `scope="mine"` lists only the skills you wrote, a full page at a time.
+`find_sessions` finds conversations by what was said in them. With no agent named it searches the current project's agents; with an agent named, only that agent. Either way you need the editor or owner role on the project (or to be a platform admin); a viewer gets no results. `search` looks across resources in the current project, or in every project you are a member of. It matches the name Studio shows, the internal name and the ID, ignoring case, among the first 100 items of each kind; in a larger project, narrow it with `kinds`. Its results, like the agent, skill, dataset and model lists, include `display_name`. `list_skills` with `scope="mine"` lists only the skills you wrote, a full page at a time.
 
 ### Agents
 
@@ -44,7 +44,7 @@ Besides those, it can use a few built-in tools: `ask_user_question`, `create_art
 
 `attach_kb_to_agent` takes a `mode`: `grounding` (the default for a new attach: the agent answers from the knowledge base and cites it), `grounding_nocite` (the same authority, in plain prose without citations) or `reference` (optional material it consults when it judges useful). On a knowledge base that is already attached, a given mode changes it and leaving it out keeps it. `get_agent` shows each attached knowledge base with its mode.
 
-`attach_skill_to_agent` attaches a skill's `main` unless you name a version. A named version must be one the skill has published; otherwise the tool refuses and lists the versions there are. If the Hub can't be read, it says so instead.
+`attach_skill_to_agent` attaches a skill's `main` unless you name a version. A named version must be one the skill has published; otherwise the tool refuses and lists the published versions it finds. If the Hub can't be read, it says so instead.
 
 `start_agent`, `stop_agent` and `delete_agent` run the same checks and steps as the buttons in Studio and wait for the result. Start is refused at the plan's limit for running agents or workspace storage. If delete removes the agent but a clean-up step fails (its workspace files, session data, API keys or service account), the result names that step so the Copilot can tell you.
 
@@ -52,17 +52,17 @@ Agents can't be scaled: they run on the shared runtime with no replicas, CPU or 
 
 ### Skills and experts
 
-`create_skill` makes a skill from a name, description and instructions. An expert, and the fields `create_skill` doesn't take, come from importing a skill folder with `import_skill_from_workspace`. Import sets the experts, the license, `requires_tools`, `fallback_for_tools` and `max_iterations`; the other fields are set in Studio. An imported expert has no model until one is chosen in Studio.
+`create_skill` makes a skill from a name, description and instructions (and `max_iterations`). An expert, the license, `requires_tools` and `fallback_for_tools` come from importing a skill folder with `import_skill_from_workspace`, which also reads `max_iterations`; the other fields are set in Studio. An imported expert has no model until one is chosen in Studio.
 
 ### Phone lines
 
-The voice tools read and change an agent's phone line (see [Voice](/work/channels/voice/)) through the same checks as the Voice screen: you need the editor role, and a system agent needs an administrator.
+The voice tools read and change an agent's phone line (see [Voice](/work/channels/voice/)) through the same checks as the Voice screen: reading needs the viewer role, changing needs the editor role, and the Copilot changes a system agent's line only for an administrator.
 
 - `get_agent_voice` returns the agent's number (none when it has no line), its settings and the free numbers in the pool. `list_voice_calls` lists recent calls, and `list_voice_options` lists what a line can be set to: Surogate's speech models and languages, the default lines, and the background scenes and hold music.
 - `set_agent_voice` gives the agent a free number and/or changes its settings. Only what you name changes; the rest is kept. Pronunciations are added word by word, and a word set to `null` is removed. With no line and no number named, it refuses and lists the free numbers rather than picking one; a number that is taken or retired is refused before you are asked anything.
 - `release_agent_voice` returns the number to the pool and keeps the settings for next time.
 
-The Copilot sets up only Surogate's own speech. Another provider needs your account's key, so it sends you to the Voice screen. Adding numbers to the pool is for administrators.
+The Copilot can't switch a line to another speech provider: that needs your account's key, so it sends you to the Voice screen. Surogate's own speech is Romanian only, so on a line that uses it the language stays Romanian. On a line already set to another provider in Studio, it can still change the other settings. Adding numbers to the pool is for administrators.
 
 ### Build guides
 
@@ -91,7 +91,7 @@ Two mechanisms apply.
 - `start_saved_run`, `update_saved_run`, `delete_training_run`
 - `set_agent_voice`, `release_agent_voice` (every change to a phone line, including a settings-only edit on a connected line)
 
-The three training-run tools and the two voice tools go one step further: their `needs_confirmation` answer carries a code tied to you, the chat and the current state (the run's, or the phone line's as it is now and as it will be stored), plus the exact change for an edit. They act only when called again with that code. `confirmed=true` alone changes nothing, a yes doesn't carry over to other values, and the code stops working once the run or the line changes. So the Copilot always receives the tool's own wording (for a delete, that a Modal run's storage and unpublished weights go too); showing it to you is still up to its instructions.
+The three training-run tools and the two voice tools go one step further: their `needs_confirmation` answer carries a code tied to you, the chat and what is about to happen, and they act only when called again with that code. For a run it covers the run's current state (and, for an edit, the exact change), so the code stops working once the run starts or changes. For a phone-line change it covers the number now, the number after and the settings as they will be stored; for a disconnect, the number being released. `confirmed=true` alone changes nothing, and a yes doesn't carry over to other values. So the Copilot always receives the tool's own wording (for a delete, that a Modal run's storage and unpublished weights go too); showing it to you is still up to its instructions.
 
 An approved plan does not cover these. Each one needs its own yes.
 
@@ -100,6 +100,7 @@ An approved plan does not cover these. Each one needs its own yes.
 - **It has no browser tool.** By design it works from the platform's own tools, not the open web. It is not a research agent.
 - **Its instructions have it guide you, not act, for secrets, keys and workspace billing.** It links the page and explains the steps: connecting channels that need credentials, creating or revoking API keys and webhook secrets, Stripe Connect onboarding, workspace billing and plan changes, and inviting members. This is an instruction, not a missing tool: `set_agent_env_vars` can write an agent's environment variables, which carry channel keys, and the Copilot is instructed to ask you first and never echo secret values back.
 - **Some knowledge-base, template and skill work is Studio-only.** Knowledge-base settings, removing a source or file, and stopping or rebuilding a compile (`compile_knowledge_base` has no stop or rebuild); creating an agent from a template (it links [Templates](/work/workflow/templates/) or offers to build one with `/build-agent`, without the template's skills); publishing skill versions, the skill canvas, test runs and optimization. Its instructions have it say where in Studio each is done.
+- **No number pool or other speech providers.** It can't add numbers to the pool or switch a phone line to another provider; it sends you to the [Voice](/work/channels/voice/) screen.
 - **Models beyond starting, stopping and redeploying are Studio work.** `deploy_model` starts a model, and on one that is running or starting it stops it and starts it again. No tool adds, edits, scales or deletes a model, merges or promotes an adapter, or publishes a run to the Hub; the instructions have it say where in Studio each is done.
 - **No Data Hub tools.** It can't browse or change repositories, branches, tags or files; it links [Data Hub](/develop/features/hub/) and explains from its doc.
 - **No RL environments or new GRPO runs.** `start_training` refuses GRPO and PPO, `update_saved_run` won't edit a GRPO run's settings, and no tool on the Copilot's list creates an environment. A GRPO run already saved in Studio can still be started or deleted with `start_saved_run` and `delete_training_run`. It walks the user through the Training page's **Environments** tab and the new-run form, and can list the project's environments.
