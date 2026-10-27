@@ -95,6 +95,8 @@ On a published form, tick **Agent may send this form** and fill in:
 
 The agent then sends the form in conversation when it fits, and reads the answers when the person submits it. A template can also open a form directly, through its form button, and a journey step can pass values into it (**Data passed to the form**).
 
+While an active Program's template opens a form, the form can't be deprecated or stop being one the agent may send: Studio names the Programs, and you pause them or change their template first.
+
 ## What users see
 
 If the agent's **AI disclosure** is on (Configure → Governance), the disclosure text arrives as the first message of every new conversation — see [Governance & AI disclosure](/work/workflow/governance/).

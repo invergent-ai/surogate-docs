@@ -10,7 +10,7 @@ This chapter covers what builders should know that operators don't need: where i
 
 ![The Surogate Copilot panel](../../../../assets/screenshots/work-copilot-panel.png)
 
-It exposes the platform's tools as natural-language commands. Instead of clicking through CONFIG / KNOWLEDGE & TOOLS / channels, you describe what you want and the Copilot calls the corresponding tools. There are over 100 of them (served by the ops MCP server at `/api/copilot/mcp`). The Copilot's agent definition lists exactly the tools below, and a tool not on that list is not shown to the model. The areas, with the main tools in each:
+It exposes the platform's tools as natural-language commands. Instead of clicking through CONFIG / KNOWLEDGE & TOOLS / channels, you describe what you want and the Copilot calls the corresponding tools. There are over 150 of them (served by the ops MCP server at `/api/copilot/mcp`). The Copilot's agent definition lists exactly the tools below, and a tool not on that list is not shown to the model. The areas, with the main tools in each:
 
 | Area | Main tools |
 |---|---|
@@ -19,15 +19,18 @@ It exposes the platform's tools as natural-language commands. Instead of clickin
 | Knowledge bases | `list_knowledge_bases`, `create_knowledge_base`, `create_kb_source`, `add_workspace_file_to_kb`, `compile_knowledge_base`, `get_kb_compile_status`, `read_kb_wiki_page`, and others for sources, wiki pages and deletion |
 | MCP servers | `list_mcp_servers`, `register_mcp_server`, `update_mcp_server`, `delete_mcp_server`, `list_composio_toolkits` |
 | Sub-agents | `list_sub_agents`, `get_sub_agent`, `create_sub_agent`, `update_sub_agent`, `delete_sub_agent` |
-| Programs | `get_programs_overview`, `create_journey`, `add_journey_step`, `simulate_journey`, `activate_journey`, `get_journey_funnel`, and others for journeys, WhatsApp templates and forms, escalations |
-| People and team | `find_people`, `add_person`, `enroll_person`, `message_person`, `get_person_timeline`, `set_team_member`, and others for program settings, Telegram start links and Slack lookups |
+| Programs | `get_programs_overview`, `create_journey`, `add_journey_step`, `simulate_journey`, `activate_journey`, `get_journey_funnel`, and others for journeys, WhatsApp templates and escalations |
+| WhatsApp forms | `list_whatsapp_flows`, `create_whatsapp_flow`, `update_whatsapp_flow`, `publish_whatsapp_flow`, `retire_whatsapp_flow`, `make_form_sendable`, `remove_sendable_form`, `list_whatsapp_forms` |
+| People and team | `find_people`, `add_person`, `update_person`, `delete_person`, `bind_person_slack`, `bind_person_whatsapp`, `enroll_person`, `message_person`, `get_person_timeline`, `set_team_member`, and others for program settings, Telegram start links and Slack lookups |
 | Monetize and landing page | `get_monetize`, `create_plan`, `update_plan`, `update_monetize_settings`, `get_landing_page`, `update_landing_page`, and others for replacing and deleting plans |
 | Voice | `get_agent_voice`, `list_voice_calls`, `list_voice_options`, `set_agent_voice`, `release_agent_voice` |
-| Inbox and insights | `list_inbox`, `update_inbox_item`, `get_agent_insights`, `get_user_reports`, `find_sessions` |
+| Inbox, insights and reports | `list_inbox`, `update_inbox_item`, `get_agent_insights`, `get_user_reports`, `generate_user_report`, `set_user_report_guidance`, `get_cohort_report`, `generate_cohort_report`, `find_sessions` |
+| Missions and scheduled work | `list_missions`, `get_mission`, `pause_mission`, `resume_mission`, `cancel_mission`, `list_scheduled_work`, `run_scheduled_work_now`, `cancel_scheduled_work` |
 | Datasets | `list_datasets`, `get_dataset`, `read_dataset`, `delete_dataset`, `upload_dataset_from_workspace` |
 | Models and training | `list_models`, `get_model`, `deploy_model`, `stop_serving`, `list_training_runs`, `get_training_run`, `get_training_metrics`, `list_experiments`, `start_training`, `start_saved_run`, `update_saved_run`, `cancel_training`, `delete_training_run`, `list_environments` |
 | Compute | `list_compute`, `get_compute_costs` |
-| Workspace | `get_current_project`, `list_my_projects`, `search`, `recent_failures` |
+| Workspace | `get_current_project`, `list_my_projects`, `search`, `recent_failures`, `create_project` |
+| Billing and members | `get_project_billing`, `get_project_usage`, `list_project_members`, `add_project_member`, `update_project_member_role`, `remove_project_member` |
 | Documentation | `search_docs`, `read_doc`, `list_docs`, `read_guide` |
 
 Besides those, it can use a few built-in tools: `ask_user_question`, `create_artifact` (for plans, documents and tables), `todo`, and the sandbox file and terminal tools (`read_file`, `write_file`, `patch`, `search_files`, `list_files`, `terminal`), which let it read documents you attach in chat. Its browser tools are switched off.
@@ -64,6 +67,24 @@ The voice tools read and change an agent's phone line (see [Voice](/work/channel
 
 The Copilot can't switch a line to another speech provider: that needs your account's key, so it sends you to the Voice screen. Surogate's own speech is Romanian only, so on a line that uses it the language stays Romanian. On a line already set to another provider in Studio, it can still change the other settings. Adding numbers to the pool is for administrators.
 
+### Billing, usage and members
+
+`get_project_billing` reads the active project's plan and limits, its credit balances and its workspace storage (measured about hourly). `get_project_usage` reads the last 1 to 90 days (default 30): the project's platform-credit compute spend per workload, and the asking user's own token usage across all their projects. Runs billed to the user's own cloud or Modal account are not in it; `get_compute_costs` reads those. A serving row's credits are the deployment's running total, not only the period's spend. Neither tool pays, changes the plan or buys credits.
+
+`list_project_members` needs the viewer role. `add_project_member`, `update_project_member_role` and `remove_project_member` are for owners, as in [Members](/work/settings/members/), and act on the active project only. A member is added by the exact username or email of an existing account, and nothing is sent. Making someone a viewer pauses their running work; removing them pauses it and, if this was their default project, moves their default to another. Leaving no owner is refused. `create_project` makes a project owned by the user, on the account's default plan, and needs no active project; in an enterprise deployment only administrators can create projects.
+
+### Missions, scheduled work and reports
+
+The mission and scheduled-work tools see only what the chat user started from Work chat (`/mission`, `/loop`), the same rows the [Missions](/work/tools/missions/) and [Scheduled work](/work/tools/scheduled-work/) pages show that user; any other id comes back `not_found`. They refuse system agents. `list_missions` returns the first 50 missions (the total counted up to 100); `get_mission` returns the first 50 tasks and workers with totals. `pause_mission` leaves running workers going; `cancel_mission` can't be undone, refunds nothing and, with `stop_workers`, interrupts the workers and cancels open tasks. `run_scheduled_work_now` runs the item's prompt as a normal run, counting as one of its repeats; `cancel_scheduled_work` refuses an item that already ended. None of these tools starts a mission or a schedule, or changes a schedule's timing or prompt.
+
+`generate_user_report` starts or refreshes one end-user's report (`force_full` rebuilds it from the whole history) and answers that it is generating, or that nothing changed. `set_user_report_guidance` sets what that user's next report focuses on. `generate_cohort_report` rebuilds the overview across 1 to 200 users and replaces the current one; `get_cohort_report` reads it. Reports use the platform's base model and spend no credits; starting one needs the editor role.
+
+### People and WhatsApp forms
+
+`update_person` renames a person at once; changing whether they may be messaged first on a channel (`whatsapp`, `slack`, `telegram`, `discord`, `teams`) needs a yes. It never takes a password. `bind_person_slack` and `bind_person_whatsapp` replace the person's existing binding (a member or number bound to another person is refused) and keep their contact permission unless one is given. `delete_person` removes the person from the agent and its Programs; their account and history are kept unless they are bound to no agent at all, not even this one, in which case the account is deleted for good, and the question says which.
+
+The form tools follow Meta's lifecycle (see [WhatsApp forms](/work/channels/whatsapp/#forms)): `create_whatsapp_flow` makes a draft and never publishes it, and a name already on the account is refused. `update_whatsapp_flow` edits a draft and returns Meta's validation errors. `publish_whatsapp_flow` freezes the form for good. `make_form_sendable` lets the agent send a published form (`cta` at most 20 characters), and `remove_sendable_form` takes it back off. `retire_whatsapp_flow` deprecates it. Meta has no delete here, and retiring or removing a form that an active Program's template opens is refused. If a create fails after Meta already made the draft, the error carries its `flow_id`, so the Copilot fixes that draft instead of making a second one. `list_whatsapp_flows` lists the account's flows on Meta (the first 100) with their status and errors; `list_whatsapp_forms` lists only the forms the agent may send.
+
 ### Build guides
 
 For each kind of build the Copilot has a playbook: `build-agent`, `build-skill`, `build-knowledge-base`, `build-sub-agent`, `connect-mcp`, `build-program`, `build-dataset`, `run-training` and `deploy-model`. It opens the guide with `read_guide` before building, along with the checklists and templates the guide cites. The loop is interview, inspect, plan (as an artifact you approve), build in dependency order, read each piece back, summarise with links and a test script. Its instructions forbid creating or updating an agent's prompt before an interview and an approved plan.
@@ -90,15 +111,19 @@ Two mechanisms apply.
 - `create_plan`, `update_plan`, `replace_plan`, `delete_plan`, `update_monetize_settings` (when changing the mode)
 - `start_saved_run`, `update_saved_run`, `delete_training_run`
 - `set_agent_voice`, `release_agent_voice` (every change to a phone line, including a settings-only edit on a connected line)
+- `update_person` (contact permission changes), `delete_person`, `bind_person_slack`, `bind_person_whatsapp`
+- `create_whatsapp_flow`, `publish_whatsapp_flow`, `retire_whatsapp_flow`, `make_form_sendable`, `remove_sendable_form`
+- `create_project`, `add_project_member`, `update_project_member_role`, `remove_project_member`, `update_landing_page` (when publishing or unpublishing)
+- `pause_mission`, `resume_mission`, `cancel_mission`, `run_scheduled_work_now`, `cancel_scheduled_work`, `generate_cohort_report`
 
-The three training-run tools and the two voice tools go one step further: their `needs_confirmation` answer carries a code tied to you, the chat and what is about to happen, and they act only when called again with that code. For a run it covers the run's current state (and, for an edit, the exact change), so the code stops working once the run starts or changes. For a phone-line change it covers the number now, the number after and the settings as they will be stored; for a disconnect, the number being released. `confirmed=true` alone changes nothing, and a yes doesn't carry over to other values. So the Copilot always receives the tool's own wording (for a delete, that a Modal run's storage and unpublished weights go too); showing it to you is still up to its instructions.
+Every tool on this list from `start_saved_run` on goes one step further: its `needs_confirmation` answer carries a code tied to you, the chat and what is about to happen, and it acts only when called again with that code. For a run it covers the run's current state (and, for an edit, the exact change), so the code stops working once the run starts or changes. For a phone-line change it covers the number now, the number after and the settings as they will be stored; for a disconnect, the number being released. For the others it covers the exact change and the state it would act on, such as a member's current role, a person's current bindings, a form's status or contents, a mission's or scheduled item's status, or the landing page's published state with the blocks and theme sent alongside, so a change in between voids the code. `confirmed=true` alone changes nothing, and a yes doesn't carry over to other values. So the Copilot always receives the tool's own wording (for a delete, that a Modal run's storage and unpublished weights go too); showing it to you is still up to its instructions.
 
 An approved plan does not cover these. Each one needs its own yes.
 
 ## What the Copilot won't do
 
 - **It has no browser tool.** By design it works from the platform's own tools, not the open web. It is not a research agent.
-- **Its instructions have it guide you, not act, for secrets, keys and workspace billing.** It links the page and explains the steps: connecting channels that need credentials, creating or revoking API keys and webhook secrets, Stripe Connect onboarding, workspace billing and plan changes, and inviting members. This is an instruction, not a missing tool: `set_agent_env_vars` can write an agent's environment variables, which carry channel keys, and the Copilot is instructed to ask you first and never echo secret values back.
+- **Its instructions have it guide you, not act, for secrets, keys and payments.** It links the page and explains the steps: connecting channels that need credentials, creating or revoking API keys and webhook secrets, Stripe Connect onboarding, and payments, plan changes and top-ups (it can read the plan, credits and usage). It adds only existing accounts as members and can't invite someone new. This is an instruction, not a missing tool: `set_agent_env_vars` can write an agent's environment variables, which carry channel keys, and the Copilot is instructed to ask you first and never echo secret values back.
 - **Some knowledge-base, template and skill work is Studio-only.** Knowledge-base settings, removing a source or file, and stopping or rebuilding a compile (`compile_knowledge_base` has no stop or rebuild); creating an agent from a template (it links [Templates](/work/workflow/templates/) or offers to build one with `/build-agent`, without the template's skills); publishing skill versions, the skill canvas, test runs and optimization. Its instructions have it say where in Studio each is done.
 - **No number pool or other speech providers.** It can't add numbers to the pool or switch a phone line to another provider; it sends you to the [Voice](/work/channels/voice/) screen.
 - **Models beyond starting, stopping and redeploying are Studio work.** `deploy_model` starts a model, and on one that is running or starting it stops it and starts it again. No tool adds, edits, scales or deletes a model, merges or promotes an adapter, or publishes a run to the Hub; the instructions have it say where in Studio each is done.

@@ -59,20 +59,36 @@ You can ask it how the platform works: *"What does the Compute page do?"* It loo
 
 Every change to a line, even a small settings edit, needs your yes to that exact change first. It can't switch a line to another speech provider, which needs your provider key, so for that it sends you to the [Voice](/work/channels/voice/) screen. Surogate's own speech is Romanian only.
 
+## Your project: billing, usage and members
+
+- *"What plan is this project on, and how many credits are left?"* It reads the plan and its limits, the credit balances and the workspace storage. Paying, changing the plan and buying credits stay in [Settings → Billing](/work/settings/billing/); it sends you there.
+- *"What did compute cost this month?"* It reads the project's platform-credit spend per workload and your own token usage across your projects, for up to the last 90 days. Runs billed to your own cloud or Modal account are not in that number; it reads those from the compute costs instead.
+- *"Who is in this project?"* It lists the members and their roles.
+- *"Add maria@acme.com as an editor."* If you are an owner, it adds someone who already has an account, by their exact username or email, changes a member's role or removes a member, each after your yes. It sends no invitation or email. Making someone a viewer, or removing them, pauses their running work, and the question tells you so. See [Members](/work/settings/members/).
+- *"Make me a new project for the pilot."* It creates a project you own, after your yes. In an enterprise deployment only administrators can create projects.
+
+## Missions, scheduled work and reports
+
+- *"What is my research agent working on?"* It lists an agent's [missions](/work/tools/missions/) and reads one with its tasks, workers and last evaluation. It can pause, resume or cancel one after your yes. Pausing leaves running workers to finish; cancelling can't be undone and refunds nothing.
+- *"Which of my loops failed last night?"* It lists an agent's [scheduled work](/work/tools/scheduled-work/) with its status, schedule and last error, and after your yes runs one now or cancels it. Running one now is a real run: whatever its prompt does, messaging people included, happens.
+- It sees only the missions and scheduled work you started yourself from Work chat, the same ones those pages show you.
+- *"Focus Ana's report on billing questions and refresh it."* It sets what a user's next report should focus on, starts a fresh activity report for one of the agent's users, and reads or, after your yes, rebuilds the overview across up to 200 users. Reports use the platform's own model and spend no credits.
+
 ## Programs, people and the team
 
 The Copilot works across these areas:
 
 - **Programs:** run an agent's [Programs](/work/tools/programs/). List and build journeys and their steps, review a journey and dry-run it, send a test, activate or pause it, read its stats, and register WhatsApp templates.
-- **People:** find and add people, make a Telegram start link, enrol people, change their follow-up, link their contacts, read their timeline and message them.
+- **People:** find and add people, rename them, make a Telegram start link, enrol people, change their follow-up, link their contacts, read their timeline and message them. After your yes it changes whether someone may be messaged first on a channel, binds their Slack member or WhatsApp number (replacing the one they had; one already bound to someone else is refused), or removes them from the agent. Removing keeps their account and history, unless they are bound to no agent at all, not even this one, which deletes the account for good; the question says which.
+- **WhatsApp forms:** build a [WhatsApp form](/work/channels/whatsapp/#forms) for a journey. After your yes it creates the form as a draft; it fixes the problems Meta finds, and after another yes publishes it and lets the agent send it. A published form can't be edited, and forms can be retired but not deleted, so it asks before each of those steps.
 - **Team:** set up the team (what each member gets told about, can do and handles, and a Slack channel picked from the workspace as its shared alert place), change the wording and channels on Settings, and claim or resolve escalations.
-- **Also:** read and answer your Inbox, read an agent's Insights, manage the plans on Monetize, and build the agent's [landing page](/work/workflow/landing-page/), including formatted text and image framing.
+- **Also:** read and answer your Inbox, read an agent's Insights, manage the plans on Monetize, and build the agent's [landing page](/work/workflow/landing-page/), including formatted text and image framing. Publishing or taking the page offline needs your yes. On a page that is already live, its edits are public at once: they don't wait for **Publish changes** as edits in Studio do.
 
 It knows what you are looking at: on the Programs page it is told which tab, journey and person you have open, so *"why didn't this step go out?"* needs no further context.
 
-**`/build-program`** is a playbook for setting a program up end to end. The Copilot interviews you one question at a time (who is followed and why, the date day 0 counts from, the rhythm, what each answer means and which is urgent, the channels, the team, the language of every message), inspects what the agent already has, and writes a plan for you to approve. Only then does it build: the step skills, any missing WhatsApp templates, the journey as a draft, the team and the wording. It reviews and dry-runs the journey and summarises what is live and what is still a draft, with a test script.
+**`/build-program`** is a playbook for setting a program up end to end. The Copilot interviews you one question at a time (who is followed and why, the date day 0 counts from, the rhythm, what each answer means and which is urgent, the channels, the team, the language of every message), inspects what the agent already has, and writes a plan for you to approve. Only then does it build: the step skills, any missing WhatsApp forms and templates, the journey as a draft, the team and the wording. It reviews and dry-runs the journey and summarises what is live and what is still a draft, with a test script.
 
-Activating a journey, sending a test, enrolling, messaging a person and changing the team need an explicit confirmation step, which the Copilot is instructed to take only after you say yes to that exact action. Called without it, the tool refuses and changes nothing.
+Activating a journey, sending a test, enrolling, messaging a person, changing the team, and changing a person's contact permission, binding or removing a person need an explicit confirmation step, which the Copilot is instructed to take only after you say yes to that exact action. Called without it, the tool refuses and changes nothing.
 
 ## How it asks before acting
 
@@ -83,7 +99,7 @@ It asks with a question in the chat and waits for your answer before it:
 
 Building a new thing inside a plan you approved does not ask again. The plan was the yes.
 
-Anything that reaches real people or real money is stricter: activating a journey, sending a test, enrolling or messaging a person, changing the team, changing plans on Monetize, and giving an agent a phone number, changing its line or disconnecting it. The tool itself refuses to run until the Copilot calls it again with an explicit confirmation, which its instructions allow only after you say yes to that exact action. A yes to the plan does not cover it.
+Anything that reaches real people, real money or who can do what is stricter: activating a journey, sending a test, enrolling or messaging a person, changing the team, changing plans on Monetize, giving an agent a phone number, changing its line or disconnecting it, changing a person's contact permission, binding or removing a person, creating, publishing or retiring a WhatsApp form, letting the agent send one or taking that back, creating a project, adding, changing or removing a member, publishing or unpublishing the landing page, pausing, resuming or cancelling a mission, running or cancelling scheduled work, and rebuilding the users overview report. The tool itself refuses to run until the Copilot calls it again with an explicit confirmation, which its instructions allow only after you say yes to that exact action. A yes to the plan does not cover it.
 
 While a question is open, a reply you type in the web chat is taken as your answer. A question that closes unanswered (see [Inbox](/work/tools/inbox/#when-nobody-answers)) is neither a yes nor a no: the Copilot doesn't act, says it is waiting, and asks again when you write.
 
@@ -97,7 +113,7 @@ The Copilot drawer keeps a history menu in its header (the clock/history icon). 
 
 - **It has no browser.** It works from the platform's own tools, not the open web. If you want to scrape or navigate a site, use a regular agent with `browser_*` tools.
 - **It can't make images or videos.** Use a regular agent for media.
-- **It won't set up things that need secrets or money for you.** Its instructions have it explain the steps and link the page instead: connecting channels (WhatsApp, Slack, Telegram, Discord, Microsoft Teams), creating or revoking API keys and webhook secrets, Stripe Connect onboarding, your workspace's billing and plan, and inviting workspace members. It can still change an agent's environment variables, where channel keys live; its instructions have it ask you first and never repeat secret values back.
+- **It won't set up things that need secrets or money for you.** Its instructions have it explain the steps and link the page instead: connecting channels (WhatsApp, Slack, Telegram, Discord, Microsoft Teams), creating or revoking API keys and webhook secrets, Stripe Connect onboarding, and paying, changing the plan or buying credits. It can read the plan, credits and usage, and add people who already have an account, but it can't invite someone new. It can still change an agent's environment variables, where channel keys live; its instructions have it ask you first and never repeat secret values back.
 - **It can't change your password** or other account settings. Those go through Settings.
 - **It can't scale agents.** Agents run on the shared runtime with no replicas, CPU or memory to set; it can start and stop them.
 - **Some knowledge-base, template and skill work happens in Studio.** It can't change a knowledge base's settings, remove a source or file, or stop or rebuild a compile; it can't create an agent from a [template](/work/workflow/templates/) (it can build a similar one with you, without the template's skills); and it can't publish skill versions, open the skill canvas, or run skill tests or optimization.
@@ -105,6 +121,7 @@ The Copilot drawer keeps a history menu in its header (the clock/history icon). 
 - **It can't change models beyond starting, stopping and redeploying them.** It can't add, edit, scale or delete one.
 - **It can't browse or change the [Data Hub](/develop/features/hub/).**
 - **It can't create RL environments or start GRPO runs.**
+- **It can't start a mission or scheduled work, or change one's schedule.** Start those from Work chat with `/goal`, `/mission` or `/loop`.
 - **It can't run evaluations.**
 
 For the Studio work in this list (knowledge bases, templates, skills, models, Data Hub, RL environments and evaluations), it tells you where in Studio to go instead; see [Develop mode → Copilot](/develop/tools/copilot/#what-the-copilot-wont-do).
