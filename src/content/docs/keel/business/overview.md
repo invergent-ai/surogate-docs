@@ -12,9 +12,9 @@ The header names the project and counts its case types, agents and team queues, 
 
 ## Period
 
-**Period** offers **Last 7 days**, **Last 30 days** and **Last 90 days**. It opens on 30 days. Open cases and past deadline are counted as of now. The other figures cover the period, and the tiles say "was" for the period of the same length before it.
+**Period** offers **Last 7 days**, **Last 30 days** and **Last 90 days**. It opens on 30 days. Open cases and past deadline are counted as of now. The other figures cover the period, and the tiles say "was" for the period of the same length before it. In **Needs attention**, only the agent items depend on the period; waits and queues are as of now.
 
-While a new period loads, each part keeps the answer for the last period, dimmed, until the new one arrives. The headings and the case type picker stay as they are. The line under the figures and under the case types table keeps naming the days the numbers shown cover.
+The address keeps the period and the case type, so a link shares them. While a new period loads, each part keeps the last answer, dimmed.
 
 ## Figures
 
@@ -29,7 +29,7 @@ Six tiles, with the caption "Open cases and past deadline are as of now. The oth
 | **Steps done by agents** | Of the steps done in the stages that cases left in the period, the share agents did, such as `71%` with `was 64%`. Under it: `6% of runs that finished in the period raised a hand`. |
 | **Agent cost per case** | The median cost of the cases decided in the period that have an agent cost, in dollars, such as `$2.90` with `was $3.10`. Under it: `median of 412 decided cases with an agent cost`. |
 
-A figure with nothing to measure reads `—`, and a count of none reads `None`. A figure whose period before has nothing says no "was". A cost below a cent keeps two significant digits, such as `$0.0042`.
+A figure with nothing to measure reads `—`, and a count of none reads `None`. **Median to decision**, **Steps done by agents** and **Agent cost per case** say no "was" when the period before has nothing to measure. **Decided** then reads `was None`. **Open cases** and **Past deadline** have none. A rate above 0 never reads `0%`; it reads `<1%`. A rate below 100% never reads `100%`; it reads `>99%`. A cost below a cent keeps two significant digits, such as `$0.0042`.
 
 ## Needs attention
 
@@ -62,9 +62,9 @@ The caption under it reads "Open and past deadline are as of now. The other figu
 
 **Where cases wait** draws one case type at a time: the one with the most open cases, or the first by name on a tie. A picker beside the heading lists the project's case types by name. The page says "Median time in each stage over the last 30 days, by who the case waited on."
 
-The chart has a bar for each stage a case left in the period, in the order of the case type's stages. Each bar is split by who held the case: **Agent working**, **Staff**, **Client**, **Third parties** and **Systems**. It ends in the stage's median, with the wait that held the stage longest beside it when a client or a third party held it. The scale is in hours, or in days when any stage's median is a day or more. Pointing at a segment shows its time.
+The chart has a bar for each stage a case left in the period, in the order of the case type's stages. Each bar is split by who held the case: **Agent working**, **Staff**, **Client**, **Third parties** and **Systems**. It ends in the stage's median, with the wait that held the stage longest beside it when a client or a third party held it. The scale is in hours, or in days when any stage's median is a day or more. Pointing at a segment shows its time. On a phone the bar ends in the median alone.
 
-The buttons **Chart** and **Table** switch the view. It opens on **Chart**, and your browser remembers your choice. The table gives the numbers of the same stages:
+The buttons **Chart** and **Table** switch the view. It opens on **Chart**, and your browser remembers your choice. The table gives the numbers of the same stages, in the same unit as the chart:
 
 | Column | What it shows |
 |---|---|
@@ -87,4 +87,4 @@ Each part reads on its own. A part that cannot be read says so, gives Keel's rea
 | Case types | "The case types could not be loaded" |
 | Where cases wait | "The chart could not be loaded" |
 
-When a read took too long, Keel says "The figures took too long to read. Try a shorter period." Pick a shorter period, or press **Try again**. After a new period fails to load, the numbers of the last period are not shown as current. When the chart fails, its picker stays, so you can try another case type.
+When a read took too long, Keel says "The figures took too long to read. Try a shorter period." Pick a shorter period, or press **Try again**. After a new period fails to load, the numbers of the last period are not shown as current. When the chart fails, its picker stays, so you can try another case type. If **Case types** cannot be read, **Where cases wait** is not shown, because its picker takes the list from it.
