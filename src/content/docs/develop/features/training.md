@@ -203,11 +203,11 @@ Creating a run and launching it are **two separate steps**: `POST /api/training-
 
 To serve a finished run, see [Local Hub](/develop/features/models/#local-hub).
 
-Two guardrails run at these boundaries:
+These guardrails run at these boundaries:
 
 - **Plan-tier gating (402).** If the project's plan doesn't include training, both create and start return `402` with an "upgrade in Settings → Billing" message.
 - **Pre-start validation (422).** START runs the same validator that drives the frontend's Start button; if the config has errors (missing GPU blocks, unset dataset, etc.) it returns `422` and the run stays queued.
-- **Already launched (409).** A run stays queued after Start until its job begins (dstack waits for capacity, Modal for a GPU). Meanwhile Start is refused and the run page shows **Stop**, so a second Start can't launch a second job; to start it again, **Stop** it, then **Retry**. A waiting run counts as in use, so deleting it, its experiment or a dataset it trains on is refused.
+- **Already launched (409).** After Start, a submitted job can wait in queued: on dstack for capacity, on Modal for a GPU once the image is deployed (the run shows provisioning while it deploys). Meanwhile Start is refused and the run page shows **Stop**, so a second Start can't launch a second job; to start it again, **Stop** it, then **Retry**. A waiting run counts as in use, so deleting it, its experiment or a dataset it trains on is refused.
 - **Dataset check (422).** **Start** checks each local dataset before provisioning or reserving credits. It refuses the run if the dataset is missing, in another project, not **ready** (the message gives its status and says to wait for the build or pick another), has no stored copy (re-create or re-upload it), or lacks a column its declared type needs. The `422` lists each problem as `datasets: ...`. A dataset of auto type with no recognised column only warns. DISTILL also gets a teacher tokenizer check and GRPO an environment check. If a check can't run (for example the Hub is slow), Start proceeds.
 
 ### Experiments and the Data Hub
