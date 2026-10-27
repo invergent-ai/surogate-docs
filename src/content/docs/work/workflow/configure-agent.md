@@ -15,7 +15,7 @@ Each tab saves independently. Most tabs surface a **SAVE** button (which flashes
 | **Metrics** | Read-only dashboard: traffic, errors, latency, tokens, conversations, connected resources |
 | **Identity** | Name, slug, description, and the SOUL.md persona |
 | **Capabilities** | Brainstorming gate, live browser, multi-session, Programs, the built-in slash commands, and Saga where the deployment enables it |
-| **Knowledge Bases** | Attach KBs the agent can search, in grounding or reference mode |
+| **Knowledge Bases** | Attach KBs the agent can search, in Grounding, Grounding (no quotes) or Reference mode |
 | **Skills** | Attach, write, import, and edit skills |
 | **Tools** | Connect MCP servers, Composio toolkits, and manage the key vault |
 | **Coding** | GitHub repos and coding-agent plans (only when `/code` is enabled) |
@@ -93,6 +93,7 @@ Each attached KB row shows its name, page count, compile status (active / compil
 | Mode | What it does |
 |---|---|
 | **Grounding** | The KB is treated as authoritative source material for answers |
+| **Grounding, no quotes** | The same authority, answered in plain prose without citations |
 | **Reference** | The KB is available for lookup but not treated as ground truth |
 
 The **Browse Library** view offers search and multi-select cards; **Attach selected (n)** pulls them in.

@@ -122,3 +122,7 @@ Once a number is connected, **Recent calls** lists the latest calls, newest firs
 
 - **Disconnect** asks for confirmation. The number goes back to the pool for other agents, and Recent calls is hidden.
 - To connect again, open the Voice screen, choose a number and click **Save and connect**. The settings you had are still there.
+
+## With the Copilot
+
+The [Copilot](/work/tools/copilot/#phone-lines) can read a line, its recent calls and the free numbers, give an agent a number, change its settings and disconnect it. It can't switch the line to another speech provider, since that needs your key. It asks you to confirm each change first.

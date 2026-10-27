@@ -13,6 +13,7 @@ A drawer opens with a chat composer. Ask in natural language; the Copilot calls 
 Look things up:
 
 - *"What agents do I have running?"*
+- *"Find my agent Customer Helper."* It finds things by the name Studio shows, not only the internal name.
 - *"Which agent had the most sessions this week?"*
 - *"Find conversations where people got stuck on pricing."*
 - *"Show me the latest training run for sql-writer."*
@@ -25,7 +26,7 @@ Look things up:
 Build and change things:
 
 - *"Create a skill called `weekly-summary` that produces 5-bullet summaries."*
-- *"Attach the `acme-product` KB to my customer-support-bot."*
+- *"Attach the `acme-product` KB to my customer-support-bot as reference material."* It attaches a knowledge base as Grounding (answer from it and cite it), Grounding, no quotes (the same, without citations) or Reference (consulted when useful).
 - *"Connect this MCP server to my agent."*
 - *"Switch customer-support-bot to the `qwen-support` model."*
 - *"Start a training run with the conversations dataset."*
@@ -48,6 +49,15 @@ It follows a written build guide for each kind of thing: agents, skills, knowled
 ## Asking the docs
 
 You can ask it how the platform works: *"What does the Compute page do?"* It looks the answer up in the product documentation instead of answering from memory. When you ask from a page, it knows which page you have open and, for pages that have one, which doc covers it.
+
+## Phone lines
+
+- *"What's the phone line of my support agent?"* It reads the agent's number, how it answers and its recent calls, and what a line can be set to.
+- *"Give my support agent a phone number."* It shows the free numbers and takes one only after your yes to that number.
+- *"Change its greeting to 'Salut!'."* It changes only what you name and keeps the rest.
+- *"Disconnect its phone line."* The number goes back to the pool and the settings are kept.
+
+Every change to a line, even a small settings edit, needs your yes to that exact change first. It can't switch a line to another speech provider, which needs your provider key, so for that it sends you to the [Voice](/work/channels/voice/) screen. Surogate's own speech is Romanian only.
 
 ## Programs, people and the team
 
@@ -73,7 +83,7 @@ It asks with a question in the chat and waits for your answer before it:
 
 Building a new thing inside a plan you approved does not ask again. The plan was the yes.
 
-Anything that reaches real people or real money is stricter: activating a journey, sending a test, enrolling or messaging a person, changing the team, and changing plans on Monetize. The tool itself refuses to run until the Copilot calls it again with an explicit confirmation, which its instructions allow only after you say yes to that exact action. A yes to the plan does not cover it.
+Anything that reaches real people or real money is stricter: activating a journey, sending a test, enrolling or messaging a person, changing the team, changing plans on Monetize, and giving an agent a phone number, changing its line or disconnecting it. The tool itself refuses to run until the Copilot calls it again with an explicit confirmation, which its instructions allow only after you say yes to that exact action. A yes to the plan does not cover it.
 
 While a question is open, a reply you type in the web chat is taken as your answer. A question that closes unanswered (see [Inbox](/work/tools/inbox/#when-nobody-answers)) is neither a yes nor a no: the Copilot doesn't act, says it is waiting, and asks again when you write.
 
@@ -90,12 +100,14 @@ The Copilot drawer keeps a history menu in its header (the clock/history icon). 
 - **It won't set up things that need secrets or money for you.** Its instructions have it explain the steps and link the page instead: connecting channels (WhatsApp, Slack, Telegram, Discord, Microsoft Teams), creating or revoking API keys and webhook secrets, Stripe Connect onboarding, your workspace's billing and plan, and inviting workspace members. It can still change an agent's environment variables, where channel keys live; its instructions have it ask you first and never repeat secret values back.
 - **It can't change your password** or other account settings. Those go through Settings.
 - **It can't scale agents.** Agents run on the shared runtime with no replicas, CPU or memory to set; it can start and stop them.
+- **Some knowledge-base, template and skill work happens in Studio.** It can't change a knowledge base's settings, remove a source or file, or stop or rebuild a compile; it can't create an agent from a [template](/work/workflow/templates/) (it can build a similar one with you, without the template's skills); and it can't publish skill versions, open the skill canvas, or run skill tests or optimization.
+- **It can't add phone numbers to the pool** or switch a phone line to another speech provider.
 - **It can't change models beyond starting, stopping and redeploying them.** It can't add, edit, scale or delete one.
 - **It can't browse or change the [Data Hub](/develop/features/hub/).**
 - **It can't create RL environments or start GRPO runs.**
 - **It can't run evaluations.**
 
-For the last four, it tells you where in Studio to go instead; see [Develop mode → Copilot](/develop/tools/copilot/#what-the-copilot-wont-do).
+For the Studio work in this list (knowledge bases, templates, skills, models, Data Hub, RL environments and evaluations), it tells you where in Studio to go instead; see [Develop mode → Copilot](/develop/tools/copilot/#what-the-copilot-wont-do).
 
 ## When the Copilot misbehaves
 
