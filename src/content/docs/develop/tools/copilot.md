@@ -49,7 +49,11 @@ Agents can't be scaled: they run on the shared runtime with no replicas, CPU or 
 
 For each kind of build the Copilot has a playbook: `build-agent`, `build-skill`, `build-knowledge-base`, `build-sub-agent`, `connect-mcp`, `build-program`, `build-dataset`, `run-training` and `deploy-model`. It opens the guide with `read_guide` before building, along with the checklists and templates the guide cites. The loop is interview, inspect, plan (as an artifact you approve), build in dependency order, read each piece back, summarise with links and a test script. Its instructions forbid creating or updating an agent's prompt before an interview and an approved plan.
 
-The three ML guides cover what the tools allow. `build-dataset` uploads one workspace file of up to 50 MB with `upload_dataset_from_workspace`, then shows you real rows and the stats with `read_dataset` (at most 20 rows, long values and lists cut). `run-training` checks the project's compute with `list_compute`, which says per compute which GPUs can train (on Modal, whether the saved default GPU can), and starts SFT, DPO and distillation runs with `start_training`. When a start is refused the run is saved: the Copilot fixes that run with `update_saved_run` (settings, a GPU on the run's own compute, a Hugging Face subset) and starts it with `start_saved_run`, rather than creating another. It follows a run with `get_training_run` and `get_training_metrics`, which samples the metrics across the whole run and says whether it is still going. `deploy-model` starts and stops serving an entry already on Models and switches an agent onto it.
+The three ML guides cover what the tools allow:
+
+- `build-dataset` uploads one workspace file of up to 50 MB with `upload_dataset_from_workspace`, then shows you real rows and the stats with `read_dataset` (at most 20 rows, long values and lists cut).
+- `run-training` reads the project's compute with `list_compute`, which lists per compute the GPUs that can train (see [Supported GPUs](/develop/features/training/#supported-gpus)), and starts SFT, DPO and distillation runs with `start_training`. A refused start leaves the run saved: the Copilot edits it with `update_saved_run` (settings, a GPU on its own compute, a Hugging Face subset) and starts it with `start_saved_run` instead of creating another. `get_training_metrics` samples a run's metrics across the whole run and says whether it is still going.
+- `deploy-model` starts and stops serving an entry already on Models and switches an agent onto it.
 
 ## How it asks before acting
 
@@ -67,7 +71,7 @@ Two mechanisms apply.
 - `create_plan`, `update_plan`, `replace_plan`, `delete_plan`, `update_monetize_settings` (when changing the mode)
 - `start_saved_run`, `update_saved_run`, `delete_training_run`
 
-The three training-run tools go one step further. Their `needs_confirmation` answer carries a code signed over you, the chat, the run's current state and the exact change, and they act only when called again with that code. A call with `confirmed=true` alone changes nothing, a yes can't carry over to other values, and once the run starts or changes the code no longer works. This makes sure the Copilot received the tool's own wording (for a delete, that a Modal run's storage and any unpublished weights go too); showing it to you is still up to the Copilot's instructions.
+The three training-run tools go one step further: their `needs_confirmation` answer carries a code tied to you, the chat, the run's current state and the exact change, and they act only when called again with that code. `confirmed=true` alone changes nothing, a yes doesn't carry over to other values, and the code stops working once the run starts or changes. So the Copilot always receives the tool's own wording (for a delete, that a Modal run's storage and unpublished weights go too); showing it to you is still up to its instructions.
 
 An approved plan does not cover these. Each one needs its own yes.
 

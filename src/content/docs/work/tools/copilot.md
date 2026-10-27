@@ -42,7 +42,7 @@ It follows a written build guide for each kind of thing: agents, skills, knowled
 
 - *"Turn this file into a dataset."* It uploads one JSONL, JSON, CSV or Parquet file you attach in chat (up to 50 MB), reshaping it first when the change is mechanical. Building a dataset from your agents' chats, generating a synthetic one, importing a Hugging Face repository and scrubbing PII are done on the Datasets page; it sends you there.
 - *"Fine-tune a model on these support conversations."* It interviews you, plans the run and, after your yes, starts an SFT, DPO or distillation run. It follows the run's loss and can cancel it. A Hugging Face dataset can be trained on directly, without a copy in the project.
-- *"Set sequence_len to 64 on my saved run and start it."* When a start is refused, the run stays saved. It can change that run's settings, its GPU or a Hugging Face subset, start it again, or delete a run you no longer need. Each of these waits for your yes to the exact change.
+- *"Move my saved run to the RTX PRO 6000 and start it."* A refused run stays saved; it can edit that run (settings, GPU, Hugging Face subset), start it, or delete runs you no longer need, each after your yes to the exact change.
 - *"Serve my fine-tuned model."* It starts serving a model that is already on the Models page, checks that it serves, stops it, and switches an agent onto it. A finished run is not on Models until you add it (see [Local Hub](/develop/features/models/#local-hub)); it tells you how.
 
 ## Asking the docs

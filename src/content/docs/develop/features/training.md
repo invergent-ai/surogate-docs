@@ -207,7 +207,7 @@ Two guardrails run at these boundaries:
 
 - **Plan-tier gating (402).** If the project's plan doesn't include training, both create and start return `402` with an "upgrade in Settings → Billing" message.
 - **Pre-start validation (422).** START runs the same validator that drives the frontend's Start button; if the config has errors (missing GPU blocks, unset dataset, etc.) it returns `422` and the run stays queued.
-- **Already launched (409).** A run stays **queued** after Start until its job begins (dstack waits for capacity, Modal for a GPU). While it waits, Start refuses it and the run page shows **Stop** instead, so a second Start can't launch a second job. Cancel it with **Stop** to start it again. It also counts as in use, so deleting it, its experiment or a dataset it trains on is refused.
+- **Already launched (409).** A run stays queued after Start until its job begins (dstack waits for capacity, Modal for a GPU). Meanwhile Start is refused and the run page shows **Stop**, so a second Start can't launch a second job; to start it again, **Stop** it, then **Retry**. A waiting run counts as in use, so deleting it, its experiment or a dataset it trains on is refused.
 - **Dataset check (422).** **Start** checks each local dataset before provisioning or reserving credits. It refuses the run if the dataset is missing, in another project, not **ready** (the message gives its status and says to wait for the build or pick another), has no stored copy (re-create or re-upload it), or lacks a column its declared type needs. The `422` lists each problem as `datasets: ...`. A dataset of auto type with no recognised column only warns. DISTILL also gets a teacher tokenizer check and GRPO an environment check. If a check can't run (for example the Hub is slow), Start proceeds.
 
 ### Experiments and the Data Hub
@@ -243,7 +243,7 @@ The buttons at the top of the run detail page depend on the run's status. Viewer
 | **Evaluate** | Completed | Opens the new-evaluation wizard; for a LoRA run, its adapter is already selected |
 | **Merge** or **Promote** | Completed (LoRA runs) | Needs the run published first (**Publish to Hub**); without that the dialog does nothing. Writes the merged model to a new Hub repository (you pick repo name and branch). **Merge** when the adapter still needs merging (background job; **Force** skips the 30B-parameter cap); **Promote** when the trainer already merged it (copies weights, no GPU). Disabled while a merge is in flight or done |
 | **Clone** | Any status | Asks for a name, then creates a new queued run in the same experiment with the same base model, datasets, configuration and compute. Press **Start** on the copy when ready |
-| **Delete** | Any status except an active run | Deletes the run after a confirmation; refused (`409`) while the run is provisioning, running, or queued with its job submitted |
+| **Delete** | Any status | Deletes the run after a confirmation; refused (`409`) while **Stop** is shown |
 
 ## Stopping a run
 
@@ -306,7 +306,7 @@ Runs live under `/api/training-runs`; experiments under `/api/experiments`. Crea
 | `GET` | `/api/training-runs` | List runs |
 | `GET` | `/api/training-runs/{id}` | Run detail |
 | `POST` | `/api/training-runs` | Create (queued) — `402` if the plan lacks training |
-| `POST` | `/api/training-runs/{id}/start` | Launch: `422` if the config fails validation, `409` if the run is already launched or not startable |
+| `POST` | `/api/training-runs/{id}/start` | Launch — `422` if the config fails validation |
 | `POST` | `/api/training-runs/{id}/stop` | Stop / abort |
 | `GET` | `/api/training-runs/{id}/metrics` | Metrics series |
 | `GET` | `/api/training-runs/{id}/rollouts` | GRPO rollouts (prompt / completion / reward) |
