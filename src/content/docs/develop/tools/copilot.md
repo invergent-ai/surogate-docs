@@ -23,8 +23,9 @@ It exposes the platform's tools as natural-language commands. Instead of clickin
 | People and team | `find_people`, `add_person`, `enroll_person`, `message_person`, `get_person_timeline`, `set_team_member`, and others for program settings, Telegram start links and Slack lookups |
 | Monetize and landing page | `get_monetize`, `create_plan`, `update_plan`, `update_monetize_settings`, `get_landing_page`, `update_landing_page`, and others for replacing and deleting plans |
 | Inbox and insights | `list_inbox`, `update_inbox_item`, `get_agent_insights`, `get_user_reports`, `find_sessions` |
-| Datasets | `list_datasets`, `get_dataset`, `create_dataset`, `delete_dataset`, `upload_dataset_from_workspace` |
-| Models and training | `list_models`, `get_model`, `deploy_model`, `stop_serving`, `list_training_runs`, `get_training_run`, `list_experiments`, `start_training`, `cancel_training`, `list_environments` |
+| Datasets | `list_datasets`, `get_dataset`, `read_dataset`, `delete_dataset`, `upload_dataset_from_workspace` |
+| Models and training | `list_models`, `get_model`, `deploy_model`, `stop_serving`, `list_training_runs`, `get_training_run`, `get_training_metrics`, `list_experiments`, `start_training`, `start_saved_run`, `update_saved_run`, `cancel_training`, `delete_training_run`, `list_environments` |
+| Compute | `list_compute`, `get_compute_costs` |
 | Workspace | `get_current_project`, `list_my_projects`, `search`, `recent_failures` |
 | Documentation | `search_docs`, `read_doc`, `list_docs`, `read_guide` |
 
@@ -48,7 +49,7 @@ Agents can't be scaled: they run on the shared runtime with no replicas, CPU or 
 
 For each kind of build the Copilot has a playbook: `build-agent`, `build-skill`, `build-knowledge-base`, `build-sub-agent`, `connect-mcp`, `build-program`, `build-dataset`, `run-training` and `deploy-model`. It opens the guide with `read_guide` before building, along with the checklists and templates the guide cites. The loop is interview, inspect, plan (as an artifact you approve), build in dependency order, read each piece back, summarise with links and a test script. Its instructions forbid creating or updating an agent's prompt before an interview and an approved plan.
 
-The three ML guides cover what the tools allow. `build-dataset` uploads one workspace file of up to 50 MB with `upload_dataset_from_workspace`; `create_dataset` only registers an empty record, so the guide forbids using it for training data. `run-training` starts SFT, DPO and distillation runs with `start_training`. `deploy-model` starts and stops serving an entry already on Models and switches an agent onto it.
+The three ML guides cover what the tools allow. `build-dataset` uploads one workspace file of up to 50 MB with `upload_dataset_from_workspace`, then shows you real rows and the stats with `read_dataset` (at most 20 rows, long values and lists cut). `run-training` checks the project's compute with `list_compute`, which says per compute which GPUs can train (on Modal, whether the saved default GPU can), and starts SFT, DPO and distillation runs with `start_training`. When a start is refused the run is saved: the Copilot fixes that run with `update_saved_run` (settings, a GPU on the run's own compute, a Hugging Face subset) and starts it with `start_saved_run`, rather than creating another. It follows a run with `get_training_run` and `get_training_metrics`, which samples the metrics across the whole run and says whether it is still going. `deploy-model` starts and stops serving an entry already on Models and switches an agent onto it.
 
 ## How it asks before acting
 
@@ -64,6 +65,9 @@ Two mechanisms apply.
 - `enroll_person`, `update_person_enrollment` (status changes), `manage_person_contacts` (add, confirm, remove), `message_person`
 - `set_team_member`, `remove_team_member`, `update_program_settings` (team, senders, destinations)
 - `create_plan`, `update_plan`, `replace_plan`, `delete_plan`, `update_monetize_settings` (when changing the mode)
+- `start_saved_run`, `update_saved_run`, `delete_training_run`
+
+The three training-run tools go one step further. Their `needs_confirmation` answer carries a code signed over you, the chat, the run's current state and the exact change, and they act only when called again with that code. A call with `confirmed=true` alone changes nothing, a yes can't carry over to other values, and once the run starts or changes the code no longer works. This makes sure the Copilot received the tool's own wording (for a delete, that a Modal run's storage and any unpublished weights go too); showing it to you is still up to the Copilot's instructions.
 
 An approved plan does not cover these. Each one needs its own yes.
 
