@@ -120,7 +120,7 @@ Supervisors are appointed and demoted by the project's owners in Keel Builder. A
 
 ### Why does a figure read — or None?
 
-A dash (`—`) means Keel had nothing to measure, such as a median with no decided case behind it, or a cost when no decided case has an agent cost. **None** is a count of zero. A figure says no "was" when the period before has nothing to compare it with.
+A dash (`—`) means Keel had nothing to measure, such as a median with no decided case behind it, or a cost when no decided case has an agent cost. **None** is a count of zero. A figure says no "was" when the period before has nothing to compare it with; **Decided** reads `was None`.
 
 ### Why does Keel say "The figures took too long to read. Try a shorter period."?
 
@@ -132,7 +132,7 @@ They count cases as of now. The other figures of the Overview cover the period.
 
 ### Why does Needs attention say "Nothing needs attention."?
 
-No agent, wait or queue crossed the limits for the period. An agent is listed when its checks failed, or its hands went up, more often than in the period before. A wait is listed when several cases past their deadline wait on the client or a third party at one step. A queue is listed when many items nobody holds wait for its members, and the oldest has waited long. Your administrator sets those limits.
+Nothing crossed the limits. Agents are compared over the period; waits and queues are counted as of now. An agent is listed when its checks failed, or its hands went up, more often than in the period before. A wait is listed when several cases past their deadline wait on the client or a third party at one step. A queue is listed when many items nobody holds wait for its members, and the oldest has waited long. Your administrator sets those limits.
 
 ## Moving cases
 

@@ -100,6 +100,7 @@ The side panel, beside the steps on a wide screen and under them on a phone, has
 - **History**:
   - **Your part in this case** first: what you did, latest first, or "You have not worked on this case yet".
   - Then each step done, latest first: its name and outcome, who did it, when, the rules it applied with their versions, which agent drafted the fields a person submitted, such as "Case agent drafted Amount and Term", and the **Policies read** by an agent, by policy and page.
+  - **Read by builders**: the builders who read the case, such as `Ana Marin, a builder, read an agent's session on this case`, with the time. It shows only when a builder has read the case, and says "Builders' reads could not be loaded." with **Try again** when they cannot be read. History shows the latest five; the rest are in **Full history**, which lists all of them, with **Show more reads**.
   - **Full history with inputs and outputs** opens every transition of the case, a hundred at a time, each with the agents that drafted it and the values it recorded: the outcome, the fields written, a vote's choice, an answer, a note and a message to an agent.
 - **Flow**: the current stage's flowchart, with the path the case took traced through it and its open steps marked as current.
 

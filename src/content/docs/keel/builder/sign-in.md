@@ -49,7 +49,7 @@ The bar at the bottom shows your name. **Open Studio** opens Studio in a new tab
 
 ## What your role lets you do
 
-- **Viewers** see everything but the sessions and raised hands of agents, and change nothing. Pages that edit show **You can view this project. Its editors and owners change it.**
+- **Viewers** see everything but agents' sessions, raised hands and exports, and change nothing. Pages that edit show **You can view this project. Its editors and owners change it.**
 - **Editors** change case types, rules, queues and connections in drafts, ask the designer agent, run dry runs, publish, set credentials and retry effects. They also read agents' sessions and raised hands, and export their runs.
 - **Owners** do what editors do, and also appoint, invite and demote supervisors, and create and revoke service keys.
 
