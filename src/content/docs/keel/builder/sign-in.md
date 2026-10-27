@@ -42,14 +42,15 @@ Projects are made in Studio, not here, and their owners add members there. If yo
 | **Case types** | The project's case types, and the designer for each. See [Case types](/keel/builder/case-types/). |
 | **Rules** | Decision tables, scorecards and calendars. See [Rules and calendars](/keel/builder/rules/). |
 | **Queues** | Queue definitions and the project's supervisors. See [Queues and supervisors](/keel/builder/queues/). |
+| **Agents** | How the agents of the project's case types are doing: figures, the steps they work, raised hands, what each may use and its sessions. See [The Agents page](/keel/builder/agents/). |
 | **Settings** | The business app's address, service keys and effects. See [Project settings](/keel/builder/settings/). |
 
 The bar at the bottom shows your name. **Open Studio** opens Studio in a new tab, and the sign-out button ends your session.
 
 ## What your role lets you do
 
-- **Viewers** see everything and change nothing. Pages that edit show **You can view this project. Its editors and owners change it.**
-- **Editors** change case types, rules, queues and connections in drafts, ask the designer agent, run dry runs, publish, set credentials and retry effects.
+- **Viewers** see everything but the sessions and raised hands of agents, and change nothing. Pages that edit show **You can view this project. Its editors and owners change it.**
+- **Editors** change case types, rules, queues and connections in drafts, ask the designer agent, run dry runs, publish, set credentials and retry effects. They also read agents' sessions and raised hands, and export their runs.
 - **Owners** do what editors do, and also appoint, invite and demote supervisors, and create and revoke service keys.
 
 The full table is in [Roles and permissions](/keel/reference/roles/).

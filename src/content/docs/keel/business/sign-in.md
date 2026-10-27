@@ -58,6 +58,7 @@ If the app does not let you in, it says why:
 | **Work** | Everyone | Your items, your team queues and the agents at work. Its badge counts what needs you. See [The Work page](/keel/business/work/). |
 | **Cases** | Everyone | Every case of the project, and new cases. See [Cases](/keel/business/cases/). |
 | **Team** | Supervisors | Staff, queues, agents and authority limits. See [The Team page](/keel/business/supervisors/). |
+| **Overview** | Supervisors | How the project is doing: figures, what needs attention, case types and where cases wait. See [The Overview](/keel/business/overview/). |
 
 The bar at the bottom shows your name and the sign-out button. Supervisors also have **Open Keel Builder**, which opens the project in Keel Builder; using it needs a Surogate account that is a member of the project.
 

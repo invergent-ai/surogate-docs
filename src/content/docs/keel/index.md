@@ -46,6 +46,6 @@ Running cases stay on the version they started on, unless a builder moves them t
 - [Concepts](/keel/concepts/): case types, cases, stages, steps, performers and the rest of the vocabulary.
 - [Quickstart](/keel/quickstart/): from an empty project to a worked case.
 - [Keel Builder](/keel/builder/sign-in/): every screen of the builder app.
-- [The business app](/keel/business/sign-in/): the Work page, cases, and the Team page.
+- [The business app](/keel/business/sign-in/): the Work page, cases, the Team page and the Overview.
 - [The case agent](/keel/business/case-agent/) and [the designer agent](/keel/builder/designer-agent/): the project's two helpers.
 - [Glossary](/keel/reference/glossary/) and [FAQ](/keel/reference/faq/).

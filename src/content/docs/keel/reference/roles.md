@@ -15,6 +15,8 @@ Keel has two sets of roles, one for each app.
 |---|---|---|---|
 | See case types, rules, calendars, queues, scenarios, connections, versions and drafts | Yes | Yes | Yes |
 | See the supervisors and the business app's address | Yes | Yes | Yes |
+| See the agents of the case types, their figures, the steps they work and what they may use | Yes | Yes | Yes |
+| Read an agent's sessions and raised hands, open a session, export an agent's runs for audit | No | Yes | Yes |
 | Start drafts and change them; create case types, rules, calendars, queues, scenarios and connections | No | Yes | Yes |
 | Ask the designer agent in a draft | No | Yes | Yes |
 | Set up the project's helpers, by opening the project | No | Yes | Yes |
@@ -41,6 +43,7 @@ Viewers see **You can view this project. Its editors and owners change it.** in 
 | Ask the case agent about a case, and have it fill in their own form | Yes | Yes |
 | Edit a case's documents while holding one of its steps; comment otherwise | Yes | Yes |
 | See the Team page: invite, add and remove staff | No | Yes |
+| See the Overview: figures, what needs attention, case types and where cases wait | No | Yes |
 | Add and remove queue members, people and agents (Team page, **Queue settings**) | No | Yes |
 | Turn agents off and on | No | Yes |
 | Set and clear authority limits of staff and agents | No | Yes |
