@@ -23,8 +23,9 @@ It exposes the platform's tools as natural-language commands. Instead of clickin
 | People and team | `find_people`, `add_person`, `enroll_person`, `message_person`, `get_person_timeline`, `set_team_member`, and others for program settings, Telegram start links and Slack lookups |
 | Monetize and landing page | `get_monetize`, `create_plan`, `update_plan`, `update_monetize_settings`, `get_landing_page`, `update_landing_page`, and others for replacing and deleting plans |
 | Inbox and insights | `list_inbox`, `update_inbox_item`, `get_agent_insights`, `get_user_reports`, `find_sessions` |
-| Datasets | `list_datasets`, `get_dataset`, `create_dataset`, `delete_dataset`, `upload_dataset_from_workspace` |
-| Models and training | `list_models`, `get_model`, `deploy_model`, `stop_serving`, `list_training_runs`, `get_training_run`, `list_experiments`, `start_training`, `cancel_training`, `list_environments` |
+| Datasets | `list_datasets`, `get_dataset`, `read_dataset`, `delete_dataset`, `upload_dataset_from_workspace` |
+| Models and training | `list_models`, `get_model`, `deploy_model`, `stop_serving`, `list_training_runs`, `get_training_run`, `get_training_metrics`, `list_experiments`, `start_training`, `start_saved_run`, `update_saved_run`, `cancel_training`, `delete_training_run`, `list_environments` |
+| Compute | `list_compute`, `get_compute_costs` |
 | Workspace | `get_current_project`, `list_my_projects`, `search`, `recent_failures` |
 | Documentation | `search_docs`, `read_doc`, `list_docs`, `read_guide` |
 
@@ -48,7 +49,11 @@ Agents can't be scaled: they run on the shared runtime with no replicas, CPU or 
 
 For each kind of build the Copilot has a playbook: `build-agent`, `build-skill`, `build-knowledge-base`, `build-sub-agent`, `connect-mcp`, `build-program`, `build-dataset`, `run-training` and `deploy-model`. It opens the guide with `read_guide` before building, along with the checklists and templates the guide cites. The loop is interview, inspect, plan (as an artifact you approve), build in dependency order, read each piece back, summarise with links and a test script. Its instructions forbid creating or updating an agent's prompt before an interview and an approved plan.
 
-The three ML guides cover what the tools allow. `build-dataset` uploads one workspace file of up to 50 MB with `upload_dataset_from_workspace`; `create_dataset` only registers an empty record, so the guide forbids using it for training data. `run-training` starts SFT, DPO and distillation runs with `start_training`. `deploy-model` starts and stops serving an entry already on Models and switches an agent onto it.
+The three ML guides cover what the tools allow:
+
+- `build-dataset` uploads one workspace file of up to 50 MB with `upload_dataset_from_workspace`, then shows you real rows and the stats with `read_dataset` (at most 20 rows, long values and lists cut).
+- `run-training` reads the project's compute with `list_compute`, which says per compute what it can train on: the exact GPUs on Modal, live offers on a cloud, the fleet's own GPUs on SSH (see [Supported GPUs](/develop/features/training/#supported-gpus)), and starts SFT, DPO and distillation runs with `start_training`. A refused start leaves the run saved: the Copilot edits it with `update_saved_run` (settings, a GPU on its own compute, a Hugging Face subset; not a GRPO run) and starts it with `start_saved_run` instead of creating another. `get_training_metrics` samples a run's metrics evenly (over the latest 20,000 rows of a kind, which covers almost every run) and says whether it is still going.
+- `deploy-model` starts and stops serving an entry already on Models and switches an agent onto it.
 
 ## How it asks before acting
 
@@ -64,6 +69,9 @@ Two mechanisms apply.
 - `enroll_person`, `update_person_enrollment` (status changes), `manage_person_contacts` (add, confirm, remove), `message_person`
 - `set_team_member`, `remove_team_member`, `update_program_settings` (team, senders, destinations)
 - `create_plan`, `update_plan`, `replace_plan`, `delete_plan`, `update_monetize_settings` (when changing the mode)
+- `start_saved_run`, `update_saved_run`, `delete_training_run`
+
+The three training-run tools go one step further: their `needs_confirmation` answer carries a code tied to you, the chat and the run's current state (for an edit, also the exact change), and they act only when called again with that code. `confirmed=true` alone changes nothing, a yes doesn't carry over to other values, and the code stops working once the run starts or changes. So the Copilot always receives the tool's own wording (for a delete, that a Modal run's storage and unpublished weights go too); showing it to you is still up to its instructions.
 
 An approved plan does not cover these. Each one needs its own yes.
 
@@ -73,7 +81,7 @@ An approved plan does not cover these. Each one needs its own yes.
 - **Its instructions have it guide you, not act, for secrets, keys and workspace billing.** It links the page and explains the steps: connecting channels that need credentials, creating or revoking API keys and webhook secrets, Stripe Connect onboarding, workspace billing and plan changes, and inviting members. This is an instruction, not a missing tool: `set_agent_env_vars` can write an agent's environment variables, which carry channel keys, and the Copilot is instructed to ask you first and never echo secret values back.
 - **Models beyond starting, stopping and redeploying are Studio work.** `deploy_model` starts a model, and on one that is running or starting it stops it and starts it again. No tool adds, edits, scales or deletes a model, merges or promotes an adapter, or publishes a run to the Hub; the instructions have it say where in Studio each is done.
 - **No Data Hub tools.** It can't browse or change repositories, branches, tags or files; it links [Data Hub](/develop/features/hub/) and explains from its doc.
-- **No RL environments or GRPO.** `start_training` refuses GRPO and PPO, and no tool on the Copilot's list creates an environment. It walks the user through the Training page's **Environments** tab and the new-run form, and can list the project's environments.
+- **No RL environments or new GRPO runs.** `start_training` refuses GRPO and PPO, `update_saved_run` won't edit a GRPO run's settings, and no tool on the Copilot's list creates an environment. A GRPO run already saved in Studio can still be started or deleted with `start_saved_run` and `delete_training_run`. It walks the user through the Training page's **Environments** tab and the new-run form, and can list the project's environments.
 - **No evaluation tools.** It sends the user to [Evaluations](/develop/features/evaluations/) or the run page's **Evaluate** button.
 - **It does not decide governance approvals.** Those stay in the Inbox.
 - **It can't make images or videos.**

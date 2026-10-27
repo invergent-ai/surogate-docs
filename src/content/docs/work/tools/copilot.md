@@ -16,6 +16,9 @@ Look things up:
 - *"Which agent had the most sessions this week?"*
 - *"Find conversations where people got stuck on pricing."*
 - *"Show me the latest training run for sql-writer."*
+- *"Show me what's in the support-chats dataset."*
+- *"How's the loss going on my last run?"*
+- *"Which GPUs can my project train on, and what did compute cost across my projects in the last 30 days?"*
 - *"What skills does my customer-support-bot have attached?"*
 - *"What failed this week?"*
 
@@ -38,7 +41,8 @@ It follows a written build guide for each kind of thing: agents, skills, knowled
 ## Datasets, training and models
 
 - *"Turn this file into a dataset."* It uploads one JSONL, JSON, CSV or Parquet file you attach in chat (up to 50 MB), reshaping it first when the change is mechanical. Building a dataset from your agents' chats, generating a synthetic one, importing a Hugging Face repository and scrubbing PII are done on the Datasets page; it sends you there.
-- *"Fine-tune a model on these support conversations."* It interviews you, plans the run and, after your yes, starts an SFT, DPO or distillation run. It follows the run and can cancel it. A Hugging Face dataset can be trained on directly, without a copy in the project.
+- *"Fine-tune a model on these support conversations."* It interviews you, plans the run and, after your yes, starts an SFT, DPO or distillation run. It follows the run's loss and can cancel it. A Hugging Face dataset can be trained on directly, without a copy in the project.
+- *"Move my saved run to the RTX PRO 6000 and start it."* A refused run stays saved; it can edit that run (settings, a GPU on the run's own compute, Hugging Face subset; GRPO runs are edited in Studio), start it, or delete runs you no longer need, each after your yes to the exact change.
 - *"Serve my fine-tuned model."* It starts serving a model that is already on the Models page, checks that it serves, stops it, and switches an agent onto it. A finished run is not on Models until you add it (see [Local Hub](/develop/features/models/#local-hub)); it tells you how.
 
 ## Asking the docs
