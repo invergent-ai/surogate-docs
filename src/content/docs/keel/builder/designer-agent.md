@@ -15,7 +15,7 @@ Each project has two helper agents:
 
 Keel sets them up when an editor or owner opens the project in Keel Builder, and after a publish when the project lacks either. There is nothing to do. In Studio they show among the project's agents, marked **Helper**.
 
-A helper is never offered as a step's agent or as an intake agent. In the business app, it is never offered as a queue member, a delegate or a Reassign target.
+A helper is never offered as a step's agent or as an intake agent. The [Agents page](/keel/builder/agents/#the-list) lists the helpers apart from the agents that work steps. In the business app, it is never offered as a queue member, a delegate or a Reassign target.
 
 ## Opening the panel
 

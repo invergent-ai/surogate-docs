@@ -79,6 +79,10 @@ While you hold a step an agent drafts for you, and the agent is at work on it, a
 - **When an agent fails for good**, people take its step: it opens as a step in the queue that gets the agent's questions, and the queue's members claim it and work it like any other step. On a step the agent drafts for a person, the person works on alone.
 - **When a supervisor turns an agent off**, each of its steps that opens from then on goes to people the same way. Steps it already works carry on. It is no longer offered as a queue member, a delegate or a Reassign target. See [Agents](/keel/business/supervisors/#agents).
 
+## How agents are doing
+
+Supervisors see how the project's agents are doing on the [Overview](/keel/business/overview/): the share of steps done by agents, how often agents raised a hand, and what agents cost per case. **Needs attention** lists an agent whose checks failed, or whose hands went up, more often than in the period before. The agent shows by name only.
+
 ## Authority applies to agents
 
 Agents have authority limits too, set on the Team page like a person's. An agent with no limit in a step's scope, or one below the amount, cannot complete a step that checks authority.

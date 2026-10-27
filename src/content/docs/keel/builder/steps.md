@@ -21,6 +21,8 @@ The step needs both. Until both are picked, the panel says **Pick its agent to s
 
 The agent works the step in its own session. It gets the values of the fields the step reads, may use only what [May use](#may-use) allows, and must finish with one of the step's outcomes and the fields that outcome requires. Keel also refuses an agent's result that does not say where each value came from.
 
+How the agent does on the step, over a period, shows on the [Agents page](/keel/builder/agents/#steps-it-works).
+
 If the agent fails for good, people take the step: it opens as work in the **Raised hands go to** queue. The same happens to each of its steps that opens while a supervisor has the agent turned off.
 
 ### A person or a queue

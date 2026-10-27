@@ -90,6 +90,10 @@ Keel could not pass the comment to the agent. "No agent works a step of yours on
 
 Only supervisors see it. If you should be one, ask an owner of the project to appoint you in Keel Builder.
 
+### Why do I not see the Overview?
+
+Only supervisors see it. A link to its address shows "Only the project's supervisors see the overview." If you should be one, ask an owner of the project to appoint you in Keel Builder.
+
 ### Why does the app say "You are not on this project's staff"?
 
 Your account signs in, but no one has added you to this project's staff. Ask a supervisor to add or invite you.
@@ -111,6 +115,24 @@ A set-password link works once, until the time it was given with. Ask the person
 ### Why can I not remove a supervisor?
 
 Supervisors are appointed and demoted by the project's owners in Keel Builder. Ask an owner to demote them; then remove them on the Team page.
+
+## Figures
+
+### Why does a figure read — or None?
+
+A dash (`—`) means Keel had nothing to measure, such as a median with no decided case behind it, or a cost when no decided case has an agent cost. **None** is a count of zero. A figure says no "was" when the period before has nothing to compare it with; **Decided** reads `was None`.
+
+### Why does Keel say "The figures took too long to read. Try a shorter period."?
+
+The figures count cases and agent runs over the period, and Keel stops a read that takes too long. Pick a shorter period in **Period**, such as **Last 7 days**, or press **Try again**. It applies to the [Overview](/keel/business/overview/) and to the [Agents page](/keel/builder/agents/).
+
+### Why do Open cases and Past deadline not change with the period?
+
+They count cases as of now. The other figures of the Overview cover the period.
+
+### Why does Needs attention say "Nothing needs attention."?
+
+Nothing crossed the limits. Agents are compared over the period; waits and queues are counted as of now. An agent is listed when its checks failed, or its hands went up, more often than in the period before. A wait is listed when several cases past their deadline wait on the client or a third party at one step. A queue is listed when many items nobody holds wait for its members, and the oldest has waited long. Your administrator sets those limits.
 
 ## Moving cases
 
@@ -157,6 +179,18 @@ A credential is set on the published connection. A connection new in your draft 
 Agents are made in Studio. Keel Builder reads the project's agents again when you come back to its window, at most once a minute, or when you reload the page.
 
 The project's helpers, the case agent and the designer agent, are never in the list of a step's agents or of intake agents.
+
+### Why is an agent not on the Agents page?
+
+The page lists the agents named by the current published versions of the project's case types. An agent a draft adds shows once the draft is published. An agent named only to start cases shows with `0 steps in 0 case types`. The project's helpers are listed apart, under **Helpers, not on any step**. See [The Agents page](/keel/builder/agents/#the-list).
+
+### Why does the Agents page show no sessions or raised hands?
+
+You are a **Viewer** of the project. The page says "Sessions and raised hands show case content. The project's editors and owners read them." Ask an owner to make you an editor in Studio.
+
+### Why does Export for audit refuse?
+
+Keel refuses a period that holds more than 100,000 runs: "The export holds more than 100,000 runs; choose a shorter period." Pick a shorter **Period**, then export again. See [Export for audit](/keel/builder/agents/#export-for-audit).
 
 ### Why is there no "Ask the designer agent"?
 

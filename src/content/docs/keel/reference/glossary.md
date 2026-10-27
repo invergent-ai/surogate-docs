@@ -43,10 +43,12 @@ Every Keel term in one place. [Concepts](/keel/concepts/) explains how they fit 
 | **Join** | A node that waits until every path leading to it has arrived. |
 | **Maker-checker** | A step's rule that it must be done by someone other than whoever did named earlier steps. |
 | **Mapping** | The part of a draft that says where the open cases of an older version go in the new version. |
+| **Needs attention** | The Overview's list of agents, waits and queues a supervisor should look at, each with a link to where to act. |
 | **Needs me** | The list of work you hold, on the Work page. |
 | **Number prefix** | The start of a case type's case numbers. |
 | **Optional action** | A step people can start from a case's header, where the case type allows it. |
 | **Outcome** | How a step, vote or wait ends, and where the case goes from there. |
+| **Overview** | The supervisors' page of the business app: the project's figures, what needs attention, its case types and where cases wait. See [The Overview](/keel/business/overview/). |
 | **Parallel split** | A node that starts several paths at once. |
 | **Performer** | Who does a step: an agent, a person or a queue, an agent with a person, or a system. |
 | **Pinned rule** | A rule each case keeps at the version in effect when it started. |
@@ -64,10 +66,11 @@ Every Keel term in one place. [Concepts](/keel/concepts/) explains how they fit 
 | **Serving order** | The order in which a queue hands out work: kinds first, then oldest or nearest deadline. |
 | **Service key** | A key another system uses to start cases and send case events in the project. |
 | **Service level** | A goal and a deadline on a step, a stage or a case, with an optional queue to escalate to. |
+| **Session** | An agent's run of one step or work item, with a record of what it did. Watch shows an agent's own step read-only; builders list an agent's sessions on the [Agents page](/keel/builder/agents/). |
 | **Staff** | The people of a project who sign in to the business app. |
 | **Stage** | A phase of a case. A case is always in one stage. |
 | **Step** | Work in a stage, done by its performer, which ends with an outcome. |
-| **Supervisor** | Staff who also run the Team page and move cases by hand. |
+| **Supervisor** | Staff who also run the Team page, read the Overview and move cases by hand. |
 | **Version** | One published state of a case type. A case stays on the version it started on unless it is moved. |
 | **Vote** | A step decided when enough members of a queue choose the same outcome. |
 | **Wait** | A node that holds a case until an event, a time or a condition, with an optional limit. |

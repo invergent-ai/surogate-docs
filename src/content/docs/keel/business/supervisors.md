@@ -4,7 +4,7 @@ sidebar:
   label: Team page (supervisors)
 ---
 
-Supervisors run the people side of a project. The **Team** page shows "Who works this project: its staff, its queues and its agents." From it, supervisors invite and remove staff, staff the queues with people and agents, turn agents off and on, and set authority limits. Supervisors also reassign work items and move cases by hand.
+Supervisors run the people side of a project. The **Team** page shows "Who works this project: its staff, its queues and its agents." From it, supervisors invite and remove staff, staff the queues with people and agents, turn agents off and on, and set authority limits. Supervisors also reassign work items and move cases by hand, and read the [Overview](/keel/business/overview/): how the project is doing.
 
 The project's owners appoint the first supervisors in Keel Builder (see [Supervisors](/keel/builder/queues/#supervisors)). Staff who are not supervisors have no **Team** row; a link to the page shows "Only the project's supervisors see the team."
 
@@ -88,6 +88,7 @@ A supervisor can move a case to any stage, or to a step of a stage, with a reaso
 
 ## What else supervisors see
 
+- The [Overview](/keel/business/overview/), after **Team** in the left rail: figures, what needs attention, case types and where cases wait. Its **Open the agents** link opens the **Agents** tab above.
 - **Queue settings** on each team queue of the Work page.
 - **Reassign** on open work items, except votes.
 - **Open Keel Builder** in the bar at the bottom of the left rail, to open the project in Keel Builder. Using it needs a Surogate account that is a member of the project.
@@ -95,4 +96,4 @@ A supervisor can move a case to any stage, or to a step of a stage, with a reaso
 
 ## What staff who are not supervisors see
 
-Staff see the **Work** and **Cases** pages, start cases, work the steps given to them or their queues, answer agents' questions, delegate and return their items, message agents and watch sessions. They do not see the Team page, **Queue settings**, **Reassign**, **Move by hand…** or **Open Keel Builder**.
+Staff see the **Work** and **Cases** pages, start cases, work the steps given to them or their queues, answer agents' questions, delegate and return their items, message agents and watch sessions. They do not see the Team page, the Overview, **Queue settings**, **Reassign**, **Move by hand…** or **Open Keel Builder**.
