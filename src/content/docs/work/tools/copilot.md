@@ -70,8 +70,8 @@ Every change to a line, even a small settings edit, needs your yes to that exact
 ## Missions, scheduled work and reports
 
 - *"What is my research agent working on?"* It lists an agent's [missions](/work/tools/missions/) and reads one with its tasks, workers and last evaluation. It can pause, resume or cancel one after your yes. Pausing leaves running workers to finish; cancelling can't be undone and refunds nothing.
-- *"Which of my loops failed last night?"* It lists an agent's [scheduled work](/work/tools/scheduled-work/) with its status, schedule and last error, and after your yes runs one now or cancels it. Running one now is a real run: whatever its prompt does, messaging people included, happens.
-- It sees only the missions and scheduled work you started yourself from Work chat, the same ones those pages show you.
+- *"Which of my loops failed last night?"* It lists an agent's [scheduled work](/work/tools/scheduled-work/) with its status, schedule and last error, and after your yes runs one now, pauses, resumes or cancels it, or changes its name, prompt or schedule. Running one now is a real run: whatever its prompt does, messaging people included, happens.
+- It sees only the missions you started yourself from Work chat, and every schedule of the agent, with who made it.
 - *"Focus Ana's report on billing questions and refresh it."* It sets what a user's next report should focus on, starts a fresh activity report for one of the agent's users, and reads or, after your yes, rebuilds the overview across up to 200 users. Reports use the platform's own model and spend no credits.
 
 ## Programs, people and the team
@@ -82,7 +82,7 @@ The Copilot works across these areas:
 - **People:** find and add people, rename them, make a Telegram start link, enrol people, change their follow-up, link their contacts, read their timeline and message them. After your yes it changes whether someone may be messaged first on a channel, binds their Slack member or WhatsApp number (replacing the one they had; one already bound to someone else is refused), or removes them from the agent. Removing keeps their account and history, unless they are bound to no agent at all, not even this one, which deletes the account for good; the question says which.
 - **WhatsApp forms:** build a [WhatsApp form](/work/channels/whatsapp/#forms) for a journey. After your yes it creates the form as a draft; it fixes the problems Meta finds, and after another yes publishes it and lets the agent send it. A published form can't be edited, and forms can be retired but not deleted, so it asks before each of those steps.
 - **Team:** set up the team (what each member gets told about, can do and handles, and a Slack channel picked from the workspace as its shared alert place), change the wording and channels on Settings, and claim or resolve escalations.
-- **Also:** read and answer your Inbox, read an agent's Insights, manage the plans on Monetize, and build the agent's [landing page](/work/workflow/landing-page/), including formatted text and image framing. Publishing or taking the page offline needs your yes. On a page that is already live, its edits are public at once: they don't wait for **Publish changes** as edits in Studio do.
+- **Also:** read your Inbox and mark items handled, read an agent's Insights, manage the plans on Monetize, and build the agent's [landing page](/work/workflow/landing-page/), including formatted text and image framing. Publishing or taking the page offline needs your yes. On a page that is already live, its edits are public at once: they don't wait for **Publish changes** as edits in Studio do.
 
 It knows what you are looking at: on the Programs page it is told which tab, journey and person you have open, so *"why didn't this step go out?"* needs no further context.
 
@@ -99,9 +99,9 @@ It asks with a question in the chat and waits for your answer before it:
 
 Building a new thing inside a plan you approved does not ask again. The plan was the yes.
 
-Anything that reaches real people, real money or who can do what is stricter: activating a journey, sending a test, enrolling or messaging a person, changing the team, changing plans on Monetize, giving an agent a phone number, changing its line or disconnecting it, changing a person's contact permission, binding or removing a person, creating, publishing or retiring a WhatsApp form, letting the agent send one or taking that back, creating a project, adding, changing or removing a member, publishing or unpublishing the landing page, pausing, resuming or cancelling a mission, running or cancelling scheduled work, and rebuilding the users overview report. The tool itself refuses to run until the Copilot calls it again with the confirmation code the tool gave it, which its instructions allow only after you say yes to that exact action. The question shows the values that will be set (the message text, the plan's price, the team member's settings), and the yes covers only those: anything different needs a new yes. A yes to the plan does not cover it. A viewer is refused before any question is asked.
+Anything that reaches real people, real money or who can do what is stricter: activating a journey, sending a test, enrolling or messaging a person, changing the team, changing plans on Monetize, giving an agent a phone number, changing its line or disconnecting it, changing a person's contact permission, binding or removing a person, creating, publishing or retiring a WhatsApp form, letting the agent send one or taking that back, creating a project, adding, changing or removing a member, publishing or unpublishing the landing page, pausing, resuming or cancelling a mission, running, pausing, resuming, editing or cancelling scheduled work, and rebuilding the users overview report. The tool itself refuses to run until the Copilot calls it again with the confirmation code the tool gave it, which its instructions allow only after you say yes to that exact action. The yes covers only what you were asked about: anything different needs a new yes. A yes to the plan does not cover it. A viewer asking for one of these on an agent is refused before any question is asked.
 
-Answer an open question in its question card: in Studio, a reply typed in the chat box is not taken as the answer. A question that closes unanswered (see [Inbox](/work/tools/inbox/#when-nobody-answers)) is neither a yes nor a no: the Copilot doesn't act, says it is waiting, and asks again when you write.
+Answer an open question in its question card: for now, in Studio a reply typed in the chat box is not taken as the answer. A question that closes unanswered (see [Inbox](/work/tools/inbox/#when-nobody-answers)) is neither a yes nor a no: the Copilot doesn't act, says it is waiting, and asks again when you write.
 
 Governance approvals in the Inbox are never the Copilot's to decide. It sends you to the Inbox page. For the exact tools and how each check works, see [Develop mode → Copilot](/develop/tools/copilot/#how-it-asks-before-acting).
 
@@ -127,10 +127,10 @@ The Copilot drawer keeps a history menu in its header (the clock/history icon). 
 - **It can't change models beyond starting, stopping and redeploying them.** It can't add, edit, scale or delete one.
 - **It can't browse or change the [Data Hub](/develop/features/hub/).**
 - **It can't create RL environments or start GRPO runs.**
-- **It can't start a mission or scheduled work, or change one's schedule.** Start those from Work chat with `/goal`, `/mission` or `/loop`.
+- **It can't start a mission or scheduled work.** Start those from Work chat with `/goal`, `/mission` or `/loop`.
 - **It can't run evaluations.**
 
-For the Studio work in this list, it tells you where in Studio to go instead; see [Develop mode → Copilot](/develop/tools/copilot/#what-the-copilot-wont-do).
+For the Studio work in this list (channels and integrations, agent and selling settings, knowledge bases, templates, skills, models, Data Hub, RL environments and evaluations), it tells you where in Studio to go instead; see [Develop mode → Copilot](/develop/tools/copilot/#what-the-copilot-wont-do).
 
 ## When the Copilot misbehaves
 
