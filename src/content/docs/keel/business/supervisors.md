@@ -19,7 +19,7 @@ Two ways:
 - **Add from the organisation**: for someone who already has a work account in the project's organisation. Search by name and pick them; people already on the staff show dimmed. Keel says *name* **is on the staff.**
 - **Invite staff**, in the page header: for anyone, by email. "Add a person to this project's staff by their work email." Enter the **Email** and **Name**, then press **Invite**.
 
-The invitation's answer says how the person signs in, and gives a link to send them when there is one:
+The invitation's answer says how the person signs in, and gives a link to send them when there is one. Where Keel sends email, it emails the person the link itself and says so, for example **Keel emailed *name* a link to set their password. If it does not reach them, send them this one.**, and the link is still shown to copy:
 
 - **Send *name* this link to set their password.** A new password account gets a set-password link. "It works once, until" the time shown.
 - ***Name* signs in with** Google, GitHub or a password, **using** their email, with a sign-in link, when the project signs in that way.
@@ -30,9 +30,18 @@ Press **Copy** to copy the link, then **Done**. The dialog shows the link only t
 
 Invitations can be refused; see [Queues and supervisors](/keel/builder/queues/#invite-someone-new) for the messages.
 
+### Absences
+
+A person who will be away hands their work on from the [Work page](/keel/business/work/#delegate-while-away). A supervisor can do the same for anyone on the staff, from their row on the **Staff** tab:
+
+- **Set absence** on a row opens **Set an absence for** the person's name: "While *name* is away, their items and the new ones that reach them go to a colleague, or back to their queues." Pick **Return their items to the queue** or a colleague under **People**; you are offered, and the person is not. Pick a day under **Back on** or leave it empty. The dialog says what would move and what would stay before you press **Set absence**, as it does for a person's own. Keel says, for example, **Mihai Ionescu is away. 1 item went back to its queue.**
+- A person who is away shows beneath their name, such as `Out, back on 3 Nov · 2 items went to you`, or `Out until they end it`. Their row offers **End absence** instead: "End *name*'s absence?" "New items reach them again. What went to you stays with you." Keel says "*Name*'s absence has ended."
+
+When some of a person's items cannot move, because they have no queue to return to or the substitute may not do their step, they stay with the person. Every other supervisor of the project then finds a notice in **Needs me**, "*Name* is away: *n* items stayed with them", listing them, so one of them can [reassign](/keel/business/work/#reassign-an-item) the items. An absence is refused when items would stay and the project has no other supervisor to see them: "Some items cannot return to a queue and the project has no other supervisor to see them: choose a substitute, or ask a builder to name a supervisor."
+
 ### Remove someone
 
-Press **Remove** on their row. Keel asks **Remove *name* from the staff?**: "They leave the project's queues and lose their authority limits." Supervisors cannot be removed here: "The project's builders appoint and demote supervisors." Ask an owner to demote them first.
+Press **Remove** on their row. If they were away, their absence ends. Keel asks **Remove *name* from the staff?**: "They leave the project's queues and lose their authority limits." Supervisors cannot be removed here: "The project's builders appoint and demote supervisors." Ask an owner to demote them first.
 
 ## Queues and members
 

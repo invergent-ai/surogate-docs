@@ -11,10 +11,18 @@ Keel records each time someone opens a case.
 - A breadcrumb: **Cases** / the case number.
 - The case's title, or its number when the case type gives it no title.
 - Under it, the case type and its version, such as `Loan request v3`, the case's summary values, and the day it opened.
-- On the right, a button for each **optional action** available now, such as **Ask client for a document**. Pressing it starts the action's step, which then shows like any other step.
+- On the right, **Follow**, and a button for each **optional action** available now, such as **Ask client for a document**. Pressing it starts the action's step, which then shows like any other step.
 - For supervisors, **More actions** with **Move by hand…**. See [Move a case by hand](/keel/business/supervisors/#move-a-case-by-hand).
 
 Under the header, the **stage bar** shows the case's stages with their dates: done, current and ahead. The current stage names the steps open in it.
+
+## Follow a case
+
+**Follow**, in the header, puts the case's changes in your [Updates](/keel/business/work/#updates). It reads **Following** once you do, and pressing it again stops: Keel says "You follow *number*. Its changes show in Updates." or "You no longer follow *number*, even when you act on it."
+
+You also follow a case by acting on it: completing a step, casting a vote, answering an agent's question, moving it, messaging its agent, or commenting with a mention. Keel does not tell you each time; the button reads **Following** the next time the case changes.
+
+Stopping is for good: once you unfollow a case, acting on it does not follow it again. Only **Follow** does. Agents never follow a case. The changes you make yourself are not in your Updates, and [Your settings](/keel/business/settings/) chooses whether you are emailed when a case you follow moves.
 
 ## Your task
 
@@ -88,6 +96,8 @@ Office documents, such as Word, Excel, PowerPoint and PDF files, open in the web
 The panel also shows who is in the document now, as "Here now ·" and their names.
 
 While you hold a step that an agent drafts for you, and the agent is at work on it, the editor offers that agent to mention in a comment. A comment that mentions it reaches the agent, which answers in the comment's thread. If Keel cannot pass the comment on, the panel says "The agent was not told about your comment:" and why, such as "No agent works a step of yours on this case now."
+
+The editor also offers the project's staff, apart from you. A comment that mentions a colleague tells them: it appears in their [Needs me](/keel/business/work/#notices-in-needs-me) as a **Mention**, and reaches them by email when their settings say so. The notice names you and the document and leads to it; it never copies your comment. If Keel cannot tell them, the panel says "The people you mentioned were not told about your comment:" and why. Mentioning many people in a minute is limited: "Too many mentions in a minute: wait a moment and comment again."
 
 Other files show their name and size, with **Download**. When documents cannot open in the editor, the panel says why, such as "Documents open here once a document server is set up. Download the file instead."
 
