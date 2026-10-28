@@ -126,18 +126,63 @@ An approved plan does not cover these. Each one needs its own yes.
 
 ## What the Copilot won't do
 
-- **It has no browser tool.** By design it works from the platform's own tools, not the open web. It is not a research agent.
-- **Its instructions have it guide you, not act, for secrets, keys and payments.** It links the page and explains the steps: connecting channels that need credentials, creating or revoking API keys and webhook secrets, Stripe Connect onboarding, and payments, plan changes and top-ups (it can read the plan, credits and usage). It adds only existing accounts as members and can't invite someone new. The same goes for the agent's API keys and the OpenAI-compatible API (the **Web chat & API** row on Publish > Channels), the WhatsApp number, Meta webhook and subscription, the Teams app package, Composio sign-in (**Connect** on Configure > Tools), the git token, repositories and coding-agent credentials (Configure > Coding), SSH keys and targets (Configure > Governance), browser profiles (Settings, Profile) and saved keys ([Vault](/work/settings/vault/)). This is an instruction, not a missing tool: `set_agent_env_vars` can write an agent's environment variables, which carry channel keys, and the Copilot is instructed to ask you first and never echo secret values back.
-- **Some knowledge-base, template and skill work is Studio-only.** Knowledge-base settings, removing a source or file, and stopping or rebuilding a compile (`compile_knowledge_base` has no stop or rebuild); creating an agent from a template (it links [Templates](/work/workflow/templates/) or offers to build one with `/build-agent`, without the template's skills); publishing skill versions, the skill canvas, test runs and optimization. Its instructions have it say where in Studio each is done.
-- **More Studio-only work.** Which channels are live (it can read only the voice line), an agent user's password and memory, the agent-wide report prompts (it can set one person's report focus with `set_user_report_guidance`), turning Programs on or off, the per-user usage limit and the **Free trial** card for people who haven't bought (a paid plan's trial days it sets with `update_plan`), answering a question an agent asked in the Inbox, the Programs API scopes and webhook, and the queued outreach list with **Send now**. It names the page and the control for each.
-- **Not yet: whole conversations and buyers.** It can't read a past conversation in full (it gives the session link `find_sessions` returns, with its **Thread** tab) or tell whether Stripe is connected and who bought (`get_monetize` returns a buyer count only). It says so and links the place.
-- **No number pool or other speech providers.** It can't add numbers to the pool or switch a phone line to another provider; it sends you to the [Voice](/work/channels/voice/) screen.
-- **Models beyond starting, stopping and redeploying are Studio work.** `deploy_model` starts a model, and on one that is running or starting it stops it and starts it again. No tool adds, edits, scales or deletes a model, merges or promotes an adapter, or publishes a run to the Hub; the instructions have it say where in Studio each is done.
-- **No Data Hub tools.** It can't browse or change repositories, branches, tags or files; it links [Data Hub](/develop/features/hub/) and explains from its doc.
-- **No RL environments or new GRPO runs.** `start_training` refuses GRPO and PPO, `update_saved_run` won't edit a GRPO run's settings, and no tool on the Copilot's list creates an environment. A GRPO run already saved in Studio can still be started or deleted with `start_saved_run` and `delete_training_run`. It walks the user through the Training page's **Environments** tab and the new-run form, and can list the project's environments.
-- **No evaluation tools.** It sends the user to [Evaluations](/develop/features/evaluations/) or the run page's **Evaluate** button.
-- **It does not decide governance approvals.** Those stay in the Inbox.
-- **It can't make images or videos.**
+For each of these the Copilot says plainly that it can't, and names the page and control where it is done.
+
+### Secrets, keys and payments: it guides, you act
+
+Anything that needs a secret or moves money is yours to do. The Copilot links the place and explains the steps.
+
+| What | Where |
+|---|---|
+| Channel credentials (WhatsApp, Slack, Telegram, Discord, Microsoft Teams) | Publish > Channels, the channel's row |
+| An agent's API keys, webhook secrets and the OpenAI-compatible API | Publish > Channels, the **Web chat & API** row |
+| The WhatsApp number, Meta webhook and subscription | Publish > Channels, the **WhatsApp** row |
+| The Teams app package | Publish > Channels, the **Microsoft Teams** row, **Download app package** |
+| Composio sign-in | Configure > Tools, **Connect** on the toolkit |
+| The git token, repositories and coding-agent credentials | Configure > Coding |
+| SSH keys and targets | Configure > Governance, **SSH remote access** |
+| Browser profiles | Settings, Profile |
+| Saved keys | [Vault](/work/settings/vault/) |
+| Stripe Connect onboarding | Publish > Monetize |
+| Payments, plan changes and top-ups | Settings, Billing (the Copilot can read the plan, credits and usage) |
+| Inviting someone who has no account yet | Settings (the Copilot adds existing accounts as members) |
+
+This is an instruction, not a missing tool: `set_agent_env_vars` can write an agent's environment variables, which carry channel keys, and the Copilot is instructed to ask you first and never echo secret values back.
+
+### Studio-only work
+
+**Agents, channels and Programs**
+- Which channels are live: Publish > Channels (the Copilot can read only the voice line).
+- An agent user's password (Publish > Users) and memory (Publish > Insights, **Memory**).
+- The agent-wide report prompts: Publish > Insights, **Prompts**. One person's report focus it sets itself with `set_user_report_guidance`.
+- Turning Programs on or off: Configure > Capabilities, **Programs**.
+- The per-user usage limit and the **Free trial** card for people who haven't bought: Publish > Monetize. A paid plan's trial days it sets itself with `update_plan`.
+- Answering a question an agent asked: the agent's Inbox, **Submit answer**.
+- The Programs API scopes and webhook: Publish > Channels, the **Web chat & API** row.
+- Queued outreach and sending a held message now: Programs, **Team** tab, **Send now**.
+- Switching a phone line to another speech provider: the [Voice](/work/channels/voice/) screen. Adding numbers to the phone pool is for an administrator, in Settings, Phone numbers.
+
+**Knowledge bases, templates and skills**
+- Knowledge-base settings, removing a source or file, and stopping or rebuilding a compile (`compile_knowledge_base` has no stop or rebuild).
+- Creating an agent from a template: it links [Templates](/work/workflow/templates/), or offers to build one with `/build-agent`, without the template's skills.
+- Publishing skill versions, the skill canvas, test runs and optimization.
+
+**Models, data and training**
+- **Models beyond starting, stopping and redeploying.** `deploy_model` starts a model, and on one that is running or starting it stops it and starts it again. No tool adds, edits, scales or deletes a model, merges or promotes an adapter, or publishes a run to the Hub.
+- **The Data Hub.** It can't browse or change repositories, branches, tags or files; it links [Data Hub](/develop/features/hub/) and explains from its doc.
+- **RL environments and new GRPO runs.** `start_training` refuses GRPO and PPO, `update_saved_run` won't edit a GRPO run's settings, and no tool on the Copilot's list creates an environment. A GRPO run already saved in Studio can still be started or deleted with `start_saved_run` and `delete_training_run`. It walks the user through the Training page's **Environments** tab and the new-run form, and can list the project's environments.
+- **Evaluations.** It sends the user to [Evaluations](/develop/features/evaluations/) or the run page's **Evaluate** button.
+
+### Not possible yet
+
+- **Reading a whole past conversation.** It gives the session link `find_sessions` returns; the session's **Thread** tab has the full conversation.
+- **Whether Stripe is connected, and who bought.** `get_monetize` returns a buyer count only; Publish > Monetize has **Stripe Connect** and **Subscribers**.
+
+### By design
+
+- **No browser tool.** It works from the platform's own tools, not the open web. It is not a research agent.
+- **No governance decisions.** Approvals stay in the Inbox.
+- **No images or videos.**
 
 ## Programmatic equivalents
 

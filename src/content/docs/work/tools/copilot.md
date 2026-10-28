@@ -115,22 +115,40 @@ The Copilot drawer keeps a history menu in its header (the clock/history icon). 
 
 ## What the Copilot can't do
 
-- **It has no browser.** It works from the platform's own tools, not the open web. If you want to scrape or navigate a site, use a regular agent with `browser_*` tools.
-- **It can't make images or videos.** Use a regular agent for media.
-- **It won't set up things that need secrets or money for you.** Its instructions have it explain the steps and link the page instead: connecting channels (WhatsApp, Slack, Telegram, Discord, Microsoft Teams), creating or revoking API keys and webhook secrets, Stripe Connect onboarding, and paying, changing the plan or buying credits. It can read the plan, credits and usage, and add people who already have an account, but it can't invite someone new. The same goes for an agent's API keys and the OpenAI-compatible API, the WhatsApp number and its Meta webhook, the Teams app package, connecting apps through Composio, git, SSH and coding-agent access, browser profiles, and saved keys in the Vault. It can still change an agent's environment variables, where channel keys live; its instructions have it ask you first and never repeat secret values back.
-- **It can't change your password** or other account settings. Those go through Settings.
-- **It can't scale agents.** Agents run on the shared runtime with no replicas, CPU or memory to set; it can start and stop them.
-- **Some knowledge-base, template and skill work happens in Studio.** It can't change a knowledge base's settings, remove a source or file, or stop or rebuild a compile; it can't create an agent from a [template](/work/workflow/templates/) (it can build a similar one with you, without the template's skills); and it can't publish skill versions, open the skill canvas, or run skill tests or optimization.
-- **More is done in Studio:** which channels are live, an agent user's password and memory, the agent-wide report prompts (it can set one person's report focus), turning Programs on or off, the usage limit and **Free trial** card for people who haven't bought (it can set a paid plan's trial days), answering a question an agent asked in the Inbox, the Programs API and webhook, and sending a held outreach message now. It tells you the page and the button.
-- **It can't yet read a whole past conversation or tell you who bought.** It links the conversation's **Thread** tab, and the **Stripe Connect** and **Subscribers** cards on Monetize.
-- **It can't add phone numbers to the pool** or switch a phone line to another speech provider.
-- **It can't change models beyond starting, stopping and redeploying them.** It can't add, edit, scale or delete one.
-- **It can't browse or change the [Data Hub](/develop/features/hub/).**
-- **It can't create RL environments or start GRPO runs.**
-- **It can't start a mission or scheduled work.** Start those from Work chat with `/goal`, `/mission` or `/loop`.
-- **It can't run evaluations.**
+When you ask for one of these, the Copilot says it can't and tells you the page and the button. For the exact places, see [Develop mode → Copilot](/develop/tools/copilot/#what-the-copilot-wont-do).
 
-For the Studio work in this list (channels and integrations, agent and selling settings, knowledge bases, templates, skills, models, Data Hub, RL environments and evaluations), it tells you where in Studio to go instead; see [Develop mode → Copilot](/develop/tools/copilot/#what-the-copilot-wont-do).
+### Things you set up yourself
+
+Anything that needs a secret or moves money. The Copilot explains the steps and links the page:
+
+- connecting channels (WhatsApp, Slack, Telegram, Discord, Microsoft Teams), the WhatsApp number and its Meta webhook, and the Teams app package;
+- an agent's API keys and the OpenAI-compatible API, and webhook secrets;
+- connecting apps through Composio, git, SSH and coding-agent access, browser profiles, and saved keys in the Vault;
+- Stripe Connect onboarding, and paying, changing the plan or buying credits. It can read the plan, credits and usage;
+- inviting someone new. It can add people who already have an account.
+
+It can still change an agent's environment variables, where channel keys live; its instructions have it ask you first and never repeat secret values back.
+
+### Done in Studio
+
+- **Agents and channels:** which channels are live, an agent user's password and memory, the agent-wide report prompts (it can set one person's report focus), and turning Programs on or off.
+- **Selling:** the usage limit and **Free trial** card for people who haven't bought (it can set a paid plan's trial days).
+- **Programs and the Inbox:** answering a question an agent asked, the Programs API and webhook, and sending a held outreach message now.
+- **Phone lines:** adding numbers to the pool, or switching a line to another speech provider.
+- **Knowledge bases, templates and skills:** a knowledge base's settings, removing a source or file, stopping or rebuilding a compile; creating an agent from a [template](/work/workflow/templates/) (it can build a similar one with you, without the template's skills); publishing skill versions, the skill canvas, skill tests and optimization.
+- **Models, data and training:** anything on a model beyond starting, stopping and redeploying it, the [Data Hub](/develop/features/hub/), RL environments and GRPO runs, and evaluations.
+
+### Not possible yet
+
+- **Reading a whole past conversation.** It links the conversation's **Thread** tab.
+- **Telling you whether Stripe is connected and who bought.** It links the **Stripe Connect** and **Subscribers** cards on Monetize.
+
+### Elsewhere
+
+- **Browsing the web, and making images or videos.** Use a regular agent with browser or media tools.
+- **Your password and account settings.** Those go through Settings.
+- **Scaling agents.** Agents run on the shared runtime with no replicas, CPU or memory to set; it can start and stop them.
+- **Starting a mission or scheduled work.** Start those from Work chat with `/goal`, `/mission` or `/loop`.
 
 ## When the Copilot misbehaves
 
