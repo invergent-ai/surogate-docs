@@ -155,7 +155,7 @@ When nothing is waiting, it says **Nothing is waiting for you.** Two people pres
 
 ## Notification settings
 
-**Notification settings** in the page's header opens [Your settings](/keel/business/settings/), where you choose which emails Keel sends you. On a phone, open it from **Your settings** in the left rail.
+**Notification settings** in the page's header opens [Your settings](/keel/business/settings/), where you choose which emails Keel sends you. On a phone, open the menu: **Your settings** is in the bar at its bottom.
 
 ## Team queues and agents at work
 
