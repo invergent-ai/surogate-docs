@@ -99,11 +99,15 @@ It asks with a question in the chat and waits for your answer before it:
 
 Building a new thing inside a plan you approved does not ask again. The plan was the yes.
 
-Anything that reaches real people, real money or who can do what is stricter: activating a journey, sending a test, enrolling or messaging a person, changing the team, changing plans on Monetize, giving an agent a phone number, changing its line or disconnecting it, changing a person's contact permission, binding or removing a person, creating, publishing or retiring a WhatsApp form, letting the agent send one or taking that back, creating a project, adding, changing or removing a member, publishing or unpublishing the landing page, pausing, resuming or cancelling a mission, running or cancelling scheduled work, and rebuilding the users overview report. The tool itself refuses to run until the Copilot calls it again with an explicit confirmation, which its instructions allow only after you say yes to that exact action. A yes to the plan does not cover it.
+Anything that reaches real people, real money or who can do what is stricter: activating a journey, sending a test, enrolling or messaging a person, changing the team, changing plans on Monetize, giving an agent a phone number, changing its line or disconnecting it, changing a person's contact permission, binding or removing a person, creating, publishing or retiring a WhatsApp form, letting the agent send one or taking that back, creating a project, adding, changing or removing a member, publishing or unpublishing the landing page, pausing, resuming or cancelling a mission, running or cancelling scheduled work, and rebuilding the users overview report. The tool itself refuses to run until the Copilot calls it again with the confirmation code the tool gave it, which its instructions allow only after you say yes to that exact action. The question shows the values that will be set (the message text, the plan's price, the team member's settings), and the yes covers only those: anything different needs a new yes. A yes to the plan does not cover it. A viewer is refused before any question is asked.
 
-While a question is open, a reply you type in the web chat is taken as your answer. A question that closes unanswered (see [Inbox](/work/tools/inbox/#when-nobody-answers)) is neither a yes nor a no: the Copilot doesn't act, says it is waiting, and asks again when you write.
+Answer an open question in its question card: in Studio, a reply typed in the chat box is not taken as the answer. A question that closes unanswered (see [Inbox](/work/tools/inbox/#when-nobody-answers)) is neither a yes nor a no: the Copilot doesn't act, says it is waiting, and asks again when you write.
 
 Governance approvals in the Inbox are never the Copilot's to decide. It sends you to the Inbox page. For the exact tools and how each check works, see [Develop mode → Copilot](/develop/tools/copilot/#how-it-asks-before-acting).
+
+## If you're a viewer
+
+A viewer can use the Copilot to look things up, from the side panel or from the Work page, where its sessions are listed too. Ask it to change something and it tells you straight away that a viewer can only read. It can't change your role: a project owner does that in [Settings, Members](/work/settings/members/).
 
 ## Conversation history
 
@@ -113,10 +117,12 @@ The Copilot drawer keeps a history menu in its header (the clock/history icon). 
 
 - **It has no browser.** It works from the platform's own tools, not the open web. If you want to scrape or navigate a site, use a regular agent with `browser_*` tools.
 - **It can't make images or videos.** Use a regular agent for media.
-- **It won't set up things that need secrets or money for you.** Its instructions have it explain the steps and link the page instead: connecting channels (WhatsApp, Slack, Telegram, Discord, Microsoft Teams), creating or revoking API keys and webhook secrets, Stripe Connect onboarding, and paying, changing the plan or buying credits. It can read the plan, credits and usage, and add people who already have an account, but it can't invite someone new. It can still change an agent's environment variables, where channel keys live; its instructions have it ask you first and never repeat secret values back.
+- **It won't set up things that need secrets or money for you.** Its instructions have it explain the steps and link the page instead: connecting channels (WhatsApp, Slack, Telegram, Discord, Microsoft Teams), creating or revoking API keys and webhook secrets, Stripe Connect onboarding, and paying, changing the plan or buying credits. It can read the plan, credits and usage, and add people who already have an account, but it can't invite someone new. The same goes for an agent's API keys and the OpenAI-compatible API, the WhatsApp number and its Meta webhook, the Teams app package, connecting apps through Composio, git, SSH and coding-agent access, browser profiles, and saved keys in the Vault. It can still change an agent's environment variables, where channel keys live; its instructions have it ask you first and never repeat secret values back.
 - **It can't change your password** or other account settings. Those go through Settings.
 - **It can't scale agents.** Agents run on the shared runtime with no replicas, CPU or memory to set; it can start and stop them.
 - **Some knowledge-base, template and skill work happens in Studio.** It can't change a knowledge base's settings, remove a source or file, or stop or rebuild a compile; it can't create an agent from a [template](/work/workflow/templates/) (it can build a similar one with you, without the template's skills); and it can't publish skill versions, open the skill canvas, or run skill tests or optimization.
+- **More is done in Studio:** which channels are live, an agent user's password and memory, the agent-wide report prompts (it can set one person's report focus), turning Programs on or off, the usage limit and **Free trial** card for people who haven't bought (it can set a paid plan's trial days), answering a question an agent asked in the Inbox, the Programs API and webhook, and sending a held outreach message now. It tells you the page and the button.
+- **It can't yet read a whole past conversation or tell you who bought.** It links the conversation's **Thread** tab, and the **Stripe Connect** and **Subscribers** cards on Monetize.
 - **It can't add phone numbers to the pool** or switch a phone line to another speech provider.
 - **It can't change models beyond starting, stopping and redeploying them.** It can't add, edit, scale or delete one.
 - **It can't browse or change the [Data Hub](/develop/features/hub/).**
@@ -124,7 +130,7 @@ The Copilot drawer keeps a history menu in its header (the clock/history icon). 
 - **It can't start a mission or scheduled work, or change one's schedule.** Start those from Work chat with `/goal`, `/mission` or `/loop`.
 - **It can't run evaluations.**
 
-For the Studio work in this list (knowledge bases, templates, skills, models, Data Hub, RL environments and evaluations), it tells you where in Studio to go instead; see [Develop mode → Copilot](/develop/tools/copilot/#what-the-copilot-wont-do).
+For the Studio work in this list, it tells you where in Studio to go instead; see [Develop mode → Copilot](/develop/tools/copilot/#what-the-copilot-wont-do).
 
 ## When the Copilot misbehaves
 
