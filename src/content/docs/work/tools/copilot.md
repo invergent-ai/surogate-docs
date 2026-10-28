@@ -42,9 +42,9 @@ It follows a written build guide for each kind of thing: agents, skills, knowled
 ## Datasets, training and models
 
 - *"Turn this file into a dataset."* It uploads one JSONL, JSON, CSV or Parquet file you attach in chat (up to 50 MB), reshaping it first when the change is mechanical. Building a dataset from your agents' chats, generating a synthetic one, importing a Hugging Face repository and scrubbing PII are done on the Datasets page; it sends you there.
-- *"Fine-tune a model on these support conversations."* It interviews you, plans the run and, after your yes, starts an SFT, DPO or distillation run. It follows the run's loss and can cancel it. A Hugging Face dataset can be trained on directly, without a copy in the project.
+- *"Fine-tune a model on these support conversations."* It interviews you, plans the run and, after your yes, starts an SFT, DPO or distillation run. It follows the run's loss and can cancel it, reporting the run's status as Studio sets it; a run that has already ended can't be cancelled. A Hugging Face dataset can be trained on directly, without a copy in the project.
 - *"Move my saved run to the RTX PRO 6000 and start it."* A refused run stays saved; it can edit that run (settings, a GPU on the run's own compute, Hugging Face subset; GRPO runs are edited in Studio), start it, or delete runs you no longer need, each after your yes to the exact change.
-- *"Serve my fine-tuned model."* It starts serving a model that is already on the Models page, checks that it serves, stops it, and switches an agent onto it. A finished run is not on Models until you add it (see [Local Hub](/develop/features/models/#local-hub)); it tells you how.
+- *"Serve my fine-tuned model."* It starts serving a model that is already on the Models page, checks that it serves, stops it, and switches an agent onto it. A finished run is not on Models until you add it (see [Local Hub](/develop/features/models/#local-hub)); it tells you how. It waits for Studio's own answer: a refusal (too few credits, a plan limit, Compute or Engine not set) comes back with Studio's reason, and a launch that fails points you to the model page, where **View job** shows the logs. If Studio hasn't answered after about two minutes, it says the start isn't confirmed yet and offers to check again, without starting the model a second time. Proxy models (OpenRouter, OpenAI-compatible) and Surogate's own models are always available and need no deploying.
 
 ## Asking the docs
 
@@ -104,6 +104,12 @@ Anything that reaches real people, real money or who can do what is stricter: ac
 Answer an open question in its question card: for now, in Studio a reply typed in the chat box is not taken as the answer. A question that closes unanswered (see [Inbox](/work/tools/inbox/#when-nobody-answers)) is neither a yes nor a no: the Copilot doesn't act, says it is waiting, and asks again when you write.
 
 Governance approvals in the Inbox are never the Copilot's to decide. It sends you to the Inbox page. For the exact tools and how each check works, see [Develop mode → Copilot](/develop/tools/copilot/#how-it-asks-before-acting).
+
+## Only the project you have open
+
+The Copilot changes things only in the project open in Studio. Ask it to change an agent, skill, knowledge base, MCP server, journey, plan, person, model, training run or dataset that belongs to another of your projects and it refuses without changing anything, names the project it is in, and asks you to switch to it first. A change that needs a confirmation code is checked before you are asked, so you are not asked to confirm something it would refuse; for some deletes the Copilot asks first and the delete is then refused. Looking things up still works across all your projects.
+
+An item in a project you are not a member of reads as "not found", the same as an id that doesn't exist.
 
 ## If you're a viewer
 
