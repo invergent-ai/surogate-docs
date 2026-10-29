@@ -15,6 +15,7 @@ With nothing wrong, it says **No problems. Every scenario passed.** Otherwise it
 
 | Group | What it means |
 |---|---|
+| **Warnings** | Something Keel ignores and never runs, such as a vendor extension in a [BPMN process](/keel/processes/) file. A warning never stops the publish. |
 | **Main changed** | Something published since the draft started changed the same files. Update the draft from main on the review page. |
 | **Unreachable steps** | No path from the stage's start reaches the node. |
 | **Outcomes with nothing connected** | An outcome, branch, case event or action leads to a place that does not exist, or a step has no outcome. |
@@ -39,7 +40,7 @@ The page, titled **Review and publish** with the draft's title under it, has the
 - **Checks**: Keel saves your changes and runs the dry run again when the page opens. **Run again** runs it once more.
 - **Moving running cases**: what the publish would do with running cases, when the draft holds a [mapping](/keel/builder/versions/#moving-running-cases-to-a-new-version).
 
-**Publish** is turned on only when the last check found no problem and the draft has not changed since. If it changed, the page says "This draft changed since the checks ran. Run them again."
+**Publish** is turned on only when the last check found no problems other than warnings and the draft has not changed since. If it changed, the page says "This draft changed since the checks ran. Run them again."
 
 ### Updating from main
 
@@ -55,9 +56,9 @@ Press **Publish**. The page says **Published *title*.**, with:
 - **Back to case types**;
 - **Running cases are moving. Follow them on the Versions tab.**, when the publish moves running cases.
 
-The draft is closed. Every case type it changed has a new version, and new cases start on it. Rules, calendars and queues it changed take effect too; a rule version can also wait for its own date (see [Rules](/keel/builder/rules/#when-a-version-takes-effect)).
+The draft is closed. Every case type it changed has a new version, and new cases start on it; so has every [process](/keel/processes/) it changed. Rules, calendars and queues it changed take effect too; a rule version can also wait for its own date (see [Rules](/keel/builder/rules/#when-a-version-takes-effect)).
 
-If Keel refuses the publish, the page lists why. Fix the problems in the draft and publish again.
+If Keel refuses the publish, the page lists why, with any warnings beside the problems. Fix the problems in the draft and publish again.
 
 ## Who can publish
 

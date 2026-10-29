@@ -29,9 +29,10 @@ A service key acts as a **system** of its project. With it, the system can:
 - **start cases** of any of the project's published case types, on their current version, with the case's starting data;
 - **send case events** to a case, such as `documents_received`. A wait for that event moves on; otherwise the case type's event of that name fires;
 - **list and read** the project's cases;
-- **export** a case as one document, with its history and the definitions it ran on.
+- **export** a case as one document, with its history and the definitions it ran on;
+- **start [BPMN process](/keel/processes/) instances**, read them, and deliver messages to them.
 
-A service key cannot complete steps, vote, answer agents' questions, start optional actions or move cases: those are for staff and agents. It cannot reach another project.
+A service key cannot complete steps or a process's tasks, vote, answer agents' questions, start optional actions or move cases: those are for staff and agents. It cannot reach another project.
 
 In a case's history, what the system did shows as done by a system.
 

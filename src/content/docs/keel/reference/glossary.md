@@ -39,6 +39,7 @@ Every Keel term in one place. [Concepts](/keel/concepts/) explains how they fit 
 | **Form** | What a person fills to start a case or complete a step, made from fields and laid out on the Forms tab. |
 | **Get next** | The button that gives you the first item of Needs me, or else the next unclaimed item of your queues. |
 | **Helper** | One of the two agents Keel sets up for each project: the case agent and the designer agent. A helper never works a step or a work item. |
+| **Instance** | One run of a BPMN process version, numbered `P-000001` and up in its project. It finishes on the version it started on. |
 | **Intake agent** | An agent allowed to start cases of a case type. |
 | **Join** | A node that waits until every path leading to it has arrived. |
 | **Maker-checker** | A step's rule that it must be done by someone other than whoever did named earlier steps. |
@@ -54,6 +55,7 @@ Every Keel term in one place. [Concepts](/keel/concepts/) explains how they fit 
 | **Pinned rule** | A rule each case keeps at the version in effect when it started. |
 | **Primary stage** | A stage of the normal path, shown as a column on the board. |
 | **Priority** | A queue's place among queues for Get next: lower numbers first. |
+| **Process** | A BPMN 2.0 file among the project's definitions, `processes/<key>.bpmn`, published through drafts and run beside case types. See [BPMN processes](/keel/processes/). |
 | **Publish** | Making a draft live. Each changed case type gets a new version. |
 | **Queue** | A team's shared list of work, with a serving order and a priority. |
 | **Raised hand** | An agent's question to a person, which pauses its step until someone answers. |
@@ -70,9 +72,11 @@ Every Keel term in one place. [Concepts](/keel/concepts/) explains how they fit 
 | **Staff** | The people of a project who sign in to the business app. |
 | **Stage** | A phase of a case. A case is always in one stage. |
 | **Step** | Work in a stage, done by its performer, which ends with an outcome. |
+| **Stuck timer** | A process instance's timer whose firing failed. It is never fired again; the instance shows why, and a supervisor cancels the instance. |
 | **Supervisor** | Staff who also run the Team page, read the Overview and move cases by hand. |
 | **Version** | One published state of a case type. A case stays on the version it started on unless it is moved. |
 | **Vote** | A step decided when enough members of a queue choose the same outcome. |
 | **Wait** | A node that holds a case until an event, a time or a condition, with an optional limit. |
+| **Warning** | Something the checks found that Keel ignores and never runs, such as a vendor extension in a process file. It never stops a publish. |
 | **Watch** | The read-only view of an agent's session on a step. |
 | **Work item** | An item in someone's work or a queue: a step, a vote, an agent question or an escalation. |

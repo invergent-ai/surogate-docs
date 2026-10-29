@@ -365,6 +365,7 @@ export default defineConfig({
               ],
             },
             'keel/systems',
+            'keel/processes',
             {
               label: 'Reference',
               collapsed: true,
