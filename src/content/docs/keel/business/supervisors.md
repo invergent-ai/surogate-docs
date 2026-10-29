@@ -69,7 +69,7 @@ With no agents, the tab says **No case type of this project uses an agent**.
 
 ## Authority limits
 
-An authority limit is the most a person or an agent may approve in a **scope**, such as `lending`. A step with an authority check refuses anyone whose limit in its scope is lower than the case's amount, and anyone with no limit there.
+An authority limit is the most a person or an agent may approve in a **scope**, such as `lending`. A step with an authority check, or a process's task with one, refuses anyone whose limit in its scope is lower than the amount, and anyone with no limit there.
 
 Press **Limits** on a person's row on the **Staff** tab, or on an agent's row on the **Agents** tab. The dialog, **Authority limits of *name***, says "The most *name* may approve in each scope. A change applies at once."
 
