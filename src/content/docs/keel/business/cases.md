@@ -33,7 +33,7 @@ The address keeps the tab, the filters and the case you preview, so you can shar
 | **Case** | The case number and its title. |
 | **Summary** | The first of the case type's summary values, such as the amount. |
 | **Stage** | The case's stages as a bar, with the current one named. |
-| **Now** | Each open step, with who holds it: a person (you as **You**), an agent that holds it, a queue, an agent at work with what it is doing, such as `Document checker · working`, the client with the day of the wait, such as `day 2 of 7`, a third party, a system, or the process a case waits on, such as `Know your customer · KYC check`, which reads **A process** until Keel starts it. A step no one holds reads **Unassigned**. |
+| **Now** | Each open step, with who holds it: a person (you as **You**), an agent that holds it, a queue, an agent at work with what it is doing, such as `Document checker · working`, the client with the day of the wait, such as `day 2 of 7`, a third party, a system, or the process a case waits on, such as `Know your customer · KYC check`, which reads **A process** until Keel has tried to start it. A step no one holds reads **Unassigned**. |
 | **Service level** | **Past deadline**, with how long ago, such as **Past deadline · 2 h**; **Past goal**; **Due today**; the time left to the deadline, such as **3 d left**; or **On time** when there is no deadline. **Waiting on the client** while the client is waited on. |
 | **Updated** | When the case last changed. |
 

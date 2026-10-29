@@ -159,11 +159,11 @@ A case's [process node](/keel/builder/flow-nodes/#processes) starts a process, a
 
 The business app shows the links on both sides:
 
-- On a case's page, the **Now** card of a process node shows the instance by its number, its process and how it stands, such as **P-000003 · KYC check · Running**, linked to its page; until Keel starts it, **Waiting for the process *name***. Under it, "It could not start: …" says why a start started nothing, and "Keel could not take its end: …" why the case could not take the end of a process it still waits on.
+- On a case's page, the **Now** card of a process node shows the instance by its number, its process and how it stands, such as **P-000003 · KYC check · Running**, linked to its page; until Keel starts it, **Waiting for the process** and the process's key made readable, such as **Waiting for the process Kyc check**. Under it, "It could not start: …" says why Keel could not start the process, and "Keel could not take its end: …" why the case, which still waits, could not take how the process or its start ended.
 - A case a process started shows **Started by** and the instance, such as **P-000001 · Claim settlement**, over its stage bar. A case that started processes lists them under **Processes**: each instance and how it stands, the node that started it and when.
 - On an instance's page, **Started by** names the case that started it. **Waiting for** shows each task that waits on its case, such as **Open the claim · CL-000001 · Claim · Open**, or "waits for its case to start", with the same notes. **Cases it started** lists the cases its tasks started.
 - The Cases page's **Now** column names the process a case waits on, such as `Know your customer · KYC check`.
-- A case's **Full history** shows "Requested the process *name*" at the node, and the process's end, such as "Process P-000003 ended", at the way the case left by.
+- A case's **Full history** shows "Requested the process" and the process's key made readable, such as "Requested the process Kyc check", at the node, and the process's end, such as "Process P-000003 ended", at the way the case left by.
 
 ## Publishing a process
 
@@ -182,7 +182,7 @@ When a rule is published again, Keel checks the new version against the processe
 
 ### Checking what starts what
 
-A start is checked when the case type or the process that holds it is published, against what it starts as the publish leaves it. It is checked again when what it starts is published again, at each stored version that starts it: the current version of each case type or process the publish leaves alone, and each version that cases or instances still run on. Such a problem is at `<case type> v<n>: <node>` or `<process> v<n>: <task>`, in the file published again. A retired case type is checked against the processes that start it like any other.
+A start is checked when the case type or the process that holds it is published, against what it starts as the publish leaves it. It is checked again when what it starts is published again, at each stored version that starts it: the current version of each case type or process the publish leaves alone, and each version that cases or instances still run on. Such a problem is at `<case type> v<n>: <node>` or `<process> v<n>: <task>`, in the file published again. A retired case type is checked against the processes that start it like any other, and its republish is never refused `retired-case-type`. A problem at a version cases or instances still run on stays until nothing runs on it, or the file fits it again; a problem at a current version does not end by itself.
 
 | Problem | Where | What it says |
 |---|---|---|
@@ -192,8 +192,8 @@ A start is checked when the case type or the process that holds it is published,
 | `process-input` | The case type's file, or the process's file at `<case type> v<n>: <node>` | "*process* requires *variable*, which no input fills", "inputs names *variable*, which *process* does not declare", "*variable*, a *type*, is filled from *field*, a *type* of another shape", "*field* may hold *choices*, which *variable* does not take" |
 | `process-output` | The same | "*field* receives *variable*, which *process* does not declare", "*field*, a *type*, receives *variable*, a *type* of another shape", "*variable* may hold *choices*, which *field* does not take" |
 | `case-input` | The process's file, or the case type's file at `<process> v<n>: <task>` | "*case type* requires *field*, which no keel:field fills", "keel:field names *field*, which *case type* does not declare", "*field*, a *type*, is filled from *variable*, a *type* of another shape", "*variable* may hold *choices*, which *field* does not take" |
-| `case-output` | The same | "*variable* receives *field*, which *case type* does not declare", "*variable*, a *type*, receives *field*, a *type* of another shape", "*field* may hold *choices*, which *variable* does not take" |
-| `case-cancel` | The same | "*case type* has no event *event*", "*event* of *case type* does not interrupt: it would not withdraw the case", "*node* of *case type* waits for *event*: it would take the event as the one it waits for" |
+| `case-output` | The same | "*variable* receives *field*, which *case type* does not declare", "*variable*, a *type*, receives *field*, a *type* of another shape", "*field* may hold *choices*, which *variable* does not take"; and in the process's own file, "the resolution variable *variable* must be a string or a choice variable" |
+| `case-cancel` | The same | "*case type* has no event *event*", "*event* of *case type* does not interrupt: it would not withdraw the case", "*node* of *case type* waits for *event*: it would take the event as the one it waits for"; and in the process's own file, "*task* waits on its case: name cancel-event, the case event that withdraws it when the process leaves the task, or keep-running="true"" and "*task* names both cancel-event and keep-running: it does one or the other" |
 | `broken-definition` | `<key> v<n>` | "*key* v*n* is stored but no longer loads: …" |
 | `checks-stale` | `<case type> v<n>` or `<process> v<n>` | "cases started on it while the publish was checked; publish again", or "instances started on it while the publish was checked; publish again" |
 
@@ -226,7 +226,8 @@ A process's user and manual tasks are worked in the business app, like a case's 
 - **The instance's page** shows the process's name, the instance's number, version and start day, and its status: **Running**, **Completed**, **Ended**, **Failed** or **Cancelled**. A failed instance says which error ended it and where.
   - A task you hold shows its form under **Your task**, with **Submit** and **Return to queue**. A task waiting in one of your queues asks you to **Claim** it first.
   - A task someone else holds shows under **Now**, with who holds it.
-  - **Waiting for** lists the timers and messages the instance waits on, and **Process data** lists its variables by their labels.
+  - **Waiting for** lists the timers, messages and cases the instance waits on, and **Process data** lists its variables by their labels.
+  - **Started by** names the case that started the instance, and **Cases it started** lists the cases its tasks started. See [Cases and processes that start each other](#cases-and-processes-that-start-each-other).
   - The page stays current on its own.
 - **Refusals.** When a task closes before your submission arrives, because someone else completed it or a timer withdrew it, the page says "This step is no longer open." and shows the instance as it now is. An instance that ended says "This process has ended."
 - **Away.** While you are away, a process's task assigned to you moves as your absence says, as a step does, and supervisors are told of what stays with you.
