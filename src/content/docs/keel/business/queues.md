@@ -12,7 +12,7 @@ The queue's page shows:
 
 - its name and its **serving order** in words, such as "Get next serves past-deadline work first, then agents' questions, then the nearest deadline.";
 - its figures: **Waiting** (its open items, claimed or not), **Agent questions**, **Past deadline**, **Oldest** (how long the oldest item has waited) and **Done today**. When votes run in the queue, **Votes** counts them too: a vote is each member's own work and never waits in the queue;
-- its members, people and agents, each with how many of its open items they hold, such as `Ana Marin · 3 open`, you as **You**;
+- its members, people and agents, each with how many of its open items they hold, such as `Ana Marin · 3 open`, you as **You**. A member who is [away](/keel/business/work/#delegate-while-away) shows muted and says so instead, with what became of their items, such as `Ana Marin · out, back on 3 Nov · 2 items went back to their queues`;
 - its views, as tabs with their counts.
 
 | Tab | What it lists | Order |
@@ -31,6 +31,8 @@ The action at the end of a row depends on the item:
 - **Claim**, on an open step no one holds, in one of your queues. Keel says **Claimed. It is in Needs me.** If someone was faster, it says **Someone took it first.**
 - **Answer**, on an agent's question you may answer. The question opens on the right, to answer as in [Needs me](/keel/business/work/#answer-an-agents-question).
 - **Open case**, on an escalation. An escalation says a deadline was missed; the step stays with whoever works it, and the escalation closes when the step or stage it is about moves on.
+
+A member who is away cannot claim; the others take the work.
 
 Only members of a queue claim its items. A vote is never claimed: every member votes from the case.
 

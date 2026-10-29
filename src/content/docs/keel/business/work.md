@@ -18,11 +18,12 @@ On a phone, the lists come first, and an item opens on its own with **Back**.
 
 | List | What it holds | Order |
 |---|---|---|
-| **Needs me** | Work you hold: steps assigned to you or that you claimed, items delegated to you, votes you owe, and agents' questions assigned to you. | Nearest deadline first |
+| **Needs me** | Work you hold: steps assigned to you or that you claimed, items delegated to you, votes you owe, and agents' questions assigned to you. Below the items, [notices](#notices-in-needs-me). | Nearest deadline first |
+| **Updates** | What changed on the cases you [follow](/keel/business/open-case/#follow-a-case). | Newest first |
 | **I delegated** | Open items you handed to someone else, until they are done. | Nearest deadline first |
 | **Done today** | What you did since midnight, in your time zone. | Most recent first |
 
-Each list shows its count in the column. The **Work** row in the left rail shows the count of **Needs me** as a badge.
+Each list shows its count in the column; **Updates** shows how many are new, such as `8 new`. The **Work** row in the left rail shows the count of **Needs me** as a badge, the items and the open notices together.
 
 Unclaimed work in your queues is not in **Needs me** until you take it. Find it in your [team queues](/keel/business/queues/), or press **Get next**.
 
@@ -82,9 +83,68 @@ Press **Send answer**. "Your answer goes back to the step. The note goes to the 
 
 An agent never stops waiting by itself: a question stays open until someone answers it. See [Working with agents](/keel/business/agents/).
 
+## Notices in Needs me
+
+Below the items, **Needs me** lists **Notices**, newest first, when there are any. A notice is not work you do; it tells you something, and you close it. **Show more notices** lists more. Pick one to read it on the right. Two kinds reach you:
+
+- **Mention**: "*Name* mentioned you in *document*". A colleague mentioned you in a comment in a case's document. The notice names the case, the document and when; it never copies the comment, so **Open the document** to read it. "It closes once you open the document, or when you dismiss it."
+- **Absence**, for supervisors: "*Name* is away: *n* items stayed with them". Some of the items of a colleague who went away could not move on: they have no queue to return to, or their substitute may not do their step. The notice says so, and lists each item with its case and who holds it now, as many as fit, with "Showing *n* of *m* items." when there are more. See [Delegate while away](#delegate-while-away).
+
+**Dismiss** closes a notice: Keel says **Dismissed.** Closed notices are kept for 30 days and then deleted.
+
+## Updates
+
+**Updates** lists what changed on the cases you follow, newest first. Each update gives the case's number and title, which open the case, a sentence saying what happened, such as who finished a step and how, and when. You never see your own changes in it.
+
+- An update you have not seen is marked **New**, and the **Updates** row counts them: `8 new`, or `99+ new` when there are many.
+- They count as seen once you have listed them all. When there are more than the list shows, **Show more updates** lists the rest, and **Mark all as seen** marks them at once.
+- **Unfollow** on an update stops following its case; the update then reads **Unfollowed**.
+- With nothing to show, the list says **Nothing new on the cases you follow**: "You follow a case once you act on it, or with Follow on its page."
+
+Updates are kept for 30 days and then deleted. By email, [Your settings](/keel/business/settings/) chooses whether you are mailed when a case you follow moves.
+
+## Delegate while away
+
+When you will be away, **Delegate while away** in the page's header hands your work on, and **Get next** gives you nothing until you are back. It opens **Delegate while away**: "While you are away, your items and the new ones that reach you go to a colleague, or back to their queues. Get next gives you nothing until you end it."
+
+Under **Your items go to**, pick one:
+
+- **Return my items to the queue**: your items go back to their queues, unclaimed, for their members to take.
+- A colleague, by name under **People**. You are not offered, and neither are agents.
+
+Under **Back on**, pick the day you are back, or leave it empty: "Leave it empty to end the absence by hand." An absence with a day ends by itself at the start of that day, in your time zone.
+
+Once you have picked, the dialog says what would happen before anything does, such as:
+
+- "You hold 3 items:", then "1 goes to *Mihai Ionescu*" and "1 goes back to its queue".
+- "1 stays with you:", with the list **Items that stay** under it, each as its case, its step and why: "it has no queue", or "*Mihai Ionescu* may not do this step". A long list shows the first hundred and "and 140 more".
+- Who will find what: the colleague finds what goes to them in **Needs me**, together with the new items that reach you while you are away; the queues' members find what goes back in their queues; and the project's other supervisors see what stays, in their **Needs me**.
+
+What moves is every item you hold, whichever way it reached you, and each new one that reaches you. A vote moves nowhere: every member of its queue votes for themselves. A colleague who is away too is never given an item. A colleague who is not allowed to do a step, because it needs someone other than you or an authority limit they do not hold, does not receive it: the item goes back to its queue, or stays with you when it has none.
+
+When some items would stay and no other supervisor could see them, the dialog says: "No other supervisor can see what stays. Choose someone who may take it, or ask a builder to name another supervisor." **Set absence** is not offered then. If a colleague cannot be your substitute, Keel says why, such as "The substitute is away too: choose someone else, or return the items to the queue."
+
+Press **Set absence**. Keel says, for example, **You are away. 2 items went to Mihai Ionescu.**
+
+### While you are away
+
+The **Your absence** box under the header says how things stand:
+
+- "You are away, back on 3 Nov.", or "You are away until 2 Nov, 22:00." when the absence was set to end at another hour, or "You are away until you end your absence."
+- "New items go to *Mihai Ionescu*.", or "New items go back to their queues, or stay with you when they have none."
+- "So far 2 items went to *Mihai Ionescu*." and what went back to queues or stayed.
+- "*Name* set it." when a supervisor set your absence for you.
+- "*Name* is no longer on the staff: new items go back to their queues, or stay with you when they have none." when your substitute left the project.
+
+**Get next** answers "You are away: end your absence to take work." You cannot claim from a queue either. A colleague's mention of you still comes to you.
+
+**End absence** in the header asks first: "End your absence?" "New items reach you again. What went to *Mihai Ionescu* stays with them." Press **End absence**; Keel says **Your absence has ended.** The same happens by itself when the day you set arrives. If a supervisor removes you from the staff, your absence ends.
+
+Supervisors can also set and end a colleague's absence from the [Team page](/keel/business/supervisors/#absences).
+
 ## Get next
 
-**Get next** in the page header hands you your next piece of work:
+**Get next** in the page header hands you your next piece of work, unless you are [away](#delegate-while-away):
 
 1. If **Needs me** holds anything, it opens the first item there.
 2. Otherwise, it takes the first unclaimed item from your team queues and opens it. It looks at your queues by their priority, and in each queue follows the queue's serving order. The item is yours from then on.
@@ -92,6 +152,10 @@ An agent never stops waiting by itself: a question stays open until someone answ
 When nothing is waiting, it says **Nothing is waiting for you.** Two people pressing **Get next** at once never get the same item.
 
 **Get next case** on the [Cases page](/keel/business/cases/) does the same, and opens the item's case.
+
+## Notification settings
+
+**Notification settings** in the page's header opens [Your settings](/keel/business/settings/), where you choose which emails Keel sends you. On a phone, open the menu: **Your settings** is in the bar at its bottom.
 
 ## Team queues and agents at work
 

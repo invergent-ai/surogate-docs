@@ -353,6 +353,7 @@ export default defineConfig({
               items: [
                 'keel/business/sign-in',
                 'keel/business/work',
+                'keel/business/settings',
                 'keel/business/queues',
                 'keel/business/cases',
                 'keel/business/open-case',
