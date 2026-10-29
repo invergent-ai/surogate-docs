@@ -4,7 +4,7 @@ sidebar:
   label: Decisions, rules and waits
 ---
 
-Besides steps, a stage's flow holds nodes that Keel works through by itself. Add them with **Add step** on the board (pick the **Kind**) or **Add decision** in a stage's flow, and edit them in their panel. See [The Workflow tab](/keel/builder/workflow/) for the board and the flow.
+Besides steps, a stage's flow holds nodes that Keel works through by itself, and process nodes, which start one of the project's BPMN processes. Add them with the **+** on a line of a stage's flow, or, for a rule, a wait or a process, with **Add step** on a stage the board shows in line; pick the **Kind**, and edit the node in its panel. See [The Workflow tab](/keel/builder/workflow/) for the board and the flow.
 
 Conditions in these nodes are written in CEL, the Common Expression Language, over the case type's field names. `now` is the current time. For example:
 
@@ -65,3 +65,29 @@ A **parallel split** starts several paths at once. Its panel, **Starts in parall
 A **join** waits until every path that leads to it has arrived, then goes on to its **Then**. A join needs at least two paths leading to it; the dry run reports one that could never fire.
 
 A path can also stop on its own, with **End of this path**: the case goes on along its other paths. A case left open with nothing to do is refused, so every path must end somewhere a case can rest or close.
+
+## Processes
+
+A process node starts one of the project's [BPMN processes](/keel/processes/) and passes it values from the case's fields. It either waits for the process to end, and takes back what the process returns, or goes on at once. A new process node names no process yet, and both its ways lead on to the next stage.
+
+Its panel has these sections:
+
+- **Process**: the process it starts, among those the project published and those the open draft adds. The card then reads, for example, `Starts KYC check and waits`, or `Starts KYC check` for a node that goes on at once. If Keel cannot read the project's processes, the section says "The project's processes could not be read." with **Retry**. Picking another process clears what the node passed and received.
+- **Waits**: **Waits until the process ends** or **Goes on at once**. A node that goes on at once receives nothing and leaves by one way, Started. Switching back while the panel is open brings back what it received and where it failed.
+- **Passes in**: a row for each variable the process declares, with its type, such as `Text · required`. Pick the case field that fills it, among the fields of the variable's type, or **Not passed**. The variables come from the process as the draft would publish it: the draft's file when the draft adds or changes the process, else its published version.
+  - Without a process, it says "Pick a process to see what it takes."
+  - For a process neither published nor in the draft, "This process is not published, and this draft does not add it."
+  - When Keel cannot read the variables, it says why, with **Retry**, and shows each variable the node fills by its name.
+  - A variable the node fills that the process no longer declares shows by its name, marked "Not declared by the process". Pick **Not passed** to remove it.
+- **Receives**, while the node waits: rows of a **Field** of the case and the **Variable** of the process it receives when the process ends. **Add a field** adds a row. With none, "It receives nothing when the process ends."
+- **Outcomes**: each way the node leaves, with its **Label** and where it **Leads to**.
+
+| Way | When the case leaves by it |
+|---|---|
+| Ended | The process completes or ends. The fields under **Receives** take the values the process ended with. |
+| Failed | The process fails, is cancelled or cannot start, or ends with a value a field cannot hold. |
+| Started | At once, for a node that goes on at once. |
+
+When a case leaves a waiting process node another way first, such as by a case event, Keel cancels the process. A process a node does not wait on runs on, whatever the case does.
+
+Publishing checks what each process node passes and receives against its process: see [Checking what starts what](/keel/processes/#checking-what-starts-what). The business app shows the process on the case's page: see [An open case](/keel/business/open-case/#now-steps-others-hold).

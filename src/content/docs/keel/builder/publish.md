@@ -37,7 +37,7 @@ Press **Review and publish** in the designer, the Rules page or the Queues page.
 The page, titled **Review and publish** with the draft's title under it, has these parts:
 
 - **What changes**: each file the draft changes, compared with what is published. "This draft changes nothing." when there is nothing.
-- **Checks**: Keel saves your changes and runs the dry run again when the page opens. **Run again** runs it once more.
+- **Checks**: Keel saves your changes and runs the dry run again when the page opens. **Run again** runs it once more. The checks also read what each process node and each process's start-a-case task starts, and check a republished case type or process against the versions that start it: see [Checking what starts what](/keel/processes/#checking-what-starts-what).
 - **Moving running cases**: what the publish would do with running cases, when the draft holds a [mapping](/keel/builder/versions/#moving-running-cases-to-a-new-version).
 
 **Publish** is turned on only when the last check found no problems other than warnings and the draft has not changed since. If it changed, the page says "This draft changed since the checks ran. Run them again."

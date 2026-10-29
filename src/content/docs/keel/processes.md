@@ -22,6 +22,7 @@ A builder puts a process file in a draft through Keel Builder's API, and staff o
 | **Start event** | The instance starts here. Only a plain start event: a timer or message start event is refused. |
 | **User task**, **manual task** | Waits for a person to complete it, from a queue. It can have a goal and a deadline. |
 | **Business rule task** | Evaluates one of the project's [rules](/keel/builder/rules/), a decision table or a scorecard, and writes its results to variables. It never waits. |
+| **Service task** that starts a case | Starts a case of one of the project's case types, and waits for it to close or goes on at once. See [A service task that starts a case](#a-service-task-that-starts-a-case). |
 | **Receive task**, **message catch event** | Waits for a message of its name. |
 | **Timer catch event** | Waits for a duration, such as `PT2H` or `P3D`, or until a date. A repeating (cycle) timer is refused. |
 | **Timer boundary event** | Fires on a task or a subprocess after a duration or at a date. An interrupting one withdraws the activity; a non-interrupting one starts its path beside it. |
@@ -33,7 +34,7 @@ A builder puts a process file in a draft through Keel Builder's API, and staff o
 | **Embedded subprocess** | Runs its own flow, and may carry boundary events. |
 | **Lanes** | A lane's name is the queue of the tasks in it, read as a queue key: lower case, with each run of other characters as `_`. A lane named "Back Office" is the queue `back_office`. |
 
-Not run yet, refused when published: service tasks, call activities, multi-instance tasks, inclusive gateways, event subprocesses, data stores, message boundary events and pools that send each other messages.
+Not run yet, refused when published: service tasks that call an agent or a system, call activities, multi-instance tasks, inclusive gateways, event subprocesses, data stores, message boundary events and pools that send each other messages.
 
 Refused: script tasks, plain tasks, send tasks, business rule tasks that name a DMN decision instead of a Keel rule, throw events, signals, escalations, compensation, transactions, ad hoc subprocesses, conditional and link events, loops on a task (draw the loop with a gateway), data objects and correlation keys. Each refusal names the element.
 
@@ -108,10 +109,61 @@ Each setting sits in the `extensionElements` of its BPMN element. An element or 
 - When the task is reached, Keel evaluates the version of the rule in force at that moment on the instance's variables, writes the results and goes on. A scorecard's results are `score` and `reasons`.
 - If the rule gives no answer, such as a decision table where no row matches and there is no default, Keel refuses what reached the task: a completion answers `409 rule-error`, a start is refused, and a timer is kept as stuck.
 
+### A service task that starts a case
+
+```xml
+<bpmn:serviceTask id="open_claim" name="Open the claim">
+  <bpmn:extensionElements>
+    <keel:case type="claim" wait="true" cancel-event="withdrawn" resolution-variable="claim_outcome">
+      <keel:field name="amount" variable="amount"/>
+      <keel:field name="reason" variable="reason"/>
+      <keel:result variable="payout" field="payout"/>
+    </keel:case>
+  </bpmn:extensionElements>
+</bpmn:serviceTask>
+```
+
+| Setting | What it does |
+|---|---|
+| `type` | The case type the task starts, by its key. Required. |
+| `wait` | `true` waits for the case to close; `false` starts it and goes on at once. Required. |
+| `keel:field` | A field of the case (`name`) and the variable that fills it (`variable`). A field the case type requires must be filled. Each field once. |
+| `keel:result` | A variable (`variable`) that takes a field of the case (`field`) when the case closes. Each variable once. |
+| `resolution-variable` | A string or choice variable that takes the case's resolution, such as `approved`, when the case closes. It cannot also be a `keel:result` variable. |
+| `cancel-event` | The case event Keel sends the case when the instance leaves the task first: by a boundary event, a cancel or its end. The case type must declare it as interrupting, and none of its wait nodes may wait for it. |
+| `keep-running` | `true` leaves the case running when the instance leaves the task first. |
+
+A task that waits names exactly one of `cancel-event` and `keep-running`. A task that does not wait names neither, and no `keel:result` or `resolution-variable`: it receives nothing.
+
+When the case closes, a waiting task completes: its `keel:result` variables and its `resolution-variable` take the case's values. Otherwise the task throws a BPMN error, which an error boundary event on the task, or on a subprocess around it, catches by its code; uncaught, it fails the instance:
+
+| Error | When |
+|---|---|
+| `case-not-started` | Keel could not start the case. |
+| `case-failed` | A step's failure closed the case. |
+| `case-values` | The case closed with a value its variables cannot hold. Nothing is written. |
+
 ### A message catch, a receive task, a timer
 
 - `keel:message` on a message catch event or a receive task lists, with `keel:write`, the variables the message may write. A message that holds anything else is refused.
 - `keel:timer business="true"` on a timer makes it count business time on the process's calendar.
+
+## Cases and processes that start each other
+
+A case's [process node](/keel/builder/flow-nodes/#processes) starts a process, and a process's [start-a-case task](#a-service-task-that-starts-a-case) starts a case. Keel starts the other side itself, a moment after the case or the instance reached the node or the task, and keeps a link between the two.
+
+- A side that waits takes the other's end: a case leaves its process node by Ended or Failed, and a process's task completes or throws its error.
+- When the waiting side moves on first, Keel withdraws the other: it cancels a process whose case no longer waits at its node, and sends a case its task's `cancel-event`, unless the task says `keep-running`.
+- When Keel cannot start the other side, such as a retired case type or values that no longer fit, the waiting side takes its error path.
+- A chain of starts stops at eight. The ninth start in a chain is refused, and its waiting side takes its error path, so a case type and a process that start each other never loop without end.
+
+The business app shows the links on both sides:
+
+- On a case's page, the **Now** card of a process node shows the instance by its number, its process and how it stands, such as **P-000003 · KYC check · Running**, linked to its page; until Keel starts it, **Waiting for the process *name***. Under it, "It could not start: …" says why a start started nothing, and "Keel could not take its end: …" why the case could not take the end of a process it still waits on.
+- A case a process started shows **Started by** and the instance, such as **P-000001 · Claim settlement**, over its stage bar. A case that started processes lists them under **Processes**: each instance and how it stands, the node that started it and when.
+- On an instance's page, **Started by** names the case that started it. **Waiting for** shows each task that waits on its case, such as **Open the claim · CL-000001 · Claim · Open**, or "waits for its case to start", with the same notes. **Cases it started** lists the cases its tasks started.
+- The Cases page's **Now** column names the process a case waits on, such as `Know your customer · KYC check`.
+- A case's **Full history** shows "Requested the process *name*" at the node, and the process's end, such as "Process P-000003 ended", at the way the case left by.
 
 ## Publishing a process
 
@@ -128,6 +180,29 @@ The checks also refuse:
 
 When a rule is published again, Keel checks the new version against the processes that use it, their current versions and any version with running instances, as it checks the case types that use it.
 
+### Checking what starts what
+
+A start is checked when the case type or the process that holds it is published, against what it starts as the publish leaves it. It is checked again when what it starts is published again, at each stored version that starts it: the current version of each case type or process the publish leaves alone, and each version that cases or instances still run on. Such a problem is at `<case type> v<n>: <node>` or `<process> v<n>: <task>`, in the file published again. A retired case type is checked against the processes that start it like any other.
+
+| Problem | Where | What it says |
+|---|---|---|
+| `unknown-process` | The case type's file, at the node | "*node* starts *process*, a process the project does not have" |
+| `unknown-case-type` | The process's file, at the task | "*task* starts *case type*, a case type the project does not have" |
+| `retired-case-type` | The process's file, at the task | "*task* starts *case type*, which is retired: no new case can start on it" |
+| `process-input` | The case type's file, or the process's file at `<case type> v<n>: <node>` | "*process* requires *variable*, which no input fills", "inputs names *variable*, which *process* does not declare", "*variable*, a *type*, is filled from *field*, a *type* of another shape", "*field* may hold *choices*, which *variable* does not take" |
+| `process-output` | The same | "*field* receives *variable*, which *process* does not declare", "*field*, a *type*, receives *variable*, a *type* of another shape", "*variable* may hold *choices*, which *field* does not take" |
+| `case-input` | The process's file, or the case type's file at `<process> v<n>: <task>` | "*case type* requires *field*, which no keel:field fills", "keel:field names *field*, which *case type* does not declare", "*field*, a *type*, is filled from *variable*, a *type* of another shape", "*variable* may hold *choices*, which *field* does not take" |
+| `case-output` | The same | "*variable* receives *field*, which *case type* does not declare", "*variable*, a *type*, receives *field*, a *type* of another shape", "*field* may hold *choices*, which *variable* does not take" |
+| `case-cancel` | The same | "*case type* has no event *event*", "*event* of *case type* does not interrupt: it would not withdraw the case", "*node* of *case type* waits for *event*: it would take the event as the one it waits for" |
+| `broken-definition` | `<key> v<n>` | "*key* v*n* is stored but no longer loads: …" |
+| `checks-stale` | `<case type> v<n>` or `<process> v<n>` | "cases started on it while the publish was checked; publish again", or "instances started on it while the publish was checked; publish again" |
+
+A problem at an old version is fixed in one of these ways:
+
+- Change the file you publish so that it fits that version again.
+- At a version cases or instances still run on: move its open cases to a newer version of the case type, or wait for them to close, or for the instances to end or be cancelled.
+- At a current version: publish a new version of that case type or process in the same draft. The new version is then checked instead.
+
 A problem that Keel cannot run, such as a script task, refuses the publish and names the element. A vendor extension, such as Camunda's, Flowable's or SpiffWorkflow's own properties, is a **warning**: Keel ignores it and never runs it, and the publish goes on. The review page lists warnings under **Warnings**, and **Publish** stays on.
 
 Running instances finish on the version they started on.
@@ -139,6 +214,8 @@ Builders read the published processes with:
 | List the processes, with each version's running instances | `GET /api/build/projects/{project}/processes` |
 | Download a version's file | `GET /api/build/projects/{project}/processes/{key}/versions/{version}` |
 | Read the file in a draft | `GET /api/build/projects/{project}/drafts/{draft_id}/files/processes/{key}` |
+| Read the variables a version declares | `GET /api/build/projects/{project}/processes/{key}/versions/{version}/variables` |
+| Read the variables the file in a draft declares, before its checks pass | `GET /api/build/projects/{project}/drafts/{draft_id}/files/processes/{key}/variables` |
 | Put the file back as the draft started with it | `POST /api/build/projects/{project}/drafts/{draft_id}/files/processes/{key}/revert` |
 
 ## Working a process's tasks

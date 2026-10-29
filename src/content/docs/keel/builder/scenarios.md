@@ -40,6 +40,7 @@ The things that happen to the case, in order. Steps count from 0. The **Add** me
 | **Send an event** | The **Event**, its **Payload**, and who sent it (by default, no one). |
 | **Start an action** | The **Action**, and who started it. |
 | **Move the case** | Where it goes (**To**), the **Reason**, and who moved it. |
+| **End a process** | The **Process**, a process node that waits; its **Status**: **Completed**, **Ended**, **Failed**, **Cancelled** or **Not started**; the **Error** a failed process ended with, or why its start was refused; and the **Variables** it ended with, as JSON. |
 | **Let time pass** | A **Duration**, so timers and service levels can fire. |
 
 Each step has an **At**: a time with its offset, or `+` and a duration after the step before, such as `+PT1M`. Blank means a minute after the step before.
