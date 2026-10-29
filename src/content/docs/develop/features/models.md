@@ -119,7 +119,7 @@ The serving configuration. For **served** models it has three parts:
 - **Generation defaults** — presets (Default / Creative / Precise / Code) plus editable rows: temperature, topP, topK, maxTokens, repetitionPenalty, stopSequences.
 - **Serving parameters** — engine flags as key/value rows. vLLM seeds `max_model_len`, `tensor_parallel_size`, `gpu_memory_utilization`, `quantization`, `enforce_eager`, `attention_backend`, `reasoning_parser`, `tool_call_parser`; llama.cpp seeds `ctx_size`, `threads`, `reasoning_format`. You can add arbitrary parameters — each is passed to the serving command as `--kebab-cased-key`. On Modal, an extra card exposes snapshot mode (CPU+GPU / CPU / off), scale-to-zero window, startup timeout, and max concurrent requests per replica.
 
-Start requires only **Engine** and **Compute**; quantization can stay unset. The yellow **"Required before serving"** note also lists quantization. Settings lock while the model is serving or starting: **Stop to edit**.
+Start requires only **Engine** and **Compute**; quantization can stay unset. The yellow **"Required before serving"** note names the same two. Settings lock while the model is serving or starting: **Stop to edit**.
 
 **Proxy** models (OpenRouter / URL) have no compute or engine to configure — CONFIG only carries generation defaults and the endpoint/API-key serving fields, and it never locks.
 
