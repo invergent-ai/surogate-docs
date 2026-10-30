@@ -341,6 +341,7 @@ export default defineConfig({
                 'keel/builder/case-type-settings',
                 'keel/builder/versions',
                 'keel/builder/publish',
+                'keel/builder/processes',
                 'keel/builder/rules',
                 'keel/builder/queues',
                 'keel/builder/agents',

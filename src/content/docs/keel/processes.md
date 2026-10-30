@@ -6,7 +6,7 @@ sidebar:
 
 Besides case types, Keel runs **processes** drawn in BPMN 2.0, the notation of process modellers such as Camunda Modeler and bpmn.io. A process is a BPMN file among the project's definitions. It is published through a draft, as a case type is, and each run of it is an **instance**.
 
-A builder puts a process file in a draft through Keel Builder's API, and staff or another system start instances through Keel's API. Staff work a process's tasks in the business app, as they work a case's steps: in the same queues, on the Work page, and on the instance's own page. A process's tasks can also call other systems, and agents can work them or draft them for the person who completes them. The designer, a list of processes and a diagram of each instance come in a later release. The Review and publish page already shows a process file's warnings.
+A builder uploads a process file in Keel Builder's [Processes](/keel/builder/processes/) page, which lists the project's processes and draws each one's file, or saves it through Keel Builder's API. Staff or another system start instances through Keel's API. Staff work a process's tasks in the business app, as they work a case's steps: in the same queues, on the Work page, and on the instance's own page. A process's tasks can also call other systems, and agents can work them or draft them for the person who completes them. Keel Builder does not draw or change a process yet: the designer comes in a later release.
 
 ## A process file
 
@@ -181,7 +181,7 @@ A call goes through a **connection** of the process, as a case type's system ste
 
 - A connection is the file `process-connections/<process>/<name>.json`, with the settings of a [case type's connection](/keel/builder/connections/#a-connection): its base URL, its authentication, its idempotency-key header and its default timeout. A connection that sends a credential must use `https`.
 - It is saved in a draft and published with it: `PUT /api/build/projects/{project}/drafts/{draft_id}/files/process-connections/{process}/{name}` saves the file, `GET` on the same path reads it, and `POST` on `…/revert` puts it back as the draft started with it. A connection file is never deleted.
-- Its credentials are not part of a draft. They are set on the published connection and apply at once, in Keel Builder's [Settings](/keel/builder/settings/#process-connections), or through the API: `PUT /api/build/projects/{project}/processes/{process}/connections/{name}/credentials/{kind}` sets one, in place of any it had, and `DELETE` on the same path deletes it. They take a case type's bodies, are for editors and owners, and are refused as a case type's are. A connection the process never published is `404 unknown-connection`, and a credential that does not exist is `404 unknown-credential`.
+- Its credentials are not part of a draft. They are set on the published connection and apply at once, in the **Connections** tab of the process's page in Keel Builder, [as its page says](/keel/builder/processes/#the-connections-tab), or through the API: `PUT /api/build/projects/{project}/processes/{process}/connections/{name}/credentials/{kind}` sets one, in place of any it had, and `DELETE` on the same path deletes it. They take a case type's bodies, are for editors and owners, and are refused as a case type's are. A connection the process never published is `404 unknown-connection`, and a credential that does not exist is `404 unknown-credential`.
 
 ### A service task that calls an agent
 
@@ -268,8 +268,8 @@ The business app shows the links on both sides:
 
 A process file is saved in a draft and published with it, like any other file of the project:
 
-1. Save the file in an open draft: `PUT /api/build/projects/{project}/drafts/{draft_id}/files/processes/{key}`, with the file as the body.
-2. Run the [dry run](/keel/builder/publish/#dry-run), or open **Review and publish**. The checks read the file against what Keel runs, its settings, its variables, its conditions and the project's calendars.
+1. Save the file in an open draft: in Keel Builder, with **New process** or **Upload a file** on the [Processes](/keel/builder/processes/) page, or through the API with `PUT /api/build/projects/{project}/drafts/{draft_id}/files/processes/{key}`, with the file as the body.
+2. Run the [dry run](/keel/builder/publish/#dry-run), or open **Review and publish**. A process's page checks its draft by itself and lists the [problems](/keel/builder/processes/#problems) beside the drawing. The checks read the file against what Keel runs, its settings, its variables, its conditions and the project's calendars.
 3. Publish. The process has a new version, and new instances start on it.
 
 The checks also refuse:
