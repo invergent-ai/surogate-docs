@@ -46,11 +46,11 @@ With no instance in a tab, the page says **No processes here**. When Keel cannot
 2. Pick a process. Its start form opens, with the variables the process requires.
 3. Fill in the form and press **Start**. **Cancel** goes back to the instances.
 
-The instance opens on its page. Every process the project has published is listed. With none, the page says **No process to start**: "Processes start once the project's builders publish one."
+The instance opens on its page. Every process the project has published whose current version can start is listed. With none, the page says **No process to start**: "Processes start once the project's builders publish one."
 
-A link to a process that is not among those you may start says **This process cannot be started**: "It is not among the processes that may start." **Choose a process** lists them. A process that requires nothing says "This process asks for nothing to start." and shows **Start** alone.
+A link to a process that is not among those you may start says **This process cannot be started**: "It is not among the processes that may start." **Choose a process** lists them. A process that requires nothing says "This process asks for nothing to start." and shows **Start** and **Cancel** without a form.
 
-If Keel refuses the form, the reason shows beside the field it names, or above the form: "The process could not be started. Try again." when Keel gave no reason. Pressing **Start** twice, or again after an error, never starts two instances from the same form.
+If Keel refuses the form, the reason shows beside the field it names, or above the form when it names none. An empty required field reads **Required.** beside it, and nothing is sent. Pressing **Start** twice, or again after an error, never starts two instances from the same form.
 
 Instances also start without you: a case's [process node](/keel/builder/flow-nodes/#processes) starts one, and another system starts one with a [service key](/keel/systems/).
 

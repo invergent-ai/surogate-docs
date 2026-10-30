@@ -15,6 +15,8 @@ Keel records each time someone opens an instance.
 
 A case that started the instance shows **Started by**, with the case, over the rest.
 
+With nothing to work or wait for, the page says "Nothing waits on people now." on a running instance and "This process has ended." on an ended one. A link to an instance that does not exist, or that is not this project's, says **This process does not exist, or it is not this project's** with **Back to processes**; when Keel cannot read it, **This process could not be loaded** with **Try again**.
+
 ## Needs a supervisor
 
 Supervisors see this card first when a task or a timer needs them. Nobody else sees it. A member of the staff who is no supervisor reads the same incidents on the task's **Now** card and in **Waiting for**, without a button.
@@ -44,6 +46,10 @@ Each open task that is yours shows as a card, **Your task**, with its form, as a
 
 **Waiting for** lists the timers, the messages, the cases and the calls the instance waits on, such as "Cool off · due 20 Oct, 10:00", "Documents · waits for the message Documents" or "Check the bureau · calling Bureau". A call that failed for good reads "Check the bureau · its call to Bureau failed: a supervisor retries it or cancels the process"; a timer that could not fire reads "Pause · could not fire". A case it waits on shows the case, linked to its page.
 
+## Cases it started
+
+An instance whose tasks started cases lists them under **Cases it started**, oldest first: each case by its number, its case type's name and how it stands, such as `CL-000001 · Claim · Open`, linked to the case, with the task that started it and when. A start that started nothing reads, for example, `Claim · Not started`, with why. The list reads again on each change. An instance that started no case shows no **Cases it started**.
+
 ## The diagram
 
 The **Diagram** card draws the process as its file lays it out, with how far the instance got. It has two tabs, **Diagram** and **List**; on a phone, **List** comes first.
@@ -58,7 +64,7 @@ The **Diagram** card draws the process as its file lays it out, with how far the
 | Dashed grey | **Withdrawn**: something took it away, such as a timer that interrupted the task |
 | Dimmed | **Not reached** |
 
-The legend under the drawing names the states. Pausing on an element shows its name and its state, such as "Review the loan · Active". An element a loop reaches again is **Active**, not **Done**. The lines carry no colour: Keel does not record which line a run took.
+The legend under the drawing names the states. A timer on a task that does not interrupt it draws with a dashed ring, whatever its state. Pausing on an element shows its name and its state, such as "Review the loan · Active". An element a loop reaches again is **Active**, not **Done**. The lines carry no colour: Keel does not record which line a run took.
 
 **List** says the same in words. It groups the elements, leaving out pools, lanes, groups and notes, under **Needs a supervisor**, **Active**, **Done**, **Withdrawn** and **Not reached**, in the file's order, each as "name · kind":
 
@@ -112,7 +118,7 @@ An element that was only entered or passed, a gateway taken, a missed goal and t
 
 ## Cancel a process
 
-A supervisor cancels a running instance from **More actions** with **Cancel the process…**. The dialog, **Cancel *number***, says "Everything still open in the process is withdrawn, and it ends as cancelled." Where the instance waits on a case it adds "A case it waits on is cancelled, or left running, as the process says." and "Your reason is kept in its history."
+A supervisor cancels a running instance from **More actions** with **Cancel the process…**. The dialog, **Cancel *number***, says "Everything still open in the process is withdrawn, and it ends as cancelled." It adds "Your reason is kept in its history." Where the instance waits on a case, it also says "A case it waits on is cancelled, or left running, as the process says."
 
 1. Write the **Reason**. Without one, the dialog says "Say why the process is cancelled." and sends nothing.
 2. Press **Cancel the process**, or **Keep it running** to leave the instance as it is.

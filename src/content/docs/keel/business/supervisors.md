@@ -114,4 +114,4 @@ See [An open process](/keel/business/open-process/).
 
 ## What staff who are not supervisors see
 
-Staff see the **Work**, **Cases** and **Processes** pages, start cases and processes, work the steps given to them or their queues, answer agents' questions, delegate and return their items, message agents and watch sessions. They do not see the Team page, the Overview, **Queue settings**, **Reassign**, **Move by hand…** or **Open Keel Builder**.
+Staff see the **Work**, **Cases** and **Processes** pages, start cases and processes, work the steps given to them or their queues, answer agents' questions, delegate and return their items, message agents and watch sessions. They do not see the Team page, the Overview, **Queue settings**, **Reassign**, **Move by hand…**, **Open Keel Builder**, **Retry** or **Cancel the process…** on a process, or its **Needs a supervisor** card.
