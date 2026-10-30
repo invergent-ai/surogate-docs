@@ -95,6 +95,15 @@ A supervisor can move a case to any stage, or to a step of a stage, with a reaso
 
 **Move by hand…** is offered on open cases. Steps on a parallel path are not offered, since a case moved onto one would wait at the join for paths no move opens. If a move would leave the case with nothing to do, Keel refuses it and says why.
 
+## Retry a process's incident and cancel a process
+
+A [BPMN process](/keel/processes/)'s instance can need a supervisor: an agent task whose agent failed for good, a call to a system that failed for good, or a timer that could not fire. The **Processes** page finds them under its **Needs a supervisor** tab, and the instance's page shows them first, under **Needs a supervisor**.
+
+- **Retry** starts the task again. A call that may have reached its system before it failed asks first: "Its call may have reached *system* before it failed. A retry calls *system* again." Check the system, then press **Retry**.
+- **More actions** on a running instance has **Cancel the process…**. It asks for a **Reason**, which Keel keeps in the instance's history, and withdraws everything still open in the process. It is the way out of a timer that could not fire.
+
+See [An open process](/keel/business/open-process/).
+
 ## What else supervisors see
 
 - The [Overview](/keel/business/overview/), after **Team** in the left rail: figures, what needs attention, case types and where cases wait. Its **Open the agents** link opens the **Agents** tab above.
@@ -105,4 +114,4 @@ A supervisor can move a case to any stage, or to a step of a stage, with a reaso
 
 ## What staff who are not supervisors see
 
-Staff see the **Work** and **Cases** pages, start cases, work the steps given to them or their queues, answer agents' questions, delegate and return their items, message agents and watch sessions. They do not see the Team page, the Overview, **Queue settings**, **Reassign**, **Move by hand…** or **Open Keel Builder**.
+Staff see the **Work**, **Cases** and **Processes** pages, start cases and processes, work the steps given to them or their queues, answer agents' questions, delegate and return their items, message agents and watch sessions. They do not see the Team page, the Overview, **Queue settings**, **Reassign**, **Move by hand…** or **Open Keel Builder**.

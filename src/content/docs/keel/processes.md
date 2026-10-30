@@ -340,12 +340,7 @@ Builders read the published processes with:
 A process's user and manual tasks are worked in the business app, like a case's steps.
 
 - **Work.** A task waits in its queue, or with the person the file names, and shows in **Mine**, in the queue's views and in **Get next**, as a step does. Its row reads the instance's number and the process's name, such as **P-000001 · Loan review**. On its item, **Open process** opens the instance's page. **Get next case** on the Cases page opens it too. **Delegate** and **Reassign** offer people and agents, as for a case's items: see [Agents in a process's queues](#agents-in-a-processs-queues).
-- **The instance's page** shows the process's name, the instance's number, version and start day, and its status: **Running**, **Completed**, **Ended**, **Failed** or **Cancelled**. A failed instance says which error ended it and where.
-  - A task you hold shows its form under **Your task**, with **Submit** and **Return to queue**. A task waiting in one of your queues asks you to **Claim** it first.
-  - A task someone else holds shows under **Now**, with who holds it.
-  - **Waiting for** lists the timers, messages and cases the instance waits on, and the calls its tasks made to systems, such as "Check the bureau · calling Bureau"; a call that failed for good reads "Check the bureau · its call to Bureau failed: a supervisor retries it or cancels the process". **Process data** lists the variables by their labels.
-  - **Started by** names the case that started the instance, and **Cases it started** lists the cases its tasks started. See [Cases and processes that start each other](#cases-and-processes-that-start-each-other).
-  - The page stays current on its own.
+- **The instance's page** shows the process's name, the instance's number, version and start day, and its status, with the tasks, what it waits for, its diagram, its data and its history. A task you hold shows its form under **Your task**, with **Submit** and **Return to queue**. A task waiting in one of your queues asks you to **Claim** it first. A task someone else holds shows under **Now**, with who holds it. The page stays current on its own. See [An open process](/keel/business/open-process/). The [Processes](/keel/business/processes/) page lists the project's instances and starts one.
 - **Refusals.** When a task closes before your submission arrives, because someone else completed it or a timer withdrew it, the page says "This step is no longer open." and shows the instance as it now is. An instance that ended says "This process has ended."
 - **Away.** While you are away, a process's task assigned to you moves as your absence says, as a step does, and supervisors are told of what stays with you.
 - **Notices.** A task that reaches you or your queue is a notice, and its mail names the process and the task.
@@ -400,10 +395,13 @@ Staff sign in as they do for the business app; another system uses a [service ke
 | To | Call | Who |
 |---|---|---|
 | Start an instance | `POST /api/projects/{project}/processes` with `{"process": "loan-review", "data": {"amount": "20000.00"}}` | Staff and service keys |
-| List instances, newest first | `GET /api/projects/{project}/processes`, with `process`, `status`, `attention=true`, `cursor` and `limit` | Staff and service keys |
+| List the processes an instance may start on, each with the form it starts with | `GET /api/projects/{project}/process-types` | Staff and service keys |
+| List instances, newest first | `GET /api/projects/{project}/processes`, with `process`, `status`, `attention=true`, `q` (a part of the number, two to a hundred characters), `cursor` and `limit`. Each row names its process. | Staff and service keys |
 | Read an instance | `GET /api/processes/{instance_id}` | Staff and service keys |
 | Read it as its page shows it: its tasks with their forms and who holds each, its goals and deadlines, what it waits for, its data | `GET /api/processes/{instance_id}/outline` | Staff and service keys |
 | Follow its changes as server-sent events | `GET /api/processes/{instance_id}/live` | Staff |
+| Its diagram: the shapes and lines its file lays out, each shape marked `done`, `active`, `incident` or `withdrawn`, or not marked | `GET /api/processes/{instance_id}/diagram` | Staff and service keys |
+| The attempts of its calls to systems | `GET /api/processes/{instance_id}/system-calls` | Staff and service keys |
 | Its open tasks | `GET /api/processes/{instance_id}/tasks` | Staff and service keys |
 | Its history | `GET /api/processes/{instance_id}/history` | Staff and service keys |
 | Check its history replays | `POST /api/processes/{instance_id}/replay` | Staff and service keys |
@@ -432,8 +430,8 @@ A task's id, such as `t3`, comes from the instance's open tasks. Completing a ta
 A call or an agent task that fails for good leaves its task with an **incident**. The task stays where it is, the instance keeps running, and a supervisor decides. The instance's list finds it with `attention=true`.
 
 - The history records `incident.raised`, with the reason.
-- The instance's page says so: **Waiting for** reads "*task* · its call to *system* failed: a supervisor retries it or cancels the process", and an agent task's **Now** card reads "*Agent* could not finish this task: a supervisor retries it or cancels the process."
-- A supervisor sends `task.retried` for the task, or cancels the instance with `process.cancelled`. A retried call is made again as a new call. A retried agent task starts the agent in a fresh run, with a new session, or goes to people in its raise-hand queue when its agent is switched off by then.
+- The instance's page says so, and shows it to supervisors first, under **Needs a supervisor**, with **Retry** and, for a call, its attempts. **Waiting for** reads "*task* · its call to *system* failed: a supervisor retries it or cancels the process", and an agent task's **Now** card reads "*Agent* could not finish this task: a supervisor retries it or cancels the process."
+- A supervisor sends `task.retried` for the task, or cancels the instance with `process.cancelled`: the instance's page has **Retry** and **Cancel the process…** for both. A call that may have reached its system before it failed asks first. A retried call is made again as a new call. A retried agent task starts the agent in a fresh run, with a new session, or goes to people in its raise-hand queue when its agent is switched off by then.
 - A task without an incident answers `task.retried` with `409 not-allowed`.
 - The agent that drafts for a person is the exception: its failure is no incident. The person works alone, and the task has no retry.
 

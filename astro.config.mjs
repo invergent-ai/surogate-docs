@@ -357,6 +357,8 @@ export default defineConfig({
                 'keel/business/queues',
                 'keel/business/cases',
                 'keel/business/open-case',
+                'keel/business/processes',
+                'keel/business/open-process',
                 'keel/business/case-agent',
                 'keel/business/agents',
                 'keel/business/watch',

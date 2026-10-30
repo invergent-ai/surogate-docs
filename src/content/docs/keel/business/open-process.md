@@ -1,0 +1,124 @@
+---
+title: An open process
+---
+
+An instance's page shows where a [BPMN process](/keel/processes/) is, the tasks that are yours to work, who holds the others, what it waits for, its diagram, its data and its history. For supervisors it also shows what needs them and offers Retry and Cancel. It keeps itself current as the instance changes. Open an instance from the [Processes](/keel/business/processes/) page, the Work page, a case it started or waits on, or a link a colleague sends.
+
+Keel records each time someone opens an instance.
+
+## The header
+
+- A breadcrumb: **Processes** / the instance number.
+- The process's name, and under it the number, the version and the start day, such as `P-000001 · v1 · started 20 Oct`.
+- The status: **Running**, **Completed**, **Ended**, **Failed** or **Cancelled**. A failed instance says which error ended it and where: "Ended in error *code* at *place*."
+- For supervisors, on a running instance, **More actions** with **Cancel the process…**. See [Cancel a process](#cancel-a-process).
+
+A case that started the instance shows **Started by**, with the case, over the rest.
+
+## Needs a supervisor
+
+Supervisors see this card first when a task or a timer needs them. Nobody else sees it. A member of the staff who is no supervisor reads the same incidents on the task's **Now** card and in **Waiting for**, without a button.
+
+Each row names the task or the timer and says what happened:
+
+| What happened | The row says | What a supervisor can do |
+|---|---|---|
+| An agent task whose agent failed for good | "*Agent* could not finish it." | **Retry** |
+| A call to a system that failed for good | "Its call to *system* failed." and each attempt of the call: **Attempt 1**, its time and how it went (**The system did not answer in time**, **The system was unavailable**, **Refused by the system** or **The system could not complete this**) | **Retry** |
+| A call that may have reached its system before it failed | The same, and "Its call may have reached *system* before it failed: check *system* before you retry." | **Retry**, which asks first |
+| A timer that could not fire | "It could not fire. Cancel the process to end it." | [Cancel the process](#cancel-a-process) |
+
+### Retry a task
+
+**Retry** starts the task again: a call is made again as a new call, and an agent task starts its agent in a fresh run. Keel says "Retried *task*." and the page reads the instance again.
+
+A call that may have reached its system asks first, since a retry calls the system again: **Retry *task*?** says "Its call may have reached *system* before it failed. A retry calls *system* again." Check the system, then press **Retry**, or **Cancel**.
+
+When another supervisor retried the task already, Keel says "Nothing to retry: the task has no incident now." and the page reads the instance again. Any other refusal shows in the same toast.
+
+## Your task, and Now
+
+Each open task that is yours shows as a card, **Your task**, with its form, as a case's step does: **Submit** completes it, **Return to queue** gives it back, and **Claim** takes a task that waits in one of your queues. Every other open task shows as a **Now** card with who holds it. Tasks that agents work or draft show what the agent does and what you may do about it. See [Working a process's tasks](/keel/processes/#working-a-processs-tasks).
+
+## Waiting for
+
+**Waiting for** lists the timers, the messages, the cases and the calls the instance waits on, such as "Cool off · due 20 Oct, 10:00", "Documents · waits for the message Documents" or "Check the bureau · calling Bureau". A call that failed for good reads "Check the bureau · its call to Bureau failed: a supervisor retries it or cancels the process"; a timer that could not fire reads "Pause · could not fire". A case it waits on shows the case, linked to its page.
+
+## The diagram
+
+The **Diagram** card draws the process as its file lays it out, with how far the instance got. It has two tabs, **Diagram** and **List**; on a phone, **List** comes first.
+
+**Diagram** draws each element where the file puts it, scaled as the file scales it, in a box that scrolls. Pools and lanes show with their names. A mark shows what each element is: a person for a user task, a hand for a manual task, a robot for an agent task, a cog for a call to a system, a folder for a task that starts a case, a table for a business rule, an envelope for a message, a clock for a timer, a bolt for an error. Gateways show as diamonds marked with a cross, a plus or a ring. An element's colour says how far the instance got:
+
+| Colour | State |
+|---|---|
+| Amber, light | **Done** |
+| Amber, strong | **Active**: the instance is at it now |
+| Red | **Needs a supervisor**: the task holds an incident |
+| Dashed grey | **Withdrawn**: something took it away, such as a timer that interrupted the task |
+| Dimmed | **Not reached** |
+
+The legend under the drawing names the states. Pausing on an element shows its name and its state, such as "Review the loan · Active". An element a loop reaches again is **Active**, not **Done**. The lines carry no colour: Keel does not record which line a run took.
+
+**List** says the same in words. It groups the elements, leaving out pools, lanes, groups and notes, under **Needs a supervisor**, **Active**, **Done**, **Withdrawn** and **Not reached**, in the file's order, each as "name · kind":
+
+| Kind | Reads |
+|---|---|
+| A start event | **Start** |
+| An end event | **End**, **End that stops every branch** or **End with an error** |
+| A timer, or a message an instance waits for | **Timer**, **Waits for a message** |
+| A timer or an error on a task | **Timer on a task**, **Error on a task** |
+| A subprocess | **Subprocess** |
+| A user or a manual task | **User task**, **Manual task** |
+| An agent task, or a call to a system | **Agent task**, **System call** |
+| A task that starts a case | **Starts a case** |
+| A business rule | **Business rule** |
+| A receive task | **Waits for a message** |
+| A gateway | **Decision**, **Parallel paths** or **Waits for the first event** |
+
+A process whose file draws nothing says "This process's file has no diagram layout." When Keel cannot read the diagram, the card says why with **Try again**.
+
+The diagram shows names and places only: never a condition, a check, a connection, or an agent's tools or knowledge.
+
+## Process details: Data and History
+
+The side panel, beside the tasks on a wide screen and under them on a phone, has two tabs. The instance opens on **Data**; the address keeps the tab, so a link can open the **History**.
+
+- **Data**: each variable by its label and value, or "No value" when it holds none. With no data, "No data yet".
+- **History**:
+  - **Your part in this process** first: what you did, latest first, or "You have not worked on this process yet".
+  - Then everything that happened, latest first, each as a sentence with where and when, such as "Mihai Ionescu finished Review the loan" under `Approve the loan · 20 Oct, 10:00`. A task a person finished with values an agent drafted adds "*Agent* drafted *fields*" under it. People who have left the staff are still named.
+
+| History says | When |
+|---|---|
+| "*Who* started the process" | The instance started. |
+| "*Who* finished *task*", at the outcome | A person or an agent completed a task. |
+| "*Agent* drafted *task*", at the outcome | An agent drafted a task for its person. |
+| "*Who* asked for a revision: *note*" | A person asked a drafting agent to revise. |
+| "*Who* wrote to the agent: *text*" | Someone messaged an agent at work. |
+| "*Agent* raised a hand: *question*", and "*Who* answered: *answer*" | An agent asked, and was answered. |
+| "*Agent* could not finish its draft" | A drafting agent failed. The person works alone. |
+| "*Agent* was off: people work *task*" | A task started while its agent was switched off. |
+| "*Task* failed: a supervisor retries it or cancels the process" | A task holds an incident. The reason stays out of the sentence. |
+| "*Who* retried *task*" | A supervisor retried it. |
+| "*Timer* fired", "The message *Name* arrived" or "*Who* sent the message *Name*" | A timer fired, or a message came. |
+| "*Boundary* caught the error *code*" | An error boundary caught an error. |
+| "*Task* applied *rule* v*n*" | A business rule task applied a rule. |
+| "Requested a case of *case type*", then "Case *number* closed", "Case *number* failed" or "The case could not start" | A task started a case, and how it ended. A closed case names its resolution. |
+| "The process completed", "The process ended at *element*" or "The process ended in error *code* at *element*" | The instance ended. |
+| "*Who* cancelled the process: *reason*" | A supervisor cancelled it. |
+
+An element that was only entered or passed, a gateway taken, a missed goal and the like are not told. The values written are in **Data**, and the history never shows an incident's reason. With nothing to tell, the tab says **Nothing yet**. When Keel cannot read the history, the tab says why.
+
+## Cancel a process
+
+A supervisor cancels a running instance from **More actions** with **Cancel the process…**. The dialog, **Cancel *number***, says "Everything still open in the process is withdrawn, and it ends as cancelled." Where the instance waits on a case it adds "A case it waits on is cancelled, or left running, as the process says." and "Your reason is kept in its history."
+
+1. Write the **Reason**. Without one, the dialog says "Say why the process is cancelled." and sends nothing.
+2. Press **Cancel the process**, or **Keep it running** to leave the instance as it is.
+
+Keel says "Cancelled *number*." and the page shows the instance as **Cancelled**. If the instance ended meanwhile, the dialog stays open and says "This process has ended."
+
+## Not offered on a process
+
+A process is not a case. An instance has no **Follow** and no Updates, no files, no case agent, no re-run and no **Move by hand…**, and its history has no **Full history with inputs and outputs**. Builders see an instance's agents and runs on the [builder's Agents screen](/keel/builder/agents/).

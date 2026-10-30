@@ -48,7 +48,7 @@ Pick an item to see it on the right: its kind and service level, what it needs, 
 
 **Open case** opens the case. Steps and votes are worked in the case, where their form and the case's files are. See [An open case](/keel/business/open-case/).
 
-A task of a [BPMN process](/keel/processes/#working-a-processs-tasks) shows **Open process** instead, which opens the instance's page, where the task's form is.
+A task of a [BPMN process](/keel/processes/#working-a-processs-tasks) shows **Open process** instead, which opens the instance's page under [Processes](/keel/business/open-process/), where the task's form is.
 
 If an address points at an item the list no longer holds, the pane says so: it may have been answered, returned or handed to someone else, or it is not yours.
 
