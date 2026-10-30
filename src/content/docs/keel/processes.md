@@ -6,12 +6,12 @@ sidebar:
 
 Besides case types, Keel runs **processes** drawn in BPMN 2.0, the notation of process modellers such as Camunda Modeler and bpmn.io. A process is a BPMN file among the project's definitions. It is published through a draft, as a case type is, and each run of it is an **instance**.
 
-A builder uploads a process file in Keel Builder's [Processes](/keel/builder/processes/) page, which lists the project's processes and draws each one's file, or saves it through Keel Builder's API. Staff or another system start instances through Keel's API. Staff work a process's tasks in the business app, as they work a case's steps: in the same queues, on the Work page, and on the instance's own page. A process's tasks can also call other systems, and agents can work them or draft them for the person who completes them. You cannot model or change a process in Keel Builder yet: the designer comes in a later release.
+A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder/processes/) page, which lists the project's processes and draws each one's file, uploads a file made in another modeller, or saves it through Keel Builder's API. Staff or another system start instances through Keel's API. Staff work a process's tasks in the business app, as they work a case's steps: in the same queues, on the Work page, and on the instance's own page. A process's tasks can also call other systems, and agents can work them or draft them for the person who completes them.
 
 ## A process file
 
 - One process is one file, `processes/<key>.bpmn`, in the project's definitions. Its key starts with a letter or a digit and holds letters, digits, `-` and `_`.
-- Keel keeps the file exactly as it was saved, diagram layout included: the file you download is the file you uploaded.
+- Keel keeps the file exactly as it was saved, diagram layout included: the file you download is the file you uploaded, or, once the diagram is changed in Keel Builder, the file Keel Builder wrote after that change. Keel Builder writes the whole file in its own layout: XML comments are dropped, and the elements, their settings and the diagram's layout are kept.
 - A file is at most 5,000,000 bytes and holds one process.
 - What BPMN has no place for, such as a task's queue or the type of a variable, is written in Keel's own elements, in the namespace `https://surogate.ai/keel/bpmn/1`, inside the `extensionElements` of the BPMN element they describe. See [Keel's settings in the file](#keels-settings-in-the-file).
 
@@ -45,6 +45,8 @@ Conditions are written in CEL over the process's variables, as a case type's are
 ## Keel's settings in the file
 
 Each setting sits in the `extensionElements` of its BPMN element. An element or attribute Keel does not know, or one where it has no meaning, is a problem when the file is published: nothing is ignored silently.
+
+Keel Builder's panel sets the process's settings and variables, a sequence flow's condition, an exclusive gateway's default flow, a timer, a message and an error: see [Changing the diagram](/keel/builder/processes/#changing-the-diagram). A task's settings and a service task's call are not set in the panel yet; they are written in the file, as this page shows, and the panel says so.
 
 ### The process
 
