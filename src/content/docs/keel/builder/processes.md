@@ -32,7 +32,7 @@ Editors and owners see **New process** in the page header. It is turned on once 
 
 Create is turned on once a file is chosen, its key is good, and the draft's processes are read; for a new draft, its title is not empty too. Keel saves the file in the draft exactly as you chose it, and the new process opens in that draft. Nothing published changes until the draft is published.
 
-If the draft cannot be made, the dialog says why, in Keel's words when Keel gave them, else "The draft could not be started. Try again." If Keel refuses the file, the dialog says why, in Keel's words when they are for people, such as "A file is at most 5000000 bytes.", and stays open. Press **Create** again: a draft already made for it is used again, and no second one is made. If the process was saved but cannot be opened, the dialog says "The process could not be opened. Try again."
+If the draft cannot be made, the dialog says why, in Keel's words when Keel gave them, else "The draft could not be started. Try again." If Keel refuses the file, the dialog says why, in Keel's words when they are for people, such as "A file is at most 5000000 bytes.", or "This draft is published or discarded." when the draft is no longer open, and stays open. Press **Create** again: a draft already made for it is used again, and no second one is made. If the process was saved but cannot be opened, the dialog says "The process could not be opened. Try again."
 
 ## A process's page
 
@@ -54,7 +54,7 @@ On the Diagram tab, a process that is not published, opened with no draft or in 
 
 With no draft open, Keel Builder asks for one first: the **Start a draft** dialog offers a **Title**, such as `Change Loan review`. Press **Start draft**, and the file is saved in the new draft. Cancel, and nothing is uploaded.
 
-Once the file is saved, a message says `Uploaded loan-review.bpmn.` with the file's name, and the page shows the draft's file, on the Diagram tab even when you uploaded from another tab. If Keel refuses the file, a message says why, in Keel's words when they are for people, and the page stays as it was. A file you choose while another is on its way waits for it.
+Once the file is saved, a message says `Uploaded loan-review.bpmn.` with the file's name, and the page shows the draft's file, on the Diagram tab even when you uploaded from another tab. If Keel refuses the file, a message says why, in Keel's words when they are for people, or "This draft is published or discarded." when the draft is no longer open, and the page stays as it was. A file you choose while another is on its way waits for it.
 
 ### Download
 
@@ -86,7 +86,7 @@ Each problem shows:
 - Keel's message;
 - its place. A problem at an element of the drawing names it, such as **Score the applicant · Script task**: its name, else its id, then its type. Press it to pick the element. A problem at the process reads **The process**. A problem at an element the drawing does not draw, such as **Documents · Message**, at a place Keel names in its own words, or in another file of the process, is listed but is not a button. A problem in another file of the process names that file, such as `bureau · Process connection checking/bureau` for a connection file.
 
-The drawing marks the elements the problems name: an element with an error has a red outline and a red glow, one with only a warning an amber outline and glow. The element you picked has a glow of its own, and the drawing moves to it.
+The drawing marks the elements the problems name: an element with an error has a red outline and a red glow, one with only a warning an amber outline and glow. The element you picked is drawn in the focus colour with a glow of its own, and the drawing moves to it.
 
 Picking an element, from a problem or by pressing it on the drawing, shows its problems only, under **At Score the applicant · Script task**, with **Show every problem**. An element with none reads **No problem at Application in · Start event.** Press the drawing's background, or **Show every problem**, to list every problem again. The address keeps the element, so you can send a colleague a link to it.
 
