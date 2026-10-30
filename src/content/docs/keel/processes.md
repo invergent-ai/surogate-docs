@@ -163,7 +163,7 @@ When the case closes, a waiting task completes: its `keel:result` variables and 
 |---|---|
 | `connection` | The [connection](#a-processs-connections) the call goes through, by name. Required. |
 | `method`, `path` | `GET`, `POST`, `PUT`, `PATCH` or `DELETE`, and the path after the connection's base URL. Required. `{variable}` in the path puts a variable's value in it; `{case.id}`, `{case.number}` and `{case.type}` put the instance's own: its id, its number and `process:<key>`. |
-| `keel:query`, `keel:header` | A `name` and a JSON value: text, or `{"$field": "amount"}` for a variable's value. Add `"optional": true` to leave it out when the variable has no value. `{"$case": "id"}`, `{"$case": "number"}` and `{"$case": "type"}` are the instance's own. Each name once. |
+| `keel:query`, `keel:header` | A `name` and a JSON value: a JSON string such as `"keel"`, or `{"$field": "amount"}` for a variable's value. Add `"optional": true` to leave it out when the variable has no value. `{"$case": "id"}`, `{"$case": "number"}` and `{"$case": "type"}` are the instance's own. Each name once. |
 | `keel:body` | A JSON template for `POST`, `PUT` and `PATCH`, with the same markers. `"as": "number"` writes a decimal variable as a JSON number. |
 | `keel:output` | A `variable` that takes the value at a `path` of the response, such as `$.body.clear`. `$.status` and `$.headers.name` read the status and a header. Each variable once. |
 | `accept` | Statuses outside 2xx, separated by spaces, that count as answers to map, such as `404 409`. |
@@ -192,6 +192,7 @@ A call goes through a **connection** of the process, as a case type's system ste
                 mcp-servers="crm" outcome-variable="decision">
       <keel:read variable="amount"/>
       <keel:write variable="score" required="true"/>
+      <keel:write variable="band"/>
       <keel:outcome name="approve" requires="band"/>
       <keel:check when="amount &gt; 0.0" message="The amount must be positive."/>
       <keel:maker-checker task="review"/>
@@ -298,7 +299,7 @@ A start is checked when the case type or the process that holds it is published,
 
 ### Checking what a process calls and which agents work it
 
-A process's calls and agents are checked when the process is published, and a connection published again is checked against every process version instances still run on.
+A process's calls and agents are checked when the process is published, and a connection published again is checked against the current version of each process the publish leaves alone and every process version instances still run on.
 
 | Problem | Where | What it says |
 |---|---|---|
@@ -311,7 +312,7 @@ A process's calls and agents are checked when the process is published, and a co
 | `knowledge` | The process's file, at the task | "*knowledge base* is not knowledge of the process" |
 | `unknown-queue` | The process's file, at the task | "*task* raises its hand to the queue *queue*, which the project does not have" |
 
-Publishing records the names of the agents and knowledge bases a process names, as it does for case types. A `system-request` problem at a version instances still run on stays until none does, or the connection's file fits it again.
+Publishing records the names of the agents and knowledge bases a process names, as it does for case types. A `system-request` problem at a version instances still run on stays until none does, or the connection's file fits it again. One at a current version stays until you publish a new version of the process, or the connection's file fits it again.
 
 A problem at an old version is fixed in one of these ways:
 
@@ -360,7 +361,7 @@ A task with an agent shows what the agent does and what you may do about it. **O
 | An agent's question | **Your task**: "*Agent* asked a question · *queue*", its progress, **Answer in Work**, **Open its session**. | **Now**: "*Agent* asked a question" and who holds the question, such as "Held by Mihai Ionescu", or the queue it waits in. |
 | An agent task whose agent failed for good | — | **Now**: "*Agent* could not finish this task: a supervisor retries it or cancels the process." No button. |
 | An agent task people work, because its agent is switched off | **Your task**: "*Agent* is off: people work this task." and the task's form, or **Claim** first. | **Now**: who holds it, and the same line. |
-| A user task its agent drafts, while it drafts | **Your task**: "*Agent* is drafting · *run*" with its progress, over the form. | **Now**: "*Agent* is drafting · *run*", and who holds the task. No form. |
+| A user task its agent drafts, while it drafts | **Your task**: "*Agent* is drafting · *run*" with its progress, **Message the agent** and **Open its session**, over the form, or over **Claim** while the task waits in your queue. | **Now**: "*Agent* is drafting · *run*", its progress, who holds the task, **Message the agent** and **Open its session**. No form. |
 | The same, once the draft is in | **Your task**: the form filled from the draft, and **Ask to revise**. | **Now**: who holds the task. |
 | A drafted task whose agent failed or is off | **Your task**: "*Agent* could not finish its draft: you work this task alone." or "*Agent* is off: you work this task alone." and the form. | **Now**: who holds the task. |
 
@@ -417,7 +418,7 @@ The events an instance takes:
 | Complete a task | `{"type": "task.completed", "task": "t3", "outcome": "approve", "output": {"note": "fine"}}` | Whoever holds its work item; while no one holds it, a member of its queue. A member of the queue its missed deadline escalated to. Supervisors always. Never a service key. |
 | Deliver a message | `{"type": "message.received", "name": "documents", "payload": {"docs": "received"}}` | Staff and service keys. Every task of the instance waiting for that message takes it. |
 | Cancel the instance | `{"type": "process.cancelled", "reason": "withdrawn"}` | Supervisors |
-| Answer an agent's question | `{"type": "hand.answered", "task": "t5", "answer": "2026", "note": "the new policy"}` | A member of the queue the question went to, or whoever holds its item; supervisors always. Never a service key. The `note` is optional, and an answer must be one of the question's choices when it has some. |
+| Answer an agent's question | `{"type": "hand.answered", "task": "t5", "answer": "2026", "note": "the new policy"}` | Whoever holds the question's item; while no one holds it, a member of the queue it went to; supervisors always. Never a service key. The `note` is optional, and an answer must be one of the question's choices when it has some. |
 | Ask a drafting agent to revise | `{"type": "revision.requested", "task": "t3", "note": "Cite the bureau"}` | Whoever holds the task, or its queue while no one does; supervisors always. Never a service key. |
 | Message an agent | `{"type": "agent.messaged", "task": "t5", "text": "Use the May statement."}` | Any member of the staff. Keel adds the sender's name. Never a service key. |
 | Retry a task with an incident | `{"type": "task.retried", "task": "t5"}` | Supervisors |
@@ -442,4 +443,4 @@ The history, `GET /api/processes/{instance_id}/history`, records what happened t
 
 An instance is `running`, `completed`, `terminated` (by a terminate end event), `failed` (by an error no boundary event caught) or `cancelled`.
 
-A refused call answers with a `code` and a `message`: `404 unknown-instance` for an instance that does not exist or belongs to another project, `422 invalid-event` for a body that is no event, `403 forbidden` for a sender who may not send it, and `409` with Keel's reason for anything the instance cannot take, such as `unknown-outcome`, `check-failed` or `rule-error`. An agent's task adds `hand-raised` (a task with a question waiting takes no completion, draft or revision), `no-hand-raised` and `invalid-answer` for an answer, `wrong-actor` for an event only a person or only an agent may send, and `not-allowed` for a message or a revision when no agent is working on the task now.
+A refused call answers with a `code` and a `message`: `404 unknown-instance` for an instance that does not exist or belongs to another project, `422 invalid-event` for a body that is no event, `403 forbidden` for a sender who may not send it, and `409` with Keel's reason for anything the instance cannot take, such as `unknown-outcome`, `check-failed` or `rule-error`. An agent's task adds `hand-raised` (a task with a question waiting takes no completion, draft, revision or message), `no-hand-raised` and `invalid-answer` for an answer, `wrong-actor` for an event only a person or only an agent may send, and `not-allowed` for a message when no agent is working on the task now, and for a revision while its agent still drafts or once its agent failed or is off.

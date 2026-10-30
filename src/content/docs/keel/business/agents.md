@@ -40,7 +40,7 @@ An agent can take a work item as a person does, in three ways:
 - **As a delegate.** **Delegate** on an item you hold offers agents as well as people. See [Hand an item to someone else](/keel/business/work/#hand-an-item-to-someone-else).
 - **By Reassign.** A supervisor gives an item to an agent. See [Reassign an item](/keel/business/work/#reassign-an-item).
 
-An agent can take a step people work, a vote, the item a system step opens when its call failed for good, and another agent's question. It never takes an escalation, a step an agent drafts for a person, or a step that opened for people because its agent failed or was turned off. Only agents the project's case types use are offered, and none a supervisor turned off.
+An agent can take a step people work, a vote, the item a system step opens when its call failed for good, and another agent's question. It never takes an escalation, a step an agent drafts for a person, or a step that opened for people because its agent failed or was turned off. Only agents the project's case types or processes use are offered, and none a supervisor turned off.
 
 The agent works the item in its own session, and finishes it as a person would: it submits the step, votes, or answers the question. Maker-checker and authority limits apply to it as to a person.
 
@@ -61,7 +61,7 @@ A task of a [BPMN process](/keel/processes/) can be worked by an agent, or draft
 
 - an agent at work on a task shows under **Now** as "*Agent* is working", with its run, its goal and deadline, its plan, and where its question would go. **Message the agent** and **Open its session** are there;
 - an agent's question shows "*Agent* asked a question" and who holds it. Answer it on the Work page;
-- an agent that drafts a task for you fills your form, each drafted field marked "Drafted by *agent*. Nothing is sent until you submit." You change what you need and press **Submit**; **Ask to revise** sends the agent a note and asks for another draft. The process's history says which agent drafted which values;
+- an agent that drafts a task for you fills your form, each drafted field marked "Drafted by *agent*. Nothing is sent until you submit." You change what you need and press **Submit**; **Ask to revise** sends the agent a note and asks for another draft. Keel keeps in the process's history which agent drafted which values, and it is read through Keel's API: see [Running instances](/keel/processes/#running-instances);
 - agents take a process's items from a queue, as a delegate or by Reassign, as they take a case's: see [Agents in a process's queues](/keel/processes/#agents-in-a-processs-queues).
 
 ## Following an agent's work
@@ -86,7 +86,7 @@ While you hold a step an agent drafts for you, and the agent is at work on it, a
 ## When an agent cannot work
 
 - **When an agent fails for good**, people take its step: it opens as a step in the queue that gets the agent's questions, and the queue's members claim it and work it like any other step. On a step the agent drafts for a person, the person works on alone.
-- **On a process's task**, an agent that works the task alone and fails for good leaves the task with an incident instead: the instance's page says "*Agent* could not finish this task: a supervisor retries it or cancels the process.", and a supervisor retries the task or cancels the process. The agent that drafts a task for a person is the exception: the person works on alone, as on a step.
+- **On a process's task**, an agent that works the task alone and fails for good leaves the task with an incident instead: the instance's page says "*Agent* could not finish this task: a supervisor retries it or cancels the process.", and a supervisor retries the task or cancels the process through Keel's API: see [Incidents](/keel/processes/#incidents). The agent that drafts a task for a person is the exception: the person works on alone, as on a step.
 - **When a supervisor turns an agent off**, each of its steps that opens from then on goes to people the same way, and so does each of its process tasks. On a task it drafts for a person, the person works alone: the page says "*Agent* is off: you work this task alone." Steps it already works carry on. It is no longer offered as a queue member, a delegate or a Reassign target. See [Agents](/keel/business/supervisors/#agents).
 
 ## How agents are doing
