@@ -6,7 +6,7 @@ sidebar:
 
 Besides case types, Keel runs **processes** drawn in BPMN 2.0, the notation of process modellers such as Camunda Modeler and bpmn.io. A process is a BPMN file among the project's definitions. It is published through a draft, as a case type is, and each run of it is an **instance**.
 
-A builder uploads a process file in Keel Builder's [Processes](/keel/builder/processes/) page, which lists the project's processes and draws each one's file, or saves it through Keel Builder's API. Staff or another system start instances through Keel's API. Staff work a process's tasks in the business app, as they work a case's steps: in the same queues, on the Work page, and on the instance's own page. A process's tasks can also call other systems, and agents can work them or draft them for the person who completes them. Keel Builder does not draw or change a process yet: the designer comes in a later release.
+A builder uploads a process file in Keel Builder's [Processes](/keel/builder/processes/) page, which lists the project's processes and draws each one's file, or saves it through Keel Builder's API. Staff or another system start instances through Keel's API. Staff work a process's tasks in the business app, as they work a case's steps: in the same queues, on the Work page, and on the instance's own page. A process's tasks can also call other systems, and agents can work them or draft them for the person who completes them. You cannot model or change a process in Keel Builder yet: the designer comes in a later release.
 
 ## A process file
 
@@ -268,8 +268,8 @@ The business app shows the links on both sides:
 
 A process file is saved in a draft and published with it, like any other file of the project:
 
-1. Save the file in an open draft: in Keel Builder, with **New process** or **Upload a file** on the [Processes](/keel/builder/processes/) page, or through the API with `PUT /api/build/projects/{project}/drafts/{draft_id}/files/processes/{key}`, with the file as the body.
-2. Run the [dry run](/keel/builder/publish/#dry-run), or open **Review and publish**. A process's page checks its draft by itself and lists the [problems](/keel/builder/processes/#problems) beside the drawing. The checks read the file against what Keel runs, its settings, its variables, its conditions and the project's calendars.
+1. Save the file in an open draft: in Keel Builder, with **New process** on the [Processes](/keel/builder/processes/) page or **Upload a file** on a process's page, or through the API with `PUT /api/build/projects/{project}/drafts/{draft_id}/files/processes/{key}`, with the file as the body.
+2. Run the [dry run](/keel/builder/publish/#dry-run), or open **Review and publish**. For editors and owners, a process's Diagram tab checks its draft by itself and lists the [problems](/keel/builder/processes/#problems) beside the drawing. The checks read the file against what Keel runs, its settings, its variables, its conditions and the project's calendars.
 3. Publish. The process has a new version, and new instances start on it.
 
 The checks also refuse:
