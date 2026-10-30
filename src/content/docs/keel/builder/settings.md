@@ -4,7 +4,7 @@ sidebar:
   label: Project settings
 ---
 
-The **Settings** page in Keel Builder's left rail holds what applies to the whole project: "The business app's address, service keys and effects." It is not the designer's Settings tab, which is per case type (see [Case type settings](/keel/builder/case-type-settings/)).
+The **Settings** page in Keel Builder's left rail holds what applies to the whole project: "The business app's address, service keys, process connections and effects." It is not the designer's Settings tab, which is per case type (see [Case type settings](/keel/builder/case-type-settings/)).
 
 ## Business app
 
@@ -26,6 +26,21 @@ Keel keeps only a fingerprint of the key. If the key is lost, create a new one a
 ### Revoke a key
 
 The table lists each key by **Name**, when it was **Created**, and when it was **Revoked**. Press **Revoke** on a live key. Keel asks **Revoke *name*?**: "Systems using it can no longer sign in." A revoked key cannot be turned back on.
+
+## Process connections
+
+**Process connections** lists the connections each [BPMN process](/keel/processes/) calls, with their credentials: "The connections each process calls, with their credentials. A process's connection files are changed in a draft." Every role reads it. With none, it says **No process has a connection yet.**
+
+The connections are grouped under their process, by the name its file gives, else by its key made readable. Each connection shows its **Base URL** and **Authentication**, read-only, as published, and its credentials as the [Connections tab](/keel/builder/connections/#credentials) shows a case type's:
+
+- **Set credential**, or **Replace credential** when one is set, and **Delete credential**, which asks first. Editors and owners see them; a viewer reads the credentials only. The dialog is **Set the *kind* credential of *connection***, and the page says **Credential set. It is not shown again.**
+- Each credential shows its kind, the hosts it is sent to, who set it and when, never its secret.
+- A connection with no credential says **No credential is set.**, and one that authenticates with **None**, **It sends no credential.**
+- If your installation keeps no credentials, the section says **Credentials are off in this installation.**
+
+Under them, **Who changed credentials** lists the changes to the credentials of processes, newest first, such as "Ana Marin set the API key credential of bureau of Loan check for bureau.example · 20 Oct, 09:00". With none, "No one has changed a credential of a process yet."
+
+On **Review and publish**, a changed connection file reads **Process connection** and its process and name, such as **Process connection checking/bureau**.
 
 ## Effects
 

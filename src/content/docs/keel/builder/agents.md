@@ -4,15 +4,15 @@ sidebar:
   label: Agents
 ---
 
-The **Agents** page shows how the agents of your case types are doing: "The agents that work steps in this project's case types". Pick an agent to see what it did over a period, the steps it works, the questions it raised, what it may use and its sessions.
+The **Agents** page shows how the agents of your case types are doing: "The agents that work steps in this project's case types". Pick an agent to see what it did over a period, the steps it works, the questions it raised, what it may use and its sessions. An agent that works the tasks of a [BPMN process](/keel/processes/#a-service-task-that-calls-an-agent), alone or drafting for a person, is listed and counted beside the ones that work case types' steps.
 
 Sessions, raised hands and **Export for audit** show case content, so only editors and owners see them; see [What your role lets you see](#what-your-role-lets-you-see). Keel records each case they show as your view of it, and the case's History in the business app lists it under **Read by builders**.
 
 ## The list
 
-The list, headed **Agents**, holds the agents named by the current published versions of the project's case types, by name. An agent Keel has no name for shows by its id. A draft adds no agent until it is published.
+The list, headed **Agents**, holds the agents named by the current published versions of the project's case types and processes, by name. An agent Keel has no name for shows by its id. A draft adds no agent until it is published.
 
-Under each name Keel says how many steps the agent works and how many of its runs are under way, such as `3 steps in 2 case types · 4 in progress`, or `1 step in 1 case type · none in progress`. A run waiting on a raised hand counts as in progress. An agent that only starts cases (an intake agent) reads `0 steps in 0 case types`. Pick a row to open the agent; the first opens by default.
+Under each name Keel says how many steps and tasks the agent works and how many of its runs are under way, such as `3 steps in 2 case types · 4 in progress`, `3 steps in 1 case type and 1 process · none in progress`, or `1 step in 1 case type · none in progress`; an agent that works only a process's task reads `1 step in 1 process · none in progress`. A run waiting on a raised hand counts as in progress. An agent that only starts cases (an intake agent) reads `0 steps in 0 case types`. Pick a row to open the agent; the first opens by default.
 
 Under the agents, **Helpers, not on any step** lists the project's helpers, the case agent and the designer agent, once Keel has set them up. They work no step and cannot be picked. Each has a line: "Answers questions inside any case. Drafts, never moves a case." and "Drafts case types from a conversation. A person publishes." A helper switched off in Studio is marked **Off**. See [The project's helpers](/keel/builder/designer-agent/#the-projects-helpers).
 
@@ -41,7 +41,7 @@ A figure with nothing to divide reads `—`, and a count of none reads `None`. A
 
 ### Steps it works
 
-The table **Steps it works** has a row for each step the agent works, most done first, each in its case type at its version, such as `Loan request v3`. The step's name opens the case type at that step. "Each step's contract is set in its case type"; see [Steps](/keel/builder/steps/).
+The table **Steps it works** has a row for each step the agent works, most done first, each in its case type at its version, such as `Loan request v3`. The step's name opens the case type at that step. A process's task has a row too: its name is not a link, since a process has no page here yet, and its second line reads the process and its version, then "process", such as `Claim assessment v1 · process`. **How it works** reads **Alone** for a task the agent works and **Drafts, a person finishes** for a user task it drafts for. "Each step's contract is set in its case type"; see [Steps](/keel/builder/steps/).
 
 | Column | What it shows |
 |---|---|
@@ -90,7 +90,7 @@ The card counts the rows, such as `1 of 4 sessions`, and **Show more** adds 25. 
 
 **Watch** and **Open** open the session. The page is titled with the step and the case, such as `Check the file on LR-000001`, and says `Underwriting agent · Done · read-only` under it. With no name for the agent, it shows the agent's id and the button reads **Back to the agent**; otherwise **Back to** *agent name* returns to the agent's page with the period, tab and search you left. The session is read-only: it has no box to type in.
 
-Beside the session, a list gives the **Case**, **Case type** with its version, **Started**, **Ended** (`Still at work` while it runs), **Time · cost**, **Tokens**, **Agent version**, and **Outcome** once it has one. **Tokens** reads `41,000 in · 3,200 out · 12,000 from cache`; the cache part is left out when none was reported. **Failed checks** and **Raised hands** cards appear only when the session had some; a failed check shows its message and its code.
+Beside the session, a list gives the **Case**, **Case type** with its version (for a process's task, the **Process instance** and the **Process** with its version), **Started**, **Ended** (`Still at work` while it runs), **Time · cost**, **Tokens**, **Agent version**, and **Outcome** once it has one. **Tokens** reads `41,000 in · 3,200 out · 12,000 from cache`; the cache part is left out when none was reported. **Failed checks** and **Raised hands** cards appear only when the session had some; a failed check shows its message and its code.
 
 While the session is at work, the page reads its record again every 30 seconds and the session is live. When it ends, the session shows as it ended. What the session shows is what [Watch](/keel/business/watch/) shows staff.
 
@@ -102,9 +102,15 @@ While the session is at work, the page reads its record again every 30 seconds a
 | **Watch cannot show this session.** | Keel's reason follows: "You cannot watch this session." or "This is not a step of the case." |
 | **Nothing to show yet.** | No entry to show has arrived yet. |
 
+### Process runs, and rules and replays
+
+A run, a raised hand or a reason of a process's task is named by the instance's number, its process and the task, where a case's is named by its case. Reading one logs a view of the instance, as reading a case's logs a view of the case. A process whose version no longer loads shows by its key made readable and the task by its element made readable.
+
+**Propose a rule**, on a reason whose answers agree, and **Replay on past cases**, which re-runs a step on past cases, work on case types' steps alone. A reason raised in a process's task offers no proposal, a reason raised in both offers its case types, and the replay's list of steps leaves a process's tasks out. Keel refuses both for a process with `422 invalid-request`.
+
 ## Export for audit
 
-**Export for audit** saves a CSV file, one row for each run of the agent that started in the period shown, the oldest first: the run's case, step, session, times, outcome, failed checks, raised hands, tokens, cost in dollars and agent version. A fact a run lacks is an empty field. The tab and the search do not narrow it. The button reads **Exporting…** and cannot be pressed again while the file is read. Keel refuses an export of more than 100,000 runs: "The export holds more than 100,000 runs; choose a shorter period." A refusal, or a file cut short, shows a short message and saves nothing.
+**Export for audit** saves a CSV file, one row for each run of the agent that started in the period shown, the oldest first: the run's case, step, session, times, outcome, failed checks, raised hands, tokens, cost in dollars and agent version. The case type of a process's run reads `process:` and the process's key, and its step is the task's label. A fact a run lacks is an empty field. The tab and the search do not narrow it. The button reads **Exporting…** and cannot be pressed again while the file is read. Keel refuses an export of more than 100,000 runs: "The export holds more than 100,000 runs; choose a shorter period." A refusal, or a file cut short, shows a short message and saves nothing.
 
 ## When a read fails
 

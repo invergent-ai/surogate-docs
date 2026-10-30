@@ -4,16 +4,17 @@ sidebar:
   label: Watch
 ---
 
-**Watch** shows what an agent does on a step of a case, read-only and live. Any member of the project's staff can watch the sessions of the cases they can open.
+**Watch** shows what an agent does on a step of a case, or on a task of a [BPMN process](/keel/processes/), read-only and live. Any member of the project's staff can watch the sessions of the cases and processes they can open.
 
 ## Opening Watch
 
 - On a case, press **Open its session** on the card of a step an agent works, or of a step whose agent asked a question.
-- On the Work page, under **Agents at work**, pick an agent and press **Watch** on a run of one of its steps. A run on a work item, which the agent took from a queue or was handed, has no **Watch**.
+- On a process instance's page, press **Open its session** on the card of a task an agent works or drafts, or whose agent asked a question.
+- On the Work page, under **Agents at work**, pick an agent and press **Watch** on a run of one of its steps or tasks. A run on a work item, which the agent took from a queue or was handed, has no **Watch**.
 
-The page is titled **Watching** and the agent's name. Under it are the step, the case and "read-only". **Back to the case** returns to the case.
+The page is titled **Watching** and the agent's name. Under it are the step, the case and "read-only". **Back to the case** returns to the case. For a process's task, the breadcrumb reads **Work**, the instance's number and **Watch**, the line under the title names the task, the process and "read-only", and **Back to the process** returns to the instance.
 
-While the step is open, new entries appear as the agent works. Once the step is no longer open, the page says "This step is no longer open. Its session shows as it ended."
+While the step is open, new entries appear as the agent works. Once the step is no longer open, the page says "This step is no longer open. Its session shows as it ended." For a process's task it says "This task is no longer open. Its session shows as it ended."
 
 ## What it shows
 
@@ -43,8 +44,8 @@ Keel records each time someone watches a session, as it records each time someon
 
 | Message | Why |
 |---|---|
-| **This step has no agent session.** | No agent worked this step. |
+| **This step has no agent session.** | No agent worked this step. A process's task says **This task has no agent session.** |
 | **The agent's session cannot be reached now.** | A temporary problem. Press **Try again**. |
 | **Nothing to show yet.** | The agent's session has not started, or has done nothing yet. |
 | **You cannot watch this session.** | Keel refused to show it to you. |
-| **This case does not exist, or it is not this project's** | The link is wrong. |
+| **This case does not exist, or it is not this project's** | The link is wrong. For a process, **This process does not exist, or it is not this project's**. |

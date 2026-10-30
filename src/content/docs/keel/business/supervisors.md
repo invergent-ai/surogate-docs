@@ -60,9 +60,9 @@ With no queues, the tab says **This project has no queues yet**: "The project's 
 
 ## Agents
 
-The **Agents** tab lists the agents the project's case types use, each with whether it **Works its steps**, and its **Authority limits**.
+The **Agents** tab lists the agents the project's case types and [processes](/keel/processes/) use, each with whether it **Works its steps**, and its **Authority limits**.
 
-- Turning the switch off asks **Turn off *agent*?**: "People work each of its steps that opens from now on." Its new steps go to people in the queue that gets its questions; steps it already works carry on. It is no longer offered as a queue member, a delegate or a Reassign target. The row then reads **Off since** the date, with who turned it off.
+- Turning the switch off asks **Turn off *agent*?**: "People work each of its steps that opens from now on." Its new steps go to people in the queue that gets its questions; steps it already works carry on. So do the tasks of a process: each that starts from then on goes to people in the queue named for the agent's questions, and a task an agent drafts for a person is the person's to work alone. It is no longer offered as a queue member, a delegate or a Reassign target. The row then reads **Off since** the date, with who turned it off.
 - Turning it on applies at once.
 
 With no agents, the tab says **No case type of this project uses an agent**.

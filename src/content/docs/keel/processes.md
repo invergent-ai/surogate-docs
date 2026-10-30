@@ -6,7 +6,7 @@ sidebar:
 
 Besides case types, Keel runs **processes** drawn in BPMN 2.0, the notation of process modellers such as Camunda Modeler and bpmn.io. A process is a BPMN file among the project's definitions. It is published through a draft, as a case type is, and each run of it is an **instance**.
 
-A builder puts a process file in a draft through Keel Builder's API, and staff or another system start instances through Keel's API. Staff work a process's tasks in the business app, as they work a case's steps: in the same queues, on the Work page, and on the instance's own page. The designer, a list of processes and a diagram of each instance come in a later release. The Review and publish page already shows a process file's warnings.
+A builder puts a process file in a draft through Keel Builder's API, and staff or another system start instances through Keel's API. Staff work a process's tasks in the business app, as they work a case's steps: in the same queues, on the Work page, and on the instance's own page. A process's tasks can also call other systems, and agents can work them or draft them for the person who completes them. The designer, a list of processes and a diagram of each instance come in a later release. The Review and publish page already shows a process file's warnings.
 
 ## A process file
 
@@ -20,8 +20,10 @@ A builder puts a process file in a draft through Keel Builder's API, and staff o
 | Element | What Keel does |
 |---|---|
 | **Start event** | The instance starts here. Only a plain start event: a timer or message start event is refused. |
-| **User task**, **manual task** | Waits for a person to complete it, from a queue. It can have a goal and a deadline. |
+| **User task**, **manual task** | Waits for a person to complete it, from a queue. It can have a goal and a deadline. A user task can have an agent that drafts for the person: see [An agent that drafts for a person](#an-agent-that-drafts-for-a-person). |
 | **Business rule task** | Evaluates one of the project's [rules](/keel/builder/rules/), a decision table or a scorecard, and writes its results to variables. It never waits. |
+| **Service task** that calls a system | Calls another system's API through one of the process's connections, waits for the answer, writes its values to variables and goes on. See [A service task that calls a system](#a-service-task-that-calls-a-system). |
+| **Service task** that calls an agent | Starts an agent on the task. The agent completes it under the task's contract, or asks a person. See [A service task that calls an agent](#a-service-task-that-calls-an-agent). |
 | **Service task** that starts a case | Starts a case of one of the project's case types, and waits for it to close or goes on at once. See [A service task that starts a case](#a-service-task-that-starts-a-case). |
 | **Receive task**, **message catch event** | Waits for a message of its name. |
 | **Timer catch event** | Waits for a duration, such as `PT2H` or `P3D`, or until a date. A repeating (cycle) timer is refused. |
@@ -34,7 +36,7 @@ A builder puts a process file in a draft through Keel Builder's API, and staff o
 | **Embedded subprocess** | Runs its own flow, and may carry boundary events. |
 | **Lanes** | A lane's name is the queue of the tasks in it, read as a queue key: lower case, with each run of other characters as `_`. A lane named "Back Office" is the queue `back_office`. |
 
-Not run yet, refused when published: service tasks that call an agent or a system, call activities, multi-instance tasks, inclusive gateways, event subprocesses, data stores, message boundary events and pools that send each other messages.
+Not run yet, refused when published: call activities, multi-instance tasks, inclusive gateways, event subprocesses, data stores, message boundary events and pools that send each other messages.
 
 Refused: script tasks, plain tasks, send tasks, business rule tasks that name a DMN decision instead of a Keel rule, throw events, signals, escalations, compensation, transactions, ad hoc subprocesses, conditional and link events, loops on a task (draw the loop with a gateway), data objects and correlation keys. Each refusal names the element.
 
@@ -59,7 +61,7 @@ Each setting sits in the `extensionElements` of its BPMN element. An element or 
 </bpmn:process>
 ```
 
-- `keel:process`: `queue`, the queue of every task that names none and lies in no lane, and `calendar`, the [calendar](/keel/builder/rules/#calendars) business timers count on.
+- `keel:process`: `queue`, the queue of every task that names none and lies in no lane, `calendar`, the [calendar](/keel/builder/rules/#calendars) business timers count on, and `knowledge`, the knowledge bases the process grants to its agents, separated by spaces.
 - `keel:variables`: one `keel:variable` for each variable the instance keeps, with the same types as a case type's [fields](/keel/builder/data/). A variable can be `required`, which its start data must then hold, and `pii`. A process has only the variables it declares.
 
 ### A user or manual task
@@ -143,6 +145,102 @@ When the case closes, a waiting task completes: its `keel:result` variables and 
 | `case-failed` | A step's failure closed the case. |
 | `case-values` | The case closed with a value its variables cannot hold. Nothing is written. |
 
+### A service task that calls a system
+
+```xml
+<bpmn:serviceTask id="check" name="Check the bureau">
+  <bpmn:extensionElements>
+    <keel:system connection="bureau" method="POST" path="/checks/{customer}" timeout-seconds="30" accept="404">
+      <keel:header name="X-Reference">{"$case": "number"}</keel:header>
+      <keel:body>{"amount": {"$field": "amount", "as": "number"}}</keel:body>
+      <keel:output variable="clear" path="$.body.clear"/>
+    </keel:system>
+  </bpmn:extensionElements>
+</bpmn:serviceTask>
+```
+
+| Setting | What it does |
+|---|---|
+| `connection` | The [connection](#a-processs-connections) the call goes through, by name. Required. |
+| `method`, `path` | `GET`, `POST`, `PUT`, `PATCH` or `DELETE`, and the path after the connection's base URL. Required. `{variable}` in the path puts a variable's value in it; `{case.id}`, `{case.number}` and `{case.type}` put the instance's own: its id, its number and `process:<key>`. |
+| `keel:query`, `keel:header` | A `name` and a JSON value: text, or `{"$field": "amount"}` for a variable's value. Add `"optional": true` to leave it out when the variable has no value. `{"$case": "id"}`, `{"$case": "number"}` and `{"$case": "type"}` are the instance's own. Each name once. |
+| `keel:body` | A JSON template for `POST`, `PUT` and `PATCH`, with the same markers. `"as": "number"` writes a decimal variable as a JSON number. |
+| `keel:output` | A `variable` that takes the value at a `path` of the response, such as `$.body.clear`. `$.status` and `$.headers.name` read the status and a header. Each variable once. |
+| `accept` | Statuses outside 2xx, separated by spaces, that count as answers to map, such as `404 409`. |
+| `timeout-seconds` | How long one call may take. Without it, the connection's default. |
+
+The task waits while the call is out. The answer completes it with its one outcome, `done`, and the values its outputs name. The history keeps where each value came from: the connection and the path in the response. Every call but a `GET` carries an idempotency key, the same on each attempt of one call, in the header the connection names.
+
+Credentials never go in a call's headers; they belong to the connection. A call that sets a header its connection sends itself is refused when the process is published.
+
+A call that fails for good is not a BPMN error, and no error boundary event catches it. After Keel's attempts, a refused status, a call that did not answer in time, or an answer a variable cannot hold leaves the task with an **incident**. See [Incidents](#incidents).
+
+### A process's connections
+
+A call goes through a **connection** of the process, as a case type's system steps go through its own: its base URL, how calls authenticate, and the credential they send. A process's connections and credentials are its own. A case type of the same key has its own, apart.
+
+- A connection is the file `process-connections/<process>/<name>.json`, with the settings of a [case type's connection](/keel/builder/connections/#a-connection): its base URL, its authentication, its idempotency-key header and its default timeout. A connection that sends a credential must use `https`.
+- It is saved in a draft and published with it: `PUT /api/build/projects/{project}/drafts/{draft_id}/files/process-connections/{process}/{name}` saves the file, `GET` on the same path reads it, and `POST` on `…/revert` puts it back as the draft started with it. A connection file is never deleted.
+- Its credentials are not part of a draft. They are set on the published connection and apply at once, in Keel Builder's [Settings](/keel/builder/settings/#process-connections), or through the API: `PUT /api/build/projects/{project}/processes/{process}/connections/{name}/credentials/{kind}` sets one, in place of any it had, and `DELETE` on the same path deletes it. They take a case type's bodies, are for editors and owners, and are refused as a case type's are. A connection the process never published is `404 unknown-connection`, and a credential that does not exist is `404 unknown-credential`.
+
+### A service task that calls an agent
+
+```xml
+<bpmn:serviceTask id="assess" name="Assess the claim">
+  <bpmn:extensionElements>
+    <keel:agent agent="assessor" raise-hand-to="underwriting" tools="search read" knowledge="product-terms"
+                mcp-servers="crm" outcome-variable="decision">
+      <keel:read variable="amount"/>
+      <keel:write variable="score" required="true"/>
+      <keel:outcome name="approve" requires="band"/>
+      <keel:check when="amount &gt; 0.0" message="The amount must be positive."/>
+      <keel:maker-checker task="review"/>
+      <keel:authority amount="amount" scope="claims"/>
+      <keel:service-level deadline="P1D" goal="PT4H" escalate-to="leads"/>
+    </keel:agent>
+  </bpmn:extensionElements>
+</bpmn:serviceTask>
+```
+
+| Setting | What it does |
+|---|---|
+| `agent` | The agent, by its id in Studio. Required. |
+| `raise-hand-to` | The queue the agent's questions go to, and the queue the task goes to when the agent is switched off. Required. |
+| `tools`, `mcp-servers`, `knowledge` | What the agent may use here, separated by spaces. Without one, the agent keeps its own tools and MCP servers, and the process's knowledge. An empty value allows none. A task can narrow what the agent has, never widen it: each knowledge base must be one the process grants with `keel:process knowledge`. |
+| `keel:read` | A variable the agent is sent when it starts. |
+| `keel:write`, `keel:outcome`, `outcome-variable`, `keel:check`, `keel:maker-checker`, `keel:authority`, `keel:service-level` | The task's contract, as on a [user task](#a-user-or-manual-task). A task holds one of `keel:system`, `keel:agent` and `keel:case`. |
+
+- **The contract.** When the task starts, Keel starts the agent in a session of its own and sends it the variables it reads, what it may write and its outcomes. It sees the process's key, as `process:<key>`, where a case's agent sees the case type. The agent completes the task with one of its outcomes and the values it writes, with a source for each value. The task's checks, maker-checker and authority limit apply to it as to a person; its limits are set on the Team page.
+- **A refused output.** An output the contract refuses is answered with the reason, and the agent tries again. The refusal that reaches the limit raises the agent's hand.
+- **A raised hand.** The agent asks a question, sometimes with answer choices and evidence. The task pauses, and the question goes to the `raise-hand-to` queue as an item that members answer on the Work page, or a supervisor. The agent resumes with the answer. A question never expires.
+- **A task the agent is off for.** A task that starts, or is retried, while the project has the agent switched off opens for people as a step in the `raise-hand-to` queue, with the form of its contract, and a person completes it with no sources. An agent already at work keeps working, and its completion is taken.
+- **A task that fails.** If the runtime refuses the agent, its start gives up, its session fails, or a quiet run's session is gone, the task is left with an **incident**: see [Incidents](#incidents).
+- **People can message the agent while it works.** See [Working a process's tasks](#working-a-processs-tasks).
+
+### An agent that drafts for a person
+
+```xml
+<bpmn:userTask id="assess" name="Assess the claim">
+  <bpmn:extensionElements>
+    <keel:task queue="underwriting" outcome-variable="decision">…</keel:task>
+    <keel:agent agent="assessor" raise-hand-to="underwriting" tools="search" knowledge="product-terms">
+      <keel:read variable="amount"/>
+    </keel:agent>
+  </bpmn:extensionElements>
+</bpmn:userTask>
+```
+
+A `keel:agent` beside the `keel:task` of a user task drafts for the person who completes it. The agent works first; its draft fills the person's form; the person checks it and completes the task.
+
+- `keel:agent` is a sibling of `keel:task`, never inside it. It names `agent` and `raise-hand-to`, may narrow `tools`, `mcp-servers` and `knowledge` as a service task's does, and holds only `keel:read`. The contract is the task's own `keel:task`. A manual task cannot hold one, and a user task holds one at most.
+- **When it starts.** The person's item opens at once, and the agent starts as the task becomes ready. The person may complete the task before any draft, which stops the agent.
+- **The draft.** The agent proposes an outcome and values, with a source for each value. A draft meets what a completion's report meets: a known outcome, only what the task writes, valid values, the outputs the task and the outcome require. It does not meet the task's checks, maker-checker or authority limit: the person's completion does. A draft writes no variable. A new draft replaces the last. The history keeps the sources of each value; the form shows none.
+- **Only the person decides.** The person completes the task under its whole contract, and the completion is theirs. The history records, for each value, whether the agent or the person gave it: a value the person left as drafted is the agent's, and one they changed is theirs.
+- **A raised hand.** The agent asks the `raise-hand-to` queue, as above. While its hand is up, no one completes the task: the question comes first.
+- **A revision, and a message.** The person who holds the task can ask the agent to revise its draft with a note, and anyone on the staff can message it while it drafts. See [Working a process's tasks](#working-a-processs-tasks).
+- **When the agent cannot help.** An agent that fails for good, or one switched off when the task starts, leaves the person to work alone. This is not an incident: the person's item stays open, nothing needs a supervisor, and the task has no retry. The history records `agent.failed` or `agent.disabled`.
+- A task an agent drafts is never given to an agent from a queue: only a person finishes it.
+
 ### A message catch, a receive task, a timer
 
 - `keel:message` on a message catch event or a receive task lists, with `keel:write`, the variables the message may write. A message that holds anything else is refused.
@@ -176,6 +274,7 @@ A process file is saved in a draft and published with it, like any other file of
 The checks also refuse:
 
 - a task whose queue the project does not have, whether the task names it, its lane gives it or the process does, and a deadline that escalates to a queue the project does not have;
+- a service task whose connection the process has no file for, a call that sets a header its connection sends itself, and an agent task or a drafting agent whose agent, tool, MCP server or knowledge base the project or the agent does not have, whose raise-hand queue the project does not have, or whose knowledge the process does not grant (the codes below);
 - a business rule task that names a rule the project does not have, a rule with no version in force, a rule whose conditions read a variable the process does not declare, a rule whose own tests fail, a result the rule does not always return, and a value the rule can return that its variable cannot hold.
 
 When a rule is published again, Keel checks the new version against the processes that use it, their current versions and any version with running instances, as it checks the case types that use it.
@@ -196,6 +295,23 @@ A start is checked when the case type or the process that holds it is published,
 | `case-cancel` | The same | "*case type* has no event *event*", "*event* of *case type* does not interrupt: it would not withdraw the case", "*node* of *case type* waits for *event*: it would take the event as the one it waits for"; and in the process's own file, "*task* waits on its case: name cancel-event, the case event that withdraws it when the process leaves the task, or keep-running="true"" and "*task* names both cancel-event and keep-running: it does one or the other" |
 | `broken-definition` | `<key> v<n>` | "*key* v*n* is stored but no longer loads: …" |
 | `checks-stale` | `<case type> v<n>` or `<process> v<n>` | "cases started on it while the publish was checked; publish again", or "instances started on it while the publish was checked; publish again" |
+
+### Checking what a process calls and which agents work it
+
+A process's calls and agents are checked when the process is published, and a connection published again is checked against every process version instances still run on.
+
+| Problem | Where | What it says |
+|---|---|---|
+| `unknown-connection` | The process's file, at the task | "*task* calls *connection*, which *process* has no connection file for: process-connections/*process*/*connection*.json" |
+| `system-request` | The process's file, at the task; the connection's file, at `<process> v<n>: <task>` | "*task* sets *header*, which connection *connection* sends itself", or, for the API key's header, "*task* sets *header*, the header of connection *connection*'s API key: credentials belong in the connection's credential, never in a step" |
+| `unknown-agent` | The process's file, at the task | "*agent* is not an agent of this project" |
+| `agent-tool` | The process's file, at the task | "*agent* has no tool *tool*" |
+| `agent-mcp-server` | The process's file, at the task | "*agent* has no MCP server *server*" |
+| `unknown-knowledge` | The process's file, at the process | "*knowledge base* is not a knowledge base of this project" |
+| `knowledge` | The process's file, at the task | "*knowledge base* is not knowledge of the process" |
+| `unknown-queue` | The process's file, at the task | "*task* raises its hand to the queue *queue*, which the project does not have" |
+
+Publishing records the names of the agents and knowledge bases a process names, as it does for case types. A `system-request` problem at a version instances still run on stays until none does, or the connection's file fits it again.
 
 A problem at an old version is fixed in one of these ways:
 
@@ -222,17 +338,36 @@ Builders read the published processes with:
 
 A process's user and manual tasks are worked in the business app, like a case's steps.
 
-- **Work.** A task waits in its queue, or with the person the file names, and shows in **Mine**, in the queue's views and in **Get next**, as a step does. Its row reads the instance's number and the process's name, such as **P-000001 · Loan review**. On its item, **Open process** opens the instance's page. **Get next case** on the Cases page opens it too. A process's task is handed to people only: **Delegate** and **Reassign** offer no agents for it.
+- **Work.** A task waits in its queue, or with the person the file names, and shows in **Mine**, in the queue's views and in **Get next**, as a step does. Its row reads the instance's number and the process's name, such as **P-000001 · Loan review**. On its item, **Open process** opens the instance's page. **Get next case** on the Cases page opens it too. **Delegate** and **Reassign** offer people and agents, as for a case's items: see [Agents in a process's queues](#agents-in-a-processs-queues).
 - **The instance's page** shows the process's name, the instance's number, version and start day, and its status: **Running**, **Completed**, **Ended**, **Failed** or **Cancelled**. A failed instance says which error ended it and where.
   - A task you hold shows its form under **Your task**, with **Submit** and **Return to queue**. A task waiting in one of your queues asks you to **Claim** it first.
   - A task someone else holds shows under **Now**, with who holds it.
-  - **Waiting for** lists the timers, messages and cases the instance waits on, and **Process data** lists its variables by their labels.
+  - **Waiting for** lists the timers, messages and cases the instance waits on, and the calls its tasks made to systems, such as "Check the bureau · calling Bureau"; a call that failed for good reads "Check the bureau · its call to Bureau failed: a supervisor retries it or cancels the process". **Process data** lists the variables by their labels.
   - **Started by** names the case that started the instance, and **Cases it started** lists the cases its tasks started. See [Cases and processes that start each other](#cases-and-processes-that-start-each-other).
   - The page stays current on its own.
 - **Refusals.** When a task closes before your submission arrives, because someone else completed it or a timer withdrew it, the page says "This step is no longer open." and shows the instance as it now is. An instance that ended says "This process has ended."
 - **Away.** While you are away, a process's task assigned to you moves as your absence says, as a step does, and supervisors are told of what stays with you.
 - **Notices.** A task that reaches you or your queue is a notice, and its mail names the process and the task.
 - **Authority limits.** The **Team** page's authority limits dialog lists the process tasks that check each scope beside the case types' steps.
+
+### Tasks agents work
+
+A task with an agent shows what the agent does and what you may do about it. **Open its session** shows the agent's session, read-only, while its run has one: see [Watch](/keel/business/watch/). **Message the agent** is on every task whose agent takes a message now: any member of the staff may use it.
+
+| The task | If it is yours to work, or yours to take | If it is not |
+|---|---|---|
+| An agent at work on a task | — | **Now**: "*Agent* is working · *Starting*, *Running* or *Waiting*", its goal and deadline, its plan and when it was last active, and where its question would go, such as "If the agent needs a person, its question goes to Underwriting, which includes you." **Message the agent**, **Open its session**. |
+| An agent's question | **Your task**: "*Agent* asked a question · *queue*", its progress, **Answer in Work**, **Open its session**. | **Now**: "*Agent* asked a question" and who holds the question, such as "Held by Mihai Ionescu", or the queue it waits in. |
+| An agent task whose agent failed for good | — | **Now**: "*Agent* could not finish this task: a supervisor retries it or cancels the process." No button. |
+| An agent task people work, because its agent is switched off | **Your task**: "*Agent* is off: people work this task." and the task's form, or **Claim** first. | **Now**: who holds it, and the same line. |
+| A user task its agent drafts, while it drafts | **Your task**: "*Agent* is drafting · *run*" with its progress, over the form. | **Now**: "*Agent* is drafting · *run*", and who holds the task. No form. |
+| The same, once the draft is in | **Your task**: the form filled from the draft, and **Ask to revise**. | **Now**: who holds the task. |
+| A drafted task whose agent failed or is off | **Your task**: "*Agent* could not finish its draft: you work this task alone." or "*Agent* is off: you work this task alone." and the form. | **Now**: who holds the task. |
+
+- **Answer in Work** opens the question's item on the Work page, in **Needs me** when you hold it, else among its queue's agent questions. See [Answer an agent's question](/keel/business/work/#answer-an-agents-question).
+- **A drafted form.** The draft fills the form over the values the process holds, and the outcome it chose is picked. Each field the agent drafted is marked "Drafted by *agent*. Nothing is sent until you submit." until you change it. A draft that sets no field picks its outcome and marks no field. A new draft fills the form afresh. **Submit** sends what you keep, as your completion.
+- **Ask to revise** opens **Ask *agent* to revise**: "*Agent* drafts the task again with your note. Nothing is sent until you submit." Type **What should change** and press **Send**. It is for whoever holds the task. When Keel refuses it, such as while the agent is still working, the dialog says why and the page reads the instance again.
+- **Message the agent** opens **Message *agent***: "*Agent* reads it while it works on *task*. It is kept in the process history as your note." Type the **Message**, at most 20,000 characters, and press **Send**: Keel says **Sent to *agent*.** An empty message is not sent: "Write a message first." When the agent takes none now, the dialog says "*Agent* takes no message now."
 
 ### Goals and deadlines
 
@@ -246,9 +381,20 @@ A task with a `keel:service-level` has a goal and a deadline from the moment it 
 
 A process's tasks never count in the cases' figures.
 
+## Agents in a process's queues
+
+An agent can take a process's work items as it takes a case's: as a member of a queue, as a delegate, or by **Reassign**. See [Agents in queues and as delegates](/keel/business/agents/#agents-in-queues-and-as-delegates).
+
+- **What an agent takes.** The step of a user task that no agent drafts for, and a question an agent task's agent raised, from any agent but that task's own.
+- **What it never takes.** A manual task, whose work is done without any application. A user task its own agent drafts for, whether its step or its question: only a person finishes it. The step an agent task opens for people when its agent is switched off. An escalation.
+- **Who is offered.** An agent that a case type or a process of the project names, that is not switched off, and that is no helper.
+- **How it works the item.** In a session of its own, started when it takes the item. It completes a step as a person does, with one of the task's outcomes and the values it writes, or answers a question, and the task's checks, maker-checker and authority limits apply to it. A refusal is kept on its run, and the item goes back. An agent that cannot work an item returns it, to the person who delegated it or else to its queue, and says why: the item's pane on the Work page shows it under **Returned**.
+- **When the item leaves.** The agent's session stops when its item closes, because someone else completed the task, a timer or a cancel withdrew it, or a supervisor gave the item to another.
+- **History.** The agent is the actor of what it completes or answers.
+
 ## Running instances
 
-Staff sign in as they do for the business app; another system uses a [service key](/keel/systems/). Keel sets who acted and when on everything they send: a body that names `actor` or `at` is refused.
+Staff sign in as they do for the business app; another system uses a [service key](/keel/systems/). Keel sets who acted and when on everything they send: a body that names `actor`, `at`, `run` or `sender` is refused.
 
 | To | Call | Who |
 |---|---|---|
@@ -271,12 +417,29 @@ The events an instance takes:
 | Complete a task | `{"type": "task.completed", "task": "t3", "outcome": "approve", "output": {"note": "fine"}}` | Whoever holds its work item; while no one holds it, a member of its queue. A member of the queue its missed deadline escalated to. Supervisors always. Never a service key. |
 | Deliver a message | `{"type": "message.received", "name": "documents", "payload": {"docs": "received"}}` | Staff and service keys. Every task of the instance waiting for that message takes it. |
 | Cancel the instance | `{"type": "process.cancelled", "reason": "withdrawn"}` | Supervisors |
-| Retry a failed task | `{"type": "task.retried", "task": "t5"}` | Supervisors |
+| Answer an agent's question | `{"type": "hand.answered", "task": "t5", "answer": "2026", "note": "the new policy"}` | A member of the queue the question went to, or whoever holds its item; supervisors always. Never a service key. The `note` is optional, and an answer must be one of the question's choices when it has some. |
+| Ask a drafting agent to revise | `{"type": "revision.requested", "task": "t3", "note": "Cite the bureau"}` | Whoever holds the task, or its queue while no one does; supervisors always. Never a service key. |
+| Message an agent | `{"type": "agent.messaged", "task": "t5", "text": "Use the May statement."}` | Any member of the staff. Keel adds the sender's name. Never a service key. |
+| Retry a task with an incident | `{"type": "task.retried", "task": "t5"}` | Supervisors |
+
+Keel sends the rest itself: a timer firing (`timer.fired`), a call or an agent failing (`task.failed`), an agent raising its hand (`hand.raised`), an agent's draft (`task.drafted`) and a case's close (`case.closed`). A body that names one is `422 invalid-event`, with the reason.
 
 A task's id, such as `t3`, comes from the instance's open tasks. Completing a task that has already finished answers `409 task-closed`. An event sent again with the `Idempotency-Key` it was first sent with is answered with the instance as it stands, and the header `Idempotent-Replayed: true`; it is not applied twice.
 
+### Incidents
+
+A call or an agent task that fails for good leaves its task with an **incident**. The task stays where it is, the instance keeps running, and a supervisor decides. The instance's list finds it with `attention=true`.
+
+- The history records `incident.raised`, with the reason.
+- The instance's page says so: **Waiting for** reads "*task* · its call to *system* failed: a supervisor retries it or cancels the process", and an agent task's **Now** card reads "*Agent* could not finish this task: a supervisor retries it or cancels the process."
+- A supervisor sends `task.retried` for the task, or cancels the instance with `process.cancelled`. A retried call is made again as a new call. A retried agent task starts the agent in a fresh run, with a new session, or goes to people in its raise-hand queue when its agent is switched off by then.
+- A task without an incident answers `task.retried` with `409 not-allowed`.
+- The agent that drafts for a person is the exception: its failure is no incident. The person works alone, and the task has no retry.
+
 Timers fire on their own. When a timer cannot fire because what follows it fails, such as a condition that cannot be evaluated on the instance's variables, the timer is kept as **stuck**: it is never fired again, the instance shows why, and the list's `attention=true` finds it. A supervisor then cancels the instance.
+
+The history, `GET /api/processes/{instance_id}/history`, records what happened to the instance's tasks. For agents it holds `task.drafted`, `revision.requested`, `agent.messaged`, `hand.raised`, `hand.answered`, `agent.failed`, `agent.disabled`, `incident.raised` and `task.retried`. A person's `task.completed` on a task an agent drafts also holds `contributions`: who gave each value, the agent or the person.
 
 An instance is `running`, `completed`, `terminated` (by a terminate end event), `failed` (by an error no boundary event caught) or `cancelled`.
 
-A refused call answers with a `code` and a `message`: `404 unknown-instance` for an instance that does not exist or belongs to another project, `422 invalid-event` for a body that is no event, `403 forbidden` for a sender who may not send it, and `409` with Keel's reason for anything the instance cannot take, such as `unknown-outcome`, `check-failed` or `rule-error`.
+A refused call answers with a `code` and a `message`: `404 unknown-instance` for an instance that does not exist or belongs to another project, `422 invalid-event` for a body that is no event, `403 forbidden` for a sender who may not send it, and `409` with Keel's reason for anything the instance cannot take, such as `unknown-outcome`, `check-failed` or `rule-error`. An agent's task adds `hand-raised` (a task with a question waiting takes no completion, draft or revision), `no-hand-raised` and `invalid-answer` for an answer, `wrong-actor` for an event only a person or only an agent may send, and `not-allowed` for a message or a revision when no agent is working on the task now.

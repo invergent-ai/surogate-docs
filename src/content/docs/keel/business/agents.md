@@ -4,7 +4,7 @@ sidebar:
   label: Working with agents
 ---
 
-Agents work some steps of a case, alone or with a person, and can take work items as people do. In the business app, agents show by name and status, beside people: in work lists, in queues, on a case's Now cards, under **Agents at work**, and on the Team page. An agent with no name shows as **Unnamed agent**. You never see an agent's configuration, its skills or its knowledge bases.
+Agents work some steps of a case, alone or with a person, and can take work items as people do. They work some tasks of a [BPMN process](/keel/processes/) in the same ways. In the business app, agents show by name and status, beside people: in work lists, in queues, on a case's Now cards, under **Agents at work**, and on the Team page. An agent with no name shows as **Unnamed agent**. You never see an agent's configuration, its skills or its knowledge bases.
 
 An agent never decides where a case goes. It finishes its step with one of the step's outcomes and the fields the step asks for, with a source for each value, or it asks a person.
 
@@ -55,6 +55,15 @@ An agent that cannot work an item returns it: to the person who delegated it, or
 - "*Agent* could not finish, and returned it";
 - "*Agent* ended without an outcome, and returned it".
 
+## Agents in processes
+
+A task of a [BPMN process](/keel/processes/) can be worked by an agent, or drafted by an agent for the person who completes it. Everything above holds for it, with the instance in place of the case and the task in place of the step. On the instance's page (see [Working a process's tasks](/keel/processes/#working-a-processs-tasks)):
+
+- an agent at work on a task shows under **Now** as "*Agent* is working", with its run, its goal and deadline, its plan, and where its question would go. **Message the agent** and **Open its session** are there;
+- an agent's question shows "*Agent* asked a question" and who holds it. Answer it on the Work page;
+- an agent that drafts a task for you fills your form, each drafted field marked "Drafted by *agent*. Nothing is sent until you submit." You change what you need and press **Submit**; **Ask to revise** sends the agent a note and asks for another draft. The process's history says which agent drafted which values;
+- agents take a process's items from a queue, as a delegate or by Reassign, as they take a case's: see [Agents in a process's queues](/keel/processes/#agents-in-a-processs-queues).
+
 ## Following an agent's work
 
 ### On the case
@@ -66,9 +75,9 @@ While an agent works a step, the case's **Now** card says "*Agent* is working", 
 
 ### Agents at work
 
-On the Work page, **Agents at work** lists each agent at work on the project's cases now, with how many steps. With none, it says **No agent is at work.**
+On the Work page, **Agents at work** lists each agent at work on the project's cases and processes now, with how many steps. With none, it says **No agent is at work.**
 
-Pick an agent to list its runs, "Its steps at work, the longest first.": each with its **Case**, **Step**, **Status** and **Since**. A run of the agent's own step has **Watch**, which opens the session. A run on a work item, which it took from a queue or was handed, has no **Watch**. An agent with nothing running says it is not at work now. An agent a supervisor turned off says "Off: people work each of its steps that opens from now on."
+Pick an agent to list its runs, "Its steps at work, the longest first.": each with its **Case**, **Step**, **Status** and **Since**. The case of a run on a process's task is the instance, such as **P-000001**, which opens the instance's page. A run of the agent's own step or task has **Watch**, which opens the session. A run on a work item, which it took from a queue or was handed, has no **Watch**. An agent with nothing running says it is not at work now. An agent a supervisor turned off says "Off: people work each of its steps that opens from now on."
 
 ## Comments that mention an agent
 
@@ -77,7 +86,8 @@ While you hold a step an agent drafts for you, and the agent is at work on it, a
 ## When an agent cannot work
 
 - **When an agent fails for good**, people take its step: it opens as a step in the queue that gets the agent's questions, and the queue's members claim it and work it like any other step. On a step the agent drafts for a person, the person works on alone.
-- **When a supervisor turns an agent off**, each of its steps that opens from then on goes to people the same way. Steps it already works carry on. It is no longer offered as a queue member, a delegate or a Reassign target. See [Agents](/keel/business/supervisors/#agents).
+- **On a process's task**, an agent that works the task alone and fails for good leaves the task with an incident instead: the instance's page says "*Agent* could not finish this task: a supervisor retries it or cancels the process.", and a supervisor retries the task or cancels the process. The agent that drafts a task for a person is the exception: the person works on alone, as on a step.
+- **When a supervisor turns an agent off**, each of its steps that opens from then on goes to people the same way, and so does each of its process tasks. On a task it drafts for a person, the person works alone: the page says "*Agent* is off: you work this task alone." Steps it already works carry on. It is no longer offered as a queue member, a delegate or a Reassign target. See [Agents](/keel/business/supervisors/#agents).
 
 ## How agents are doing
 
