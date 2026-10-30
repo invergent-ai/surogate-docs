@@ -99,31 +99,31 @@ Otherwise the drawing is only read, and a sentence above it says why when there 
 
 A viewer reads the drawing with no sentence, as does a published version.
 
-With no draft open and the current version shown, editors and owners see **Change the diagram** in the page header. It asks for a draft, as an upload does: the **Start a draft** dialog offers a **Title**, such as `Change Loan review`. Press **Start draft**, and the process opens in the new draft, ready to change. In a draft, or with a version shown, the button is not there.
+On the Diagram tab of a published process, with no draft open and its current version shown, editors and owners see **Change the diagram** in the page header, but not on a phone. It asks for a draft, as an upload does: the **Start a draft** dialog offers a **Title**, such as `Change Loan review`. Press **Start draft**, and the process opens in the new draft, ready to change. In a draft, on the other tabs, with an older version shown, and for a process that only a draft holds, the button is not there.
 
-**What you can draw.** Keel Builder offers only what Keel runs. Beside the drawing, the palette has the hand, lasso, space and connect tools, then **Create start event**, **Create end event**, **Create gateway**, **Create user task**, **Create timer intermediate catch event**, **Create expanded sub-process**, **Create pool/participant** and **Create group**. A picked element has a context pad with **Append user task**, **Append timer intermediate catch event**, **Append end event**, **Append gateway**, **Change element**, a connect handle and a delete handle. What Keel does not run is not offered: a plain task, a throw event, a signal, conditional or compensation event, a data object or a data store. **Change element** lists only the kinds Keel runs; for a user task: **Service task**, **Receive task**, **Manual task**, **Business rule task**, **Sub-process (collapsed)** and **Sub-process (expanded)**. On a timer boundary event it also offers **Toggle non-interrupting**.
+**What you can draw.** Keel Builder offers only what Keel runs. Beside the drawing, the palette has the hand, lasso, space and connect tools, then **Create start event**, **Create end event**, **Create gateway**, **Create user task**, **Create timer intermediate catch event**, **Create expanded sub-process**, **Create pool/participant** and **Create group**. A picked element has a context pad. A flow node that is not an end event has **Append end event**, **Append gateway**, **Append user task** and **Append timer intermediate catch event**; an event-based gateway has **Append receive task**, **Append message intermediate catch event** and **Append timer intermediate catch event**; an end event has none. Most elements also have **Change element**, **Add text annotation**, a connect handle and a delete handle. What Keel does not run is not offered: a plain task, a throw event, a signal, conditional or compensation event, a data object or a data store. **Change element** lists only the kinds Keel runs; for a user task: **Service task**, **Receive task**, **Manual task**, **Business rule task**, **Sub-process (collapsed)** and **Sub-process (expanded)**. On a timer boundary event it also offers **Toggle non-interrupting**.
 
 A file from another modeller can hold elements Keel does not run, such as a script task. They stay drawn, you can delete them or change them into a kind Keel runs, and a vendor's settings on them stay in the file through every change.
 
 On the drawing, **Delete** removes what is picked, **Ctrl+Z** takes the last change back and **Ctrl+Y** does it again (**⌘** on a Mac), and **E** renames the picked element in place. **Undo** and **Redo**, above the drawing, do the same; each is off while there is nothing to take back or do again. An undo is a change like any other, and is saved. A file drawn afresh, after **Load the latest**, an upload, or the end of the designer agent's turn, has nothing to undo.
 
-Keel runs one pool: a second pool cannot be drawn on a drawing that has one. Lanes, pools, text annotations and groups are drawn with the pointer only: the panel has no control for them. A lane's name is the queue of the tasks in it: see [Lanes](/keel/processes/#what-keel-runs).
+Keel runs one pool: a second pool cannot be drawn on a drawing that has one. Lanes, pools, text annotations and groups are drawn with the pointer only; once drawn, the panel names them and deletes them. A lane's name is the queue of the tasks in it: see [Lanes](/keel/processes/#what-keel-runs).
 
 #### Saving a change
 
-There is no save button. Each change is saved to the draft as the process's file a moment after you make it, as it is for any other change in the draft: the [draft bar](/keel/builder/drafts/#saving) says **Saving…**, then **Saved**, or **Not saved:** and the reason, with **Try again**, which sends the latest drawing. Your drawing stays as you changed it until it is saved. When someone else saved the draft meanwhile, the bar warns "This draft changed since you opened it. Each of your saves replaces the whole file as you have it.", your save is still made, and **Load the latest** draws their file instead.
+There is no save button. Each change is saved to the draft as the process's file a moment after you make it, as it is for any other change in the draft: the [draft bar](/keel/builder/drafts/#saving) says **Saving…**, then **Saved**, or **Not saved:** and the reason, with **Try again**, which sends the latest drawing. Your drawing stays as you changed it until it is saved. When someone else saved the draft meanwhile, the bar warns "This draft changed since you opened it. Each of your saves replaces the whole file as you have it.", your save is still made, and it replaces the process's file as they saved it. **Load the latest** reads the draft again and draws its file as it is then.
 
 The first change to a file made in another modeller rewrites the whole file in Keel Builder's layout. A file that holds XML comments says so before you change it: "This file holds XML comments. Your first change here drops them; its elements, their settings and its layout stay." Its elements, their settings, a vendor's attributes and elements, and the diagram's layout are kept. Only the comments and the file's line layout change, so [Review and publish](/keel/builder/publish/#review-and-publish) can show many lines changed after the first change of an uploaded file. **Upload a file** still keeps a file byte for byte.
 
 #### The panel
 
-Beside the drawing, the column holds a panel, the Problems and **Elements**. The panel is headed by the kind of the picked element, such as **User task**, with its id under it, or by **Process** when none is picked. A viewer reads it and changes nothing. For an editor or owner, a field is saved when you leave it, or press Enter in a one-line box: Escape puts the old value back. A box in the middle of typing is not a change.
+Beside the drawing, the column holds a panel, the Problems and **Elements**. The panel is headed by the kind of the picked element, such as **User task**, with its id under it, or by **Process** when none is picked. A viewer reads it and changes nothing, and so does an editor while the drawing cannot be changed (on a phone, during the designer agent's turn, for a file this page cannot write back, and for a published version). Where the drawing can be changed, a field is saved when you leave it, or press Enter in a one-line box: Escape puts the old value back. A box in the middle of typing is not a change.
 
 An element's panel has:
 
 - **Name**, or **Text** for a text annotation;
 - **Delete**;
-- on a flow node that is not an end event, a **Next element** pick with **Add after**, which adds that kind after the element, joined to it, and picks it: **User task**, **Manual task**, **Service task**, **Receive task**, **Business rule task**, **Exclusive gateway**, **Parallel gateway**, **Event-based gateway**, **Timer catch event**, **Message catch event**, **Subprocess** or **End event**; and a **Connect to** pick with **Connect**, which joins it to another element of its process or subprocess. If the drawing refuses, a message says "Nothing can be added after this element." or "These two cannot be connected.";
+- on a flow node that is not an end event, a **Next element** pick with **Add after**, which adds that kind after the element, joined to it, and picks it: **User task**, **Manual task**, **Service task**, **Receive task**, **Business rule task**, **Exclusive gateway**, **Parallel gateway**, **Event-based gateway**, **Timer catch event**, **Message catch event**, **Subprocess**, **End event**, **Terminate end event** or **Error end event**; and a **Connect to** pick with **Connect**, which joins it to another element of its process or subprocess. If the drawing refuses, a message says "Nothing can be added after this element." or "These two cannot be connected.";
 - on a task or a subprocess, a **Boundary event** pick with **Attach**: **Timer**, **Timer that does not interrupt** or **Error**. If it cannot be attached, "A boundary event cannot be put on this element.";
 - for a user or manual task: "Its queue, outcomes and what it writes are not set here yet. Keel's checks list what it needs."; for a service task: "What it calls is not set here yet. Keel's checks list what it needs."; for a business rule task: "Its rule is not set here yet. Keel's checks list what it needs."
 
@@ -134,7 +134,7 @@ A task's settings are written in the file for now: see [Keel's settings in the f
 - **Name**: the name the page's header shows;
 - **Queue**, **None** or one of the project's queues, published or in the draft: "Tasks that name no queue and lie in no lane go to this queue."
 - **Calendar**, **None** or one of the project's calendars, published or in the draft: "The working hours that business timers and deadlines count."
-- **Knowledge**, the knowledge bases as chips, each with a remove button, and **Add knowledge**: "The knowledge bases the process's agent tasks may use." With none: "Its agent tasks use no knowledge."
+- **Knowledge**, the knowledge bases as chips, each with a remove button, and an **Add** menu: "The knowledge bases the process's agent tasks may use." With none: "Its agent tasks use no knowledge."
 - **Variables**, a table of **Variable**, **Type**, **Required** and **Personal data**, one row for each variable the process declares, with **Add variable**. With none, **No variables yet**: "A process keeps only the variables it declares."
 
 If the project's queues, calendars or knowledge bases cannot be read, the panel says "The project's queues could not be read.", "The project's calendars could not be read." or "The project's knowledge bases could not be read.", each with **Try again**.
@@ -144,7 +144,7 @@ Press a variable, or **Add variable**, to open the dialog, which is the [case ty
 **A sequence flow.**
 
 - Leaving an exclusive gateway, and not its default: **Condition**, a box for a CEL condition: "A CEL condition over the process's variables, such as amount <= 250000.0. The gateway takes the first flow whose condition holds, in the file's order." A blank condition takes it away.
-- A gateway's default flow reads "The default flow of *the gateway* : taken when no condition holds." and has no condition.
+- A gateway's default flow reads "The default flow of *the gateway*: taken when no condition holds." and has no condition.
 - Any other flow reads "Only a flow that leaves an exclusive gateway carries a condition."
 
 **An exclusive gateway** has **Default flow**: **None** or one of the flows that leave it, such as **Large · Sequence flow**: "Taken when no other flow's condition holds."
@@ -159,7 +159,7 @@ Press a variable, or **Add variable**, to open the dialog, which is the [case ty
 **A message catch event or a receive task:**
 
 - **Message**: one of the file's messages by name, **None**, or **A new message**. A new one asks for a **Message name**, and **Add message** adds it to the file and picks it. "The instance waits for a message of this name."
-- **Writes**: the variables the message may write, as chips, with **Add a variable**: "The variables a message may write." With none: "The message writes no variable."
+- **Writes**: the variables the message may write, as chips, with an **Add** menu: "The variables a message may write." With none: "The message writes no variable."
 
 **An error end event or an error boundary event:**
 
@@ -168,7 +168,7 @@ Press a variable, or **Add variable**, to open the dialog, which is the [case ty
 
 #### Elements, and the keyboard
 
-The drawing takes the keyboard when it is focused, but its palette and context pad do not. So everything you draw is also reached without the pointer or the canvas. **Elements**, under the Problems, lists every element the drawing draws in the file's order, such as **Review the loan · User task**: its name, else its id, then its type. Type in **Find an element** to narrow it; with no match it says "No element matches." Press an element to pick it: the panel shows it and the address keeps it. A viewer sees the list too. Then use the panel's **Add after**, **Connect to** and **Attach** to draw. Everything but lanes, pools, text annotations and groups can be drawn this way.
+The drawing takes the keyboard when it is focused, but its palette and context pad do not. So everything you draw is also reached without the pointer or the canvas. **Elements**, under the Problems, lists every element the drawing draws in the file's order, such as **Review the loan · User task**: its name, else its id, then its type. Type in **Find an element** to narrow it; with no match it says "No element matches." Press an element to pick it: the panel shows it and the address keeps it. A viewer sees the list too. Then use the panel's **Add after**, **Connect to** and **Attach** to draw. Everything but lanes, pools, text annotations, groups and the start event can be drawn this way; a start event is made from the palette.
 
 #### Problems while you change
 

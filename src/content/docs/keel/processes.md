@@ -64,7 +64,7 @@ Keel Builder's panel sets the process's settings and variables, a sequence flow'
 ```
 
 - `keel:process`: `queue`, the queue of every task that names none and lies in no lane, `calendar`, the [calendar](/keel/builder/rules/#calendars) business timers count on, and `knowledge`, the knowledge bases the process grants to its agents, separated by spaces.
-- `keel:variables`: one `keel:variable` for each variable the instance keeps, with the same types as a case type's [fields](/keel/builder/data/). A variable can be `required`, which its start data must then hold, and `pii`. A process has only the variables it declares.
+- `keel:variables`: one `keel:variable` for each variable the instance keeps, with the same types as a case type's [fields](/keel/builder/data/), except `file`. A variable can be `required`, which its start data must then hold, and `pii`. A process has only the variables it declares.
 
 ### A user or manual task
 
