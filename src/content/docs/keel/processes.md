@@ -27,8 +27,9 @@ A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder
 | **Service task** that starts a case | Starts a case of one of the project's case types, and waits for it to close or goes on at once. See [A service task that starts a case](#a-service-task-that-starts-a-case). |
 | **Call activity** | Starts another published process of the project, named by its key, and waits for it to end. See [A call activity](#a-call-activity). |
 | **A task that runs several times** | A user, manual, service or business rule task, or a call activity, can run once for each item of a list, or a number of times, all at once or one after another. See [A task that runs for each item](#a-task-that-runs-for-each-item). |
-| **Receive task**, **message catch event** | Waits for a message of its name. |
+| **Receive task**, **message catch event** | Waits for a message of its name, sent to the instance or, when the wait names a key, sent to the project with that key. See [A message catch, a receive task, a timer](#a-message-catch-a-receive-task-a-timer). |
 | **Timer catch event** | Waits for a duration, such as `PT2H` or `P3D`, or until a date. A repeating (cycle) timer is refused. |
+| **Message boundary event** | Fires on a task, a call activity or a subprocess when a message of its name arrives, and withdraws the activity. Only one that interrupts: a message boundary event that does not interrupt is refused, with the way round it. |
 | **Timer boundary event** | Fires on a task, a call activity or a subprocess after a duration or at a date. An interrupting one withdraws the activity; a non-interrupting one starts its path beside it. |
 | **Error boundary event** | Catches an error thrown inside the task or subprocess it sits on, or by the call activity it sits on: the one with the error's code first, else one without a code. |
 | **Exclusive gateway** | Takes the first outgoing flow, in the order written, whose condition holds, else its default flow. |
@@ -40,9 +41,9 @@ A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder
 | **Event subprocess** | A subprocess with no flow in or out, that starts while the process or subprocess around it runs, when its start event's timer fires, its message arrives or an error is thrown inside it. It stops the rest of the process or subprocess, or runs beside it. See [An event subprocess](#an-event-subprocess). |
 | **Lanes** | A lane's name is the queue of the tasks in it, read as a queue key: lower case, with each run of other characters as `_`. A lane named "Back Office" is the queue `back_office`. Keel Builder names a lane for the queue you pick in its panel. |
 
-Not run yet, refused when published: data stores, message boundary events and pools that send each other messages. An event subprocess that starts on a signal, an escalation, a condition, compensation or a link is refused too.
+Not run yet, refused when published: data stores and pools that send each other messages. An event subprocess that starts on a signal, an escalation, a condition, compensation or a link is refused too.
 
-Refused: script tasks, plain tasks, send tasks, business rule tasks that name a DMN decision instead of a Keel rule, throw events, signals, escalations, compensation, transactions, ad hoc subprocesses, complex gateways, conditional and link events, loops on a task (draw the loop with a gateway), data objects and correlation keys. Each refusal names the element.
+Refused: script tasks, plain tasks, send tasks, business rule tasks that name a DMN decision instead of a Keel rule, throw events, signals, escalations, compensation, transactions, ad hoc subprocesses, complex gateways, conditional and link events, loops on a task (draw the loop with a gateway), data objects and the standard's correlation keys, properties and subscriptions (a message wait names its key with `keel:message key`). Each refusal names the element.
 
 A receive task and a subprocess cannot run for each item, and are refused when they try. "a multi-instance receive task is not supported: every instance would wait for the same message" A multi-instance subprocess is refused with the way round it: "draw its steps as a process of their own and call it from a multi-instance call activity", each called process being an instance of its own with its own page, number and history.
 
@@ -292,8 +293,32 @@ A `keel:agent` beside the `keel:task` of a user task drafts for the person who c
 
 ### A message catch, a receive task, a timer
 
-- `keel:message` on a message catch event or a receive task lists, with `keel:write`, the variables the message may write. A message that holds anything else is refused.
+- `keel:message` on a message catch event, a receive task or a message boundary event lists, with `keel:write`, the variables the message may write. A message that holds anything else is refused.
+- `keel:message key="<variable>"` makes the wait addressable by a business key: see [A message addressed by a key](#a-message-addressed-by-a-key).
 - `keel:timer business="true"` on a timer makes it count business time on the process's calendar.
+
+### A message addressed by a key
+
+A system outside Keel knows a business key, such as a claim number, not Keel's instance id. A message wait can name the process variable that holds it with `key`, and a message sent to the project with that key reaches the running instances whose wait holds it.
+
+```xml
+<bpmn:intermediateCatchEvent id="docs" name="Documents in">
+  <bpmn:extensionElements>
+    <keel:message key="claim_number">
+      <keel:write variable="docs_note"/>
+    </keel:message>
+  </bpmn:extensionElements>
+  <bpmn:messageEventDefinition messageRef="documents_arrived"/>
+</bpmn:intermediateCatchEvent>
+```
+
+- **Which wait.** A message catch event, a receive task, a message boundary event, the start event of a message event subprocess, and a branch of an event-based gateway take a `key`.
+- **Which variable.** A declared string, whole-number (`int`) or choice variable. Its key is its value as text: a string or a choice as it is, a whole number in decimal digits. The sender sends the key as a string, `"2041"` for the whole number 2041, and the comparison is exact, case and all.
+- **When it is read.** After every transition, not when the wait opens: a task that writes the variable while the wait is open moves the wait to the new value. A wait whose variable holds no value (or an empty string) has no key, and only a message sent to its instance reaches it.
+- **Without a `key`**, a wait is reached only by a message sent to its instance, as before. A message sent to an instance with a `key` reaches only the waits whose key holds it; without one, every wait of its name, keyed or not.
+- **Personal data.** A variable marked as personal data may be a key. Its value is kept with the wait while the wait is open, and in the event that took the message; it is shown under **Waiting for** as it is shown among the data, and the audit and the history's sentences never state it.
+
+A message boundary event interrupts the task, call activity or subprocess it sits on, and writes what its message carries, as a message catch event does. A receive task cannot carry a message boundary event for its own message: the task would take the message and the boundary event never. A task that runs for each item, or a subprocess, carries one on the whole activity, and the message withdraws every instance of it, or everything in the subprocess.
 
 ### A task that runs for each item
 
@@ -491,6 +516,21 @@ An event subprocess is checked when the process is published. Each problem is in
 
 The process's own start event with a timer or a message stays refused: "timer start events are not supported", "message start events are not supported". An event subprocess has no `no-outgoing` and no `unreachable` problem: its start event reaches it.
 
+### Checking a message key and a message boundary event
+
+A message wait's key and a message boundary event are checked when the process is published. Each problem is in the process's file, at the wait or the boundary event.
+
+| Problem | What it says |
+|---|---|
+| `extension` | "keel:message key is blank: name a variable or leave it out" |
+| `undeclared-variable` | "a message key names *variable*, which is not a declared variable" |
+| `message-key` | "the key *variable* is a *type* variable: a key is a string, a whole number or a choice" |
+| `boundary` | "a message boundary event that does not interrupt is not supported yet: put the task in a subprocess with a message event subprocess that does not interrupt"; "cancelActivity must be true or false, not '*value*'"; "another message boundary event of this activity waits for the message *name*"; "the receive task *task* waits for the message *name* too: the task would take it and this boundary event never" |
+| `message-name`, `unknown-reference` | As for a message catch event: "*element* needs a bpmn:message", "the message *id* is not a bpmn:message of the file", "the message *id* has no name" |
+| `unsupported` | "correlation is not supported: a message wait names its key with keel:message key", at a `correlationKey`, `correlationProperty` or `correlationSubscription` |
+
+A key that no sender can know, and a message nobody sends, are not checked.
+
 ### Checking what a process calls and which agents work it
 
 A process's calls and agents are checked when the process is published, and a connection published again is checked against the current version of each process the publish leaves alone and every process version instances still run on.
@@ -590,6 +630,7 @@ Staff sign in as they do for the business app; another system uses a [service ke
 
 | To | Call | Who |
 |---|---|---|
+| Send a message to the instances that wait for it with a key | `POST /api/projects/{project}/messages` with `{"name": "documents arrived", "key": "CL-2041", "payload": {"docs_note": "scan"}}`; see below | Staff and service keys |
 | Start an instance | `POST /api/projects/{project}/processes` with `{"process": "loan-review", "data": {"amount": "20000.00"}}` | Staff and service keys |
 | List the processes an instance may start on, each with the form it starts with | `GET /api/projects/{project}/process-types` | Staff and service keys |
 | List instances, newest first | `GET /api/projects/{project}/processes`, with `process`, `status`, `attention=true`, `q` (a part of the number, two to a hundred characters), `cursor` and `limit`. Each row names its process. | Staff and service keys |
@@ -604,6 +645,15 @@ Staff sign in as they do for the business app; another system uses a [service ke
 | Check its history replays | `POST /api/processes/{instance_id}/replay` | Staff and service keys |
 | Send it an event | `POST /api/processes/{instance_id}/events` | See below |
 
+A message sent to the project (`POST /api/projects/{project}/messages`) gives the message `name` to every running instance of the project that waits for it with the `key` (1 to 1,000 characters, not blank), each in a transaction of its own, oldest first, with the `payload` the waits list. It answers `200`:
+
+```json
+{"reached": [{"instance_id": "…", "number": "P-000001", "process": "claim-documents", "seq": 2, "status": "running"}],
+ "refused": []}
+```
+
+An instance that refuses the message (its key changed since, it ended, the payload does not fit, its version no longer loads) is in `refused` with its `code` and `message`, and never undoes another's delivery. No instance waiting is `409 unknown-message`: "No running instance of the project waits for the message *name* with that key." More than 100 is `409 too-many-instances`: "More than 100 instances wait for the message *name* with that key: a message reaches at most 100." When every instance refuses, the answer is the first refusal, with the instance's number before it: "P-000001: the message documents arrived may not write other". Sent again with the `Idempotency-Key` it was first sent with, by the same caller and with the same body, it answers as the first time with the header `Idempotent-Replayed: true`, and no instance takes it twice; the key another caller or another body used is `422 key-reused`: "*key* was used for another send in this project". A send cut short is finished by sending it again.
+
 Starting an instance answers its `instance_id`, its `number`, such as `P-000001`, and its status. The start data must fit the declared variables. Send an `Idempotency-Key` header with each start: a start sent again with the same key answers with the instance it started the first time.
 
 A process a call activity called is an instance like any other, with its own number: it is listed, read, followed and cancelled as the others are, and a cancel of it makes the call activity that waits for it throw `process-cancelled`. Its page says it was called by the instance that started it.
@@ -613,7 +663,7 @@ The events an instance takes:
 | Event | Body | Who sends it |
 |---|---|---|
 | Complete a task | `{"type": "task.completed", "task": "t3", "outcome": "approve", "output": {"note": "fine"}}` | Whoever holds its work item; while no one holds it, a member of its queue. A member of the queue its missed deadline escalated to. Supervisors always. Never a service key. |
-| Deliver a message | `{"type": "message.received", "name": "documents", "payload": {"docs": "received"}}` | Staff and service keys. Every task of the instance waiting for that message takes it. |
+| Deliver a message | `{"type": "message.received", "name": "documents", "payload": {"docs": "received"}}`, with `"key": "CL-2041"` to reach only the waits whose key holds it | Staff and service keys. Every task of the instance waiting for that message takes it (with a `key`, those whose key holds it). |
 | Cancel the instance | `{"type": "process.cancelled", "reason": "withdrawn"}` | Supervisors |
 | Answer an agent's question | `{"type": "hand.answered", "task": "t5", "answer": "2026", "note": "the new policy"}` | Whoever holds the question's item; while no one holds it, a member of the queue it went to; supervisors always. Never a service key. The `note` is optional, and an answer must be one of the question's choices when it has some. |
 | Ask a drafting agent to revise | `{"type": "revision.requested", "task": "t3", "note": "Cite the bureau"}` | Whoever holds the task, or its queue while no one does; supervisors always. Never a service key. |
