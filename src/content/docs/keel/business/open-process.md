@@ -13,7 +13,7 @@ Keel records each time someone opens an instance.
 - The status: **Running**, **Completed**, **Ended**, **Failed** or **Cancelled**. A failed instance says which error ended it and where: "Ended in error *code* at *place*."
 - For supervisors, on a running instance, **More actions** with **Cancel the process…**. See [Cancel a process](#cancel-a-process).
 
-A case that started the instance shows **Started by**, with the case, over the rest.
+A case that started the instance shows **Started by**, with the case, over the rest. A process that called it shows **Called by**, with the calling instance, such as `P-000001 · Loan decision`.
 
 With nothing to work or wait for, the page says "Nothing waits on people now." on a running instance and "This process has ended." on an ended one. A link to an instance that does not exist, or that is not this project's, says **This process does not exist, or it is not this project's** with **Back to processes**; when Keel cannot read it, **This process could not be loaded** with **Try again**.
 
@@ -44,17 +44,21 @@ Each open task that is yours shows as a card, **Your task**, with its form, as a
 
 ## Waiting for
 
-**Waiting for** lists the timers, the messages, the cases and the calls the instance waits on, such as "Cool off · due 20 Oct, 10:00", "Documents · waits for the message Documents" or "Check the bureau · calling Bureau". A call that failed for good reads "Check the bureau · its call to Bureau failed: a supervisor retries it or cancels the process"; a timer that could not fire reads "Pause · could not fire". A case it waits on shows the case, linked to its page.
+**Waiting for** lists the timers, the messages, the cases, the processes it called and the calls the instance waits on, such as "Cool off · due 20 Oct, 10:00", "Documents · waits for the message Documents" or "Check the bureau · calling Bureau". A call that failed for good reads "Check the bureau · its call to Bureau failed: a supervisor retries it or cancels the process"; a timer that could not fire reads "Pause · could not fire". A case it waits on shows the case, linked to its page. A call activity shows the process it called, linked to its instance, such as **Check credit · P-000002 · Credit check · Running**, or "waits for its process to start" until Keel starts it. Under it, "It could not start: …" says why Keel could not start the process, and "Keel could not take its end: …" why the instance, which still waits, could not take how the process ended.
 
 ## Cases it started
 
 An instance whose tasks started cases lists them under **Cases it started**, oldest first: each case by its number, its case type's name and how it stands, such as `CL-000001 · Claim · Open`, linked to the case, with the task that started it and when. A start that started nothing reads, for example, `Claim · Not started`, with why. The list reads again on each change. An instance that started no case shows no **Cases it started**.
 
+## Processes it called
+
+An instance whose call activities called processes lists them under **Processes it called**, oldest first: each by its number, its process's name and how it stands, such as `P-000002 · Credit check · Completed`, linked to its instance, with the call activity that called it and when. A call that started nothing reads, for example, `Credit check · Not started`, with why. The list reads again on each change. An instance that called no process shows no **Processes it called**.
+
 ## The diagram
 
 The **Diagram** card draws the process as its file lays it out, with how far the instance got. It has two tabs, **Diagram** and **List**; on a phone, **List** comes first.
 
-**Diagram** draws each element where the file puts it, scaled as the file scales it, in a box that scrolls. Pools and lanes show with their names. A mark shows what each element is: a person for a user task, a hand for a manual task, a robot for an agent task, a cog for a call to a system, a folder for a task that starts a case, a table for a business rule, an envelope for a message, a clock for a timer, a bolt for an error. Gateways show as diamonds marked with a cross, a plus, a bold circle or a ring. An element's colour says how far the instance got:
+**Diagram** draws each element where the file puts it, scaled as the file scales it, in a box that scrolls. Pools and lanes show with their names. A mark shows what each element is: a person for a user task, a hand for a manual task, a robot for an agent task, a cog for a call to a system, a folder for a task that starts a case, a box with a thick border and a plus for a call activity, a table for a business rule, an envelope for a message, a clock for a timer, a bolt for an error. Gateways show as diamonds marked with a cross, a plus, a bold circle or a ring. An element's colour says how far the instance got:
 
 | Colour | State |
 |---|---|
@@ -64,7 +68,7 @@ The **Diagram** card draws the process as its file lays it out, with how far the
 | Dashed grey | **Withdrawn**: something took it away, such as a timer that interrupted the task |
 | Dimmed | **Not reached** |
 
-The legend under the drawing names the states. A timer on a task that does not interrupt it draws with a dashed ring, whatever its state. Pausing on an element shows its name and its state, such as "Review the loan · Active". An element a loop reaches again is **Active**, not **Done**. A gateway where paths meet is **Active** while it waits for the paths still running, and a path a gateway did not take stays **Not reached**. The lines carry no colour: Keel does not record which line a run took.
+The legend under the drawing names the states. A timer on a task that does not interrupt it draws with a dashed ring, whatever its state. Pausing on an element shows its name and its state, such as "Review the loan · Active". A call activity is **Active** while the process it called runs, and **Done** once it ended. An element a loop reaches again is **Active**, not **Done**. A gateway where paths meet is **Active** while it waits for the paths still running, and a path a gateway did not take stays **Not reached**. The lines carry no colour: Keel does not record which line a run took.
 
 **List** says the same in words. It groups the elements, leaving out pools, lanes, groups and notes, under **Needs a supervisor**, **Active**, **Done**, **Withdrawn** and **Not reached**, in the file's order, each as "name · kind":
 
@@ -78,6 +82,7 @@ The legend under the drawing names the states. A timer on a task that does not i
 | A user or a manual task | **User task**, **Manual task** |
 | An agent task, or a call to a system | **Agent task**, **System call** |
 | A task that starts a case | **Starts a case** |
+| A call activity | **Calls a process** |
 | A business rule | **Business rule** |
 | A receive task | **Waits for a message** |
 | A gateway | **Decision**, **Parallel paths**, **One or more paths** or **Waits for the first event** |
@@ -111,6 +116,7 @@ The side panel, beside the tasks on a wide screen and under them on a phone, has
 | "*Boundary* caught the error *code*" | An error boundary caught an error. |
 | "*Task* applied *rule* v*n*" | A business rule task applied a rule. |
 | "Requested a case of *case type*", then "Case *number* closed", "Case *number* failed" or "The case could not start" | A task started a case, and how it ended. A closed case names its resolution. |
+| "Called the process *process*", then "Process *number* completed", "Process *number* ended", "Process *number* ended in error *code*", "Process *number* was cancelled" or "The called process could not start" | A call activity called a process, and how it ended. |
 | "The process completed", "The process ended at *element*" or "The process ended in error *code* at *element*" | The instance ended. |
 | "*Who* cancelled the process: *reason*" | A supervisor cancelled it. |
 
@@ -118,7 +124,7 @@ An element that was only entered or passed, a gateway taken, a missed goal and t
 
 ## Cancel a process
 
-A supervisor cancels a running instance from **More actions** with **Cancel the process…**. The dialog, **Cancel *number***, says "Everything still open in the process is withdrawn, and it ends as cancelled." It adds "Your reason is kept in its history." Where the instance waits on a case, it also says "A case it waits on is cancelled, or left running, as the process says."
+A supervisor cancels a running instance from **More actions** with **Cancel the process…**. The dialog, **Cancel *number***, says "Everything still open in the process is withdrawn, and it ends as cancelled." It adds "Your reason is kept in its history." Where the instance waits on a case, it also says "A case it waits on is cancelled, or left running, as the process says." Where it waits on a process it called, it says "A process it called is cancelled too."
 
 1. Write the **Reason**. Without one, the dialog says "Say why the process is cancelled." and sends nothing.
 2. Press **Cancel the process**, or **Keep it running** to leave the instance as it is.

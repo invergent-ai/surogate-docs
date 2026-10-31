@@ -25,6 +25,7 @@ A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder
 | **Service task** that calls a system | Calls another system's API through one of the process's connections, waits for the answer, writes its values to variables and goes on. See [A service task that calls a system](#a-service-task-that-calls-a-system). |
 | **Service task** that calls an agent | Starts an agent on the task. The agent completes it under the task's contract, or asks a person. See [A service task that calls an agent](#a-service-task-that-calls-an-agent). |
 | **Service task** that starts a case | Starts a case of one of the project's case types, and waits for it to close or goes on at once. See [A service task that starts a case](#a-service-task-that-starts-a-case). |
+| **Call activity** | Starts another published process of the project, named by its key, and waits for it to end. See [A call activity](#a-call-activity). |
 | **Receive task**, **message catch event** | Waits for a message of its name. |
 | **Timer catch event** | Waits for a duration, such as `PT2H` or `P3D`, or until a date. A repeating (cycle) timer is refused. |
 | **Timer boundary event** | Fires on a task or a subprocess after a duration or at a date. An interrupting one withdraws the activity; a non-interrupting one starts its path beside it. |
@@ -37,7 +38,7 @@ A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder
 | **Embedded subprocess** | Runs its own flow, and may carry boundary events. |
 | **Lanes** | A lane's name is the queue of the tasks in it, read as a queue key: lower case, with each run of other characters as `_`. A lane named "Back Office" is the queue `back_office`. Keel Builder names a lane for the queue you pick in its panel. |
 
-Not run yet, refused when published: call activities, multi-instance tasks, event subprocesses, data stores, message boundary events and pools that send each other messages.
+Not run yet, refused when published: multi-instance tasks, event subprocesses, data stores, message boundary events and pools that send each other messages.
 
 Refused: script tasks, plain tasks, send tasks, business rule tasks that name a DMN decision instead of a Keel rule, throw events, signals, escalations, compensation, transactions, ad hoc subprocesses, complex gateways, conditional and link events, loops on a task (draw the loop with a gateway), data objects and correlation keys. Each refusal names the element.
 
@@ -152,6 +153,42 @@ When the case closes, a waiting task completes: its `keel:result` variables and 
 | `case-failed` | A step's failure closed the case. |
 | `case-values` | The case closed with a value its variables cannot hold. Nothing is written. |
 
+### A call activity
+
+```xml
+<bpmn:callActivity id="check" name="Check credit" calledElement="credit-check">
+  <bpmn:extensionElements>
+    <keel:called>
+      <keel:pass variable="amount" to="loan_amount"/>
+      <keel:receive variable="band" from="rating"/>
+    </keel:called>
+  </bpmn:extensionElements>
+</bpmn:callActivity>
+```
+
+| Setting | What it does |
+|---|---|
+| `calledElement` | The process the call activity starts, by its key: the name of its file under `processes/`, not the process id inside the file. Required. A vendor's `calledElementBinding` is a warning and never read. |
+| `keel:pass` | A variable of this process (`variable`) that fills a variable of the called process (`to`). A variable with no value is not passed. Each called variable once. |
+| `keel:receive` | A variable of this process (`variable`) that takes a variable of the called process (`from`) when it ends. Each variable once. |
+
+Nothing is passed or received that is not named: the two processes do not share variables by name.
+
+Each call starts the newest published version of the called process, and that instance finishes on it, whatever is published after. It is an instance of its own, with its own number, page, tasks and history: see [Running instances](#running-instances). The calling instance waits at the call activity until it ends; no one holds a lock on either meanwhile. A called process that requires a variable no `keel:pass` fills cannot start, and a `keel:pass` of a variable with no value leaves it unfilled.
+
+When the called process ends, the call activity completes: each `keel:receive` variable takes the called process's variable, when it holds one, and a terminate end event in the called process ends only that process. Otherwise the call activity throws a BPMN error, which an error boundary event on it, or on a subprocess around it, catches by its code; uncaught, it fails the instance:
+
+| Error | When |
+|---|---|
+| `process-not-started` | Keel could not start the process: it is not published, the values passed do not fit it, or the chain of starts is too deep. |
+| `process-cancelled` | The called process was cancelled. |
+| The called process's own error code | The called process ended in an error end event. |
+| `process-values` | The called process ended with a value the receiving variables cannot hold. Nothing is written. |
+
+When the calling instance leaves the call activity first, by an interrupting boundary event, a supervisor's cancel or an error caught elsewhere, Keel cancels the called process, as the system `keel`. A boundary event that does not interrupt leaves it running. A called process that waits on an incident keeps the caller waiting until a supervisor retries it or cancels it.
+
+A process cannot call itself, or call a process that calls it back: the publish refuses a cycle of calls, naming each call activity in it.
+
 ### A service task that calls a system
 
 ```xml
@@ -261,6 +298,7 @@ A case's [process node](/keel/builder/flow-nodes/#processes) starts a process, a
 - A side that waits takes the other's end: a case leaves its process node by Ended or Failed, and a process's task completes or throws its error.
 - When the waiting side moves on first, Keel withdraws the other: it cancels a process whose case no longer waits at its node, and sends a case its task's `cancel-event`, unless the task says `keep-running`.
 - When Keel cannot start the other side, such as a retired case type or values that no longer fit, the waiting side takes its error path.
+- A call activity starts a process the same way, and waits for it to end; see [A call activity](#a-call-activity). A call counts in the chain.
 - A chain of starts stops at eight. The ninth start in a chain is refused, and its waiting side takes its error path, so a case type and a process that start each other never loop without end.
 
 The business app shows the links on both sides:
@@ -289,13 +327,17 @@ When a rule is published again, Keel checks the new version against the processe
 
 ### Checking what starts what
 
-A start is checked when the case type or the process that holds it is published, against what it starts as the publish leaves it. It is checked again when what it starts is published again, at each stored version that starts it: the current version of each case type or process the publish leaves alone, and each version that cases or instances still run on. Such a problem is at `<case type> v<n>: <node>` or `<process> v<n>: <task>`, in the file published again. A retired case type is checked against the processes that start it like any other, and its republish is never refused `retired-case-type`. A problem at a version cases or instances still run on stays until nothing runs on it, or the file fits it again; a problem at a current version does not end by itself.
+A start or a call is checked when the case type or the process that holds it is published, against what it starts or calls as the publish leaves it. It is checked again when what it starts is published again, at each stored version that starts or calls it: the current version of each case type or process the publish leaves alone, and each version that cases or instances still run on. Such a problem is at `<case type> v<n>: <node>` or `<process> v<n>: <task>`, in the file published again. A retired case type is checked against the processes that start it like any other, and its republish is never refused `retired-case-type`. A problem at a version cases or instances still run on stays until nothing runs on it, or the file fits it again; a problem at a current version does not end by itself.
 
 | Problem | Where | What it says |
 |---|---|---|
-| `unknown-process` | The case type's file, at the node | "*node* starts *process*, a process the project does not have" |
 | `unknown-case-type` | The process's file, at the task | "*task* starts *case type*, a case type the project does not have" |
 | `retired-case-type` | The process's file, at the task | "*task* starts *case type*, which is retired: no new case can start on it" |
+| `called-element` | The process's file, at the call activity | "*element* needs calledElement: the key of the process it calls" |
+| `unknown-process` | The case type's file, at the node; or the process's file, at the call activity | "*node* starts *process*, a process the project does not have"; "*element* calls *process*, a process the project does not have" |
+| `call-input` | The process's file, at the call activity, or at `<process> v<n>: <call activity>` in the called process's file | "*process* requires *name*, which no keel:pass fills", "keel:pass names *to*, which *process* does not declare", "*to*, a *type*, is filled from *variable*, a *type* of another shape", "*variable* may hold *choices*, which *to* does not take" |
+| `call-output` | The same | "*variable* receives *from*, which *process* does not declare", "*variable*, a *type*, receives *from*, a *type* of another shape", "*from* may hold *choices*, which *variable* does not take" |
+| `call-cycle` | The process's file, at each call activity of it that lies on a cycle of calls | "*element* calls *process*, the process it is in: a process cannot wait on itself", "*element* calls *called*, and the calls of *a, b, c* lead back round: a process cannot wait on itself" |
 | `process-input` | The case type's file, or the process's file at `<case type> v<n>: <node>` | "*process* requires *variable*, which no input fills", "inputs names *variable*, which *process* does not declare", "*variable*, a *type*, is filled from *field*, a *type* of another shape", "*field* may hold *choices*, which *variable* does not take" |
 | `process-output` | The same | "*field* receives *variable*, which *process* does not declare", "*field*, a *type*, receives *variable*, a *type* of another shape", "*variable* may hold *choices*, which *field* does not take" |
 | `case-input` | The process's file, or the case type's file at `<process> v<n>: <task>` | "*case type* requires *field*, which no keel:field fills", "keel:field names *field*, which *case type* does not declare", "*field*, a *type*, is filled from *variable*, a *type* of another shape", "*variable* may hold *choices*, which *field* does not take" |
@@ -405,6 +447,7 @@ Staff sign in as they do for the business app; another system uses a [service ke
 | List the processes an instance may start on, each with the form it starts with | `GET /api/projects/{project}/process-types` | Staff and service keys |
 | List instances, newest first | `GET /api/projects/{project}/processes`, with `process`, `status`, `attention=true`, `q` (a part of the number, two to a hundred characters), `cursor` and `limit`. Each row names its process. | Staff and service keys |
 | Read an instance | `GET /api/processes/{instance_id}` | Staff and service keys |
+| The processes its call activities called, oldest first, each with its state | `GET /api/processes/{instance_id}/calls` | Staff and service keys |
 | Read it as its page shows it: its tasks with their forms and who holds each, its goals and deadlines, what it waits for, its data | `GET /api/processes/{instance_id}/outline` | Staff and service keys |
 | Follow its changes as server-sent events | `GET /api/processes/{instance_id}/live` | Staff |
 | Its diagram: the shapes and lines its file lays out, each shape marked `done`, `active`, `incident` or `withdrawn`, or not marked | `GET /api/processes/{instance_id}/diagram` | Staff and service keys |
@@ -428,7 +471,7 @@ The events an instance takes:
 | Message an agent | `{"type": "agent.messaged", "task": "t5", "text": "Use the May statement."}` | Any member of the staff. Keel adds the sender's name. Never a service key. |
 | Retry a task with an incident | `{"type": "task.retried", "task": "t5"}` | Supervisors |
 
-Keel sends the rest itself: a timer firing (`timer.fired`), a call or an agent failing (`task.failed`), an agent raising its hand (`hand.raised`), an agent's draft (`task.drafted`) and a case's close (`case.closed`). A body that names one is `422 invalid-event`, with the reason.
+Keel sends the rest itself: a timer firing (`timer.fired`), a call or an agent failing (`task.failed`), an agent raising its hand (`hand.raised`), an agent's draft (`task.drafted`) and a case's close (`case.closed`) and a called process's end (`called.ended`). A body that names one is `422 invalid-event`, with the reason.
 
 A task's id, such as `t3`, comes from the instance's open tasks. Completing a task that has already finished answers `409 task-closed`. An event sent again with the `Idempotency-Key` it was first sent with is answered with the instance as it stands, and the header `Idempotent-Replayed: true`; it is not applied twice.
 
