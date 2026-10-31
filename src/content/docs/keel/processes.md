@@ -39,11 +39,13 @@ A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder
 
 Not run yet, refused when published: call activities, multi-instance tasks, event subprocesses, data stores, message boundary events and pools that send each other messages.
 
-Refused: script tasks, plain tasks, send tasks, business rule tasks that name a DMN decision instead of a Keel rule, throw events, signals, escalations, compensation, transactions, ad hoc subprocesses, conditional and link events, loops on a task (draw the loop with a gateway), data objects and correlation keys. Each refusal names the element.
+Refused: script tasks, plain tasks, send tasks, business rule tasks that name a DMN decision instead of a Keel rule, throw events, signals, escalations, compensation, transactions, ad hoc subprocesses, complex gateways, conditional and link events, loops on a task (draw the loop with a gateway), data objects and correlation keys. Each refusal names the element.
 
 Conditions are written in CEL over the process's variables, as a case type's are, for example `amount <= 250000.0`. An exclusive gateway stops at the first condition that holds; an inclusive gateway evaluates every one. A condition that reads a variable with no value, such as one only a branch not taken writes, refuses what reached the gateway: a completion answers `409 evaluation-error`, a start is refused, and a timer is kept as stuck. So give such a variable a value on every path.
 
 An exclusive or an inclusive gateway with more than one flow leaving it needs a condition on every flow but its default, and one with a condition on any flow needs a default flow. A condition on the default flow is never evaluated, and Keel warns of it.
+
+A parallel or an inclusive gateway where flows meet takes one flow from each element that leads to it, so two flows from one element into it are refused.
 
 ## Keel's settings in the file
 
@@ -325,7 +327,7 @@ A problem at an old version is fixed in one of these ways:
 - At a version cases or instances still run on: move its open cases to a newer version of the case type, or wait for them to close, or for the instances to end or be cancelled.
 - At a current version: publish a new version of that case type or process in the same draft. The new version is then checked instead.
 
-A problem that Keel cannot run, such as a script task, refuses the publish and names the element. A vendor extension, such as Camunda's, Flowable's or SpiffWorkflow's own properties, is a **warning**: Keel ignores it and never runs it, and the publish goes on. The review page lists warnings under **Warnings**, and **Publish** stays on.
+A problem that Keel cannot run, such as a script task, refuses the publish and names the element. A vendor extension, such as Camunda's, Flowable's or SpiffWorkflow's own properties, is a **warning**: Keel ignores it and never runs it, and the publish goes on. So is a cycle of tasks that no path leaves for an end event: an instance that reaches it never ends. The review page lists warnings under **Warnings**, and **Publish** stays on.
 
 Running instances finish on the version they started on.
 
