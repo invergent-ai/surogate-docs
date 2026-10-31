@@ -46,7 +46,7 @@ Conditions are written in CEL over the process's variables, as a case type's are
 
 Each setting sits in the `extensionElements` of its BPMN element. An element or attribute Keel does not know, or one where it has no meaning, is a problem when the file is published: nothing is ignored silently.
 
-Keel Builder's panel sets the process's settings and variables, a user or manual task's settings, a user task's drafting agent, a business rule task's rule, a lane's queue (its name), a sequence flow's condition, an exclusive gateway's default flow, a timer, a message and an error: see [Changing the diagram](/keel/builder/processes/#changing-the-diagram). A service task's call is not set in the panel yet; it is written in the file, as this page shows, and the panel says so. A change made in the panel keeps whatever else the file holds.
+Keel Builder's panel sets the process's settings and variables, a user or manual task's settings, a user task's drafting agent, a service task's call (a call to a system, a call to an agent or the start of a case), a business rule task's rule, a lane's queue (its name), a sequence flow's condition, an exclusive gateway's default flow, a timer, a message and an error: see [Changing the diagram](/keel/builder/processes/#changing-the-diagram). A change made in the panel keeps whatever else the file holds.
 
 ### The process
 
@@ -182,7 +182,7 @@ A call that fails for good is not a BPMN error, and no error boundary event catc
 A call goes through a **connection** of the process, as a case type's system steps go through its own: its base URL, how calls authenticate, and the credential they send. A process's connections and credentials are its own. A case type of the same key has its own, apart.
 
 - A connection is the file `process-connections/<process>/<name>.json`, with the settings of a [case type's connection](/keel/builder/connections/#a-connection): its base URL, its authentication, its idempotency-key header and its default timeout. A connection that sends a credential must use `https`.
-- It is saved in a draft and published with it: `PUT /api/build/projects/{project}/drafts/{draft_id}/files/process-connections/{process}/{name}` saves the file, `GET` on the same path reads it, and `POST` on `…/revert` puts it back as the draft started with it. A connection file is never deleted.
+- It is made and changed in a draft in Keel Builder, on the **Connections** tab of the process's page, [as its page says](/keel/builder/processes/#the-connections-tab), and published with it. Through the API, `PUT /api/build/projects/{project}/drafts/{draft_id}/files/process-connections/{process}/{name}` saves the file, `GET` on the same path reads it, and `POST` on `…/revert` puts it back as the draft started with it. A connection file is never deleted.
 - Its credentials are not part of a draft. They are set on the published connection and apply at once, in the **Connections** tab of the process's page in Keel Builder, [as its page says](/keel/builder/processes/#the-connections-tab), or through the API: `PUT /api/build/projects/{project}/processes/{process}/connections/{name}/credentials/{kind}` sets one, in place of any it had, and `DELETE` on the same path deletes it. They take a case type's bodies, are for editors and owners, and are refused as a case type's are. A connection the process never published is `404 unknown-connection`, and a credential that does not exist is `404 unknown-credential`.
 
 ### A service task that calls an agent
