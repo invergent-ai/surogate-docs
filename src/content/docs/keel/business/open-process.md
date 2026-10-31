@@ -42,9 +42,11 @@ When another supervisor retried the task already, Keel says "Nothing to retry: t
 
 Each open task that is yours shows as a card, **Your task**, with its form, as a case's step does: **Submit** completes it, **Return to queue** gives it back, and **Claim** takes a task that waits in one of your queues. Every other open task shows as a **Now** card with who holds it. Tasks that agents work or draft show what the agent does and what you may do about it. See [Working a process's tasks](/keel/processes/#working-a-processs-tasks).
 
+A task that runs for each item has one card for each instance that is open, headed by its number and how many there are: **Your task · Approve · 2 of 3** when it is yours, **Now · Approve · 2 of 3** when it is another's. Under the name the card shows the instance's item, such as "Member: ann": the label of the variable that holds it, then its value (a choice by its label). A task with no item variable shows none. Each card is worked as any task is, with its own form, its own goal and deadline and its own holder; you can hold several. When the task says each person completes one instance at most, and you completed one, another of yours is refused with "Someone else must finish this step." When a completion would start more than 100 instances, it is refused with "This would run a step more than 100 times. Ask your supervisor." A task that runs one after another shows one instance at a time: the next opens when the one before it completes.
+
 ## Waiting for
 
-**Waiting for** lists the timers, the messages, the cases, the processes it called and the calls the instance waits on, such as "Cool off · due 20 Oct, 10:00", "Documents · waits for the message Documents" or "Check the bureau · calling Bureau". A call that failed for good reads "Check the bureau · its call to Bureau failed: a supervisor retries it or cancels the process"; a timer that could not fire reads "Pause · could not fire". A case it waits on shows the case, linked to its page. A call activity shows the process it called, linked to its instance, such as **Check credit · P-000002 · Credit check · Running**, or "waits for its process to start" until Keel starts it. Under it, "It could not start: …" says why Keel could not start the process, and "Keel could not take its end: …" why the instance, which still waits, could not take how the process ended.
+**Waiting for** lists the timers, the messages, the cases, the processes it called, the calls and the tasks that run for each item that the instance waits on, such as "Cool off · due 20 Oct, 10:00", "Documents · waits for the message Documents" or "Check the bureau · calling Bureau". A call that failed for good reads "Check the bureau · its call to Bureau failed: a supervisor retries it or cancels the process"; a timer that could not fire reads "Pause · could not fire". A task that runs for each item reads how far it is, such as "Approve · 1 of 3 done"; a call, a case or a process one of its instances waits on is named with the instance, such as "Check the bureau · 2 of 3 · calling Bureau". A case it waits on shows the case, linked to its page. A call activity shows the process it called, linked to its instance, such as **Check credit · P-000002 · Credit check · Running**, or "waits for its process to start" until Keel starts it. Under it, "It could not start: …" says why Keel could not start the process, and "Keel could not take its end: …" why the instance, which still waits, could not take how the process ended.
 
 ## Cases it started
 
@@ -68,7 +70,7 @@ The **Diagram** card draws the process as its file lays it out, with how far the
 | Dashed grey | **Withdrawn**: something took it away, such as a timer that interrupted the task |
 | Dimmed | **Not reached** |
 
-The legend under the drawing names the states. A timer on a task that does not interrupt it draws with a dashed ring, whatever its state. Pausing on an element shows its name and its state, such as "Review the loan · Active". A call activity is **Active** while the process it called runs, and **Done** once it ended. An element a loop reaches again is **Active**, not **Done**. A gateway where paths meet is **Active** while it waits for the paths still running, and a path a gateway did not take stays **Not reached**. The lines carry no colour: Keel does not record which line a run took.
+The legend under the drawing names the states. A timer on a task that does not interrupt it draws with a dashed ring, whatever its state. Pausing on an element shows its name and its state, such as "Review the loan · Active". A call activity is **Active** while the process it called runs, and **Done** once it ended. A task that runs for each item is drawn with BPMN's marker, three bars at the bottom of the task: vertical bars when its instances run all at once, horizontal bars when one after another (a call activity keeps its plus beside them). It is **Active** while any of its instances is open, **Needs a supervisor** while one holds an incident, and **Done** once it completed, an empty list included, or once one of its instances did. It is **Withdrawn** only when a timer or a cancel took it away before any instance completed: one that a timer withdrew after an instance completed reads **Done**, as an element a loop completed once does. An element a loop reaches again is **Active**, not **Done**. A gateway where paths meet is **Active** while it waits for the paths still running, and a path a gateway did not take stays **Not reached**. The lines carry no colour: Keel does not record which line a run took.
 
 **List** says the same in words. It groups the elements, leaving out pools, lanes, groups and notes, under **Needs a supervisor**, **Active**, **Done**, **Withdrawn** and **Not reached**, in the file's order, each as "name · kind":
 
@@ -86,6 +88,8 @@ The legend under the drawing names the states. A timer on a task that does not i
 | A business rule | **Business rule** |
 | A receive task | **Waits for a message** |
 | A gateway | **Decision**, **Parallel paths**, **One or more paths** or **Waits for the first event** |
+
+A task that runs for each item adds how it runs after its kind: **Several at once** or **Several, one after another**, such as "Approve · User task · Several at once".
 
 A process whose file draws nothing says "This process's file has no diagram layout." When Keel cannot read the diagram, the card says why with **Try again**.
 
@@ -118,9 +122,11 @@ The side panel, beside the tasks on a wide screen and under them on a phone, has
 | "Requested a case of *case type*", then "Case *number* closed", "Case *number* failed" or "The case could not start" | A task started a case, and how it ended. A closed case names its resolution. |
 | "Called the process *process*", then "Process *number* completed", "Process *number* ended", "Process *number* ended in error *code*", "Process *number* was cancelled" or "The called process could not start" | A call activity called a process, and how it ended. |
 | "The process completed", "The process ended at *element*" or "The process ended in error *code* at *element*" | The instance ended. |
+| "Started 3 instances of *task*", or "*Task* had nothing to run" | A task that runs for each item was reached, with its items, or with an empty list. |
+| "All 3 instances of *task* completed", "The instance of *task* completed", "*Task* completed" or "*Task* ended early: 2 of 3 instances completed" | The task ended: every instance completed, its only instance, none to run, or its completion condition held and the instances still open were withdrawn. |
 | "*Who* cancelled the process: *reason*" | A supervisor cancelled it. |
 
-An element that was only entered or passed, a gateway taken, a missed goal and the like are not told. The values written are in **Data**, and the history never shows an incident's reason. With nothing to tell, the tab says **Nothing yet**. When Keel cannot read the history, the tab says why.
+Every line about an instance of a task that runs for each item names the instance, such as "Ann finished Approve · 2 of 3". An element that was only entered or passed, a gateway taken, a missed goal and the like are not told. The values written are in **Data**, and the history never shows an incident's reason. With nothing to tell, the tab says **Nothing yet**. When Keel cannot read the history, the tab says why.
 
 ## Cancel a process
 

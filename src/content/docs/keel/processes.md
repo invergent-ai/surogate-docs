@@ -26,6 +26,7 @@ A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder
 | **Service task** that calls an agent | Starts an agent on the task. The agent completes it under the task's contract, or asks a person. See [A service task that calls an agent](#a-service-task-that-calls-an-agent). |
 | **Service task** that starts a case | Starts a case of one of the project's case types, and waits for it to close or goes on at once. See [A service task that starts a case](#a-service-task-that-starts-a-case). |
 | **Call activity** | Starts another published process of the project, named by its key, and waits for it to end. See [A call activity](#a-call-activity). |
+| **A task that runs several times** | A user, manual, service or business rule task, or a call activity, can run once for each item of a list, or a number of times, all at once or one after another. See [A task that runs for each item](#a-task-that-runs-for-each-item). |
 | **Receive task**, **message catch event** | Waits for a message of its name. |
 | **Timer catch event** | Waits for a duration, such as `PT2H` or `P3D`, or until a date. A repeating (cycle) timer is refused. |
 | **Timer boundary event** | Fires on a task, a call activity or a subprocess after a duration or at a date. An interrupting one withdraws the activity; a non-interrupting one starts its path beside it. |
@@ -38,9 +39,11 @@ A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder
 | **Embedded subprocess** | Runs its own flow, and may carry boundary events. |
 | **Lanes** | A lane's name is the queue of the tasks in it, read as a queue key: lower case, with each run of other characters as `_`. A lane named "Back Office" is the queue `back_office`. Keel Builder names a lane for the queue you pick in its panel. |
 
-Not run yet, refused when published: multi-instance tasks, event subprocesses, data stores, message boundary events and pools that send each other messages.
+Not run yet, refused when published: event subprocesses, data stores, message boundary events and pools that send each other messages.
 
 Refused: script tasks, plain tasks, send tasks, business rule tasks that name a DMN decision instead of a Keel rule, throw events, signals, escalations, compensation, transactions, ad hoc subprocesses, complex gateways, conditional and link events, loops on a task (draw the loop with a gateway), data objects and correlation keys. Each refusal names the element.
+
+A receive task and a subprocess cannot run for each item, and are refused when they try. "A multi-instance receive task is not supported: every instance would wait for the same message." A multi-instance subprocess is refused with the way round it: "draw its steps as a process of their own and call it from a multi-instance call activity", each called process being an instance of its own with its own page, number and history.
 
 Conditions are written in CEL over the process's variables, as a case type's are, for example `amount <= 250000.0`. An exclusive gateway stops at the first condition that holds; an inclusive gateway evaluates every one. A condition that reads a variable with no value, such as one only a branch not taken writes, refuses what reached the gateway: a completion answers `409 evaluation-error`, a start is refused, and a timer is kept as stuck. So give such a variable a value on every path.
 
@@ -52,7 +55,7 @@ A parallel or an inclusive gateway where flows meet takes one flow from each ele
 
 Each setting sits in the `extensionElements` of its BPMN element. An element or attribute Keel does not know, or one where it has no meaning, is a problem when the file is published: nothing is ignored silently.
 
-Keel Builder's panel sets the process's settings and variables, a user or manual task's settings, a user task's drafting agent, a service task's call (a call to a system, a call to an agent or the start of a case), a call activity's process, what it passes and what it receives, a business rule task's rule, a lane's queue (its name), a sequence flow's condition, an exclusive or an inclusive gateway's default flow, a timer, a message and an error: see [Changing the diagram](/keel/builder/processes/#changing-the-diagram). A change made in the panel keeps whatever else the file holds.
+Keel Builder's panel sets the process's settings and variables, a user or manual task's settings, a user task's drafting agent, a service task's call (a call to a system, a call to an agent or the start of a case), a call activity's process, what it passes and what it receives, a business rule task's rule, how a task runs for each item, a lane's queue (its name), a sequence flow's condition, an exclusive or an inclusive gateway's default flow, a timer, a message and an error: see [Changing the diagram](/keel/builder/processes/#changing-the-diagram). A change made in the panel keeps whatever else the file holds.
 
 ### The process
 
@@ -291,6 +294,63 @@ A `keel:agent` beside the `keel:task` of a user task drafts for the person who c
 - `keel:message` on a message catch event or a receive task lists, with `keel:write`, the variables the message may write. A message that holds anything else is refused.
 - `keel:timer business="true"` on a timer makes it count business time on the process's calendar.
 
+### A task that runs for each item
+
+A user task, a manual task, a service task (a call to a system, a call to an agent or the start of a case), a business rule task and a call activity can run more than once where the flow reaches them: once for each item of a list, or a number of times. BPMN calls this a multi-instance activity. Each run is an **instance** of the task, numbered from 1. Do not confuse it with an instance of the process.
+
+```xml
+<bpmn:userTask id="vote" name="Approve">
+  <bpmn:extensionElements>
+    <keel:task outcome-variable="vote">…</keel:task>
+  </bpmn:extensionElements>
+  <bpmn:multiInstanceLoopCharacteristics>
+    <bpmn:extensionElements>
+      <keel:instances collection="members" item="member" results="votes" result="vote" distinct="true"/>
+    </bpmn:extensionElements>
+    <bpmn:completionCondition xsi:type="bpmn:tFormalExpression">votes.filter(v, v == "approve").size() &gt;= 2</bpmn:completionCondition>
+  </bpmn:multiInstanceLoopCharacteristics>
+</bpmn:userTask>
+```
+
+| Setting | What it does |
+|---|---|
+| `isSequential` | On the loop. `true` runs the instances one after another, each opening when the one before completes. Absent or `false` runs them all at once. |
+| `loopCardinality` | How many instances, as a number of times: a whole number from 1 to 100, or a CEL expression of the process's variables that gives an `int`. Give this or a `collection`, never both. |
+| `completionCondition` | A CEL condition that ends the task before every instance has: see [How it ends](#how-it-ends). Left empty, there is none. |
+| `collection` | On `keel:instances`, in the loop's own `extensionElements`. A `list` variable: one instance for each of its items, in the list's order. |
+| `item` | The variable that holds the instance's item while it runs. With a `loopCardinality` it is an `int` variable that holds the instance's number, from 1. |
+| `results`, `result` | `results` is a `list` variable that takes what the instances give, when the task ends. `result` is the variable each instance writes. They come together. |
+| `distinct` | `true` makes each instance take a different person: see [People](#people-and-agents-at-an-instance). |
+
+Every attribute of `keel:instances` is optional. A variable named in it is declared by the process, and the collection, the item, the results and the result are four different variables. The item and the result cannot be `required`: each instance gives them its own value. Publishing refuses a variable of a shape the list does not take: the item must have the shape of the list's items, and the result the shape of the `results` list's items.
+
+- **What an instance sees and gives.** Inside an instance, its checks, its authority amount, its form's values, its agent's reads, its call's templates, a case's fields, a call activity's passes and a rule's inputs read the `item` variable as the instance's item, and the `result` variable holds nothing until the instance writes it. What an instance writes to its `result` variable goes into the `results` list, never into the process's variables. Neither the item nor the result variable is ever written to the process's variables: after the task, the process holds of them only what it held before. What else an instance writes is the process's, and the last writer wins, as for parallel branches. The task itself must write its `result` variable, or publishing refuses it: through `keel:write`, its outcome variable, a call's outputs, a case's results or a rule's assignments. It must not write the `item` variable, nor the `results` list.
+- **The results.** When the task ends, `results` holds the result of each instance that completed and wrote one, in the order of the items, whichever instance completed first. It is shorter than the list when an instance was withdrawn or gave nothing, since a list holds no empty place. When each result must be read beside its item, make the result an object that names the item. The list is written once, at the end.
+- **The count.** The list is read once, when the task is reached. A later change to the variable changes no instance. An empty list, or a `loopCardinality` that gives 0, completes the task at once with an empty `results` list, and the condition is never read. A list variable with no value refuses what reached the task, as a gateway whose condition reads an unset variable does: a completion answers `409 evaluation-error` with "*task*: *list* has no value", a start is refused, and a timer is kept as stuck.
+- **At most 100.** Publishing refuses a `loopCardinality` written as a number under 1 or over 100. A list of more than 100 items, or a `loopCardinality` that gives more, refuses what reached the task, `409 too-many-instances`: "*task*: *list* holds 101 items, over 100", or "*task*: loopCardinality gave 101, over 100". The business app says "This would run a step more than 100 times. Ask your supervisor." A `loopCardinality` that gives a negative number or no whole number is `409 evaluation-error`.
+- **In a loop.** A task reached again starts afresh: it reads its list again, numbers its instances from 1 and never reads the first round's results. An instance of the first round completed late is refused `task-closed`.
+- **Where flows meet.** A parallel or an inclusive gateway after a task that runs for each item waits for the whole task, and goes on once, after its last instance.
+- **A call activity.** Each instance starts a process of its own, with its own number, page, tasks and history: see [A call activity](#a-call-activity). A task that ends early cancels the processes of its open instances, as a call activity does when the instance leaves it first.
+- **A rule.** A business rule task never waits: all its instances evaluate their rule in the step that reaches the task, one after another in the order of the items.
+
+#### How it ends
+
+- **Every instance completed.** The results are written, the history says "All 3 instances of *task* completed", and the task completes.
+- **The completion condition.** `completionCondition` is read each time an instance completes. It reads the process's variables, the `results` list holding the results so far, in the order of the items, and three counts: `numberOfInstances`, the number of instances; `numberOfCompletedInstances`; and `numberOfActiveInstances`, the instances started and not yet completed. When it holds, the instances still open are withdrawn: a person's items close, an agent's session is cancelled, a case or a called process an instance started is cancelled, and a task that runs one after another opens no more. The task then completes, and the history says "*Task* ended early: 2 of 3 instances completed". A condition that cannot be evaluated, such as one that reads a place the list does not have, refuses the completion that reads it: `409 evaluation-error`.
+- **An error.** A BPMN error one instance throws, such as a call that fails with an error code, a called process that ends in an error or a case that fails, leaves the whole task. An error boundary event on the task catches it, and every instance is withdrawn, the one that threw it too. With none, the instance fails at the task.
+- **An incident.** A call or an agent that fails for good leaves an incident on that instance only. The others go on, the task waits, and a supervisor retries that instance or cancels the process: see [Incidents](#incidents).
+- **A timer boundary event on the task** is on all its instances. An interrupting one withdraws every instance; one that does not interrupt leaves them running.
+- **A cancel of the process**, a terminate end event elsewhere and an interrupted subprocess around the task withdraw every instance with the task.
+
+#### People and agents at an instance
+
+- **One work item for each instance.** A user or manual task instance is a work item of its own, in the task's queue or for its one user. All at once, they open together; one after another, each opens when the one before completes. Who may complete one, its goal and deadline, its checks, maker-checker, authority limit, outcomes and drafting agent are each the instance's, so a goal and a deadline count from the moment *that* instance opens.
+- **Its words.** Where Keel names an instance's work, it reads "*task* · *n* of *count*", such as "Approve · 2 of 3": on the Work page, on the instance's page, in notices and in the history. With an `item` variable, the instance's page shows the item under the name.
+- **"Each person completes one instance at most".** With `distinct="true"`, someone who completed one instance of the task cannot complete another of it: the completion is refused `409 maker-checker`, "*person* already completed another instance of *task*", which the business app words "Someone else must finish this step." Absence routing never hands an instance to a substitute who completed another of the task. A task reached again in a loop starts with nobody. Without `distinct`, one person completes as many instances as they hold. Only a user or a manual task takes it: an agent, a call or a rule completes every instance as one actor, and publishing refuses it there.
+- **An agent task for each item** starts one agent run for each item, each in a session of its own, so a task over 100 items is up to 100 runs at once, and costs as many. Pick one after another when the cost or the agent's load matters. A task that runs one after another starts one run at a time. A user task's drafting agent drafts each instance.
+
+The panel in Keel Builder sets all of this: see [Instances](/keel/builder/processes/#instances). A file from another modeller can carry the loop with Camunda's `camunda:collection` and `camunda:elementVariable`. Keel reads neither: they are a warning, "camunda:collection, camunda:elementVariable are ignored: Keel runs only BPMN and its keel: extension", and the task then has no count until `loopCardinality` or `collection` gives one. An expression such as `${members}` is not CEL.
+
 ## Cases and processes that start each other
 
 A case's [process node](/keel/builder/flow-nodes/#processes) starts a process, and a process's [start-a-case task](#a-service-task-that-starts-a-case) starts a case. Keel starts the other side itself, a moment after the case or the instance reached the node or the task, and keeps a link between the two.
@@ -346,6 +406,24 @@ A start or a call is checked when the case type or the process that holds it is 
 | `broken-definition` | `<key> v<n>` | "*key* v*n* is stored but no longer loads: …" |
 | `checks-stale` | `<case type> v<n>` or `<process> v<n>` | "cases started on it while the publish was checked; publish again", or "instances started on it while the publish was checked; publish again" |
 
+### Checking a task that runs for each item
+
+A task's loop is checked when the process is published, against the process's own variables. Each problem is in the process's file, at the task. A call activity that runs for each item is also checked against the process it calls, and a start-a-case task against its case type, as one that runs once is.
+
+| Problem | What it says |
+|---|---|
+| `unsupported` | "a multi-instance receive task is not supported: every instance would wait for the same message"; "a multi-instance subprocess is not supported: draw its steps as a process of their own and call it from a multi-instance call activity"; "loopDataInputRef is not supported: name the collection, its item and the results in keel:instances", and the same for `loopDataOutputRef`, `inputDataItem` and `outputDataItem`; "a multi-instance behavior other than All is not supported: it throws events, which a process does not" |
+| `extension` | "keel:instances has no attribute *name*", "keel:instances cannot hold *name*", "keel:*name* has no meaning on a multiInstanceLoopCharacteristics", "keel:instances appears twice on one multiInstanceLoopCharacteristics", "keel:instances *attribute* is blank: name a variable or leave it out", "keel:instances distinct must be true or false, not '*value*'" |
+| `instances` | "isSequential must be true or false, not '*value*'"; "*task* needs a loopCardinality or a keel:instances collection: how many instances it runs"; "*task* has both a loopCardinality and a keel:instances collection: give one" |
+| `instances` | "the collection *list* is a *type*, not a list", "the result list *list* is a *type*, not a list"; "*item*, a *type*, takes each item of *list*, a *type* of another shape"; "the items of *list* may hold *choices*, which *item* does not take"; "*item* is a *type*: with a loopCardinality each instance's item is its number, an int"; "each item of *results*, a *type*, takes *result*, a *type* of another shape"; "*result* may hold *choices*, which *results* does not take" |
+| `instances` | "keel:instances names the result list *list* but no result", "keel:instances names the result *variable* but no result list"; "*variable* is named twice in keel:instances: the collection, the item, the result list and the result are four variables"; "*variable* cannot be required: each instance gives it its own value" |
+| `instances` | "*task* writes *item*, the item each instance is given", "*task* writes *results*, which its instances' results fill when it ends", "*task* does not write *result*, the result each instance gives"; "distinct needs a user or a manual task: an agent, a call or a rule completes every instance" |
+| `instances` | "loopCardinality *n* runs no instance: give a whole number from 1 to 100, or an expression", "loopCardinality *n* is over 100, the most instances an activity runs", "loopCardinality *expression* is *TYPE*, not INT" |
+| `undeclared-variable` | "the collection names *variable*, which is not a declared variable", and the same for "the item", "the result list" and "the result" |
+| `expression`, `not-boolean` | The `loopCardinality` or the `completionCondition` does not compile, "*condition*: *why*", or a condition is not a yes or no, "*condition* is *TYPE*, not BOOL". The condition is checked with `numberOfInstances`, `numberOfCompletedInstances` and `numberOfActiveInstances` declared. |
+
+A boundary event on a task that runs for each item is checked as on one that runs once: an error boundary event on a user task still never fires.
+
 ### Checking what a process calls and which agents work it
 
 A process's calls and agents are checked when the process is published, and a connection published again is checked against the current version of each process the publish leaves alone and every process version instances still run on.
@@ -389,6 +467,7 @@ Builders read the published processes with:
 A process's user and manual tasks are worked in the business app, like a case's steps.
 
 - **Work.** A task waits in its queue, or with the person the file names, and shows in **Mine**, in the queue's views and in **Get next**, as a step does. Its row reads the instance's number and the process's name, such as **P-000001 · Loan review**. On its item, **Open process** opens the instance's page. **Get next case** on the Cases page opens it too. **Delegate** and **Reassign** offer people and agents, as for a case's items: see [Agents in a process's queues](#agents-in-a-processs-queues).
+- **A task that runs for each item.** Each instance is a work item of its own in the task's queue, or with the person the file names, and its step reads "*task* · *n* of *count*", such as "Approve · 2 of 3". Anyone in the queue may claim any instance. With "Each person completes one instance at most", someone who completed one instance cannot complete another of the task, and the page says "Someone else must finish this step." See [A task that runs for each item](#a-task-that-runs-for-each-item).
 - **The instance's page** shows the process's name, the instance's number, version and start day, and its status, with the tasks, what it waits for, its diagram, its data and its history. A task you hold shows its form under **Your task**, with **Submit** and **Return to queue**. A task waiting in one of your queues asks you to **Claim** it first. A task someone else holds shows under **Now**, with who holds it. The page stays current on its own. See [An open process](/keel/business/open-process/). The [Processes](/keel/business/processes/) page lists the project's instances and starts one.
 - **Refusals.** When a task closes before your submission arrives, because someone else completed it or a timer withdrew it, the page says "This step is no longer open." and shows the instance as it now is. An instance that ended says "This process has ended."
 - **Away.** While you are away, a process's task assigned to you moves as your absence says, as a step does, and supervisors are told of what stays with you.
@@ -423,6 +502,7 @@ A task with a `keel:service-level` has a goal and a deadline from the moment it 
 - A missed goal is only recorded in the history.
 - A missed deadline with `escalate-to` puts an escalation in that queue. The page shows **Escalated to** that queue. Members of that queue may complete the task, and the escalation closes when the task does. Without `escalate-to`, a missed deadline is only recorded.
 - When the task leaves, completed or withdrawn, its goal and deadline go with it. A task reached again in a loop counts from its new start.
+- Each instance of a task that runs for each item has a goal and a deadline of its own, from the moment that instance is ready: when the task runs one after another, an instance counts from when the one before it completed.
 
 A process's tasks never count in the cases' figures.
 
@@ -448,9 +528,9 @@ Staff sign in as they do for the business app; another system uses a [service ke
 | List instances, newest first | `GET /api/projects/{project}/processes`, with `process`, `status`, `attention=true`, `q` (a part of the number, two to a hundred characters), `cursor` and `limit`. Each row names its process. | Staff and service keys |
 | Read an instance | `GET /api/processes/{instance_id}` | Staff and service keys |
 | The processes its call activities called, oldest first, each with its state | `GET /api/processes/{instance_id}/calls` | Staff and service keys |
-| Read it as its page shows it: its tasks with their forms and who holds each, its goals and deadlines, what it waits for, its data | `GET /api/processes/{instance_id}/outline` | Staff and service keys |
+| Read it as its page shows it: its tasks with their forms and who holds each, its goals and deadlines, what it waits for, its data. An instance of a task that runs for each item carries its `number` and how many there are (`of`), and its item | `GET /api/processes/{instance_id}/outline` | Staff and service keys |
 | Follow its changes as server-sent events | `GET /api/processes/{instance_id}/live` | Staff |
-| Its diagram: the shapes and lines its file lays out, each shape marked `done`, `active`, `incident` or `withdrawn`, or not marked | `GET /api/processes/{instance_id}/diagram` | Staff and service keys |
+| Its diagram: the shapes and lines its file lays out, each shape marked `done`, `active`, `incident` or `withdrawn`, or not marked, and a task that runs for each item marked `loop`, `parallel` or `sequential` | `GET /api/processes/{instance_id}/diagram` | Staff and service keys |
 | The attempts of its calls to systems | `GET /api/processes/{instance_id}/system-calls` | Staff and service keys |
 | Its open tasks | `GET /api/processes/{instance_id}/tasks` | Staff and service keys |
 | Its history | `GET /api/processes/{instance_id}/history` | Staff and service keys |
@@ -489,7 +569,7 @@ A call or an agent task that fails for good leaves its task with an **incident**
 
 Timers fire on their own. When a timer cannot fire because what follows it fails, such as a condition that cannot be evaluated on the instance's variables, the timer is kept as **stuck**: it is never fired again, the instance shows why, and the list's `attention=true` finds it. A supervisor then cancels the instance.
 
-The history, `GET /api/processes/{instance_id}/history`, records what happened to the instance's tasks. For agents it holds `task.drafted`, `revision.requested`, `agent.messaged`, `hand.raised`, `hand.answered`, `agent.failed`, `agent.disabled`, `incident.raised` and `task.retried`. A person's `task.completed` on a task an agent drafts also holds `contributions`: who gave each value, the agent or the person.
+The history, `GET /api/processes/{instance_id}/history`, records what happened to the instance's tasks. For a task that runs for each item it holds `instances.started` and `instances.completed`, and every entry of an instance of it carries `instance` and `of`. For agents it holds `task.drafted`, `revision.requested`, `agent.messaged`, `hand.raised`, `hand.answered`, `agent.failed`, `agent.disabled`, `incident.raised` and `task.retried`. A person's `task.completed` on a task an agent drafts also holds `contributions`: who gave each value, the agent or the person.
 
 An instance is `running`, `completed`, `terminated` (by a terminate end event), `failed` (by an error no boundary event caught) or `cancelled`.
 
