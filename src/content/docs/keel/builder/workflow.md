@@ -63,21 +63,21 @@ Removing an action asks first: "Outcomes and case events that lead to it will ne
 
 ## Adding nodes
 
-**Add step** under a column opens **Add to *stage***:
+**Add step** under a column whose nodes run in line opens **Add to *stage***, and the **+** on a line of a stage's flow opens **Add between *node* and *node***:
 
-1. Pick the **Kind**: **Step**, **Decision**, **Rule**, **Wait**, **Parallel split** or **Join**.
+1. Pick the **Kind**. **Add step** offers **Step**, **Rule**, **Wait** and **Process**; the **+** offers every kind: **Step**, **Decision**, **Rule**, **Wait**, **Parallel split**, **Join** and **Process**.
 2. Type a **Name**. It must have a letter or a digit; the node's key is made from it.
 3. For a step, pick **Done by**: **An agent**, **A person or a queue**, **An agent with a person** or **A system**.
 4. Press **Add**.
 
-A new node leads on to the next stage until you say where it goes. A new rule names no rule yet, and a new wait waits one day. The first node you add to an empty stage becomes the stage's start.
+A new node leads on to the next stage until you say where it goes. A new rule names no rule yet, a new wait waits one day, and a new process node names no process yet and waits for it. The first node you add to an empty stage becomes the stage's start.
 
 ## A stage's flow
 
 Pick a stage and its flow opens below the board, with its number and name, and a count such as `Flow · 3 steps · 1 decision`. The canvas draws the stage's entry, every node, and where each outcome leads, including the ways out of the stage. Its branches carry their labels.
 
 - Press a node on the canvas to open its panel.
-- **Add step** and **Add decision** add a node to this stage.
+- The **+** on a line adds a node between the two it joins.
 - **Back to board** closes the flow.
 
 Keel draws the flow from the case type as you edit it. While it redraws, the canvas keeps the last drawing.
@@ -87,7 +87,7 @@ Keel draws the flow from the case type as you edit it. While it redraws, the can
 Picking a card, a node on the canvas, or an action opens its panel on the right. Its header shows the node's kind and its **Name**, which you can change, and a close button.
 
 - A step's panel is its contract: see [Steps](/keel/builder/steps/).
-- Decisions, rules, waits, splits and joins: see [Decisions, rules, waits and parallel paths](/keel/builder/flow-nodes/).
+- Decisions, rules, waits, splits, joins and process nodes: see [Decisions, rules, waits and parallel paths](/keel/builder/flow-nodes/).
 
 The panel's footer holds **Remove step** (or **Remove decision**, **Remove rule**, and so on), which asks first: "Outcomes that lead to it will need a new target." Keel never rewrites outcomes that pointed at a removed node; the next dry run lists them.
 

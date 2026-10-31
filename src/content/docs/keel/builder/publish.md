@@ -15,6 +15,7 @@ With nothing wrong, it says **No problems. Every scenario passed.** Otherwise it
 
 | Group | What it means |
 |---|---|
+| **Warnings** | Something Keel ignores and never runs, such as a vendor extension in a [BPMN process](/keel/processes/) file. A warning never stops the publish. |
 | **Main changed** | Something published since the draft started changed the same files. Update the draft from main on the review page. |
 | **Unreachable steps** | No path from the stage's start reaches the node. |
 | **Outcomes with nothing connected** | An outcome, branch, case event or action leads to a place that does not exist, or a step has no outcome. |
@@ -35,11 +36,11 @@ Press **Review and publish** in the designer, the Rules page or the Queues page.
 
 The page, titled **Review and publish** with the draft's title under it, has these parts:
 
-- **What changes**: each file the draft changes, compared with what is published. "This draft changes nothing." when there is nothing.
-- **Checks**: Keel saves your changes and runs the dry run again when the page opens. **Run again** runs it once more.
+- **What changes**: each file the draft changes, compared with what is published. A [process](/keel/builder/processes/)'s file reads by its name, such as **Process Loan review**, with its lines. "This draft changes nothing." when there is nothing.
+- **Checks**: Keel saves your changes and runs the dry run again when the page opens. **Run again** runs it once more. The checks also read what each process node and each process's start-a-case task starts, and check a republished case type or process against the versions that start it: see [Checking what starts what](/keel/processes/#checking-what-starts-what). They check a process's calls to systems and the agents that work its tasks too: see [Checking what a process calls and which agents work it](/keel/processes/#checking-what-a-process-calls-and-which-agents-work-it).
 - **Moving running cases**: what the publish would do with running cases, when the draft holds a [mapping](/keel/builder/versions/#moving-running-cases-to-a-new-version).
 
-**Publish** is turned on only when the last check found no problem and the draft has not changed since. If it changed, the page says "This draft changed since the checks ran. Run them again."
+**Publish** is turned on only when the last check found no problems other than warnings and the draft has not changed since. If it changed, the page says "This draft changed since the checks ran. Run them again."
 
 ### Updating from main
 
@@ -52,12 +53,12 @@ When main and the draft changed the same files, Keel Builder asks: **Main and th
 Press **Publish**. The page says **Published *title*.**, with:
 
 - **Open the business app**, which opens the project's Work page in the business app;
-- **Back to case types**;
+- **Back to case types**, or **Back to the process** when you opened **Review and publish** from a process's page;
 - **Running cases are moving. Follow them on the Versions tab.**, when the publish moves running cases.
 
-The draft is closed. Every case type it changed has a new version, and new cases start on it. Rules, calendars and queues it changed take effect too; a rule version can also wait for its own date (see [Rules](/keel/builder/rules/#when-a-version-takes-effect)).
+The draft is closed. Every case type it changed has a new version, and new cases start on it; so has every [process](/keel/processes/) it changed. Rules, calendars and queues it changed take effect too; a rule version can also wait for its own date (see [Rules](/keel/builder/rules/#when-a-version-takes-effect)).
 
-If Keel refuses the publish, the page lists why. Fix the problems in the draft and publish again.
+If Keel refuses the publish, the page lists why, with any warnings beside the problems. Fix the problems in the draft and publish again.
 
 ## Who can publish
 

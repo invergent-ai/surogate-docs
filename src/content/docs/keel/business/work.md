@@ -48,6 +48,8 @@ Pick an item to see it on the right: its kind and service level, what it needs, 
 
 **Open case** opens the case. Steps and votes are worked in the case, where their form and the case's files are. See [An open case](/keel/business/open-case/).
 
+A task of a [BPMN process](/keel/processes/#working-a-processs-tasks) shows **Open process** instead, which opens [the instance's page](/keel/business/open-process/), where the task's form is.
+
 If an address points at an item the list no longer holds, the pane says so: it may have been answered, returned or handed to someone else, or it is not yours.
 
 ### Hand an item to someone else
@@ -57,7 +59,7 @@ For an item you hold, a step or an agent's question, the pane shows **Delegate**
 - **Return to queue** puts it back in its queue, unclaimed, for someone else to take.
 - **Delegate** opens **Delegate**: "Hand this item to someone on the staff or to an agent. It leaves your work and shows in I delegated until it is done." Pick a person under **People** or an agent under **Agents**, and press **Delegate**. Keel says **Handed to** and the name.
 
-The person you pick sees it in their **Needs me** as **Delegated to you**. An agent you pick starts work on it at once; if it cannot finish it, it returns the item to you. Only some items take an agent: see [Agents in queues and as delegates](/keel/business/agents/#agents-in-queues-and-as-delegates). A vote cannot be delegated: every member of its queue votes for themselves.
+The person you pick sees it in their **Needs me** as **Delegated to you**. An agent you pick starts work on it at once; if it cannot finish it, it returns the item to you. Only some items take an agent: see [Agents in queues and as delegates](/keel/business/agents/#agents-in-queues-and-as-delegates), and, for a [BPMN process](/keel/processes/)'s tasks, [Agents in a process's queues](/keel/processes/#agents-in-a-processs-queues). A process's task is handed on the same way. A vote cannot be delegated: every member of its queue votes for themselves.
 
 When an item leaves you, returned or delegated, any draft the [case agent](/keel/business/case-agent/) made of its form for you is dropped. Whoever holds it next starts with none.
 
@@ -65,7 +67,7 @@ When an item leaves you, returned or delegated, any draft the [case agent](/keel
 
 Supervisors see **Reassign** on any open item but a vote, whoever holds it. It opens **Reassign**: "Give this item to someone on the staff or to an agent. Whoever holds it now no longer does." Pick a person under **People** or an agent under **Agents**, and press **Reassign**. Keel says **Given to** and the name.
 
-Whoever holds the item now is not offered. When there is no one to offer, the dialog says "There is no one to hand it to." Taking an item from an agent stops its work on it.
+Whoever holds the item now is not offered. When there is no one to offer, the dialog says "There is no one to hand it to." Taking an item from an agent stops its work on it. A process's task is given the same way, to people and agents.
 
 ### Answer an agent's question
 
@@ -80,6 +82,8 @@ When an agent working a step needs a person, it raises a hand, and its question 
 - **Note for the agent and the case history**, optional.
 
 Press **Send answer**. "Your answer goes back to the step. The note goes to the agent and is kept in the case history." The agent resumes the step with your answer.
+
+An agent working a task of a [BPMN process](/keel/processes/#a-service-task-that-calls-an-agent) asks the same way, and you answer it here the same way. The item shows the process in place of the case: its number and name, such as **P-000001 · Loan review**, which open the instance's page; "*task* · paused until you answer"; and the agent's progress on the task. The agent's evidence shows its cards without a file to open, since a process keeps no files. The note reads **Note for the agent and the process history**, and under **Send answer**: "Your answer goes back to the task. The note goes to the agent and is kept in the process history." The agent resumes the task with your answer. An agent's question on a task its agent drafts for a person is answered the same way, by a person.
 
 An agent never stops waiting by itself: a question stays open until someone answers it. See [Working with agents](/keel/business/agents/).
 
@@ -162,4 +166,4 @@ When nothing is waiting, it says **Nothing is waiting for you.** Two people pres
 Under **Mine**, the column lists:
 
 - **Team queues**: each queue you are a member of, with how many items are open in it, and **All queues**. See [Team queues](/keel/business/queues/).
-- **Agents at work**: each agent at work on the project's cases now, on its own steps or on work items, with how many. See [Working with agents](/keel/business/agents/#agents-at-work).
+- **Agents at work**: each agent at work on the project's cases and processes now, on its own steps or tasks or on work items, with how many. See [Working with agents](/keel/business/agents/#agents-at-work).

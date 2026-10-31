@@ -40,6 +40,7 @@ Projects are made in Studio, not here, and their owners add members there. If yo
 | Row | What it holds |
 |---|---|
 | **Case types** | The project's case types, and the designer for each. See [Case types](/keel/builder/case-types/). |
+| **Processes** | The project's BPMN processes: each one's drawing, its file, its problems, its versions and its connections. See [Processes](/keel/builder/processes/). |
 | **Rules** | Decision tables, scorecards and calendars. See [Rules and calendars](/keel/builder/rules/). |
 | **Queues** | Queue definitions and the project's supervisors. See [Queues and supervisors](/keel/builder/queues/). |
 | **Agents** | How the agents of the project's case types are doing: figures, the steps they work, raised hands, what each may use and its sessions. See [The Agents page](/keel/builder/agents/). |

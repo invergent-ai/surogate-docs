@@ -29,9 +29,9 @@ The table lists each key by **Name**, when it was **Created**, and when it was *
 
 ## Effects
 
-An **effect** is work Keel does outside a case after a transition: starting or resuming an agent on a step, starting or stopping an agent's work on a work item, or calling another system for a system step. Keel runs each effect, tries again when it fails, and marks it **Failed** when its last attempt fails. Editors and owners see this section.
+An **effect** is work Keel does after a transition: starting or resuming an agent on a step, starting or stopping an agent's work on a work item, calling another system for a system step, starting the process a case's process node asks for, or starting the case a process's task asks for. Keel runs each effect, tries again when it fails, and marks it **Failed** when its last attempt fails. Editors and owners see this section.
 
-The tabs show the effects in one status: **Failed**, **Pending**, **Running**, **Done** or **All**. It opens on **Failed**. The table shows each effect's **Type**, its **Case**, its **Status**, its **Attempts**, its **Last error**, when it was **Created** and when it was **Done**. It never shows the effect's content, which holds case data.
+The tabs show the effects in one status: **Failed**, **Pending**, **Running**, **Done** or **All**. It opens on **Failed**. The table shows each effect's **Type**, its **Case** (a case's id, or **Process** and the instance's number for an effect of a process, such as `Process P-000003`), its **Status**, its **Attempts**, its **Last error**, when it was **Created** and when it was **Done**. It never shows the effect's content, which holds case data.
 
 Press **Retry** on a failed effect to run it again; Keel says **The effect runs again.** An effect that is no longer failed, or that Keel no longer has, shows Keel's reason, and the list is read again.
 

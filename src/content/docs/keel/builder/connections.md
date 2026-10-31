@@ -43,3 +43,9 @@ If your installation keeps no credentials, the tab says **Credentials are off in
 ## Who changed credentials
 
 Under the connections, **Who changed credentials** lists the case type's credential changes, newest first: who set, replaced or deleted which credential, of which connection, for which hosts, and when. With none, "No one has changed a credential of this case type yet."
+
+## A process's connections
+
+A [BPMN process](/keel/processes/) calls other systems through connections of its own, the files `process-connections/<process>/<name>.json`. A process's connection holds the settings above. It is made and changed in a draft on the **Connections** tab of the process's page, as [Processes](/keel/builder/processes/#the-connections-tab) says, and is published with it. It is not a case type's: this tab never lists it, and a case type and a process of one key keep their connections and credentials apart. Keel's list of connections names a process's as `process:<process>/<name>`.
+
+Its credentials are set on the published connection, as a case type's are, on the **Connections** tab of the process's page, [Processes](/keel/builder/processes/#the-connections-tab): the same **Set credential**, **Replace credential** and **Delete credential**, and the list of who changed them. The API sets and deletes them at `/api/build/projects/{project}/processes/{process}/connections/{name}/credentials/{kind}`, with `PUT` and `DELETE`: see [A process's connections](/keel/processes/#a-processs-connections).

@@ -4,7 +4,7 @@ sidebar:
   label: Node kinds
 ---
 
-Every node of a stage's flow, with each setting its panel holds in Keel Builder. The pages [Steps](/keel/builder/steps/) and [Decisions, rules, waits and parallel paths](/keel/builder/flow-nodes/) explain them in full.
+Every node of a stage's flow, with each setting its panel holds in Keel Builder. The pages [Steps](/keel/builder/steps/) and [Decisions, rules, waits and parallel paths](/keel/builder/flow-nodes/) explain them in full; the process node is under [Processes](/keel/builder/flow-nodes/#processes).
 
 ## Step
 
@@ -66,6 +66,24 @@ Automatic. **Starts in parallel**: the places each path starts.
 ## Join
 
 Automatic. Waits for every path leading to it, then goes to **Then**.
+
+## Process
+
+Starts one of the project's BPMN processes, and waits for it to end or goes on at once.
+
+| Section | Settings |
+|---|---|
+| **Process** | One of the project's processes: those published, and those the open draft adds. |
+| **Waits** | **Waits until the process ends** or **Goes on at once**. |
+| **Passes in** | Each variable the process declares, and the field that fills it, or **Not passed**. |
+| **Receives** | Nodes that wait only: each **Field** and the **Variable** it receives. **Add a field** adds one. |
+| **Outcomes** | Ended and Failed, or Started, each with a **Label** and where it **Leads to**. |
+
+| Waits | Leaves by | When |
+|---|---|---|
+| **Waits until the process ends** | Ended | The process completes or ends. |
+| **Waits until the process ends** | Failed | The process fails, is cancelled or cannot start. |
+| **Goes on at once** | Started | At once, when Keel is asked to start the process. |
 
 ## Where an outcome can lead
 
