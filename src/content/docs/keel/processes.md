@@ -31,22 +31,25 @@ A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder
 | **Error boundary event** | Catches an error thrown inside the task or subprocess it sits on: the one with the error's code first, else one without a code. |
 | **Exclusive gateway** | Takes the first outgoing flow, in the order written, whose condition holds, else its default flow. |
 | **Parallel gateway** | Splits into every outgoing flow, or waits for every incoming one. |
+| **Inclusive gateway** | Takes every outgoing flow whose condition holds, else its default flow. Where flows meet, it waits for the paths still running that can reach it, then goes on once. A path that can also come back along a flow that has already arrived does not hold it, and when it comes the gateway goes on again. |
 | **Event-based gateway** | Waits for whichever of its timer and message catches comes first. |
 | **End event** | Plain, **terminate** (ends everything still open in its process or subprocess), or **error** (throws its error's code). |
 | **Embedded subprocess** | Runs its own flow, and may carry boundary events. |
 | **Lanes** | A lane's name is the queue of the tasks in it, read as a queue key: lower case, with each run of other characters as `_`. A lane named "Back Office" is the queue `back_office`. Keel Builder names a lane for the queue you pick in its panel. |
 
-Not run yet, refused when published: call activities, multi-instance tasks, inclusive gateways, event subprocesses, data stores, message boundary events and pools that send each other messages.
+Not run yet, refused when published: call activities, multi-instance tasks, event subprocesses, data stores, message boundary events and pools that send each other messages.
 
 Refused: script tasks, plain tasks, send tasks, business rule tasks that name a DMN decision instead of a Keel rule, throw events, signals, escalations, compensation, transactions, ad hoc subprocesses, conditional and link events, loops on a task (draw the loop with a gateway), data objects and correlation keys. Each refusal names the element.
 
-Conditions are written in CEL over the process's variables, as a case type's are, for example `amount <= 250000.0`.
+Conditions are written in CEL over the process's variables, as a case type's are, for example `amount <= 250000.0`. An exclusive gateway stops at the first condition that holds; an inclusive gateway evaluates every one. A condition that reads a variable with no value, such as one only a branch not taken writes, refuses what reached the gateway: a completion answers `409 evaluation-error` and a timer is kept as stuck. So give such a variable a value on every path.
+
+An exclusive or an inclusive gateway with a condition on any flow needs a default flow, and every other flow needs a condition. A condition on the default flow is never evaluated, and Keel warns of it.
 
 ## Keel's settings in the file
 
 Each setting sits in the `extensionElements` of its BPMN element. An element or attribute Keel does not know, or one where it has no meaning, is a problem when the file is published: nothing is ignored silently.
 
-Keel Builder's panel sets the process's settings and variables, a user or manual task's settings, a user task's drafting agent, a service task's call (a call to a system, a call to an agent or the start of a case), a business rule task's rule, a lane's queue (its name), a sequence flow's condition, an exclusive gateway's default flow, a timer, a message and an error: see [Changing the diagram](/keel/builder/processes/#changing-the-diagram). A change made in the panel keeps whatever else the file holds.
+Keel Builder's panel sets the process's settings and variables, a user or manual task's settings, a user task's drafting agent, a service task's call (a call to a system, a call to an agent or the start of a case), a business rule task's rule, a lane's queue (its name), a sequence flow's condition, an exclusive or an inclusive gateway's default flow, a timer, a message and an error: see [Changing the diagram](/keel/builder/processes/#changing-the-diagram). A change made in the panel keeps whatever else the file holds.
 
 ### The process
 

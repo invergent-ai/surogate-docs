@@ -54,7 +54,7 @@ An instance whose tasks started cases lists them under **Cases it started**, old
 
 The **Diagram** card draws the process as its file lays it out, with how far the instance got. It has two tabs, **Diagram** and **List**; on a phone, **List** comes first.
 
-**Diagram** draws each element where the file puts it, scaled as the file scales it, in a box that scrolls. Pools and lanes show with their names. A mark shows what each element is: a person for a user task, a hand for a manual task, a robot for an agent task, a cog for a call to a system, a folder for a task that starts a case, a table for a business rule, an envelope for a message, a clock for a timer, a bolt for an error. Gateways show as diamonds marked with a cross, a plus or a ring. An element's colour says how far the instance got:
+**Diagram** draws each element where the file puts it, scaled as the file scales it, in a box that scrolls. Pools and lanes show with their names. A mark shows what each element is: a person for a user task, a hand for a manual task, a robot for an agent task, a cog for a call to a system, a folder for a task that starts a case, a table for a business rule, an envelope for a message, a clock for a timer, a bolt for an error. Gateways show as diamonds marked with a cross, a plus, a bold circle or a ring. An element's colour says how far the instance got:
 
 | Colour | State |
 |---|---|
@@ -64,7 +64,7 @@ The **Diagram** card draws the process as its file lays it out, with how far the
 | Dashed grey | **Withdrawn**: something took it away, such as a timer that interrupted the task |
 | Dimmed | **Not reached** |
 
-The legend under the drawing names the states. A timer on a task that does not interrupt it draws with a dashed ring, whatever its state. Pausing on an element shows its name and its state, such as "Review the loan · Active". An element a loop reaches again is **Active**, not **Done**. The lines carry no colour: Keel does not record which line a run took.
+The legend under the drawing names the states. A timer on a task that does not interrupt it draws with a dashed ring, whatever its state. Pausing on an element shows its name and its state, such as "Review the loan · Active". An element a loop reaches again is **Active**, not **Done**. A gateway where paths meet is **Active** while it waits for the paths still running, and a path a gateway did not take stays **Not reached**. The lines carry no colour: Keel does not record which line a run took.
 
 **List** says the same in words. It groups the elements, leaving out pools, lanes, groups and notes, under **Needs a supervisor**, **Active**, **Done**, **Withdrawn** and **Not reached**, in the file's order, each as "name · kind":
 
@@ -80,7 +80,7 @@ The legend under the drawing names the states. A timer on a task that does not i
 | A task that starts a case | **Starts a case** |
 | A business rule | **Business rule** |
 | A receive task | **Waits for a message** |
-| A gateway | **Decision**, **Parallel paths** or **Waits for the first event** |
+| A gateway | **Decision**, **Parallel paths**, **One or more paths** or **Waits for the first event** |
 
 A process whose file draws nothing says "This process's file has no diagram layout." When Keel cannot read the diagram, the card says why with **Try again**.
 
