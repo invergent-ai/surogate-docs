@@ -19,7 +19,7 @@ A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder
 
 | Element | What Keel does |
 |---|---|
-| **Start event** | The instance starts here. Only a plain start event: a timer or message start event is refused. |
+| **Start event** | The instance starts here. Only a plain start event: a timer or message start event is refused. Only the start event of an event subprocess takes a timer, a message or an error. |
 | **User task**, **manual task** | Waits for a person to complete it, from a queue. It can have a goal and a deadline. A user task can have an agent that drafts for the person: see [An agent that drafts for a person](#an-agent-that-drafts-for-a-person). |
 | **Business rule task** | Evaluates one of the project's [rules](/keel/builder/rules/), a decision table or a scorecard, and writes its results to variables. It never waits. |
 | **Service task** that calls a system | Calls another system's API through one of the process's connections, waits for the answer, writes its values to variables and goes on. See [A service task that calls a system](#a-service-task-that-calls-a-system). |
@@ -37,9 +37,10 @@ A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder
 | **Event-based gateway** | Waits for whichever of its timer and message catches comes first. |
 | **End event** | Plain, **terminate** (ends everything still open in its process or subprocess), or **error** (throws its error's code). |
 | **Embedded subprocess** | Runs its own flow, and may carry boundary events. |
+| **Event subprocess** | A subprocess with no flow in or out, that starts while the process or subprocess around it runs, when its start event's timer fires, its message arrives or an error is thrown inside it. It stops the rest of the process or subprocess, or runs beside it. See [An event subprocess](#an-event-subprocess). |
 | **Lanes** | A lane's name is the queue of the tasks in it, read as a queue key: lower case, with each run of other characters as `_`. A lane named "Back Office" is the queue `back_office`. Keel Builder names a lane for the queue you pick in its panel. |
 
-Not run yet, refused when published: event subprocesses, data stores, message boundary events and pools that send each other messages.
+Not run yet, refused when published: data stores, message boundary events and pools that send each other messages. An event subprocess that starts on a signal, an escalation, a condition, compensation or a link is refused too.
 
 Refused: script tasks, plain tasks, send tasks, business rule tasks that name a DMN decision instead of a Keel rule, throw events, signals, escalations, compensation, transactions, ad hoc subprocesses, complex gateways, conditional and link events, loops on a task (draw the loop with a gateway), data objects and correlation keys. Each refusal names the element.
 
@@ -55,7 +56,7 @@ A parallel or an inclusive gateway where flows meet takes one flow from each ele
 
 Each setting sits in the `extensionElements` of its BPMN element. An element or attribute Keel does not know, or one where it has no meaning, is a problem when the file is published: nothing is ignored silently.
 
-Keel Builder's panel sets the process's settings and variables, a user or manual task's settings, a user task's drafting agent, a service task's call (a call to a system, a call to an agent or the start of a case), a call activity's process, what it passes and what it receives, a business rule task's rule, how a task runs for each item, a lane's queue (its name), a sequence flow's condition, an exclusive or an inclusive gateway's default flow, a timer, a message and an error: see [Changing the diagram](/keel/builder/processes/#changing-the-diagram). A change made in the panel keeps whatever else the file holds.
+Keel Builder's panel sets the process's settings and variables, a user or manual task's settings, a user task's drafting agent, a service task's call (a call to a system, a call to an agent or the start of a case), a call activity's process, what it passes and what it receives, a business rule task's rule, how a task runs for each item, a lane's queue (its name), a sequence flow's condition, an exclusive or an inclusive gateway's default flow, a timer, a message and an error, and an event subprocess with what starts it and whether it interrupts: see [Changing the diagram](/keel/builder/processes/#changing-the-diagram). A change made in the panel keeps whatever else the file holds.
 
 ### The process
 
@@ -351,6 +352,56 @@ Every attribute of `keel:instances` is optional. A variable named in it is decla
 
 The panel in Keel Builder sets all of this: see [Instances](/keel/builder/processes/#instances). A file from another modeller can carry the loop with Camunda's `camunda:collection` and `camunda:elementVariable`. Keel reads neither: they are a warning, "camunda:collection, camunda:elementVariable are ignored: Keel runs only BPMN and its keel: extension", and the task then has no count until `loopCardinality` or `collection` gives one. An expression such as `${members}` is not CEL.
 
+### An event subprocess
+
+An event subprocess is a subprocess that no flow enters or leaves. It sits in a process or a subprocess, and its start event says what starts it. While the process or subprocess around it runs, it waits; when a timer fires, a message arrives or an error is thrown, it runs.
+
+```xml
+<bpmn:subProcess id="late" name="Escalate" triggeredByEvent="true">
+  <bpmn:startEvent id="late_start" name="Five days" isInterrupting="false">
+    <bpmn:extensionElements>
+      <keel:timer business="true"/>
+    </bpmn:extensionElements>
+    <bpmn:timerEventDefinition>
+      <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P5D</bpmn:timeDuration>
+    </bpmn:timerEventDefinition>
+  </bpmn:startEvent>
+  …
+</bpmn:subProcess>
+```
+
+| Setting | What it does |
+|---|---|
+| `triggeredByEvent="true"` | On the `bpmn:subProcess`: it is an event subprocess. |
+| The start event's definition | One of `timerEventDefinition`, `messageEventDefinition` and `errorEventDefinition`. A start event with none, or with another, is refused. |
+| `isInterrupting` | On the start event. `false` runs the event subprocess beside the rest; absent or `true` stops the rest first. An error event subprocess always interrupts, and `false` on it is refused. Any other value is refused. |
+| `keel:timer`, `keel:message` | On the start event, as on a timer or a message catch event: `business="true"` counts business time on the process's calendar, and `keel:write` lists the variables the message may write. |
+
+**What starts it.**
+
+- **A timer**: a duration, which counts from the start of the process or subprocess around it, or a date. A repeating (cycle) timer is refused. A date already past when the process or subprocess starts starts the event subprocess at once.
+- **A message**: a message of its name, as a message catch event takes it, sent to the instance through Keel's API. Messages are not matched by their content.
+- **An error**: an error thrown inside the process or subprocess around it, caught by its code, or any error when the start event names no error. An error end event, a failing call, a called process that ends in an error and a case that fails each throw one.
+
+**Where it may sit.** In the process, in an embedded subprocess, in another event subprocess, and in a process that another calls. It has no boundary event, and two of one process or subprocess cannot start on the same error code, nor on the same message. Two that start on a timer are fine, and so is one that starts on a message that a task beside it also waits for: both take the message.
+
+**When it waits.** An event subprocess waits from the start of the process or subprocess around it. A subprocess that is reached again starts afresh, so its event subprocess waits again, and its duration counts again from then. It stops waiting when the process or subprocess around it has ended its own flow, when an interrupting event subprocess of it starts, and when the process or subprocess is withdrawn. An event subprocess that never starts leaves nothing in the history.
+
+**An interrupting event subprocess** stops everything else the process or subprocess around it is doing, as an interrupting boundary event stops its task: people's items close, an agent's session is cancelled, a task's instances are withdrawn, the cases and called processes its tasks wait on are cancelled, and so are the runs of its other event subprocesses. No other event subprocess of it can start after that. When the event subprocess ends, the process or subprocess ends with it: the process completes, and a subprocess goes on by its outgoing flow. A terminate end event inside it ends only the event subprocess, and the process or subprocess ends the same way. An error end event inside it throws outward.
+
+**An event subprocess that does not interrupt** runs beside the rest:
+
+- A message starts a run each time it arrives, so several runs of one event subprocess can be open at once. A timer starts it once.
+- At most 100 runs of one event subprocess are open at once. The message that would start the 101st is refused `409 too-many-instances`: "*event subprocess*: 100 runs of it are open, the most an event subprocess runs at once".
+- The process or subprocess around it waits for its runs. Once its own flow has ended, no new run starts, and a message for the event subprocess is refused `409 unknown-message`: "the instance is not waiting for the message *name*", unless another task waits for it. It ends when its last run does, and only once.
+- A run reads and writes the process's variables, and the last writer wins, as for parallel branches. A message writes its values once, when it arrives, so two runs open at once both read the values of the second message.
+
+**Errors.** An error goes to the nearest handler: the error boundary event on the task that threw it, then an error event subprocess of the process or subprocess the task is in, then the error boundary event on the subprocess, then the event subprocess of the one around it, and so on outward. An error thrown inside an event subprocess goes to the process or subprocess around it, never to the event subprocess that threw it. An error thrown after the flow around it has ended passes its error event subprocess. Uncaught, it fails the process at the task that threw it. An incident, a call or an agent that fails for good, is no error and starts nothing.
+
+An event subprocess that can never start, such as one on an error that nothing in its scope throws, or on a message nobody sends, is not checked.
+
+Keel Builder sets all of it: see [Event subprocesses](/keel/builder/processes/#event-subprocesses). The business app draws an event subprocess dotted, and says **Waiting to start** while it waits: see [The diagram](/keel/business/open-process/#the-diagram).
+
 ## Cases and processes that start each other
 
 A case's [process node](/keel/builder/flow-nodes/#processes) starts a process, and a process's [start-a-case task](#a-service-task-that-starts-a-case) starts a case. Keel starts the other side itself, a moment after the case or the instance reached the node or the task, and keeps a link between the two.
@@ -423,6 +474,22 @@ A task's loop is checked when the process is published, against the process's ow
 | `expression`, `not-boolean` | The `loopCardinality` or the `completionCondition` does not compile, "*condition*: *why*", or a condition is not a yes or no, "*condition* is *TYPE*, not BOOL". The condition is checked with `numberOfInstances`, `numberOfCompletedInstances` and `numberOfActiveInstances` declared. Neither the `loopCardinality` nor the `completionCondition` can read the `item` or the `result` variable: outside an instance they hold no value, so the check reports them as undeclared. |
 
 A boundary event on a task that runs for each item is checked as on one that runs once: an error boundary event on a user task still never fires.
+
+### Checking an event subprocess
+
+An event subprocess is checked when the process is published. Each problem is in the process's file.
+
+| Problem | Where | What it says |
+|---|---|---|
+| `unsupported` | The event subprocess | "signal event subprocesses are not supported: an event subprocess starts on a timer, a message or an error", and the same for escalation, conditional, compensation, link, cancel and terminate |
+| `event-subprocess` | The start event | "isInterrupting must be true or false, not '*value*'", on any start event; "*start* starts the event subprocess *name*: it needs a timer, a message or an error"; "an error event subprocess always interrupts" |
+| `event-subprocess` | The event subprocess | "*name* is an event subprocess: no flow enters or leaves it, its start event starts it"; "another event subprocess of this scope catches the same errors"; "another event subprocess of this scope waits for the message *name*" |
+| `boundary` | The boundary event | "a boundary event cannot be attached to an event subprocess" |
+| `start-events`, `end-events` | The event subprocess | "*name* needs exactly one start event, and has *n*", "*name* needs an end event" |
+| `extension` | The start event | "keel:timer has no meaning on a startEvent", and the same for any Keel element a start event's definition has no use for |
+| `timer`, `business-timer`, `message-name`, `undeclared-variable`, `unknown-reference` | The start event | The problems of a timer, a message and an error, as on a catch event or a boundary event |
+
+The process's own start event with a timer or a message stays refused: "timer start events are not supported", "message start events are not supported". An event subprocess has no `no-outgoing` and no `unreachable` problem: its start event reaches it.
 
 ### Checking what a process calls and which agents work it
 
