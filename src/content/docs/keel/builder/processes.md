@@ -125,9 +125,10 @@ An element's panel has:
 - **Delete**;
 - on a flow node that is not an end event, a **Next element** pick with **Add after**, which adds that kind after the element, joined to it, and picks it: **User task**, **Manual task**, **Service task**, **Receive task**, **Business rule task**, **Exclusive gateway**, **Parallel gateway**, **Event-based gateway**, **Timer catch event**, **Message catch event**, **Subprocess**, **End event**, **Terminate end event** or **Error end event**; and a **Connect to** pick with **Connect**, which joins it to another element of its process or subprocess. If the drawing refuses, a message says "Nothing can be added after this element." or "These two cannot be connected.";
 - on a task or a subprocess, a **Boundary event** pick with **Attach**: **Timer**, **Timer that does not interrupt** or **Error**. If it cannot be attached, "A boundary event cannot be put on this element.";
-- for a user or manual task: "Its queue, outcomes and what it writes are not set here yet. Keel's checks list what it needs."; for a service task: "What it calls is not set here yet. Keel's checks list what it needs."; for a business rule task: "Its rule is not set here yet. Keel's checks list what it needs."
+- for a user task, a manual task and a business rule task, their own settings, which the paragraphs on a user or manual task, a business rule task and a lane describe below;
+- for a service task: "What it calls is not set here yet. Keel's checks list what it needs."
 
-A task's settings are written in the file for now: see [Keel's settings in the file](/keel/processes/#keels-settings-in-the-file). A change made in the panel keeps them.
+A service task's call is written in the file for now: see [Keel's settings in the file](/keel/processes/#keels-settings-in-the-file). A change made in the panel keeps it.
 
 **The process.** With nothing picked, the panel has:
 
@@ -165,6 +166,32 @@ Press a variable, or **Add variable**, to open the dialog, which is the [case ty
 
 - **Error**: one of the file's errors as *name* · *code* (the code alone when it has no name), or **A new error**, and on a boundary first **Any error**. A new one asks for an **Error name** and an **Error code**, says "An error needs a code." while the code is blank, and **Add error** adds it to the file and picks it.
 - "Thrown when the path reaches this end." on an end event. On a boundary: "Catches the error of this code thrown inside the activity; Any error catches every code."
+
+**A user or manual task.** Its panel has these sections, in this order. A section that needs two things before Keel can use it, such as an agent and the queue its raised hands go to, saves nothing until both are given, and says which is missing. Every change is one step of **Undo**.
+
+- **Done by**:
+  - **Queue**, **None** or one of the project's queues, published or in the draft: "The queue whose members complete it."
+  - While the task names no queue of its own, one line says where it goes: `It goes to <queue>, the queue of its lane <lane>.`, `It goes to <queue>, the process's queue.`, "It goes to its person alone." or "It goes to no queue." A queue the project does not have shows as written.
+  - **Person**, a button that opens a search of the project's people by name: "The one person who completes it, else any member of its queue." It reads **Pick a person**, then the person's name, or **Unnamed person** for one Keel names no more. **Clear person** takes the person away.
+- **Drafted by**, on a user task only: an agent that drafts for the person.
+  - **Agent**, **None** or one of the project's agents: "An agent drafts the outcome and values; the person checks them and completes the task." **Raised hands go to** picks a queue. While only one of the two is picked the section says "Pick where its raised hands go to save it." or "Pick its agent to save it." and nothing is saved.
+  - Once the agent is saved: **Tools**, **MCP servers** and **Knowledge**, each "Everything *the agent* has" (for knowledge, "Everything the process has", or "The process has no knowledge.") until you press **Narrow**, then a list of chips with **Use everything** to go back and `Not allowed: …` naming what the list leaves out. "A task can narrow these lists, never widen them." Picking another agent drops the narrowing of its tools and MCP servers.
+  - **Reads**: "The variables the agent is sent when it starts." with **Add a variable it reads**, and "It reads no variable." with none.
+  - **None** takes the agent away; the task's other settings stay.
+- **Writes**: the variables the task writes. Each row names the variable, then its type and whether it is needed: `Text · Required`, `Text · Required for Decline` (for the outcomes that need it) or `Text · Optional`. A switch named *the variable* **is required** makes it needed whatever the outcome, and a remove button (×) takes it away, and stops any outcome requiring it. **Add a variable it writes** offers the process's declared variables the task does not write yet. With none: "It writes no variable."
+- **Outcomes**: one group for each outcome, named by its label, with its name under it in small type, a **Label**, the variables it requires as chips ("Nothing more." with none) with **Add a variable it requires**, and **Remove outcome**. **New outcome** (**Name an outcome**) with **Add outcome** adds one; its name is made from the label you type, and only its label changes afterwards, so a gateway's condition that reads the name keeps working. A label with no letter or digit is refused: "Give it a name with letters or digits." With no outcome: "It has one outcome, done, until you add one." **Outcome variable** is **None** or one of the process's choice variables: "A choice variable that takes the outcome's name, for a gateway after the task to read. Its choices are the outcomes."
+- **Checks**: "Each condition must hold once the completion's values are in, or Keel refuses the completion with its message." One group for each check, **Check 1**, **Check 2**…, with its **Condition** (a CEL condition over the process's variables) and its **Message**, and **Remove check**. With none: "It has no checks." **New check** has its own **Condition** and **Message**; **Add check** is turned on once both are typed.
+- **Maker-checker**: "Whoever completed one of these tasks may not complete this one." The tasks are chips, and **Add a task** picks another user task, manual task or agent task of the process. A task the file names and no longer holds shows as written. With none: "Anyone may complete it."
+- **Authority**: "The person completing it needs an authority limit in this scope at least as large as the amount." **Amount variable** picks a whole-number or decimal variable of the process, and **Scope** is typed. While one is missing: "An authority check needs its amount variable and its scope." **Clear** takes it away.
+- **Service level**: "An ISO 8601 duration from the moment the task is ready, such as PT4H or P2D." **Goal** and **Deadline** are typed. A goal with no deadline says "A service level needs a deadline." and is not saved. Once it has a deadline: **Business time**, "Counts working time on the process's calendar." (with "The process has no calendar: pick one in its settings." when the process has none), and **Past the deadline, escalate to**, **None** or a queue. **Clear** takes it away.
+
+The panel keeps a condition or a duration as you typed it and adds no check of its own. Keel's checks list what is wrong in **Problems**, under the picked task, such as a check that is not a condition or an outcome variable whose choices are not the outcomes.
+
+A task from another modeller can hold Keel settings the panel does not show, such as an attribute of its own. Its panel then says "It holds Keel settings this panel does not show. They stay in the file as written." and every change you make keeps them.
+
+**A business rule task.** **Rule** is one of the project's rules by name; one the project no longer has shows by its key made readable. If the rules cannot be read the section says "The project's rules could not be read." with **Try again**. **Assignments**: "Each result of the rule goes to a variable." One group for each assignment, **Assignment 1**…, with the rule's **Result**, the **Variable** it goes to and **Remove assignment**; "It assigns none of the rule's results." with none. **New assignment** has a **Result** and a **Variable**, and **Add assignment** is turned on once both are given.
+
+**A lane.** A lane's name is the queue of the tasks in it, as [Lanes](/keel/processes/#what-keel-runs) says. Its panel has **Name**, as every element does, and **Queue**: "A lane's name is the queue of the tasks in it. Picking a queue names the lane so that it reads as that queue's key." It offers the project's queues whose key a name can read as, and picking one names the lane: by the queue's name when that name reads as its key, else by the key. A line says what the lane gives: `The tasks in it go to the queue <queue>, unless a task names its own.`, "Its name reads as no queue key." or "A lane with no name gives its tasks no queue." Take care with a queue Keel Builder made from "Front desk": its key is `front-desk`, while a lane named "Front desk" reads as `front_desk`. Pick the queue, and the lane is named `front-desk`.
 
 #### Elements, and the keyboard
 
@@ -236,7 +263,7 @@ When you open **Review and publish** from a process, the page's link back reads 
 | See the list, a drawing, its versions and connections | Yes | Yes | Yes |
 | **Download** a file | Yes | Yes | Yes |
 | **New process**, **Upload a file**, **Change the diagram** | No | Yes | Yes |
-| Change a draft's diagram, and set the process, an element, a flow, a timer, a message or an error in the panel | No | Yes | Yes |
+| Change a draft's diagram, and set the process, a task, a rule task, a lane, a flow, a timer, a message or an error in the panel | No | Yes | Yes |
 | Read the panel and **Elements** | Yes | Yes | Yes |
 | Run the draft's checks, **Dry run**, publish | No | Yes | Yes |
 | Set, replace and delete a connection's credential | No | Yes | Yes |

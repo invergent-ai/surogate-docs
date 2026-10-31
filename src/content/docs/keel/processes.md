@@ -34,7 +34,7 @@ A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder
 | **Event-based gateway** | Waits for whichever of its timer and message catches comes first. |
 | **End event** | Plain, **terminate** (ends everything still open in its process or subprocess), or **error** (throws its error's code). |
 | **Embedded subprocess** | Runs its own flow, and may carry boundary events. |
-| **Lanes** | A lane's name is the queue of the tasks in it, read as a queue key: lower case, with each run of other characters as `_`. A lane named "Back Office" is the queue `back_office`. |
+| **Lanes** | A lane's name is the queue of the tasks in it, read as a queue key: lower case, with each run of other characters as `_`. A lane named "Back Office" is the queue `back_office`. Keel Builder names a lane for the queue you pick in its panel. |
 
 Not run yet, refused when published: call activities, multi-instance tasks, inclusive gateways, event subprocesses, data stores, message boundary events and pools that send each other messages.
 
@@ -46,7 +46,7 @@ Conditions are written in CEL over the process's variables, as a case type's are
 
 Each setting sits in the `extensionElements` of its BPMN element. An element or attribute Keel does not know, or one where it has no meaning, is a problem when the file is published: nothing is ignored silently.
 
-Keel Builder's panel sets the process's settings and variables, a sequence flow's condition, an exclusive gateway's default flow, a timer, a message and an error: see [Changing the diagram](/keel/builder/processes/#changing-the-diagram). A task's settings and a service task's call are not set in the panel yet; they are written in the file, as this page shows, and the panel says so.
+Keel Builder's panel sets the process's settings and variables, a user or manual task's settings, a user task's drafting agent, a business rule task's rule, a lane's queue (its name), a sequence flow's condition, an exclusive gateway's default flow, a timer, a message and an error: see [Changing the diagram](/keel/builder/processes/#changing-the-diagram). A service task's call is not set in the panel yet; it is written in the file, as this page shows, and the panel says so. A change made in the panel keeps whatever else the file holds.
 
 ### The process
 
