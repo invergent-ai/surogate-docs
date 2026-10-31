@@ -31,7 +31,7 @@ A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder
 | **Error boundary event** | Catches an error thrown inside the task or subprocess it sits on: the one with the error's code first, else one without a code. |
 | **Exclusive gateway** | Takes the first outgoing flow, in the order written, whose condition holds, else its default flow. |
 | **Parallel gateway** | Splits into every outgoing flow, or waits for every incoming one. |
-| **Inclusive gateway** | Takes every outgoing flow whose condition holds, else its default flow. Where flows meet, it waits for the paths still running that can reach it, then goes on once. A path that can also come back along a flow that has already arrived does not hold it, and when it comes the gateway goes on again. |
+| **Inclusive gateway** | Takes every outgoing flow whose condition holds, else its default flow. Where flows meet, it waits for each path still running that can reach it along a flow that has not arrived yet, then goes on. A path that can reach it along a flow that has already arrived does not hold it: when it comes, the gateway goes on again. |
 | **Event-based gateway** | Waits for whichever of its timer and message catches comes first. |
 | **End event** | Plain, **terminate** (ends everything still open in its process or subprocess), or **error** (throws its error's code). |
 | **Embedded subprocess** | Runs its own flow, and may carry boundary events. |
@@ -41,9 +41,9 @@ Not run yet, refused when published: call activities, multi-instance tasks, even
 
 Refused: script tasks, plain tasks, send tasks, business rule tasks that name a DMN decision instead of a Keel rule, throw events, signals, escalations, compensation, transactions, ad hoc subprocesses, conditional and link events, loops on a task (draw the loop with a gateway), data objects and correlation keys. Each refusal names the element.
 
-Conditions are written in CEL over the process's variables, as a case type's are, for example `amount <= 250000.0`. An exclusive gateway stops at the first condition that holds; an inclusive gateway evaluates every one. A condition that reads a variable with no value, such as one only a branch not taken writes, refuses what reached the gateway: a completion answers `409 evaluation-error` and a timer is kept as stuck. So give such a variable a value on every path.
+Conditions are written in CEL over the process's variables, as a case type's are, for example `amount <= 250000.0`. An exclusive gateway stops at the first condition that holds; an inclusive gateway evaluates every one. A condition that reads a variable with no value, such as one only a branch not taken writes, refuses what reached the gateway: a completion answers `409 evaluation-error`, a start is refused, and a timer is kept as stuck. So give such a variable a value on every path.
 
-An exclusive or an inclusive gateway with a condition on any flow needs a default flow, and every other flow needs a condition. A condition on the default flow is never evaluated, and Keel warns of it.
+An exclusive or an inclusive gateway with more than one flow leaving it needs a condition on every flow but its default, and one with a condition on any flow needs a default flow. A condition on the default flow is never evaluated, and Keel warns of it.
 
 ## Keel's settings in the file
 
