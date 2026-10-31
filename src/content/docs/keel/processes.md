@@ -482,7 +482,7 @@ An event subprocess is checked when the process is published. Each problem is in
 | Problem | Where | What it says |
 |---|---|---|
 | `unsupported` | The start event's event definition, else the start event | "signal event subprocesses are not supported: an event subprocess starts on a timer, a message or an error", and the same for escalation, conditional, compensation, link, cancel and terminate |
-| `event-subprocess` | The start event | "isInterrupting must be true or false, not '*value*'", on any start event; "*start* starts the event subprocess *element*: it needs a timer, a message or an error"; "an error event subprocess always interrupts" |
+| `event-subprocess` | The start event | "isInterrupting must be true or false, not '*value*'"; "*start* starts the event subprocess *element*: it needs a timer, a message or an error"; "an error event subprocess always interrupts" |
 | `event-subprocess` | The event subprocess | "*element* is an event subprocess: no flow enters or leaves it, its start event starts it"; "another event subprocess of this scope catches the same errors"; "another event subprocess of this scope waits for the message *name*" |
 | `boundary` | The boundary event | "a boundary event cannot be attached to an event subprocess" |
 | `start-events`, `end-events` | The event subprocess | "*element* needs exactly one start event, and has *n*", "*element* needs an end event" |
