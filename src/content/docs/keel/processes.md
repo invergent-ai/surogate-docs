@@ -28,8 +28,8 @@ A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder
 | **Call activity** | Starts another published process of the project, named by its key, and waits for it to end. See [A call activity](#a-call-activity). |
 | **Receive task**, **message catch event** | Waits for a message of its name. |
 | **Timer catch event** | Waits for a duration, such as `PT2H` or `P3D`, or until a date. A repeating (cycle) timer is refused. |
-| **Timer boundary event** | Fires on a task or a subprocess after a duration or at a date. An interrupting one withdraws the activity; a non-interrupting one starts its path beside it. |
-| **Error boundary event** | Catches an error thrown inside the task or subprocess it sits on: the one with the error's code first, else one without a code. |
+| **Timer boundary event** | Fires on a task, a call activity or a subprocess after a duration or at a date. An interrupting one withdraws the activity; a non-interrupting one starts its path beside it. |
+| **Error boundary event** | Catches an error thrown inside the task or subprocess it sits on, or by the call activity it sits on: the one with the error's code first, else one without a code. |
 | **Exclusive gateway** | Takes the first outgoing flow, in the order written, whose condition holds, else its default flow. |
 | **Parallel gateway** | Splits into every outgoing flow, or waits for every incoming one. |
 | **Inclusive gateway** | Takes every outgoing flow whose condition holds, else its default flow. Where flows meet, it waits for each path still running that can reach it along a flow that has not arrived yet, then goes on. A path that can reach it along a flow that has already arrived does not hold it: when it comes, the gateway goes on again. |
@@ -52,7 +52,7 @@ A parallel or an inclusive gateway where flows meet takes one flow from each ele
 
 Each setting sits in the `extensionElements` of its BPMN element. An element or attribute Keel does not know, or one where it has no meaning, is a problem when the file is published: nothing is ignored silently.
 
-Keel Builder's panel sets the process's settings and variables, a user or manual task's settings, a user task's drafting agent, a service task's call (a call to a system, a call to an agent or the start of a case), a business rule task's rule, a lane's queue (its name), a sequence flow's condition, an exclusive or an inclusive gateway's default flow, a timer, a message and an error: see [Changing the diagram](/keel/builder/processes/#changing-the-diagram). A change made in the panel keeps whatever else the file holds.
+Keel Builder's panel sets the process's settings and variables, a user or manual task's settings, a user task's drafting agent, a service task's call (a call to a system, a call to an agent or the start of a case), a call activity's process, what it passes and what it receives, a business rule task's rule, a lane's queue (its name), a sequence flow's condition, an exclusive or an inclusive gateway's default flow, a timer, a message and an error: see [Changing the diagram](/keel/builder/processes/#changing-the-diagram). A change made in the panel keeps whatever else the file holds.
 
 ### The process
 
@@ -180,14 +180,14 @@ When the called process ends, the call activity completes: each `keel:receive` v
 
 | Error | When |
 |---|---|
-| `process-not-started` | Keel could not start the process: it is not published, the values passed do not fit it, or the chain of starts is too deep. |
+| `process-not-started` | Keel could not start the process: it is not published, the values passed do not fit it, the chain of starts is too deep, its first steps refused, or Keel gave up starting it. |
 | `process-cancelled` | The called process was cancelled. |
-| The called process's own error code | The called process ended in an error end event. |
+| The called process's own error code | The called process failed on an error nothing in it caught, such as an error end event. |
 | `process-values` | The called process ended with a value the receiving variables cannot hold. Nothing is written. |
 
 When the calling instance leaves the call activity first, by an interrupting boundary event, a supervisor's cancel or an error caught elsewhere, Keel cancels the called process, as the system `keel`. A boundary event that does not interrupt leaves it running. A called process that waits on an incident keeps the caller waiting until a supervisor retries it or cancels it.
 
-A process cannot call itself, or call a process that calls it back: the publish refuses a cycle of calls, naming each call activity in it.
+A process cannot call itself, or call a process that calls it back: the publish refuses a cycle of calls, naming each call activity of the published processes that lies on it.
 
 ### A service task that calls a system
 
@@ -459,6 +459,8 @@ Staff sign in as they do for the business app; another system uses a [service ke
 
 Starting an instance answers its `instance_id`, its `number`, such as `P-000001`, and its status. The start data must fit the declared variables. Send an `Idempotency-Key` header with each start: a start sent again with the same key answers with the instance it started the first time.
 
+A process a call activity called is an instance like any other, with its own number: it is listed, read, followed and cancelled as the others are, and a cancel of it makes the call activity that waits for it throw `process-cancelled`. Its page says it was called by the instance that started it.
+
 The events an instance takes:
 
 | Event | Body | Who sends it |
@@ -471,7 +473,7 @@ The events an instance takes:
 | Message an agent | `{"type": "agent.messaged", "task": "t5", "text": "Use the May statement."}` | Any member of the staff. Keel adds the sender's name. Never a service key. |
 | Retry a task with an incident | `{"type": "task.retried", "task": "t5"}` | Supervisors |
 
-Keel sends the rest itself: a timer firing (`timer.fired`), a call or an agent failing (`task.failed`), an agent raising its hand (`hand.raised`), an agent's draft (`task.drafted`) and a case's close (`case.closed`) and a called process's end (`called.ended`). A body that names one is `422 invalid-event`, with the reason.
+Keel sends the rest itself: a timer firing (`timer.fired`), a call or an agent failing (`task.failed`), an agent raising its hand (`hand.raised`), an agent's draft (`task.drafted`), a case's close (`case.closed`) and a called process's end (`called.ended`). A body that names one is `422 invalid-event`, with the reason.
 
 A task's id, such as `t3`, comes from the instance's open tasks. Completing a task that has already finished answers `409 task-closed`. An event sent again with the `Idempotency-Key` it was first sent with is answered with the instance as it stands, and the header `Idempotent-Replayed: true`; it is not applied twice.
 
