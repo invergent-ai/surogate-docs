@@ -39,7 +39,7 @@ Every Keel term in one place. [Concepts](/keel/concepts/) explains how they fit 
 | **Form** | What a person fills to start a case or complete a step, made from fields and laid out on the Forms tab. |
 | **Get next** | The button that gives you the first item of Needs me, or else the next unclaimed item of your queues. |
 | **Helper** | One of the two agents Keel sets up for each project: the case agent and the designer agent. A helper never works a step or a work item. |
-| **Instance** | One run of a BPMN process version, numbered `P-000001` and up in its project. It finishes on the version it started on. |
+| **Instance** | One run of a BPMN process version, numbered `P-000001` and up in its project. It runs on the version it started on until it is moved to the process's current version. |
 | **Intake agent** | An agent allowed to start cases of a case type. |
 | **Join** | A node that waits until every path leading to it has arrived. |
 | **Maker-checker** | A step's rule that it must be done by someone other than whoever did named earlier steps. |

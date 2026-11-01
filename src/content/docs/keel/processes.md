@@ -183,7 +183,7 @@ When the case closes, a waiting task completes: its `keel:result` variables and 
 
 Nothing is passed or received that is not named: the two processes do not share variables by name.
 
-Each call starts the newest published version of the called process, and that instance finishes on it, whatever is published after. It is an instance of its own, with its own number, page, tasks and history: see [Running instances](#running-instances). The calling instance waits at the call activity until it ends; no one holds a lock on either meanwhile. A called process that requires a variable no `keel:pass` fills cannot start, and a `keel:pass` of a variable with no value leaves it unfilled.
+Each call starts the newest published version of the called process, and that instance runs on it until it is moved to a newer one, whatever is published after. It is an instance of its own, with its own number, page, tasks and history: see [Running instances](#running-instances). The calling instance waits at the call activity until it ends; no one holds a lock on either meanwhile. A called process that requires a variable no `keel:pass` fills cannot start, and a `keel:pass` of a variable with no value leaves it unfilled.
 
 When the called process ends, the call activity completes: each `keel:receive` variable takes the called process's variable, when it holds one, and a terminate end event in the called process ends only that process. Otherwise the call activity throws a BPMN error, which an error boundary event on it, an error event subprocess around it, or an error boundary event on a subprocess around it, catches by its code; uncaught, it fails the instance:
 
@@ -597,12 +597,12 @@ Publishing records the names of the agents and knowledge bases a process names, 
 A problem at an old version is fixed in one of these ways:
 
 - Change the file you publish so that it fits that version again.
-- At a version cases or instances still run on: move its open cases to a newer version of the case type, or wait for them to close, or for the instances to end or be cancelled.
+- At a version cases or instances still run on: move its open cases to a newer version of the case type, or move its instances to the process's current version ([Moving instances to a newer version](#moving-instances-to-a-newer-version)), or wait for them to close, or for the instances to end or be cancelled.
 - At a current version: publish a new version of that case type or process in the same draft. The new version is then checked instead.
 
 A problem that Keel cannot run, such as a script task, refuses the publish and names the element. A vendor extension, such as Camunda's, Flowable's or SpiffWorkflow's own properties, is a **warning**: Keel ignores it and never runs it, and the publish goes on. So is a cycle of tasks that no path leaves for an end event: an instance that reaches it never ends. The review page lists warnings under **Warnings**, and **Publish** stays on.
 
-Running instances finish on the version they started on.
+A running instance runs on the version it started on until it is moved to the process's current version: see [Moving instances to a newer version](#moving-instances-to-a-newer-version).
 
 Builders read the published processes with:
 
@@ -614,6 +614,83 @@ Builders read the published processes with:
 | Read the variables a version declares | `GET /api/build/projects/{project}/processes/{key}/versions/{version}/variables` |
 | Read the variables the file in a draft declares, before its checks pass | `GET /api/build/projects/{project}/drafts/{draft_id}/files/processes/{key}/variables` |
 | Put the file back as the draft started with it | `POST /api/build/projects/{project}/drafts/{draft_id}/files/processes/{key}/revert` |
+| Check what moving the running instances of a version to the current one would do | `GET /api/build/projects/{project}/processes/{key}/moves/forecast?from_version=2` |
+| Start that move | `POST /api/build/projects/{project}/processes/{key}/moves` with `{"from_version": 2}` |
+| List the process's moves, newest first | `GET /api/build/projects/{project}/processes/{key}/moves` |
+| Read a move | `GET /api/build/projects/{project}/processes/{key}/moves/{move_id}` |
+| List the instances a move left on their version | `GET /api/build/projects/{project}/processes/{key}/moves/{move_id}/stayed`, with `limit` (1 to 100, 50 unless given) and `offset` |
+
+Any member of the project reads the moves; an editor or an owner starts one. The forecast checks the oldest 1,000 running instances of `from_version` as they stand, and answers how many run, how many it checked, how many of those could move, and the reasons the others could not, the one most instances meet first:
+
+```json
+{"process": "loan-review", "from_version": 2, "to_version": 3, "running": 12, "checked": 12, "moving": 10, "staying": 2,
+ "reasons": [{"code": "missing-element", "element": "pay", "message": "Pay is open, and version 3 has no element pay", "instances": 2}]}
+```
+
+Starting the move answers `201` with its progress, and the sweeper moves the instances after the answer, one in each transaction:
+
+```json
+{"id": 5, "process": "loan-review", "from_version": 2, "to_version": 3, "status": "running", "total": 12,
+ "moved": 0, "stayed": 0, "remaining": 12, "started_by": "…", "started_at": "…", "finished_at": null}
+```
+
+`total` counts the instances running on `from_version` when the move started. `moved` and `stayed` count the instances handled so far, `remaining` is what is left of `total` while the move runs and `0` once it is `done`, and `status` is `running` or `done`. An instance another transaction holds waits for a later pass; one that ended, or that a supervisor moved meanwhile, gets no outcome of the move, so `moved` and `stayed` can add up to less than `total`. The instances that stayed come by their number, as people count, P-000009 before P-000010, each with its `instance_id`, `number` and `problems`, and the `total` that stayed. They carry no data. An instance whose move fails on five passes in a row stays on its version with the reason `failed`, "Keel could not move it; it stays on v2.", so that the move can finish.
+
+A refused start has Keel's words: `404 unknown-process`, "The project has no process *key*." or "The project has no process *key* v9."; `409 not-older`, "v3 is the current version of *key*: its instances run on it already."; `409 nothing-to-move`, "No instance of *key* runs on v1."; `409 move-running`, "A move of the running instances of *key* is running: wait until it is done."; `409 broken-definition` when the current version no longer loads; `403` for a viewer; `422 invalid-request` for a body that is not exactly `from_version`, a whole number from 1 to 2,147,483,647. A move of another process or project, or an id that is no move, is `404 unknown-move`: "The project has no such move." The list of processes shows `running_move` for each process: the id of its running move, else `null`; an older Keel does not send it.
+
+## Moving instances to a newer version
+
+An instance runs on the version of its process that it started on, whatever is published after, until it is moved. A move puts it on the process's current version, the newest published, from where it stands: it keeps its number, its data and its history, and from then on it runs the new version. Keel records the move in the instance's history, and replays that history with each side of the move on its own version.
+
+### When an instance can move
+
+An instance moves when what it holds carries over to the new version as it is:
+
+- **The same elements.** Each task it holds, an open one or one a join still counts, is the element with the same id in the new version, of the same kind, in the same place: in the process, or in the same subprocess.
+- **Worked the same way.** Each open task is worked as it was: a user task for the same queue or person and the same drafting agent, an agent task by the same agent with the same reads, writes, required values and outcomes, a call to a system with the same call (its request, its outputs, its timeout and what it does when it fails), a task that starts a case for the same case type with the same results, a call activity for the same process with the same variables taken back, an event-based gateway with the same branches, a boundary event on the same activity.
+- **Nothing new around it.** The new version adds no boundary event to an open task, takes none away, and adds or takes away no event subprocess of the process or of a subprocess that is running: such an event would not have been armed when the task was reached.
+- **Data that fits.** The instance's data fits the new version's variables, required ones included.
+
+Anything else changes nothing for an instance that is at a task: tasks added, removed or rewired ahead of where it stands, a gateway's conditions, a subprocess that gains a task ahead, an open user task's name, form, outcomes, checks, writes and service level, the name or the key of a message it waits for, the name of a signal, a timer's duration, whether an event subprocess interrupts, whether a boundary event interrupts (one that already fired without interrupting cannot be made interrupting while its task is open), a completion condition. An element behind where the instance stands, which it passed, does not matter either, unless a join still counts it. Keel does not map a renamed element to its old one: element ids are the mapping, so an instance whose task's element id changed stays where it is.
+
+An instance that cannot move stays on its version, untouched, and Keel says why, in one line for each reason:
+
+| Reason | Keel says | What to do |
+|---|---|---|
+| An element it holds is gone | "*Task* is open, and version 3 has no element *id*", or "*Task* has finished, but the instance still needs it, and version 3 has no element *id*" | Publish a version that keeps the element, or move the instance once it is past it. |
+| It became another kind | "*Task* is a user task in version 2 and a manual task in version 3", with the kinds of element a process has: a service task that calls a system, an agent task, a service task that starts a case, a call activity, a receive task, a catch event, a throw event, a boundary event, an event-based gateway, an exclusive, an inclusive or a parallel gateway, a subprocess, an event subprocess, a business rule task, a start event, an end event | Keep the element's kind, or wait. |
+| It moved | "*Task* is in the process in version 2 and in *Checks* in version 3". When two subprocesses share a name, their ids tell them apart: "*Checks* (s1)". | Keep the task where it was. A subprocess that is only renamed is no reason. |
+| It waits for another event | "*Task* waits for a timer in version 2 and for a message in version 3" (a timer, a message, a signal or an error). For an event subprocess started by a timer, a new start event: "…and for another timer in version 3". For a catch event or a receive task put behind an event-based gateway: "*Task* waits for a message in version 2 and is a branch of an event-based gateway in version 3". | Keep the kind of event. |
+| It is worked another way | "*Task* is open for the queue *q*, and version 3 gives it to the queue *r*"; "*Task* has the agent *a* drafting for its person, and version 3 has no agent"; "The agent *a* is at work on *Task*, and version 3 gives it to the agent *b*", or "…changes what it reads, writes or ends with"; "*Task* has called *connection*, and version 3 makes another call"; "*Task* waits on a case of *type*, and version 3 starts a case of *type*", or "…takes other values back from it or ends it another way"; "*Task* waits on *process*, and version 3 calls *process*", or "…takes other variables back from it"; "*Boundary* sits on *A* in version 2 and on *B* in version 3"; "*Gateway* waits on its branches, and version 3 gives it other branches" | Finish the task, then move. |
+| A boundary event differs | "*Task* is open, and version 3 adds the boundary event *B*", or "…takes away the boundary event *B*". Also "*B* has fired on *Task*, which is still open, and version 3 makes it interrupt": a boundary event that fired without interrupting, made interrupting while its task is open. | Move once the task is done. |
+| An event subprocess differs | "The process is running, and version 3 adds the event subprocess *E*", or "…takes away the event subprocess *E*"; "*Phase* is running, …" for a subprocess | Move once the scope has ended. |
+| A join would join other flows | "*Join* holds a branch that arrived, and version 3 joins other flows there" | Move once the join has fired. |
+| A task that runs for each item differs | "*Task* runs once in version 2 and for each item in version 3", "…runs for each item in version 2 and once in version 3", or "*Task* runs for each item, and version 3 runs its items another way" (only the completion condition may change) | Move once the task is done. |
+| The data does not fit | "Version 3 refuses its data: *note*: must be an integer", or "…*note*: not a declared field", "…*amount*: required". For an object the new version gives fields, "…*answers*: holds a field that version 3 does not declare". A reason names the variable, never its value or a key in it. | Declare the variable the way the instance holds it. |
+| The process has another id | "The process is open, and version 3 names its process *x*, not *y*" | Keep the `id` of the `bpmn:process`. |
+
+Moving through the API adds a few more: the version asked for is not the process's current one, the instance runs on it already, the instance ended, or a version it needs no longer loads. Each says so in its own words below.
+
+### What a move keeps
+
+A move keeps what was set when the task was reached:
+
+- Every task, and its work item, who holds it, its queue, its goal and its deadline.
+- The timers it armed, at their due times. A timer of the new version with another duration does not re-arm, and a goal or a deadline of the new version does not change the ones set.
+- A call already made, with its retries, and an agent's session, its draft and its raised hand.
+- The case or the process a task waits on, and its link.
+- Its number, data and history.
+
+The new version decides the rest, as the instance reaches it: a task's form, outcomes, checks and writes, labels, the queues and service levels of the tasks it reaches next, and everything ahead. A message or a signal wait the new version names another way is set again under the new name, so the instance takes the new name from then on; a signal already on its way under the old name finds no wait and is dropped. A move opens and closes no work item, and tells no one: no notice, no mail.
+
+The instance's history shows "*Who* moved the process to version 3", or "The process moved to version 3" when Keel's own move did it. Its diagram becomes the new version's, with what the instance did before marked wherever the new version has the same elements.
+
+### Who moves
+
+- A **supervisor** moves one instance, from its page, to the current version ("Move to version 3…" in [An open process](/keel/business/open-process/#move-to-the-current-version)), or by the API.
+- **Editors and owners** move every running instance of an older version at once, from the process's [Versions tab](/keel/builder/processes/#the-versions-tab). The builder first sees how many could move and why the others could not, from the oldest thousand instances. The move starts after they confirm, and Keel moves the instances one at a time, in the background. One that cannot move stays on its version, and the move lists it, with why. A process has one running move: a move starts only when the one before it is done.
+
+An instance moves only to its process's current version, and only from an older one, never back. A version published while a move runs leaves the instances not yet moved on their version, with the reason "Version 4 was published while the move ran: move the instance to version 4"; start another move.
 
 ## Working a process's tasks
 
@@ -682,6 +759,8 @@ Staff sign in as they do for the business app; another system uses a [service ke
 | List the processes an instance may start on, each with the form it starts with | `GET /api/projects/{project}/process-types` | Staff and service keys |
 | List instances, newest first | `GET /api/projects/{project}/processes`, with `process`, `status`, `attention=true`, `q` (a part of the number, two to a hundred characters), `cursor` and `limit`. Each row names its process. | Staff and service keys |
 | Read an instance | `GET /api/processes/{instance_id}` | Staff and service keys |
+| Ask whether it can move to the process's current version, and why not | `GET /api/processes/{instance_id}/move` | Staff and service keys |
+| Move it to the current version | `POST /api/processes/{instance_id}/move` with `{"to_version": 3}` | Supervisors |
 | The processes its call activities called, oldest first, each with its state | `GET /api/processes/{instance_id}/calls` | Staff and service keys |
 | Read it as its page shows it: its tasks with their forms and who holds each, its goals and deadlines, what it waits for, its data. An instance of a task that runs for each item carries `instance`: its `number`, how many there are (`of`) and its `item`; so do the rows of `…/tasks` | `GET /api/processes/{instance_id}/outline` | Staff and service keys |
 | Follow its changes as server-sent events | `GET /api/processes/{instance_id}/live` | Staff |
@@ -708,6 +787,30 @@ A signal sent to the project (`POST /api/projects/{project}/signals`) gives the 
 ```
 
 Each instance takes the signal after the answer, in a change of its own, so the answer says how many instances it is for, not what each did. No instance waiting is `202` with `"instances": 0`, not a failure, and there is no cap on how many it reaches. Supervisors and service keys send a signal, since it can interrupt every open instance at once: another member of the staff gets `403 forbidden`, "Only a supervisor may send a signal." Sent again with the `Idempotency-Key` it was first sent with, by the same caller and with the same body, it answers as the first time with the header `Idempotent-Replayed: true`, and nothing is sent twice. The key another caller or another body used is `422 key-reused`: "*key* was used for another send in this project".
+
+Whether an instance can move to the process's current version (`GET /api/processes/{instance_id}/move`) answers with the version it runs on, the version it would move to, and the reasons it cannot, which are empty when it can:
+
+```json
+{"from_version": 2, "to_version": 3,
+ "problems": [{"code": "missing-element", "element": "pay", "message": "Pay is open, and version 3 has no element pay"}]}
+```
+
+It reads the instance as it stands, so an event since may change the answer; the move checks again. Each reason has a `code` (`missing-element`, `other-kind`, `other-place`, `other-event`, `not-alike`, `boundary-events`, `event-subprocesses`, `join-inputs`, `invalid-values`), the `element` it is about (none for the data, and for an event subprocess of the process itself), and the words above. An instance that already runs on the current version answers one reason, `same-version`: "P-000001 already runs on version 2."; an ended one `process-ended`: "P-000001 is cancelled: only a running instance moves to another version."; a version that no longer loads `broken-definition`. The read is logged as a view of the instance, like the others.
+
+A move (`POST /api/processes/{instance_id}/move`, with `{"to_version": 3}`, a whole number from 1 to 2,147,483,647) is for supervisors: another member of the staff or a service key gets `403 forbidden`, "Only a supervisor may move an instance to another version." It checks again with the instance locked, so an event between the read and the move is seen. It answers `200` with the instance as the move left it, as an event does:
+
+```json
+{"instance_id": "…", "number": "P-000004", "seq": 5, "status": "running"}
+```
+
+An instance that cannot move answers `409 cannot-move` and is left as it was, with the reasons:
+
+```json
+{"code": "cannot-move", "message": "P-000004 cannot move to version 3.",
+ "problems": [{"code": "missing-element", "element": "pay", "message": "Pay is open, and version 3 has no element pay"}]}
+```
+
+A version that is not the current one is `409 not-current-version`: "Version 3 is the current version of *key*: an instance moves only to it." (older versions included); one the instance runs on already `409 same-version`; an instance that ended `409 process-ended`. A body that is not exactly `to_version`, as a whole number, is `422 invalid-request`. Sent again with the `Idempotency-Key` it was first sent with, by the same caller and with the same body, it answers with the instance as it stands and the header `Idempotent-Replayed: true`, and moves nothing twice; the key another caller or another body used is `422 key-reused`. Two supervisors at once: the second finds the instance moved and gets `409 same-version`.
 
 Starting an instance answers its `instance_id`, its `number`, such as `P-000001`, and its status. The start data must fit the declared variables. Send an `Idempotency-Key` header with each start: a start sent again with the same key answers with the instance it started the first time.
 

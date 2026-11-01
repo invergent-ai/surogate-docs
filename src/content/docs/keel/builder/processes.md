@@ -38,12 +38,12 @@ If the draft cannot be made, the dialog says why, in Keel's words when Keel gave
 
 ## A process's page
 
-The page's header shows the process's name and, under it, its published version: for example **Version 2 published 20 Oct 2026 · 3 instances running on it**, or **Not published yet**. While the draft's file is shown, the name is the one that file gives its process. Under the header are a breadcrumb back to **Processes** and the [draft bar](/keel/builder/drafts/), then the tabs:
+The page's header shows the process's name and, under it, its published version: for example **Version 2 published 20 Oct 2026 · 3 instances running on it**, or **Not published yet**. When instances still run on older versions, it adds their number: **Version 3 published 20 Oct 2026 · 3 instances running on it · 5 on older versions**. While the draft's file is shown, the name is the one that file gives its process. Under the header are a breadcrumb back to **Processes** and the [draft bar](/keel/builder/drafts/), then the tabs:
 
 | Tab | What it holds |
 |---|---|
 | **Diagram** | The drawing of the file, and in a draft, the problems found in it. |
-| **Versions** | Every published version, what each changed, and its file. |
+| **Versions** | Every published version, what each changed, and its file, and the moves of running instances to the current version. |
 | **Connections** | The connections the process calls, and their credentials. |
 
 On the right of the header, everyone sees **Download**. Editors and owners also see **Upload a file**, with no draft open **Change the diagram**, and in a draft, **Dry run** and **Review and publish**. See [Dry run and publish](/keel/builder/publish/).
@@ -304,6 +304,18 @@ Press a row to open it:
 
 If the publishes cannot be read, the tab says why, in Keel's words, or "The project's publishes could not be read."; if what a version changed cannot, "What this version changed could not be read." Each comes with **Try again**.
 
+### Moving the instances of an older version
+
+A new version does not take the running instances with it: each stays on the version it started on until it is moved ([Moving instances to a newer version](/keel/processes/#moving-instances-to-a-newer-version) says when it can). Under the row of each version older than the current one that has instances running, a section **Move from v2** says what a move would do. Keel checks the oldest thousand of those instances as they stand:
+
+- "Of the 12 instances running on v2, 10 can move to v3 and 2 cannot." When there are more than Keel checked: "Keel checked the 1000 oldest of the 4213 instances running on v2: 980 can move to v3 and 20 cannot."
+- Under it, why the others cannot move, the reason most instances meet first, each with how many: "Pay is open, and version 3 has no element pay · 2 instances".
+- If the check cannot be made, the section says why, in Keel's words, or "Keel could not check the instances running on v2.", with **Try again**.
+
+**Move running instances to v3**, for editors and owners, asks first: **Move the instances running on v2 to v3?** "Each one that can move goes to v3 with its open tasks and their work. One that cannot stays on v2, and the move lists it with why. A move cannot be undone." **Move them** starts the move. The button is off for a viewer, while no instance can move, and while a move of this process's instances is running ("A move of this process's instances is running."). When Keel refuses the start, the section says why in Keel's words, such as "A move of the running instances of loan-review is running: wait until it is done."
+
+Above the rows, **Moves** lists the process's moves, newest first. Each card shows `v2 to v3 · 20 Oct 2026, 10:00`, **Running** or **Done**, a bar named by how many instances it handled of those it had to ("8 of 10 instances handled", moved and stayed together), and "6 moved · 2 stayed · 2 remaining". A running move is read again every five seconds until it is done, and then the number of instances running on each version is read again. When a move left instances behind, **Instances that stayed (2)** opens a table of them, **Instance** and **Why**, by number as people count, P-000009 before P-000010, fifty at a time with **Show more**. Each shows its number and each reason on a line of its own, never its data. The instances stay where they were, and their reasons are worded as the forecast's. If the moves cannot be read, the tab says why, in Keel's words, or "The moves of running instances could not be read."; if the list of instances, in Keel's words or "The instances that stayed could not be read." Each comes with **Try again**. A Keel older than moves sends nothing for them, and the tab then shows no section and no moves.
+
 ## The Connections tab
 
 The tab says: "The connections this process calls, with their credentials. Its connection files are changed in a draft." With no draft, each connection of the process shows its **Base URL** and **Authentication**, read-only, as published. In a draft, each connection file of the process shows as the [Connections tab](/keel/builder/connections/) of a case type shows its own: **Base URL**, **Authentication** with what its kind needs, **Idempotency-key header** and **Default timeout (seconds)**. Editors and owners change them, except during the designer agent's turn, and a viewer reads them. **New connection**, for editors and owners, asks for a **Name** in a dialog that says "It is made in the draft. Its calls need a base URL next." and makes the file in the draft. A connection file is never deleted. Each connection also shows its credentials as the [Connections tab](/keel/builder/connections/#credentials) of a case type shows them:
@@ -334,4 +346,6 @@ When you open **Review and publish** from a process, the page's link back reads 
 | Make and change a process's connection files in a draft | No | Yes | Yes |
 | Read the panel and **Elements** | Yes | Yes | Yes |
 | Run the draft's checks, **Dry run**, publish | No | Yes | Yes |
+| Read the forecast of a move of running instances, and follow the moves | Yes | Yes | Yes |
+| **Move running instances to v3** (an older version's, to the current one) | No | Yes | Yes |
 | Set, replace and delete a connection's credential | No | Yes | Yes |

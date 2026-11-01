@@ -11,7 +11,7 @@ Keel records each time someone opens an instance.
 - A breadcrumb: **Processes** / the instance number.
 - The process's name, and under it the number, the version and the start day, such as `P-000001 · v1 · started 20 Oct`.
 - The status: **Running**, **Completed**, **Ended**, **Failed** or **Cancelled**. A failed instance says which error ended it and where: "Ended in error *code* at *place*."
-- For supervisors, on a running instance, **More actions** with **Cancel the process…**. See [Cancel a process](#cancel-a-process).
+- For supervisors, on a running instance, **More actions** with **Move to version 3…**, when the process has a newer version than the one the instance runs, and **Cancel the process…**. See [Move to the current version](#move-to-the-current-version) and [Cancel a process](#cancel-a-process).
 
 A case that started the instance shows **Started by**, with the case, over the rest. A process that called it shows **Called by**, with the calling instance, such as `P-000001 · Loan decision`.
 
@@ -131,9 +131,20 @@ The side panel, beside the tasks on a wide screen and under them on a phone, has
 | "The process completed", "The process ended at *element*" or "The process ended in error *code* at *element*" | The instance ended. |
 | "Started 3 instances of *task*", or "*Task* had nothing to run" | A task that runs for each item was reached, with its items, or with an empty list. |
 | "All 3 instances of *task* completed", "The instance of *task* completed", "*Task* completed" or "*Task* ended early: 2 of 3 instances completed" | The task ended: every instance completed, its only instance, none to run, or its completion condition held and the instances still open were withdrawn. |
+| "*Who* moved the process to version 3", or "The process moved to version 3" | A supervisor moved the instance to the current version, or a builder's move of the running instances did. |
 | "*Who* cancelled the process: *reason*" | A supervisor cancelled it. |
 
 Every line about an instance of a task that runs for each item names the instance, such as "Ann finished Approve · 2 of 3". An element that was only entered or passed, a gateway taken, a missed goal and the like are not told. The values written are in **Data**, and the history never shows an incident's reason. With nothing to tell, the tab says **Nothing yet**. When Keel cannot read the history, the tab says why.
+
+## Move to the current version
+
+An instance runs on the version of its process that it started on, shown in the header as `v1`. When the process has a newer version, a supervisor moves a running instance to it from **More actions** with **Move to version 3…**. The dialog, **Move *number* to version 3**, says "It runs on version 2. Its open tasks keep their work: who holds them, their timers, goals and deadlines, and the cases and processes they wait on. From there on it runs version 3, and its history keeps the move."
+
+1. The dialog checks first: "Checking whether it can move…".
+2. When the instance cannot move, it says "It cannot move to version 3:" over each reason, in Keel's words, such as "Pay is open, and version 3 has no element pay"; **Move to version 3** stays off. [Moving instances to a newer version](/keel/processes/#moving-instances-to-a-newer-version) lists the reasons. If the check itself fails, the dialog says why, in Keel's words, with **Try again**.
+3. Otherwise press **Move to version 3**, or **Keep it on version 2** to leave the instance as it is.
+
+Keel says "Moved *number* to version 3.", closes the dialog and shows the instance on version 3: the header reads `v3`, the history says who moved it, and the diagram is the new version's. If Keel refuses at the last moment, because something changed since the check, the dialog stays open and shows the reasons, or Keel's message when the version asked for is no longer the current one, and the page reads the instance again. A move cannot be undone: an instance moves only to the process's current version, never back. A resend of the same move after a failed one is applied once. Builders may move the running instances of an older version together from the [Versions tab](/keel/builder/processes/#moving-the-instances-of-an-older-version).
 
 ## Cancel a process
 
@@ -146,4 +157,4 @@ Keel says "Cancelled *number*." and the page shows the instance as **Cancelled**
 
 ## Not offered on a process
 
-A process is not a case. An instance has no **Follow** and no Updates, no files, no case agent, no re-run and no **Move by hand…**, and its history has no **Full history with inputs and outputs**. Builders see an instance's agents and runs on the [builder's Agents screen](/keel/builder/agents/).
+A process is not a case. An instance has no **Follow** and no Updates, no files, no case agent, no re-run and no **Move by hand…** (its **Move to version 3…** puts it on a newer version of its process, as above), and its history has no **Full history with inputs and outputs**. Builders see an instance's agents and runs on the [builder's Agents screen](/keel/builder/agents/).

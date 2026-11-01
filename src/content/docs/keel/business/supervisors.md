@@ -100,7 +100,7 @@ A supervisor can move a case to any stage, or to a step of a stage, with a reaso
 A [BPMN process](/keel/processes/)'s instance can need a supervisor: an agent task whose agent failed for good, a call to a system that failed for good, or a timer that could not fire. The **Processes** page finds them under its **Needs a supervisor** tab, and the instance's page shows them first, under **Needs a supervisor**.
 
 - **Retry** starts the task again. A call that may have reached its system before it failed asks first: "Its call may have reached *system* before it failed. A retry calls *system* again." Check the system, then press **Retry**.
-- **More actions** on a running instance has **Cancel the process…**. It asks for a **Reason**, which Keel keeps in the instance's history, and withdraws everything still open in the process. It is the way out of a timer that could not fire.
+- **More actions** on a running instance has **Move to version 3…**, when its process has a newer version than the one the instance runs, and **Cancel the process…**. **Move to version 3…** checks whether the instance can carry over to the new version and, if it can, moves it: see [Move to the current version](/keel/business/open-process/#move-to-the-current-version). **Cancel the process…** asks for a **Reason**, which Keel keeps in the instance's history, and withdraws everything still open in the process. It is the way out of a timer that could not fire.
 
 See [An open process](/keel/business/open-process/).
 
@@ -114,4 +114,4 @@ See [An open process](/keel/business/open-process/).
 
 ## What staff who are not supervisors see
 
-Staff see the **Work**, **Cases** and **Processes** pages, start cases and processes, work the steps given to them or their queues, answer agents' questions, delegate and return their items, message agents and watch sessions. They do not see the Team page, the Overview, **Queue settings**, **Reassign**, **Move by hand…**, **Open Keel Builder**, **Retry** or **Cancel the process…** on a process, or its **Needs a supervisor** card.
+Staff see the **Work**, **Cases** and **Processes** pages, start cases and processes, work the steps given to them or their queues, answer agents' questions, delegate and return their items, message agents and watch sessions. They do not see the Team page, the Overview, **Queue settings**, **Reassign**, **Move by hand…**, **Open Keel Builder**, **Retry**, **Move to version…** or **Cancel the process…** on a process, or its **Needs a supervisor** card.

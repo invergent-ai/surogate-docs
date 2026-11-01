@@ -31,7 +31,7 @@ The address keeps the tab, the process and the search, so you can share a link t
 
 | Column | What it shows |
 |---|---|
-| **Process** | The instance number over the process's name, such as `P-000002` over `Loan review`. The whole row opens the instance. |
+| **Process** | The instance number and the version it runs on over the process's name, such as `P-000002 · v1` over `Loan review`. The whole row opens the instance. |
 | **Status** | **Running**, **Completed**, **Ended**, **Failed** or **Cancelled**. An instance that needs a supervisor also shows **Needs a supervisor**. |
 | **Started** | The day the instance started. |
 | **Updated** | How long ago it last changed, such as `2 h ago`. A phone does not show it. |
