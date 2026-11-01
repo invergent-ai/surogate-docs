@@ -46,12 +46,12 @@ If the draft cannot be made, the dialog says why, in Keel's words when Keel gave
 
 Under the description, the dialog checks the designer agent: **Checking the designer agent…** while it does, and **Create** stays off until the agent can work on processes. Otherwise it says why, as the [designer agent's page](/keel/builder/designer-agent/#opening-the-panel) lists: **This project has no designer agent.**, **The designer agent is switched off in Studio.**, or **The designer agent has no tools for processes in this project yet. Ask an administrator.** If the check cannot be made, the dialog says why, with **Try again**. If the window is narrowed to a phone's width, the choice becomes **An empty diagram**.
 
-**Create** makes the draft when you picked **A new draft**, saves an empty process in it, as **An empty diagram** does, and opens the process's page in the draft. The designer agent's panel opens there by itself, and your description is sent to the agent as the chat's first message. The turn's changes are those since the empty process was saved, even in an open draft that holds other changes of yours.
+**Create** makes the draft when you picked **A new draft**, saves an empty process in it, as **An empty diagram** does, and opens the process's page in the draft. The designer agent's panel opens there by itself, and a first message is sent for you: Keel's request to draft the process in its file, then your description. The turn's changes are those since the empty process was saved, even in an open draft that holds other changes of yours.
 
 If something fails on the way:
 
 - The draft cannot be made, or Keel refuses the file: the dialog says why, as for any new process, and stays open. **Create** again uses the draft already made.
-- The empty process is saved, but the chat cannot open, such as when the agents service cannot be reached: the empty process stays in the draft, and the panel says why, with **Try again**, which sends your description then.
+- The empty process is saved, but the chat cannot open, such as when Studio cannot be reached: the empty process stays in the draft, and the panel says why, with **Try again**, which sends your description then.
 - The process's page cannot be opened: the dialog says "The process could not be opened. Try again."
 
 Your description is kept in this browser tab only, until it is sent: reloading the page loses it. See [The designer agent](/keel/builder/designer-agent/#processes) for what the agent does with it.
@@ -67,13 +67,13 @@ The page's header shows the process's name and, under it, its published version:
 | **Connections** | The connections the process calls, and their credentials. |
 | **Figures** | How the process's instances and tasks did over a period, by version and by task. |
 
-On the right of the header, everyone sees **Download**. Editors and owners also see **Upload a file**, with no draft open **Change the diagram**, **Ask the designer agent** (not on a phone's width), and in a draft, **Dry run** and **Review and publish**. See [Dry run and publish](/keel/builder/publish/).
+On the right of the header, everyone sees **Download**. Editors and owners also see **Upload a file**, with no draft open **Change the diagram**, **Ask the designer agent** in a draft or, with none open, on the current version (not on a phone's width), and in a draft, **Dry run** and **Review and publish**. See [Dry run and publish](/keel/builder/publish/).
+
+On the Diagram tab, a process that is not published, opened with no draft or in a draft that has no file for it, says **This process is not here**: "Open it in the draft that holds it." A draft that has no file for a published process says **The draft has no file for this process.**
 
 ### Asking the designer agent
 
 **Ask the designer agent** opens the [designer agent's](/keel/builder/designer-agent/) panel beside the page, in the open draft. With no draft open, it is offered on the current version only, and asks for a draft first, as **Upload a file** does. The panel stays open as you move between the tabs and the draft's other processes, and ends when you leave the draft. While the agent takes its turn, the page waits: see [The designer agent](/keel/builder/designer-agent/#during-its-turn). After its turn, the page reads the file again, and **Show changes** lists what it changed, without the diagram, with **Revert**.
-
-On the Diagram tab, a process that is not published, opened with no draft or in a draft that has no file for it, says **This process is not here**: "Open it in the draft that holds it." A draft that has no file for a published process says **The draft has no file for this process.**
 
 ### Upload a file
 

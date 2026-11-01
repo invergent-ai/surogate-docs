@@ -202,7 +202,7 @@ Keel refuses a period that holds more than 100,000 runs: "The export holds more 
 
 ### Why is there no "Ask the designer agent"?
 
-It shows in the designer to editors and owners, in an open draft. With **Published** shown, open or start a draft first. Viewers do not see it.
+It shows to editors and owners in the designer, in an open draft, and on a process's page, not on a phone's width. With **Published** shown in the designer, open or start a draft first. On a process's page, with no draft open, it asks for a draft first on the current version. Viewers do not see it.
 
 ### Why can I not edit while the designer agent works?
 

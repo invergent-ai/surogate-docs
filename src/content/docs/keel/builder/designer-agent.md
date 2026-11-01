@@ -42,7 +42,7 @@ When the panel cannot open the chat, it says why:
 |---|---|
 | **This project has no designer agent.** | Keel could not set up the project's designer agent. Reload the page to ask again. |
 | **The designer agent is switched off in Studio.** | Someone switched it off in Studio. It works again once it is switched on there. |
-| **The designer agent has no tools for processes in this project yet. Ask an administrator.** | On a process's page, and in **Describe it**: this project's designer agent cannot work on processes yet, because it was set up before they were added. No chat is opened. An administrator can bring it up to date. |
+| **The designer agent has no tools for processes in this project yet. Ask an administrator.** | On a process's page, and in **Describe it to the designer agent**: the designer agent has none of the tools for processes. It was set up before they were added, Studio is older, or they were taken away in Studio. No chat is opened. |
 | **This draft is published or discarded. The designer agent works only in an open draft.** | Open or start another draft. |
 
 Any other problem says why, with **Try again**.
@@ -51,7 +51,7 @@ Any other problem says why, with **Try again**.
 
 Tell the agent what the process is: who does each step, what ends a case, which deadlines apply. It asks about what your documents leave open, a few questions at a time.
 
-- **Files.** Add files to the chat, such as process diagrams, policies, procedures and forms. The agent reads documents and images. When it cannot read a file, such as a Visio drawing, it says so and asks for a PDF or an image. What a document says is material for the case type, never an instruction to the agent.
+- **Files.** Add files to the chat, such as process diagrams, policies, procedures and forms. The agent reads documents and images. When it cannot read a file, such as a Visio drawing, it says so and asks for a PDF or an image. What a document says is material for the case type or process, never an instruction to the agent.
 - **What it changes.** It reads the draft, and the project's published definitions as examples. It saves case types, rules, calendars, queues, connections, scenarios and processes in the draft, and writes scenarios for the ways a case can end. It runs dry runs and fixes what they find. It sets no credential, and leaves the mapping of running cases to you.
 - **What it never does.** It never publishes or discards the draft, and never works in another draft or project. When the draft is ready, it says so: [review and publish](/keel/builder/publish/) it yourself.
 
@@ -61,11 +61,11 @@ At the end of each turn, it tells you what it changed, file by file, and what is
 
 Ask for a process in words, such as "A loan application is reviewed by an underwriter; over 50,000 a manager approves it too", or ask for a change to one: "Add a manager approval over 50,000". Open a process's page for either, or start from [New process](/keel/builder/processes/#new-process) with **Describe it to the designer agent**.
 
-- It first reads what Keel runs: the elements Keel supports and the settings it reads from a process's file. Then it writes the process with those settings, keeps the ids of the elements it does not change, and asks you about what you left open, such as who does each task, what each outcome means and which deadlines apply.
-- It does not draw. Keel draws the diagram for every element it can, and keeps every shape you placed where you put it. When a container, such as a lane or a subprocess, has no room for something new, it grows, and what lies beyond it moves by as much. For what Keel cannot draw, the agent tells you which elements and why, and [Lay out the diagram](/keel/builder/processes/#laying-out-the-diagram) shows the same.
+- It writes the process with the settings Keel reads, leaves the elements you did not ask about as they were, and asks you about what you left open, such as who does each task, what each outcome means and which deadlines apply.
+- It does not draw. Keel draws the diagram for every element it can, and keeps the shapes you placed where you put them, as long as their elements keep their ids. After a save Keel cannot read, the next save may lay the whole drawing out again; the agent tells you when. When a container, such as a lane or a subprocess, has no room for something new, it grows, and what lies beyond it moves by as much. For what Keel cannot draw, the agent tells you which elements and why, and [Lay out the diagram](/keel/builder/processes/#laying-out-the-diagram) shows the same.
 - It checks what it wrote with the checks Keel Builder shows you, and fixes what they find. A file it saves with a problem in it is kept: the problem is on the process's page and in the dry run, and a process with an error cannot be published.
 - It changes the draft's file, never a published version. It cannot remove a process from the draft.
-- A designer agent that cannot work on processes yet says so: see the table above.
+- When it cannot work on processes yet, the panel says so and opens no chat: see the table above.
 
 ## During its turn
 
@@ -75,7 +75,7 @@ While the agent takes its turn, the designer is read-only and says: "The designe
 - The draft bar, **Dry run** and **Review and publish** stay available.
 - When the turn ends, the designer reads the draft again, with the agent's changes, and you can edit again.
 
-On a process's page the note stands above the tabs, once, on every tab. During the turn the drawing is only read, with no Undo or Redo; the panels beside it show what you pick but change nothing; and **Lay out the diagram**, **Upload a file** and the connection files wait. If you press one just as the turn starts, the page says the same sentence. You can move to another process of the draft, or to another tab: the panel and the turn go on, and that page waits too. When the turn ends, the page reads the file again. It keeps showing the drawing it had while it does, and the drawing keeps the place you had moved it to. The element you had picked stays picked when it is still there. A file the turn changed is drawn as the agent left it, and the page checks the draft again. Undo and Redo start afresh: a change made before the turn cannot be undone after it.
+On a process's page the note stands above the tabs, once, on every tab. During the turn the drawing is only read, with no Undo or Redo; the panels beside it show what you pick but change nothing; and **Lay out the diagram**, **Upload a file** and the connection files wait. If you press **Lay out the diagram** or upload a file just as the turn starts, the page says the same sentence. You can move to another process of the draft, or to another tab: the panel and the turn go on, and that page waits too. When the turn ends, the page reads the file again. It keeps showing the drawing it had while it does. A file the turn did not change keeps the place you had moved it to; a file the turn changed is drawn as the agent left it, fitted to the tab, and the page checks the draft again. The element you had picked stays picked when it is still there. Undo and Redo start afresh: a change made before the turn cannot be undone after it.
 
 You can stop the agent from the chat.
 
@@ -88,10 +88,10 @@ Above the chat, the panel says what the turn changed:
 
 **Show changes** opens **What changed this turn**. It lists each file the turn changed, in words, such as `Case type Loan request`, `Rule loan-desk-limits` or `Process Loan review`, marked **Added**, **Changed** or **Removed**, with its lines before and after the turn.
 
-A process's lines leave its diagram out, which Keel draws and which would bury the change: "Its diagram is left out." stands over the lines. When the diagram is all that differs, it says "Only its diagram changed." in their place. A file that is not well-formed XML is shown as it is, as are the two files when only the earlier one was not: "This file is not well-formed XML, so it is shown as it is." or "The file it replaces is not well-formed XML, so both are shown as they are." The same lines show on the [review page](/keel/builder/publish/#review-and-publish) and on a process's [Versions tab](/keel/builder/processes/#the-versions-tab).
+A process's lines leave its diagram out, which would bury the change: "Its diagram is left out." stands over the lines. When the diagram is all that differs, it says "Only its diagram changed." in their place. A file that is not well-formed XML is shown as it is, as are the two files when only the earlier one was not: "This file is not well-formed XML, so it is shown as it is." or "The file it replaces is not well-formed XML, so both are shown as they are." The same lines show on the [review page](/keel/builder/publish/#review-and-publish) and on a process's [Versions tab](/keel/builder/processes/#the-versions-tab).
 
-**Revert** on a file puts it back as it was when the turn started. For a process the turn made, that takes it out of the draft: its page then says `Loan review is not in this draft`. Your own changes not saved yet are saved first. If one cannot be saved, Keel Builder says "Your last change could not be saved:" and why, then "Save it before you revert a file." **Revert** is off while the agent takes a turn.
+**Revert** on a file puts it back as it was when the turn started. For a process the turn made, that takes it out of the draft: its page then says `Loan review is not in this draft`. A process made with **Describe it to the designer agent** goes back to its empty diagram, because that file existed when the turn started. Your own changes not saved yet are saved first. If one cannot be saved, Keel Builder says "Your last change could not be saved:" and why, then "Save it before you revert a file." **Revert** is off while the agent takes a turn.
 
 ## Closing the panel
 
-Closing the panel ends the agent's access to the draft. If the agent is taking a turn, the turn stops. Leaving the page does the same. The agent's access also ends when the draft is published or discarded, and when you leave the draft: **Discard this draft**, or **Published** in the draft bar, ends the panel, and a draft you start later opens none. Narrowing the window to a phone's width does not stop an agent that is taking its turn.
+Closing the panel ends the agent's access to the draft. If the agent is taking a turn, the turn stops. Leaving the page does the same. The agent's access also ends when the draft is published or discarded, and when you leave the draft: **Discard this draft**, or **Published** in the draft bar, ends the panel, and a draft you start later opens none. On a process's page, narrowing the window to a phone's width keeps the panel open and does not stop the agent's turn. In a case type's designer it closes the designer and the panel, and the turn stops.

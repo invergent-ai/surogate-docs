@@ -92,7 +92,7 @@ When an agent needs a person, it **raises a hand**: it asks a question, sometime
 Each project has two **helpers**, agents Keel sets up for it:
 
 - the **case agent**, which a person asks about one case, or one process instance, in the business app. It answers from the case's data, files and history, or the instance's data, tasks, waits and history, and fills in that person's form when they ask. It never submits. See [The case agent](/keel/business/case-agent/).
-- the **designer agent**, which a builder chats with in Keel Builder. It drafts case types in the open draft, as the builder, and never publishes. See [The designer agent](/keel/builder/designer-agent/).
+- the **designer agent**, which a builder chats with in Keel Builder. It drafts case types and processes in the open draft, as the builder, and never publishes. See [The designer agent](/keel/builder/designer-agent/).
 
 A helper never works a step or a work item, and is never offered as a step's agent or an intake agent.
 
