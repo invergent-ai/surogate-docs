@@ -45,6 +45,7 @@ The page's header shows the process's name and, under it, its published version:
 | **Diagram** | The drawing of the file, and in a draft, the problems found in it. |
 | **Versions** | Every published version, what each changed, and its file, and the moves of running instances to the current version. |
 | **Connections** | The connections the process calls, and their credentials. |
+| **Figures** | How the process's instances and tasks did over a period, by version and by task. |
 
 On the right of the header, everyone sees **Download**. Editors and owners also see **Upload a file**, with no draft open **Change the diagram**, and in a draft, **Dry run** and **Review and publish**. See [Dry run and publish](/keel/builder/publish/).
 
@@ -316,6 +317,20 @@ A new version does not take the running instances with it: each stays on the ver
 
 Above the rows, **Moves** lists the process's moves, newest first. Each card shows `v2 to v3 · 20 Oct 2026, 10:00`, **Running** or **Done**, a bar named by how many instances it handled of those it had to ("8 of 10 instances handled", moved and stayed together), and "6 moved · 2 stayed · 2 remaining". A running move is read again every five seconds until it is done, and then the number of instances running on each version is read again. When a move left instances behind, **Instances that stayed (2)** opens a table of them, **Instance** and **Why**, by number as people count, P-000009 before P-000010, fifty at a time with **Show more**. Each shows its number and each reason on a line of its own, never its data. The instances stay where they were, and their reasons are worded as the forecast's. If the moves cannot be read, the tab says why, in Keel's words, or "The moves of running instances could not be read."; if the list of instances, in Keel's words or "The instances that stayed could not be read." Each comes with **Try again**. A Keel older than moves sends nothing for them, and the tab then shows no section and no moves.
 
+## The Figures tab
+
+The tab shows how the process's instances and tasks did. Nothing is read until it opens. The address keeps the tab, the period (`days`, not written for 30) and the version (`figuresVersion`), so a link shares them.
+
+- **Period** offers **Last 7 days**, **Last 30 days** and **Last 90 days**, and opens on 30 days.
+- **Version** offers **All versions**, then each version that has instances running, needing a supervisor, or started or finished in the period, and the current one, newest first, such as `v3 · current` and `v2`.
+
+Under them are the six figures of the instances as tiles (screen readers hear them as *Figures of Loan review*, or *Figures of Loan review v2* when a version is picked): **Running**, **Needs a supervisor**, **Started**, **Finished**, **Failed or cancelled** and **Median to finish**, with the caption "Running and needs a supervisor are as of now. The other figures cover the last 30 days." **Finished** adds `28 completed · 2 ended` when any ended, **Failed or cancelled** adds `1 failed · 3 cancelled` when any failed or was cancelled, and **Median to finish** adds `90% within 4.2 d`. [Figures](/keel/processes/#figures) says what each counts. An instance counts under the version it runs on, or ended on.
+
+- **Versions** is a table with a row for each version, `v3 · current` and `v2`, and the same six columns, whatever **Version** says.
+- **Tasks** is a table of the process's tasks, for all versions or the version picked: **Task**, **Waits on**, **Open**, **Done**, **Median time**, **Met deadline**, **Waited to be taken** and **Incidents**, with the caption "Open is as of now. The other figures cover the tasks done in the last 30 days. A task that runs for each item counts each of its instances." The columns are those of the [Processes page](/keel/business/processes/#figures-supervisors). A process with no task to measure says "This process has no task to measure." A version whose file no longer loads says "Version 2 no longer loads, so its tasks cannot be shown."
+
+While a new choice loads, the tab keeps the last figures, dimmed. If Keel cannot read them, the tab says **The figures could not be loaded** with the reason, in Keel's words, such as "The figures took too long to read. Try a shorter period." or, for a version the process does not have, "The project has no process loan-review v9.", and **Try again**; **Period** and **Version** stay. A process that only a draft holds says **Not published yet.** and reads nothing. A Keel older than these figures says **Figures are not available**: "This Keel does not count the figures of processes yet."
+
 ## The Connections tab
 
 The tab says: "The connections this process calls, with their credentials. Its connection files are changed in a draft." With no draft, each connection of the process shows its **Base URL** and **Authentication**, read-only, as published. In a draft, each connection file of the process shows as the [Connections tab](/keel/builder/connections/) of a case type shows its own: **Base URL**, **Authentication** with what its kind needs, **Idempotency-key header** and **Default timeout (seconds)**. Editors and owners change them, except during the designer agent's turn, and a viewer reads them. **New connection**, for editors and owners, asks for a **Name** in a dialog that says "It is made in the draft. Its calls need a base URL next." and makes the file in the draft. A connection file is never deleted. Each connection also shows its credentials as the [Connections tab](/keel/builder/connections/#credentials) of a case type shows them:
@@ -347,5 +362,6 @@ When you open **Review and publish** from a process, the page's link back reads 
 | Read the panel and **Elements** | Yes | Yes | Yes |
 | Run the draft's checks, **Dry run**, publish | No | Yes | Yes |
 | Read the forecast of a move of running instances, and follow the moves | Yes | Yes | Yes |
+| Read the process's figures | Yes | Yes | Yes |
 | **Move running instances to v3** (an older version's, to the current one) | No | Yes | Yes |
 | Set, replace and delete a connection's credential | No | Yes | Yes |

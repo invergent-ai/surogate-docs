@@ -65,7 +65,7 @@ The **Agents** tab lists the agents the project's case types and [processes](/ke
 - Turning the switch off asks **Turn off *agent*?**: "People work each of its steps that opens from now on." Its new steps go to people in the queue that gets its questions; steps it already works carry on. So do the tasks of a process: each that starts from then on goes to people in the queue named for the agent's questions, and a task an agent drafts for a person is the person's to work alone. It is no longer offered as a queue member, a delegate or a Reassign target. The row then reads **Off since** the date, with who turned it off.
 - Turning it on applies at once.
 
-With no agents, the tab says **No case type of this project uses an agent**.
+With no agents, the tab says **No case type or process of this project uses an agent**.
 
 ## Authority limits
 

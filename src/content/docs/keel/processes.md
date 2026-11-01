@@ -619,6 +619,7 @@ Builders read the published processes with:
 | List the process's moves, newest first | `GET /api/build/projects/{project}/processes/{key}/moves` |
 | Read a move | `GET /api/build/projects/{project}/processes/{key}/moves/{move_id}` |
 | List the instances a move left on their version | `GET /api/build/projects/{project}/processes/{key}/moves/{move_id}/stayed`, with `limit` (1 to 100, 50 unless given) and `offset` |
+| Read the process's figures: see [Figures](#the-figures-through-the-api) | `GET /api/build/projects/{project}/processes/{key}/figures`, with `days` and `version` |
 
 Any member of the project reads the moves; an editor or an owner starts one. The forecast checks the oldest 1,000 running instances of `from_version` as they stand, and answers how many run, how many it checked, how many of those could move, and the reasons the others could not, the one most instances meet first:
 
@@ -692,6 +693,91 @@ The instance's history shows "*Who* moved the process to version 3", or "The pro
 
 An instance moves only to its process's current version, and only from an older one, never back. A version published while a move runs leaves the instances not yet moved on their version, with the reason "Version 4 was published while the move ran: move the instance to version 4"; start another move.
 
+## Figures
+
+Keel counts a process's instances and its tasks over a period. Supervisors read the figures on the business app's [Processes](/keel/business/processes/#figures-supervisors) page, above the list. Builders read them on the **Figures** tab of a process's page in Keel Builder, by version: see [the Figures tab](/keel/builder/processes/#the-figures-tab). They are apart from the cases' figures: the [Overview](/keel/business/overview/) never counts an instance, and a process's tasks and instances never count in a case's figures. The figures name no instance and show no value of its data.
+
+A period is the last 7, 30 or 90 days in the apps, and ends now. Through the API it is `days`, 1 to 92, 30 unless given. A count of none reads **None**, and a time or a share that nothing is behind reads `—`.
+
+### What the instances' figures count
+
+| Figure | What it counts |
+|---|---|
+| **Running** | Instances running now. |
+| **Needs a supervisor** | Instances with an incident or a timer that could not fire, now: the count of the Processes page's **Needs a supervisor** tab. |
+| **Started** | Instances that started in the period. |
+| **Finished** | Instances that completed, or that a terminate end event ended, in the period, with `28 completed · 2 ended` under it when any ended. |
+| **Failed or cancelled** | Instances an error ended, or that were cancelled, in the period, with `1 failed · 3 cancelled` under it. |
+| **Median to finish** | The median time from start to finish of the instances that finished in the period, with `90% within 4.2 d` under it. |
+
+An instance counts in the period it ended in, and an instance still running counts in no time. An instance counts under the version it runs on, or ended on: one moved to a newer version counts under the newer one, with its whole time and its start.
+
+### What the tasks' figures count
+
+A process has a row for each task its file shows a figure for. **Waits on** says what the task waits for, and so which tasks have a row:
+
+| Waits on | The task |
+|---|---|
+| **A person** | A user task or a manual task. |
+| **An agent** | A service task that calls an agent. |
+| **A system** | A service task that calls a system. |
+| **A case** | A service task that starts a case and waits for it. |
+| **A called process** | A call activity. |
+| **A message** | A receive task, or a message catch event. |
+| **A signal** | A signal catch event. |
+| **A timer** | A timer catch event. |
+| **The first of its events** | An event-based gateway. |
+| **Its own tasks** | An embedded subprocess, or an event subprocess. |
+
+Start and end events, throw events, the other gateways, business rule tasks, a service task that starts a case and does not wait, and boundary events have no row: they take no time of their own. A receive task or a catch event that an event-based gateway waits on has none either: the gateway counts the wait.
+
+| Figure | What it counts |
+|---|---|
+| **Open** | Tasks waiting now, in instances running now. `4 · 1 past deadline` counts, of them, those whose deadline passed while they waited. |
+| **Done** | Tasks that left in the period by completing, or by ending in a BPMN error. A task withdrawn, because an instance was cancelled or an event subprocess interrupted it, is not done. |
+| **Median time** | The median time from the start of the done tasks to their end. |
+| **Met deadline** | Of the done tasks, the share that were not past their deadline, for a task with a service level. `—` for another, and when none is done. |
+| **Waited to be taken** | For a person's task only: the median time from the opening of its work item to its taking, or to its closing when nobody took it. A task given back and taken again counts to its last taking, and an item handed to a person when it opened waited nothing. |
+| **Incidents** | Incidents raised on the tasks that left in the period, done or withdrawn. |
+
+A task counts under the version of the change that ended it, so what an instance finished before a move stays with the older version. A task still open counts under the version of its instance now.
+
+- **A task that runs for each item** counts each of its instances as a task of its own: each vote, each call.
+- **A subprocess** counts once, as **Its own tasks**, and its tasks count as theirs. An event subprocess counts its run the same way, and the task it interrupted is withdrawn.
+- **A call activity** counts the time it waits for the called instance. The called process's tasks count under that process.
+- **A service task that starts a case** counts the time its case takes. The case counts only in the cases' figures.
+- **A timer** counts the time the timer ran.
+- **A version that no longer loads** keeps its instances' figures, but its tasks cannot be shown: "Version 2 no longer loads, so its tasks cannot be shown." Read for every version, a task shows by the name the current version gives it, else the newest version that names it. A task no version that loads names has no row.
+
+After an upgrade to a Keel that counts them, Keel counts the tasks of the instances that ran before in the background. Until it is done, the task figures cover the instances counted so far.
+
+### The figures through the API
+
+The routes are listed with the others: the business door's two in [Running instances](#running-instances), for supervisors, and Keel Builder's, for any member of the project, in the builders' list above. Other staff and service keys get `403 forbidden` on the business door's: "Only the project's supervisors read the process figures."
+
+The first answers a row for each published process, by name, with zeros for one that has no instance. `name` is the current version's name, else the key made readable:
+
+```json
+{"period": {"since": "2026-10-14T09:00:00Z", "until": "2026-11-13T09:00:00Z", "previous_since": "2026-09-14T09:00:00Z"},
+ "processes": [{"process": "loan-review", "name": "Loan review", "version": 3, "running": 12, "attention": 1, "started": 40,
+                "completed": 30, "terminated": 2, "failed": 1, "cancelled": 3, "median_seconds": 183600.0, "p90_seconds": 432000.0}]}
+```
+
+The other two answer the same for one process. `version` left out reads every version, and `instances` is the process's row; a version reads that version's row and tasks. `versions` has each version with an instance figure and the current one, newest first. `tasks` is `null` for a version that no longer loads:
+
+```json
+{"period": {"since": "2026-10-14T09:00:00Z", "until": "2026-11-13T09:00:00Z", "previous_since": "2026-09-14T09:00:00Z"},
+ "process": "loan-review", "name": "Loan review", "current_version": 3, "version": null,
+ "instances": {"running": 12, "attention": 1, "started": 40, "completed": 30, "terminated": 2, "failed": 1, "cancelled": 3,
+               "median_seconds": 183600.0, "p90_seconds": 432000.0},
+ "versions": [{"version": 3, "running": 12, "attention": 1, "started": 40, "completed": 30, "terminated": 2, "failed": 1,
+               "cancelled": 3, "median_seconds": 183600.0, "p90_seconds": 432000.0}],
+ "tasks": [{"element": "review", "name": "Review the loan", "kind": "person", "open": 4, "past_deadline": 1, "done": 28,
+            "median_seconds": 7200.0, "within_deadline": 0.9285714285714286, "waited_seconds": 1800.0, "incidents": 0}]}
+```
+
+A process the project never published, and a version above its current one, are `404 unknown-process`: "The project has no process *key*." or "The project has no process *key* v9." A `days` outside 1 to 92, or a `version` that is not a whole number from 1 to 2,147,483,647, is `422 invalid-request`. A read that takes more than 15 seconds is `503 figures-unavailable`: "The figures took too long to read. Try a shorter period."
+
 ## Working a process's tasks
 
 A process's user and manual tasks are worked in the business app, like a case's steps.
@@ -734,7 +820,7 @@ A task with a `keel:service-level` has a goal and a deadline from the moment it 
 - When the task leaves, completed or withdrawn, its goal and deadline go with it. A task reached again in a loop counts from its new start.
 - Each instance of a task that runs for each item has a goal and a deadline of its own, from the moment that instance is ready: when the task runs one after another, an instance counts from when the one before it completed.
 
-A process's tasks never count in the cases' figures.
+A process's tasks never count in the cases' figures. Their own are in [Figures](#figures).
 
 ## Agents in a process's queues
 
@@ -758,6 +844,8 @@ Staff sign in as they do for the business app; another system uses a [service ke
 | Start an instance | `POST /api/projects/{project}/processes` with `{"process": "loan-review", "data": {"amount": "20000.00"}}` | Staff and service keys |
 | List the processes an instance may start on, each with the form it starts with | `GET /api/projects/{project}/process-types` | Staff and service keys |
 | List instances, newest first | `GET /api/projects/{project}/processes`, with `process`, `status`, `attention=true`, `q` (a part of the number, two to a hundred characters), `cursor` and `limit`. Each row names its process. | Staff and service keys |
+| Read the figures of every process the project published: see [Figures](#the-figures-through-the-api) | `GET /api/projects/{project}/process-figures`, with `days` | Supervisors |
+| Read the figures of one process | `GET /api/projects/{project}/process-figures/{key}`, with `days` and `version` | Supervisors |
 | Read an instance | `GET /api/processes/{instance_id}` | Staff and service keys |
 | Ask whether it can move to the process's current version, and why not | `GET /api/processes/{instance_id}/move` | Staff and service keys |
 | Move it to the current version | `POST /api/processes/{instance_id}/move` with `{"to_version": 3}` | Supervisors |
