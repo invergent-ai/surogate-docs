@@ -12,35 +12,35 @@ Supervisors see a card **Figures** above the list, with how the project's proces
 
 **Period**, beside the card's heading, offers **Last 7 days**, **Last 30 days** and **Last 90 days**. It opens on 30 days. The address keeps the period, as `days`, and the process; 30 days is not written in it.
 
-With **All processes** in the filters, the card shows the table **Processes**: a row for each process the project has published, by name, with its current version muted after it, such as `Loan review v3`. Its columns are:
+With **All processes** in the filters, the card shows a table labelled **Processes**: a row for each process the project has published, by name, with its current version muted after it, such as `Loan review v3`. Its columns are:
 
 | Column | What it shows |
 |---|---|
 | **Running** | The instances running now. |
 | **Needs a supervisor** | The instances with an incident or a timer that could not fire, now: the count of the **Needs a supervisor** tab. |
 | **Started** | The instances that started in the period. |
-| **Finished** | The instances that completed or ended in the period, with `28 completed · 2 ended` under it when any ended. |
-| **Failed or cancelled** | The instances an error ended, or a supervisor cancelled, in the period, with `1 failed · 3 cancelled` under it. |
-| **Median to finish** | The median time from start to finish of the instances finished in the period, such as `4.2 d`, with `90% within 6.1 d` under it. `—` when none finished. |
+| **Finished** | The instances that completed or ended in the period. |
+| **Failed or cancelled** | The instances an error ended, or that were cancelled, in the period. |
+| **Median to finish** | The median time from start to finish of the instances finished in the period, such as `4.2 d`. `—` when none finished. |
 
 A count of none reads **None**. Under the table: "Running and needs a supervisor are as of now. The other figures cover the last 30 days." With no process published, the card says "No process is published in this project yet."
 
-Press a process's name to pick it: the filter and the list narrow to it, and the card shows its figures. The six figures are named **Figures of Loan review**, with the same caption, and under them **Tasks**, a table of the process's tasks over all its versions:
+Press a process's name to pick it: the filter and the list narrow to it, and the card shows its figures. The card then shows the process's six figures as tiles (screen readers hear them as *Figures of Loan review*), with the same caption. **Finished** adds `28 completed · 2 ended` when any ended, **Failed or cancelled** adds `1 failed · 3 cancelled` when any failed or was cancelled, and **Median to finish** adds `90% within 4.2 d`. Under them is **Tasks**, a table of the process's tasks over all its versions:
 
 | Column | What it shows |
 |---|---|
 | **Task** | The task's name. |
 | **Waits on** | What the task waits for: **A person**, **An agent**, **A system**, **A case**, **A called process**, **A message**, **A signal**, **A timer**, **The first of its events** or **Its own tasks**. |
 | **Open** | The tasks waiting now, such as `4`, or `4 · 1 past deadline`. |
-| **Done** | The tasks that were completed in the period. |
+| **Done** | The tasks that left in the period by completing, or by ending in a BPMN error. |
 | **Median time** | The median time the done tasks took, from their start to their end. |
 | **Met deadline** | Of the done tasks, the share that were not past their deadline, for a task with a service level. `—` for others. |
-| **Waited to be taken** | For a person's task, the median time from the opening of its work item to its taking, or to its closing when nobody took it. `—` for others. |
+| **Waited to be taken** | For a person's task, the median time from the opening of its work item to its taking, or to its closing when nobody took it; an item handed to a person when it opened waited nothing. `—` for others. |
 | **Incidents** | The incidents raised on tasks that left in the period. |
 
 Under it: "Open is as of now. The other figures cover the tasks done in the last 30 days. A task that runs for each item counts each of its instances." A process with no task to measure says "This process has no task to measure." [Figures](/keel/processes/#figures) says what each figure counts.
 
-While another period or process loads, the card keeps the last answer, dimmed. When Keel cannot read the figures, the card says **The figures could not be loaded** with the reason and **Try again**. A read that takes too long says "The figures took too long to read. Try a shorter period." The card is not read again when the list changes. **Period**, picking a process and **Try again** read it again.
+While another period or process loads, the card keeps the last answer, dimmed. When Keel cannot read the figures, the card says **The figures could not be loaded** with the reason and **Try again**. A read that takes too long says "The figures took too long to read. Try a shorter period." A period or process that cannot be read replaces the figures with the reason, in Keel's words, and **Try again**; **Period** stays. The card is not read again when the list changes. **Period**, picking a process and **Try again** read it again.
 
 ## Finding an instance
 

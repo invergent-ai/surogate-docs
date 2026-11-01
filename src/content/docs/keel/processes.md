@@ -707,7 +707,7 @@ A period is the last 7, 30 or 90 days in the apps, and ends now. Through the API
 | **Needs a supervisor** | Instances with an incident or a timer that could not fire, now: the count of the Processes page's **Needs a supervisor** tab. |
 | **Started** | Instances that started in the period. |
 | **Finished** | Instances that completed, or that a terminate end event ended, in the period, with `28 completed · 2 ended` under it when any ended. |
-| **Failed or cancelled** | Instances an error ended, or a supervisor cancelled, in the period, with `1 failed · 3 cancelled` under it. |
+| **Failed or cancelled** | Instances an error ended, or that were cancelled, in the period, with `1 failed · 3 cancelled` under it. |
 | **Median to finish** | The median time from start to finish of the instances that finished in the period, with `90% within 4.2 d` under it. |
 
 An instance counts in the period it ended in, and an instance still running counts in no time. An instance counts under the version it runs on, or ended on: one moved to a newer version counts under the newer one, with its whole time and its start.
@@ -721,7 +721,7 @@ A process has a row for each task its file shows a figure for. **Waits on** says
 | **A person** | A user task or a manual task. |
 | **An agent** | A service task that calls an agent. |
 | **A system** | A service task that calls a system. |
-| **A case** | A service task that starts a case, while it waits for it. |
+| **A case** | A service task that starts a case and waits for it. |
 | **A called process** | A call activity. |
 | **A message** | A receive task, or a message catch event. |
 | **A signal** | A signal catch event. |
@@ -729,7 +729,7 @@ A process has a row for each task its file shows a figure for. **Waits on** says
 | **The first of its events** | An event-based gateway. |
 | **Its own tasks** | An embedded subprocess, or an event subprocess. |
 
-Start and end events, the other gateways, business rule tasks and boundary events have no row: they take no time of their own.
+Start and end events, throw events, the other gateways, business rule tasks, a service task that starts a case and does not wait, and boundary events have no row: they take no time of their own. A receive task or a catch event that an event-based gateway waits on has none either: the gateway counts the wait.
 
 | Figure | What it counts |
 |---|---|
@@ -737,7 +737,7 @@ Start and end events, the other gateways, business rule tasks and boundary event
 | **Done** | Tasks that left in the period by completing, or by ending in a BPMN error. A task withdrawn, because an instance was cancelled or an event subprocess interrupted it, is not done. |
 | **Median time** | The median time from the start of the done tasks to their end. |
 | **Met deadline** | Of the done tasks, the share that were not past their deadline, for a task with a service level. `—` for another, and when none is done. |
-| **Waited to be taken** | For a person's task only: the median time from the opening of its work item to its taking, or to its closing when nobody took it. A task given back and taken again counts to its last taking. |
+| **Waited to be taken** | For a person's task only: the median time from the opening of its work item to its taking, or to its closing when nobody took it. A task given back and taken again counts to its last taking, and an item handed to a person when it opened waited nothing. |
 | **Incidents** | Incidents raised on the tasks that left in the period, done or withdrawn. |
 
 A task counts under the version of the change that ended it, so what an instance finished before a move stays with the older version. A task still open counts under the version of its instance now.
