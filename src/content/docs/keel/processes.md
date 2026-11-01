@@ -19,7 +19,7 @@ A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder
 
 | Element | What Keel does |
 |---|---|
-| **Start event** | The instance starts here. Only a plain start event: a timer or message start event is refused. Only the start event of an event subprocess takes a timer, a message or an error. |
+| **Start event** | The instance starts here. Only a plain start event: a timer, message or signal start event is refused. Only the start event of an event subprocess takes a timer, a message, a signal or an error. |
 | **User task**, **manual task** | Waits for a person to complete it, from a queue. It can have a goal and a deadline. A user task can have an agent that drafts for the person: see [An agent that drafts for a person](#an-agent-that-drafts-for-a-person). |
 | **Business rule task** | Evaluates one of the project's [rules](/keel/builder/rules/), a decision table or a scorecard, and writes its results to variables. It never waits. |
 | **Service task** that calls a system | Calls another system's API through one of the process's connections, waits for the answer, writes its values to variables and goes on. See [A service task that calls a system](#a-service-task-that-calls-a-system). |
@@ -27,22 +27,27 @@ A builder draws a process in a draft on Keel Builder's [Processes](/keel/builder
 | **Service task** that starts a case | Starts a case of one of the project's case types, and waits for it to close or goes on at once. See [A service task that starts a case](#a-service-task-that-starts-a-case). |
 | **Call activity** | Starts another published process of the project, named by its key, and waits for it to end. See [A call activity](#a-call-activity). |
 | **A task that runs several times** | A user, manual, service or business rule task, or a call activity, can run once for each item of a list, or a number of times, all at once or one after another. See [A task that runs for each item](#a-task-that-runs-for-each-item). |
-| **Receive task**, **message catch event** | Waits for a message of its name. |
+| **Receive task**, **message catch event** | Waits for a message of its name, sent to the instance or, when the wait names a key, sent to the project with that key. See [A message catch, a receive task, a timer](#a-message-catch-a-receive-task-a-timer). |
 | **Timer catch event** | Waits for a duration, such as `PT2H` or `P3D`, or until a date. A repeating (cycle) timer is refused. |
+| **Signal catch event** | Waits for a signal of its name. A signal reaches every instance of the project that waits for it when it is sent. See [A signal](#a-signal). |
+| **Message boundary event** | Fires on a task, a call activity or a subprocess when a message of its name arrives, and withdraws the activity. Only one that interrupts: a message boundary event that does not interrupt is refused, with the way round it. |
+| **Signal boundary event** | Fires on a task, a call activity or a subprocess when a signal of its name arrives, and withdraws the activity. Only one that interrupts: a signal boundary event that does not interrupt is refused, with the way round it. |
 | **Timer boundary event** | Fires on a task, a call activity or a subprocess after a duration or at a date. An interrupting one withdraws the activity; a non-interrupting one starts its path beside it. |
 | **Error boundary event** | Catches an error thrown inside the task or subprocess it sits on, or by the call activity it sits on: the one with the error's code first, else one without a code. |
 | **Exclusive gateway** | Takes the first outgoing flow, in the order written, whose condition holds, else its default flow. |
 | **Parallel gateway** | Splits into every outgoing flow, or waits for every incoming one. |
 | **Inclusive gateway** | Takes every outgoing flow whose condition holds, else its default flow. Where flows meet, it waits for each path still running that can reach it along a flow that has not arrived yet, then goes on. A path that can reach it along a flow that has already arrived does not hold it: when it comes, the gateway goes on again. |
-| **Event-based gateway** | Waits for whichever of its timer and message catches comes first. |
+| **Event-based gateway** | Waits for whichever of its timer, message and signal catches comes first. |
 | **End event** | Plain, **terminate** (ends everything still open in its process or subprocess), or **error** (throws its error's code). |
+| **Signal throw event** | Sends its signal when it completes, and goes on. The instance's own waits for that signal take it at once, and every other running instance of the project that waits for it takes it after the change is saved. See [A signal](#a-signal). |
+| **Signal end event** | An end event that sends its signal when it completes, as a signal throw event does, before its process or subprocess ends: an event subprocess of it that does not interrupt still starts. See [A signal](#a-signal). |
 | **Embedded subprocess** | Runs its own flow, and may carry boundary events. |
-| **Event subprocess** | A subprocess with no flow in or out, that starts while the process or subprocess around it runs, when its start event's timer fires, its message arrives or an error is thrown inside it. It stops the rest of the process or subprocess, or runs beside it. See [An event subprocess](#an-event-subprocess). |
+| **Event subprocess** | A subprocess with no flow in or out, that starts while the process or subprocess around it runs, when its start event's timer fires, its message or its signal arrives or an error is thrown inside it. It stops the rest of the process or subprocess, or runs beside it. See [An event subprocess](#an-event-subprocess). |
 | **Lanes** | A lane's name is the queue of the tasks in it, read as a queue key: lower case, with each run of other characters as `_`. A lane named "Back Office" is the queue `back_office`. Keel Builder names a lane for the queue you pick in its panel. |
 
-Not run yet, refused when published: data stores, message boundary events and pools that send each other messages. An event subprocess that starts on a signal, an escalation, a condition, compensation or a link is refused too.
+Not run yet, refused when published: data stores and pools that send each other messages. An event subprocess that starts on an escalation, a condition, compensation or a link is refused too.
 
-Refused: script tasks, plain tasks, send tasks, business rule tasks that name a DMN decision instead of a Keel rule, throw events, signals, escalations, compensation, transactions, ad hoc subprocesses, complex gateways, conditional and link events, loops on a task (draw the loop with a gateway), data objects and correlation keys. Each refusal names the element.
+Refused: script tasks, plain tasks, send tasks, business rule tasks that name a DMN decision instead of a Keel rule, message throw events and message end events (a process sends a signal, or calls a process), throw events that send no signal, the process's own signal start event (a signal reaches the instances that wait for it, and starts none), signal boundary events that do not interrupt, escalations, compensation, transactions, ad hoc subprocesses, complex gateways, conditional and link events, loops on a task (draw the loop with a gateway), data objects and the standard's correlation keys, properties and subscriptions (a message wait names its key with `keel:message key`). Each refusal names the element.
 
 A receive task and a subprocess cannot run for each item, and are refused when they try. "a multi-instance receive task is not supported: every instance would wait for the same message" A multi-instance subprocess is refused with the way round it: "draw its steps as a process of their own and call it from a multi-instance call activity", each called process being an instance of its own with its own page, number and history.
 
@@ -56,7 +61,7 @@ A parallel or an inclusive gateway where flows meet takes one flow from each ele
 
 Each setting sits in the `extensionElements` of its BPMN element. An element or attribute Keel does not know, or one where it has no meaning, is a problem when the file is published: nothing is ignored silently.
 
-Keel Builder's panel sets the process's settings and variables, a user or manual task's settings, a user task's drafting agent, a service task's call (a call to a system, a call to an agent or the start of a case), a call activity's process, what it passes and what it receives, a business rule task's rule, how a task runs for each item, a lane's queue (its name), a sequence flow's condition, an exclusive or an inclusive gateway's default flow, a timer, a message and an error, and an event subprocess with what starts it and whether it interrupts: see [Changing the diagram](/keel/builder/processes/#changing-the-diagram). A change made in the panel keeps whatever else the file holds.
+Keel Builder's panel sets the process's settings and variables, a user or manual task's settings, a user task's drafting agent, a service task's call (a call to a system, a call to an agent or the start of a case), a call activity's process, what it passes and what it receives, a business rule task's rule, how a task runs for each item, a lane's queue (its name), a sequence flow's condition, an exclusive or an inclusive gateway's default flow, a timer, a message, a signal and an error, and an event subprocess with what starts it and whether it interrupts: see [Changing the diagram](/keel/builder/processes/#changing-the-diagram). A change made in the panel keeps whatever else the file holds.
 
 ### The process
 
@@ -292,8 +297,57 @@ A `keel:agent` beside the `keel:task` of a user task drafts for the person who c
 
 ### A message catch, a receive task, a timer
 
-- `keel:message` on a message catch event or a receive task lists, with `keel:write`, the variables the message may write. A message that holds anything else is refused.
+- `keel:message` on a message catch event, a receive task or a message boundary event lists, with `keel:write`, the variables the message may write. A message that holds anything else is refused.
+- `keel:message key="<variable>"` makes the wait addressable by a business key: see [A message addressed by a key](#a-message-addressed-by-a-key).
 - `keel:timer business="true"` on a timer makes it count business time on the process's calendar.
+- A signal has no Keel setting: see [A signal](#a-signal).
+
+### A message addressed by a key
+
+A system outside Keel knows a business key, such as a claim number, not Keel's instance id. A message wait can name the process variable that holds it with `key`, and a message sent to the project with that key reaches the running instances whose wait holds it.
+
+```xml
+<bpmn:intermediateCatchEvent id="docs" name="Documents in">
+  <bpmn:extensionElements>
+    <keel:message key="claim_number">
+      <keel:write variable="docs_note"/>
+    </keel:message>
+  </bpmn:extensionElements>
+  <bpmn:messageEventDefinition messageRef="documents_arrived"/>
+</bpmn:intermediateCatchEvent>
+```
+
+- **Which wait.** A message catch event, a receive task, a message boundary event, the start event of a message event subprocess, and a branch of an event-based gateway take a `key`.
+- **Which variable.** A declared string, whole-number (`int`) or choice variable. Its key is its value as text: a string or a choice as it is, a whole number in decimal digits. The sender sends the key as a string, `"2041"` for the whole number 2041, and the comparison is exact, case and all.
+- **When it is read.** After every transition, not only when the wait opens: a task that writes the variable while the wait is open moves the wait to the new value. A wait whose variable holds no value, only spaces, or more than 1,000 characters (the most a send carries) has no key, and only a message sent to its instance reaches it.
+- **Without a `key`**, a wait is reached only by a message sent to its instance, as before. A message sent to an instance with a `key` reaches only the waits whose key holds it; without one, every wait of its name, keyed or not.
+- **Personal data.** A variable marked as personal data may be a key. Its value is kept with the wait while the wait is open, in the event that took the message, and in the `subscription.set` command of each transition that opened or moved the wait, which the instance's history returns; **Waiting for** shows it as the sender sends it (2041, not 2,041; a choice's value, not its label), and the audit and the history's sentences never state it.
+
+A message boundary event interrupts the task, call activity or subprocess it sits on, and writes what its message carries, as a message catch event does. A receive task cannot carry a message boundary event for its own message: the task takes the message and goes on, and the boundary event is withdrawn. A task that runs for each item, or a subprocess, carries one on the whole activity, and the message withdraws every instance of it, or everything in the subprocess.
+
+### A signal
+
+A message is for one instance, or for the instances a business key names. A **signal** is for every instance that waits for it: a broadcast, such as "the rates changed", to every open loan. A signal has a name and nothing else: it carries no values, has no key and has no Keel setting in the file.
+
+```xml
+<bpmn:signal id="rates_changed" name="rates changed"/>
+…
+<bpmn:intermediateCatchEvent id="repriced" name="Rates">
+  <bpmn:signalEventDefinition signalRef="rates_changed"/>
+</bpmn:intermediateCatchEvent>
+<bpmn:intermediateThrowEvent id="tell" name="Rates published">
+  <bpmn:signalEventDefinition signalRef="rates_changed"/>
+</bpmn:intermediateThrowEvent>
+```
+
+- **Which wait.** A signal catch event, a signal boundary event, a branch of an event-based gateway and the start event of an event subprocess, interrupting or not, wait for a signal. A signal boundary event interrupts the task, call activity or subprocess it sits on, as a message boundary event does: on a task that runs for each item it withdraws every instance, and on a subprocess everything in it.
+- **Which send.** A signal throw event and a signal end event send their signal when they complete. A throw event goes on at once. A signal end event sends its signal before its process or subprocess ends, so an event subprocess of that scope that does not interrupt still starts.
+- **Who takes it.** The instance's own waits for the signal take it at once, in the same change, so an event subprocess of the instance that waits for it starts at once. Every other running instance of the project that waits for it takes it after the sender's change is saved, each in a change of its own. An instance with several waits for the signal takes it at each of them, and an event subprocess among them that interrupts starts and stops the rest, as it does for a message.
+- **Which waits.** A signal reaches the waits open when it is sent. An instance that starts waiting afterwards is not reached. An instance that moved on, because it ended or its wait is done, skips it. An instance that cannot take it for any other reason is logged for the operators, and the other instances are not affected.
+- **From outside.** A supervisor or a service key sends a signal to the project: see [Running instances](#running-instances). The history shows who sent it, or the instance it came from.
+- **In order.** An instance takes the signals sent to it in the order they were sent. If one cannot be applied just now, the instance's later signals wait for it.
+- **Round in a circle.** A signal an instance throws as it takes a signal is sent on with the signals that led to it, and one that is already among them is not sent again: two processes that answer each other's signal stop at the signal that comes round, and the operators' log says so. A task whose own signal boundary event catches a signal that its flow throws is interrupted at once, before the flow goes on.
+- **No cap.** A signal reaches every instance that waits for it, however many. A signal and a message of the same name are two waits, and a signal has no payload.
 
 ### A task that runs for each item
 
@@ -354,7 +408,7 @@ The panel in Keel Builder sets all of this: see [Instances](/keel/builder/proces
 
 ### An event subprocess
 
-An event subprocess is a subprocess that no flow enters or leaves. It sits in a process or a subprocess, and its start event says what starts it. While the process or subprocess around it runs, it waits; when a timer fires, a message arrives or an error is thrown, it runs.
+An event subprocess is a subprocess that no flow enters or leaves. It sits in a process or a subprocess, and its start event says what starts it. While the process or subprocess around it runs, it waits; when a timer fires, a message or a signal arrives or an error is thrown, it runs.
 
 ```xml
 <bpmn:subProcess id="late" name="Escalate" triggeredByEvent="true">
@@ -373,17 +427,18 @@ An event subprocess is a subprocess that no flow enters or leaves. It sits in a 
 | Setting | What it does |
 |---|---|
 | `triggeredByEvent="true"` | On the `bpmn:subProcess`: it is an event subprocess. |
-| The start event's definition | One of `timerEventDefinition`, `messageEventDefinition` and `errorEventDefinition`. A start event with none, or with another, is refused. |
+| The start event's definition | One of `timerEventDefinition`, `messageEventDefinition`, `signalEventDefinition` and `errorEventDefinition`. A start event with none, or with another, is refused. |
 | `isInterrupting` | On the start event. `false` runs the event subprocess beside the rest; absent or `true` stops the rest first. An error event subprocess always interrupts, and `false` on it is refused. Any other value is refused. |
-| `keel:timer`, `keel:message` | On the start event, as on a timer or a message catch event: `business="true"` counts business time on the process's calendar, and `keel:write` lists the variables the message may write. |
+| `keel:timer`, `keel:message` | On the start event, as on a timer or a message catch event: `business="true"` counts business time on the process's calendar, and `keel:write` lists the variables the message may write. A signal start event has no Keel setting. |
 
 **What starts it.**
 
 - **A timer**: a duration, which counts from the start of the process or subprocess around it, or a date. A repeating (cycle) timer is refused. A date already past when the process or subprocess starts starts the event subprocess at once.
-- **A message**: a message of its name, as a message catch event takes it, sent to the instance through Keel's API. Messages are not matched by their content.
+- **A message**: a message of its name, as a message catch event takes it, sent to the instance through Keel's API, or to the project with the start event's `key`. Messages are not matched by their content.
+- **A signal**: a signal of its name, as a signal catch event takes it, sent to the project or thrown by an instance of it: see [A signal](#a-signal).
 - **An error**: an error thrown inside the process or subprocess around it, caught by its code, or any error when the start event names no error. An error end event, a call activity whose process could not start, was cancelled or ended in an error, and a start-a-case task whose case could not start or failed each throw one. A call to a system or an agent that fails for good throws none: it leaves an incident.
 
-**Where it may sit.** In the process, in an embedded subprocess, in another event subprocess, and in a process that another calls. It has no boundary event, and two of one process or subprocess cannot start on the same error code, nor on the same message. Two that start on a timer are fine, and so is one that starts on a message that a task beside it also waits for: both take it. One that does not interrupt runs beside the task, and an interrupting one withdraws the task first. The message may then write only the variables both list.
+**Where it may sit.** In the process, in an embedded subprocess, in another event subprocess, and in a process that another calls. It has no boundary event, and two of one process or subprocess cannot start on the same error code, nor on the same message, nor on the same signal. Two that start on a timer are fine, and so is one that starts on a message that a task beside it also waits for: both take it. One that does not interrupt runs beside the task, and an interrupting one withdraws the task first. The message may then write only the variables both list.
 
 **When it waits.** An event subprocess waits from the start of the process or subprocess around it. A subprocess that is reached again starts afresh, so its event subprocess waits again, and its duration counts again from then. It stops waiting when the process or subprocess around it has ended its own flow, when an interrupting event subprocess of it starts, and when the process or subprocess is withdrawn. An event subprocess that never starts leaves nothing in the history.
 
@@ -391,14 +446,14 @@ An event subprocess is a subprocess that no flow enters or leaves. It sits in a 
 
 **An event subprocess that does not interrupt** runs beside the rest:
 
-- A message starts a run each time it arrives, so several runs of one event subprocess can be open at once. A timer starts it once.
-- At most 100 runs of one event subprocess are open at once. The message that would start the 101st is refused `409 too-many-instances`: "*element*: 100 runs of it are open, the most an event subprocess runs at once".
-- The process or subprocess around it waits for its runs. Once its own flow has ended, no new run starts, and a message for the event subprocess is refused `409 unknown-message`: "the instance is not waiting for the message *name*", unless another task waits for it. It ends when its last run does, and only once.
+- A message or a signal starts a run each time it arrives, so several runs of one event subprocess can be open at once. A timer starts it once.
+- At most 100 runs of one event subprocess are open at once. The message that would start the 101st is refused `409 too-many-instances`: "*element*: 100 runs of it are open, the most an event subprocess runs at once". A signal that would start the 101st run is taken at none of the instance's waits: one sent to the project, or by another instance, is logged for the operators, as one that cannot take a signal is, and one the instance sends itself refuses what reached the throw event, `409 too-many-instances`, with the same words.
+- The process or subprocess around it waits for its runs. Once its own flow has ended, no new run starts, and a message for the event subprocess is refused `409 unknown-message`: "the instance is not waiting for the message *name*", unless another task waits for it. A signal for it is passed over, as for any instance that moved on. It ends when its last run does, and only once.
 - A run reads and writes the process's variables, and the last writer wins, as for parallel branches. A message writes its values once, when it arrives, so two runs open at once both read the values of the second message.
 
 **Errors.** An error goes to the nearest handler: the error boundary event on the task that threw it, then an error event subprocess of the process or subprocess the task is in, then the error boundary event on the subprocess, then the event subprocess of the one around it, and so on outward. An error thrown inside an event subprocess goes to the process or subprocess around it, never to the event subprocess that threw it. An error thrown after the flow around it has ended passes its error event subprocess. Uncaught, it fails the process at the task that threw it. An incident, a call or an agent that fails for good, is no error and starts nothing.
 
-An event subprocess that can never start, such as one on an error that nothing in its scope throws, or on a message nobody sends, is not checked.
+An event subprocess that can never start, such as one on an error that nothing in its scope throws, or on a message or a signal nobody sends, is not checked.
 
 Keel Builder sets all of it: see [Event subprocesses](/keel/builder/processes/#event-subprocesses). The business app draws an event subprocess dotted, and says **Waiting to start** while it waits: see [The diagram](/keel/business/open-process/#the-diagram).
 
@@ -481,15 +536,46 @@ An event subprocess is checked when the process is published. Each problem is in
 
 | Problem | Where | What it says |
 |---|---|---|
-| `unsupported` | The start event's event definition, else the start event | "signal event subprocesses are not supported: an event subprocess starts on a timer, a message or an error", and the same for escalation, conditional, compensation, link, cancel and terminate |
-| `event-subprocess` | The start event | "isInterrupting must be true or false, not '*value*'"; "*start* starts the event subprocess *element*: it needs a timer, a message or an error"; "an error event subprocess always interrupts" |
-| `event-subprocess` | The event subprocess | "*element* is an event subprocess: no flow enters or leaves it, its start event starts it"; "another event subprocess of this scope catches the same errors"; "another event subprocess of this scope waits for the message *name*" |
+| `unsupported` | The start event's event definition, else the start event | "escalation event subprocesses are not supported: an event subprocess starts on a timer, a message, a signal or an error", and the same for conditional, compensation, link, cancel and terminate |
+| `event-subprocess` | The start event | "isInterrupting must be true or false, not '*value*'"; "*start* starts the event subprocess *element*: it needs a timer, a message, a signal or an error"; "an error event subprocess always interrupts" |
+| `event-subprocess` | The event subprocess | "*element* is an event subprocess: no flow enters or leaves it, its start event starts it"; "another event subprocess of this scope catches the same errors"; "another event subprocess of this scope waits for the message *name*"; "another event subprocess of this scope waits for the signal *name*" |
 | `boundary` | The boundary event | "a boundary event cannot be attached to an event subprocess" |
 | `start-events`, `end-events` | The event subprocess | "*element* needs exactly one start event, and has *n*", "*element* needs an end event" |
-| `extension` | The start event | "keel:timer has no meaning on a startEvent", and the same for any Keel element a start event's definition has no use for |
-| `timer`, `business-timer`, `message-name`, `undeclared-variable`, `unknown-reference` | The start event | The problems of a timer, a message and an error, as on a catch event or a boundary event |
+| `extension` | The start event | "keel:timer has no meaning on a startEvent", and the same for any Keel element a start event's definition has no use for; "keel:message key is blank: name a variable or leave it out" |
+| `timer`, `business-timer`, `message-name`, `signal-name`, `undeclared-variable`, `message-key`, `unknown-reference` | The start event | The problems of a timer, a message, a signal and an error, as on a catch event or a boundary event |
 
-The process's own start event with a timer or a message stays refused: "timer start events are not supported", "message start events are not supported". An event subprocess has no `no-outgoing` and no `unreachable` problem: its start event reaches it.
+The process's own start event with a timer, a message or a signal stays refused: "timer start events are not supported", "message start events are not supported", "signal start events are not supported: a signal reaches the instances that wait for it, and starts none". An event subprocess has no `no-outgoing` and no `unreachable` problem: its start event reaches it.
+
+### Checking a message key and a message boundary event
+
+A message wait's key and a message boundary event are checked when the process is published. Each problem is in the process's file, at the wait or the boundary event.
+
+| Problem | What it says |
+|---|---|
+| `extension` | "keel:message key is blank: name a variable or leave it out" |
+| `undeclared-variable` | "a message key names *variable*, which is not a declared variable" |
+| `message-key` | "the key *variable* is a *type* variable: a key is a string, a whole number or a choice" |
+| `boundary` | "a message boundary event that does not interrupt is not supported yet: put the task in a subprocess with a message event subprocess that does not interrupt"; "cancelActivity must be true or false, not '*value*'"; "another message boundary event of this activity waits for the message *name*"; "the receive task *task* waits for the message *name* too: the task takes it and goes on, and this boundary event is withdrawn" |
+| `message-name`, `unknown-reference` | As for a message catch event: "*element* needs a bpmn:message", "the message *id* is not a bpmn:message of the file", "the message *id* has no name" |
+| `unsupported` | "correlation is not supported: a message wait names its key with keel:message key", at a `correlationKey`, `correlationProperty` or `correlationSubscription` |
+
+A key that no sender can know, and a message nobody sends, are not checked.
+
+### Checking a signal
+
+A signal wait or send is checked when the process is published. Each problem is in the process's file, at the element.
+
+| Problem | What it says |
+|---|---|
+| `signal-name` | "*element* needs a bpmn:signal", when a signal event names none; "the signal *ref* has no name", for a name that is blank; "the signal *ref* has a name of more than 200 characters" |
+| `unknown-reference` | "the signal *ref* is not a bpmn:signal of the file" |
+| `boundary` | "a signal boundary event that does not interrupt is not supported yet: put the task in a subprocess with a signal event subprocess that does not interrupt"; "cancelActivity must be true or false, not '*value*'"; "another signal boundary event of this activity waits for the signal *name*" |
+| `event-subprocess` | "another event subprocess of this scope waits for the signal *name*" |
+| `event-gateway` | "two branches of *gateway* wait for the signal *name*"; "*gateway* leads to *target*, which is not a timer, a message, a signal or a receive task" |
+| `extension` | "keel:*name* has no meaning on *the element*", at a signal catch event, a throw event, a signal end event, a signal boundary event or a signal start event: a signal has no Keel settings |
+| `unsupported` | "an intermediate catch event needs a timer, a message or a signal"; "a throw event needs a signal: a process sends nothing else"; "signal start events are not supported: a signal reaches the instances that wait for it, and starts none", at the process's own start event; "message throw events are not supported: a process sends a signal, or calls a process"; "message end events are not supported: a process sends a signal, or calls a process" |
+
+A signal nobody sends, and a wait that opens only after its signal was sent, are not checked.
 
 ### Checking what a process calls and which agents work it
 
@@ -590,6 +676,8 @@ Staff sign in as they do for the business app; another system uses a [service ke
 
 | To | Call | Who |
 |---|---|---|
+| Send a message to the instances that wait for it with a key | `POST /api/projects/{project}/messages` with `{"name": "documents arrived", "key": "CL-2041", "payload": {"docs_note": "scan"}}`; see below | Staff and service keys |
+| Send a signal to every instance that waits for it | `POST /api/projects/{project}/signals` with `{"name": "rates changed"}`; see below | Supervisors and service keys |
 | Start an instance | `POST /api/projects/{project}/processes` with `{"process": "loan-review", "data": {"amount": "20000.00"}}` | Staff and service keys |
 | List the processes an instance may start on, each with the form it starts with | `GET /api/projects/{project}/process-types` | Staff and service keys |
 | List instances, newest first | `GET /api/projects/{project}/processes`, with `process`, `status`, `attention=true`, `q` (a part of the number, two to a hundred characters), `cursor` and `limit`. Each row names its process. | Staff and service keys |
@@ -604,6 +692,23 @@ Staff sign in as they do for the business app; another system uses a [service ke
 | Check its history replays | `POST /api/processes/{instance_id}/replay` | Staff and service keys |
 | Send it an event | `POST /api/processes/{instance_id}/events` | See below |
 
+A message sent to the project (`POST /api/projects/{project}/messages`) gives the message `name` to every running instance of the project that waits for it with the `key` (1 to 1,000 characters, not blank), each in a transaction of its own, oldest first, with the `payload` the waits list. It answers `200`:
+
+```json
+{"reached": [{"instance_id": "…", "number": "P-000001", "process": "claim-documents", "seq": 2, "status": "running"}],
+ "refused": []}
+```
+
+An instance that refuses the message (its key changed since, it ended, the payload does not fit, its version no longer loads) is in `refused` with its `code` and `message`, and never undoes another's delivery. No instance waiting is `409 unknown-message`: "No running instance of the project waits for the message *name* with that key." More than 100 is `409 too-many-instances`: "More than 100 instances wait for the message *name* with that key: a message reaches at most 100." When every instance refuses, the answer is the first refusal, with the instance's number before it: "P-000001: the message documents arrived may not write other". Sent again with the `Idempotency-Key` it was first sent with, by the same caller and with the same body, it answers as the first time with the header `Idempotent-Replayed: true`, and no instance takes it twice. A send cut short, such as by a restart between two instances, is finished by sending it again with the same key. A send every instance refuses keeps nothing, so its key can be used again. The key another caller or another body used is `422 key-reused`: "*key* was used for another send in this project".
+
+A signal sent to the project (`POST /api/projects/{project}/signals`) gives the signal `name` (1 to 200 characters, with a character other than a space) to every running instance of the project that waits for it. It carries no values: a body with any other field is refused `422`. It answers `202`, with the signal and the number of instances it is on its way to:
+
+```json
+{"signal": "rates changed", "instances": 3}
+```
+
+Each instance takes the signal after the answer, in a change of its own, so the answer says how many instances it is for, not what each did. No instance waiting is `202` with `"instances": 0`, not a failure, and there is no cap on how many it reaches. Supervisors and service keys send a signal, since it can interrupt every open instance at once: another member of the staff gets `403 forbidden`, "Only a supervisor may send a signal." Sent again with the `Idempotency-Key` it was first sent with, by the same caller and with the same body, it answers as the first time with the header `Idempotent-Replayed: true`, and nothing is sent twice. The key another caller or another body used is `422 key-reused`: "*key* was used for another send in this project".
+
 Starting an instance answers its `instance_id`, its `number`, such as `P-000001`, and its status. The start data must fit the declared variables. Send an `Idempotency-Key` header with each start: a start sent again with the same key answers with the instance it started the first time.
 
 A process a call activity called is an instance like any other, with its own number: it is listed, read, followed and cancelled as the others are, and a cancel of it makes the call activity that waits for it throw `process-cancelled`. Its page says it was called by the instance that started it.
@@ -613,14 +718,14 @@ The events an instance takes:
 | Event | Body | Who sends it |
 |---|---|---|
 | Complete a task | `{"type": "task.completed", "task": "t3", "outcome": "approve", "output": {"note": "fine"}}` | Whoever holds its work item; while no one holds it, a member of its queue. A member of the queue its missed deadline escalated to. Supervisors always. Never a service key. |
-| Deliver a message | `{"type": "message.received", "name": "documents", "payload": {"docs": "received"}}` | Staff and service keys. Every task of the instance waiting for that message takes it. |
+| Deliver a message | `{"type": "message.received", "name": "documents", "payload": {"docs": "received"}}`, with `"key": "CL-2041"` to reach only the waits whose key holds it | Staff and service keys. Every task of the instance waiting for that message takes it (with a `key`, those whose key holds it). |
 | Cancel the instance | `{"type": "process.cancelled", "reason": "withdrawn"}` | Supervisors |
 | Answer an agent's question | `{"type": "hand.answered", "task": "t5", "answer": "2026", "note": "the new policy"}` | Whoever holds the question's item; while no one holds it, a member of the queue it went to; supervisors always. Never a service key. The `note` is optional, and an answer must be one of the question's choices when it has some. |
 | Ask a drafting agent to revise | `{"type": "revision.requested", "task": "t3", "note": "Cite the bureau"}` | Whoever holds the task, or its queue while no one does; supervisors always. Never a service key. |
 | Message an agent | `{"type": "agent.messaged", "task": "t5", "text": "Use the May statement."}` | Any member of the staff. Keel adds the sender's name. Never a service key. |
 | Retry a task with an incident | `{"type": "task.retried", "task": "t5"}` | Supervisors |
 
-Keel sends the rest itself: a timer firing (`timer.fired`), a call or an agent failing (`task.failed`), an agent raising its hand (`hand.raised`), an agent's draft (`task.drafted`), a case's close (`case.closed`) and a called process's end (`called.ended`). A body that names one is `422 invalid-event`, with the reason.
+Keel sends the rest itself: a timer firing (`timer.fired`), a signal arriving (`signal.received`), a call or an agent failing (`task.failed`), an agent raising its hand (`hand.raised`), an agent's draft (`task.drafted`), a case's close (`case.closed`) and a called process's end (`called.ended`). A body that names one is `422 invalid-event`, with the reason: for `signal.received`, "Only Keel delivers a signal: send it to the project."
 
 A task's id, such as `t3`, comes from the instance's open tasks. Completing a task that has already finished answers `409 task-closed`. An event sent again with the `Idempotency-Key` it was first sent with is answered with the instance as it stands, and the header `Idempotent-Replayed: true`; it is not applied twice.
 
@@ -636,7 +741,7 @@ A call or an agent task that fails for good leaves its task with an **incident**
 
 Timers fire on their own. When a timer cannot fire because what follows it fails, such as a condition that cannot be evaluated on the instance's variables, the timer is kept as **stuck**: it is never fired again, the instance shows why, and the list's `attention=true` finds it. A supervisor then cancels the instance.
 
-The history, `GET /api/processes/{instance_id}/history`, records what happened to the instance's tasks. For a task that runs for each item it holds `instances.started` and `instances.completed`, and every entry of an instance of it carries `instance` and `of`. For an event subprocess it holds `subprocess.triggered` each time a run starts: the event subprocess (`element`), the run's task, the start event (`trigger`), whether it interrupts and the subprocess it sits in (`scope`, none for the process). For agents it holds `task.drafted`, `revision.requested`, `agent.messaged`, `hand.raised`, `hand.answered`, `agent.failed`, `agent.disabled`, `incident.raised` and `task.retried`. A person's `task.completed` on a task an agent drafts also holds `contributions`: who gave each value, the agent or the person.
+The history, `GET /api/processes/{instance_id}/history`, records what happened to the instance's tasks. For a task that runs for each item it holds `instances.started` and `instances.completed`, and every entry of an instance of it carries `instance` and `of`. For an event subprocess it holds `subprocess.triggered` each time a run starts: the event subprocess (`element`), the run's task, the start event (`trigger`), whether it interrupts and the subprocess it sits in (`scope`, none for the process). For a signal it holds `signal.thrown` when a throw event or a signal end event sends one (the `signal` and the sending `element`) and `signal.received` when an instance takes one (the `signal`, and who sent it: the `actor` of a send to the project, else the `origin` of one an instance sent, its `instance_id`, `number` and `element`). For agents it holds `task.drafted`, `revision.requested`, `agent.messaged`, `hand.raised`, `hand.answered`, `agent.failed`, `agent.disabled`, `incident.raised` and `task.retried`. A person's `task.completed` on a task an agent drafts also holds `contributions`: who gave each value, the agent or the person.
 
 An instance is `running`, `completed`, `terminated` (by a terminate end event), `failed` (by an error no error boundary event or error event subprocess caught) or `cancelled`.
 
