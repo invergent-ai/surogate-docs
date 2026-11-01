@@ -46,9 +46,9 @@ Each save replaces the whole file, such as the whole case type, so the last save
 
 ## Working with the designer agent
 
-In the designer, **Ask the designer agent** opens a chat with the project's designer agent, bound to the open draft. The agent works in the draft as you and saves its changes there. It never publishes or discards the draft.
+In the designer, and on a [process's page](/keel/builder/processes/), **Ask the designer agent** opens a chat with the project's designer agent, bound to the open draft. The agent works in the draft as you and saves its changes there. It never publishes or discards the draft.
 
-While the agent takes its turn, the designer is read-only: "The designer agent is working in this draft. You can edit again when its turn ends." Your changes not saved yet are saved before its turn starts, and the draft bar stays available. After the turn, **Show changes** lists what it changed, with **Revert** for each file. See [The designer agent](/keel/builder/designer-agent/).
+While the agent takes its turn, the designer, or the process's page, is read-only: "The designer agent is working in this draft. You can edit again when its turn ends." Your changes not saved yet are saved before its turn starts, and the draft bar stays available. After the turn, **Show changes** lists what it changed, with **Revert** for each file. See [The designer agent](/keel/builder/designer-agent/).
 
 ## Seeing what a draft changes
 

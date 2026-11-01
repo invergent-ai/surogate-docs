@@ -29,7 +29,7 @@ Every Keel term in one place. [Concepts](/keel/concepts/) explains how they fit 
 | **Credential** | The secret a connection sends. Set on the published connection, never shown again. |
 | **Decision** | A node that picks a branch from conditions over the case's data. |
 | **Delegate** | Handing an item you hold to someone else on the staff, or to an agent. |
-| **Designer agent** | The project's helper that drafts case types with a builder in Keel Builder, in the open draft. It never publishes. |
+| **Designer agent** | The project's helper that drafts case types and processes with a builder in Keel Builder, in the open draft. It never publishes. |
 | **Draft** | A set of changes to the project's definitions, not live until published. |
 | **Dry run** | Every publish check and scenario, run on a draft without publishing it. |
 | **Effect** | Work Keel does outside a case after a transition: starting an agent, or calling a system. |

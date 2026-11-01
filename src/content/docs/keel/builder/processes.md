@@ -4,7 +4,7 @@ title: Processes
 
 The **Processes** page lists the project's [BPMN processes](/keel/processes/): "Upload, check and publish this project's BPMN processes." Press a row to open the process: its drawing, its file, the problems the checks found in it, its versions and its connections.
 
-Draw a process on its page, in a draft, or make the file in a modeller such as Camunda Modeler or bpmn.io and upload it here.
+Draw a process on its page, in a draft, or make the file in a modeller such as Camunda Modeler or bpmn.io and upload it here. Or describe it, and have the [designer agent](/keel/builder/designer-agent/) draft it.
 
 ## The list
 
@@ -22,12 +22,12 @@ A process that exists only in a draft is listed too, under its key made readable
 
 Editors and owners see **New process** in the page header. It is turned on once the list is read.
 
-1. Press **New process**. **Start from** offers **A BPMN file**, the default, and **An empty diagram**. With a file, the dialog says: "Its file is saved in a draft as you upload it. Nothing published changes until the draft is published."
-2. With **A BPMN file**, choose the **BPMN file**: "A BPMN 2.0 file from a modeller such as Camunda Modeler or bpmn.io, at most 5,000,000 bytes." With **An empty diagram**, type the process's **Name** instead. The dialog then says: "Its diagram is saved in a draft as you change it. Nothing published changes until the draft is published."
-3. Check the **Key**. It fills in from the file: the name the file gives its process, else the process's id, else the file's name without its extension; from an empty diagram, it fills in from the **Name**. It is made into a key: lower case, without accents, with each run of other characters as `-`. When a process of the project has that key already, `-2`, `-3` and so on are added. Change it if you need to.
+1. Press **New process**. **Start from** offers **A BPMN file**, the default, **An empty diagram** and **Describe it to the designer agent** (not on a phone's width). With a file, the dialog says: "Its file is saved in a draft as you upload it. Nothing published changes until the draft is published."
+2. With **A BPMN file**, choose the **BPMN file**: "A BPMN 2.0 file from a modeller such as Camunda Modeler or bpmn.io, at most 5,000,000 bytes." With **An empty diagram**, type the process's **Name** instead. The dialog then says: "Its diagram is saved in a draft as you change it. Nothing published changes until the draft is published." With **Describe it to the designer agent**, type the **Name** and the **Description**: see [Describe it](#describe-it).
+3. Check the **Key**. It fills in from the file: the name the file gives its process, else the process's id, else the file's name without its extension; from an empty diagram or a description, it fills in from the **Name**. It is made into a key: lower case, without accents, with each run of other characters as `-`. When a process of the project has that key already, `-2`, `-3` and so on are added. Change it if you need to.
    - A key is letters, digits, `-` and `_`, starting with a letter or a digit. The dialog says so, "A key is letters, digits, - and _, starting with a letter or a digit.", when yours is not.
    - It says "A process has this key already." when you type the key of a published process, or of one the draft you pick holds.
-4. Pick the **Draft** to put it in: **A new draft**, or one of the open drafts. A new draft asks for a **Draft title**, which starts as `New process: <the process's name>`, or the key when the file's process has no name; for an empty diagram, `New process: <the Name>`.
+4. Pick the **Draft** to put it in: **A new draft**, or one of the open drafts. A new draft asks for a **Draft title**, which starts as `New process: <the process's name>`, or the key when the file's process has no name; for an empty diagram or a description, `New process: <the Name>`.
 5. Press **Create**.
 
 Create is turned on once a file is chosen, or a **Name** typed, its key is good, and the draft's processes are read; for a new draft, its title is not empty too. Keel saves the file in the draft exactly as you chose it, and the new process opens in that draft. Nothing published changes until the draft is published.
@@ -35,6 +35,26 @@ Create is turned on once a file is chosen, or a **Name** typed, its key is good,
 An empty diagram is a process named as you typed, with one start event. Keel's checks find two problems in it at once, which the Problems section lists: `Process_loan-review needs an end event` and `StartEvent_1 has no flow leaving it: every path must end at an end event`, with your process's key in place of `loan-review`. Draw the rest, as [Changing the diagram](#changing-the-diagram) says.
 
 If the draft cannot be made, the dialog says why, in Keel's words when Keel gave them, else "The draft could not be started. Try again." If Keel refuses the file, the dialog says why, in Keel's words when they are for people, such as "A file is at most 5000000 bytes.", or "This draft is published or discarded." when the draft is no longer open, and stays open. Press **Create** again: a draft already made for it is used again, and no second one is made. If the process was saved but cannot be opened, the dialog says "The process could not be opened. Try again."
+
+### Describe it
+
+**Describe it to the designer agent** has the [designer agent](/keel/builder/designer-agent/) draft the process from your words. The dialog says: "The designer agent drafts it from your description, in a draft, and you review what it changed. Nothing published changes until the draft is published."
+
+1. Type the **Name**, and check the **Key** and the **Draft**, as for an empty diagram. The key is chosen here, because the process's file is named by it and the agent cannot rename a file.
+2. Type the **Description**: "What starts it, who does each task, the decisions on the way and how it ends. At most 4,000 characters." Over 4,000 characters, the dialog says "A description is at most 4,000 characters: this one has 4,350." with the number yours has, and **Create** stays off; nothing is cut. Put anything longer in the chat once it is open.
+3. Press **Create**.
+
+Under the description, the dialog checks the designer agent: **Checking the designer agent…** while it does, and **Create** stays off until the agent can work on processes. Otherwise it says why, as the [designer agent's page](/keel/builder/designer-agent/#opening-the-panel) lists: **This project has no designer agent.**, **The designer agent is switched off in Studio.**, or **The designer agent has no tools for processes in this project yet. Ask an administrator.** If the check cannot be made, the dialog says why, with **Try again**. If the window is narrowed to a phone's width, the choice becomes **An empty diagram**.
+
+**Create** makes the draft when you picked **A new draft**, saves an empty process in it, as **An empty diagram** does, and opens the process's page in the draft. The designer agent's panel opens there by itself, and a first message is sent for you: Keel's request to draft the process in its file, then your description. The turn's changes are those since the empty process was saved, even in an open draft that holds other changes of yours.
+
+If something fails on the way:
+
+- The draft cannot be made, or Keel refuses the file: the dialog says why, as for any new process, and stays open. **Create** again uses the draft already made.
+- The empty process is saved, but the chat cannot open, such as when Studio cannot be reached: the empty process stays in the draft, and the panel says why, with **Try again**, which sends your description then.
+- The process's page cannot be opened: the dialog says "The process could not be opened. Try again."
+
+Your description is kept in this browser tab only, until it is sent: reloading the page loses it. See [The designer agent](/keel/builder/designer-agent/#processes) for what the agent does with it.
 
 ## A process's page
 
@@ -47,9 +67,13 @@ The page's header shows the process's name and, under it, its published version:
 | **Connections** | The connections the process calls, and their credentials. |
 | **Figures** | How the process's instances and tasks did over a period, by version and by task. |
 
-On the right of the header, everyone sees **Download**. Editors and owners also see **Upload a file**, with no draft open **Change the diagram**, and in a draft, **Dry run** and **Review and publish**. See [Dry run and publish](/keel/builder/publish/).
+On the right of the header, everyone sees **Download**. Editors and owners also see **Upload a file**, with no draft open **Change the diagram**, **Ask the designer agent** in a draft or, with none open, on the current version (not on a phone's width), and in a draft, **Dry run** and **Review and publish**. See [Dry run and publish](/keel/builder/publish/).
 
 On the Diagram tab, a process that is not published, opened with no draft or in a draft that has no file for it, says **This process is not here**: "Open it in the draft that holds it." A draft that has no file for a published process says **The draft has no file for this process.**
+
+### Asking the designer agent
+
+**Ask the designer agent** opens the [designer agent's](/keel/builder/designer-agent/) panel beside the page, in the open draft. With no draft open, it is offered on the current version only, and asks for a draft first, as **Upload a file** does. The panel stays open as you move between the tabs and the draft's other processes, and ends when you leave the draft. While the agent takes its turn, the page waits: see [The designer agent](/keel/builder/designer-agent/#during-its-turn). After its turn, the page reads the file again, and **Show changes** lists what it changed, without the diagram, with **Revert**.
 
 ### Upload a file
 
@@ -121,9 +145,9 @@ It is not offered on a published version that is not the current one, on a publi
 
 Under the line, an amber notice then says what Keel left out and what it made larger. **Keel left these elements without a shape:** lists each as its name, else its id, then its type and why, such as `Score the applicant · Script task: it is in no lane, and the process has lanes: put it in one`. When a container grew, it adds **To make room, Keel made Review the loan larger and moved what lay beyond by as much.**, naming the containers that had no room. The notice lists only elements the file still draws no shape for. While it stands, the line above the drawing and **Lay out the diagram** give way to it. It stays while the draft is as the layout left it and the page shows the same process, also after a visit to another tab. The next change to the draft removes it, and the line may then offer the layout again for the elements Keel could not lay out.
 
-**When Keel refuses.** A message says why and the file stays as it was. Keel lays out a file that parses, has no DOCTYPE, is BPMN with a process, and is in UTF-8, whose subprocesses and lanes nest at most 100 levels deep and that has at most 5,000 elements to draw. Otherwise the message is Keel's, such as `Keel cannot lay out the draft's file of loan-review: the file has no bpmn:process.` A laid-out file over 5,000,000 bytes is refused too. A draft that is no longer open says **This draft is published or discarded.**, and one that cannot be changed now, as while the designer agent works in it, says **The draft cannot be changed now.** When your last change to the file could not be saved, the layout is not sent: a message says `Your last change could not be saved:` and why, and the change stays. A Keel older than this feature says **This Keel cannot lay out a diagram yet. Try again once it is upgraded.**
+**When Keel refuses.** A message says why and the file stays as it was. Keel lays out a file that parses, has no DOCTYPE, is BPMN with a process, and is in UTF-8, whose subprocesses and lanes nest at most 100 levels deep and that has at most 5,000 elements to draw. Otherwise the message is Keel's, such as `Keel cannot lay out the draft's file of loan-review: the file has no bpmn:process.` A laid-out file over 5,000,000 bytes is refused too. A draft that is no longer open says **This draft is published or discarded.**, and while the designer agent works in the draft it says "The designer agent is working in this draft. You can edit again when its turn ends." Any other draft that cannot be changed says **The draft cannot be changed now.** When your last change to the file could not be saved, the layout is not sent: a message says `Your last change could not be saved:` and why, and the change stays. A Keel older than this feature says **This Keel cannot lay out a diagram yet. Try again once it is upgraded.**
 
-**What it saves.** A layout is one saved change of the draft's file: a change waiting to be saved is saved first, and **Review and publish** shows the file as **Changed**, or **Added** for a process that is new in the draft. Nothing is saved when the diagram was already complete. Undo and Redo start afresh from the laid-out file: a layout cannot be undone, and neither can the changes before it. Once it is saved, the page draws the laid-out file and the draft's checks run again.
+**What it saves.** A layout is one saved change of the draft's file: a change waiting to be saved is saved first, and **Review and publish** shows the file as **Changed**, or **Added** for a process that is new in the draft. Nothing is saved when the diagram was already complete. Undo and Redo start afresh from the laid-out file: a layout cannot be undone, and neither can the changes before it. They start afresh, with nothing to undo, after the designer agent's turn too. Once it is saved, the page draws the laid-out file and the draft's checks run again.
 
 ### Changing the diagram
 
@@ -137,12 +161,12 @@ In a draft, editors and owners change the drawing on this tab. Nothing is saved 
 - the designer agent is not taking its turn in the draft;
 - the file is in UTF-8, and a change would not alter part of it.
 
-Otherwise the drawing is only read, and a sentence above it says why when there is one:
+Otherwise the drawing is only read, and a sentence above it says why when there is one. The designer agent's turn is the exception: its sentence stands above the tabs, once, on every tab, because the connection files wait too.
 
 | The sentence | When |
 |---|---|
 | **Change the diagram on a larger screen.** | On a phone. |
-| **The designer agent is working in this draft. You can edit again when its turn ends.** | While the designer agent takes its turn. |
+| **The designer agent is working in this draft. You can edit again when its turn ends.** | While the designer agent takes its turn. It stands above the tabs, not above the drawing. |
 | **This file is not in UTF-8, so it cannot be changed here. Upload it in UTF-8 to change it here.** | The file's bytes are not valid UTF-8. |
 | **Changing the diagram here would change part of this file: …. Change it where it was made and upload it again.** | Keel Builder cannot write the file back whole. The sentence names what it would alter, such as `bpmn:conditionExpression on line 122`, `the reference to ghost` or `its encoding, ISO-8859-1`, joined by `;`. |
 
@@ -349,7 +373,7 @@ Press a row to open it:
 
 - **Download v2** saves that version's file as `loan-review-v2.bpmn`.
 - **Show the diagram** opens the Diagram tab on that version.
-- Under them, what the version changed in the process's file, as its lines: the file before the publish against the file after it, with three unchanged lines beside each change. A version that did not change it says "This version did not change" and the process's name, such as "This version did not change Loan review."
+- Under them, what the version changed in the process's file, as its lines: the file before the publish against the file after it, with three unchanged lines beside each change. The diagram is left out of the lines ("Its diagram is left out."), as in the review page: "Only its diagram changed." says when nothing else did. A version that did not change it says "This version did not change" and the process's name, such as "This version did not change Loan review."
 
 If the publishes cannot be read, the tab says why, in Keel's words, or "The project's publishes could not be read."; if what a version changed cannot, "What this version changed could not be read." Each comes with **Try again**.
 
@@ -394,7 +418,7 @@ A process with no connection says **This process has no connection yet.** If the
 
 ## Review and publish
 
-In **What changes** on the [review page](/keel/builder/publish/#review-and-publish), a process's file reads **Process Loan review**: the name the draft's file gives its process, else the name the published file gives it, else the key. Beside it are **Added**, **Changed** or **Removed**, and the file's lines, main's against the draft's. A changed connection file of a process reads **Process connection** and its process and name, such as **Process connection checking/bureau**.
+In **What changes** on the [review page](/keel/builder/publish/#review-and-publish), a process's file reads **Process Loan review**: the name the draft's file gives its process, else the name the published file gives it, else the key. Beside it are **Added**, **Changed** or **Removed**, and the file's lines, main's against the draft's, with the diagram left out ("Its diagram is left out."). A changed connection file of a process reads **Process connection** and its process and name, such as **Process connection checking/bureau**.
 
 When you open **Review and publish** from a process, the page's link back reads **Back to the process**, and leads to the process in the draft. After the publish, the page that confirms it offers **Back to the process** too, leading to the published process.
 
@@ -406,6 +430,7 @@ When you open **Review and publish** from a process, the page's link back reads 
 | **Download** a file | Yes | Yes | Yes |
 | **New process**, **Upload a file**, **Change the diagram** | No | Yes | Yes |
 | **Lay out the diagram** | No | Yes | Yes |
+| **Ask the designer agent**, and **Describe it to the designer agent** in **New process** | No | Yes | Yes |
 | Change a draft's diagram, and set the process, a task, a service task, a rule task, a lane, a flow, a timer, a message, a signal or an error in the panel | No | Yes | Yes |
 | Make and change a process's connection files in a draft | No | Yes | Yes |
 | Read the panel and **Elements** | Yes | Yes | Yes |
