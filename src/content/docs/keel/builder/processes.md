@@ -72,10 +72,58 @@ The tab shows the file of the draft when a draft is open, else the current publi
 In place of a drawing, the tab says why there is none:
 
 - **This file cannot be read as a BPMN 2.0 file.** The file is not well-formed XML, or is not a BPMN 2.0 file.
-- **This process's file has no diagram layout.** The file has no diagram, so there is nothing to draw.
+- **This process's file has no diagram layout.** The file has no diagram, so there is nothing to draw. Editors and owners can have Keel draw one: see [Laying out the diagram](#laying-out-the-diagram).
 - **This file could not be drawn.** The drawing could not make sense of the file.
 
 If the file cannot be read from Keel, the tab shows Keel's words, or "The process's file could not be read.", with **Try again**. The page does the same when it cannot read the project's processes, "The project's processes could not be read.", or the draft, in Keel's words.
+
+### Laying out the diagram
+
+A file from another tool, or one written by hand, often has no diagram, or has one that leaves some elements out. Keel runs and publishes it all the same, but Keel Builder cannot draw the missing parts, and an instance's page leaves them out. **Lay out the diagram** has Keel draw them.
+
+**Who sees it.** Editors and owners, on a phone too, in two places:
+
+- the draft's file;
+- the current version with no draft open. Pressing the button there asks for a draft first, as **Upload a file** does: press **Start draft** in the **Start a draft** dialog and the file is laid out in the new draft. Cancel, and nothing is laid out.
+
+It is not offered on a published version that is not the current one, on a published version shown in a draft, or while the designer agent takes its turn in the draft. A viewer sees neither the button nor the line above it.
+
+**When.** Only when Keel Builder can read the file and it lacks a shape. A line above the drawing says what Keel can add, beside **Lay out the diagram**:
+
+| The line | When |
+|---|---|
+| **Keel can draw one: a shape for each element and a line for each flow. Nothing else in the file changes.** | The file has no diagram. The drawing says **This process's file has no diagram layout.** |
+| **2 elements have no shape in this file's diagram. Keel can add them beside what is drawn.** | The file has a diagram, but some of its tasks, events, gateways, flows, lanes, pools or annotations have no shape or line in it. For one, it reads **1 element has no shape in this file's diagram. Keel can add it beside what is drawn.** |
+
+**What it does.** Keel draws a shape for each element that has none and a line for each flow that has none, beside what is drawn. A file with no diagram gets a whole one, left to right, with its lanes, subprocesses and event subprocesses. It also removes what the diagram draws for nothing: a shape or line of an element the file no longer has, or a second one of an element.
+
+**What it never does.** It never changes an element, a name or a setting, or a shape you placed. Only the file's diagram changes, and nothing else in the file. The one exception: a lane, pool or subprocess too small for what Keel puts in it grows, and what lies beyond it moves by as much. The notice below says which.
+
+**What it leaves without a shape.** Keel does not draw:
+
+- a second process in the file: only the first is laid out;
+- a second pool, or a message flow between pools: Keel runs one process per file;
+- a data object or a data store: Keel does not run them;
+- a group: draw it round what it groups in Keel Builder;
+- a lane inside a subprocess;
+- an element that is in no lane, in a process that has lanes: put it in one;
+- a lane, pool or subprocess with no shape whose elements are drawn outside it: draw it round them in Keel Builder;
+- a pool, when the diagram's plane is the process's own;
+- a flow or an association whose source or target has no shape.
+
+**What it says.** While Keel works the button is disabled. Then a message says how it went:
+
+| The message | When |
+|---|---|
+| **Laid out the diagram.** | Keel drew something. |
+| **Every element already has a shape.** | There was nothing to draw, and nothing was left out. The draft is not changed. |
+| **Nothing could be laid out.** | Keel drew nothing, and left something without a shape. |
+
+Under the line, an amber notice then says what Keel left out and what it made larger. **Keel left these elements without a shape:** lists each as its name, else its id, then its type and why, such as `Score the applicant · Script task: it is in no lane, and the process has lanes: put it in one`. When a container grew, it adds **To make room, Keel made Review the loan larger and moved what lay beyond by as much.**, naming each one. The notice stays while the draft is as the layout left it and the page shows the same process; the next change to the draft removes it.
+
+**When Keel refuses.** A message says why and the file stays as it was. Keel lays out a file that parses, has no DOCTYPE, is BPMN with a process, and is in UTF-8, whose subprocesses and lanes nest at most 100 levels deep and that has at most 5,000 elements to draw. Otherwise the message is Keel's, such as `Keel cannot lay out the draft's file of loan-review: the file has no bpmn:process.` A laid-out file over 5,000,000 bytes is refused too. A draft that is no longer open says **This draft is published or discarded.** A Keel older than this feature says **This Keel cannot lay out a diagram yet. Try again once it is upgraded.**
+
+**What it saves.** A layout is one saved change of the draft's file: a change waiting to be saved is saved first, and **Review and publish** shows the file as **Changed**. Nothing is saved when the diagram was already complete. Once it is saved, the page draws the laid-out file and the draft's checks run again.
 
 ### Changing the diagram
 
@@ -277,7 +325,7 @@ The checks run by themselves. Editors and owners need not press **Dry run**: ope
 
 Each problem shows:
 
-- **Error**, which stops a publish, or **Warning**, which does not, such as a vendor's setting Keel ignores;
+- **Error**, which stops a publish, or **Warning**, which does not, such as a vendor's setting Keel ignores, or a file whose diagram is missing or partial;
 - Keel's message;
 - its place. A problem at an element of the drawing names it, such as **Score the applicant · Script task**: its name, else its id, then its type. Press it to pick the element. A problem at the process reads **The process**. A problem at an element the drawing does not draw, such as **Documents · Message**, at a place Keel names in its own words, or in another file of the process, is listed but is not a button. A problem in another file of the process names that file, such as `bureau · Process connection checking/bureau` for a connection file.
 
@@ -357,6 +405,7 @@ When you open **Review and publish** from a process, the page's link back reads 
 | See the list, a drawing, its versions and connections | Yes | Yes | Yes |
 | **Download** a file | Yes | Yes | Yes |
 | **New process**, **Upload a file**, **Change the diagram** | No | Yes | Yes |
+| **Lay out the diagram** | No | Yes | Yes |
 | Change a draft's diagram, and set the process, a task, a service task, a rule task, a lane, a flow, a timer, a message, a signal or an error in the panel | No | Yes | Yes |
 | Make and change a process's connection files in a draft | No | Yes | Yes |
 | Read the panel and **Elements** | Yes | Yes | Yes |
