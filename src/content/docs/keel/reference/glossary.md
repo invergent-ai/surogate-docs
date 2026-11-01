@@ -18,7 +18,7 @@ Every Keel term in one place. [Concepts](/keel/concepts/) explains how they fit 
 | **Business time** | Time that counts only working hours on working days, by the case type's calendar. |
 | **Calendar** | A project's working days, working hours, holidays and time zone. A case type can use one. |
 | **Case** | One running instance of a case type version, with its data, files and history. |
-| **Case agent** | The project's helper that answers a person's questions about one case, and fills in their form when they ask. It never submits. |
+| **Case agent** | The project's helper that answers a person's questions about one case or one process instance, and fills in their form when they ask. It never submits. |
 | **Case event** | A named signal another system sends to a case. A wait for it moves on; otherwise the case type's event of that name fires. |
 | **Case number** | The case type's number prefix and a count, such as `LR-000001`. |
 | **Case type** | The definition of one kind of case: its fields, stages, flows, forms and settings. Versioned. |
@@ -56,6 +56,7 @@ Every Keel term in one place. [Concepts](/keel/concepts/) explains how they fit 
 | **Primary stage** | A stage of the normal path, shown as a column on the board. |
 | **Priority** | A queue's place among queues for Get next: lower numbers first. |
 | **Process** | A BPMN 2.0 file among the project's definitions, `processes/<key>.bpmn`, published through drafts and run beside case types. See [BPMN processes](/keel/processes/). |
+| **Process agent** | The case agent, on a process instance's page, where it answers about the instance and fills in the form of a task you hold when you ask. It never submits. |
 | **Publish** | Making a draft live. Each changed case type gets a new version. |
 | **Queue** | A team's shared list of work, with a serving order and a priority. |
 | **Raised hand** | An agent's question to a person, which pauses its step until someone answers. |

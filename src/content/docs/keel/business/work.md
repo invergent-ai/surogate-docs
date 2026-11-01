@@ -61,7 +61,7 @@ For an item you hold, a step or an agent's question, the pane shows **Delegate**
 
 The person you pick sees it in their **Needs me** as **Delegated to you**. An agent you pick starts work on it at once; if it cannot finish it, it returns the item to you. Only some items take an agent: see [Agents in queues and as delegates](/keel/business/agents/#agents-in-queues-and-as-delegates), and, for a [BPMN process](/keel/processes/)'s tasks, [Agents in a process's queues](/keel/processes/#agents-in-a-processs-queues). A process's task is handed on the same way. A vote cannot be delegated: every member of its queue votes for themselves.
 
-When an item leaves you, returned or delegated, any draft the [case agent](/keel/business/case-agent/) made of its form for you is dropped. Whoever holds it next starts with none.
+When you return or delegate an item, or a supervisor reassigns it, any draft the [case agent](/keel/business/case-agent/) made of its form for you is dropped. Whoever holds it next starts with none. When you are away and the item goes to your substitute, the draft goes with it; when it goes back to its queue, the draft is dropped.
 
 ### Reassign an item
 

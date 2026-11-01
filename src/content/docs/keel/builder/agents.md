@@ -14,9 +14,9 @@ The list, headed **Agents**, holds the agents named by the current published ver
 
 Under each name Keel says how many steps and tasks the agent works and how many of its runs are under way, such as `3 steps in 2 case types · 4 in progress`, `3 steps in 1 case type and 1 process · none in progress`, or `1 step in 1 case type · none in progress`; an agent that works only a process's task reads `1 step in 1 process · none in progress`. A run waiting on a raised hand counts as in progress. An agent that only starts cases (an intake agent) reads `0 steps in 0 case types`. Pick a row to open the agent; the first opens by default.
 
-Under the agents, **Helpers, not on any step** lists the project's helpers, the case agent and the designer agent, once Keel has set them up. They work no step and cannot be picked. Each has a line: "Answers questions inside any case. Drafts, never moves a case." and "Drafts case types from a conversation. A person publishes." A helper switched off in Studio is marked **Off**. See [The project's helpers](/keel/builder/designer-agent/#the-projects-helpers).
+The list holds only the agents your case types and processes name. The project's two helpers, the case agent and the designer agent, work no step and are not listed here; they show in Studio, marked **Helper**. See [The project's helpers](/keel/builder/designer-agent/#the-projects-helpers).
 
-With no agent named, the list says "No case type of this project names an agent yet." The helpers still show. Agents are made in Studio; **New agent**, in the page header, opens Studio in a new tab. Editors and owners see it.
+With no agent named, the list says "No case type or process of this project names an agent yet." Agents are made in Studio; **New agent**, in the page header, opens Studio in a new tab. Editors and owners see it.
 
 ## Period
 

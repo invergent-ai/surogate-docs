@@ -2,7 +2,7 @@
 title: An open process
 ---
 
-An instance's page shows where a [BPMN process](/keel/processes/) is, the tasks that are yours to work, who holds the others, what it waits for, its diagram, its data and its history. For supervisors it also shows what needs them and offers Retry and Cancel. It keeps itself current as the instance changes. Open an instance from the [Processes](/keel/business/processes/) page, the Work page, a case it started or waits on, or a link a colleague sends.
+An instance's page shows where a [BPMN process](/keel/processes/) is, the tasks that are yours to work, who holds the others, what it waits for, its diagram, its data and its history, and a chat with the process agent. For supervisors it also shows what needs them and offers Retry and Cancel. It keeps itself current as the instance changes. Open an instance from the [Processes](/keel/business/processes/) page, the Work page, a case it started or waits on, or a link a colleague sends.
 
 Keel records each time someone opens an instance.
 
@@ -101,8 +101,9 @@ The diagram shows names and places only: never a condition, a check, a connectio
 
 ## Process details: Data and History
 
-The side panel, beside the tasks on a wide screen and under them on a phone, has two tabs. The instance opens on **Data**; the address keeps the tab, so a link can open the **History**.
+The side panel, beside the tasks on a wide screen and under them on a phone, has three tabs: **Process agent**, **Data** and **History**. The instance opens on **Data**; the address keeps the tab, so a link can open the **History** or the **Process agent**.
 
+- **Process agent**: your chat about the instance. See [The Process agent tab](#the-process-agent-tab).
 - **Data**: each variable by its label and value, or "No value" when it holds none. With no data, "No data yet".
 - **History**:
   - **Your part in this process** first: what you did, latest first, or "You have not worked on this process yet".
@@ -136,6 +137,70 @@ The side panel, beside the tasks on a wide screen and under them on a phone, has
 
 Every line about an instance of a task that runs for each item names the instance, such as "Ann finished Approve · 2 of 3". An element that was only entered or passed, a gateway taken, a missed goal and the like are not told. The values written are in **Data**, and the history never shows an incident's reason. With nothing to tell, the tab says **Nothing yet**. When Keel cannot read the history, the tab says why.
 
+## The Process agent tab
+
+The **Process agent** tab is your own chat with the project's [case agent](/keel/business/case-agent/) about this instance. The project's staff see it. It is the first tab of the side panel; an instance still opens on **Data**.
+
+The tab says: "Ask about this process. *The process agent* answers from its data, tasks, waits and history, and drafts into your form when you ask. Nothing is sent until you submit." Once your chat has a session, the line names the agent by the name it has in Studio, such as "Case agent", in place of *The process agent*.
+
+The chat is yours. Each person has their own chat with the agent on each instance; the rest of the staff do not see it. When you come back to the instance, the tab opens on the same chat, and another instance opens its own chat.
+
+### Asking
+
+Type a question and send it. The agent reads the instance before it answers, as you read it, and answers only from what it read:
+
+- the instance's data, each variable by its label;
+- its open tasks and who holds them, and the fields of the form of a task you hold;
+- what it waits for, the cases it started and the processes it called, by number and name, and what started it;
+- its incidents, in Keel's words;
+- its history, as the sentences of **History**;
+- whether it could move to the newest version of its process, and why not.
+
+When the instance does not hold the answer, it says so. It reads no files and no other instance: a case or a process the instance waits on is named, never read. It never reads the payload of a message, a connection's secret, or the text of an agent's session that failed.
+
+After each fact it gives, it names where the fact comes from, in square brackets:
+
+- a variable, by its label, such as `[Data: Amount]`;
+- an entry of the history, by its element, when it has one, and day, such as `[History: Review the loan, 12 Oct]`;
+- a task, a wait, a case, a process, an incident or the move check, such as `[Task: Review the loan]`, `[Waiting: Check credit]`, `[Case: CL-000001]`, `[Process: P-000002]`, `[Incident: Check credit]` or `[Move check]`.
+
+You can stop the agent while it answers. When it cannot answer, the chat says "The process agent could not answer." Keel records what the agent reads for you as your own views of the instance, made through the case agent.
+
+### Filling in your form
+
+Ask the agent to fill in a form, for example from the instance's data. It fills in only the form of a task of this instance that you hold, and only the fields that form takes; it leaves out a value it is not sure of, and tells you which fields it filled and where each value came from. It never chooses an outcome: it does not pick **Approve the loan** or **Decline** for you. While an agent's raised hand waits on the task, the task has no form to fill.
+
+The chat marks each draft with a line such as "Drafted into your form: Reviewer's note". In the task's form, each field it filled is marked "Drafted by the process agent at your request. Nothing is sent until you submit." Check each value, change what you need, choose an outcome and press **Submit**, as on any task.
+
+- A field you changed is yours. A later draft of the process agent does not fill it again, and its mark goes. A new draft of the task's own agent fills the form afresh.
+- On a task an agent drafts for you, the newer draft of a field wins: the task's agent's, or the process agent's.
+- Your draft belongs to you and the task's work item. When you return or delegate the item, or a supervisor reassigns it, the draft is dropped: whoever holds it next starts with none. When you are away and the item goes to your substitute, the draft goes with it, marked as the process agent's draft; when it goes back to its queue, the draft is dropped.
+- When a supervisor moves the instance to a newer version, your draft keeps the values the newer version's form still takes and drops the rest.
+
+When you submit, the task's entry in **History** names the agent that drafted its fields under it, such as "Case assistant drafted Reviewer's note". A field you changed before submitting is recorded as yours.
+
+### What it never does
+
+The process agent reads the instance and fills in your form. It cannot:
+
+- submit a form, complete a task, retry one, cancel the process or move it to another version;
+- send a message or a signal, or answer an agent's raised hand;
+- change the instance's data;
+- fill in a task you do not hold;
+- read files, or read another case or process.
+
+A process instance holds no files.
+
+### When it cannot answer
+
+| Message | Why |
+|---|---|
+| **The project's process agent is not set up yet: a builder opens the project in the builder app to set it up.** | Keel has no case agent for the project, or it is switched off. Ask an editor or owner to open the project in Keel Builder. |
+| **The process agent's session cannot be reached now; try again shortly.** | A temporary problem. Send your message again, or press **Try again** where the tab offers it. |
+| **The process agent takes no files.** | The message had a file or an image. Nothing was sent. |
+| **A message to the process agent is at most 20,000 characters.** | The message is too long. Nothing was sent. |
+| **The process agent could not answer.** | Its turn failed. Ask again. |
+
 ## Move to the current version
 
 An instance runs on the version of its process that it started on, shown in the header as `v1`. When the process has a newer version, a supervisor moves a running instance to it from **More actions** with **Move to version 3…**. The dialog, **Move *number* to version 3**, says "It runs on version 2. Its open tasks keep their work: who holds them, their timers, goals and deadlines, and the cases and processes they wait on. From there on it runs version 3, and its history keeps the move."
@@ -157,4 +222,4 @@ Keel says "Cancelled *number*." and the page shows the instance as **Cancelled**
 
 ## Not offered on a process
 
-A process is not a case. An instance has no **Follow** and no Updates, no files, no case agent, no re-run and no **Move by hand…** (its **Move to version 3…** puts it on a newer version of its process, as above), and its history has no **Full history with inputs and outputs**. Builders see an instance's agents and runs on the [builder's Agents screen](/keel/builder/agents/).
+A process is not a case. An instance has no **Follow** and no Updates, no files, no re-run and no **Move by hand…** (its **Move to version 3…** puts it on a newer version of its process, as above), and its history has no **Full history with inputs and outputs**. Builders see an instance's agents and runs on the [builder's Agents screen](/keel/builder/agents/).
