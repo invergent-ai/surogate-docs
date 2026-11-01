@@ -4,7 +4,7 @@ sidebar:
   label: Agents
 ---
 
-The **Agents** page shows how the agents of your case types are doing: "The agents that work steps in this project's case types and processes". Pick an agent to see what it did over a period, the steps it works, the questions it raised, what it may use and its sessions. An agent that works the tasks of a [BPMN process](/keel/processes/#a-service-task-that-calls-an-agent), alone or drafting for a person, is listed and counted beside the ones that work case types' steps.
+The **Agents** page shows how the agents of your case types are doing: "The agents that work steps in this project's case types and processes". Pick an agent to see what it did over a period, the steps it works, the questions it raised, what it may use and its sessions. An agent that works the tasks of a [BPMN process](/keel/processes/#calling-other-things), alone or drafting for a person, is listed and counted beside the ones that work case types' steps.
 
 Sessions, raised hands and **Export for audit** show case content, so only editors and owners see them; see [What your role lets you see](#what-your-role-lets-you-see). Keel records each case they show as your view of it, and the case's History in the business app lists it under **Read by builders**.
 

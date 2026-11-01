@@ -57,12 +57,12 @@ An agent that cannot work an item returns it: to the person who delegated it, or
 
 ## Agents in processes
 
-A task of a [BPMN process](/keel/processes/) can be worked by an agent, or drafted by an agent for the person who completes it. Everything above holds for it, with the instance in place of the case and the task in place of the step. On the instance's page (see [Working a process's tasks](/keel/processes/#working-a-processs-tasks)):
+A task of a [BPMN process](/keel/processes/) can be worked by an agent, or drafted by an agent for the person who completes it. Everything above holds for it, with the instance in place of the case and the task in place of the step. On the instance's page (see [Working a process's tasks](/keel/processes/#start-and-work-instances)):
 
 - an agent at work on a task shows under **Now** as "*Agent* is working", with its run, its goal and deadline, its plan, and where its question would go. **Message the agent** and **Open its session** are there;
 - an agent's question shows "*Agent* asked a question" and who holds it. Answer it on the Work page;
-- an agent that drafts a task for you fills your form, each drafted field marked "Drafted by *agent*. Nothing is sent until you submit." You change what you need and press **Submit**; **Ask to revise** sends the agent a note and asks for another draft. Keel keeps in the process's history which agent drafted which values, and it is read through Keel's API: see [Running instances](/keel/processes/#running-instances);
-- agents take a process's items from a queue, as a delegate or by Reassign, as they take a case's: see [Agents in a process's queues](/keel/processes/#agents-in-a-processs-queues).
+- an agent that drafts a task for you fills your form, each drafted field marked "Drafted by *agent*. Nothing is sent until you submit." You change what you need and press **Submit**; **Ask to revise** sends the agent a note and asks for another draft. Keel keeps in the process's history which agent drafted which values;
+- agents take a process's items from a queue, as a delegate or by Reassign, as they take a case's: see [Agents in a process's queues](/keel/processes/#start-and-work-instances).
 
 ## Following an agent's work
 
@@ -86,7 +86,7 @@ While you hold a step an agent drafts for you, and the agent is at work on it, a
 ## When an agent cannot work
 
 - **When an agent fails for good**, people take its step: it opens as a step in the queue that gets the agent's questions, and the queue's members claim it and work it like any other step. On a step the agent drafts for a person, the person works on alone.
-- **On a process's task**, an agent that works the task alone and fails for good leaves the task with an incident instead: the instance's page says "*Agent* could not finish this task: a supervisor retries it or cancels the process.", and a supervisor retries the task or cancels the process through Keel's API: see [Incidents](/keel/processes/#incidents). The agent that drafts a task for a person is the exception: the person works on alone, as on a step.
+- **On a process's task**, an agent that works the task alone and fails for good leaves the task with an incident instead: the instance's page says "*Agent* could not finish this task: a supervisor retries it or cancels the process.", and a supervisor retries the task or cancels the process from the instance's page: see [Supervise](/keel/processes/#supervise). The agent that drafts a task for a person is the exception: the person works on alone, as on a step.
 - **When a supervisor turns an agent off**, each of its steps that opens from then on goes to people the same way, and so does each of its process tasks. On a task it drafts for a person, the person works alone: the page says "*Agent* is off: you work this task alone." Steps it already works carry on. It is no longer offered as a queue member, a delegate or a Reassign target. See [Agents](/keel/business/supervisors/#agents).
 
 ## How agents are doing
