@@ -90,4 +90,4 @@ Its panel has these sections:
 
 When a case leaves a waiting process node another way first, such as by a case event, Keel cancels the process. A process a node does not wait on runs on, whatever the case does.
 
-Publishing checks what each process node passes and receives against its process: see [Checking what starts what](/keel/processes/#checking-what-starts-what). The business app shows the process on the case's page: see [An open case](/keel/business/open-case/#now-steps-others-hold).
+Publishing checks what each process node passes and receives against its process: see [Checking what starts what](/keel/processes/#check-and-publish). The business app shows the process on the case's page: see [An open case](/keel/business/open-case/#now-steps-others-hold).

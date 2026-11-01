@@ -180,7 +180,7 @@ A file from another modeller can hold elements Keel does not run, such as a scri
 
 On the drawing, **Delete** removes what is picked, **Ctrl+Z** takes the last change back and **Ctrl+Y** does it again (**⌘** on a Mac), and **E** renames the picked element in place. **Undo** and **Redo**, above the drawing, do the same; each is off while there is nothing to take back or do again. An undo is a change like any other, and is saved. A file drawn afresh, after **Load the latest**, an upload, a layout or the end of the designer agent's turn, has nothing to undo.
 
-Keel runs one pool: a second pool cannot be drawn on a drawing that has one. Lanes, pools, text annotations and groups are drawn with the pointer only; once drawn, the panel names them and deletes them. A lane's name is the queue of the tasks in it: see [Lanes](/keel/processes/#what-keel-runs).
+Keel runs one pool: a second pool cannot be drawn on a drawing that has one. Lanes, pools, text annotations and groups are drawn with the pointer only; once drawn, the panel names them and deletes them. A lane's name is the queue of the tasks in it: see [Lanes](/keel/processes/#tasks-that-people-do).
 
 #### Saving a change
 
@@ -288,11 +288,11 @@ A task from another modeller can hold Keel settings the panel does not show, suc
 
 A call activity from another modeller can hold Keel settings the panel does not show, and says so as a task does. Keel's checks place a problem at the call activity: see [Problems](#problems).
 
-**A lane.** A lane's name is the queue of the tasks in it, as [Lanes](/keel/processes/#what-keel-runs) says. Its panel has **Name**, as every element does, and **Queue**: "A lane's name is the queue of the tasks in it. Picking a queue names the lane so that it reads as that queue's key." It offers the project's queues whose key a name can read as, and picking one names the lane: by the queue's name when that name reads as its key, else by the key. A line says what the lane gives: `The tasks in it go to the queue <queue>, unless a task names its own.`, "Its name reads as no queue key." or "A lane with no name gives its tasks no queue." Take care with a queue Keel Builder made from "Front desk": its key is `front-desk`, while a lane named "Front desk" reads as `front_desk`. Pick the queue, and the lane is named `front-desk`.
+**A lane.** A lane's name is the queue of the tasks in it, as [Lanes](/keel/processes/#tasks-that-people-do) says. Its panel has **Name**, as every element does, and **Queue**: "A lane's name is the queue of the tasks in it. Picking a queue names the lane so that it reads as that queue's key." It offers the project's queues whose key a name can read as, and picking one names the lane: by the queue's name when that name reads as its key, else by the key. A line says what the lane gives: `The tasks in it go to the queue <queue>, unless a task names its own.`, "Its name reads as no queue key." or "A lane with no name gives its tasks no queue." Take care with a queue Keel Builder made from "Front desk": its key is `front-desk`, while a lane named "Front desk" reads as `front_desk`. Pick the queue, and the lane is named `front-desk`.
 
 #### Instances
 
-A user task, a manual task, a service task, a business rule task and a call activity can run more than once where the flow reaches them: see [A task that runs for each item](/keel/processes/#a-task-that-runs-for-each-item). Their panels end with an **Instances** section.
+A user task, a manual task, a service task, a business rule task and a call activity can run more than once where the flow reaches them: see [A task that runs for each item](/keel/processes/#doing-a-task-several-times). Their panels end with an **Instances** section.
 
 - **Runs** picks one of **Once**, **Several times, all at once** and **Several times, one after another**. A task that runs once reads **Once**. Picking another way adds the marker, or changes the way and keeps what the file says of its instances; picking **Once** takes the marker away with everything the file says of its instances. Each is one step of **Undo**, and picking the way the task runs already changes nothing. The rest of the section is there once the task runs several times.
 - **How many** picks **One for each item of a list** or **A number of times**. Picking the way the file does not hold changes nothing in the file until the way's first pick is given, as a service task's **What it does** does; another element, another way of running or a count changed by an Undo starts the pick afresh.
@@ -307,7 +307,7 @@ A list, an item, a results list or a result that the file names and the process 
 
 #### Event subprocesses
 
-An event subprocess is a subprocess that no flow enters or leaves, started while the process or subprocess around it runs: see [An event subprocess](/keel/processes/#an-event-subprocess). Keel Builder draws one in a subprocess's or the process's panel, in the Change element menu, and with its start event's panel.
+An event subprocess is a subprocess that no flow enters or leaves, started while the process or subprocess around it runs: see [An event subprocess](/keel/processes/#when-something-goes-wrong-or-changes). Keel Builder draws one in a subprocess's or the process's panel, in the Change element menu, and with its start event's panel.
 
 **Add one.** The process's panel, with nothing picked, ends with **Event subprocess**: "Starts while the process runs: when its timer fires, its message or its signal arrives or an error is thrown in the process." An expanded subprocess's panel has the same pick, "Starts while this subprocess runs: when its timer fires, its message or its signal arrives or an error is thrown inside it.", with **Add inside**. Pick what starts it, from "Pick what starts it":
 
@@ -379,7 +379,7 @@ If the publishes cannot be read, the tab says why, in Keel's words, or "The proj
 
 ### Moving the instances of an older version
 
-A new version does not take the running instances with it: each stays on the version it started on until it is moved ([Moving instances to a newer version](/keel/processes/#moving-instances-to-a-newer-version) says when it can). Under the row of each version older than the current one that has instances running, a section **Move from v2** says what a move would do. Keel checks the oldest thousand of those instances as they stand:
+A new version does not take the running instances with it: each stays on the version it started on until it is moved ([Moving instances to a newer version](/keel/processes/#change-a-published-process) says when it can). Under the row of each version older than the current one that has instances running, a section **Move from v2** says what a move would do. Keel checks the oldest thousand of those instances as they stand:
 
 - "Of the 12 instances running on v2, 10 can move to v3 and 2 cannot." When there are more than Keel checked: "Keel checked the 1000 oldest of the 4213 instances running on v2: 980 can move to v3 and 20 cannot."
 - Under it, why the others cannot move, the reason most instances meet first, each with how many: "Pay is open, and version 3 has no element pay · 2 instances".
@@ -414,7 +414,7 @@ The tab says: "The connections this process calls, with their credentials. Its c
 
 Under them, **Who changed credentials** lists the changes to this process's credentials, newest first, such as "Ana Marin set the API key credential of bureau for bureau.example · 20 Oct, 09:00". With none, "No one has changed a credential of this process yet."
 
-A process with no connection says **This process has no connection yet.** If the connections cannot be read, the tab says why, in Keel's words, or "The connections could not be read.", with **Try again**. In a draft, if the connection files cannot be listed, the tab says the same, with **Try again**. How a process's connections are kept is in [A process's connections](/keel/processes/#a-processs-connections).
+A process with no connection says **This process has no connection yet.** If the connections cannot be read, the tab says why, in Keel's words, or "The connections could not be read.", with **Try again**. In a draft, if the connection files cannot be listed, the tab says the same, with **Try again**. How a process's connections are kept is in [A process's connections](/keel/processes/#calling-other-things).
 
 ## Review and publish
 

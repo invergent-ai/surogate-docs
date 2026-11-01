@@ -376,6 +376,7 @@ export default defineConfig({
                 'keel/reference/glossary',
                 'keel/reference/node-kinds',
                 'keel/reference/roles',
+                'keel/reference/process-file',
                 'keel/reference/faq',
               ],
             },
