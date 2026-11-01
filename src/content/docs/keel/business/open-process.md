@@ -144,7 +144,7 @@ An instance runs on the version of its process that it started on, shown in the 
 2. When the instance cannot move, it says "It cannot move to version 3:" over each reason, in Keel's words, such as "Pay is open, and version 3 has no element pay"; **Move to version 3** stays off. [Moving instances to a newer version](/keel/processes/#moving-instances-to-a-newer-version) lists the reasons. If the check itself fails, the dialog says why, in Keel's words, with **Try again**.
 3. Otherwise press **Move to version 3**, or **Keep it on version 2** to leave the instance as it is.
 
-Keel says "Moved *number* to version 3.", closes the dialog and shows the instance on version 3: the header reads `v3`, the history says who moved it, and the diagram is the new version's. If Keel refuses at the last moment, because something changed since the check, the dialog stays open and shows the reasons, or Keel's message when the version asked for is no longer the current one, and the page reads the instance again. A resend of the same move after a failed one is applied once. Builders may move the running instances of an older version together from the [Versions tab](/keel/builder/processes/#moving-the-instances-of-an-older-version).
+Keel says "Moved *number* to version 3.", closes the dialog and shows the instance on version 3: the header reads `v3`, the history says who moved it, and the diagram is the new version's. If Keel refuses at the last moment, because something changed since the check, the dialog stays open and shows the reasons, or Keel's message when the version asked for is no longer the current one, and the page reads the instance again. A move cannot be undone: an instance moves only to the process's current version, never back. A resend of the same move after a failed one is applied once. Builders may move the running instances of an older version together from the [Versions tab](/keel/builder/processes/#moving-the-instances-of-an-older-version).
 
 ## Cancel a process
 
@@ -157,4 +157,4 @@ Keel says "Cancelled *number*." and the page shows the instance as **Cancelled**
 
 ## Not offered on a process
 
-A process is not a case. An instance has no **Follow** and no Updates, no files, no case agent, no re-run and no **Move by hand…** (its **Move to version…** puts it on a newer version of its process, as above), and its history has no **Full history with inputs and outputs**. Builders see an instance's agents and runs on the [builder's Agents screen](/keel/builder/agents/).
+A process is not a case. An instance has no **Follow** and no Updates, no files, no case agent, no re-run and no **Move by hand…** (its **Move to version 3…** puts it on a newer version of its process, as above), and its history has no **Full history with inputs and outputs**. Builders see an instance's agents and runs on the [builder's Agents screen](/keel/builder/agents/).
