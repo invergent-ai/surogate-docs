@@ -182,7 +182,7 @@ The project's helpers, the case agent and the designer agent, are never in the l
 
 ### Why is an agent not on the Agents page?
 
-The page lists the agents named by the current published versions of the project's case types. An agent a draft adds shows once the draft is published. An agent named only to start cases shows with `0 steps in 0 case types`. The project's helpers are listed apart, under **Helpers, not on any step**. See [The Agents page](/keel/builder/agents/#the-list).
+The page lists the agents named by the current published versions of the project's case types. An agent a draft adds shows once the draft is published. An agent named only to start cases shows with `0 steps in 0 case types`. The project's helpers are not listed. See [The Agents page](/keel/builder/agents/#the-list).
 
 ### Why does the Agents page show no sessions or raised hands?
 

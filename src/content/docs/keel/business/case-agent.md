@@ -6,6 +6,8 @@ sidebar:
 
 The **case agent** answers your questions about one case, from the case's data, files and history. When you ask, it fills in the form of a step you hold, for you to check. It never submits: nothing is sent until you submit the form yourself.
 
+The case agent also answers about a process instance, from the **Process agent** tab on its page: see [The Process agent tab](/keel/business/open-process/#the-process-agent-tab).
+
 Each project has one case agent. It is one of the project's two helpers, which Keel sets up when an editor or owner opens the project in Keel Builder (see [The project's helpers](/keel/builder/designer-agent/#the-projects-helpers)). It is not one of the agents that work steps: it never holds a step, a work item or a question.
 
 ## Opening it
