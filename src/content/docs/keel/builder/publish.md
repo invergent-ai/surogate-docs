@@ -15,7 +15,7 @@ With nothing wrong, it says **No problems. Every scenario passed.** Otherwise it
 
 | Group | What it means |
 |---|---|
-| **Warnings** | Something Keel ignores and never runs, such as a vendor extension in a [BPMN process](/keel/processes/) file, or a process whose file has no diagram or only a partial one: [lay it out](/keel/builder/processes/#laying-out-the-diagram) from the process's Diagram tab. A warning never stops the publish. |
+| **Warnings** | Something Keel ignores and never runs, such as a vendor extension in a [BPMN process](/keel/processes/) file, or something it runs but Keel Builder and an instance's page cannot show: a process whose file has no diagram or only a partial one. [Lay it out](/keel/builder/processes/#laying-out-the-diagram) from the process's Diagram tab. A warning never stops the publish. |
 | **Main changed** | Something published since the draft started changed the same files. Update the draft from main on the review page. |
 | **Unreachable steps** | No path from the stage's start reaches the node. |
 | **Outcomes with nothing connected** | An outcome, branch, case event or action leads to a place that does not exist, or a step has no outcome. |
