@@ -92,4 +92,4 @@ Instances also start without you: a case's [process node](/keel/builder/flow-nod
 
 ## What the page does not offer
 
-An instance is not a case. The list has no **Get next**: the Work page's [Get next](/keel/business/work/#get-next) serves the tasks of processes as well. An instance has no files, no case agent, no **Follow** and no re-run. See [An open process](/keel/business/open-process/).
+An instance is not a case. The list has no **Get next**: the Work page's [Get next](/keel/business/work/#get-next) serves the tasks of processes as well. An instance has no files, no **Follow** and no re-run. See [An open process](/keel/business/open-process/).

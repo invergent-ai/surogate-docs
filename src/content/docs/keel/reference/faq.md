@@ -68,6 +68,14 @@ It fills in only a form of yours: an open step of the case that you hold, and on
 
 The case agent takes no files: "The case agent takes no files. Add them to the case instead." Add the file through a step's file field, then ask about it.
 
+### Why does the Process agent tab say "The project's process agent is not set up yet"?
+
+The Process agent tab is the project's case agent on an instance's page, and Keel has none for the project, or it is switched off. Ask an editor or owner to open the project in Keel Builder, then try again. See [The Process agent tab](/keel/business/open-process/#the-process-agent-tab).
+
+### Why can I not give the process agent a file?
+
+A process instance holds no files, and the process agent takes none: "The process agent takes no files."
+
 ### Why can I not give an item to an agent?
 
 Keel says why: **The agent cannot work this item: the project's case types do not name it, it is switched off, it is one of the project's helpers, only a person may act on the item, or the item has no queue for the agent to return it to.** An agent never takes an escalation, a step an agent drafts for a person, or a step that opened for people because its agent failed or was turned off. See [Agents in queues and as delegates](/keel/business/agents/#agents-in-queues-and-as-delegates).
@@ -182,7 +190,7 @@ The project's helpers, the case agent and the designer agent, are never in the l
 
 ### Why is an agent not on the Agents page?
 
-The page lists the agents named by the current published versions of the project's case types. An agent a draft adds shows once the draft is published. An agent named only to start cases shows with `0 steps in 0 case types`. The project's helpers are listed apart, under **Helpers, not on any step**. See [The Agents page](/keel/builder/agents/#the-list).
+The page lists the agents named by the current published versions of the project's case types and processes. An agent a draft adds shows once the draft is published. An agent named only to start cases shows with `0 steps in 0 case types`. The project's helpers are not listed. See [The Agents page](/keel/builder/agents/#the-list).
 
 ### Why does the Agents page show no sessions or raised hands?
 
