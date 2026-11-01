@@ -345,6 +345,8 @@ A message is for one instance, or for the instances a business key names. A **si
 - **Who takes it.** The instance's own waits for the signal take it at once, in the same change, so an event subprocess of the instance that waits for it starts at once. Every other running instance of the project that waits for it takes it after the sender's change is saved, each in a change of its own. An instance with several waits for the signal takes it at each of them, and an event subprocess among them that interrupts starts and stops the rest, as it does for a message.
 - **Which waits.** A signal reaches the waits open when it is sent. An instance that starts waiting afterwards is not reached. An instance that moved on, because it ended or its wait is done, skips it. An instance that cannot take it for any other reason is logged for the operators, and the other instances are not affected.
 - **From outside.** A supervisor or a service key sends a signal to the project: see [Running instances](#running-instances). The history shows who sent it, or the instance it came from.
+- **In order.** An instance takes the signals sent to it in the order they were sent. If one cannot be applied just now, the instance's later signals wait for it.
+- **Round in a circle.** A signal an instance throws as it takes a signal is sent on with the signals that led to it, and one that is already among them is not sent again: two processes that answer each other's signal stop at the signal that comes round, and the operators' log says so. A task whose own signal boundary event catches a signal that its flow throws is interrupted at once, before the flow goes on.
 - **No cap.** A signal reaches every instance that waits for it, however many. A signal and a message of the same name are two waits, and a signal has no payload.
 
 ### A task that runs for each item
@@ -445,7 +447,7 @@ An event subprocess is a subprocess that no flow enters or leaves. It sits in a 
 **An event subprocess that does not interrupt** runs beside the rest:
 
 - A message or a signal starts a run each time it arrives, so several runs of one event subprocess can be open at once. A timer starts it once.
-- At most 100 runs of one event subprocess are open at once. The message that would start the 101st is refused `409 too-many-instances`: "*element*: 100 runs of it are open, the most an event subprocess runs at once". A signal that would start it does not, and the instance is logged for the operators, as one that cannot take a signal is.
+- At most 100 runs of one event subprocess are open at once. The message that would start the 101st is refused `409 too-many-instances`: "*element*: 100 runs of it are open, the most an event subprocess runs at once". A signal that would start the 101st run is taken at none of the instance's waits: one sent to the project, or by another instance, is logged for the operators, as one that cannot take a signal is, and one the instance sends itself refuses what reached the throw event, `409 too-many-instances`, with the same words.
 - The process or subprocess around it waits for its runs. Once its own flow has ended, no new run starts, and a message for the event subprocess is refused `409 unknown-message`: "the instance is not waiting for the message *name*", unless another task waits for it. A signal for it is passed over, as for any instance that moved on. It ends when its last run does, and only once.
 - A run reads and writes the process's variables, and the last writer wins, as for parallel branches. A message writes its values once, when it arrives, so two runs open at once both read the values of the second message.
 
@@ -565,7 +567,7 @@ A signal wait or send is checked when the process is published. Each problem is 
 
 | Problem | What it says |
 |---|---|
-| `signal-name` | "*element* needs a bpmn:signal", when a signal event names none; "the signal *ref* has no name" |
+| `signal-name` | "*element* needs a bpmn:signal", when a signal event names none; "the signal *ref* has no name", for a name that is blank; "the signal *ref* has a name of more than 200 characters" |
 | `unknown-reference` | "the signal *ref* is not a bpmn:signal of the file" |
 | `boundary` | "a signal boundary event that does not interrupt is not supported yet: put the task in a subprocess with a signal event subprocess that does not interrupt"; "cancelActivity must be true or false, not '*value*'"; "another signal boundary event of this activity waits for the signal *name*" |
 | `event-subprocess` | "another event subprocess of this scope waits for the signal *name*" |
@@ -573,7 +575,7 @@ A signal wait or send is checked when the process is published. Each problem is 
 | `extension` | "keel:*name* has no meaning on *the element*", at a signal catch event, a throw event, a signal end event, a signal boundary event or a signal start event: a signal has no Keel settings |
 | `unsupported` | "an intermediate catch event needs a timer, a message or a signal"; "a throw event needs a signal: a process sends nothing else"; "signal start events are not supported: a signal reaches the instances that wait for it, and starts none", at the process's own start event; "message throw events are not supported: a process sends a signal, or calls a process"; "message end events are not supported: a process sends a signal, or calls a process" |
 
-A signal nobody sends, and a wait nobody can reach, are not checked.
+A signal nobody sends, and a wait that opens only after its signal was sent, are not checked.
 
 ### Checking what a process calls and which agents work it
 
@@ -699,7 +701,7 @@ A message sent to the project (`POST /api/projects/{project}/messages`) gives th
 
 An instance that refuses the message (its key changed since, it ended, the payload does not fit, its version no longer loads) is in `refused` with its `code` and `message`, and never undoes another's delivery. No instance waiting is `409 unknown-message`: "No running instance of the project waits for the message *name* with that key." More than 100 is `409 too-many-instances`: "More than 100 instances wait for the message *name* with that key: a message reaches at most 100." When every instance refuses, the answer is the first refusal, with the instance's number before it: "P-000001: the message documents arrived may not write other". Sent again with the `Idempotency-Key` it was first sent with, by the same caller and with the same body, it answers as the first time with the header `Idempotent-Replayed: true`, and no instance takes it twice. A send cut short, such as by a restart between two instances, is finished by sending it again with the same key. A send every instance refuses keeps nothing, so its key can be used again. The key another caller or another body used is `422 key-reused`: "*key* was used for another send in this project".
 
-A signal sent to the project (`POST /api/projects/{project}/signals`) gives the signal `name` (1 to 200 characters) to every running instance of the project that waits for it. It carries no values: a body with any other field is refused `422`. It answers `202`, with the signal and the number of instances it is on its way to:
+A signal sent to the project (`POST /api/projects/{project}/signals`) gives the signal `name` (1 to 200 characters, with a character other than a space) to every running instance of the project that waits for it. It carries no values: a body with any other field is refused `422`. It answers `202`, with the signal and the number of instances it is on its way to:
 
 ```json
 {"signal": "rates changed", "instances": 3}
