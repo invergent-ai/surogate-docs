@@ -4,7 +4,43 @@ title: Processes
 
 The **Processes** page lists the instances of the project's [BPMN processes](/keel/processes/), running and ended. Its header offers **New process**. All staff see all the project's instances. The page keeps itself current.
 
-An instance is one run of a process, such as one loan review. Its number, such as `P-000002`, counts the project's instances of every process. The page does not count them, and the [Overview](/keel/business/overview/) never counts them among the cases.
+An instance is one run of a process, such as one loan review. Its number, such as `P-000002`, counts the project's instances of every process. Supervisors see the processes' [figures](#figures-supervisors) above the list, and the [Overview](/keel/business/overview/) never counts the instances among the cases.
+
+## Figures (supervisors)
+
+Supervisors see a card **Figures** above the list, with how the project's processes did. Other staff do not see it, and a supervisor demoted while the page is open loses it. The card is not there either when Keel is older than these figures. The list below it is the same in each case.
+
+**Period**, beside the card's heading, offers **Last 7 days**, **Last 30 days** and **Last 90 days**. It opens on 30 days. The address keeps the period, as `days`, and the process; 30 days is not written in it.
+
+With **All processes** in the filters, the card shows the table **Processes**: a row for each process the project has published, by name, with its current version muted after it, such as `Loan review v3`. Its columns are:
+
+| Column | What it shows |
+|---|---|
+| **Running** | The instances running now. |
+| **Needs a supervisor** | The instances with an incident or a timer that could not fire, now: the count of the **Needs a supervisor** tab. |
+| **Started** | The instances that started in the period. |
+| **Finished** | The instances that completed or ended in the period, with `28 completed · 2 ended` under it when any ended. |
+| **Failed or cancelled** | The instances an error ended, or a supervisor cancelled, in the period, with `1 failed · 3 cancelled` under it. |
+| **Median to finish** | The median time from start to finish of the instances finished in the period, such as `4.2 d`, with `90% within 6.1 d` under it. `—` when none finished. |
+
+A count of none reads **None**. Under the table: "Running and needs a supervisor are as of now. The other figures cover the last 30 days." With no process published, the card says "No process is published in this project yet."
+
+Press a process's name to pick it: the filter and the list narrow to it, and the card shows its figures. The six figures are named **Figures of Loan review**, with the same caption, and under them **Tasks**, a table of the process's tasks over all its versions:
+
+| Column | What it shows |
+|---|---|
+| **Task** | The task's name. |
+| **Waits on** | What the task waits for: **A person**, **An agent**, **A system**, **A case**, **A called process**, **A message**, **A signal**, **A timer**, **The first of its events** or **Its own tasks**. |
+| **Open** | The tasks waiting now, such as `4`, or `4 · 1 past deadline`. |
+| **Done** | The tasks that were completed in the period. |
+| **Median time** | The median time the done tasks took, from their start to their end. |
+| **Met deadline** | Of the done tasks, the share that were not past their deadline, for a task with a service level. `—` for others. |
+| **Waited to be taken** | For a person's task, the median time from the opening of its work item to its taking, or to its closing when nobody took it. `—` for others. |
+| **Incidents** | The incidents raised on tasks that left in the period. |
+
+Under it: "Open is as of now. The other figures cover the tasks done in the last 30 days. A task that runs for each item counts each of its instances." A process with no task to measure says "This process has no task to measure." [Figures](/keel/processes/#figures) says what each figure counts.
+
+While another period or process loads, the card keeps the last answer, dimmed. When Keel cannot read the figures, the card says **The figures could not be loaded** with the reason and **Try again**. A read that takes too long says "The figures took too long to read. Try a shorter period." The card is not read again when the list changes. **Period**, picking a process and **Try again** read it again.
 
 ## Finding an instance
 

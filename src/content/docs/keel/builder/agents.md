@@ -4,7 +4,7 @@ sidebar:
   label: Agents
 ---
 
-The **Agents** page shows how the agents of your case types are doing: "The agents that work steps in this project's case types". Pick an agent to see what it did over a period, the steps it works, the questions it raised, what it may use and its sessions. An agent that works the tasks of a [BPMN process](/keel/processes/#a-service-task-that-calls-an-agent), alone or drafting for a person, is listed and counted beside the ones that work case types' steps.
+The **Agents** page shows how the agents of your case types are doing: "The agents that work steps in this project's case types and processes". Pick an agent to see what it did over a period, the steps it works, the questions it raised, what it may use and its sessions. An agent that works the tasks of a [BPMN process](/keel/processes/#a-service-task-that-calls-an-agent), alone or drafting for a person, is listed and counted beside the ones that work case types' steps.
 
 Sessions, raised hands and **Export for audit** show case content, so only editors and owners see them; see [What your role lets you see](#what-your-role-lets-you-see). Keel records each case they show as your view of it, and the case's History in the business app lists it under **Read by builders**.
 
@@ -16,7 +16,7 @@ Under each name Keel says how many steps and tasks the agent works and how many 
 
 Under the agents, **Helpers, not on any step** lists the project's helpers, the case agent and the designer agent, once Keel has set them up. They work no step and cannot be picked. Each has a line: "Answers questions inside any case. Drafts, never moves a case." and "Drafts case types from a conversation. A person publishes." A helper switched off in Studio is marked **Off**. See [The project's helpers](/keel/builder/designer-agent/#the-projects-helpers).
 
-With no agent named, the list says "No case type of this project names an agent yet." The helpers still show. Agents are made in Studio; **New agent**, in the page header, opens Studio in a new tab. Editors and owners see it.
+With no agent named, the list says "No case type or process of this project names an agent yet." The helpers still show. Agents are made in Studio; **New agent**, in the page header, opens Studio in a new tab. Editors and owners see it.
 
 ## Period
 
@@ -78,7 +78,7 @@ The table **Steps it works** has a row for each step the agent works, most done 
 
 Each row shows:
 
-- **Case and step**: the case number and title, and the step.
+- **Case or process, and step**: the case number and title, or for a process's task the instance's number, such as `P-000001`, and the step.
 - **Status**: **Starting**, **Working**, **Working with a person**, **Drafted, a person finishes**, **Hand raised**, **Done**, **Drafted**, **Returned to its queue**, **Stopped**, **Failed** or **Finished**.
 - **Doing now**: for a running session, the item of its plan in progress, read every 30 seconds; for one with its hand raised, `Waiting on` the queue and the question; for a finished one, `Outcome` and its value, and how many checks it failed, such as `Outcome approve · 1 failed check`. A dash when there is nothing to say.
 - **Started** and **Time · cost**: a running session's time so far, such as `41 min · $0.37`; `waiting 22 min · $0.37` for one with its hand raised; the time from start to end for a finished one. The cost shows `—` until the session reports one.

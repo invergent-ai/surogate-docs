@@ -22,7 +22,7 @@ The queue's page shows:
 | **Agent questions** | Agents' raised hands, held or not. | The queue's serving order |
 | **Done today** | Items closed since midnight. | The latest first |
 
-Each row shows the item's **Kind**, its **Case**, what is **Needed and why**, how long it **Waited**, and its **Service level**. Under the table, a line such as `7 of 13 unclaimed, in the order Get next serves them` says how many show; **Show more** lists more.
+Each row shows the item's **Kind**, its **Case or process**, what is **Needed and why**, how long it **Waited**, and its **Service level**. Under the table, a line such as `7 of 13 unclaimed, in the order Get next serves them` says how many show; **Show more** lists more.
 
 ## Taking work from a queue
 

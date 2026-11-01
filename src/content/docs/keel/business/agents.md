@@ -77,7 +77,7 @@ While an agent works a step, the case's **Now** card says "*Agent* is working", 
 
 On the Work page, **Agents at work** lists each agent at work on the project's cases and processes now, with how many steps. With none, it says **No agent is at work.**
 
-Pick an agent to list its runs, "Its steps at work, the longest first.": each with its **Case**, **Step**, **Status** and **Since**. The case of a run on a process's task is the instance, such as **P-000001**, which opens the instance's page. A run of the agent's own step or task has **Watch**, which opens the session. A run on a work item, which it took from a queue or was handed, has no **Watch**. An agent with nothing running says it is not at work now. An agent a supervisor turned off says "Off: people work each of its steps that opens from now on."
+Pick an agent to list its runs, "Its steps at work, the longest first.": each with its **Case or process**, **Step**, **Status** and **Since**. The case of a run on a process's task is the instance, such as **P-000001**, which opens the instance's page. A run of the agent's own step or task has **Watch**, which opens the session. A run on a work item, which it took from a queue or was handed, has no **Watch**. An agent with nothing running says it is not at work now. An agent a supervisor turned off says "Off: people work each of its steps that opens from now on."
 
 ## Comments that mention an agent
 

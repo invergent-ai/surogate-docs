@@ -4,7 +4,7 @@ sidebar:
   label: Overview (supervisors)
 ---
 
-The **Overview** shows a project's supervisors how the project is doing: how many cases are open and decided, what needs attention, how each case type is doing and where cases wait. It counts cases and shows none of their content.
+The **Overview** shows a project's supervisors how the project is doing: how many cases are open and decided, what needs attention, how each case type is doing and where cases wait. It counts cases and shows none of their content. It never counts a [process](/keel/processes/)'s instances: supervisors find the processes' figures on the [Processes](/keel/business/processes/#figures-supervisors) page.
 
 Only supervisors have the **Overview** row, after **Team** in the left rail (see [The Team page](/keel/business/supervisors/)). Staff who are not supervisors and open its address read "Only the project's supervisors see the overview." with **Back to work**. A supervisor demoted while the page is open reads the same.
 
