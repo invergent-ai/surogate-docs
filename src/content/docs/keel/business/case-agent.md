@@ -43,7 +43,7 @@ In the step's form, each field it filled is marked "Drafted by the case agent at
 
 - A field you changed is yours. A later draft does not fill it again, and its mark goes.
 - On a step an agent drafts for you, the newer draft of a field wins: the step agent's, or the case agent's.
-- Your draft belongs to you and the step's work item. When the item leaves you, because you returned, delegated or reassigned it, the draft is dropped: whoever holds it next starts with none.
+- Your draft belongs to you and the step's work item. When you return or delegate the item, or a supervisor reassigns it, the draft is dropped: whoever holds it next starts with none. When you are away and the item goes to your substitute, the draft goes with it; when it goes back to its queue, the draft is dropped.
 
 When you submit, the step's entry in [History](/keel/business/open-case/#case-agent-data-history-and-flow) names the agent that drafted its fields, such as "Case agent drafted Net income and Term". A field you changed before submitting is recorded as yours.
 

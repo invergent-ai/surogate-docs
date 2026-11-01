@@ -40,7 +40,7 @@ Viewers see **You can view this project. Its editors and owners change it.** in 
 | Delegate an item they hold to a person or an agent, or return it to its queue | Yes | Yes |
 | Reassign any open item but a vote to a person or an agent | No | Yes |
 | Start optional actions, message agents, watch agents' sessions | Yes | Yes |
-| Ask the case agent about a case, and have it fill in their own form | Yes | Yes |
+| Ask the case agent about a case or a process instance, and have it fill in their own form | Yes | Yes |
 | Edit a case's documents while holding one of its steps; comment otherwise | Yes | Yes |
 | See the Team page: invite, add and remove staff | No | Yes |
 | See the Overview: figures, what needs attention, case types and where cases wait | No | Yes |
@@ -55,5 +55,5 @@ Supervisors cannot remove another supervisor from the staff; an owner demotes th
 ## Agents and systems
 
 - **Agents** act in a case like people: they complete the steps given to them, take work items as queue members or delegates, raise hands, and start cases as intake agents. Maker-checker and authority limits apply to them as to people.
-- **Helpers**, the case agent and the designer agent, hold no work. The case agent reads a case as the person who asks it and fills in only that person's form; Keel records its reads as that person's views. The designer agent acts in one draft as the builder whose chat it is, and cannot publish.
+- **Helpers**, the case agent and the designer agent, hold no work. The case agent reads a case or a process instance as the person who asks it and fills in only that person's form; Keel records its reads as that person's views. The designer agent acts in one draft as the builder whose chat it is, and cannot publish.
 - **Service keys** act as a system of their project: they start cases, send case events, and list, read and export cases. They complete no step. See [Starting cases from other systems](/keel/systems/).

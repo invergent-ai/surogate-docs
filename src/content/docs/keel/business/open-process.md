@@ -139,9 +139,9 @@ Every line about an instance of a task that runs for each item names the instanc
 
 ## The Process agent tab
 
-The **Process agent** tab is your own chat with the project's [case agent](/keel/business/case-agent/) about this instance. The project's staff see it. It is the first tab of **Process details**; an instance still opens on **Data**.
+The **Process agent** tab is your own chat with the project's [case agent](/keel/business/case-agent/) about this instance. The project's staff see it. It is the first tab of the side panel; an instance still opens on **Data**.
 
-The tab says: "Ask about this process. *The process agent* answers from its data, tasks, waits and history, and drafts into your form when you ask. Nothing is sent until you submit." Once your chat has a session, the line names the agent by the name its builder gave it, such as "Case assistant", in place of *The process agent*.
+The tab says: "Ask about this process. *The process agent* answers from its data, tasks, waits and history, and drafts into your form when you ask. Nothing is sent until you submit." Once your chat has a session, the line names the agent by the name it has in Studio, such as "Case agent", in place of *The process agent*.
 
 The chat is yours. Each person has their own chat with the agent on each instance; the rest of the staff do not see it. When you come back to the instance, the tab opens on the same chat, and another instance opens its own chat.
 
@@ -161,7 +161,7 @@ When the instance does not hold the answer, it says so. It reads no files and no
 After each fact it gives, it names where the fact comes from, in square brackets:
 
 - a variable, by its label, such as `[Data: Amount]`;
-- an entry of the history, by its task and day, such as `[History: Review the loan, 12 Oct]`;
+- an entry of the history, by its element, when it has one, and day, such as `[History: Review the loan, 12 Oct]`;
 - a task, a wait, a case, a process, an incident or the move check, such as `[Task: Review the loan]`, `[Waiting: Check credit]`, `[Case: CL-000001]`, `[Process: P-000002]`, `[Incident: Check credit]` or `[Move check]`.
 
 You can stop the agent while it answers. When it cannot answer, the chat says "The process agent could not answer." Keel records what the agent reads for you as your own views of the instance, made through the case agent.
@@ -172,9 +172,9 @@ Ask the agent to fill in a form, for example from the instance's data. It fills 
 
 The chat marks each draft with a line such as "Drafted into your form: Reviewer's note". In the task's form, each field it filled is marked "Drafted by the process agent at your request. Nothing is sent until you submit." Check each value, change what you need, choose an outcome and press **Submit**, as on any task.
 
-- A field you changed is yours. A later draft does not fill it again, and its mark goes.
+- A field you changed is yours. A later draft of the process agent does not fill it again, and its mark goes. A new draft of the task's own agent fills the form afresh.
 - On a task an agent drafts for you, the newer draft of a field wins: the task's agent's, or the process agent's.
-- Your draft belongs to you and the task's work item. When the item leaves you, because you returned, delegated or reassigned it, the draft is dropped: whoever holds it next starts with none.
+- Your draft belongs to you and the task's work item. When you return or delegate the item, or a supervisor reassigns it, the draft is dropped: whoever holds it next starts with none. When you are away and the item goes to your substitute, the draft goes with it, marked as the process agent's draft; when it goes back to its queue, the draft is dropped.
 - When a supervisor moves the instance to a newer version, your draft keeps the values the newer version's form still takes and drops the rest.
 
 When you submit, the task's entry in **History** names the agent that drafted its fields under it, such as "Case assistant drafted Reviewer's note". A field you changed before submitting is recorded as yours.
@@ -189,7 +189,7 @@ The process agent reads the instance and fills in your form. It cannot:
 - fill in a task you do not hold;
 - read files, or read another case or process.
 
-It never takes files. Add what the instance needs through the task that asks for it, then ask again.
+A process instance holds no files.
 
 ### When it cannot answer
 

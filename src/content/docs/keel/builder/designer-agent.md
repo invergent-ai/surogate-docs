@@ -19,11 +19,11 @@ A helper is never offered as a step's agent or as an intake agent, and the [Agen
 
 ### Keeping the helpers up to date
 
-A project's helpers are made once. When a newer version of a helper brings tools or instructions, Keel asks Studio to bring the project's helpers up to date, without making them again: when you open the project in Keel Builder, after each publish, and when someone opens their first chat about a process instance in an hour. An editor does nothing, and a helper that is up to date is left as it is.
+A project's helpers are made once. When a newer version of a helper brings tools or instructions, Keel asks Studio to bring the project's helpers up to date, without making them again: when an editor or owner opens the project in Keel Builder, after each publish, and, at most once an hour, when someone starts a chat about a process instance. An editor does nothing, and a helper that is up to date is left as it is.
 
 - **Tools** are added, never taken away. A tool you took away from a helper in Studio stays away, and a helper with no list of tools stays open.
-- **Instructions** that Keel ships sit between two marker lines in the helper's instructions in Studio, `<!-- keel:helper v2 -->` and `<!-- /keel:helper -->`, where the number is the version. A newer version replaces what is between them, so write nothing of your own there.
-- Text you wrote outside the marker lines is kept. When a helper's instructions were changed, Keel puts the marked instructions above your text, with one line saying that where the two disagree, the marked instructions win.
+- **Instructions**, from version 2 of a helper on, sit between two marker lines in its instructions in Studio, `<!-- keel:helper v2 -->` and `<!-- /keel:helper -->`, where the number is the version. A newer version replaces what is between them, so write nothing of your own there. The case agent has them; the designer agent is still at version 1, whose instructions have no marker lines.
+- Text you wrote outside the marker lines is kept. When a helper's instructions no longer hold exactly one pair of marker lines, because you edited them before Keel marked them, or deleted a marker line, or copied the block, Keel puts the marked instructions above your text, with one line saying that where the two disagree, the marked instructions win.
 - A helper whose marked instructions were deleted gets them back at the next version.
 - A helper's name, description, model and whether it is switched on never change.
 
