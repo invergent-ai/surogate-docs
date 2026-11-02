@@ -13,6 +13,11 @@ class Content(unittest.TestCase):
     def test_short_opening_is_a_lead(self):
         self.assertIn('class="lead"', page('/work/quickstart/'))
 
+    def test_dms_quickstart_caption_and_lead(self):
+        doc = page('/dms/quickstart/')
+        self.assertIn('<figcaption>The Upload a document dialog: the file, the title, the Building permit type and its required fields</figcaption>', doc)
+        self.assertIn('class="lead"', doc)
+
 
 if __name__ == '__main__':
     unittest.main()

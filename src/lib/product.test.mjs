@@ -17,3 +17,11 @@ test('products', () => {
   assert.equal(productFor('keel'), 'keel');
   assert.equal(productFor(''), null);
 });
+
+test('dms', () => {
+  assert.equal(trackFor('dms'), 'dms');
+  assert.equal(trackFor('dms/admin/people'), 'dms');
+  assert.equal(trackFor('dmsx'), null);
+  assert.equal(productFor('dms'), 'dms');
+  assert.equal(productFor('dms/work/search'), 'dms');
+});

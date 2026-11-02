@@ -1,20 +1,23 @@
 ---
-// The two products, side by side, each with its mark, its line, a small drawing
+// The three products, side by side, each with its mark, its line, a small drawing
 // and the way in.
 import AgentsMark from '../brand/AgentsMark.astro';
+import DmsMark from '../brand/DmsMark.astro';
 import KeelMark from '../brand/KeelMark.astro';
 import MiniAgents from './MiniAgents.astro';
+import MiniDms from './MiniDms.astro';
 import MiniKeel from './MiniKeel.astro';
 ---
 
 <section class="band not-content">
   <div class="inner">
     <div class="intro">
-      <h2>Two products, built to work together.</h2>
+      <h2>Three products, built to work together.</h2>
       <p>
         Surogate Agents is where you build and run agents: each one has its own computer, browser and files, and works
         with your skills and knowledge. Keel runs your business processes, with agents, people and systems each doing
-        their step.
+        their step. Surogate DMS keeps an institution's documents: filing, finding, signing, retention and handover to
+        the archive.
       </p>
     </div>
     <div class="cards">
@@ -34,6 +37,15 @@ import MiniKeel from './MiniKeel.astro';
         <div class="actions">
           <a class="button" href="/keel/">Open the Keel docs</a>
           <a class="link" href="/keel/quickstart/">Quickstart</a>
+        </div>
+      </article>
+      <article class="card" data-docs="product-card">
+        <div class="head"><DmsMark size={48} /><h3>Surogate DMS</h3></div>
+        <p>Keep your institution's documents, from the first upload to the archive.</p>
+        <div class="drawing"><MiniDms /></div>
+        <div class="actions">
+          <a class="button" href="/dms/">Open the DMS docs</a>
+          <a class="link" href="/dms/quickstart/">Quickstart</a>
         </div>
       </article>
     </div>
@@ -79,7 +91,7 @@ import MiniKeel from './MiniKeel.astro';
     align-items: stretch;
   }
   .card {
-    flex: 1 1 460px;
+    flex: 1 1 340px;
     min-width: 0;
     background: var(--d-surface);
     border: 1px solid var(--d-line);

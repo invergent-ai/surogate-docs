@@ -66,7 +66,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Surogate Docs',
-      description: 'Guides, tutorials and reference for Surogate Agents and Keel.',
+      description: 'Guides, tutorials and reference for Surogate Agents, Keel and Surogate DMS.',
       logo: {
         light: './src/assets/logo-black.svg',
         dark: './src/assets/logo-white.svg',
@@ -137,7 +137,7 @@ export default defineConfig({
       plugins: [
         starlightLinksValidator(),
         starlightLlmsTxt(),
-        // One sidebar per track. Work and Develop are Surogate Agents; Keel is its own product.
+        // One sidebar per track. Work and Develop are Surogate Agents; Keel and Surogate DMS are their own products.
         // Each topic's items are the track's former sidebar group, unchanged and in order.
         starlightSidebarTopics([
         {
@@ -388,6 +388,63 @@ export default defineConfig({
             },
           ],
         },
+        {
+          id: 'dms',
+          label: 'Surogate DMS',
+          link: '/dms/',
+          items: [
+            'dms',
+            'dms/concepts',
+            'dms/quickstart',
+            'dms/quickstart-admin',
+            {
+              label: 'Examples',
+              collapsed: true,
+              items: ['dms/examples/contract', 'dms/examples/new-department', 'dms/examples/selection-and-handover'],
+            },
+            {
+              label: 'Daily work',
+              collapsed: true,
+              items: [
+                'dms/work/sign-in',
+                'dms/work/my-desk',
+                'dms/work/library',
+                'dms/work/upload',
+                'dms/work/document-page',
+                'dms/work/versions',
+                'dms/work/lifecycle',
+                'dms/work/search',
+                'dms/work/comments',
+                'dms/work/signing',
+                'dms/work/favorites-and-collections',
+                'dms/work/personal-data',
+              ],
+            },
+            {
+              label: 'Archive',
+              collapsed: true,
+              items: ['dms/archive/overview', 'dms/archive/selection', 'dms/archive/handover'],
+            },
+            {
+              label: 'Administration',
+              collapsed: true,
+              items: [
+                'dms/admin/org-chart',
+                'dms/admin/people',
+                'dms/admin/roles',
+                'dms/admin/document-types',
+                'dms/admin/folders',
+                'dms/admin/nomenclator',
+                'dms/admin/audit-log',
+              ],
+            },
+            {
+              label: 'Reference',
+              collapsed: true,
+              items: ['dms/reference/roles', 'dms/reference/glossary', 'dms/reference/faq'],
+            },
+          ],
+        },
       ]),
       ],
       head: [
@@ -418,7 +475,7 @@ export default defineConfig({
           attrs: {
             name: 'keywords',
             content:
-              'Surogate, Surogate Agents, Keel, AI agents, agent platform, business processes, case management, MCP, fine-tuning, documentation',
+              'Surogate, Surogate Agents, Keel, Surogate DMS, AI agents, agent platform, business processes, case management, document management, records management, archive, MCP, fine-tuning, documentation',
           },
         },
         {
@@ -450,7 +507,7 @@ export default defineConfig({
           tag: 'meta',
           attrs: {
             name: 'twitter:description',
-            content: 'Guides, tutorials and reference for Surogate Agents and Keel.',
+            content: 'Guides, tutorials and reference for Surogate Agents, Keel and Surogate DMS.',
           },
         },
         {
