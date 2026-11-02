@@ -1,6 +1,6 @@
 ---
 // The nav bar, the same aubergine bar as surogate.ai in both themes: the docs
-// wordmark, the two products, search (surogate.ai on the home page, whose hero
+// wordmark, the three products, search (surogate.ai on the home page, whose hero
 // carries the big search field), the theme switch and Sign in.
 import Search from '@astrojs/starlight/components/Search.astro';
 import ThemeToggle from './ThemeToggle.astro';
@@ -18,7 +18,7 @@ const isHome = id === '';
   </a>
   <div class="products">
     {
-      (['agents', 'keel'] as const).map((product) => (
+      (['agents', 'keel', 'dms'] as const).map((product) => (
         <a
           data-docs="product-link"
           href={PRODUCT_HOME[product]}

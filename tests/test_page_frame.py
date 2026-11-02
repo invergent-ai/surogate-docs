@@ -17,6 +17,10 @@ class PageFrame(unittest.TestCase):
         crumb = words(section(page('/keel/quickstart/'), 'breadcrumb'))
         self.assertEqual(crumb, ['Keel', '/', 'Keel', 'quickstart'])
 
+    def test_breadcrumb_dms_home_stops_at_the_product(self):
+        crumb = words(section(page('/dms/'), 'breadcrumb'))
+        self.assertEqual(crumb, ['Surogate', 'DMS'])
+
     def test_breadcrumb_on_a_track_home_stops_at_the_track(self):
         crumb = words(section(page('/develop/'), 'breadcrumb'))
         self.assertEqual(crumb, ['Surogate', 'Agents', '/', 'Develop'])

@@ -21,6 +21,11 @@ class Sidebar(unittest.TestCase):
         self.assertIn('Keel', section(doc, 'product-head'))
         self.assertNotIn('data-docs="track-switch"', doc)
 
+    def test_dms_has_head_and_no_switch(self):
+        doc = page('/dms/')
+        self.assertIn('Surogate DMS', section(doc, 'product-head'))
+        self.assertNotIn('data-docs="track-switch"', doc)
+
 
 if __name__ == '__main__':
     unittest.main()

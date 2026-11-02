@@ -18,6 +18,15 @@ class Topics(unittest.TestCase):
         self.assertIn('/keel/builder/designer-agent/', links)
         self.assertFalse([l for l in links if l.startswith(('/work/', '/develop/'))])
 
+    def test_dms_sidebar_has_only_dms_pages(self):
+        links = self.sidebar_links('/dms/')
+        self.assertIn('/dms/', links)
+        self.assertFalse([l for l in links if l.startswith(('/work/', '/develop/', '/keel/'))])
+
+    def test_other_sidebars_have_no_dms_pages(self):
+        for route in ('/keel/', '/work/quickstart/', '/develop/'):
+            self.assertFalse([l for l in self.sidebar_links(route) if l.startswith('/dms/')], route)
+
     def test_work_sidebar_has_only_work_pages(self):
         links = self.sidebar_links('/work/quickstart/')
         self.assertIn('/work/channels/slack/', links)
@@ -31,6 +40,7 @@ class Topics(unittest.TestCase):
     def test_pagination_stays_in_track(self):
         self.assertNotIn('rel="next"', page('/work/reference/faq/'))
         self.assertNotIn('rel="prev"', page('/develop/'))
+        self.assertNotIn('rel="prev"', page('/dms/'))
 
 
 if __name__ == '__main__':
