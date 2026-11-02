@@ -2,7 +2,7 @@
 title: An open case
 ---
 
-A case's page shows where the case is, the steps that are yours to work, who holds the others, its files, its data and its history, and has the case agent to ask about it. It keeps itself current as the case changes. Open a case from the Work page, the Cases page, or a link a colleague sends.
+A case's page shows where the case is, the steps that are yours to work, who holds the others, its files, its data and its history, and has the case agent to ask about it. If your project uses the DMS, it also lists the case's DMS documents. It keeps itself current as the case changes. Open a case from the Work page, the Cases page, or a link a colleague sends.
 
 Keel records each time someone opens a case.
 
@@ -14,7 +14,9 @@ Keel records each time someone opens a case.
 - On the right, **Follow**, and a button for each **optional action** available now, such as **Ask client for a document**. Pressing it starts the action's step, which then shows like any other step.
 - For supervisors, **More actions** with **Move by hand…**. See [Move a case by hand](/keel/business/supervisors/#move-a-case-by-hand).
 
-Under the header, a case a BPMN process started shows **Started by** and the process's instance, such as **P-000001 · Claim settlement**, linked to its page. The **stage bar** shows the case's stages with their dates: done, current and ahead. The current stage names the steps open in it.
+Under the header, a case a BPMN process started shows **Started by** and the process's instance, such as **P-000001 · Claim settlement**, linked to its page. The **stage bar** shows the case's stages with their dates: done, current and ahead. The current stage names the steps open in it. Under the stage bar, the case type's summary values show as figures, such as **Loan amount** and **Term**.
+
+![A closed case, MPA-000003: the header with Follow, the stage bar, two figures, "This case is closed.", the files panel, and the side panel on its Data tab.](../../../../assets/screenshots/keel-business-case.png)
 
 ## Follow a case
 
@@ -92,6 +94,8 @@ A case whose process nodes started any [BPMN processes](/keel/processes/) lists 
 
 Under the steps, the files panel holds the case's files: the files its file fields hold, and the files its agents wrote. The four changed last have tabs of their own; **All *n* files** lists every file, newest first, with its field, who added it, at which step, and when.
 
+![The files panel on All 6 files: each file with its field, who added it, at which step, and when.](../../../../assets/screenshots/keel-business-case-files.png)
+
 Office documents, such as Word, Excel, PowerPoint and PDF files, open in the web editor in the panel. What you can do in a document depends on the case:
 
 - While you hold a step of the case, you can edit.
@@ -106,18 +110,65 @@ The editor also offers the project's staff, apart from you. A comment that menti
 
 Other files show their name and size, with **Download**. When documents cannot open in the editor, the panel says why, such as "Documents open here once a document server is set up. Download the file instead."
 
+## DMS documents
+
+If your project uses the DMS, Surogate's document system, the case's page has a **DMS documents** section under the files panel. It lists the documents of the DMS linked to the case. Keel keeps no copy of them: it asks the DMS each time, as you, so you see only what the DMS lets you read.
+
+- The documents show newest first. Each shows its title, then its document type when it has one, how it stands in the DMS (**Draft**, **Validated**, **Approved**, **Published** or **Archived**), its current version and file name, such as `v2 contract.pdf`, and when it was added to the case.
+- Each title opens the document in the DMS, in a new tab, when the DMS has a page for it.
+- Documents you may not open there are not listed. A line counts them instead, such as "2 documents you cannot open."
+- **Show more** lists more when there are many.
+- With no document linked, the section says "No DMS documents are linked to this case."
+
+The section reads the DMS again each time the case changes.
+
+### Add or remove a document
+
+**Add a document** and **Remove** show only while the case is open, and only to a supervisor or to someone who has work on the case: a step, a vote or an agent's question they hold, or a step waiting unclaimed in one of their queues. Others see the list only.
+
+To link a document:
+
+1. Press **Add a document**. The dialog **Add a DMS document** opens: "Search the DMS by title. It lists the documents you may open there."
+2. Type at least two characters of the title. The dialog says "Type at least two characters." until you do, then "Searching…".
+3. Each document found shows its title, its folder, how it stands and its current version. **More results** lists more. When nothing matches, the dialog says "No document matches."
+4. Press **Add** beside the document. Keel says **Added.**, or "It was already in this case." when it was linked before. The dialog closes, and the section lists the document.
+
+![The Add a DMS document dialog, empty: "Type at least two characters."](../../../../assets/screenshots/keel-business-dms-picker.png)
+
+To unlink a document, press **Remove** under it. Keel asks "Remove *title* from this case?": "The document stays in the DMS." Press **Remove**. The DMS has the last word: when it does not let you, Keel says "The DMS does not let you do this with this document."
+
+### When the DMS refuses or does not answer
+
+When the section cannot list the documents, it says why:
+
+| Message | What to do |
+|---|---|
+| "You are not a member of the DMS's organisation, so it lists no documents for you. Ask an administrator." | Ask an administrator. The section offers nothing to try again. |
+| "The DMS did not accept your sign-in." | Press **Try again**. |
+| "The DMS did not answer. Try again shortly." | Press **Try again** a little later. |
+
+A search in **Add a DMS document** can also say "The DMS cannot read this search. Use plain words, and close any quote or bracket."
+
 ## Case agent, Data, History and Flow
 
 The side panel, beside the steps on a wide screen and under them on a phone, has four tabs. The case opens on **Data**.
 
 - **Case agent**: your chat with the project's case agent about this case. It answers from the case's data, files and history, and fills in your form when you ask. See [The case agent](/keel/business/case-agent/).
+
+  ![The Case agent tab: "Ask about this case.", and the message box.](../../../../assets/screenshots/keel-business-case-agent.png)
+
 - **Data**: each field by its label and value. Open a field to see every value it took, who set it (a person, an agent, **Rule**, or **Set by the move to version *n***), when, and at which step or at **Case started**.
 - **History**:
   - **Your part in this case** first: what you did, latest first, or "You have not worked on this case yet".
   - Then each step done, latest first: its name and outcome, who did it, when, the rules it applied with their versions, which agent drafted the fields a person submitted, such as "Case agent drafted Amount and Term", and the **Policies read** by an agent, by policy and page.
   - **Read by builders**: the builders who read the case, such as `Ana Marin, a builder, read an agent's session on this case`, with the time. It shows only when a builder has read the case, and says "Builders' reads could not be loaded." with **Try again** when they cannot be read. History shows the latest five; the rest are in **Full history**, which lists all of them, with **Show more reads**.
   - **Full history with inputs and outputs** opens every transition of the case, a hundred at a time, each with the agents that drafted it and the values it recorded: the outcome, the fields written, a vote's choice, an answer, a note and a message to an agent. A transition that reached a process node also says "Requested the process" and the process's key made readable, such as "Requested the process Kyc check", and the node; the process's end reads, for example, "Process P-000003 ended" or "Process P-000003 failed", with the way the case left by.
+
+  ![The History tab: Your part in this case, then each step done, latest first, with its outcome, who did it and when.](../../../../assets/screenshots/keel-business-case-history.png)
+
 - **Flow**: the current stage's flowchart, with the path the case took traced through it and its open steps marked as current.
+
+  ![The Flow tab of a closed case: the Offer stage, from Start through Issue the offer to Closed: Approved.](../../../../assets/screenshots/keel-business-case-flow.png)
 
 ## When Keel refuses
 

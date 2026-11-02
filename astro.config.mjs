@@ -323,11 +323,18 @@ export default defineConfig({
             'keel',
             'keel/concepts',
             'keel/quickstart',
+            'keel/quickstart-business',
+            {
+              label: 'Examples',
+              collapsed: true,
+              items: ['keel/examples/mortgage-pre-approval'],
+            },
             {
               label: 'Keel Builder',
               collapsed: true,
               items: [
                 'keel/builder/sign-in',
+                'keel/builder/overview',
                 'keel/builder/case-types',
                 'keel/builder/drafts',
                 'keel/builder/designer-agent',
@@ -345,6 +352,7 @@ export default defineConfig({
                 'keel/builder/rules',
                 'keel/builder/queues',
                 'keel/builder/agents',
+                'keel/builder/knowledge',
                 'keel/builder/settings',
               ],
             },
@@ -367,7 +375,6 @@ export default defineConfig({
                 'keel/business/overview',
               ],
             },
-            'keel/systems',
             'keel/processes',
             {
               label: 'Reference',
@@ -376,7 +383,6 @@ export default defineConfig({
                 'keel/reference/glossary',
                 'keel/reference/node-kinds',
                 'keel/reference/roles',
-                'keel/reference/process-file',
                 'keel/reference/faq',
               ],
             },

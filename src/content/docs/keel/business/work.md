@@ -6,11 +6,15 @@ sidebar:
 
 **Work** is your home page in the business app: "your items and your teams' queues". It shows what needs you, what you handed to others, what you did today, the queues you work in, and the agents at work. The page keeps itself current; there is nothing to refresh.
 
-The page has three columns on a desktop:
+On a desktop, four figures head the page: **Needs me**, **I delegated**, **Waiting in my queues** (the open items of the queues you are a member of) and **Done today**. A count of zero reads **None**.
+
+Under them, the page has three columns:
 
 - on the left, the lists you can open: **Mine**, **Team queues** and **Agents at work**;
 - in the middle, the list you picked, labelled with the order it is in;
 - on the right, the item you picked.
+
+![The Work page with nothing in Needs me: the four figures, the lists on the left, "Nothing needs you" in the middle.](../../../../assets/screenshots/keel-business-work.png)
 
 On a phone, the lists come first, and an item opens on its own with **Back**.
 
@@ -46,11 +50,13 @@ Pick an item to see it on the right: its kind and service level, what it needs, 
 - **Since**, **Goal**, **Deadline**: when it opened, and its service level's times;
 - **Done**, for an item done.
 
+![An agent's question picked in Done today: on the right, the question, who asked, its case, and Why, Since, Goal, Deadline and Done.](../../../../assets/screenshots/keel-business-work-done-item.png)
+
 **Open case** opens the case. Steps and votes are worked in the case, where their form and the case's files are. See [An open case](/keel/business/open-case/).
 
 A task of a [BPMN process](/keel/processes/#start-and-work-instances) shows **Open process** instead, which opens [the instance's page](/keel/business/open-process/), where the task's form is.
 
-If an address points at an item the list no longer holds, the pane says so: it may have been answered, returned or handed to someone else, or it is not yours.
+If a link points at an item the list no longer holds, the pane says so: "This item is no longer in this list. It may have been answered, returned or handed to someone else, or it is not yours."
 
 ### Hand an item to someone else
 
@@ -100,6 +106,8 @@ Below the items, **Needs me** lists **Notices**, newest first, when there are an
 
 **Updates** lists what changed on the cases you follow, newest first. Each update gives the case's number and title, which open the case, a sentence saying what happened, such as who finished a step and how, and when. You never see your own changes in it.
 
+![The Updates list: three changes on case MPA-000001, newest first, each with Unfollow.](../../../../assets/screenshots/keel-business-work-updates.png)
+
 - An update you have not seen is marked **New**, and the **Updates** row counts them: `8 new`, or `99+ new` when there are many.
 - They count as seen once you have listed them all. When there are more than the list shows, **Show more updates** lists the rest, and **Mark all as seen** marks them at once.
 - **Unfollow** on an update stops following its case; the update then reads **Unfollowed**.
@@ -118,6 +126,8 @@ Under **Your items go to**, pick one:
 
 Under **Back on**, pick the day you are back, or leave it empty: "Leave it empty to end the absence by hand." An absence with a day ends by itself at the start of that day, in your time zone.
 
+![The Delegate while away dialog: Return my items to the queue, four colleagues under People, the Back on day, and Set absence.](../../../../assets/screenshots/keel-business-delegate-while-away.png)
+
 Once you have picked, the dialog says what would happen before anything does, such as:
 
 - "You hold 3 items:", then "1 goes to *Mihai Ionescu*" and "1 goes back to its queue".
@@ -132,7 +142,7 @@ Press **Set absence**. Keel says, for example, **You are away. 2 items went to M
 
 ### While you are away
 
-The **Your absence** box under the header says how things stand:
+A box under the page's header says how things stand:
 
 - "You are away, back on 3 Nov.", or "You are away until 2 Nov, 22:00." when the absence was set to end at another hour, or "You are away until you end your absence."
 - "New items go to *Mihai Ionescu*.", or "New items go back to their queues, or stay with you when they have none."
@@ -166,4 +176,12 @@ When nothing is waiting, it says **Nothing is waiting for you.** Two people pres
 Under **Mine**, the column lists:
 
 - **Team queues**: each queue you are a member of, with how many items are open in it, and **All queues**. See [Team queues](/keel/business/queues/).
-- **Agents at work**: each agent at work on the project's cases and processes now, on its own steps or tasks or on work items, with how many. See [Working with agents](/keel/business/agents/#agents-at-work).
+- **Agents at work**: each agent at work on the project's cases and processes now, on its own steps or tasks or on work items, with how many. With none, it says "No agent is at work." See [Working with agents](/keel/business/agents/#agents-at-work).
+
+A queue you pick fills the middle and the right of the page with its figures, its members and its items:
+
+![The Intake queue on the Work page: its figures, its members, the Unclaimed tab and one step with Claim.](../../../../assets/screenshots/keel-business-work-queue.png)
+
+**All queues** lists every queue of the project, with your own marked **Yours**:
+
+![All queues: Committee, Underwriting and Intake, each with Waiting, Unclaimed, Agent questions, Past deadline and Done today.](../../../../assets/screenshots/keel-business-work-all-queues.png)

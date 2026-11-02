@@ -10,6 +10,8 @@ Only supervisors have the **Overview** row, after **Team** in the left rail (see
 
 The header names the project and counts its case types, agents and team queues, such as `Lending · 2 case types · 1 agent · 1 team queue`. A count that could not be read is left out.
 
+![The Overview: Period in the header, the six figure tiles, Cases opened and decided, Open cases by deadline and the Case types table.](../../../../assets/screenshots/keel-business-overview.png)
+
 ## Period
 
 **Period** offers **Last 7 days**, **Last 30 days** and **Last 90 days**. It opens on 30 days. Open cases and past deadline are counted as of now. The other figures cover the period, and the tiles say "was" for the period of the same length before it. In **Needs attention**, only the agent items depend on the period; waits and queues are as of now.
@@ -30,6 +32,15 @@ Six tiles, with the caption "Open cases and past deadline are as of now. The oth
 | **Agent cost per case** | The median cost of the cases decided in the period that have an agent cost, in dollars, such as `$2.90` with `was $3.10`. Under it: `median of 412 decided cases with an agent cost`. |
 
 A figure with nothing to measure reads `—`, and a count of none reads `None`. **Median to decision**, **Steps done by agents** and **Agent cost per case** say no "was" when the period before has nothing to measure. **Decided** then reads `was None`. **Open cases** and **Past deadline** have none. A rate above 0 never reads `0%`; it reads `<1%`. A rate below 100% never reads `100%`; it reads `>99%`. A cost below a cent keeps two significant digits, such as `$0.0042`.
+
+## Cases by week and by deadline
+
+Under the tiles, two charts show how cases come and go. Neither follows **Period**.
+
+- **Cases opened and decided** draws, for each of the last eight weeks, how many cases opened and how many were decided, each week labelled by its Monday, such as `26 Oct`. With none, it says "No case was opened or decided in these weeks."
+- **Open cases by deadline** is a ring of the open cases that have a deadline: **On time**, **Due within 24 hours** and **Past deadline**, with the share on time in the middle. Under it, a line such as "3 more have no deadline." counts the open cases without one. With no open case that has a deadline, it says "No open case has a deadline."
+
+At the bottom of the page, two tips: "The weekly bars always cover the last eight weeks, whatever the period above." and "A queue running short? Add a member from Team, or raise someone's authority limit there."
 
 ## Needs attention
 
@@ -62,6 +73,8 @@ The caption under it reads "Open and past deadline are as of now. The other figu
 
 **Where cases wait** draws one case type at a time: the one with the most open cases, or the first by name on a tie. A picker beside the heading lists the project's case types by name. The page says "Median time in each stage over the last 30 days, by who the case waited on."
 
+![The lower part of the Overview: Case types, Needs attention with "Nothing needs attention.", Where cases wait with its case type picker, Chart and Table, and the two tips.](../../../../assets/screenshots/keel-business-overview-more.png)
+
 The chart has a bar for each stage a case left in the period, in the order of the case type's stages. Each bar is split by who held the case: **Agent working**, **Staff**, **Client**, **Third parties** and **Systems**. It ends in the stage's median, with the wait that held the stage longest beside it when a client or a third party held it. The scale is in hours, or in days when any stage's median is a day or more. Pointing at a segment shows its time. On a phone the bar ends in the median alone.
 
 The buttons **Chart** and **Table** switch the view. It opens on **Chart**, and your browser remembers your choice. The table gives the numbers of the same stages, in the same unit as the chart:
@@ -83,6 +96,7 @@ Each part reads on its own. A part that cannot be read says so, gives Keel's rea
 | Part | Title |
 |---|---|
 | Figures | "The figures could not be loaded" |
+| Cases opened and decided, Open cases by deadline | "The chart could not be loaded" |
 | Needs attention | "This list could not be loaded" |
 | Case types | "The case types could not be loaded" |
 | Where cases wait | "The chart could not be loaded" |

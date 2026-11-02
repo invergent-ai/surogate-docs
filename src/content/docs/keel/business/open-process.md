@@ -2,7 +2,9 @@
 title: An open process
 ---
 
-An instance's page shows where a [BPMN process](/keel/processes/) is, the tasks that are yours to work, who holds the others, what it waits for, its diagram, its data and its history, and a chat with the process agent. For supervisors it also shows what needs them and offers Retry and Cancel. It keeps itself current as the instance changes. Open an instance from the [Processes](/keel/business/processes/) page, the Work page, a case it started or waits on, or a link a colleague sends.
+An instance's page shows where a [BPMN process](/keel/processes/) is, the tasks that are yours to work, who holds the others, what it waits for, its diagram, its data and its history, and a chat with the process agent. When the project uses the Surogate document system, it also lists the instance's [DMS documents](#dms-documents). For supervisors it also shows what needs them and offers Retry and Cancel. It keeps itself current as the instance changes. Open an instance from the [Processes](/keel/business/processes/) page, the Work page, a case it started or waits on, or a link a colleague sends.
+
+![An instance of Loan review: the header with its status and More actions, Your task with Claim, the Diagram card, Processes it called, and the Data tab on the right.](../../../../assets/screenshots/keel-business-process-instance.png)
 
 Keel records each time someone opens an instance.
 
@@ -56,9 +58,48 @@ An instance whose tasks started cases lists them under **Cases it started**, old
 
 An instance whose call activities called processes lists them under **Processes it called**, oldest first: each by its number, its process's name and how it stands, such as `P-000002 · Credit check · Completed`, linked to its instance, with the call activity that called it and when. A call that started nothing reads, for example, `Credit check · Not started`, with why. The list reads again on each change. An instance that called no process shows no **Processes it called**.
 
+## DMS documents
+
+When the project uses the Surogate document system (the DMS), the page has a card **DMS documents**. In a project that does not use it, the card is not there.
+
+The card lists the DMS documents linked to the instance, newest first, as you may read them in the DMS: Keel asks the DMS with your own sign-in, so the list holds only the documents the DMS lets you open. Each row shows the document's title and, under it, its type when it has one, its state in the DMS (**Draft**, **Validated**, **Approved**, **Published** or **Archived**), its current version with its file name, and when it was added, such as `Contract · Approved · v2 loan-agreement.pdf · Added 31 Oct`. Press the title to open the document in the DMS, in a new tab. Under the list, a line counts the linked documents you cannot open, such as "2 documents you cannot open." **Show more** loads the next documents when there are more than 50. The card reads the list again each time the instance changes.
+
+With no document linked, the card says "No DMS documents are linked to this process."
+
+![The DMS documents card of a running instance: no document linked yet, and Add a document beside the heading.](../../../../assets/screenshots/keel-business-process-dms-documents.png)
+
+### Add or remove a document
+
+**Add a document**, and **Remove** under each document, show only while the instance is running, and only to a supervisor or to a person with a task of this instance: a task they hold, or one that waits in one of their queues. Everyone else sees the list without them.
+
+1. Press **Add a document**. The dialog **Add a DMS document** says "Search the DMS by title. It lists the documents you may open there."
+2. Type at least two characters of the title. Until you do, the dialog says "Type at least two characters." The search runs when you pause typing.
+3. Each document found shows its title, its folder, its state and its current version. **More results** loads the next ones. With no match, the dialog says "No document matches."
+4. Press **Add** beside the document. Keel says "Added.", or "It was already in this process." when it was linked already, closes the dialog and lists the document.
+
+![The Add a DMS document dialog: a search field and "Type at least two characters."](../../../../assets/screenshots/keel-business-dms-picker.png)
+
+The document is linked in your name, with your DMS sign-in.
+
+To remove a document, press **Remove** under it. Keel asks **Remove *title* from this process?** and says "The document stays in the DMS." Press **Remove** to confirm. The DMS has its own rules for its documents: when it refuses a change, Keel shows its words, such as "The DMS does not let you do this with this document."
+
+### When the DMS refuses or does not answer
+
+The card then shows the reason in place of the list:
+
+| The card says | What to do |
+|---|---|
+| "You are not a member of the DMS's organisation, so it lists no documents for you. Ask an administrator." | Ask an administrator to add you to the DMS. The card offers no **Try again**. |
+| "The DMS did not accept your sign-in." | Press **Try again**. |
+| "The DMS did not answer. Try again shortly." | Wait a moment, then press **Try again**. |
+
+In the dialog, a search the DMS cannot read says "The DMS cannot read this search. Use plain words, and close any quote or bracket."
+
 ## The diagram
 
 The **Diagram** card draws the process as its file lays it out, with how far the instance got. It has two tabs, **Diagram** and **List**; on a phone, **List** comes first.
+
+![The Diagram tab of the Diagram card: Check credit done, Send the decline letter active, the other path not reached, and the legend under the drawing.](../../../../assets/screenshots/keel-business-process-tab-diagram.png)
 
 **Diagram** draws each element where the file puts it, scaled as the file scales it, in a box that scrolls. Pools and lanes show with their names. A mark shows what each element is: a person for a user task, a hand for a manual task, a robot for an agent task, a cog for a call to a system, a folder for a task that starts a case, a box with a thick border and a plus for a call activity, a table for a business rule, an envelope for a message, a clock for a timer, a triangle for a signal, a bolt for an error. An event subprocess is drawn as a subprocess with a dotted border; its start event carries the mark of what starts it, a clock, an envelope, a triangle or a bolt, and a dashed ring when it runs beside the rest instead of stopping it. A collapsed event subprocess carries that mark at its top left. Gateways show as diamonds marked with a cross, a plus, a bold circle or a ring. An element's colour says how far the instance got:
 
@@ -74,6 +115,8 @@ The **Diagram** card draws the process as its file lays it out, with how far the
 The legend under the drawing names the states, and **Waiting to start** only when the drawing holds an event subprocess. A timer on a task that does not interrupt it draws with a dashed ring, whatever its state. A signal's triangle is outlined where the event waits for the signal, and filled where it sends it: on a throw event, and on an end event that sends a signal. Pausing on an element shows its name and its state, such as "Review the loan · Active". A call activity is **Active** while the process it called runs, and **Done** once it ended. A task that runs for each item is drawn with BPMN's marker, three bars at the bottom of the task: vertical bars when its instances run all at once, horizontal bars when one after another (a call activity keeps its plus beside them). It is **Active** while any of its instances is open, **Needs a supervisor** while one holds an incident, and **Done** once it completed, an empty list included, or once one of its instances did. It is **Withdrawn** when something took it away before any instance completed, such as a timer that interrupted it, an error caught on it, a terminate end event or a cancel: one withdrawn after an instance completed reads **Done**, as an element a loop completed once does. An element a loop reaches again is **Active**, not **Done**. An event subprocess is **Waiting to start** while its trigger waits and no run of it is open, and that outranks **Done** and **Withdrawn**, since it can start again; **Active** while a run of it is open, and while any task inside one is; **Done** once a run of it completed; and **Withdrawn** when a run of it was taken away before any completed. **Active** and **Needs a supervisor** outrank **Waiting to start**. One that never started and cannot now, because the process or subprocess around it ended or another event subprocess stopped it, reads **Not reached**. A gateway where paths meet is **Active** while it waits for the paths still running, and a path a gateway did not take stays **Not reached**. The lines carry no colour: Keel does not record which line a run took.
 
 **List** says the same in words. It groups the elements, leaving out pools, lanes, groups and notes, under **Needs a supervisor**, **Active**, **Waiting to start**, **Done**, **Withdrawn** and **Not reached**, in the file's order, each as "name · kind":
+
+![The List tab of the Diagram card: Send the decline letter under Active, three elements under Done, three under Not reached.](../../../../assets/screenshots/keel-business-process-tab-list.png)
 
 | Kind | Reads |
 |---|---|
@@ -103,11 +146,15 @@ The diagram shows names and places only: never a condition, a check, a connectio
 
 The side panel, beside the tasks on a wide screen and under them on a phone, has three tabs: **Process agent**, **Data** and **History**. The instance opens on **Data**; the address keeps the tab, so a link can open the **History** or the **Process agent**.
 
+![The Data tab of the side panel: Customer, Amount, Credit verdict and Note with their values.](../../../../assets/screenshots/keel-business-process-tab-data.png)
+
 - **Process agent**: your chat about the instance. See [The Process agent tab](#the-process-agent-tab).
 - **Data**: each variable by its label and value, or "No value" when it holds none. With no data, "No data yet".
 - **History**:
   - **Your part in this process** first: what you did, latest first, or "You have not worked on this process yet".
   - Then everything that happened, latest first, each as a sentence with where and when, such as "Mihai Ionescu finished Review the loan" under `Approve the loan · 20 Oct, 10:00`. A task a person finished with values an agent drafted adds "*Agent* drafted *fields*" under it. People who have left the staff are still named.
+
+![The History tab: Your part in this process, then each entry with where and when, such as Called the process Credit check under Check credit.](../../../../assets/screenshots/keel-business-process-tab-history.png)
 
 | History says | When |
 |---|---|
@@ -141,7 +188,9 @@ Every line about an instance of a task that runs for each item names the instanc
 
 The **Process agent** tab is your own chat with the project's [case agent](/keel/business/case-agent/) about this instance. The project's staff see it. It is the first tab of the side panel; an instance still opens on **Data**.
 
-The tab says: "Ask about this process. *The process agent* answers from its data, tasks, waits and history, and drafts into your form when you ask. Nothing is sent until you submit." Once your chat has a session, the line names the agent by the name it has in Studio, such as "Case agent", in place of *The process agent*.
+The tab says: "Ask about this process. *The process agent* answers from its data, tasks, waits and history, and drafts into your form when you ask. Nothing is sent until you submit." Once your chat has a session, the line names the agent by its own name, such as "Case agent", in place of *The process agent*.
+
+![The Process agent tab: the line about what the agent answers from, and the message box under it.](../../../../assets/screenshots/keel-business-process-tab-process-agent.png)
 
 The chat is yours. Each person has their own chat with the agent on each instance; the rest of the staff do not see it. When you come back to the instance, the tab opens on the same chat, and another instance opens its own chat.
 
@@ -209,7 +258,7 @@ An instance runs on the version of its process that it started on, shown in the 
 2. When the instance cannot move, it says "It cannot move to version 3:" over each reason, in Keel's words, such as "Pay is open, and version 3 has no element pay"; **Move to version 3** stays off. [Moving instances to a newer version](/keel/processes/#change-a-published-process) lists the reasons. If the check itself fails, the dialog says why, in Keel's words, with **Try again**.
 3. Otherwise press **Move to version 3**, or **Keep it on version 2** to leave the instance as it is.
 
-Keel says "Moved *number* to version 3.", closes the dialog and shows the instance on version 3: the header reads `v3`, the history says who moved it, and the diagram is the new version's. If Keel refuses at the last moment, because something changed since the check, the dialog stays open and shows the reasons, or Keel's message when the version asked for is no longer the current one, and the page reads the instance again. A move cannot be undone: an instance moves only to the process's current version, never back. A resend of the same move after a failed one is applied once. Builders may move the running instances of an older version together from the [Versions tab](/keel/builder/processes/#moving-the-instances-of-an-older-version).
+Keel says "Moved *number* to version 3.", closes the dialog and shows the instance on version 3: the header reads `v3`, the history says who moved it, and the diagram is the new version's. When a newer version was published while the page was open, the dialog says so, such as "Version 4 was published since this page opened. Close this and move the process to version 4 from More actions.", and **Move to version 3** stays off. If Keel refuses at the last moment, because something changed since the check, the dialog stays open and shows the reasons, or Keel's message when the version asked for is no longer the current one, and the page reads the instance again. A move cannot be undone: an instance moves only to the process's current version, never back. A resend of the same move after a failed one is applied once. Builders may move the running instances of an older version together from the [Versions tab](/keel/builder/processes/#moving-the-instances-of-an-older-version).
 
 ## Cancel a process
 
@@ -222,4 +271,4 @@ Keel says "Cancelled *number*." and the page shows the instance as **Cancelled**
 
 ## Not offered on a process
 
-A process is not a case. An instance has no **Follow** and no Updates, no files, no re-run and no **Move by hand…** (its **Move to version 3…** puts it on a newer version of its process, as above), and its history has no **Full history with inputs and outputs**. Builders see an instance's agents and runs on the [builder's Agents screen](/keel/builder/agents/).
+A process is not a case. An instance has no **Follow** and no Updates, no files of its own (its [DMS documents](#dms-documents) stay in the DMS), no re-run and no **Move by hand…** (its **Move to version 3…** puts it on a newer version of its process, as above), and its history has no **Full history with inputs and outputs**. Builders see an instance's agents and runs on the [builder's Agents screen](/keel/builder/agents/).

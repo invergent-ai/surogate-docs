@@ -8,9 +8,11 @@ The **Queues** page holds the project's queue definitions and its supervisors: "
 
 ## Queues
 
-The list shows each queue by name, with its key, its serving order in words and its priority, in the order Keel serves the queues. Pick one to open it.
+The list shows each queue by name, with its key, its serving order in words and its priority, in the order Keel serves the queues. Pick one to open it on the right. With no queue picked, the first one opens.
 
-Queues change in a [draft](/keel/builder/drafts/), like everything else. With no draft open, your first change offers a new draft titled `Change queues`. **New queue** asks for the queue's key: "It is made in the draft, serving the oldest work first, at priority 100."
+![The Queues page: the Queues list with three queues, the Supervisors card under it, and the Committee queue open with its name, serving order and priority](../../../../assets/screenshots/keel-builder-queues.png)
+
+Queues change in a [draft](/keel/builder/drafts/), like everything else. With no draft open, your first change offers a new draft titled `Change queues`. To add a queue, press **+** (**New queue**) beside the **Queues** heading. The dialog asks for the queue's **Name** and shows the key it gives: "It is made in the draft, serving the oldest work first, at priority 100." Press **Create**.
 
 A queue has:
 
@@ -40,8 +42,11 @@ Use **Appoint a supervisor**: type two letters of the person's name and pick the
 
 1. Press **Invite a supervisor**: "Add a person to this project's staff as a supervisor, by their work email."
 2. Enter their **Email** and **Name**, and press **Invite**.
+
+   ![The Invite a supervisor dialog: Email and Name filled in, Cancel and Invite](../../../../assets/screenshots/keel-builder-invite-supervisor.png)
+
 3. Read the answer and send the person what it gives you:
-   - **Send *name* this link to set their password.** with a **Set-password link**. The link works once, until the time shown.
+   - **Send *name* this link to set their password.** with a **Set-password link**. The link works once, until the time shown. When Keel has emailed the person, the dialog says so first: **Keel emailed *name* a link to set their password. If it does not reach them, send them this one.**
    - ***Name* signs in with** the project's sign-in, **using** their email, with a **Sign-in link**, when the project signs in through Google, GitHub or another outside sign-in.
    - ***Name* was on the staff already, and is now a supervisor.**
    - ***Name* can sign in with the account they have.** with a **Sign-in link**, for someone whose account already existed.
@@ -59,6 +64,6 @@ An invitation can be refused:
 
 ### Demote a supervisor
 
-Press **Demote** beside their name. Keel asks first: "They stay on the staff, in their queues and with their authority." They lose only the supervisor's rights.
+Press **Demote** beside their name. Keel asks **Demote *name*?**: "They stay on the staff, in their queues and with their authority." Press **Demote** to confirm. They lose only the supervisor's rights.
 
 Supervisors cannot be removed from the staff in the business app; demote them here first.

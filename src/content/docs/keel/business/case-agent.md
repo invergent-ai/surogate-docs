@@ -17,6 +17,8 @@ Each project has one case agent. It is one of the project's two helpers, which K
 
 The tab says: "Ask about this case. *The case agent* answers from its data, files and history, and drafts into your form when you ask. Nothing is sent until you submit."
 
+![A closed case with the Case agent tab open in the side panel: the line about what the agent answers from, and the message box under it.](../../../../assets/screenshots/keel-business-case-agent.png)
+
 The chat is yours. Each person has their own chat with the case agent on each case; the rest of the staff do not see it. When you come back to the case, the tab opens on the same chat.
 
 ## Asking

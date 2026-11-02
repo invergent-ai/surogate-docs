@@ -10,7 +10,9 @@ Each publish that changes a case type gives it a new version. A running case sta
 
 Each publish that changed the case type is a row, newest first: `v3 · 12 Oct 2026 · Elena Ionescu · Change Loan request`, that is, the version, the day, who published it and the draft's title. Beside it, how many cases run on that version: `41 cases running`, or **No cases running**.
 
-Press a row to see what that version changed in the case type. With no publishes yet, the tab says **Not published yet**.
+Press a row to see what that version changed in the case type. With no publishes yet, the tab says **Not published yet.**
+
+![The Versions tab of Mortgage pre-approval: the Moves section with one finished move, then versions v2 and v1, each with No cases running.](../../../../assets/screenshots/keel-builder-versions.png)
 
 ## Moving running cases to a new version
 
@@ -24,7 +26,7 @@ In a draft, each older version with open cases has a **Move running cases** swit
 4. Run a **Dry run**. The **Forecast** shows where the cases would go.
 5. Publish. The move starts after the publish.
 
-Turning the switch off asks **Stop moving cases from v*n*?**: "The mapping is removed from the draft."
+Turning the switch off asks **Stop moving cases from v*n*?**: "The mapping is removed from the draft." Press **Stop moving**.
 
 ### The mapping
 
@@ -32,17 +34,17 @@ The mapping says where each place in the old version goes in the new one. It has
 
 - **Stages**: for each old stage, **Same stage** when the new version has it, another stage, or **No target**.
 - **Steps and actions**: for each old step, wait, join and optional action, a node of the same kind in the new version, or **No target**. "A renamed step no case waits at still needs its target, so maker-checker keeps following who did it."
-- **Fields**: for each field of the new version, where its value comes from: **Same field** when the old version has a field like it, **From** another old field of the same type, or **A value** you type as JSON. When the type changed, "The type changed, so the old value cannot be kept." When the new version requires a field the cases lack, the mapping says **Cases need a value for** that field.
+- **Fields**: for each field of the new version, where its value comes from: **Same field** when the old version has a field like it, **From** another old field of the same type, or **A value** you type in the **Value** box, written as the field holds it: a number as it is, such as `25`, and text in double quotes, such as `"EUR"`. When the type changed, "The type changed, so the old value cannot be kept." When the new version requires a field the cases lack, the mapping says **Cases need a value for** that field.
 
 A place with no target reads "Cases here stay on v*n*." Those cases stay on their version.
 
 ### The forecast
 
-After a dry run, **Forecast** says what the publish would do, such as "Publishing moves up to 41 of 43 open cases from v3 to v4. At least 2 stay on v3." A table lists each place where cases sit in the old version: **Where**, how many **Cases**, where each **Goes to**, and whether its open work is **Carried** to the new node or **Reopened** there.
+After a dry run, **Forecast** says what the publish would do, such as `43 open · up to 41 move · at least 2 stay`. A table lists each place where cases sit in the old version: **Where**, how many **Cases**, where each **Goes to**, and under **Work** whether its open work is **Carried** to the new node or **Reopened** there.
 
-Before the first dry run, the forecast says **Run the dry run to see where cases go.** After you change the draft, it asks you to run the dry run again.
+Before the first dry run, the forecast says **Run the dry run to see where cases go.** After you change the draft, it says **Dry run again to see where cases go now.**
 
-The review page shows the same forecast under **Moving running cases**.
+The review page shows the same forecast under **Moving running cases**, as a sentence for each case type, such as "Publishing moves up to 41 of 43 open cases from v3 to v4. At least 2 stay on v3."
 
 ## Following a move
 

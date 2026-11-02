@@ -6,6 +6,8 @@ sidebar:
 
 People fill a **form** to start a case and to complete a step. Keel makes each form from fields: the start form from the case type's required fields, a step's form from the fields the step writes. The **Forms** tab lets you order, group and label those fields, and shows a preview of the form as staff will see it.
 
+![The Forms tab: the list of forms, the Start form's sections in the middle, and the Preview on the right.](../../../../assets/screenshots/keel-builder-forms.png)
+
 ## The list of forms
 
 The left of the tab lists:
@@ -29,6 +31,7 @@ A layout is a list of sections.
 - **Outcome label**: what a step's form calls its choice of outcome, such as `Decision`. Blank, it reads **Outcome**.
 - **Add section** adds a section. Each has a **Title** and **Help**, then its fields in order.
 - In a section, the **Add** menu places a field the form may show. Each placed field has:
+  - **Field**: which field it is.
   - **Hint**: how it is shown, such as **Long text** for text, **Money** for a decimal, **Drop-down** or **Choice cards** for a choice, **Checkbox** or **Switch** for yes or no. **Default** lets the field's type decide.
   - **Help**: a line under the field.
   - **Placeholder**: text shown in an empty box.

@@ -13,13 +13,19 @@ Like everything else, rules and calendars change in a [draft](/keel/builder/draf
 - **Decision tables and scorecards**: each rule by name, with its latest version, such as `v3`, or **New** for one not published yet.
 - **Calendars**: each calendar by key, with its version.
 
-Pick one to open it. Editors and owners make a new one with **New rule** or **New calendar**.
+Pick one to open it. Editors and owners make a new one with **New rule** or **New calendar**, the **+** beside each list.
+
+A note above the lists says: "A rule has no model in it: the same inputs always give the same answer, and the case's history records which version decided."
+
+![The Rules page: the lists of decision tables and calendars, and the rule Debt service and loan to value open, with its Versions, Hit policy and Outputs.](../../../../assets/screenshots/keel-builder-rules.png)
 
 ## Decision tables and scorecards
 
 **New rule** asks for the rule's key and its **Kind**: **Decision table** or **Scorecard**. "It is made in the draft, as a decision table or a scorecard, which it stays."
 
-A rule shows its **Name**, its **Versions** and, in a draft, when its next version **Takes effect**, its table or scorecard, and its **Tests**.
+In a draft, a rule shows its **Name**, its **Versions**, when its next version **Takes effect**, its table or scorecard, and its **Tests**. With no draft open, it shows its **Versions**, with the latest open under them, read-only.
+
+The [designer agent](/keel/builder/designer-agent/) can make and change rules in a draft for you, with their conditions and tests.
 
 ### Decision tables
 
@@ -30,7 +36,7 @@ A decision table turns conditions over the case's fields into result values.
 - **Rows**: each row has a **When** condition and a value per output. **Add row** adds one; rows move up and down.
 - **Default**: **No default**, or **A value per output** for when no row matches. With no default and no matching row, the rule gives no answer, and the case cannot go past the node.
 
-Conditions are written in CEL over field names, such as `amount > 50000.0`.
+A **When** condition compares the case's fields by name, such as `amount > 50000.0`: the field, a comparison, and a value.
 
 A rule node then assigns outputs to fields, for example the output `over_limit` to the field **Over the desk's limit**.
 
@@ -45,7 +51,12 @@ A scorecard gives two results: `score`, the total, and `reasons`, the reason cod
 
 ### Tests
 
-Each test has **Data**, the field values to try as JSON, and **Expect**, the results it must give. **Add test** adds one. Every dry run runs them; a failed test shows **Failed in the last dry run**, and the dry run lists it under **Failing scenarios**.
+A test gives the rule some field values and says what it must answer. **Add test** adds one; the cross beside a test removes it. With none, the section says "It has no tests yet."
+
+- **Data**: the field values to try. Type each field's name in double quotes, a colon, then its value; separate them with commas and put them all between curly braces. Text and decimals go in double quotes, whole numbers and `true` or `false` do not, such as `{"amount": "250000.00"}`.
+- **Expect**: the whole answer the rule must give, each output by name, in the same form, such as `{"over_limit": true}`. The test fails if the rule answers anything else.
+
+Every dry run runs the tests. After one, the section says under them "None of its tests failed in the last dry run.", or lists each failure, with Keel's message, under **Failed in the last dry run**. The dry run lists a failed test under **Failing scenarios** too.
 
 ### When a version takes effect
 
@@ -69,6 +80,8 @@ A calendar says when the working week runs, for service levels and waits that co
 | **Time zone** | **Find a time zone**, such as Bucharest. |
 | **Working days** | The days that count, Monday to Sunday. A calendar needs at least one. |
 | **Hours** | **Day starts** and **Day ends**. The day must end after it starts. |
-| **Holidays** | Days that do not count. Add one with **Holiday** and **Add holiday**. |
+| **Holidays** | Days that do not count. Add one with **Holiday** and **Add holiday**; the cross on a holiday removes it. |
+
+![The calendar bank-hours: time zone Europe/Bucharest, working days Monday to Friday, hours 09:00 to 17:00, and its holidays.](../../../../assets/screenshots/keel-builder-rules-calendar.png)
 
 A case type uses a calendar by picking it on its [Settings tab](/keel/builder/case-type-settings/#case-type).

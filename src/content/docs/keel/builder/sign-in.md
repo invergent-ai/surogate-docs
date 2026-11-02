@@ -8,7 +8,9 @@ Keel Builder, at https://keel-builder.surogate.ai, is where a project's builders
 
 ## Signing in
 
-The sign-in page is titled **Sign in to Keel Builder**.
+The sign-in page is titled **Sign in to Keel Builder**: "Use your Surogate account."
+
+![The Keel Builder sign-in page: Username or email, Password, Remember me, Sign in, and Continue with Google and Continue with GitHub.](../../../../assets/screenshots/keel-builder-sign-in.png)
 
 1. Type your **Username or email** and your **Password**.
 2. Leave **Remember me** on to stay signed in on this browser.
@@ -20,6 +22,7 @@ If sign-in does not work, the page says why:
 
 | Message | What to do |
 |---|---|
+| **Enter your username or email and your password.** | Fill in both boxes. |
 | **Wrong username or password.** | Check both and try again. |
 | **Too many attempts. Wait a minute and try again.** | Wait, then try again. |
 | **Your password must be changed. Change it in Studio, then sign in here.** | Change your password in Studio first. |
@@ -29,7 +32,9 @@ If sign-in does not work, the page says why:
 
 ## Picking a project
 
-After signing in, Keel Builder opens the project you used last, or the first of your projects by name. The switcher at the top of the left rail shows the project and your role in it: **Owner**, **Editor** or **Viewer**. Pick another project there to open the same page in that project.
+After signing in, Keel Builder opens the **Case types** page of the project you used last, or of the first of your projects by name. The switcher at the top of the left rail shows the project and your role in it: **Owner**, **Editor** or **Viewer**. Press it to see your **Projects**, each with your role, and pick another project to open the same page in that project.
+
+![The project switcher open over the left rail: the Projects list, with Example Bank picked and the role Owner beside each project.](../../../../assets/screenshots/keel-builder-project-switcher.png)
 
 When an editor or owner opens a project, Keel sets up the project's helpers, the case agent and the designer agent, if it lacks them. See [The project's helpers](/keel/builder/designer-agent/#the-projects-helpers).
 
@@ -37,16 +42,20 @@ Projects are made in Studio, not here, and their owners add members there. If yo
 
 ## The left rail
 
+The rows are grouped under **Design**, **Who does the work** and **Project**.
+
 | Row | What it holds |
 |---|---|
+| **Overview** | "How what you built is holding up in live work, and what to change next.": counts of what is published, running and in drafts, how often agents needed a person, who did the steps, the slowest stages, the open drafts, and what is worth changing. |
 | **Case types** | The project's case types, and the designer for each. See [Case types](/keel/builder/case-types/). |
 | **Processes** | The project's BPMN processes: each one's drawing, its file, its problems, its versions and its connections. See [Processes](/keel/builder/processes/). |
 | **Rules** | Decision tables, scorecards and calendars. See [Rules and calendars](/keel/builder/rules/). |
 | **Queues** | Queue definitions and the project's supervisors. See [Queues and supervisors](/keel/builder/queues/). |
 | **Agents** | How the agents of the project's case types are doing: figures, the steps they work, raised hands, what each may use and its sessions. See [The Agents page](/keel/builder/agents/). |
+| **Knowledge** | "The knowledge bases this project's case types and agents read. The same ones every agent in Studio uses." |
 | **Settings** | The business app's address, service keys and effects. See [Project settings](/keel/builder/settings/). |
 
-The bar at the bottom shows your name. **Open Studio** opens Studio in a new tab, and the sign-out button ends your session.
+The bar at the bottom shows your name. Its buttons switch between **Dark theme** and **Light theme**, **Open Studio** in a new tab, and **Sign out**.
 
 ## What your role lets you do
 

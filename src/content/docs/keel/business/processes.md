@@ -4,13 +4,15 @@ title: Processes
 
 The **Processes** page lists the instances of the project's [BPMN processes](/keel/processes/), running and ended. Its header offers **New process**. All staff see all the project's instances. The page keeps itself current.
 
+![The Processes page: the Running tab, the Figures card with one row per process, and the list of running instances.](../../../../assets/screenshots/keel-business-processes.png)
+
 An instance is one run of a process, such as one loan review. Its number, such as `P-000002`, counts the project's instances of every process. Supervisors see the processes' [figures](#figures-supervisors) above the list, and the [Overview](/keel/business/overview/) never counts the instances among the cases.
 
 ## Figures (supervisors)
 
-Supervisors see a card **Figures** above the list, with how the project's processes did. Other staff do not see it, and a supervisor demoted while the page is open loses it. The card is not there either when Keel is older than these figures. The list below it is the same in each case.
+Supervisors see a card **Figures** above the list, with how the project's processes did. Other staff do not see it, and a supervisor demoted while the page is open loses it. The list below it is the same in each case.
 
-**Period**, beside the card's heading, offers **Last 7 days**, **Last 30 days** and **Last 90 days**. It opens on 30 days. The address keeps the period, as `days`, and the process; 30 days is not written in it.
+**Period**, beside the card's heading, offers **Last 7 days**, **Last 30 days** and **Last 90 days**. It opens on 30 days. The address keeps the period and the process, so a link to the page keeps them.
 
 With **All processes** in the filters, the card shows a table labelled **Processes**: a row for each process the project has published, by name, with its current version muted after it, such as `Loan review v3`. Its columns are:
 
@@ -79,6 +81,9 @@ With no instance in a tab, the page says **No processes here**. When Keel cannot
 ## Starting a process
 
 1. Press **New process**. The page asks you to "Choose the process to start."
+
+   ![The New process page: Choose the process to start, with three processes listed.](../../../../assets/screenshots/keel-business-new-process.png)
+
 2. Pick a process. Its start form opens, with the variables the process requires.
 3. Fill in the form and press **Start**. **Cancel** goes back to the instances.
 
@@ -88,7 +93,7 @@ A link to a process that is not among those you may start says **This process ca
 
 If Keel refuses the form, the reason shows beside the field it names, or above the form when it names none. An empty required field reads **Required.** beside it, and nothing is sent. Pressing **Start** twice, or again after an error, never starts two instances from the same form.
 
-Instances also start without you: a case's [process node](/keel/builder/flow-nodes/#processes) starts one, and another system starts one with a [service key](/keel/systems/).
+Instances also start without you: a case's [process node](/keel/builder/flow-nodes/#processes) starts one, and another system connected to the project can start one.
 
 ## What the page does not offer
 
