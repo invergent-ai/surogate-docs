@@ -66,7 +66,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Surogate Docs',
-      description: 'Guides, tutorials and reference for Surogate Agents, Keel and Surogate DMS.',
+      description: 'Guides, tutorials and reference for Surogate Agents, Surogate Keel and Surogate DMS.',
       logo: {
         light: './src/assets/logo-black.svg',
         dark: './src/assets/logo-white.svg',
@@ -137,7 +137,7 @@ export default defineConfig({
       plugins: [
         starlightLinksValidator(),
         starlightLlmsTxt(),
-        // One sidebar per track. Work and Develop are Surogate Agents; Keel and Surogate DMS are their own products.
+        // One sidebar per track. Work and Develop are Surogate Agents; Surogate Keel and Surogate DMS are their own products.
         // Each topic's items are the track's former sidebar group, unchanged and in order.
         starlightSidebarTopics([
         {
@@ -317,7 +317,7 @@ export default defineConfig({
         },
         {
           id: 'keel',
-          label: 'Keel',
+          label: 'Surogate Keel',
           link: '/keel/',
           items: [
             'keel',
@@ -475,7 +475,7 @@ export default defineConfig({
           attrs: {
             name: 'keywords',
             content:
-              'Surogate, Surogate Agents, Keel, Surogate DMS, AI agents, agent platform, business processes, case management, document management, records management, archive, MCP, fine-tuning, documentation',
+              'Surogate, Surogate Agents, Surogate Keel, Surogate DMS, AI agents, agent platform, business processes, case management, document management, records management, archive, MCP, fine-tuning, documentation',
           },
         },
         {
@@ -507,7 +507,7 @@ export default defineConfig({
           tag: 'meta',
           attrs: {
             name: 'twitter:description',
-            content: 'Guides, tutorials and reference for Surogate Agents, Keel and Surogate DMS.',
+            content: 'Guides, tutorials and reference for Surogate Agents, Surogate Keel and Surogate DMS.',
           },
         },
         {

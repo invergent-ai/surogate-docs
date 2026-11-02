@@ -28,7 +28,7 @@ class Home(unittest.TestCase):
 
     def test_hero(self):
         self.assertIn('Surogate documentation', self.doc)
-        self.assertIn('Guides, tutorials and reference for Surogate Agents, Keel and Surogate DMS.', self.doc)
+        self.assertIn('Guides, tutorials and reference for Surogate Agents, Surogate Keel and Surogate DMS.', self.doc)
 
     def test_product_cards(self):
         self.assertEqual(self.doc.count('data-docs="product-card"'), 3)

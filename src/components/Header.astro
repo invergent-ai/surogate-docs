@@ -124,13 +124,19 @@ const isHome = id === '';
   /* Three products and the search field crowd the bar between 800 and 1024 px: the field shrinks to its content. */
   @media (max-width: 64rem) {
     .docs-header {
-      gap: 1.2rem;
+      gap: 1rem;
     }
     .products {
-      gap: 1rem;
+      gap: 0.8rem;
+    }
+    .products a {
+      font-size: 0.82rem;
     }
     .tools {
       gap: 0.6rem;
+    }
+    .sign-in {
+      padding: 0 0.8rem;
     }
     .tools :global(button[data-open-modal]) {
       min-width: 0;

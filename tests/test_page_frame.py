@@ -15,7 +15,7 @@ class PageFrame(unittest.TestCase):
 
     def test_breadcrumb_keel_has_no_track(self):
         crumb = words(section(page('/keel/quickstart/'), 'breadcrumb'))
-        self.assertEqual(crumb, ['Keel', '/', 'Keel', 'quickstart'])
+        self.assertEqual(crumb, ['Surogate', 'Keel', '/', 'Keel', 'quickstart'])
 
     def test_breadcrumb_dms_quickstart(self):
         crumb = words(section(page('/dms/quickstart/'), 'breadcrumb'))
