@@ -19,6 +19,20 @@ Keel has two web apps. Each has its own sign-in.
 
 The two apps show different things. The business app never shows a case type's definition, an agent's configuration, skills, knowledge bases, connections or credentials. Keel Builder has no list of cases.
 
+![Keel Builder, the Overview page: published case types, running cases, open drafts and charts of how the work goes](../../../assets/screenshots/keel-builder-overview.png)
+
+![The business app, the Work page: what needs you, your team's queues and the agents at work](../../../assets/screenshots/keel-business-work.png)
+
+## Start here
+
+| You are | Start with |
+|---|---|
+| A builder who will design case types and processes | [Quickstart for builders](/keel/quickstart/): build and publish a small case type. |
+| Staff or a supervisor who works cases | [Quickstart for the business app](/keel/quickstart-business/): sign in, take work, do a step, start a case. |
+| A builder who has a BPMN model, or work that is mostly a route | [BPMN processes](/keel/processes/): build a first process, then publish and run it. |
+| Someone who wants to see it all working | [Example: mortgage pre-approval](/keel/examples/mortgage-pre-approval/): a case type with people, agents, a rule, a vote and a committee. |
+| Someone new to the words | [Concepts](/keel/concepts/) and the [Glossary](/keel/reference/glossary/). |
+
 ## Who is who
 
 A Keel project is a Surogate project. The same project holds its builders and its staff.
@@ -44,7 +58,8 @@ Running cases stay on the version they started on, unless a builder moves them t
 ## Where to go next
 
 - [Concepts](/keel/concepts/): case types, cases, stages, steps, performers and the rest of the vocabulary.
-- [Quickstart](/keel/quickstart/): from an empty project to a worked case.
+- [Quickstart for builders](/keel/quickstart/) and [Quickstart for the business app](/keel/quickstart-business/): from an empty project to a worked case.
+- [Example: mortgage pre-approval](/keel/examples/mortgage-pre-approval/): one case type that uses most of what Keel offers.
 - [Keel Builder](/keel/builder/sign-in/): every screen of the builder app.
 - [The business app](/keel/business/sign-in/): the Work page, cases, processes, the Team page and the Overview.
 - [The case agent](/keel/business/case-agent/) and [the designer agent](/keel/builder/designer-agent/): the project's two helpers.

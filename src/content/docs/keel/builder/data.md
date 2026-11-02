@@ -6,6 +6,8 @@ sidebar:
 
 The **Data** tab lists the case type's **fields**: the data every case of the type carries. Steps read and write fields, decisions and rules test them, and forms are made from them.
 
+![The Data tab of Mortgage pre-approval: each field with its label, type, Required, Personal data, Read by and Written by.](../../../../assets/screenshots/keel-builder-data.png)
+
 ## The field list
 
 | Column | What it shows |
@@ -18,11 +20,15 @@ The **Data** tab lists the case type's **fields**: the data every case of the ty
 | **Read by** | Where it is read: steps by name, and decisions, rules, waits, conditions, the title and the summary. |
 | **Written by** | Where it is written: steps by name, rules, and the **Start form**. |
 
-Keel works out **Read by** and **Written by** from the case type as you edit it. While it works, or if it cannot, the columns stay empty and a warning says why.
+Keel works out **Read by** and **Written by** from the case type as you edit it. A field nothing reads or writes yet shows **None**. While Keel works, the columns stay empty; if it cannot work them out, a warning says why.
+
+![The Data tab of a new case type, Loan request: three fields, none read by a step yet.](../../../../assets/screenshots/keel-builder-data-fields.png)
 
 ## Add or change a field
 
 Editors and owners press **Add field**; anyone can press a row to open a field.
+
+![The Add field dialog: Name applicant, Label Applicant, Type Text, Required on.](../../../../assets/screenshots/keel-builder-add-field-filled.png)
 
 | Setting | What it is |
 |---|---|
@@ -38,9 +44,11 @@ Editors and owners press **Add field**; anyone can press a row to open a field.
 
 Press **Save**. Viewers see the same dialog with **Close**.
 
+![The Add field dialog for a decimal: Type Decimal, Unit EUR, with the unit's help line under it.](../../../../assets/screenshots/keel-builder-add-field-decimal.png)
+
 ## Remove a field
 
-Open the field and press **Remove field**. Keel Builder asks first: "No step requires it any more. Steps and forms that name it, and the case's title and summary, will need changing." Run a [dry run](/keel/builder/publish/) afterwards to find them.
+Open the field and press **Remove field**. Keel Builder asks first, **Remove *label*?**: "No step requires it any more. Steps and forms that name it, and the case's title and summary, will need changing." Press **Remove**. Run a [dry run](/keel/builder/publish/#dry-run) afterwards to find them.
 
 ## Files and documents
 

@@ -26,26 +26,37 @@ Use a process when you already have a BPMN model, or when the work is mostly a r
 ## From a drawing to finished work
 
 1. **Draw it** in Keel Builder, on the **Processes** page. Start from an empty diagram, from a BPMN file, or by describing the process to the designer agent.
-2. **Set it up** in the panel beside the drawing: the data it keeps, who does each task, how long they have, what each decision depends on.
-3. **Check it.** The **Problems** section beside the drawing lists what is wrong while you work.
+2. **Set it up** in the **Details** panel of the drawing: the data it keeps, who does each task, how long they have, what each decision depends on.
+3. **Check it.** The **Problems** tab of the **Details** panel lists what is wrong while you work.
 4. **Publish it** in a draft, with **Review and publish**. The process has a new version.
 5. **Start instances** in the business app, from a case, from another process, or from another system.
 6. **Work the tasks** on the Work page and on each instance's page.
 7. **Supervise.** Supervisors see what needs them and read the process's figures.
 8. **Improve it.** Publish a new version. Running instances stay on the version they started on, until someone moves them.
 
+![A published process in Keel Builder: the Loan review drawing on its Diagram tab, with Change the diagram, Upload a file, Download and Ask the designer agent in the header](../../../assets/screenshots/keel-builder-process-diagram.png)
+
 ## Build your first process
 
 This walks through a small loan review: an underwriter reviews every application, and a manager also approves the large ones. You need to be an editor or owner of the project. Before you start, make sure the project has three queues, for the underwriters, the managers and the team leads, and that people are in them: queues are defined on the [Queues page](/keel/builder/queues/), and a supervisor adds their members on the [Team page](/keel/business/supervisors/).
 
 1. In Keel Builder, open **Processes** and press **New process**. Under **Start from**, pick **An empty diagram**, type the **Name** `Loan review`, and leave the **Key** `loan-review` and the **Draft** **A new draft**. Press **Create**. The process opens in the new draft, with one start event on the drawing. The [draft bar](/keel/builder/drafts/) saves every change you make; there is no save button.
-2. **Say what data the process keeps.** With nothing picked, the panel is headed **Process**. Under **Variables**, press **Add variable** and add two. The first is `amount`, with the **Label** `Amount`, **Type** **Decimal** and **Required** on. The second is `decision`, **Type** **Choice**, with the choices `approve` and `decline`. A process keeps only the variables it declares.
-3. **Draw the route.** Pick the start event. In the panel, pick **User task** under **Next element**, press **Add after**, and name it `Review the loan`. Add after it an **Exclusive gateway** named `Large?`. After the gateway, add a **User task** named `Manager approval` and, from the gateway, a second path to an **End event**. Join `Manager approval` to the same end event with **Connect to**. You can draw with the palette and the pointer instead; the panel does the same without it.
-4. **Say who does each task.** Pick `Review the loan`. Under **Done by**, set **Queue** to the underwriters' queue. Do the same for `Manager approval` with the managers' queue. A task goes to the queue that its **Queue** names, else the queue of its lane, else the process's own queue; members take it from there.
-5. **Say how a task ends.** Under **Outcomes** on `Review the loan`, add `Approve` and `Decline`; their names are the lower-case forms of the labels. Set **Outcome variable** to `decision`: the task stores the outcome there, so a path after it can read it. A task with no outcome has one, `done`.
+
+   ![The New process dialog: Start from A BPMN file, An empty diagram or Describe it to the designer agent, with the Key, Draft and Draft title below](../../../assets/screenshots/keel-builder-new-process.png)
+
+2. **Say what data the process keeps.** Press **Details** at the top right of the drawing. With nothing picked, the panel is headed **Process**. On its **Settings** tab, under **Variables**, press **Add variable** and add two. The first is `amount`, with the **Label** `Amount`, **Type** **Decimal** and **Required** on. The second is `decision`, **Type** **Choice**, with the choices `approve` and `decline`. A process keeps only the variables it declares.
+
+   ![The Details panel of a process: the Settings tab with Name, Queue, Calendar, Knowledge and the Variables table](../../../assets/screenshots/keel-builder-process-details.png)
+
+3. **Draw the route.** Pick the start event. On the panel's **Connect** tab, pick **User task** under **Next element**, press **Add after**, and name it `Review the loan` with the pencil beside the panel's title. Add after it an **Exclusive gateway** named `Large?`. After the gateway, add a **User task** named `Manager approval` and, from the gateway, a second path to an **End event**. Join `Manager approval` to the same end event with **Connect to**. You can draw with the palette and the pointer instead; the panel does the same without it.
+4. **Say who does each task.** Pick `Review the loan`. On its **Who** tab, under **Done by**, set **Queue** to the underwriters' queue. Do the same for `Manager approval` with the managers' queue. A task goes to the queue that its **Queue** names, else the queue of its lane, else the process's own queue; members take it from there.
+
+   ![The panel of a user task on its Who tab: Done by with Queue and Person, and Drafted by with Agent and Raised hands go to](../../../assets/screenshots/keel-builder-process-task-panel.png)
+
+5. **Say how a task ends.** On the **Outcomes** tab of `Review the loan`, add `Approve` and `Decline`; their names are the lower-case forms of the labels. Set **Outcome variable** to `decision`: the task stores the outcome there, so a path after it can read it. A task with no outcome has one, `done`.
 6. **Say which way the gateway goes.** Pick the line from `Large?` to `Manager approval`, name it `Over 50,000`, and type `decision == "approve" && amount > 50000.0` in its **Condition**. Name the line from the gateway to the end event `Otherwise`. Pick the gateway and set its **Default flow** to **Otherwise · Sequence flow**: it is taken when no condition holds. A declined loan, or a small one, goes straight to the end.
-7. **Give it a deadline.** On `Review the loan`, under **Service level**, type a **Goal** of `PT4H` and a **Deadline** of `P2D`: four hours and two days, counted from the moment the task is ready. Set **Past the deadline, escalate to** to a team leads' queue.
-8. **Read Problems.** A new process shows problems until the route is whole; for example, a path that does not end at an end event. Press a problem to pick the element it names. Fix them until the section says **Keel found no problem in this process.**
+7. **Give it a deadline.** On the **Rules** tab of `Review the loan`, under **Service level**, type a **Goal** of `PT4H` and a **Deadline** of `P2D`: four hours and two days, counted from the moment the task is ready. Set **Past the deadline, escalate to** to a team leads' queue.
+8. **Read Problems.** A new process shows problems until the route is whole; for example, a path that does not end at an end event. Press a problem to pick the element it names. Fix them until the **Problems** tab says **Keel found no problem in this process.**
 9. **Publish.** Press **Review and publish**, read **What changes** and **Checks**, and press **Publish**. The process has version 1.
 10. **Start an instance.** In the business app, open **Processes**, press **New process**, pick **Loan review**, type the **Amount** and press **Start**. The instance opens on its own page.
 11. **Work the task.** An underwriter opens **Work**, then the underwriters' queue under **Team queues**, and presses **Claim** on **P-000001 · Loan review** under **Unclaimed**; **Get next** claims the next task and opens it in one press. The claimed task is in **Needs me**: open it and press **Open process**. Under **Your task** they pick an outcome and press **Submit**. An approved loan over 50,000 then opens the manager's task; any other loan ends the process.
@@ -93,7 +104,7 @@ Variables are the process's memory. Declare them in the process panel, under **V
 - **A signal** reaches every instance that waits for it, such as "the rates changed". It carries nothing. A **signal throw event** or **signal end event** sends one.
 - **A receive task** and a **message catch event** wait for a message.
 
-The apps have no button to send a message or a signal; another system of the project sends them, once you have connected it with a service key: see [starting cases from other systems](/keel/systems/). An instance's page shows what it waits for under **Waiting for**.
+The apps have no button to send a message or a signal; another system that your team connects to the project sends them, with a [service key](/keel/builder/settings/#service-keys) of the project. An instance's page shows what it waits for under **Waiting for**.
 
 ### Calling other things
 
@@ -107,7 +118,7 @@ A **call activity** starts another process of the project and waits for it to en
 
 ### Doing a task several times
 
-A user, manual, service or business rule task, or a call activity, can run more than once: **once for each item of a list**, or a fixed number of times. Open the task's **Instances** section in the panel.
+A user, manual, service or business rule task, or a call activity, can run more than once: **once for each item of a list**, or a fixed number of times. Open the **Instances** section on the task's **Rules** tab.
 
 - **Runs** is **Once**, **Several times, all at once** or **Several times, one after another**.
 - **How many** is **One for each item of a list**, with the **List** variable and a variable that holds **Each instance's item**, or **A number of times**, from 1 to 100.
@@ -121,7 +132,7 @@ Each run of a person's task is a work item of its own, shown as `Approve · 2 of
 
 - **A boundary event** sits on a task, a call activity or a subprocess. A timer boundary event fires after a duration or at a date; a message or signal boundary event fires when one arrives; an error boundary event catches an error thrown inside. An interrupting one withdraws the task and takes its own path; a timer that does not interrupt starts its path beside the task.
 - **An error end event** throws an error with a code. To catch an error, attach an **Error** boundary event, pick **A new error** and type the code under **Error code**, or pick **Any error**. A task that starts a case, and a call activity, throw these codes: `case-not-started` (Keel could not start the case), `case-failed` (a step's failure closed it), `case-values` and `process-values` (it ended with a value your variables cannot hold), `process-not-started` (the called process is not published, or the values passed do not fit it) and `process-cancelled` (a supervisor cancelled it). An error nothing catches fails the instance.
-- **An event subprocess** is a part of the process that no path enters. It waits while the process or subprocess around it runs and starts when its timer fires, its message or signal arrives, or an error is thrown. It either stops the rest or runs beside it. Add one from the **Event subprocess** pick at the end of the process's or a subprocess's panel, such as **On a timer** or **On a message, alongside the rest**, then pick its start event to say more. The business app draws it dotted, and says **Waiting to start** while it waits.
+- **An event subprocess** is a part of the process that no path enters. It waits while the process or subprocess around it runs and starts when its timer fires, its message or signal arrives, or an error is thrown. It either stops the rest or runs beside it. Add one from the **Event subprocess** pick at the end of the process's **Settings** tab, or on a subprocess's **Connect** tab, such as **On a timer** or **On a message, alongside the rest**, then pick its start event to say more. The business app draws it dotted, and says **Waiting to start** while it waits.
 - **A terminate end event** ends everything still open in its process or subprocess.
 - A **subprocess** groups steps and can carry boundary events.
 
@@ -144,7 +155,7 @@ Press **Upload a file** on a process's page, or pick **A BPMN file** in **New pr
 
 ## Check and publish
 
-A process is saved in a draft and published with it, like any other definition. For editors and owners, the Diagram tab checks the draft by itself and lists the problems beside the drawing. See [Problems](/keel/builder/processes/#problems). Each problem is an **Error**, which stops the publish, or a **Warning**, which does not. A problem names the element; press it to pick the element on the drawing.
+A process is saved in a draft and published with it, like any other definition. For editors and owners, the Diagram tab checks the draft by itself and lists the problems on the **Problems** tab of the **Details** panel. See [Problems](/keel/builder/processes/#problems). Each problem is an **Error**, which stops the publish, or a **Warning**, which does not. A problem names the element; press it to pick the element on the drawing.
 
 The checks go beyond the drawing. They read the process against the rest of the project:
 
@@ -175,6 +186,8 @@ Staff start instances in the business app, on the [Processes](/keel/business/pro
 
 **The instance's page** shows the process's name, the instance number, its version and the day it started, its status, the tasks, what it waits for, its diagram, its data and its history. It keeps itself current. See [An open process](/keel/business/open-process/).
 
+![An instance of Loan review in the business app: Your task with Claim, the diagram with the active task, and the Data tab on the right](../../../assets/screenshots/keel-business-process-instance.png)
+
 **Agents and tasks.** An agent that works a task shows what it does, its plan, and its question if it has one. **Message the agent** sends it a note while it works; **Open its session** lets you read it. An agent that drafts a user task fills the form for you; **Ask to revise** has it draft again with your note, and nothing is sent until you press **Submit**. The page says when an agent has failed or is switched off, and what you do then. **Answer in Work** takes you to an agent's question. See [Agents in processes](/keel/business/agents/#agents-in-processes) and [Watch](/keel/business/watch/).
 
 **The Process agent tab.** Ask the project's case agent about the instance, and have it fill the form of a task you hold with values from the instance's data. It never submits, never picks the outcome and never acts on the instance. See [An open process](/keel/business/open-process/#the-process-agent-tab).
@@ -199,6 +212,8 @@ A supervisor cancels an instance from **More actions** with **Cancel the process
 
 The Processes page lists the instances with their status, and filters them. Supervisors also see the process's figures there; see [Figures](#figures).
 
+![The business app's Processes page for a supervisor: the status tabs, the Figures of each process, and the list of running instances](../../../assets/screenshots/keel-business-processes.png)
+
 ## Change a published process
 
 Change a published process in a draft, as any definition: open the process, press **Change the diagram**, and publish the draft. Each publish creates a new version. New instances start on the newest. **Running instances stay on the version they started on**, with their number, data and history, until they are moved.
@@ -217,7 +232,7 @@ An instance can move when what it holds carries over: the task it is at still ex
 | "*Task* is open, and version 3 adds the boundary event *B*" | Move once the task is done. |
 | "Version 3 refuses its data: *amount*: required" | Declare the variable the way the instance holds it. |
 
-Keel matches the task an instance is at by its id, which the panel shows under the element's kind, not by its name. A task you delete and draw again is a new element, and an instance at it cannot move. A move cannot be undone: an instance moves only forward, to the current version.
+Keel matches the task an instance is at by its id, not by its name: renaming a task keeps it. A task you delete and draw again is a new element, and an instance at it cannot move. A move cannot be undone: an instance moves only forward, to the current version.
 
 ## Figures
 
@@ -241,4 +256,4 @@ Builders sign in to Keel Builder with their Studio account, staff to the busines
 - [The designer agent](/keel/builder/designer-agent/): drafting and changing processes in a draft.
 - [Processes in the business app](/keel/business/processes/) and [An open process](/keel/business/open-process/): starting, finding and working instances.
 - [Team queues](/keel/business/queues/) and [Supervisors](/keel/business/supervisors/): who works what.
-- [Starting cases from other systems](/keel/systems/): how another system starts instances and sends messages and signals.
+- [Project settings](/keel/builder/settings/): the service keys another system uses to start instances and send messages and signals.

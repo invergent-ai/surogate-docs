@@ -96,3 +96,5 @@ Supervisors see how the project's agents are doing on the [Overview](/keel/busin
 ## Authority applies to agents
 
 Agents have authority limits too, set on the Team page like a person's. An agent with no limit in a step's scope, or one below the amount, cannot complete a step that checks authority.
+
+![The Agents tab of the Team page: each agent with its Works its steps switch, its authority limits and Limits.](../../../../assets/screenshots/keel-business-team-agents.png)

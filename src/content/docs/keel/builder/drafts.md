@@ -2,21 +2,28 @@
 title: Drafts
 ---
 
-Every change in Keel Builder is made in a **draft**. A draft holds changed copies of the project's definitions: case types, rules, calendars, queues, scenarios, connections and mappings of running cases. Nothing published changes until the draft is published. A project can have several open drafts at once.
+Every change in Keel Builder is made in a **draft**. A draft holds changed copies of the project's definitions: case types, rules, calendars, queues, scenarios, connections, processes and mappings of running cases. Nothing published changes until the draft is published. A project can have several open drafts at once.
 
 ## The draft bar
 
-The designer, the **Rules** page and the **Queues** page show a draft bar under their header. It starts with a chip that says what you are looking at:
+The designer, a process's page, the **Rules** page and the **Queues** page show a draft bar. In the designer and on a process's page it sits in the page header, on the right; on the Rules and Queues pages it sits under the header. It starts with a chip that says what you are looking at:
 
-- **Version 4 · draft**: the version a draft would publish, in the designer;
-- **Version 3**, or **Published**: the published definitions, with no draft open;
-- **Draft: *title***, on the Rules and Queues pages.
+- **Draft: *title***: the open draft;
+- **Published**: the published definitions, with no draft open.
 
 Press the chip to open its menu:
 
-- each open draft, by title, and **Published**: pick one to show it;
+- in the designer, under **Change this case type**, the drafts that change the case type you are looking at; on a process's page, under **Change this process**, those that change the process;
+- under **Other drafts in this project**, or **Drafts in this project**, the project's other open drafts;
+- **Published**, to show the published definitions. In the designer and on a process's page it is offered only when the case type or process is published;
 - **New draft…**: start another draft (editors and owners);
 - **Discard this draft**: throw the open draft away (see below).
+
+Pick a draft, or **Published**, to show it.
+
+![The draft bar's menu in the designer: under Change this case type the open draft, under Other drafts in this project four more drafts, then New draft… and Discard this draft.](../../../../assets/screenshots/keel-builder-draft-bar.png)
+
+Viewers see the chip and the menu, and the bar says: "You can view this project. Its editors and owners change it."
 
 ## Starting a draft
 
@@ -24,7 +31,13 @@ There are three ways:
 
 - **New case type** makes a new draft for the case type, unless you pick an open one. See [Case types](/keel/builder/case-types/#create-a-case-type).
 - **New draft…** in the draft bar's menu.
-- Change something while **Published** is shown. Keel Builder asks for a draft first: the **Start a draft** dialog offers a **Title**, such as `Change Loan request`, `Change rules` or `Change queues`. Press **Start draft**, and your change is made in the new draft. Cancel, and the change is dropped.
+- Change something while **Published** is shown. Keel Builder asks for a draft first.
+
+![The menu of the Published chip on a published case type: the drafts that change it, the other drafts, Published picked, and New draft….](../../../../assets/screenshots/keel-builder-published-menu.png)
+
+Either of the last two opens the **Start a draft** dialog: "Changes are saved to the draft. Nothing published changes until it is published." Its **Title** is filled in for you, such as `Change Loan request`, `Change rules` or `Change queues`; change it if you like. Press **Start draft**. If you started by changing something, your change is made in the new draft. Cancel, and the change is dropped.
+
+![The Start a draft dialog: the Title Change Mortgage pre-approval, with Cancel and Start draft.](../../../../assets/screenshots/keel-builder-new-draft.png)
 
 ## Saving
 
@@ -42,7 +55,7 @@ While a change is not saved, the browser warns you before you close or reload th
 
 Several builders can work in one draft. When someone else saved the draft since you opened it, a warning says: **This draft changed since you opened it. Each of your saves replaces the whole file as you have it.**
 
-Each save replaces the whole file, such as the whole case type, so the last save of a file wins. Press **Load the latest** to read the draft again. If you have changes that are not saved yet, Keel Builder asks first, because loading drops them.
+Each save replaces the whole file, such as the whole case type, so the last save of a file wins. Press **Load the latest** to read the draft again. If you have changes that are not saved yet, Keel Builder asks first, **Load the latest?**, because loading drops them.
 
 ## Working with the designer agent
 
@@ -60,7 +73,9 @@ When the published definitions changed after the draft started, because another 
 
 **Discard this draft** in the draft bar's menu asks **Discard *title*?**: "Its changes are lost. Nothing published changes." Press **Discard**.
 
-The project's owners can discard any draft. An editor can discard a draft they created. A viewer cannot discard, even a draft they created while they were an editor.
+![The discard confirmation: Discard New case type: Loan request?, with Cancel and Discard.](../../../../assets/screenshots/keel-builder-discard-draft.png)
+
+The project's owners can discard any draft. An editor can discard a draft they created; the menu offers **Discard this draft** only to those who may. A viewer cannot discard, even a draft they created while they were an editor.
 
 ## Who can do what
 

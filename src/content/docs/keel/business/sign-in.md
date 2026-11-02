@@ -26,6 +26,8 @@ The sign-in page is titled **Sign in to** and your project's name: "Use your wor
 2. Leave **Remember me** on to stay signed in on this browser.
 3. Press **Sign in**.
 
+![The sign-in page of the project Example Bank: Email, Password, Remember me and Sign in.](../../../../assets/screenshots/keel-business-sign-in.png)
+
 When your project signs in with Google or GitHub, the page also shows **Continue with Google** or **Continue with GitHub**. Some projects show only those buttons.
 
 If sign-in does not work, the page says why:
@@ -53,6 +55,10 @@ If the app does not let you in, it says why:
 
 ## The left rail
 
+The rail lists the pages of the project. Supervisors also see **Team** and **Overview**, under **Supervise**.
+
+![The left rail of a supervisor: the project switcher, Work, Cases, Processes, Team and Overview, and the bar with her name at the bottom.](../../../../assets/screenshots/keel-business-work.png)
+
 | Row | Who sees it | What it holds |
 |---|---|---|
 | **Work** | Everyone | Your items, your team queues and the agents at work. Its badge counts what needs you. See [The Work page](/keel/business/work/). |
@@ -61,7 +67,12 @@ If the app does not let you in, it says why:
 | **Team** | Supervisors | Staff, queues, agents and authority limits. See [The Team page](/keel/business/supervisors/). |
 | **Overview** | Supervisors | How the project is doing: figures, what needs attention, case types and where cases wait. See [The Overview](/keel/business/overview/). |
 
-The bar at the bottom shows your name and the sign-out button. Supervisors also have **Open Keel Builder**, which opens the project in Keel Builder; using it needs a Surogate account that is a member of the project.
+The bar at the bottom shows your name and these buttons:
+
+- **Dark theme** or **Light theme** switches the app's colours.
+- **Your settings** opens [Your settings](/keel/business/settings/).
+- **Open Keel Builder**, for supervisors only, opens the project in Keel Builder in a new tab. Using it needs a Surogate account that is a member of the project.
+- **Sign out**.
 
 ## Phones
 

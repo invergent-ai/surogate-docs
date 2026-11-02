@@ -12,19 +12,26 @@ The project's owners appoint the first supervisors in Keel Builder (see [Supervi
 
 The **Staff** tab lists the project's staff: each person's **Name**, marked **Supervisor** where they are one, the **Queues** they work, and their **Authority limits**, or **None**.
 
+![The Staff tab of the Team page: five people with their queues and authority limits, Set absence, Limits and Remove on each row, and Add from the organisation above the list.](../../../../assets/screenshots/keel-business-team-staff.png)
+
 ### Add someone
 
 Two ways:
 
 - **Add from the organisation**: for someone who already has a work account in the project's organisation. Search by name and pick them; people already on the staff show dimmed. Keel says *name* **is on the staff.**
+
+  ![Add from the organisation open: a Type a name field and "Type at least two letters of a name."](../../../../assets/screenshots/keel-business-add-from-organisation.png)
+
 - **Invite staff**, in the page header: for anyone, by email. "Add a person to this project's staff by their work email." Enter the **Email** and **Name**, then press **Invite**.
+
+  ![The Invite staff dialog: Email and Name filled in, with Cancel and Invite.](../../../../assets/screenshots/keel-business-invite-staff.png)
 
 The invitation's answer says how the person signs in, and gives a link to send them when there is one. Where Keel sends email, it emails the person the link itself and says so, for example **Keel emailed *name* a link to set their password. If it does not reach them, send them this one.**, and the link is still shown to copy:
 
 - **Send *name* this link to set their password.** A new password account gets a set-password link. "It works once, until" the time shown.
 - ***Name* signs in with** Google, GitHub or a password, **using** their email, with a sign-in link, when the project signs in that way.
 - ***Name* is already on the staff.**
-- ***Name* can sign in with the account they have.**, with a sign-in link.
+- ***Name* can sign in with the account they have.**, with a sign-in link. It adds: "If they have never set a password, their home organisation must invite them again to send a set-password link."
 
 Press **Copy** to copy the link, then **Done**. The dialog shows the link only this once.
 
@@ -35,17 +42,24 @@ Invitations can be refused; see [Queues and supervisors](/keel/builder/queues/#i
 A person who will be away hands their work on from the [Work page](/keel/business/work/#delegate-while-away). A supervisor can do the same for anyone on the staff, from their row on the **Staff** tab:
 
 - **Set absence** on a row opens **Set an absence for** the person's name: "While *name* is away, their items and the new ones that reach them go to a colleague, or back to their queues." Pick **Return their items to the queue** or a colleague under **People**; you are offered, and the person is not. Pick a day under **Back on** or leave it empty. The dialog says what would move and what would stay before you press **Set absence**, as it does for a person's own. Keel says, for example, **Mihai Ionescu is away. 1 item went back to its queue.**
+
+  ![The Set an absence for Laura Constantin dialog: Return their items to the queue, four colleagues under People, and Back on.](../../../../assets/screenshots/keel-business-set-absence.png)
+
 - A person who is away shows beneath their name, such as `Out, back on 3 Nov · 2 items went to you`, or `Out until they end it`. Their row offers **End absence** instead: "End *name*'s absence?" "New items reach them again. What went to you stays with you." Keel says "*Name*'s absence has ended."
 
 When some of a person's items cannot move, because they have no queue to return to or the substitute may not do their step, they stay with the person. Every other supervisor of the project then finds a notice in **Needs me**, "*Name* is away: *n* items stayed with them", listing them, so one of them can [reassign](/keel/business/work/#reassign-an-item) the items. An absence is refused when items would stay and the project has no other supervisor to see them: "Some items cannot return to a queue and the project has no other supervisor to see them: choose a substitute, or ask a builder to name a supervisor."
 
 ### Remove someone
 
-Press **Remove** on their row. If they were away, their absence ends. Keel asks **Remove *name* from the staff?**: "They leave the project's queues and lose their authority limits." Supervisors cannot be removed here: "The project's builders appoint and demote supervisors." Ask an owner to demote them first.
+Press **Remove** on their row. If they were away, their absence ends. Keel asks **Remove *name* from the staff?**: "They leave the project's queues and lose their authority limits." A supervisor's row has no **Remove**; under the list, the tab says "The project's builders appoint and demote supervisors." Ask an owner to demote them first.
 
 ## Queues and members
 
-The **Queues** tab lists the project's queues in the order Keel serves them. Each shows its name, its serving order, its priority, and who works it. "Serving order and priority are set by the project's builders."
+The **Queues** tab lists the project's queues in the order Keel serves them. Above them, **Load by queue** draws how many items wait in each queue, the fullest first; a queue with items past their deadline says how many are late, such as `3, 1 late`. Under the bars: "Get next serves the queue with the lowest priority number first."
+
+Each queue shows its name, its serving order in words, such as "Get next serves votes first, then the nearest deadline.", its priority, such as `Priority 10`, and who works it. "Serving order and priority are set by the project's builders."
+
+![The Queues tab: Load by queue, then the Committee and Underwriting queues with their serving order, priority, members and Add a member.](../../../../assets/screenshots/keel-business-team-queues.png)
 
 - Each member shows by name, with a mark for a person or an agent. Press × beside a member to take them out of the queue.
 - Pick someone from **Add a member** to add them: the staff under **People**, and the agents under **Agents**. Agents a supervisor turned off are not offered, and neither are the project's helpers. When everyone is a member already, it says "Everyone on the staff works this queue."
@@ -62,6 +76,8 @@ With no queues, the tab says **This project has no queues yet**: "The project's 
 
 The **Agents** tab lists the agents the project's case types and [processes](/keel/processes/) use, each with whether it **Works its steps**, and its **Authority limits**.
 
+![The Agents tab: three agents, each with its Works its steps switch on, its authority limits and Limits.](../../../../assets/screenshots/keel-business-team-agents.png)
+
 - Turning the switch off asks **Turn off *agent*?**: "People work each of its steps that opens from now on." Its new steps go to people in the queue that gets its questions; steps it already works carry on. So do the tasks of a process: each that starts from then on goes to people in the queue named for the agent's questions, and a task an agent drafts for a person is the person's to work alone. It is no longer offered as a queue member, a delegate or a Reassign target. The row then reads **Off since** the date, with who turned it off.
 - Turning it on applies at once.
 
@@ -72,6 +88,8 @@ With no agents, the tab says **No case type or process of this project uses an a
 An authority limit is the most a person or an agent may approve in a **scope**, such as `lending`. A step with an authority check, or a process's task with one, refuses anyone whose limit in its scope is lower than the amount, and anyone with no limit there.
 
 Press **Limits** on a person's row on the **Staff** tab, or on an agent's row on the **Agents** tab. The dialog, **Authority limits of *name***, says "The most *name* may approve in each scope. A change applies at once."
+
+![The Authority limits of Laura Constantin dialog: one limit held, Underwriting · 1,000,000, with Clear, and Set a limit with Scope and Amount.](../../../../assets/screenshots/keel-business-authority-limits.png)
 
 - Each limit held is listed with **Clear**. Clearing asks first: "*Name* may then approve nothing in *scope*."
 - Under **Set a limit**, pick the **Scope** and type the **Amount**, then press **Set limit**. The scopes are those the project's published case types check; each says which step checks it, such as "Checked by Approve the loan in Loan request". An amount is zero or more, with at most six decimal places.

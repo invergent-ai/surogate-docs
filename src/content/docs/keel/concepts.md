@@ -23,6 +23,12 @@ Builders change case types in a **draft**. Publishing the draft gives each chang
 
 A **case** is one running instance of a case type version. It has a number made of the case type's number prefix and a count, such as `LD-000042`, a title, its data, its files and its full history. A case is **open** until it closes with a **resolution**, such as `approved`, `declined` or `completed`.
 
+## Processes
+
+A **process** is a second way to define work, drawn as a diagram in BPMN, the standard notation for business processes. A process has tasks done by people and agents, decisions, waits, timers and calls to other systems. Builders upload a diagram made in another modeller, draw one in Keel Builder, or describe it to the designer agent. Publishing gives the process a version, as for a case type. Staff start **instances** of it in the business app. See [BPMN processes](/keel/processes/).
+
+A case type and a process can work together: a case's process node starts an instance of a process, and a process can start and follow cases.
+
 ## Stages
 
 A case is always in one **stage**. The **primary stages** are the normal path, shown left to right on the builder's board. **Alternate stages**, such as Withdrawn or Fraud hold, are stages a case only reaches when an outcome, a case event or a supervisor sends it there. A case type can have a single stage.
@@ -51,7 +57,7 @@ Every step has a **performer**: who does the work.
 - **An agent**: a Surogate agent of the project works the step in its own session. It must return one of the step's outcomes and the fields the step asks for, and say where each value came from. When it needs a person, it **raises a hand**.
 - **A person or a queue**: the step becomes a work item for one person, or for a queue whose members claim it. It can also be decided by a **vote** of the queue's members.
 - **An agent with a person**: the agent drafts the step, and one person checks the draft, changes it if needed, and submits it.
-- **A system**: Keel calls another system's REST API through one of the case type's connections and maps the answer into fields.
+- **A system**: Keel calls another system through one of the case type's connections and maps the answer into fields.
 
 People and agents are treated alike. Maker-checker and authority limits apply to both. An agent can also take a work item as a person does: as a member of a queue, as a delegate, or when a supervisor reassigns the item to it.
 

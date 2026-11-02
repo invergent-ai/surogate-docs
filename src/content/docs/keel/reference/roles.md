@@ -56,4 +56,4 @@ Supervisors cannot remove another supervisor from the staff; an owner demotes th
 
 - **Agents** act in a case like people: they complete the steps given to them, take work items as queue members or delegates, raise hands, and start cases as intake agents. Maker-checker and authority limits apply to them as to people.
 - **Helpers**, the case agent and the designer agent, hold no work. The case agent reads a case or a process instance as the person who asks it and fills in only that person's form; Keel records its reads as that person's views. The designer agent acts in one draft as the builder whose chat it is, and cannot publish.
-- **Service keys** act as a system of their project: they start cases, send case events, and list, read and export cases. They complete no step. See [Starting cases from other systems](/keel/systems/).
+- **Service keys** let another system that your team connects act as a system of the project: it can start cases and send case events. A key completes no step. Owners make and revoke keys on the Settings page of Keel Builder: see [Settings](/keel/builder/settings/).

@@ -6,6 +6,8 @@ sidebar:
 
 The designer's **Settings** tab holds what applies to the whole case type. It has eight sections.
 
+![The Settings tab of Mortgage pre-approval: Case type (Name, Number prefix, Calendar), Service level of the case, and Pinned rules.](../../../../assets/screenshots/keel-builder-case-type-settings.png)
+
 ## Case type
 
 - **Name**: the case type's name, as builders and staff see it.
@@ -16,7 +18,7 @@ A blank name, or a prefix Keel would refuse, is kept on screen and not saved.
 
 ## Service level of the case
 
-A **Goal** and a **Deadline** for the whole case, counted from its start, with **Count business time** when there is a calendar and **Past the deadline, escalate to** a queue. They work as a step's service level does; see [Service level](/keel/builder/steps/#service-level). While a case waits on the client, this clock pauses.
+A **Goal** and a **Deadline** for the whole case, counted from its start, with **Count business time** when there is a calendar and **Past the deadline, escalate to** a queue. They work as a step's service level does; see [Service level](/keel/builder/steps/#service-level). **Clear** removes the service level. While a case waits on the client, this clock pauses.
 
 Each stage has a service level of its own, set with the pencil beside its name on the [board](/keel/builder/workflow/#primary-stages).
 
@@ -46,8 +48,6 @@ Named signals another system can send to a case of this type, such as `documents
 Type a name in **Name an event** and press **Add event**. Removing one asks first: "A case it reaches no longer reacts to it."
 
 A [wait](/keel/builder/flow-nodes/#waits) for an event of that name takes precedence: when a case is waiting for the event, the wait moves on and the case type's event does not fire.
-
-See [Starting cases from other systems](/keel/systems/) for how a system sends events.
 
 ## Title
 

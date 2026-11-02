@@ -4,16 +4,9 @@ sidebar:
   label: Decisions, rules and waits
 ---
 
-Besides steps, a stage's flow holds nodes that Keel works through by itself, and process nodes, which start one of the project's BPMN processes. Add them with the **+** on a line of a stage's flow, or, for a rule, a wait or a process, with **Add step** on a stage the board shows in line; pick the **Kind**, and edit the node in its panel. See [The Workflow tab](/keel/builder/workflow/) for the board and the flow.
+Besides steps, a stage's flow holds nodes that Keel works through by itself, and process nodes, which start one of the project's BPMN processes. Add them with the **+** on a line of a stage's flow, or, for a rule, a wait or a process, with **Add step** under a stage whose nodes run in one line; pick the **Kind**, and edit the node in its panel. See [The Workflow tab](/keel/builder/workflow/) for the board and the flow.
 
-Conditions in these nodes are written in CEL, the Common Expression Language, over the case type's field names. `now` is the current time. For example:
-
-```
-amount > 50000.0
-over_limit && term_years <= 30
-```
-
-Keel keeps a condition exactly as you type it; the [dry run](/keel/builder/publish/) reports one it cannot read.
+A condition in these nodes is a short expression over the case type's field names, such as `amount > 50000.0`. The word `now` stands for the current time. The [designer agent](/keel/builder/designer-agent/) can write a condition from a sentence, such as "the amount is over 50,000". Keel keeps a condition exactly as you type it; the [dry run](/keel/builder/publish/) reports one it cannot read.
 
 ## Decisions
 
@@ -24,9 +17,11 @@ The panel has two sections:
 - **Branches**: each with a **Condition**, a **Label** that people read (such as `Over the limit`), and **Goes to**. **Add branch** adds one; the × removes it. With none, "It has no branches: every case goes the other way."
 - **Otherwise**: where a case goes when no branch holds (**Goes to**), and its **Label**, such as `Within the limit`.
 
+![A decision's panel: under Branches, a branch with the Condition amount > 200000.0, the Label Above 200,000 EUR and Goes to Prepare the credit memo, and Add branch; under Otherwise, Goes to Next stage: Offer and the Label Within the underwriter's limit.](../../../../assets/screenshots/keel-builder-step-decision.png)
+
 **Goes to** offers the same places as a step's outcome. See [Allowed outcomes](/keel/builder/steps/#allowed-outcomes).
 
-Decisions show in the stage's flow, not as cards on the board.
+On the board, a decision is a card marked **Decision**. Under it, the board lists each way out that the next card does not show, as its label and where it goes, such as `Above 200,000 EUR → Prepare the credit memo`.
 
 ## Rules
 
@@ -35,6 +30,8 @@ A rule node runs one of the project's [decision tables or scorecards](/keel/buil
 - **Rule**: pick the rule.
 - **Assignments**: which of the rule's results goes to which field. Each row has a **Result**, the result's key as the rule writes it, and a **Field**. **Add assignment** adds a row. A scorecard's results are `score` and `reasons`.
 - **Then**: where the case goes next.
+
+![A rule node's panel: Rule Debt service and loan to value; two Assignments, the Result ltv_ok to the Field Loan to value and dsti_ok to Debt service; and Then Next stage: Underwriting.](../../../../assets/screenshots/keel-builder-step-rule.png)
 
 The case uses the version of the rule in effect at that moment, unless the case type [pins](/keel/builder/case-type-settings/#pinned-rules) the rule: then each case uses the version in effect when it started.
 
@@ -48,8 +45,8 @@ A wait holds the case until something happens. Its panel has three sections.
 
 | Choice | Setting | The outcome it leaves by |
 |---|---|---|
-| **A time** | **How long**, a duration | Elapsed |
 | **An event** | **Event**, the name of a [case event](/keel/builder/case-type-settings/#case-events) another system sends | Arrived |
+| **A time** | **How long**, a number and **Minutes**, **Hours** or **Days** | Elapsed |
 | **A condition** | **Condition**: "It is checked each time the case changes." | Met |
 
 **At most** sets a limit. When the limit passes first, the wait leaves by its **Deadline** outcome. When the case type has a calendar, these durations count business time: "Counted in business time, by the case type's calendar."
@@ -60,9 +57,9 @@ A wait holds the case until something happens. Its panel has three sections.
 
 ## Parallel splits and joins
 
-A **parallel split** starts several paths at once. Its panel, **Starts in parallel**, lists where each path starts; the **Add** menu adds one. Steps on parallel paths are open at the same time, and their cards read `Parallel with` and the other paths.
+A **parallel split** starts several paths at once. Its panel, **Starts in parallel**, lists where each path starts; a chip's × removes one, and the **Add** menu adds one. With none, it says **It starts no paths yet.** Steps on parallel paths are open at the same time, and their cards read `Parallel with` and the other paths. On the board, the split shows as `Parallel ·` and its name, with each path as a branch of cards under it.
 
-A **join** waits until every path that leads to it has arrived, then goes on to its **Then**. A join needs at least two paths leading to it; the dry run reports one that could never fire.
+A **join** waits until every path that leads to it has arrived, then goes on to its **Then**. On the board, it shows as `All branches meet at` and its name. A join needs at least two paths leading to it; the dry run reports one that could never fire.
 
 A path can also stop on its own, with **End of this path**: the case goes on along its other paths. A case left open with nothing to do is refused, so every path must end somewhere a case can rest or close.
 

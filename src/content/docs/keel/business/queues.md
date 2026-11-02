@@ -22,7 +22,9 @@ The queue's page shows:
 | **Agent questions** | Agents' raised hands, held or not. | The queue's serving order |
 | **Done today** | Items closed since midnight. | The latest first |
 
-Each row shows the item's **Kind**, its **Case or process**, what is **Needed and why**, how long it **Waited**, and its **Service level**. Under the table, a line such as `7 of 13 unclaimed, in the order Get next serves them` says how many show; **Show more** lists more.
+Each row shows the item's **Kind**, its **Case or process**, what is **Needed and why**, how long it **Waited**, and its **Service level**. Under the table, a line such as `7 of 13 unclaimed, in the order Get next serves them` says how many show; **Show more** lists more. Pick a row's case or process to see the item on the right, as in [Needs me](/keel/business/work/#an-item).
+
+![The Intake queue: "Get next serves the oldest work first.", its figures, two members, the Unclaimed tab with one step, and Claim.](../../../../assets/screenshots/keel-business-work-queue.png)
 
 ## Taking work from a queue
 
@@ -30,7 +32,7 @@ The action at the end of a row depends on the item:
 
 - **Claim**, on an open step no one holds, in one of your queues. Keel says **Claimed. It is in Needs me.** If someone was faster, it says **Someone took it first.**
 - **Answer**, on an agent's question you may answer. The question opens on the right, to answer as in [Needs me](/keel/business/work/#answer-an-agents-question).
-- **Open case**, on an escalation. An escalation says a deadline was missed; the step stays with whoever works it, and the escalation closes when the step or stage it is about moves on.
+- **Open case**, or **Open process** for a process's task, on an escalation. An escalation says a deadline was missed; the step stays with whoever works it, and the escalation closes when the step or stage it is about moves on.
 
 A member who is away cannot claim; the others take the work.
 
@@ -44,6 +46,10 @@ An agent that is a member takes the queue's waiting items by itself, in the queu
 
 **All queues** lists every queue of the project, in the order Keel serves them, with how many items are **Waiting**, **Unclaimed**, **Agent questions**, **Past deadline** and **Done today**. Your queues are marked **Yours**. Pick one to open it.
 
+![All queues: three queues of the project, Intake marked Yours.](../../../../assets/screenshots/keel-business-work-all-queues.png)
+
 ## Queue settings
 
-Supervisors see **Queue settings** in a queue's header. It opens the queue's members, to add and remove, with its serving order and priority, which the builders set. See [Queues and members](/keel/business/supervisors/#queues-and-members).
+Supervisors see **Queue settings** in a queue's header. It opens the queue's members, to add and remove, with its serving order and priority, which the builders set. **Done** closes it. The **Queues** tab of the Team page holds the same settings for every queue. See [Queues and members](/keel/business/supervisors/#queues-and-members).
+
+![The Team page's Queues tab: the load of each queue, then each queue's serving order, priority and members, with Add a member.](../../../../assets/screenshots/keel-business-team-queues.png)

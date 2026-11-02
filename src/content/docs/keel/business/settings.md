@@ -14,7 +14,9 @@ A **notice** is Keel telling you something about your work: that an item reached
 
 ## The emails
 
-The table **Emails** has one switch for each kind of notice. Every switch is on until you turn it off, and a change is saved at once: Keel says **Turned off:** or **Turned on:** and the notice.
+Under **Email**, the table has one row for each kind of notice, with a switch in its **Email** column. Every switch is on until you turn it off, and a change is saved at once: Keel says **Turned off:** or **Turned on:** and the notice, such as "Turned off: A goal nears."
+
+![Your settings: the Email table, with a switch on for each of the seven notices.](../../../../assets/screenshots/keel-business-settings.png)
 
 | Notice | When Keel emails you |
 |---|---|
