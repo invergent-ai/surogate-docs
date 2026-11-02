@@ -1,9 +1,9 @@
 // Which product and track a docs page belongs to, from its Starlight route id
 // ('work', 'work/channels/slack', 'keel/builder/rules', '' for the home page).
 
-export const PRODUCT_LABEL = { agents: 'Surogate Agents', keel: 'Keel', dms: 'Surogate DMS' };
+export const PRODUCT_LABEL = { agents: 'Surogate Agents', keel: 'Surogate Keel', dms: 'Surogate DMS' };
 export const PRODUCT_HOME = { agents: '/work/', keel: '/keel/', dms: '/dms/' };
-export const TRACK_LABEL = { work: 'Work', develop: 'Develop', keel: 'Keel', dms: 'Surogate DMS' };
+export const TRACK_LABEL = { work: 'Work', develop: 'Develop', keel: 'Surogate Keel', dms: 'Surogate DMS' };
 export const TRACK_HOME = { work: '/work/', develop: '/develop/', keel: '/keel/', dms: '/dms/' };
 
 /** @returns {'work' | 'develop' | 'keel' | 'dms' | null} */

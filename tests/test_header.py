@@ -10,7 +10,7 @@ class Header(unittest.TestCase):
             head = section(page(route), 'header')
             self.assertIn('href="https://ops.surogate.ai"', head)
             self.assertIn('Surogate Agents', head)
-            self.assertIn('Keel', head)
+            self.assertIn('Surogate Keel', head)
             self.assertIn('Surogate DMS', head)
             self.assertIn('data-docs="theme-toggle"', head)
 
@@ -18,7 +18,7 @@ class Header(unittest.TestCase):
         work = section(page('/develop/'), 'header')
         self.assertRegex(work, r'aria-current="page"[^>]*>\s*Surogate Agents')
         keel = section(page('/keel/quickstart/'), 'header')
-        self.assertRegex(keel, r'aria-current="page"[^>]*>\s*Keel')
+        self.assertRegex(keel, r'aria-current="page"[^>]*>\s*Surogate Keel')
         dms_quick = section(page('/dms/quickstart/'), 'header')
         self.assertRegex(dms_quick, r'aria-current="page"[^>]*>\s*Surogate DMS')
         self.assertEqual(dms_quick.count('aria-current="page"'), 1)

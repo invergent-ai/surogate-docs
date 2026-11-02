@@ -18,7 +18,7 @@ class Sidebar(unittest.TestCase):
 
     def test_keel_has_head_and_no_switch(self):
         doc = page('/keel/builder/rules/')
-        self.assertIn('Keel', section(doc, 'product-head'))
+        self.assertIn('Surogate Keel', section(doc, 'product-head'))
         self.assertNotIn('data-docs="track-switch"', doc)
 
     def test_dms_admin_page_has_head_and_no_switch(self):
