@@ -13,6 +13,7 @@ The words this guide uses, with the Romanian terms the DMS keeps on purpose.
 | **Archived** | The last state of a document: closed and read only; comments are still allowed |
 | **Arhivele Naționale** | The National Archives, which approve the nomenclator, answer a selection and receive the permanent dosare |
 | **Attachment** | A document attached to another one, such as a contract's annex |
+| **Case** | A long-lived file in Keel that moves through stages and can hold documents of the DMS |
 | **Collection** | Documents from different folders shared with some people for a limited time |
 | **Compartment** | The unit an entry of the nomenclator belongs to |
 | **Document type** | A list of fields, a default folder and personal-data defaults for documents of one kind |
@@ -25,11 +26,13 @@ The words this guide uses, with the Romanian terms the DMS keeps on purpose.
 | **Hold** | A mark on a dosar that keeps it out of every selection |
 | **Holder** | The person who holds a position |
 | **Indicativ** | The code of an entry of the nomenclator |
+| **Keel** | The product that runs the business processes and cases of your institution; it can hold documents of the DMS |
 | **Library folder** | A folder of the library that belongs to a unit; made by an administrator |
 | **Metadata** | The values a person fills in for the fields of a document's type |
 | **Nomenclator** | The list, approved by the National Archives, of the dosare an institution keeps and for how long |
 | **Permanent** | A term meaning the dosar is kept for good and is handed over to the National Archives |
 | **Position** | A post in a unit, held by at most one person |
+| **Process** | A workflow of steps in Keel that people, agents and systems complete; it can hold documents of the DMS |
 | **Proces-verbal** (plural **procese-verbale**) | The record of a meeting or an act; the DMS issues one for a selection and for a handover |
 | **Published** | The state after **Approved**: released for use |
 | **Reason for access** | The text you write to open a document with certain personal data; it goes into the audit log |
@@ -38,6 +41,7 @@ The words this guide uses, with the Romanian terms the DMS keeps on purpose.
 | **Role** | A set of permissions |
 | **Selection** | The process by which dosare whose term has ended are proposed, confirmed by the National Archives and deleted |
 | **Handover** | The process by which permanent dosare are given to the National Archives |
+| **Start rule** | A rule that makes the DMS start a Keel process when a document is filed in a folder or when a dosar's term ends |
 | **Unit** | A part of the institution in the org chart, such as a department or an office |
 | **User folder** | A plain folder that anyone filing in a library folder can make inside it |
 | **Validated** | The state after **Draft**: the type and the metadata are complete |

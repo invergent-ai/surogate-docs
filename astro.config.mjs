@@ -400,7 +400,12 @@ export default defineConfig({
             {
               label: 'Examples',
               collapsed: true,
-              items: ['dms/examples/contract', 'dms/examples/new-department', 'dms/examples/selection-and-handover'],
+              items: [
+                'dms/examples/contract',
+                'dms/examples/new-department',
+                'dms/examples/selection-and-handover',
+                'dms/examples/loan-file-with-keel',
+              ],
             },
             {
               label: 'Daily work',
@@ -418,6 +423,7 @@ export default defineConfig({
                 'dms/work/signing',
                 'dms/work/favorites-and-collections',
                 'dms/work/personal-data',
+                'dms/work/workflows',
               ],
             },
             {
@@ -436,6 +442,7 @@ export default defineConfig({
                 'dms/admin/folders',
                 'dms/admin/nomenclator',
                 'dms/admin/audit-log',
+                'dms/admin/keel-integration',
               ],
             },
             {

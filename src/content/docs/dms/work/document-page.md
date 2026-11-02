@@ -26,10 +26,11 @@ The viewer shows the file page by page. Its toolbar zooms and moves between page
 | **Attachments** | Documents attached to this one |
 | **Comments** | Remarks by colleagues |
 | **Signatures** | The signatures and refusals of each version, and the buttons to ask for or give a signature |
+| **Workflows** | The Keel cases and processes that hold the document |
 | **Archive** | How long the document is kept and why, and its reception and preservation |
 | **Audit log** | For people who may consult the audit log: the entries about this document |
 
-A tab called **Workflows** appears only when your institution connected the DMS to Keel and a case or process holds the document.
+The tab **Workflows** is there when your institution connected the DMS to Keel. See [Workflows and cases with Keel](/dms/work/workflows/).
 
 ### Edit the metadata
 

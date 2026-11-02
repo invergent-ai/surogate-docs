@@ -44,9 +44,9 @@ The DMS does not offer these:
 - editing the older Office formats (`.doc`, `.xls`, `.ppt`, `.odt`) in the browser, two people editing one file at once, and printing from the viewer;
 - deleting a single document: a document can be archived, and dosare are deleted together after a selection;
 - following a document, and sending or sharing a document by link or by e-mail;
-- registers and registration numbers, approval workflows, scanning and barcodes;
+- registers and registration numbers, approval workflows of its own (a flow that spans people and systems runs in Keel: see [Workflows and cases with Keel](/dms/work/workflows/)), scanning and barcodes;
 - creating accounts, setting passwords or a second factor: sign-in belongs to your institution's sign-in service.
 
 ## Pages for IT teams
 
-The pages **Keel integration** and **API integration** under **Administration** are for the IT team that connects other systems to the DMS. They are not described in this guide.
+The page **API integration** under **Administration** is for the IT team that connects other systems to the DMS. It is not described in this guide. The page **Keel integration** is: see [Keel integration](/dms/admin/keel-integration/).
