@@ -1,6 +1,7 @@
 ---
-// Ten real tasks, five per product, each linking to the guide that does it.
+// Fifteen real tasks, five per product, each linking to the guide that does it.
 import AgentsMark from '../brand/AgentsMark.astro';
+import DmsMark from '../brand/DmsMark.astro';
 import KeelMark from '../brand/KeelMark.astro';
 
 const columns = [
@@ -26,6 +27,17 @@ const columns = [
       ['Test a case type with scenarios before you publish', 'Keel Builder', '/keel/builder/scenarios/'],
     ],
   },
+  {
+    product: 'dms',
+    name: 'Surogate DMS',
+    tasks: [
+      ['File your first document and find it again', 'Quickstart', '/dms/quickstart/'],
+      ['Have a contract signed and approved', 'Example', '/dms/examples/contract/'],
+      ['Set up a new department with its roles and types', 'Administration', '/dms/examples/new-department/'],
+      ['Select the dosare whose term has ended', 'Archive', '/dms/archive/selection/'],
+      ['Hand permanent dosare over to the National Archives', 'Archive', '/dms/archive/handover/'],
+    ],
+  },
 ] as const;
 ---
 
@@ -40,7 +52,7 @@ const columns = [
         columns.map((column) => (
           <div class="column">
             <div class="head">
-              {column.product === 'agents' ? <AgentsMark size={28} /> : <KeelMark size={28} />}
+              {column.product === 'agents' ? <AgentsMark size={28} /> : column.product === 'keel' ? <KeelMark size={28} /> : <DmsMark size={28} />}
               <p>{column.name}</p>
             </div>
             {column.tasks.map(([title, where, href]) => (
@@ -94,7 +106,7 @@ const columns = [
     gap: 32px 56px;
   }
   .column {
-    flex: 1 1 440px;
+    flex: 1 1 300px;
     min-width: 0;
     display: flex;
     flex-direction: column;

@@ -14,6 +14,11 @@ TASKS = [
     ('Give a team a queue with a serving order', '/keel/builder/queues/'),
     ('Let an agent work a step and ask when unsure', '/keel/business/agents/'),
     ('Test a case type with scenarios before you publish', '/keel/builder/scenarios/'),
+    ('File your first document and find it again', '/dms/quickstart/'),
+    ('Have a contract signed and approved', '/dms/examples/contract/'),
+    ('Set up a new department with its roles and types', '/dms/examples/new-department/'),
+    ('Select the dosare whose term has ended', '/dms/archive/selection/'),
+    ('Hand permanent dosare over to the National Archives', '/dms/archive/handover/'),
 ]
 
 
@@ -23,12 +28,12 @@ class Home(unittest.TestCase):
 
     def test_hero(self):
         self.assertIn('Surogate documentation', self.doc)
-        self.assertIn('Guides, tutorials and reference for Surogate Agents and Keel.', self.doc)
+        self.assertIn('Guides, tutorials and reference for Surogate Agents, Keel and Surogate DMS.', self.doc)
 
     def test_product_cards(self):
-        self.assertEqual(self.doc.count('data-docs="product-card"'), 2)
-        self.assertIn('Two products, built to work together.', self.doc)
-        for href in ('href="/work/"', 'href="/work/quickstart/"', 'href="/keel/"', 'href="/keel/quickstart/"'):
+        self.assertEqual(self.doc.count('data-docs="product-card"'), 3)
+        self.assertIn('Three products, built to work together.', self.doc)
+        for href in ('href="/work/"', 'href="/work/quickstart/"', 'href="/keel/"', 'href="/keel/quickstart/"', 'href="/dms/"', 'href="/dms/quickstart/"'):
             self.assertIn(href, self.doc)
 
     def test_tasks_link_to_real_sections(self):
