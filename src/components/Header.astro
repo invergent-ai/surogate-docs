@@ -121,6 +121,22 @@ const isHome = id === '';
     color: rgba(255, 255, 255, 0.75);
   }
 
+  /* Three products and the search field crowd the bar between 800 and 1024 px: the field shrinks to its content. */
+  @media (max-width: 64rem) {
+    .docs-header {
+      gap: 1.2rem;
+    }
+    .products {
+      gap: 1rem;
+    }
+    .tools {
+      gap: 0.6rem;
+    }
+    .tools :global(button[data-open-modal]) {
+      min-width: 0;
+    }
+  }
+
   /* On phones the products and Sign in move to the menu; pages without a menu keep Sign in. */
   @media (max-width: 50rem) {
     .products,

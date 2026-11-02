@@ -22,7 +22,7 @@ For some categories the DMS asks you to write why you open the document. The rea
 
 ## Classify a document
 
-A document's personal data is usually inherited from its type and its dosar. People who hold **Classifies a document's personal data** can change it: **Change the classification**, choose **Inherited**, **No personal data** or **Holds personal data**, tick the categories and the processing purpose, write the **Reason for the change** and press **Save the classification**.
+A document's personal data is usually inherited from its type and its dosar. People who hold **Classifies a document's personal data** can change it: **Change the classification**, choose **Inherited (from type and dosar)**, **No personal data** or **Holds personal data**, tick the categories and the processing purpose, write the **Reason for the change** and press **Save the classification**.
 
 ![The classification dialog: Holds personal data, the Health data category and a reason](../../../../assets/screenshots/dms-pd-classify.png)
 
