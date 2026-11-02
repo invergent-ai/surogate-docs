@@ -15,7 +15,7 @@ The pictures were taken in a demo city hall, Example City Hall, with made-up peo
 | Radu Florea, contracts clerk in the Legal Department | Uploads the contract into **Contracts 2026**, fills in its metadata, attaches the annex, validates it and asks for a signature |
 | Mihai Stan, Secretary General | Signs the contract internally, approves it and publishes it |
 
-The DMS has no approval workflow of its own. The states, the signing request and the permissions carry the approval: Radu may validate, and only a person who holds the permissions to approve and publish, here Mihai, may take the document further.
+The DMS has no approval workflow of its own. (A flow that spans several people and systems can run in Keel: see [Workflows and cases with Keel](/dms/work/workflows/).) The states, the signing request and the permissions carry the approval: Radu may validate, and only a person who holds the permissions to approve and publish, here Mihai, may take the document further.
 
 ## 1. File the contract
 
