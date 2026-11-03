@@ -10,7 +10,7 @@ For everyone: the page of one document: its header, the card Life of the documen
 
 ## The header
 
-The header shows the title, the file's kind, the **state**, a **Personal data** pill when it applies, the star that makes the document a favorite, and a line with the type, the folder, the version, the size and the date. The buttons on the right are the ones you may use: **Validate**, **Approve**, **Publish**, **Archive** or **Reopen**; **Check out**; **Move**.
+The header shows the title, the file's kind, the **state**, a **Personal data** pill when it applies, the star that makes the document a favorite, and a line with the type, the folder, the version, the size and the date. The buttons on the right are the ones you may use: **Validate**, **Approve**, **Publish**, **Archive** or **Reopen**; **Check out**; **Move**. A document that a registration holds shows the line **Registered as** with its numbers under the header: see [Registering documents](/dms/work/registry/).
 
 ## The viewer
 

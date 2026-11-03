@@ -13,6 +13,7 @@ The pictures were taken in a demo city hall, Example City Hall, with made-up peo
 | You are | You mostly use | Start with |
 |---|---|---|
 | Staff who file and look for documents | **Library**, **Search**, **My desk**, **To sign** | [Quickstart for staff](/dms/quickstart/) |
+| Staff who register incoming and outgoing documents | **Registry** | [Registering documents](/dms/work/registry/) |
 | An administrator | **Org chart**, **People**, **Roles and permissions**, **Document types**, **Folders**, **Nomenclator** | [Quickstart for administrators](/dms/quickstart-admin/) |
 | An electronic archivist | The **Archive** section: **Selection**, **Handover**, **Overview** | [The Archive overview](/dms/archive/overview/) |
 | An auditor or the data protection officer | **Audit log**, **Personal data** | [The audit log](/dms/admin/audit-log/) |

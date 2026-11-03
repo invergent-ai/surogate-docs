@@ -51,6 +51,12 @@ When a file arrives, the DMS checks it and, where it can, makes a copy in a form
 
 When the term of a closed dosar has ended, an archivist starts a **selection**: a commission proposes the dosare to eliminate, a **proces-verbal** (plural **procese-verbale**, the signed record of a meeting or an act) is issued, the National Archives answer, and the deletion runs after a delay. Dosare kept permanently are **handed over** to the National Archives instead. See [Selection and deletion](/dms/archive/selection/) and [Handover](/dms/archive/handover/).
 
+## Registrations
+
+The institution's **registry** gives the documents that come in, go out or stay inside a number. A **registration** takes a number in the **main register** and, when it is made in a **service register** kept by a unit, a second one. It names the **correspondent** and the units it concerns, holds the documents, and lends them for reading to those units. The registrations of one exchange form a **thread**.
+
+See [Registering documents](/dms/work/registry/) and [Registers and address lists](/dms/admin/registers/).
+
 ## Personal data
 
 Some documents hold personal data. They carry a **Personal data** pill; some categories (health data, for example) ask you for a **reason for access** before they open. See [Personal data](/dms/work/personal-data/).

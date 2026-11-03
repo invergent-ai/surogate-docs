@@ -424,6 +424,9 @@ export default defineConfig({
                 'dms/work/favorites-and-collections',
                 'dms/work/personal-data',
                 'dms/work/workflows',
+                'dms/work/registry',
+                'dms/work/registry-lists',
+                'dms/work/correspondents',
               ],
             },
             {
@@ -441,6 +444,7 @@ export default defineConfig({
                 'dms/admin/document-types',
                 'dms/admin/folders',
                 'dms/admin/nomenclator',
+                'dms/admin/registers',
                 'dms/admin/audit-log',
                 'dms/admin/keel-integration',
               ],

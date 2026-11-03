@@ -61,7 +61,7 @@ class DmsContent(unittest.TestCase):
             self.assertEqual((width, height), (1600, 900), f.name)
             self.assertLessEqual(f.stat().st_size, 300_000, f.name)
             self.assertIn(f.name, used, f'{f.name} is used by no page')
-        self.assertLessEqual(len(files), 120)
+        self.assertLessEqual(len(files), 130)
         self.assertLessEqual(len(pages()), 40)
 
     def test_llms_txt_names_the_product(self):
