@@ -37,6 +37,20 @@ It holds a category of personal data that asks for a reason for access. The reas
 ### Why do I not see a document in a search or a collection?
 You see only documents you may read. Documents with personal data need the permission **Access to documents with personal data**.
 
+## The registry
+
+### I do not see the Registry section
+The section shows when you hold at least one of the permissions **Sees registrations**, **Registers documents**, **Cancels registrations** or **Manages the registers**. Ask your administrator for a grant. See [Registers and address lists](/dms/admin/registers/).
+
+### Can I change a registration number?
+No. A number never changes and is never given to another registration, even when the registration is cancelled. When the kind, the register or the type is wrong, cancel the registration and register it again. See [Registering documents](/dms/work/registry/).
+
+### Why does **Download with the number** give a message?
+Only a PDF that is not encrypted and has no signatures gets a numbered copy, because the stamp on the first page would break a signature. Download the original and the receipt instead.
+
+### Where do I see what is addressed to my unit?
+In **Registry** › **For my unit**. It lists the registrations addressed to the units where you hold a position in the org chart. See [Finding registrations](/dms/work/registry-lists/).
+
 ## What the DMS does not do
 
 The DMS does not offer these:
@@ -44,7 +58,7 @@ The DMS does not offer these:
 - editing the older Office formats (`.doc`, `.xls`, `.ppt`, `.odt`) in the browser, two people editing one file at once, and printing from the viewer;
 - deleting a single document: a document can be archived, and dosare are deleted together after a selection;
 - following a document, and sending or sharing a document by link or by e-mail;
-- registers and registration numbers, approval workflows of its own (a flow that spans people and systems runs in Keel: see [Workflows and cases with Keel](/dms/work/workflows/)), scanning and barcodes;
+- approval workflows of its own (a flow that spans people and systems runs in Keel: see [Workflows and cases with Keel](/dms/work/workflows/)) and scanning paper documents into the DMS;
 - creating accounts, setting passwords or a second factor: sign-in belongs to your institution's sign-in service.
 
 ## Pages for IT teams
