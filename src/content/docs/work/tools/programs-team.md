@@ -101,6 +101,7 @@ A team member can work with the agent from their own chat on any channel they ar
 | `team_update_person` | Pause, resume or end someone's follow-up, correct their start date, name, who answers for them, timezone or preferred channel. Previewed first, changed only after a yes. |
 | `team_enroll_person` | Enrol someone by WhatsApp number, Slack member, a Telegram start link, or as someone the agent already knows. Previewed first. |
 | `team_escalation` | Take an escalation (*"I'll handle Ion"*) or mark it resolved (*"done"*), on the same record as the Escalations tab. Without a name it is the person in the latest alert they received. The colleagues who got that alert are told who took or resolved it. |
+| `team_tell_member` | Pass a team member's words to a colleague (*"tell the doctor to enrol Vasile"*), signed with who asked. The colleague's answer comes back in their own conversation and is passed on the same way. |
 
 Whoever enrols someone by number or Slack member vouches for their consent; the welcome message goes out at once.
 
