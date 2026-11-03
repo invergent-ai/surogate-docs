@@ -73,6 +73,8 @@ Three escalating options, only when something's actually broken:
 
 ## Verifying changes
 
+To try a change on made-up customers before real ones see it, run them through [Simulate](/work/workflow/simulate/): it reviews each run and can make the fix for you.
+
 Start a new session, ask the same question that produced a 👎 in the past, compare. Don't continue an old session — it'll keep the old config.
 
 For systematic regression checking, collect the 👎 sessions into a dataset and score a benchmark against it — see [Regression testing](/develop/loop/observe/#regression-testing).

@@ -173,6 +173,7 @@ export default defineConfig({
                 'work/tools/sub-agents',
                 'work/tools/inbox',
                 'work/workflow/improve-agent',
+                'work/workflow/simulate',
               ],
             },
             'work/workflow/review-sessions',

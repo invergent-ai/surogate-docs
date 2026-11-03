@@ -37,7 +37,7 @@ The Copilot calls the platform's own tools on your behalf. You see the same effe
 
 When you ask it to make something, it does not just start. It interviews you one question at a time (purpose, audience, tone, sources, tools, boundaries), looks at what you already have so it does not duplicate it, and shows a plan for your approval. Only then does it build, one piece at a time, reads each piece back to check it, and ends with links to everything and a few first messages to test with.
 
-It follows a written build guide for each kind of thing: agents, skills, knowledge bases, sub-agents, MCP server connections, Programs, datasets, RL environments, training runs, evaluations and model deployments.
+It follows a written build guide for each kind of thing: agents, skills, knowledge bases, sub-agents, MCP server connections, Programs, testing and improving an agent with Simulate, datasets, RL environments, training runs, evaluations and model deployments.
 
 ## Datasets, training, evaluations and models
 
@@ -92,6 +92,12 @@ It knows what you are looking at: on the Programs page it is told which tab, jou
 **`/build-program`** is a playbook for setting a program up end to end. The Copilot interviews you one question at a time (who is followed and why, the date day 0 counts from, the rhythm, what each answer means and which is urgent, the channels, the team, the language of every message), inspects what the agent already has, and writes a plan for you to approve. Only then does it build: the step skills, any missing WhatsApp forms and templates, the journey as a draft, the team and the wording. It reviews and dry-runs the journey and summarises what is live and what is still a draft, with a test script.
 
 Activating a journey, sending a test, enrolling, messaging a person, changing the team, and changing a person's contact permission, binding or removing a person need an explicit confirmation step, which the Copilot is instructed to take only after you say yes to that exact action. Called without it, the tool refuses and changes nothing.
+
+## Testing and improving an agent
+
+**`/improve-agent`** runs an agent through [Simulate](/work/workflow/simulate/). The Copilot picks people from the agent's cast, or writes the ones you describe ("an angry customer who wants a refund"), runs them on a channel, and gives you the run's link so you can watch or take over. When the run is over, it reads you the review: how it went, then each finding, the serious ones first.
+
+For each finding you want fixed, it drafts the change to the identity, a skill or a knowledge base and shows you the diff. Say how you want it worded and it drafts it again from your note. Making a change and undoing one each need your yes on that exact change. It never loosens a safety rule to make a customer happier. To check a fix, it runs the same people again and tells you which changes held and which came back.
 
 ## How it asks before acting
 
