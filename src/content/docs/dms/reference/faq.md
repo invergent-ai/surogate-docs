@@ -57,7 +57,7 @@ In **Registry** › **For my unit**. It lists the registrations addressed to the
 **New capture** and **My captures** show when you hold **Uploads documents** somewhere, or **Process captures**. **To process**, **To validate** and **Separator sheets** show when you hold **Process captures**. Ask your administrator for a grant. See [Capturing documents](/dms/work/capture/).
 
 ### Why is To process empty or missing?
-It lists the captures of the channels of the units where you hold **Process captures** and **Access to documents with personal data** both. Ask your administrator for both in the unit of the channel. The captures you sent or printed yourself are in **My captures**.
+It lists the captures of the channels of the units where you hold **Process captures** and **Access to documents with personal data** both. Ask your administrator for both in the unit of the channel. **To process** also lists the captures you sent or printed yourself, and **My captures** lists only those.
 
 ### Why did my scan not split?
 A PDF that carries a signature or is password protected is never cut. A sheet of a profile that was switched off stops the capture and says so. A channel with **Separators** off reads the sheets and cuts nothing. See [Separator sheets and registration labels](/dms/admin/separator-sheets/).
@@ -76,7 +76,7 @@ The DMS does not offer these:
 - deleting a single document: a document can be archived, and dosare are deleted together after a selection;
 - following a document, and sending or sharing a document by link or by e-mail;
 - approval workflows of its own (a flow that spans people and systems runs in Keel: see [Workflows and cases with Keel](/dms/work/workflows/));
-- scanning from the program of a scanner on your computer (TWAIN and WIA), printing labels in the language of a label printer (the DMS makes PDFs), printing to the DMS printer from a phone (photograph the pages with **New capture** instead) and sending e-mail (the DMS only reads a mailbox);
+- scanning from the program of a scanner on your computer (TWAIN and WIA), printing labels in the language of a label printer (the DMS makes PDFs), and printing to the DMS printer from a phone (photograph the pages with **New capture** instead);
 - creating accounts, setting passwords or a second factor: sign-in belongs to your institution's sign-in service.
 
 ## Pages for IT teams

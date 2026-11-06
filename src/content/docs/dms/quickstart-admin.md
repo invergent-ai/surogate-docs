@@ -99,4 +99,4 @@ Open **Audit log** and filter the **Entries** by a person to see what they did.
 - [Set up a new department](/dms/examples/new-department/) repeats these steps for one department.
 - [Roles and permissions](/dms/admin/roles/) explains grants.
 - [The Archive overview](/dms/archive/overview/) is where an archivist starts.
-- [The capture quickstart](/dms/quickstart-capture/) sets up a channel and a flow for scanned paper.
+- [Quickstart for capture](/dms/quickstart-capture/) sets up a channel and a flow for scanned paper.

@@ -21,10 +21,8 @@ The page lists the flows with their **Name**, **State** (**On** or **Off**), **V
 ![The Capture flows page: two flows that are on, their versions, their channels and the captures they took this month](../../../../assets/screenshots/dms-capture-flows.png)
 
 - **New flow** opens **New capture flow**. Write the **Name** and a **Description** and choose **Create**. The new flow has the two steps every flow has, **Split** and **Filing**, with **A person files**.
-- **Rename** changes the name.
-- **Versions** lists each published version with its **Note**, **Published by** and **Published on**.
 
-Choose a flow to open it. The flow can be shown in two ways, chosen with **How the flow is shown**: as a **Drawing**, with a box for each step and a fork at the rules, or as a **List**. They show the same flow.
+Choose a flow to open it. On its page, **Rename** changes the name and the description, and a table lists each published version with its **Note**, **Published by** and **Published on**. The flow can be shown in two ways, chosen with **How the flow is shown**: as a **Drawing**, with a box for each step and a fork at the rules, or as a **List**. They show the same flow.
 
 ![The flow Incoming mail as a drawing: the steps from Start to Filing, the Routing step with three branches, and the destinations](../../../../assets/screenshots/dms-capture-flow-canvas.png)
 
@@ -84,8 +82,8 @@ Texts are compared without regard to case, accents or the amount of white space.
 
 - **Destination** is **A library folder**, **The dosar of the year of a position** (choose the **Unit** and the **Position**), **The type's folder**, or **No new folder**. With the dosar of the year, the rule finds the open dosar of the position for the current year among the folders of the unit. If the unit has no such dosar open, the capture waits and says so.
 - **Type** is the document type the part gets.
-- **Title** is a text for the part. The screen says "{placeholders} can be used.": `{field:` and the key of a field of the template and `}`, such as `{field:property_address}`, stands for the value of that field, `{date}` for the day the capture was received, and `{channel}` for the name of the channel. The title has between 1 and 300 characters.
-- **Data** are values of fields of the type. Choose **Add a datum**, the **The type's field**, and whether the value comes **written here** or **from the field** of the template. **Remove** takes one out.
+- **Title** is a text for the part. The screen says "{field:cheie}, {date}, {channel} can be used." Write the key of a field of the template in place of `cheie`: `{field:property_address}` stands for the value of that field. `{date}` stands for the day the capture was received, and `{channel}` for the name of the channel. The title has between 1 and 300 characters.
+- **Data** are values of fields of the type. Choose **Add a datum**, write the key of the type's field in **The type's field** in place of the `cheie1` the screen suggests, and choose whether the value comes **written here** or **from the field** of the template. **Remove** takes one out.
 
 **Otherwise** says what happens to a part no rule takes, under **A part no rule fits**: **a person chooses the folder** (the capture waits and says "No rule of the flow fits part {n}; choose the folder."), or **goes to a destination**.
 
@@ -107,21 +105,21 @@ Errors stop you from publishing and switching on. Warnings do not.
 | **Wrong destination** | The destination is not a library folder or no longer exists. | Error |
 | **You may not file there** | You may not file in the unit {unit}; automatic filing would use your own rights. | Error |
 | **Wrong Keel key** | The Keel process name has 1 to 200 printable characters, no spaces. | Error |
-| **Rule never applies** | A rule before it always fits. | Warning |
-| **The type's folder wins** | The type has its own default folder; the document goes there, not to the rule's destination. | Warning |
+| **Rule never applies** | The rule {rule} never applies: a rule before it always fits. | Warning |
+| **The type's folder wins** | The type {type} has its own default folder; the document goes there, not to the rule's destination. | Warning |
 | **Dosar closed** | The destination's dosar is closed. | Warning |
 | **Keel off** | Keel is not configured; the Keel step will be skipped. | Warning |
-| **Two processes** | The destination folder already starts the same process for every document; two processes would start. | Warning |
+| **Two processes** | The destination folder already starts the process {process} for every document; two processes would start. | Warning |
 
 ## Publish and switch on
 
 Your edits are a **draft**. **Save** keeps them. **Discard the draft** deletes the saved draft, and the flow keeps its last published version.
 
-1. Choose **Publish**. In **Publish the flow**, write a **Note** if you want one and choose **Publish**. If the flow files automatically, the dialog says "Automatic filing will use your rights." Whoever publishes a flow that is on, with automatic filing, becomes the person it files as.
-2. Choose **Switch on**. Channels can now be given the flow, and **Apply a flow** offers it. Publishing and switching on both run the check for you and refuse when it finds an error.
+1. Choose **Publish**. In **Publish the flow**, write a **Note** if you want one and choose **Publish**. If the flow is on and files automatically, and you are not the person it files as now, the dialog says "Automatic filing will use your rights." Whoever publishes a flow that is on, with automatic filing, becomes the person it files as.
+2. Choose **Switch on**. Channels can now be given the flow, and **Apply a flow** offers it. If the flow files automatically, the dialog says "Automatic filing will use your rights." Publishing and switching on both run the check for you and refuse when it finds an error.
 3. In **Capture channels**, open each channel that should run the flow, choose the flow in **Flow**, and **Save**.
 
-**Switch off** stops channels from being given the flow and stops **Apply a flow** from offering it. It says "Channels can no longer be given this flow and Apply a flow no longer offers it; captures started with it go on."
+**Switch off** stops channels from being given the flow and stops **Apply a flow** from offering it. It says "Channels can no longer be given this flow and Apply a flow no longer offers it; captures started with it go on." A channel whose flow is switched off runs its own settings again for new captures, its own **Automatic filing** included, until the flow is switched on.
 
 ## Try on a capture
 

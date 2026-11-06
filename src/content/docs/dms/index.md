@@ -14,7 +14,7 @@ The pictures were taken in a demo city hall, Example City Hall, with made-up peo
 |---|---|---|
 | Staff who file and look for documents | **Library**, **Search**, **My desk**, **To sign** | [Quickstart for staff](/dms/quickstart/) |
 | Staff who register incoming and outgoing documents | **Registry** | [Registering documents](/dms/work/registry/) |
-| Staff who scan paper and work a unit's captures | **New capture**, **To process**, **To validate** | [Capture quickstart](/dms/quickstart-capture/) |
+| Staff who scan paper and work a unit's captures | **New capture**, **To process**, **To validate** | [Quickstart for capture](/dms/quickstart-capture/) |
 | An administrator | **Org chart**, **People**, **Roles and permissions**, **Document types**, **Folders**, **Nomenclator** | [Quickstart for administrators](/dms/quickstart-admin/) |
 | An electronic archivist | The **Archive** section: **Selection**, **Handover**, **Overview** | [The Archive overview](/dms/archive/overview/) |
 | An auditor or the data protection officer | **Audit log**, **Personal data** | [The audit log](/dms/admin/audit-log/) |
@@ -39,7 +39,7 @@ What you see depends on your roles. The sidebar shows only the pages you may ope
 |---|---|
 | File my first document and find it again | [Quickstart for staff](/dms/quickstart/) |
 | Set up the DMS for my institution | [Quickstart for administrators](/dms/quickstart-admin/) |
-| Scan paper and file it by rules | [Capture quickstart](/dms/quickstart-capture/) |
+| Scan paper and file it by rules | [Quickstart for capture](/dms/quickstart-capture/) |
 | Scan a day's mail with labels and a form | [Scan the incoming mail](/dms/examples/incoming-mail/) |
 | Understand the words the DMS uses | [Concepts](/dms/concepts/) and the [Glossary](/dms/reference/glossary/) |
 | Have a contract signed and approved | [File and approve a contract](/dms/examples/contract/) |

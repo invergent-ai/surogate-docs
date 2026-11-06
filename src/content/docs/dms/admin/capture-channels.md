@@ -41,11 +41,11 @@ Choose **New channel**, then the **Kind of channel**. The kind cannot be changed
 | **Unit** | The unit whose people process the captures of the channel. They need **Process captures** and **Access to documents with personal data** in that unit. |
 | **Default document type** | The type offered for each part. It is optional. |
 | **Default folder** | The library folder offered for each part. It is optional, and it must be a library folder. |
-| **Automatic filing** | The channel files its captures by itself into the default folder. The hint says "Files as {person}.": the documents are filed as the person who switched it on, with that person's access at the moment of filing. If that person loses the right, the capture waits. |
+| **Automatic filing** | The channel files its captures by itself into the default folder. The hint says "Captures file themselves, as the person who switches this on.", and afterwards "Files as {person}.": the documents are filed as that person, with that person's access at the moment of filing. If that person loses the right, the capture waits. |
 | **Flow** | The [capture flow](/dms/admin/capture-flows/) the captures of the channel run, among the flows that are switched on, or **No flow**. |
 | **Active** | Whether the channel takes new files. A channel that is off takes none. |
 
-A channel with a flow runs the steps of the flow, with the settings of those steps. The **Barcodes** and **Extraction** sections of the channel apply to a channel with no flow. They are described [below](#barcodes-and-extraction).
+A channel with a flow runs the steps of the flow, with the settings of those steps. If the flow is switched off, the channel runs its own settings again, its **Automatic filing** included. The **Barcodes** and **Extraction** sections of the channel apply to a channel with no flow. They are described [below](#barcodes-and-extraction).
 
 ## Web upload
 
@@ -55,7 +55,7 @@ A **Web upload** channel is the destination offered on the page **New capture**.
 
 A scanner writes finished files into a shared folder. The DMS takes each file once and makes a capture of it. Your operator connects the shared folder to the DMS and gives the scanner the right to write there. Ask your operator which folder is yours.
 
-![The settings of the watched folder Registry Office scanner: the barcodes it reads, the blank pages it leaves out and the folder it watches](../../../../assets/screenshots/dms-capture-channel-folder.png)
+![The settings of the watched folder Registry Office scanner: the barcode and extraction sections, the folder it watches and how it waits for a file](../../../../assets/screenshots/dms-capture-channel-folder.png)
 
 | Setting | What it does |
 |---|---|
@@ -78,7 +78,7 @@ When your institution has it, a channel can read a mailbox. The DMS signs in to 
 |---|---|
 | **Host**, **Port number** | The mail server. The port is 993 unless you change it. |
 | **Network** | **through the proxy** or **direct**. Your operator tells you which one reaches your server. |
-| **Sign-in** | **Password**, with the **User**, the **Mailbox address** and the password; or **Microsoft 365**, with the **Tenant ID**, the **Client ID** and the **Client secret**. |
+| **Sign-in** | **Password**, with the **User**, the **Mailbox address** and the password; or **Microsoft 365**, with the **User** (the address of the mailbox), the **Mailbox address**, the **Tenant ID**, the **Client ID** and the **Client secret**. |
 | **Folder read** | The mail folder to read, `INBOX` unless you change it. |
 | **Folder for taken messages**, **Folder for rejected messages** | Where a message goes after the DMS made a capture of it, and where it goes when it could not. The DMS makes them if they are missing. |
 | **Every (minutes)** | How often the mailbox is read. |

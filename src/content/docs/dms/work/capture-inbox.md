@@ -14,7 +14,7 @@ For staff who work the captures of a unit: reading the inbox, checking the parts
 
 The columns are **Received**, **Channel**, **Title**, **Pages**, **Documents** (such as "0 of 4": documents made out of parts), **State** and **Reason**. The filters are **State** (**Needs attention and Ready to file** by default, or **All**), **Channel** and **Reason**. A row has **Open**, **File** (when the capture is ready) and **Discard**.
 
-Tick several rows and use the bar **Actions for the selected captures** to file or discard them together. The page tells you the result, for example "Filed 3 of 4.", and names each capture it could not file and why.
+Tick several rows that are ready to file (a capture that waits for a person has no box) and use the bar **Actions for the selected captures** to file or discard them together. The page tells you the result, for example "Filed 3 of 4.", and names each capture it could not file and why.
 
 ## A capture's page
 
@@ -22,15 +22,15 @@ Choose **Open**. The first card gives the state and its sentence and the buttons
 
 - **File all** files every part that is ready.
 - **Try again** runs again the step that stopped. Use it after you fixed what the sentence says.
-- **Continue without {step}** appears when a stopped step may be skipped, for example the reading of the data.
+- **Continue without** and the name of the step, such as **Continue without Extraction** or **Continue without Codes**, appears when a stopped step may be skipped.
 - **Apply a flow**, see below.
 - **Discard** and **Restore**, see below.
 
 When the capture runs a flow, the card says "Flow: Registry desk, version 1". A capture keeps the version it started with, even when a newer one is published.
 
-The next card gives **Channel**, **Received**, **Pages**, **Size**, **How it arrived** (the file name or the sender) and a reference when there is one.
+The next card gives **Channel**, **Received**, **Pages**, **Size** and a **Reference** when there is one. It also says how the capture arrived: **File**, **Modified** and **File size** for a scanner's file, **Sender**, **Recipients** and **Subject** for a message, and the **Job name** for a printed capture.
 
-![A capture ready to file: how it arrived, the buttons, and its pages grouped in parts with the separator sheets left out](../../../../assets/screenshots/dms-capture-page.png)
+![A capture ready to file: the channel it came by, the buttons, and its pages grouped in parts with the separator sheets left out](../../../../assets/screenshots/dms-capture-page.png)
 
 ## The pages and their codes
 
@@ -46,14 +46,14 @@ A page that was left out says why: "Blank page left out" or "Separator sheet".
 
 ## The parts
 
-Each part has its own card: **Part 1**, **Pages 1** (the pages it holds), a title, a **Document type** and a **Folder**, and the fields of the type. The card says how the part got there: **Rule “Petitions”** when a flow's rule took it, or **Otherwise: a person chooses** when no rule did, or the line of its registration.
+Each part has its own card: **Part 1**, **Pages** (the part's own pages, counted from 1), a title, a **Document type** and a **Folder**, and the fields of the type. The card says how the part got there: **Rule “Petitions”** when a flow's rule took it, or **Otherwise: a person chooses** when no rule did. A part linked to a registration also has the line of its registration.
 
 - **Save** keeps what you changed. The part cannot be filed before it is saved: "Save the correction before filing the part."
 - **File** files this part as a document. The document is made as you.
 - **Split** cuts the part in two or more, see below.
 - **Open the document** appears once the part is **Filed**.
 
-![The card of part 2: its title, type and folder set by the rule Applications, the fields of the type, and the buttons Save, Split and File](../../../../assets/screenshots/dms-capture-part.png)
+![The card of part 2: its title and folder set by the rule Applications, its type from the separator sheet, the fields of the type, and the buttons Save, Split and File](../../../../assets/screenshots/dms-capture-part.png)
 
 A part linked to a registration says "It is filed in the register's folder." and has **Remove the link**. The folder you see is not used, because a registered document always goes to the folder of its register. A link is made by a label on the page, never by hand.
 
@@ -70,6 +70,7 @@ Two letters scanned without a sheet between them make one part. To cut it:
 1. On the part's card, choose **Split**. The dialog **Split part 3** shows the pages of the part side by side.
 2. Click between two pages to cut there. The gap is called **Cut after page 1**, and you can reach it with the keyboard. A cut shows as "cut". Click again to take it back.
 3. The dialog says "2 parts are made." Choose **Split**.
+4. The capture is read again. When it says **Ready to file**, check the new parts.
 
 ![The Split part 3 dialog with a cut between the two petitions](../../../../assets/screenshots/dms-capture-split.png)
 
@@ -83,12 +84,12 @@ A capture that **Needs attention** says in words what is wrong. The usual ones, 
 |---|---|---|
 | **Data to check** | Check the data read from part {n}. | Open [To validate](/dms/work/capture-validate/). |
 | **Template not settled** | Part {n} fits several templates. Choose one. | On the part, **Choose the template**, then **Try again**. |
-| **No template** | Part {n} has no capture template. Choose one or go on without extraction. | Choose one, or **Continue without** the reading. |
-| **No rule fits** | No rule of the flow fits part {n}; choose the folder. | On the part, choose the **Folder**, **Save**, then **Try again**. |
-| **Dosar not open** | The unit has not opened the dosar of the position for the year; open it or choose the folder. | Ask the unit to open the dosar, or choose another folder, then **Try again**. |
-| **The rule's folder is missing** | The flow cannot find the folder it sends part {n} to. | Choose the folder by hand, and tell the administrator of the flow. |
+| **No template** | Part {n} has no capture template. Choose one or go on without extraction. | Choose one, or choose **Continue without Extraction**. |
+| **No rule fits** | No rule of the flow {flow} fits part {n}; choose the folder. | On the part, choose the **Folder**, **Save**, then **Try again**. |
+| **Dosar not open** | The unit {unit} has not opened the dosar of position {indicativ} for {year}; open it or choose the folder. | Ask the unit to open the dosar, or choose another folder, then **Try again**. |
+| **The rule's folder is missing** | The flow {flow} cannot find the folder it sends part {n} to; choose the folder. | Choose the folder by hand, and tell the administrator of the flow. |
 | **Filing refused** | Part {n} could not be filed, and why. | Read the reason on the part, correct it and **Try again**. |
-| **Two codes on one page** | Page {n} has two different DMS codes; split the capture by hand. | Split the part. |
+| **Two codes on one page** | Page {n} has two different DMS codes; split the capture by hand. | Choose **Continue without Codes**, then split the part by hand. |
 | **Separator sheet no longer in use** | The separator sheet on a page is no longer in use; choose the folder by hand. | Choose the folder of the part. |
 | **Signed file with separator sheets** | A file is signed and is not split. | File it whole, or scan it again without the signature. |
 | **Password protected file** | A file is password protected. | Save it without a password and capture it again. |

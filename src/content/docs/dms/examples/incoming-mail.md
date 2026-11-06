@@ -12,12 +12,12 @@ The pictures were taken in a demo city hall, Example City Hall, with made-up peo
 
 | Who | Does what |
 |---|---|
-| Andrei Ionescu, registry clerk | Prints the labels of two registered letters, puts the stack together with separator sheets, scans it, checks the date written by hand on a form, fills in the data of a petition and chooses a folder for another part |
+| Andrei Ionescu, registry clerk | Prints the labels of two registered letters, puts the stack together with separator sheets, scans it, checks the date written by hand on a form, fills in the data of a petition and chooses a folder for another part, and files the petition himself |
 | The scanner of the Registry Office | Writes the scan into its shared folder, where the DMS takes it |
 | The flow Incoming mail, switched on by Elena Marin, the administrator | Cuts the stack by its codes, reads the form with a template, and files each part by its rules |
 | Ioana Dobre, urban planning inspector | Opens the application in **Building permits 2026** |
 
-Elena has already made the channel **Registry Office scanner**, the template **Building permit application** and the flow **Incoming mail**. See [Capture channels](/dms/admin/capture-channels/), [Capture templates](/dms/admin/capture-templates/) and [Capture flows](/dms/admin/capture-flows/). [The capture quickstart](/dms/quickstart-capture/) shows how a channel and a flow are made.
+Elena has already made the channel **Registry Office scanner**, the template **Building permit application** and the flow **Incoming mail**. See [Capture channels](/dms/admin/capture-channels/), [Capture templates](/dms/admin/capture-templates/) and [Capture flows](/dms/admin/capture-flows/). [Quickstart for capture](/dms/quickstart-capture/) shows how a channel and a flow are made.
 
 ## 1. Register the letters and print their labels
 
@@ -46,7 +46,7 @@ The stack has nine pages. A label starts a part for its letter and links it to t
 
 ## 3. The scanner sends the stack
 
-Andrei puts the stack in the scanner and scans it to one PDF. The scanner writes the file into its folder on the shared drive, and the DMS takes it. When the DMS next reads the folder, it takes the file. The capture is in **Capture** › **To process**, with the channel **Registry Office scanner**, nine pages and no title, and it goes through its steps.
+Andrei puts the stack in the scanner and scans it to one PDF. The scanner writes the file into its folder on the shared drive. When the DMS next reads the folder, it takes the file. The capture is in **Capture** › **To process**, with the channel **Registry Office scanner**, nine pages and no title, and it goes through its steps.
 
 ## 4. The codes cut the stack
 
@@ -63,46 +63,50 @@ Andrei opens the capture. **Pages of the capture** shows what the DMS read on ea
 
 The capture stops: **Needs attention**, with the sentence "Check the data read from part 3." The form carries a date written by hand, and a person always checks a handwritten field. Andrei opens **Capture** › **To validate** and chooses **Open** on the capture.
 
-Part 3 shows **Template: Building permit application, version 4** and the **Data read from the pages**: the applicant Victor Ilie, the personal numeric code, the property address 7 Poplar Street and the **Date of the application**, read by machine. Andrei chooses **Show the zone** beside the date. The page opens with the zone outlined, and he compares the date with what is written there.
+Part 3 shows **Template: Building permit application, version 4** and the fields read from the form: the applicant Victor Ilie, the personal numeric code, the property address 7 Poplar Street and the **Date of the application**, read by machine. Andrei chooses **Show the zone** beside the date. The page opens with the zone outlined, and he compares the date with what is written there.
 
 ![The page of part 3 with the zone of the handwritten date marked](../../../../assets/screenshots/dms-capture-ex-handwriting.png)
 
-The machine read it right. A part with a handwritten field waits until a person has typed the field, so Andrei types the date, 5.11.2026, in the box. Then he chooses **Try again** on the capture.
+The machine read it right. A part with a handwritten field waits until a person has typed the field, so Andrei types the date over, writing it as 05.11.2026 instead of 5.11.2026, and leaves the box. Then he chooses **Try again** on the capture.
 
-## 6. Complete what the rules cannot
+## 6. Choose a folder for the invitation
 
-The capture stops again, this time with "No rule of the flow fits part 5; choose the folder." The rules of the flow know the form and the petition. They do not know the invitation, so **Otherwise** sends it to a person. Part 5 shows **Otherwise: a person chooses**. The rule **Petitions** took part 4, but a rule sets only a folder and a title here. It sets no data of the petition.
+The capture stops again, this time with "No rule of the flow Incoming mail fits part 5; choose the folder." The rules of the flow know the form and the petition. They do not know the invitation, so **Otherwise** sends it to a person. Part 5 shows **Otherwise: a person chooses**.
 
 ![Part 5, which no rule takes: the card says Otherwise: a person chooses, with a folder chosen and not saved yet](../../../../assets/screenshots/dms-capture-attention.png)
 
-On part 4, Andrei fills in the **Petitioner**, Dan Sorescu, and the date in **Received on**, 5 Nov 2026, and chooses **Save**. On part 5 he chooses the **Folder** **General Secretariat** and chooses **Save**. The page says "Save the correction before filing the part." until he has saved. Then he chooses **Try again** on the capture.
+Andrei chooses the **Folder** **General Secretariat** on part 5 and chooses **Save**. The page says "Save the correction before filing the part." until he has saved. Then he chooses **Try again** on the capture.
 
-## 7. The flow files everything
+## 7. Fill in what the petition needs
 
-The flow files by its rules, as Elena, who switched it on. The page says "Filed as 5 documents."
+The flow now tries to file the parts, and part 4 stops it: the capture says "Part 4 could not be filed" and gives the reason. The rule **Petitions** chose the folder and the title of the petition, but a rule here gives no data, and the type **Petition** asks for the petitioner and the date it was received. On part 4, Andrei fills in the **Petitioner**, Dan Sorescu, and **Received on**, 5 Nov 2026, chooses **Save**, and then **File**, which files that part as him. He chooses **Try again** on the capture so that the flow files the rest.
+
+## 8. The flow files the rest
+
+The flow files the other parts by its rules, as Elena, who switched it on. The page says "Filed as 5 documents."
 
 ![The evening capture after filing: Filed as 5 documents, with its pages and the parts they made](../../../../assets/screenshots/dms-capture-ex-filed.png)
 
 - Parts 1 and 2, the two letters, are filed in the folder of the Urban planning register. They are attached to their registrations too: the registration 13/06.11.2026 (UP-11/2026) lists the scanned file among its **Documents**.
 - Part 3, the form, is taken by the rule **Building permit applications** and filed in **Building permits 2026** of the Urban Planning Department.
-- Part 4, the petition, is taken by the rule **Petitions** and filed in the folder of the type, **Petitions 2026**.
+- Part 4, the petition, was taken by the rule **Petitions**, which chose the folder of the type, **Petitions 2026**. Andrei filed it there.
 - Part 5, the invitation, is filed in **General Secretariat**, the folder Andrei chose.
 
 ![The registration of the inspectorate letter: the scanned letter is among its documents](../../../../assets/screenshots/dms-capture-ex-registration.png)
 
-## 8. What Ioana sees
+## 9. What Ioana sees
 
 Ioana Dobre opens **Building permits 2026**. The application is there, titled "Application, 7 Poplar Street", after the property address on the form. Its header says it was captured through Registry Office scanner. Its metadata holds the applicant Victor Ilie, the property address and the date of the application, 5 Nov 2026. The type **Application** gives it its personal data level, category and purpose.
 
 ![The application as Ioana sees it: captured through the scanner, with the metadata read from the form](../../../../assets/screenshots/dms-capture-ex-document.png)
 
-## 9. With Keel
+## 10. With Keel
 
-When your institution has Keel, a **Keel** step at the end of the flow starts a Keel process for each document the flow files, for example the review of an application by the department. The step sends Keel only the identifiers of the document, its folder, the capture and the flow. See [Capture flows](/dms/admin/capture-flows/#the-keel-step) and [The Keel integration](/dms/admin/keel-integration/). In this demo Keel is not connected, so the flow has no such step.
+When your institution has Keel, a **Keel** step at the end of the flow starts a Keel process for each document the flow files, for example the review of an application by the department. The step sends Keel only the identifiers of the document, its folder, the capture and the flow. See [Capture flows](/dms/admin/capture-flows/#the-keel-step) and [The Keel integration](/dms/admin/keel-integration/). In this demo Keel is not connected, so no Keel process starts.
 
 ## What to take from the example
 
 - Labels and separator sheets let one scan hold several documents. The DMS cuts them, and a person does not have to.
 - A label links a letter to its registration and files it in the register's folder.
 - A template reads the form, and a person checks what a machine read from handwriting.
-- Rules file what they know. A part no rule takes waits for a person to choose its folder, and the flow goes on from there.
+- Rules file what they know. A part no rule takes waits for a person to choose its folder, data a rule cannot give is filled in by a person, and the flow goes on from there.

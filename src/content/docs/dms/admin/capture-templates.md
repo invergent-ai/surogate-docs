@@ -15,7 +15,7 @@ You make templates in **Administration** › **Capture templates**. You need **M
 ## Make a template
 
 1. Choose **New template**.
-2. Write the **Name**, a **Description** and choose the **Document type** whose fields the values of the form will fill. The name must differ from every other template's, whatever the case and the accents. The description and the type are optional.
+2. Write the **Name**, a **Description** and choose the **Document type** whose fields the values of the form fill. The name must differ from every other template's, whatever the case and the accents. The description and the type are optional.
 3. Choose **Create**. The page of the template opens.
 
 On the page, **Save** keeps your changes as the **draft**. **Active (offered when a template is chosen)** switches the template on and off: a template that is off is not offered, and no capture is read with it. If someone else saved first, **Save** is refused and the page offers **Read the template again**, which drops what you typed.
@@ -58,9 +58,9 @@ Choose **Add a field** for each value to read. **Delete the field** removes one.
 | Choice | Reads | Settings |
 |---|---|---|
 | **Text** | The text, with its spaces collapsed. | **Letters**: **Unchanged**, **Capitals** or **Small**; **Longest length**. |
-| **Date** | A date written with dots, slashes or hyphens, such as 5.11.2026 or 2026-11-05, or a day, the name of a month and a year. | None. The value is kept as year, month and day. |
+| **Date** | A date written with dots, slashes or hyphens, such as 5.11.2026 or 2026-11-05, or a day, a Romanian month name (whole or short, such as noiembrie or noi) and a year. | None. The value is kept as year, month and day. |
 | **Number** | Digits with a decimal sign and thousands separators. | **Decimals**. |
-| **Amount** | A number and a currency word or sign. | **Decimals** and the **Currency** to take when the text names none. |
+| **Amount** | A number and a currency word or sign. | The **Currency** to take when the text names none. |
 | **Personal numeric code** | The 13 digits of a CNP. | None. |
 | **Tax code** | The digits of a CUI, with or without the letters RO before them. | None. |
 | **Value from a list** | The text, matched to the closest value of a list. | **List**: **The field's choices**, **The organisation's units** or **A list of my own**, with **The values, one per line**. |
@@ -79,7 +79,7 @@ A field can have checks. Choose **Add a check** and one of these.
 | **Matches a pattern** | The whole text fits the **Pattern**. | The value does not have the required form. |
 | **Length** | The length of the text is between **Least** and **Most**. | The value does not have the required length. |
 | **Range** | A number, an amount or a date lies between **Least** and **Most**, both included. Dates are written yyyy-mm-dd. | The value is not in the required range. |
-| **Control digit** | The control digit of a CNP or a CUI is right. | The control digit of the CNP does not match. |
+| **Control digit** | The control digit of a CNP or a CUI is right. | The control digit of the CNP does not match, or the control digit of the CUI does not match. |
 | **Equal to another field** | The value equals that of the **Field** you choose. | The value is not the same as that of another field. |
 | **One of the values** | The value is one of **The values, one per line**. | The value is not one of those allowed. |
 
@@ -87,11 +87,11 @@ A check on an empty optional field is skipped. A part **conforms** when every ch
 
 ## Try
 
-Choose **Try**. The page says "A try reads the saved draft and saves nothing." Under **Try it on**, choose **The sample**, or **A capture** and then the **Capture** and the **Part**, and choose **Try**.
+In the **Try** section, the page says "A try reads the saved draft and saves nothing." Under **Try it on**, choose **The sample**, or **A capture** and then the **Capture** and the **Part**, and choose **Try**.
 
 ![A try of the template on part 3 of a capture: the recognition text found, and for each field the value, the text read and the checks](../../../../assets/screenshots/dms-capture-template-try.png)
 
-**Result of the try** says whether the part conforms: "Conforming: every check passes." or "Not conforming: at least one check fails." It says how each recognition text matched, for example "The text “APPLICATION FOR A BUILDING PERMIT Example City Hall, Urban Planning Department” was found (100% alike).", and it lists for each field the **Value**, the **Text read** and the **Checks**. A field read as handwriting, or read again from the zone, shows "The server reads it again when the capture is taken in." because the page of a try cannot run those readings. Try the template on a filled test form of the institution, and on the blank sample, before you publish.
+The result says whether the part conforms: "Conforming: every check passes." or "Not conforming: at least one check fails." It says how each recognition text matched, for example "The text “APPLICATION FOR A BUILDING PERMIT Example City Hall, Urban Planning Department” was found (100% alike).", and it lists for each field the **Value**, the **Text read** and the **Checks**. A field read as handwriting, or read again from the zone, shows "The server reads it again when the capture is taken in." because the page of a try cannot run those readings. Try the template on a filled test form of the institution, and on the blank sample, before you publish.
 
 ## Publish and versions
 

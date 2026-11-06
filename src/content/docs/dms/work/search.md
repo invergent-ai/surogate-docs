@@ -40,7 +40,7 @@ What you type is kept in the audit log for 12 months; when the month is archived
 
 The **Filters** card narrows the results: **State**, **Retention**, **Type**, the dates **Created from** and **Created until**, **Kept until the year**, and **Indicativ** and **Compartment**. Each filter writes its part into the box.
 
-**Capture** has one button, **Not conforming at capture**. It lists the documents filed from a capture whose data failed a check; see [Checking the data read from forms](/dms/work/capture-validate/#the-document-afterwards).
+**Capture** has one button, **Not conforming at capture**. It lists the documents filed from a capture whose data failed a check and that nobody has marked as checked since; see [Checking the data read from forms](/dms/work/capture-validate/#the-document-afterwards).
 
 **Latest version only** and **All versions** switch between the current version of each document and every version.
 

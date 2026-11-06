@@ -21,13 +21,13 @@ A capture reaches the DMS in one of these ways:
 | Entry of the **Capture** section | Who sees it |
 |---|---|
 | **New capture** and **My captures** | People who hold **Uploads documents** somewhere, and people who hold **Process captures**. |
-| **To process**, **To validate** and **Separator sheets** | People who hold **Process captures**. They also need **Access to documents with personal data** in the same unit. |
+| **To process**, **To validate** and **Separator sheets** | People who hold **Process captures**. The captures they list are those of the units where they also hold **Access to documents with personal data**. |
 | **Capture channels**, **Capture flows**, **Separator sheets** and **Capture templates** in **Administration** | People who hold **Manage capture** for the whole institution. See [Roles and permissions](/dms/reference/roles/). |
 
 ## Send a capture
 
 1. Open **Capture** › **New capture**.
-2. In **Destination**, choose **My captures** or a channel of a unit, for example **Registry Office desk**. The page says "The destination cannot change once the first file is chosen." Choose it before the files.
+2. In **Destination**, choose your own channel or a channel of a unit, for example **Registry Office desk**. What you send to your own channel is in **My captures**. The page says "The destination cannot change once the first file is chosen." Choose it before the files.
 3. Drop the files on the page or choose **Choose files**. On a phone you can also **Take a photo** of each page. The files upload at once and the list **Files** shows each one with "Uploaded" when it is done.
 4. Look at **Pages**. Each page has buttons to turn it, to move it one place earlier or later and to take it out. A photograph shows its own picture. A PDF shows numbered tiles until you send it, and its pictures appear on the capture's page afterwards.
 5. Choose how the pages become documents with the switch **One document**. On: all pages make one document. Off: each file makes a document. A channel may start with it off.
@@ -36,7 +36,7 @@ A capture reaches the DMS in one of these ways:
 
 ![The New capture page with three photographs chosen: the files, a tile for each page with buttons to turn, move and remove it, and the switch for one document](../../../../assets/screenshots/dms-capture-new.png)
 
-If you leave the page with files that were not sent, the DMS asks before it throws them away.
+If you leave the page with files that were not sent, the page asks "Leave the page?" and says that the capture stays unsent and is deleted after 24 hours.
 
 ## Separator sheets and labels
 
@@ -60,18 +60,18 @@ The page of the capture says where it is, in words:
 | **Filed** | Filed as the number of documents it made. | Open the documents. |
 | **Discarded** | Who discarded it, when and why. | A person who processes captures may restore it. |
 
-A unit's processors see the captures of the unit in **To process**. You see your own in **My captures**. The daily work of a processor is in [Processing captures](/dms/work/capture-inbox/).
+A unit's processors see the captures of the unit in **To process**. You see the captures you sent to yourself or printed in **My captures**. The daily work of a processor is in [Processing captures](/dms/work/capture-inbox/).
 
 ## My captures and My printer
 
-**My captures** lists what you sent, with filters **State**, **Channel** and **Reason**. A capture you sent to yourself, or printed to your own printer, is yours to check and file there.
+**My captures** lists the captures you sent to your own channel and the ones you printed on your own printer, with filters **State**, **Channel** and **Reason**. A capture you sent to yourself, or printed to your own printer, is yours to check and file there.
 
 **My printer** gives your computer a printer that sends pages to the DMS.
 
 1. In **My captures**, choose **Create the printer**.
 2. The card shows two addresses, the **Printer address** and the **https address**, each with **Copy**. They are shown once. Keep them now.
 3. Add the printer to your computer as the card says for **Windows**, **macOS** and **Linux**: paste the https address in Windows, the address in the **Address** field on a Mac, and on Linux the command the card gives with the address in place of `ADDRESS`.
-4. Print a document to it. A capture appears in **My captures**, named after the document.
+4. Print a document to it. A capture appears in **My captures**, with no title. Its page shows the **Job name** of the print.
 
 ![My printer right after it was made: its two addresses, shown once, and how to add it on Windows, macOS and Linux](../../../../assets/screenshots/dms-capture-printer.png)
 

@@ -33,15 +33,22 @@ The channel is now in the list, **Active**. It is the destination Andrei will ch
 
 ## 3. Draw a flow
 
-A flow says what the DMS does with the captures of a channel. Open **Administration** › **Capture flows**, choose **New flow**, write the **Name** Registry desk and choose **Create**. The new flow opens with the two steps every flow has: **Split** and **Filing**.
+A flow says what the DMS does with the captures of a channel.
 
-1. Choose **List** in **How the flow is shown**, then **Add a step**, and add **Barcodes**, **OCR** and **Routing**. The steps keep their order.
-2. In **Routing**, choose **Add a rule**. Write the **Name** Applications. Under **When**, choose **all the conditions fit** and **Add a condition**: the **Fact** is **The separator sheet**, the **Operator** is **is**, and the value is the code of the Applications profile, which you copy from the **Code** column of **Separator sheets**.
-3. Under **Then**, choose the **Destination** **The dosar of the year of a position**, the **Unit** Urban Planning Department and the **Position** III-1 Building permits. Write the **Title** `Application received on {date}`.
-4. Add a second rule named Petitions, for the code of the Petitions profile. Choose the **Destination** **The type's folder** and the **Title** `Petition received on {date}`.
-5. Leave **Otherwise** at **a person chooses the folder**, and **Filing** at **A person files**.
+1. Open **Administration** › **Capture flows** and choose **New flow**.
+2. Write the **Name** Registry desk and choose **Create**. The new flow opens with the two steps every flow has: **Split** and **Filing**.
+3. Choose **List** in **How the flow is shown**.
+4. Choose **Add a step** and add **Barcodes**. Add **OCR** and **Routing** in the same way. The steps keep their order.
+5. In **Routing**, choose **Add a rule** and write the **Name** Applications.
+6. Under **When**, choose **all the conditions fit**, and choose **Add a condition**.
+7. Choose the **Fact** **The separator sheet** and the **Operator** **is**. Write the code of the Applications profile as the value. You copy it from the **Code** column of **Separator sheets**.
+8. Under **Then**, choose the **Destination** **The dosar of the year of a position**, the **Unit** Urban Planning Department and the **Position** III-1 Building permits.
+9. Write the **Title** `Application received on {date}`.
+10. Add a second rule named Petitions. Its condition is the code of the Petitions profile, its **Destination** is **The type's folder**, and its **Title** is `Petition received on {date}`.
+11. Leave **Otherwise** at **a person chooses the folder**, and **Filing** at **A person files**.
+12. Choose **Check**. The page says "The flow has no problems."
 
-The sheet already gives each document its type, so the rules do not set it. Choose **Check**. The page says "The flow has no problems." Choose **Drawing** to see the flow.
+The sheet already gives each document its type, so the rules do not set it. Choose **Drawing** to see the flow.
 
 ![The flow Registry desk as a drawing: Barcodes, Split, OCR and Routing with its three branches, then Filing](../../../assets/screenshots/dms-capture-qs-flow.png)
 
@@ -49,21 +56,34 @@ See [Capture flows](/dms/admin/capture-flows/).
 
 ## 4. Publish it, switch it on and give it to the channel
 
-Choose **Publish**, write a **Note** such as First version, and choose **Publish**. Then choose **Switch on**. Open **Capture channels**, choose **Edit** on Registry Office desk, choose the **Flow** Registry desk and choose **Save**.
+1. Choose **Publish**, write a **Note** such as First version, and choose **Publish** in the dialog.
+2. Choose **Switch on**.
+3. Open **Capture channels** and choose **Edit** on Registry Office desk.
+4. Choose the **Flow** Registry desk and choose **Save**.
 
 From now on, a capture sent to that channel runs the flow. A capture keeps the version of the flow it started with.
 
 ## 5. Print the sheets
 
-Andrei opens **Capture** › **Separator sheets** and chooses **Print** on **Applications**. The stack in this quickstart has two applications, so he writes 2 in **Number of copies**. Then he prints one copy of **Petitions**. He prints at full size and does not write on the sheets.
+Now you are Andrei. Open **Capture** › **Separator sheets**.
+
+1. Choose **Print** on **Applications**. The stack in this quickstart has two applications, so write 2 in **Number of copies**.
+2. Choose **Print** in the dialog, and print the PDF at full size.
+3. Print one copy of **Petitions** in the same way.
+
+Do not write on the sheets.
 
 ![The Print separator sheets dialog for the Applications sheet, with the number of copies](../../../assets/screenshots/dms-capture-sheets-print.png)
 
 ## 6. Scan the stack and send it
 
-Andrei puts the stack together: a separator sheet before each document. The stack has an Applications sheet and an application of one page, an Applications sheet and an application of two pages, and a Petitions sheet and two petitions of one page each, with no sheet between the two petitions. He scans the stack to one PDF of eight pages.
+Put the stack together with a separator sheet before each document: an Applications sheet and an application of one page, an Applications sheet and an application of two pages, and a Petitions sheet and two petitions of one page each. Put no sheet between the two petitions. Scan the stack to one PDF of eight pages.
 
-He opens **Capture** › **New capture**, chooses **Registry Office desk** as the **Destination**, and chooses the file with **Choose files**. He writes the **Title** Morning post and chooses **Submit**. The destination cannot change once the first file is chosen, so he chooses it first.
+1. Open **Capture** › **New capture**.
+2. Choose **Registry Office desk** in **Destination**. Do it first: the destination cannot change once the first file is chosen.
+3. Choose **Choose files** and choose the PDF.
+4. Write the **Title** Morning post.
+5. Choose **Submit**.
 
 ![The New capture page with three photographs chosen: the files, a tile for each page with buttons to turn, move and remove it, and the switch for one document](../../../assets/screenshots/dms-capture-new.png)
 
@@ -79,17 +99,19 @@ When the DMS has read the pages, the state becomes **Ready to file**.
 
 ## 8. Check the parts and split one
 
-Andrei opens **Capture** › **To process** and opens **Morning post**. Under **Pages of the capture**, he checks what the DMS did.
+Open **Capture** › **To process** and open **Morning post**. Under **Pages of the capture**, check what the DMS did.
 
 ![The capture Morning post ready to file: its eight pages, the three separator sheets marked and left out, and the pages grouped in parts 1 to 3](../../../assets/screenshots/dms-capture-page.png)
 
-Pages 1, 3 and 6 are marked **Separator sheet**. They are left out of the documents. Page 2 is part 1, pages 4 and 5 are part 2, and pages 7 and 8 are part 3. Part 3 holds the two petitions, because no sheet lay between them. Each part's card says **Rule “Applications”** or **Rule “Petitions”**, and shows the title, the type and the folder the rule chose.
+Pages 1, 3 and 6 are marked **Separator sheet**. They are left out of the documents. Page 2 is part 1, pages 4 and 5 are part 2, and pages 7 and 8 are part 3. Part 3 holds the two petitions, because no sheet lay between them. Each part's card says **Rule “Applications”** or **Rule “Petitions”**, and shows the title and the folder the rule chose and the type the sheet gave.
 
-To cut part 3, choose **Split** on its card. Click between the two pages, and check that the dialog says "2 parts are made." Choose **Split**.
+1. Choose **Split** on the card of part 3.
+2. Click between the two pages, and check that the dialog says "2 parts are made."
+3. Choose **Split**.
 
 ![The Split part 3 dialog with a cut between the two petitions](../../../assets/screenshots/dms-capture-split.png)
 
-The capture now has four parts.
+The capture is read again. When it says **Ready to file** once more, it has four parts.
 
 ## 9. File the capture
 

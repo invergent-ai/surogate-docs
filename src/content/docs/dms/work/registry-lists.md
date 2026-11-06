@@ -42,11 +42,10 @@ A search by name, CNP or CUI is written in the audit log with the names of the f
 
 ## Print labels
 
-A **label** is a sticker with the QR code of a registration. Stuck on the first page of a letter, it lets the scanner and the DMS know which registration the letter belongs to when the letter is scanned in a stack. See [Separator sheets and registration labels](/dms/admin/separator-sheets/#how-a-batch-is-cut).
+A **label** is a sticker with the QR code of a registration. Stuck on the first page of a letter, it lets the DMS know which registration the letter belongs to when the letter is scanned in a stack. See [Separator sheets and registration labels](/dms/admin/separator-sheets/#how-a-batch-is-cut).
 
-1. In the list, tick the registrations you want labels for, or tick the box at the top to select all on the page. On the page of one registration, choose **Print the label**.
-2. Choose **Print labels (n)**.
-3. In **Print labels**, choose the **Label size**, the **First free label** and the **Copies**, and choose **Print**.
+1. In the list, tick the registrations you want labels for, or tick the box at the top to select all on the page, and choose **Print labels (n)**. On the page of one registration, choose **Print the label** instead.
+2. In **Print labels**, choose the **Label size**, the **First free label** and the **Copies**, and choose **Print**.
 
 ![The Print labels dialog for the two registrations that are ticked: label size A4, 3 by 8, the first free label and the copies](../../../../assets/screenshots/dms-registry-labels.png)
 
@@ -54,7 +53,7 @@ The **Label size** is the stock you stick the labels on: **A4, 3 by 8 (70 x 37 m
 
 Your browser saves a PDF. Print it at full size, never fitted to the page: a printer that shrinks the page moves the labels off their places and makes the QR code too small to read. A cancelled registration has no label.
 
-A label carries the QR code of the registration and its number. Where the size has room, it also carries the number as a Code 128 bar code, which a hand scanner reads into **Number or QR code**. On the small sizes the label has the QR code only. It never carries a correspondent's name, a CNP, a description or a document's title.
+A label carries the QR code of the registration, its numbers, the name of the register and the name of your institution. Where the size has room, it also carries the number as a Code 128 bar code, which a hand scanner reads into **Number or QR code**. **A4, 4 by 10 (48.5 x 25.4 mm)** and **Roll, 50 x 25 mm** have no Code 128, and a long number may leave it out on other sizes. It never carries a correspondent's name, a CNP, a description or a document's title.
 
 ## For my unit
 

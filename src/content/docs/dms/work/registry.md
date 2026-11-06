@@ -43,7 +43,7 @@ When you save, the page of the registration opens with the two numbers: "Registe
 
 **Print the receipt** makes a PDF with both numbers, the register, the kind, the name of the correspondent, the units and a QR code. The receipt never shows a CNP, an identity document or an address. **Another of the same kind** opens a new form with the same register, type and source.
 
-**Print the label** makes a sticker with the QR code of the registration, to stick on the paper letter before it is scanned. See [Print labels](/dms/work/registry-lists/#print-labels).
+**Print the label** opens **Print labels** and saves a PDF of labels with the QR code of the registration, to stick on the paper letter before it is scanned. See [Print labels](/dms/work/registry-lists/#print-labels).
 
 ## The page of a registration
 
