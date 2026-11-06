@@ -51,6 +51,23 @@ Only a PDF that is not encrypted and has no signatures gets a numbered copy, bec
 ### Where do I see what is addressed to my unit?
 In **Registry** › **For my unit**. It lists the registrations addressed to the units where you hold a position in the org chart. See [Finding registrations](/dms/work/registry-lists/).
 
+## Capture
+
+### I do not see the Capture section
+**New capture** and **My captures** show when you hold **Uploads documents** somewhere, or **Process captures**. **To process**, **To validate** and **Separator sheets** show when you hold **Process captures**. Ask your administrator for a grant. See [Capturing documents](/dms/work/capture/).
+
+### Why is To process empty or missing?
+It lists the captures of the channels of the units where you hold **Process captures** and **Access to documents with personal data** both. Ask your administrator for both in the unit of the channel. The captures you sent or printed yourself are in **My captures**.
+
+### Why did my scan not split?
+A PDF that carries a signature or is password protected is never cut. A sheet of a profile that was switched off stops the capture and says so. A channel with **Separators** off reads the sheets and cuts nothing. See [Separator sheets and registration labels](/dms/admin/separator-sheets/).
+
+### Why does a capture wait?
+A sentence on the capture says what is wrong and what to do. See [Processing captures](/dms/work/capture-inbox/#when-a-capture-waits).
+
+### Where are the captures of my printer?
+In **Capture** › **My captures**. A unit's printer sends its captures to **To process** instead.
+
 ## What the DMS does not do
 
 The DMS does not offer these:
@@ -58,7 +75,8 @@ The DMS does not offer these:
 - editing the older Office formats (`.doc`, `.xls`, `.ppt`, `.odt`) in the browser, two people editing one file at once, and printing from the viewer;
 - deleting a single document: a document can be archived, and dosare are deleted together after a selection;
 - following a document, and sending or sharing a document by link or by e-mail;
-- approval workflows of its own (a flow that spans people and systems runs in Keel: see [Workflows and cases with Keel](/dms/work/workflows/)) and scanning paper documents into the DMS;
+- approval workflows of its own (a flow that spans people and systems runs in Keel: see [Workflows and cases with Keel](/dms/work/workflows/));
+- scanning from the program of a scanner on your computer (TWAIN and WIA), printing labels in the language of a label printer (the DMS makes PDFs), printing to the DMS printer from a phone (photograph the pages with **New capture** instead) and sending e-mail (the DMS only reads a mailbox);
 - creating accounts, setting passwords or a second factor: sign-in belongs to your institution's sign-in service.
 
 ## Pages for IT teams

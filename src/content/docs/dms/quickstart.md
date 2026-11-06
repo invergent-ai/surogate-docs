@@ -108,3 +108,4 @@ On the **Signatures** tab the signature appears with the status **Valid · inter
 - [The life of a document](/dms/work/lifecycle/) shows who may approve and publish.
 - [Search](/dms/work/search/) lists what you can search for.
 - [File and approve a contract](/dms/examples/contract/) follows a document from upload to Published.
+- [Capturing documents](/dms/work/capture/) brings in paper and files from a scanner, a mailbox, a printer or a phone.

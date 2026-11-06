@@ -43,9 +43,11 @@ When you save, the page of the registration opens with the two numbers: "Registe
 
 **Print the receipt** makes a PDF with both numbers, the register, the kind, the name of the correspondent, the units and a QR code. The receipt never shows a CNP, an identity document or an address. **Another of the same kind** opens a new form with the same register, type and source.
 
+**Print the label** makes a sticker with the QR code of the registration, to stick on the paper letter before it is scanned. See [Print labels](/dms/work/registry-lists/#print-labels).
+
 ## The page of a registration
 
-The page shows the number or numbers in the header, with the kind and the status, and the buttons you may use: **Reply** (on an incoming registration), **Add to the thread**, **Correct**, **Cancel the registration** and **Print the receipt**. The cards are **Registration**, the correspondent (**Origin** or **Addressee**, as it was saved), **Destination**, **Documents** and **Notes**, and on the right **Correspondence thread**, **Comments** and **Changes**. When the correspondent has been changed in the directory since, the card says "The directory's data changed since."
+The page shows the number or numbers in the header, with the kind and the status, and the buttons you may use: **Reply** (on an incoming registration), **Add to the thread**, **Correct**, **Cancel the registration**, **Print the receipt** and **Print the label**. The cards are **Registration**, the correspondent (**Origin** or **Addressee**, as it was saved), **Destination**, **Documents** and **Notes**, and on the right **Correspondence thread**, **Comments** and **Changes**. When the correspondent has been changed in the directory since, the card says "The directory's data changed since."
 
 ![The page of an incoming registration with its correspondence thread: the registration, its reply and a later incoming one](../../../../assets/screenshots/dms-registry-thread.png)
 

@@ -111,3 +111,4 @@ Every action has an entry in the audit log: **Registration made**, **Registratio
 4. Import the localities.
 5. Register a few real correspondents. A CNP or a CUI that the DMS refuses although it is right is a fault to report to the people who support the installation.
 6. Print a receipt, read its QR code with the scanner you will use and see that the registration opens.
+7. Choose the label stock, print a label of a test registration, stick it on a letter and see that [capturing the letter](/dms/admin/separator-sheets/) links it to the registration. See [Print labels](/dms/work/registry-lists/#print-labels).

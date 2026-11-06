@@ -10,7 +10,7 @@ For everyone: the page of one document: its header, the card Life of the documen
 
 ## The header
 
-The header shows the title, the file's kind, the **state**, a **Personal data** pill when it applies, the star that makes the document a favorite, and a line with the type, the folder, the version, the size and the date. The buttons on the right are the ones you may use: **Validate**, **Approve**, **Publish**, **Archive** or **Reopen**; **Check out**; **Move**. A document that a registration holds shows the line **Registered as** with its numbers under the header: see [Registering documents](/dms/work/registry/).
+The header shows the title, the file's kind, the **state**, a **Personal data** pill when it applies, the star that makes the document a favorite, and a line with the type, the folder, the version, the size and the date. The buttons on the right are the ones you may use: **Validate**, **Approve**, **Publish**, **Archive** or **Reopen**; **Check out**; **Move**. A document that a registration holds shows the line **Registered as** with its numbers under the header: see [Registering documents](/dms/work/registry/). A document that was filed from a capture says "Captured through" the channel and "on" the date. One whose data failed a check at capture shows **Not conforming at capture**: see [Checking the data read from forms](/dms/work/capture-validate/#the-document-afterwards).
 
 ## The viewer
 
