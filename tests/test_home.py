@@ -18,7 +18,7 @@ TASKS = [
     ('Have a contract signed and approved', '/dms/examples/contract/'),
     ('Set up a new department with its roles and types', '/dms/examples/new-department/'),
     ('Select the dosare whose term has ended', '/dms/archive/selection/'),
-    ('Hand permanent dosare over to the National Archives', '/dms/archive/handover/'),
+    ('Scan the incoming mail and file each letter by rules', '/dms/examples/incoming-mail/'),
 ]
 
 

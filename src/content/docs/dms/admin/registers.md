@@ -101,7 +101,7 @@ The national statistics institute publishes the list of localities. Check that t
 
 ## What is recorded
 
-Every action has an entry in the audit log: **Registration made**, **Registration consulted**, **Registration corrected**, **Document added to a registration**, **Document removed from a registration**, **Comment on a registration**, **Registration cancelled**, **Registration receipt downloaded**, **Registry search**, **Registry export**, **Register created**, **Register changed**, **Register reset**, **Register printed**, **Correspondent created**, **Correspondent changed**, **Correspondent consulted**, **Address changed** and **Address lists imported**. The entries hold ids, codes and counts, never a description, a note, a name, a CNP, a CUI or an address. **Registry search** is written only for a list that looks a person up by CNP, CUI or name.
+Every action has an entry in the audit log: **Registration made**, **Registration consulted**, **Registration corrected**, **Document added to a registration**, **Document removed from a registration**, **Comment on a registration**, **Registration cancelled**, **Registration receipt downloaded**, **Registry search**, **Registry export**, **Register created**, **Register changed**, **Register reset**, **Register printed**, **Labels printed**, **Correspondent created**, **Correspondent changed**, **Correspondent consulted**, **Address changed** and **Address lists imported**. The entries hold ids, codes and counts, never a description, a note, a name, a CNP, a CUI or an address. **Registry search** is written only for a list that looks a person up by CNP, CUI or name.
 
 ## Before real use
 
@@ -111,3 +111,4 @@ Every action has an entry in the audit log: **Registration made**, **Registratio
 4. Import the localities.
 5. Register a few real correspondents. A CNP or a CUI that the DMS refuses although it is right is a fault to report to the people who support the installation.
 6. Print a receipt, read its QR code with the scanner you will use and see that the registration opens.
+7. Choose the label stock, print a label of a test registration, stick it on a letter, scan the letter as a capture (see [Capturing documents](/dms/work/capture/)) and see that the part is linked to the registration. See [Print labels](/dms/work/registry-lists/#print-labels).

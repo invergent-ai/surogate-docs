@@ -8,7 +8,7 @@ For administrators who hold the permission to manage roles and permissions: what
 
 ## Roles
 
-A **role** is a set of permissions. **Administration** › **Roles and permissions** lists the roles on the left: the built-in ones (**Access to special data**, **Archive administrator**, **Electronic archivist**, **Auditor**, **Integration**, **Data protection officer (DPO)**, **Registrar** and **Standard user**) and any you made. The built-in roles keep their names; only their permissions can be changed. Choose a role to see its permissions, in the groups **Documents** and **Administration**.
+A **role** is a set of permissions. **Administration** › **Roles and permissions** lists the roles on the left: the built-in ones (**Access to special data**, **Archive administrator**, **Electronic archivist**, **Auditor**, **Integration**, **Capture operator**, **Data protection officer (DPO)**, **Registrar** and **Standard user**) and any you made. The built-in roles keep their names; only their permissions can be changed. Choose a role to see its permissions, in the groups **Documents**, **Registry**, **Capture** and **Administration**.
 
 ![The role Standard user and its permissions](../../../../assets/screenshots/dms-roles-list.png)
 

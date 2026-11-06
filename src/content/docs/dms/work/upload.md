@@ -19,6 +19,8 @@ For staff who file documents: uploading one or many files into a folder, followi
 
 You can also drop files on a folder in the Library to file them there.
 
+To bring in paper, a scanned stack or the pages of a letter that must be cut into documents, send a capture instead: see [Capturing documents](/dms/work/capture/).
+
 ## Follow the uploads
 
 Uploads go on in the background. A card at the bottom right of every page, the **tray**, shows how far each file is, with **Pause** and **Cancel**.

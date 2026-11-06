@@ -31,7 +31,7 @@ After you sign in you land on **My desk**, or on the page you had opened before.
 
 ## The sidebar
 
-The sidebar lists the pages your roles allow. A person who files documents and reads them sees the first three groups; the **Archive** and **Administration** groups appear for people with the right roles.
+The sidebar lists the pages your roles allow. A person who files documents and reads them sees the first three groups. The **Capture** group appears for people who may upload documents or work captures, and the **Archive** and **Administration** groups for people with the right roles.
 
 ![The sidebar of a staff member: My desk, To review, To sign, Notifications, Documents and Bring in](../../../../assets/screenshots/dms-shell-staff.png)
 
@@ -40,6 +40,7 @@ The sidebar lists the pages your roles allow. A person who files documents and r
 | (no title) | **My desk**, **To review**, **To sign**, **Notifications** | Everyone |
 | **Documents** | **Library**, **Search**, **Favorites**, **Collections** | Everyone |
 | **Bring in** | **Uploads**, and **Import** for people who may file documents | Everyone, **Import** with the right to file |
+| **Capture** | **New capture**, **To process**, **To validate**, **My captures**, **Separator sheets** | **New capture** and **My captures** for people who may upload documents; all of them for people who hold **Process captures** |
 | **Archive** | **Overview**, **Reception**, **Integrity**, **Archival formats**, **Time stamps**, **Selection**, **Handover**, **Procese-verbale**, **Personal data**, **Reports**, **Alerts** | People with archive, audit, personal-data or alert roles |
 | **Administration** | **Document types**, **Folders**, **Nomenclator**, **Org chart**, **Roles and permissions**, **People**, **Signatures**, **Audit log** | Administrators and auditors, each page by its own permission |
 

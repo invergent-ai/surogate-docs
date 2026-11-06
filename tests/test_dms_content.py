@@ -12,7 +12,7 @@ IMAGE = re.compile(r'!\[([^\]]*)\]\(((?:\.\./)+assets/screenshots/([^)]+))\)')
 DENY = re.compile(
     r'\bDMS_[A-Z_]+|kubernetes|kubectl|\bk3s\b|\bhelm\b|docker|postgres|opensearch|minio|alembic|webhook|openapi'
     r'|verapdf|euro-office|bagit|e-ark|grant-admin|environment variable|\bworker\b|\bcron\b|x-sdms|surogates runtime'
-    r'|hash chain',
+    r'|hash chain|paddle|zxing|ghostscript|\bre2\b|sdmssep|sdmsreg|sdms-lucru',
     re.I,
 )
 
@@ -61,8 +61,18 @@ class DmsContent(unittest.TestCase):
             self.assertEqual((width, height), (1600, 900), f.name)
             self.assertLessEqual(f.stat().st_size, 300_000, f.name)
             self.assertIn(f.name, used, f'{f.name} is used by no page')
-        self.assertLessEqual(len(files), 130)
-        self.assertLessEqual(len(pages()), 40)
+        self.assertLessEqual(len(files), 165)
+        self.assertLessEqual(len(pages()), 50)
+
+    def test_faq_no_longer_rules_out_scanning(self):
+        text = (PAGES / 'reference/faq.md').read_text(encoding='utf-8')
+        self.assertNotIn('scanning paper documents into the DMS', text)
+        self.assertIn('## Capture', text)
+
+    def test_roles_reference_names_the_capture_permissions(self):
+        text = (PAGES / 'reference/roles.md').read_text(encoding='utf-8')
+        for word in ('Capture operator', 'Process captures', 'Manage capture'):
+            self.assertIn(word, text)
 
     def test_llms_txt_names_the_product(self):
         self.assertIn('Surogate DMS', (DIST / 'llms.txt').read_text(encoding='utf-8'))

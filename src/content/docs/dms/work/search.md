@@ -31,6 +31,7 @@ The card **Search tips** on the page lists the words the box understands. The fi
 | `pastrare_pana<=2030` | documents whose term ends by 2030 |
 | `indicativ=II-1` | documents in dosare with that indicativ |
 | `sursa:api` | documents filed through the API |
+| `preluare:neconform` | documents filed not conforming at capture |
 | `referinta="1234/2026"` | documents filed by another system with that reference |
 
 What you type is kept in the audit log for 12 months; when the month is archived, the text is not kept.
@@ -38,6 +39,8 @@ What you type is kept in the audit log for 12 months; when the month is archived
 ## Filters
 
 The **Filters** card narrows the results: **State**, **Retention**, **Type**, the dates **Created from** and **Created until**, **Kept until the year**, and **Indicativ** and **Compartment**. Each filter writes its part into the box.
+
+**Capture** has one button, **Not conforming at capture**. It lists the documents filed from a capture whose data failed a check and that nobody has marked as checked since; see [Checking the data read from forms](/dms/work/capture-validate/#the-document-afterwards).
 
 **Latest version only** and **All versions** switch between the current version of each document and every version.
 

@@ -22,6 +22,8 @@ Check a document out to work on it without anyone else changing it. **Check out*
 
 The **Versions** tab lists every file of the document, newest first, with who saved it and a comment. **New version** adds one. For each version you can **View**, **Download**, press **OCR** to read its text again, **Add a label** such as "final" and **Add a signature file**. **Go back to this version** makes an older version the current one.
 
+Beside **Download**, on the viewer and on each version, **Download as** offers the file as a **PDF**, a **Searchable PDF/A** (made when you choose **Make the PDF/A copy**), a **Word (.docx)** file with the text in reading order and the data read at capture, or **JSON** with the document, its text and the data read. A choice that does not fit the version says why: a Word file needs text that was read, and a signed PDF has no PDF/A copy. For a document that came from a capture, the Word and JSON files of its first version also hold the data read at capture. See [Capturing documents](/dms/work/capture/).
+
 ![The Versions tab: three versions of a contract, the current one labelled final](../../../../assets/screenshots/dms-versions-tab.png)
 
 ## Compare two versions

@@ -40,6 +40,21 @@ A search by name, CNP or CUI is written in the audit log with the names of the f
 
 **Print the register** saves a PDF of the registrations of one register for a period. Filter the list by one register and choose **Print the register**, then choose **From** and **To**. An administrator can also print from the register's card on the **Registers** page. The period is at most 400 days and ends today at the latest. A print holds at most 2,000 registrations: for more, choose a shorter period or export to XLSX.
 
+## Print labels
+
+A **label** is a sticker with the QR code of a registration. Stuck on the first page of a letter, it lets the DMS know which registration the letter belongs to when the letter is scanned in a stack. See [Separator sheets and registration labels](/dms/admin/separator-sheets/#how-a-batch-is-cut).
+
+1. In the list, tick the registrations you want labels for, or tick the box at the top to select all on the page, and choose **Print labels (n)**. On the page of one registration, choose **Print the label** instead.
+2. In **Print labels**, choose the **Label size**, the **First free label** and the **Copies**, and choose **Print**.
+
+![The Print labels dialog for the two registrations that are ticked: label size A4, 3 by 8, the first free label and the copies](../../../../assets/screenshots/dms-registry-labels.png)
+
+The **Label size** is the stock you stick the labels on: **A4, 3 by 8 (70 x 37 mm)**, **A4, 3 by 7 (70 x 42.3 mm)**, **A4, 2 by 7 (99.1 x 38.1 mm)**, **A4, 4 by 10 (48.5 x 25.4 mm)**, **Roll, 62 x 29 mm**, **Roll, 50 x 25 mm**, **Roll, 57 x 32 mm** or **Roll, 100 x 50 mm**. **First free label** is asked for the A4 sheets only. It lets you start on a sheet that is partly used. For a roll, each label is one page. **Copies** is how many labels of each registration to print.
+
+Your browser saves a PDF. Print it at full size, never fitted to the page: a printer that shrinks the page moves the labels off their places and makes the QR code too small to read. A cancelled registration has no label.
+
+A label carries the QR code of the registration, its numbers, the name of the register and the name of your institution. Where the size has room, it also carries the number as a Code 128 bar code, which a hand scanner reads into **Number or QR code**. **A4, 4 by 10 (48.5 x 25.4 mm)** and **Roll, 50 x 25 mm** have no Code 128, and a long number may leave it out on other sizes. It never carries a correspondent's name, a CNP, a description or a document's title.
+
 ## For my unit
 
 **Registry** › **For my unit** lists the registrations addressed to the units where you hold a position in the org chart. By default it shows the last 30 days: change **From** to look further back. **and subunits** adds the units below yours.

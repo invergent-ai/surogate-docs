@@ -57,6 +57,18 @@ The institution's **registry** gives the documents that come in, go out or stay 
 
 See [Registering documents](/dms/work/registry/) and [Registers and address lists](/dms/admin/registers/).
 
+## Captures
+
+A **capture** is a batch of pages on its way to becoming documents: a scanned stack, photographs, a PDF, the attachments of a message or a printout. It comes in through a **channel**: a web page, a scanner's watched folder, a mailbox or a virtual printer. The DMS cuts the pages into **parts**, and each part becomes one document.
+
+A **separator sheet** you put between two documents cuts the stack, and a **label** of a registration starts a part linked to that registration. A **capture template** describes one kind of form: where each value lies, how it is read and which **checks** it must pass. A part whose data fail a check is **not conforming at capture**, and a document filed that way carries a mark until someone checks it.
+
+A **capture flow** is the line of steps a channel's captures run, with **rules** that send each part to a folder, a type and a title. A capture waits for a person only when something needs one: a value to check, a folder to choose.
+
+![A capture ready to file: the channel it came by, its pages, and the parts the pages make, with the separator sheets left out](../../../assets/screenshots/dms-capture-page.png)
+
+See [Capturing documents](/dms/work/capture/), [Processing captures](/dms/work/capture-inbox/), [Capture channels](/dms/admin/capture-channels/), [Capture templates](/dms/admin/capture-templates/), [Capture flows](/dms/admin/capture-flows/) and the [Glossary](/dms/reference/glossary/).
+
 ## Personal data
 
 Some documents hold personal data. They carry a **Personal data** pill; some categories (health data, for example) ask you for a **reason for access** before they open. See [Personal data](/dms/work/personal-data/).

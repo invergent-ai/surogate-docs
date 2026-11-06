@@ -398,6 +398,7 @@ export default defineConfig({
             'dms/concepts',
             'dms/quickstart',
             'dms/quickstart-admin',
+            'dms/quickstart-capture',
             {
               label: 'Examples',
               collapsed: true,
@@ -406,6 +407,7 @@ export default defineConfig({
                 'dms/examples/new-department',
                 'dms/examples/selection-and-handover',
                 'dms/examples/loan-file-with-keel',
+                'dms/examples/incoming-mail',
               ],
             },
             {
@@ -428,6 +430,9 @@ export default defineConfig({
                 'dms/work/registry',
                 'dms/work/registry-lists',
                 'dms/work/correspondents',
+                'dms/work/capture',
+                'dms/work/capture-inbox',
+                'dms/work/capture-validate',
               ],
             },
             {
@@ -446,6 +451,10 @@ export default defineConfig({
                 'dms/admin/folders',
                 'dms/admin/nomenclator',
                 'dms/admin/registers',
+                'dms/admin/capture-channels',
+                'dms/admin/separator-sheets',
+                'dms/admin/capture-templates',
+                'dms/admin/capture-flows',
                 'dms/admin/audit-log',
                 'dms/admin/keel-integration',
               ],

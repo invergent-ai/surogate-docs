@@ -4,6 +4,11 @@ import unittest
 from docsite import DIST, page, section
 
 
+CAPTURE = ['/dms/quickstart-capture/', '/dms/examples/incoming-mail/', '/dms/work/capture/', '/dms/work/capture-inbox/',
+           '/dms/work/capture-validate/', '/dms/admin/capture-channels/', '/dms/admin/separator-sheets/',
+           '/dms/admin/capture-templates/', '/dms/admin/capture-flows/']
+
+
 class Topics(unittest.TestCase):
     def sidebar_links(self, route):
         # The page tree only: the track switch and the topic list above it link to other tracks on purpose.
@@ -22,6 +27,11 @@ class Topics(unittest.TestCase):
         links = self.sidebar_links('/dms/')
         self.assertIn('/dms/', links)
         self.assertFalse([l for l in links if l.startswith(('/work/', '/develop/', '/keel/'))])
+
+    def test_dms_sidebar_lists_the_capture_pages(self):
+        links = self.sidebar_links('/dms/')
+        for route in CAPTURE:
+            self.assertIn(route, links)
 
     def test_other_sidebars_have_no_dms_pages(self):
         for route in ('/keel/', '/work/quickstart/', '/develop/'):
