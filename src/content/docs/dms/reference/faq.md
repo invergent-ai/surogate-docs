@@ -12,7 +12,7 @@ Answers to the questions the DMS's messages and empty screens raise.
 Your account exists but nobody has given you a role yet, or the role does not reach the folder. Ask your administrator for a grant. See [Roles and permissions](/dms/admin/roles/).
 
 ### Why is Upload missing?
-The **Upload** button shows only in folders where you may file documents, and not in a closed dosar. **Import** under **Bring in** shows only to people who may file documents.
+The **Upload** button shows only in folders where you may file documents, and not in a closed dosar. **Import** under **Documents** shows only to people who may file documents.
 
 ### Why is a page missing from my sidebar?
 The sidebar lists only the pages your roles allow. See [Sign in and find your way](/dms/work/sign-in/).
