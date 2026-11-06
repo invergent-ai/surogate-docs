@@ -31,6 +31,7 @@ The words this guide uses, with the Romanian terms the DMS keeps on purpose.
 | **Entry** | One line of the nomenclator: an indicativ, a compartment, a short content and a term |
 | **Favorite** | A document you marked with a star |
 | **Grant** | The act of giving a role to a person, a position or a unit, for the whole institution or one unit |
+| **Handover** | The process by which permanent dosare are given to the National Archives |
 | **Hold** | A mark on a dosar that keeps it out of every selection |
 | **Holder** | The person who holds a position |
 | **Indicativ** | The code of an entry of the nomenclator |
@@ -57,7 +58,6 @@ The words this guide uses, with the Romanian terms the DMS keeps on purpose.
 | **Retention term** | How long a dosar's documents are kept, in years, or permanently |
 | **Role** | A set of permissions |
 | **Selection** | The process by which dosare whose term has ended are proposed, confirmed by the National Archives and deleted |
-| **Handover** | The process by which permanent dosare are given to the National Archives |
 | **Separator sheet** | A printed page put between two documents of a scanned stack to cut it |
 | **Service register** | A register kept by one unit, with its own prefix, suffix and numbers, below the main register |
 | **Start rule** | A rule that makes the DMS start a Keel process when a document is filed in a folder or when a dosar's term ends |

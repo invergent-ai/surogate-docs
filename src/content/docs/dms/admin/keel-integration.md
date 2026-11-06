@@ -40,6 +40,8 @@ A **start rule** makes the DMS start a Keel process by itself. There are two kin
 - **For each new document in a folder**. When a document is filed in that library folder, or in a personal folder inside it, the process starts and holds the document from the start. A bulk import never starts processes.
 - **When a dosar's retention term ends**. Once a day the DMS finds the dosare that the [Selection](/dms/archive/selection/) page lists as candidates and starts the process for each one, once for each rule, dosar and year in which the term ended.
 
+A third way starts a process too: the **Keel** step of a [capture flow](/dms/admin/capture-flows/#the-keel-step) starts one for each document the flow files. It is set in the flow, not in a start rule. If a start rule of the destination folder would start the same process, the flow's check warns about two processes.
+
 ![The Start rules tab with no rule yet](../../../../assets/screenshots/dms-keel-rules-empty.png)
 
 ### Add a rule

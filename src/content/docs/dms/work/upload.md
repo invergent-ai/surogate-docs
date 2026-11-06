@@ -27,7 +27,7 @@ Uploads go on in the background. A card at the bottom right of every page, the *
 
 ![The tray with three files uploading](../../../../assets/screenshots/dms-upload-tray.png)
 
-The **Uploads** page, under **Bring in**, lists every file of this window and what each is doing. **Remove the finished ones from the list** tidies it. A file whose upload was cut off by closing the page can be continued for a day: choose the same file again and only what is missing is sent.
+The **Uploads** page, under **Documents**, lists every file of this window and what each is doing. **Remove the finished ones from the list** tidies it. A file whose upload was cut off by closing the page can be continued for a day: choose the same file again and only what is missing is sent.
 
 ![The Uploads page with three finished uploads](../../../../assets/screenshots/dms-uploads-page.png)
 
@@ -41,7 +41,7 @@ When a finished upload looks like another document, the document's page tells yo
 
 ## Import many documents at once
 
-When you have many files and their metadata, use **Import** under **Bring in**. It has three steps.
+When you have many files and their metadata, use **Import** under **Documents**. It has three steps.
 
 1. **Put the files in the staging area.** Drop the files or a whole folder, or choose them. The files wait there for 30 days and only you see them.
 2. **Download the manifest template and fill it in.** Choose the **Type of the documents in the template**, tick **Fill the template with the staged files** and press **Download the template**. In the spreadsheet, one row for each file: the dosar it goes to, its title, and the values of the type's fields.

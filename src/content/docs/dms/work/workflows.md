@@ -17,7 +17,7 @@ A flow can read a document, move it through its states (validate, approve, publi
 - A flow acts **for a person** and with that person's access. If you may not approve a document, a flow acting for you may not either, and the refusal goes to whoever the flow sends it to. A step that nobody completed, such as a timer, acts as a service account with only the rights an administrator gave it.
 - A flow never signs for you. Signing and refusing to sign stay yours alone.
 
-A flow can also **start** by itself when a document is filed in a folder that your administrators chose, or when the retention term of a dosar ends. You do nothing for that: the new process holds the document from the start. See [Keel integration](/dms/admin/keel-integration/) for the rules behind it.
+A flow can also **start** by itself when a document is filed in a folder that your administrators chose, or when the retention term of a dosar ends. You do nothing for that: the new process holds the document from the start. See [Keel integration](/dms/admin/keel-integration/) for the rules behind it. A capture flow can start one too: its **Keel** step starts a process for each document it files, as [Capture flows](/dms/admin/capture-flows/#the-keel-step) describes.
 
 ## The Workflows tab
 
