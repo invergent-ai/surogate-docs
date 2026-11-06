@@ -18,6 +18,11 @@ class Content(unittest.TestCase):
         self.assertIn('<figcaption>The Upload a document dialog: the file, the title, the Building permit type and its required fields</figcaption>', doc)
         self.assertIn('class="lead"', doc)
 
+    def test_dms_capture_quickstart_caption_and_lead(self):
+        doc = page('/dms/quickstart-capture/')
+        self.assertIn('<figcaption>The dialog New separator sheet profile filled in for Applications: the document type Application and the folder of the channel, with no template</figcaption>', doc)
+        self.assertIn('class="lead"', doc)
+
 
 if __name__ == '__main__':
     unittest.main()
