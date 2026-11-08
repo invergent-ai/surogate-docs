@@ -12,7 +12,8 @@ CAPTURE = ['/dms/quickstart-capture/', '/dms/examples/incoming-mail/', '/dms/wor
 PORTAL = ['/portal/', '/portal/quickstart/', '/portal/console/sign-in/', '/portal/console/users/',
           '/portal/console/groups/', '/portal/console/organizations/', '/portal/console/sign-in-providers/',
           '/portal/console/tokens/', '/portal/console/tenants/', '/portal/reference/roles/',
-          '/portal/console/directories/', '/portal/console/group-mappings/', '/portal/console/scim/']
+          '/portal/console/directories/', '/portal/console/group-mappings/', '/portal/console/scim/',
+          '/portal/console/access/', '/portal/sites/permissions/']
 
 
 class Topics(unittest.TestCase):

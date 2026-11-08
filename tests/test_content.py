@@ -40,6 +40,16 @@ class Content(unittest.TestCase):
             for word in ('kubectl', 'helm', 'PORTAL_'):
                 self.assertNotIn(word, page(route))
 
+    def test_portal_permission_pages(self):
+        doc = page('/portal/console/access/')
+        self.assertIn('<figcaption>Check access for ana@example.ro on the page main/intranet: Allowed, with the steps down to the group Funcționari.</figcaption>', doc)
+        guide = page('/portal/sites/permissions/')
+        self.assertIn('group:Funcționari', guide)
+        self.assertIn('href="/portal/console/access/"', guide)
+        for route in ('/portal/console/access/', '/portal/sites/permissions/'):
+            for word in ('kubectl', 'helm', 'PORTAL_'):
+                self.assertNotIn(word, page(route))
+
 
 if __name__ == '__main__':
     unittest.main()

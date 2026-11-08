@@ -6,7 +6,7 @@ Surogate Portal has two roles for its console. People without a role can still s
 
 | Role | Where | What it allows |
 |---|---|---|
-| **Administrator** | Any tenant | Manage the tenant's users, groups, organizations and sign-in providers. |
+| **Administrator** | Any tenant | Manage the tenant's users, groups, organizations, sign-in providers and [access](/portal/console/access/). Administrators see and edit every site and page. |
 | **Install administrator** | The main portal (the default tenant) | Everything an administrator does on the main portal, and create and manage tenants. |
 
 On the main portal, managing users and sign-in takes the **Install administrator** role. A plain **Administrator** there sees only **My tokens**.
