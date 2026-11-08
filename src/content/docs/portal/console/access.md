@@ -27,6 +27,6 @@ Editors may edit a site or a page, and so they can also see it, whatever its fil
 
 ![The Add editors dialog: the group Funcționari, for the page main/servicii.](../../../../assets/screenshots/portal-access-add-editors.png)
 
-To take the right away, press the bin next to the editors and confirm. Editors also go when the person, group or organization is deleted.
+To take the right away, press the bin next to the editors and confirm. Editors also go when the person, group or organization is deleted, or when the site or page is removed from the site's files.
 
 Administrators always edit and see everything; they need no entry here.
