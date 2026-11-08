@@ -77,6 +77,6 @@ Under **Personal data** on a person's page, an administrator answers a data prot
 
 ![Erase Dan Ion?, with the email typed to confirm and the Erase button.](../../../../assets/screenshots/portal-erase.png)
 
-Erasing asks every app to erase the person first. If an app cannot, the console names it, and the person stays disabled until you try again. When every app has erased them, they are removed from the portal, and their name and email are removed from the audit log.
+Erasing asks every app to erase the person first. If an app cannot, the console names it, and the person stays disabled until you try again. If an app has not been set up to erase people, nothing is done and the console names it. When every app has erased them, they are removed from the portal, and their name and email are removed from the audit log.
 
 You cannot erase yourself, nor the last active administrator. A person who comes from a directory or from SCIM can come back on the next sync: remove them there as well. If the site's files name the person, the console says so; remove them from the files too.
