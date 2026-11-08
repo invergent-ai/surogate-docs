@@ -78,6 +78,19 @@ class Content(unittest.TestCase):
         self.assertIn('id="sessions"', page('/portal/console/account/'))
         self.assertIn('Who needs it', page('/portal/console/sign-in-policy/'))
         self.assertIn('id="two-step-sign-in"', page('/portal/console/users/'))
+
+    def test_portal_apps(self):
+        doc = page('/portal/console/apps/')
+        self.assertIn('<figcaption>The Apps page', doc)
+        self.assertIn('id="approve-an-app"', doc)
+        self.assertIn('id="for-the-apps-developers"', doc)
+        self.assertIn('href="/portal/sites/apps/"', page('/portal/sites/permissions/') + doc)
+        guide = page('/portal/sites/apps/')
+        self.assertIn('portal-request+jwt', guide)
+        self.assertIn('href="/portal/console/apps/#for-the-apps-developers"', guide)
+        for route in ('/portal/console/apps/', '/portal/sites/apps/'):
+            for word in ('kubectl', 'helm', 'PORTAL_'):
+                self.assertNotIn(word, page(route))
         for route in ('/portal/console/sign-in/', '/portal/console/account/',
                       '/portal/console/sign-in-policy/', '/portal/console/users/'):
             for word in ('kubectl', 'helm', 'PORTAL_'):

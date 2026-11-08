@@ -27,7 +27,7 @@ The tenant's console is then at `/_portal/admin/` on these addresses, and its ad
 
 ## Config
 
-The **Config** card connects the tenant to the place its pages and apps are kept. Your implementation team gives you the **Repository address** and the **Branch or tag**. Press **Sync now** to bring in their latest changes: the card says whether the new config is live or what is wrong with it.
+The **Config** card connects the tenant to the place its pages and apps are kept. Your implementation team gives you the **Repository address** and the **Branch or tag**. Press **Sync now** to bring in their latest changes: the card says whether the new config is live or what is wrong with it. A sync also asks each app what it offers. If an app cannot be reached, or offers something wrong, the sync is refused and the pages stay as they were.
 
 ### A private repository
 

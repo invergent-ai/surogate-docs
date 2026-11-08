@@ -3,7 +3,7 @@ title: Who sees a page
 description: Restrict a site, a page or a part of a page to signed-in people, a group, an organization or administrators.
 ---
 
-Each site, page and placement (an app placed on a page) can say who may see it. You write it in the site's files, next to the page itself, so the change is reviewed and published like any other change to the site.
+Each site, page and placement (an [app](/portal/sites/apps/) placed on a page) can say who may see it. You write it in the site's files, next to the page itself, so the change is reviewed and published like any other change to the site.
 
 ## Restrict a page
 
