@@ -477,6 +477,7 @@ export default defineConfig({
               label: 'The console',
               items: [
                 'portal/console/sign-in',
+                'portal/console/account',
                 'portal/console/users',
                 'portal/console/groups',
                 'portal/console/organizations',
@@ -485,6 +486,7 @@ export default defineConfig({
                 'portal/console/group-mappings',
                 'portal/console/scim',
                 'portal/console/service-accounts',
+                'portal/console/sign-in-policy',
                 'portal/console/access',
                 'portal/console/audit',
                 'portal/console/tokens',

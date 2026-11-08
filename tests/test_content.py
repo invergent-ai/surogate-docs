@@ -71,5 +71,17 @@ class Content(unittest.TestCase):
             for word in ('kubectl', 'helm', 'PORTAL_'):
                 self.assertNotIn(word, page(route))
 
+    def test_portal_sign_in_policies(self):
+        self.assertIn('id="the-second-step"', page('/portal/console/sign-in/'))
+        self.assertIn('id="with-a-certificate"', page('/portal/console/sign-in/'))
+        self.assertIn('id="two-step-sign-in"', page('/portal/console/account/'))
+        self.assertIn('id="sessions"', page('/portal/console/account/'))
+        self.assertIn('Who needs it', page('/portal/console/sign-in-policy/'))
+        self.assertIn('id="two-step-sign-in"', page('/portal/console/users/'))
+        for route in ('/portal/console/sign-in/', '/portal/console/account/',
+                      '/portal/console/sign-in-policy/', '/portal/console/users/'):
+            for word in ('kubectl', 'helm', 'PORTAL_'):
+                self.assertNotIn(word, page(route))
+
 if __name__ == '__main__':
     unittest.main()
