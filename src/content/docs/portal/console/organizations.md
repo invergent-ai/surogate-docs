@@ -15,7 +15,7 @@ The list shows the structure as a tree: organizations inside another are indente
 3. In **Part of**, choose the organization it belongs to, or **Nothing (top level)**.
 4. Press **Create organization**.
 
-Two organizations in the same place cannot have the same name: the console says **An organization with this name already exists here.**
+Two organizations in the same place cannot have the same name: the console says **An organization with this name already exists here.** A name cannot contain `/`, because [page permissions](/portal/sites/permissions/) name organizations by their path, such as `Primăria/Direcția IT`.
 
 ## Members
 

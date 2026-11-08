@@ -484,9 +484,14 @@ export default defineConfig({
                 'portal/console/directories',
                 'portal/console/group-mappings',
                 'portal/console/scim',
+                'portal/console/access',
                 'portal/console/tokens',
                 'portal/console/tenants',
               ],
+            },
+            {
+              label: 'Sites',
+              items: ['portal/sites/permissions'],
             },
             {
               label: 'Reference',
