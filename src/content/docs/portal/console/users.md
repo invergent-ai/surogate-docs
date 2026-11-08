@@ -63,6 +63,14 @@ To see the portal exactly as a person sees it, for example to check what a page 
 
 ![The console while impersonating: You are acting as Ion Pop, with the Stop button.](../../../../assets/screenshots/portal-impersonation-banner.png)
 
+### Sessions
+
+The **Sessions** card lists where the person is signed in now, with the browser, the address and when it was last used. **End** signs one out; **End all sessions** signs them out everywhere.
+
+### Two-step sign-in
+
+If the person lost their phone, press **Reset two-step sign-in** and confirm. Their authenticator app, passkeys and recovery codes are removed. They sign in with their password and set up a new one, within 7 days.
+
 ## People from a directory or an identity system
 
 A user who comes from a [directory](/portal/console/directories/) or from [SCIM](/portal/console/scim/) carries its name in the list. On their page:
@@ -80,6 +88,8 @@ The **Linked accounts** card lists the directories and providers a person signs 
 1. Press **Link an account**.
 2. Choose the **Sign-in source** and type **Their ID at the source**: the NameID or subject the provider sends, or the ID of their directory entry.
 3. Press **Link**.
+
+To link a **certificate**, choose **Certificate** as the source and type the **Certificate issuer** and the **Subject serial number**, as the certificate shows them; the issuer's parts can be in any order. The person can then [sign in with it](/portal/console/sign-in/#with-a-certificate).
 
 ## Personal data
 

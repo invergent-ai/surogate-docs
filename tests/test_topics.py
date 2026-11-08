@@ -14,7 +14,8 @@ PORTAL = ['/portal/', '/portal/quickstart/', '/portal/console/sign-in/', '/porta
           '/portal/console/tokens/', '/portal/console/tenants/', '/portal/reference/roles/',
           '/portal/console/directories/', '/portal/console/group-mappings/', '/portal/console/scim/',
           '/portal/console/access/', '/portal/sites/permissions/', '/portal/console/audit/',
-          '/portal/console/service-accounts/']
+          '/portal/console/service-accounts/', '/portal/console/account/',
+          '/portal/console/sign-in-policy/']
 
 
 class Topics(unittest.TestCase):
