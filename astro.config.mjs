@@ -485,6 +485,7 @@ export default defineConfig({
                 'portal/console/directories',
                 'portal/console/group-mappings',
                 'portal/console/scim',
+                'portal/console/apps',
                 'portal/console/service-accounts',
                 'portal/console/sign-in-policy',
                 'portal/console/access',
@@ -495,7 +496,7 @@ export default defineConfig({
             },
             {
               label: 'Sites',
-              items: ['portal/sites/permissions'],
+              items: ['portal/sites/permissions', 'portal/sites/apps'],
             },
             {
               label: 'Reference',
