@@ -23,6 +23,8 @@ Upper and lower case do not matter, nor do spaces after the commas of a DN.
 
 Each time, the person gets exactly the groups and roles the mappings give them, and loses the ones that no longer apply.
 
+Changing or removing a mapping takes its group or role at once from everyone the directory or provider gave it to. Their next sign-in, or the directory's next sync, gives it back to whoever still qualifies.
+
 ## Mapped and hand-given access
 
 Groups and roles an administrator gives by hand are never touched by mappings. On a user's page, the **Roles** card shows the roles given by hand as tick boxes, and lists below them each role a directory or provider gives, with that source's name. A group's **Members** card shows members a directory gave as **From** the directory; only the directory can take them away. Someone given both by hand and by a directory is listed once, with **From** the directory.

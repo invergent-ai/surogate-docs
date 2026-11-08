@@ -17,7 +17,7 @@ With SCIM, your identity system keeps the portal's people and groups up to date 
 - A person the identity system creates gets an account with their email. If someone already has that email in the portal, SCIM takes over their account, except an administrator's.
 - Turning a person off, or deleting them, in the identity system disables them in the portal. Their account stays. If the identity system creates them again, they get the same account back.
 - People are found by the user name the identity system sends, even when it is not an email.
-- Groups the identity system pushes appear in **Groups**; only SCIM changes their members and names. A pushed group with the name of a group you made by hand takes that group over.
+- Groups the identity system pushes appear in **Groups**; only SCIM changes their members and names. A pushed group with the name of a group you made by hand takes that group over; if the identity system deletes it, the group comes back to you with the members you gave it. SCIM puts only people it provisioned in its groups.
 - A person from SCIM has their name and email managed by the identity system. They sign in with a sign-in provider, often the same system through [SAML or OpenID Connect](/portal/console/sign-in-providers/).
 
 Revoke a token with **Revoke** in the card. The system that uses it can no longer provision anyone.
