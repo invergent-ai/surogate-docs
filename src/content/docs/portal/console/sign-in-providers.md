@@ -62,3 +62,5 @@ Press a provider in the list to edit it.
  The **Client secret** field is empty: leave it empty to keep the saved secret, or type a new one to replace it. Press **Save**.
 
 To delete it, press **Delete provider** in the same window and confirm. People can no longer sign in with it; their accounts stay, and they can still sign in with a password if they have one.
+
+Deleting a provider also unlinks everyone who signed in through it, and a new provider does not take them back for administrators. Before you delete the provider you sign in with yourself, set yourself a password on your user page or link your account to another provider. Otherwise you cannot sign in again.
