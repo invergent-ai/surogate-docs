@@ -15,6 +15,6 @@ When you change your own roles, the console's pages follow at once.
 
 Every tenant keeps at least one active administrator: you cannot remove the role from, or disable, the last one.
 
-Roles are set on a user's page, under [Roles](/portal/console/users/#roles).
+Roles are set on a user's page, under [Roles](/portal/console/users/#roles). A [service account](/portal/console/service-accounts/) can be an administrator too; what each of its tokens may do is then limited by the token's scopes.
 
 Roles can also come from a directory or a sign-in provider, through [group mappings](/portal/console/group-mappings/). Those are kept apart from the ones given by hand, and the next sign-in or sync updates them.
