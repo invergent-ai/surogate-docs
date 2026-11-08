@@ -486,6 +486,7 @@ export default defineConfig({
                 'portal/console/group-mappings',
                 'portal/console/scim',
                 'portal/console/apps',
+                'portal/console/events',
                 'portal/console/service-accounts',
                 'portal/console/sign-in-policy',
                 'portal/console/access',
