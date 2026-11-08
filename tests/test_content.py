@@ -31,6 +31,15 @@ class Content(unittest.TestCase):
         self.assertIn('Add administrator', tenants)
         self.assertNotIn('kubectl', tenants)
 
+    def test_portal_directory_pages(self):
+        doc = page('/portal/console/directories/')
+        self.assertIn('<figcaption>A directory open in the console: Test connection says it finds 3 users, and its group mappings are below.</figcaption>', doc)
+        for route in ('/portal/console/group-mappings/', '/portal/console/scim/'):
+            self.assertIn('Directories', page(route))
+        for route in ('/portal/console/directories/', '/portal/console/scim/', '/portal/console/group-mappings/'):
+            for word in ('kubectl', 'helm', 'PORTAL_'):
+                self.assertNotIn(word, page(route))
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -4,7 +4,7 @@ sidebar:
   label: Sign-in providers
 ---
 
-On **Sign-in**, an administrator connects the portal to your organisation's accounts, such as Microsoft Entra ID, Keycloak or Google Workspace. People then sign in with the account they already have. The portal uses OpenID Connect, which these services all offer.
+On **Sign-in**, an administrator connects the portal to your organisation's accounts, such as Microsoft Entra ID, ADFS, Keycloak or Google Workspace. People then sign in with the account they already have. The portal speaks OpenID Connect and SAML; most of these services offer both.
 
 ## Before you start
 
@@ -27,6 +27,30 @@ The service asks you for the portal's **callback URL**. The console shows it whi
 8. Press **Add provider**.
 
 People are matched by email: someone whose organisation email is already a user of the portal signs in as that user.
+
+## Add a SAML provider
+
+1. Press **New provider** and choose **SAML**.
+2. **Display name** and **Slug**, as for OpenID Connect.
+3. The console now shows the portal's **SP entity ID**, **ACS URL** and **SP metadata URL**. Register the portal with your IdP using these, or give it the metadata URL.
+4. You can save it now, with **On** unticked, and come back with the IdP's details.
+5. **IdP sign-in URL** and **IdP signing certificate**: from the IdP's metadata. During a certificate change, paste both certificates.
+6. **IdP entity ID**: the IdP's issuer, so only it is accepted.
+7. **Email attribute**, **Name attribute** and **Groups attribute**: the names of the attributes your IdP sends. Leave the email empty to use the email the IdP names, or the NameID.
+8. **ID attribute**: leave it empty to use the NameID. If your IdP sends a temporary (transient) NameID, set an attribute that stays the same.
+9. **Trust the IdP's email**: only then can a sign-in link an existing user by email.
+10. Tick **On** and press **Save**.
+
+![A new SAML provider: the portal's SP entity ID, ACS URL and metadata URL to give to the IdP.](../../../../assets/screenshots/portal-provider-saml.png)
+
+Sign-in always starts on the portal: a link on the IdP's own portal page that sends people straight here does not sign them in.
+
+## Groups and existing users
+
+- **Groups claim** (OpenID Connect) or **Groups attribute** (SAML): where the provider lists a person's groups, for [group mappings](/portal/console/group-mappings/).
+- **Link existing users by email**: a person whose email is already a user signs in as that user. Administrators are never linked this way; link them on their user page.
+
+A person who signed in once through a provider is recognised by the provider's own ID for them afterwards, even if their email changes.
 
 ## Change or delete a provider
 
