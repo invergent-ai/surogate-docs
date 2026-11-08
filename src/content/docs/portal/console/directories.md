@@ -32,7 +32,7 @@ Open the directory and press **Test connection**. The console says how many peop
 
 ![A directory open in the console: Test connection says it finds 3 users, and its group mappings are below.](../../../../assets/screenshots/portal-directory-test-mappings.png)
 
-Press **Sync now** to bring everyone the filter finds into the portal: new people are added, names and emails are brought up to date, and people the directory no longer has are disabled. People without an email in the directory are skipped, and the console says how many it skipped and why. A sync that finds nobody changes nothing. If a sync would disable more than half of the directory's people, the console asks first: check the directory's settings, then press **Sync anyway** if they are right.
+Press **Sync now** to bring everyone the filter finds into the portal: new people are added, names and emails are brought up to date, and people the directory no longer has are disabled. People without an email in the directory are skipped, and the console says how many it skipped and why. A person whose directory email another user already has keeps their old email, and the console says so. A sync that finds nobody changes nothing. If a sync would disable more than half of the directory's people, the console asks first: check the directory's settings, then press **Sync anyway** if they are right.
 
 A person an administrator disabled stays disabled, whatever the directory says.
 

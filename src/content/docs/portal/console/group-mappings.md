@@ -12,7 +12,7 @@ Mappings are kept per directory and per sign-in provider, at the bottom of its w
 3. Choose the portal group or role it gives.
 4. Press **Save mappings**. A row with only one of its two halves filled in is refused: complete it or remove it.
 
-While a directory's mappings are unsaved, **Test connection** and **Sync now** wait. Closing the window with unsaved mappings asks before discarding them.
+While a directory's mappings are unsaved, **Sync now** waits. Closing the window with unsaved mappings asks before discarding them.
 
 Upper and lower case do not matter, nor do spaces after the commas of a DN.
 
