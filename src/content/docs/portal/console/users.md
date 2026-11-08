@@ -56,7 +56,7 @@ A user who comes from a [directory](/portal/console/directories/) or from [SCIM]
 
 - **Details** says **Managed by** the directory or system: their name and fields come from there, and are changed there.
 - A directory user has no **Password** card: they use their directory password.
-- **Roles** shows the roles given by hand as tick boxes, and lists below them the roles a directory or provider gives through [group mappings](/portal/console/group-mappings/).
+- **Roles** shows the roles given by hand as tick boxes, and lists below them each role a directory or provider gives through [group mappings](/portal/console/group-mappings/), with that source's name.
 
 ![A user from the Corp AD directory: managed details, roles, and the linked account.](../../../../assets/screenshots/portal-user-managed.png)
 

@@ -10,7 +10,9 @@ Mappings are kept per directory and per sign-in provider, at the bottom of its w
 1. Press **Add mapping**.
 2. Type the outside group: for a directory, the group's DN; for a provider, the group's name or ID as the provider sends it.
 3. Choose the portal group or role it gives.
-4. Press **Save mappings**.
+4. Press **Save mappings**. A row with only one of its two halves filled in is refused: complete it or remove it.
+
+While a directory's mappings are unsaved, **Test connection** and **Sync now** wait. Closing the window with unsaved mappings asks before discarding them.
 
 Upper and lower case do not matter, nor do spaces after the commas of a DN.
 
@@ -23,6 +25,6 @@ Each time, the person gets exactly the groups and roles the mappings give them, 
 
 ## Mapped and hand-given access
 
-Groups and roles an administrator gives by hand are never touched by mappings. On a user's page, the **Roles** card shows the roles given by hand as tick boxes, and lists below them the ones a directory or provider gives. A group's **Members** card shows members a directory gave as **From** the directory; only the directory can take them away.
+Groups and roles an administrator gives by hand are never touched by mappings. On a user's page, the **Roles** card shows the roles given by hand as tick boxes, and lists below them each role a directory or provider gives, with that source's name. A group's **Members** card shows members a directory gave as **From** the directory; only the directory can take them away. Someone given both by hand and by a directory is listed once, with **From** the directory.
 
 The portal always keeps one active administrator: a mapping never takes the role from the last one.

@@ -26,22 +26,23 @@ The service asks you for the portal's **callback URL**. The console shows it whi
 7. **On**: untick it to keep the provider ready but hidden from the sign-in page.
 8. Press **Add provider**.
 
-People are matched by email: someone whose organisation email is already a user of the portal signs in as that user.
+People are matched by email: someone whose organisation email is already a user of the portal signs in as that user. This needs the provider to say the email is verified; when it does not, the person can still sign in, but only to an account the provider made or linked before, and no account is made for them.
 
 ## Add a SAML provider
 
 1. Press **New provider** and choose **SAML**.
 2. **Display name** and **Slug**, as for OpenID Connect.
-3. The console now shows the portal's **SP entity ID**, **ACS URL** and **SP metadata URL**. Register the portal with your IdP using these, or give it the metadata URL.
-4. You can save it now, with **On** unticked, and come back with the IdP's details.
-5. **IdP sign-in URL** and **IdP signing certificate**: from the IdP's metadata. During a certificate change, paste both certificates.
-6. **IdP entity ID**: the IdP's issuer, so only it is accepted.
-7. **Email attribute**, **Name attribute** and **Groups attribute**: the names of the attributes your IdP sends. Leave the email empty to use the email the IdP names, or the NameID.
-8. **ID attribute**: leave it empty to use the NameID. If your IdP sends a temporary (transient) NameID, set an attribute that stays the same.
-9. **Trust the IdP's email**: only then can a sign-in link an existing user by email.
-10. Tick **On** and press **Save**.
+3. The console now shows the portal's **ACS URL** and **SP metadata URL**. Register the portal with your IdP using these, or give it the metadata URL.
+4. **SP entity ID**: how the IdP knows the portal. Leave it empty to use the metadata URL; enter another only if your IdP expects one.
+5. You can save it now, with **On** unticked, and come back with the IdP's details.
+6. **IdP sign-in URL** and **IdP signing certificate**: from the IdP's metadata. During a certificate change, paste both certificates.
+7. **IdP entity ID**: the IdP's issuer, so only it is accepted.
+8. **Email attribute**, **Name attribute** and **Groups attribute**: the names of the attributes your IdP sends. Leave the email empty to use the email the IdP names, or the NameID.
+9. **ID attribute**: leave it empty to use the NameID. If your IdP sends a temporary (transient) NameID, set an attribute that stays the same.
+10. **Trust the IdP's email**: only then can a sign-in link an existing user by email.
+11. Tick **On** and press **Save**.
 
-![A new SAML provider: the portal's SP entity ID, ACS URL and metadata URL to give to the IdP.](../../../../assets/screenshots/portal-provider-saml.png)
+![A new SAML provider: the portal's ACS URL and metadata URL to give to the IdP, and its SP entity ID, empty to use the metadata URL.](../../../../assets/screenshots/portal-provider-saml.png)
 
 Sign-in always starts on the portal: a link on the IdP's own portal page that sends people straight here does not sign them in.
 
