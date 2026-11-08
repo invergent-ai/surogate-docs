@@ -49,3 +49,21 @@ When you set your own password here, you stay signed in on this browser.
 Press **Disable** at the top, then **Disable** again in the question **Disable** *name***?** A disabled person can no longer sign in, and their tokens stop working. Press **Enable** to let them back in.
 
 You cannot disable the last active administrator.
+
+## People from a directory or an identity system
+
+A user who comes from a [directory](/portal/console/directories/) or from [SCIM](/portal/console/scim/) carries its name in the list. On their page:
+
+- **Details** says **Managed by** the directory or system: their name and fields come from there, and are changed there.
+- A directory user has no **Password** card: they use their directory password.
+- **Roles** shows the roles given by hand as tick boxes, and lists below them each role a directory or provider gives through [group mappings](/portal/console/group-mappings/), with that source's name.
+
+![A user from the Corp AD directory: managed details, roles, and the linked account.](../../../../assets/screenshots/portal-user-managed.png)
+
+## Linked accounts
+
+The **Linked accounts** card lists the directories and providers a person signs in through. Administrators are never linked by email, so link them here:
+
+1. Press **Link an account**.
+2. Choose the **Sign-in source** and type **Their ID at the source**: the NameID or subject the provider sends, or the ID of their directory entry.
+3. Press **Link**.
