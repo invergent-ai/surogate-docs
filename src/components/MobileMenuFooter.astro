@@ -1,5 +1,5 @@
 ---
-// The foot of the mobile menu: the three products, the theme switch and Sign in,
+// The foot of the mobile menu: the four products, the theme switch and Sign in,
 // which the nav bar hides on narrow screens.
 import ThemeToggle from './ThemeToggle.astro';
 import { PRODUCT_HOME, PRODUCT_LABEL, productFor } from '../lib/product.mjs';
@@ -10,7 +10,7 @@ const current = productFor(Astro.locals.starlightRoute.id);
 <div class="mobile-foot" data-docs="mobile-foot">
   <div class="products">
     {
-      (['agents', 'keel', 'dms'] as const).map((product) => (
+      (['agents', 'keel', 'dms', 'portal'] as const).map((product) => (
         <a href={PRODUCT_HOME[product]} aria-current={product === current ? 'page' : undefined}>{PRODUCT_LABEL[product]}</a>
       ))
     }

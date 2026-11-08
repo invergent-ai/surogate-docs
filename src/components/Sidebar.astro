@@ -6,6 +6,7 @@ import Default from '@astrojs/starlight/components/Sidebar.astro';
 import AgentsMark from './brand/AgentsMark.astro';
 import DmsMark from './brand/DmsMark.astro';
 import KeelMark from './brand/KeelMark.astro';
+import PortalMark from './brand/PortalMark.astro';
 import { PRODUCT_LABEL, TRACK_HOME, TRACK_LABEL, productFor, trackFor } from '../lib/product.mjs';
 
 const { id } = Astro.locals.starlightRoute;
@@ -16,7 +17,7 @@ const track = trackFor(id);
 {
   product && (
     <div class="product-head" data-docs="product-head">
-      {product === 'agents' ? <AgentsMark size={26} /> : product === 'keel' ? <KeelMark size={26} /> : <DmsMark size={26} />}
+      {product === 'agents' ? <AgentsMark size={26} /> : product === 'keel' ? <KeelMark size={26} /> : product === 'dms' ? <DmsMark size={26} /> : <PortalMark size={26} />}
       <span>{PRODUCT_LABEL[product]}</span>
     </div>
   )

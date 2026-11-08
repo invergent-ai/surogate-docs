@@ -9,6 +9,11 @@ CAPTURE = ['/dms/quickstart-capture/', '/dms/examples/incoming-mail/', '/dms/wor
            '/dms/admin/capture-templates/', '/dms/admin/capture-flows/']
 
 
+PORTAL = ['/portal/', '/portal/quickstart/', '/portal/console/sign-in/', '/portal/console/users/',
+          '/portal/console/groups/', '/portal/console/organizations/', '/portal/console/sign-in-providers/',
+          '/portal/console/tokens/', '/portal/console/tenants/', '/portal/reference/roles/']
+
+
 class Topics(unittest.TestCase):
     def sidebar_links(self, route):
         # The page tree only: the track switch and the topic list above it link to other tracks on purpose.
@@ -37,6 +42,16 @@ class Topics(unittest.TestCase):
         for route in ('/keel/', '/work/quickstart/', '/develop/'):
             self.assertFalse([l for l in self.sidebar_links(route) if l.startswith('/dms/')], route)
 
+    def test_portal_sidebar_has_only_portal_pages(self):
+        links = self.sidebar_links('/portal/')
+        for route in PORTAL:
+            self.assertIn(route, links)
+        self.assertFalse([l for l in links if not l.startswith('/portal/')])
+
+    def test_other_sidebars_have_no_portal_pages(self):
+        for route in ('/keel/', '/dms/', '/work/quickstart/', '/develop/'):
+            self.assertFalse([l for l in self.sidebar_links(route) if l.startswith('/portal/')], route)
+
     def test_work_sidebar_has_only_work_pages(self):
         links = self.sidebar_links('/work/quickstart/')
         self.assertIn('/work/channels/slack/', links)
@@ -52,6 +67,8 @@ class Topics(unittest.TestCase):
         self.assertNotIn('rel="prev"', page('/develop/'))
         self.assertNotIn('rel="prev"', page('/dms/'))
         self.assertNotIn('rel="next"', page('/dms/reference/faq/'))
+        self.assertNotIn('rel="prev"', page('/portal/'))
+        self.assertNotIn('rel="next"', page('/portal/reference/roles/'))
 
 
 if __name__ == '__main__':

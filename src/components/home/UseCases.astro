@@ -1,8 +1,9 @@
 ---
-// Fifteen real tasks, five per product, each linking to the guide that does it.
+// Twenty real tasks, five per product, each linking to the guide that does it.
 import AgentsMark from '../brand/AgentsMark.astro';
 import DmsMark from '../brand/DmsMark.astro';
 import KeelMark from '../brand/KeelMark.astro';
+import PortalMark from '../brand/PortalMark.astro';
 
 const columns = [
   {
@@ -38,6 +39,17 @@ const columns = [
       ['Scan the incoming mail and file each letter by rules', 'Capture', '/dms/examples/incoming-mail/'],
     ],
   },
+  {
+    product: 'portal',
+    name: 'Surogate Portal',
+    tasks: [
+      ['Sign in to the console and add your first user', 'Quickstart', '/portal/quickstart/'],
+      ['Let people sign in with their organisation account', 'Console', '/portal/console/sign-in-providers/'],
+      ['Build your organisation chart', 'Console', '/portal/console/organizations/'],
+      ['Create a token for the command line', 'Console', '/portal/console/tokens/'],
+      ['Give a new tenant its first administrator', 'Console', '/portal/console/tenants/'],
+    ],
+  },
 ] as const;
 ---
 
@@ -52,7 +64,7 @@ const columns = [
         columns.map((column) => (
           <div class="column">
             <div class="head">
-              {column.product === 'agents' ? <AgentsMark size={28} /> : column.product === 'keel' ? <KeelMark size={28} /> : <DmsMark size={28} />}
+              {column.product === 'agents' ? <AgentsMark size={28} /> : column.product === 'keel' ? <KeelMark size={28} /> : column.product === 'dms' ? <DmsMark size={28} /> : <PortalMark size={28} />}
               <p>{column.name}</p>
             </div>
             {column.tasks.map(([title, where, href]) => (
@@ -101,12 +113,11 @@ const columns = [
     color: var(--d-text);
   }
   .columns {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr));
     gap: 32px 56px;
   }
   .column {
-    flex: 1 1 300px;
     min-width: 0;
     display: flex;
     flex-direction: column;
