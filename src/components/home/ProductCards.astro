@@ -1,23 +1,25 @@
 ---
-// The three products, side by side, each with its mark, its line, a small drawing
+// The four products, two by two, each with its mark, its line, a small drawing
 // and the way in.
 import AgentsMark from '../brand/AgentsMark.astro';
 import DmsMark from '../brand/DmsMark.astro';
 import KeelMark from '../brand/KeelMark.astro';
+import PortalMark from '../brand/PortalMark.astro';
 import MiniAgents from './MiniAgents.astro';
 import MiniDms from './MiniDms.astro';
 import MiniKeel from './MiniKeel.astro';
+import MiniPortal from './MiniPortal.astro';
 ---
 
 <section class="band not-content">
   <div class="inner">
     <div class="intro">
-      <h2>Three products, built to work together.</h2>
+      <h2>Four products, built to work together.</h2>
       <p>
         Surogate Agents is where you build and run agents: each one has its own computer, browser and files, and works
         with your skills and knowledge. Surogate Keel runs your business processes, with agents, people and systems each doing
         their step. Surogate DMS keeps an institution's documents: filing, finding, signing, retention and handover to
-        the archive.
+        the archive. Surogate Portal runs an institution's websites and portals, with the people and the access behind them.
       </p>
     </div>
     <div class="cards">
@@ -46,6 +48,15 @@ import MiniKeel from './MiniKeel.astro';
         <div class="actions">
           <a class="button" href="/dms/">Open the DMS docs</a>
           <a class="link" href="/dms/quickstart/">Quickstart</a>
+        </div>
+      </article>
+      <article class="card" data-docs="product-card">
+        <div class="head"><PortalMark size={48} /><h3>Surogate Portal</h3></div>
+        <p>Run your portals, and the people and sign-in behind them, from one console.</p>
+        <div class="drawing"><MiniPortal /></div>
+        <div class="actions">
+          <a class="button" href="/portal/">Open the Portal docs</a>
+          <a class="link" href="/portal/quickstart/">Quickstart</a>
         </div>
       </article>
     </div>
@@ -85,13 +96,12 @@ import MiniKeel from './MiniKeel.astro';
     color: var(--d-text);
   }
   .cards {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr));
     gap: 24px;
     align-items: stretch;
   }
   .card {
-    flex: 1 1 340px;
     min-width: 0;
     background: var(--d-surface);
     border: 1px solid var(--d-line);

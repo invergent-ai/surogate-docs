@@ -66,7 +66,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Surogate Docs',
-      description: 'Guides, tutorials and reference for Surogate Agents, Surogate Keel and Surogate DMS.',
+      description: 'Guides, tutorials and reference for Surogate Agents, Surogate Keel, Surogate DMS and Surogate Portal.',
       logo: {
         light: './src/assets/logo-black.svg',
         dark: './src/assets/logo-white.svg',
@@ -137,7 +137,7 @@ export default defineConfig({
       plugins: [
         starlightLinksValidator(),
         starlightLlmsTxt(),
-        // One sidebar per track. Work and Develop are Surogate Agents; Surogate Keel and Surogate DMS are their own products.
+        // One sidebar per track. Work and Develop are Surogate Agents; Surogate Keel, Surogate DMS and Surogate Portal are their own products.
         // Each topic's items are the track's former sidebar group, unchanged and in order.
         starlightSidebarTopics([
         {
@@ -466,6 +466,32 @@ export default defineConfig({
             },
           ],
         },
+        {
+          id: 'portal',
+          label: 'Surogate Portal',
+          link: '/portal/',
+          items: [
+            'portal',
+            'portal/quickstart',
+            {
+              label: 'The console',
+              items: [
+                'portal/console/sign-in',
+                'portal/console/users',
+                'portal/console/groups',
+                'portal/console/organizations',
+                'portal/console/sign-in-providers',
+                'portal/console/tokens',
+                'portal/console/tenants',
+              ],
+            },
+            {
+              label: 'Reference',
+              collapsed: true,
+              items: ['portal/reference/roles'],
+            },
+          ],
+        },
       ]),
       ],
       head: [
@@ -496,7 +522,7 @@ export default defineConfig({
           attrs: {
             name: 'keywords',
             content:
-              'Surogate, Surogate Agents, Surogate Keel, Surogate DMS, AI agents, agent platform, business processes, case management, document management, records management, archive, MCP, fine-tuning, documentation',
+              'Surogate, Surogate Agents, Surogate Keel, Surogate DMS, Surogate Portal, portal platform, AI agents, agent platform, business processes, case management, document management, records management, archive, MCP, fine-tuning, documentation',
           },
         },
         {
@@ -528,7 +554,7 @@ export default defineConfig({
           tag: 'meta',
           attrs: {
             name: 'twitter:description',
-            content: 'Guides, tutorials and reference for Surogate Agents, Surogate Keel and Surogate DMS.',
+            content: 'Guides, tutorials and reference for Surogate Agents, Surogate Keel, Surogate DMS and Surogate Portal.',
           },
         },
         {
