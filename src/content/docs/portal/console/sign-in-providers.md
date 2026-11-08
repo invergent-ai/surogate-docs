@@ -30,6 +30,10 @@ People are matched by email: someone whose organisation email is already a user 
 
 ## Change or delete a provider
 
-Press a provider in the list to edit it. The **Client secret** field is empty: leave it empty to keep the saved secret, or type a new one to replace it. Press **Save**.
+Press a provider in the list to edit it.
+
+![Editing the Entra ID provider: Display name, Slug, Callback URL with Copy, and Issuer.](../../../../assets/screenshots/portal-provider-edit.png)
+
+ The **Client secret** field is empty: leave it empty to keep the saved secret, or type a new one to replace it. Press **Save**.
 
 To delete it, press **Delete provider** in the same window and confirm. People can no longer sign in with it; their accounts stay, and they can still sign in with a password if they have one.

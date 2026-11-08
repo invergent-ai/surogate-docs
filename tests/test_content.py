@@ -23,6 +23,14 @@ class Content(unittest.TestCase):
         self.assertIn('<figcaption>The dialog New separator sheet profile filled in for Applications: the document type Application and the folder of the channel, with no template</figcaption>', doc)
         self.assertIn('class="lead"', doc)
 
+    def test_portal_pages_show_the_console(self):
+        doc = page('/portal/quickstart/')
+        self.assertIn('<figcaption>The New user dialog: Email, Name and Password (optional).</figcaption>', doc)
+        self.assertRegex(doc, r'<figure>\s*<img[^>]+src="/_astro/')
+        tenants = page('/portal/console/tenants/')
+        self.assertIn('Add administrator', tenants)
+        self.assertNotIn('kubectl', tenants)
+
 
 if __name__ == '__main__':
     unittest.main()

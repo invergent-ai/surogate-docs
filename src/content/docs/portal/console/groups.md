@@ -6,6 +6,8 @@ A group is a set of people you give the same access, such as "Editors" or "Help 
 
 **Groups** lists your groups with how many members each has.
 
+![The Groups page: Editors and Help desk, each with its number of members.](../../../../assets/screenshots/portal-groups.png)
+
 ## Create a group
 
 1. Press **New group**.
@@ -20,6 +22,10 @@ On a group's page, the **Members** card lists who is in it.
 1. Type a name or an email in **Search for users to add**. Matching users appear under the field.
 2. Press the **+** beside each person to add them. Press the **×** beside a member to remove them.
 3. Press **Save members**. Nothing changes until you save.
+
+![The Editors group: a search for "an" offers Mihai Stan to add, above the three members.](../../../../assets/screenshots/portal-group.png)
+
+If nobody you could add matches the search, the card says **No user to add matches.**
 
 ## Rename or delete a group
 

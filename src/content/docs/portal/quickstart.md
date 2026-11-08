@@ -13,6 +13,8 @@ You need the address of your portal and an administrator account. Whoever set up
 2. The page is titled **Portal administration**: "Sign in to manage the portal."
 3. Type your **Email** and **Password** and press **Sign in**.
 
+![The sign-in page: Portal administration, with Email, Password and Sign in.](../../../assets/screenshots/portal-sign-in.png)
+
 If your portal signs in with an organisation account, press **Continue with** and the account's name instead. See [Sign in to the console](/portal/console/sign-in/).
 
 The console opens on **Users**. An install administrator lands on **Tenants** instead.
@@ -24,6 +26,8 @@ The console opens on **Users**. An install administrator lands on **Tenants** in
 3. Type a **Password** of at least 12 characters, or leave it empty if they will sign in with your organisation's account.
 4. Fill in any other fields your portal asks for. Fields marked **Required** must be filled in.
 5. Press **Create user**.
+
+![The New user dialog: Email, Name and Password (optional).](../../../assets/screenshots/portal-user-new.png)
 
 The console opens the new user's page.
 

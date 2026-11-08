@@ -4,6 +4,8 @@ title: Tenants
 
 A tenant is a separate portal in the same install, with its own addresses, users, sign-in and settings. **Tenants** is for **install administrators**, on the main portal's console.
 
+![The Tenants page: the default tenant and Romgaz.](../../../../assets/screenshots/portal-tenants.png)
+
 The list shows every tenant. The one marked **Default tenant** is the main portal: it answers on every address no other tenant has claimed.
 
 ## Create a tenant
@@ -27,12 +29,20 @@ The tenant's console is then at `/_portal/admin/` on these addresses, and its ad
 
 The **Config** card connects the tenant to the place its pages and apps are kept. Your implementation team gives you the **Repository address** and the **Branch or tag**. Press **Sync now** to bring in their latest changes: the card says whether the new config is live or what is wrong with it.
 
-## Give a new tenant its first administrator
+## Give a tenant an administrator
 
-A new tenant has no users yet. Add its first administrator from the command line with an install administrator's [token](/portal/console/tokens/):
+A new tenant has no users yet. Give it its first administrator from its page:
+
+1. Open the tenant and press **Add administrator**.
+2. Type their **Email** and **Name** and press **Add administrator**.
+3. For a new person, the console shows a **First password**, once. Press **Copy** and give it to them over a safe channel. They sign in on the tenant's console and an administrator can set another one from [Users](/portal/console/users/#password).
+
+If the email is already a user of the tenant, they become an administrator and keep their password; a disabled account is enabled again.
+
+The main portal (the default tenant) has no **Add administrator**: its administrators are install administrators, made on its own [Users](/portal/console/users/#roles) page.
+
+The same works from the command line with an install administrator's [token](/portal/console/tokens/):
 
 ```
 portal tenants add-admin <tenant> <email> --name "<name>"
 ```
-
-The command prints a first password once. Give it to the person over a safe channel; they sign in on the tenant's console and change it there, or an administrator sets another one from [Users](/portal/console/users/#password).

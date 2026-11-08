@@ -12,6 +12,8 @@ A token lets the command line or a script act as you, without your password. Eve
 4. Press **Copy** and keep the token somewhere safe. The console shows it this once: "Copy it now. You won't be able to see it again."
 5. Press **Close**.
 
+![My tokens: the token laptop, with the start of its value, when it was created and when it was last used.](../../../../assets/screenshots/portal-tokens.png)
+
 A token starts with `pat_`. The list shows the first characters after it, so you can tell your tokens apart, with when each was created and last used.
 
 ## Revoke a token
