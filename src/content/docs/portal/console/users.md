@@ -50,6 +50,19 @@ Press **Disable** at the top, then **Disable** again in the question **Disable**
 
 You cannot disable the last active administrator.
 
+### Impersonate
+
+To see the portal exactly as a person sees it, for example to check what a page shows them, press **Impersonate** at the top of their page and confirm. The console takes you to the portal's home page, signed in as them.
+
+![Impersonate Ion Pop?, with what impersonating does.](../../../../assets/screenshots/portal-impersonate.png)
+
+- It lasts at most an hour. The console shows "You are acting as" *name* at the top; press **Stop** to come back to your own account.
+- While you impersonate someone, the console's administration pages, their password and their tokens are closed to you.
+- Everything you do meanwhile is in the [audit log](/portal/console/audit/) as you acting as them.
+- You can impersonate an active person who is not an administrator, and not yourself.
+
+![The console while impersonating: You are acting as Ion Pop, with the Stop button.](../../../../assets/screenshots/portal-impersonation-banner.png)
+
 ## People from a directory or an identity system
 
 A user who comes from a [directory](/portal/console/directories/) or from [SCIM](/portal/console/scim/) carries its name in the list. On their page:

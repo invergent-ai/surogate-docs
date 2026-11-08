@@ -29,6 +29,20 @@ The tenant's console is then at `/_portal/admin/` on these addresses, and its ad
 
 The **Config** card connects the tenant to the place its pages and apps are kept. Your implementation team gives you the **Repository address** and the **Branch or tag**. Press **Sync now** to bring in their latest changes: the card says whether the new config is live or what is wrong with it.
 
+### A private repository
+
+If the repository is private, your implementation team also gives you a **User name** and an **Access token** that can read it. Type them under **Private repository** and press **Save**.
+
+- A saved token is never shown again, not even here. To replace it, type a new one and press **Save**; leave the field empty to keep it.
+- **Remove credential** forgets it.
+- The token is only sent to an `https` address. If you change the repository to another server, type the token again.
+
+From the command line, the token comes on standard input so it stays out of your shell history:
+
+```
+portal config source <tenant> <repository address> --username <user name> --token-stdin
+```
+
 ## Give a tenant an administrator
 
 A new tenant has no users yet. Give it its first administrator from its page:

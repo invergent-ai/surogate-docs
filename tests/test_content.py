@@ -59,5 +59,17 @@ class Content(unittest.TestCase):
                 self.assertNotIn(word, page(route))
 
 
+    def test_portal_machine_access(self):
+        doc = page('/portal/console/service-accounts/')
+        self.assertIn('<figcaption>A service account', doc)
+        self.assertIn('Act for a person', doc)
+        self.assertIn('id="scopes"', page('/portal/console/tokens/'))
+        self.assertIn('id="impersonate"', page('/portal/console/users/'))
+        self.assertIn('Private repository', page('/portal/console/tenants/'))
+        for route in ('/portal/console/service-accounts/', '/portal/console/tokens/',
+                      '/portal/console/users/', '/portal/console/tenants/'):
+            for word in ('kubectl', 'helm', 'PORTAL_'):
+                self.assertNotIn(word, page(route))
+
 if __name__ == '__main__':
     unittest.main()

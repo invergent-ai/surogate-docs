@@ -2,19 +2,43 @@
 title: My tokens
 ---
 
-A token lets the command line or a script act as you, without your password. Everyone who signs in to the console has **My tokens**. A token can do what you can do in the console, no more.
+A token lets the command line or a script act as you, without your password. For a program that is not you, make a [service account](/portal/console/service-accounts/) instead. Everyone who signs in to the console has **My tokens**. A token can do what you can do in the console, no more.
 
 ## Create a token
 
 1. Press **New token**.
 2. Name it so you know it later, such as "laptop" or "nightly backup".
-3. Press **Create token**.
-4. Press **Copy** and keep the token somewhere safe. The console shows it this once: "Copy it now. You won't be able to see it again."
-5. Press **Close**.
+3. Tick its **Scopes**: what the token may do. **Your own account** is ticked to start with.
+4. Press **Create token**.
+5. Press **Copy** and keep the token somewhere safe. The console shows it this once: "Copy it now. You won't be able to see it again."
+6. Press **Close**.
 
-![My tokens: the token laptop, with the start of its value, when it was created and when it was last used.](../../../../assets/screenshots/portal-tokens.png)
+![My tokens: the tokens laptop and smoke, each with the start of its value, its scopes, and when it was created and last used.](../../../../assets/screenshots/portal-tokens.png)
 
-A token starts with `pat_`. The list shows the first characters after it, so you can tell your tokens apart, with when each was created and last used.
+A token starts with `pat_`. The list shows the first characters after it, so you can tell your tokens apart, with its scopes and when it was created and last used.
+
+## Scopes
+
+A token can only do what its scopes allow, and never more than you can do in the console. Give a token only the scopes it needs:
+
+| Scope | What the token may do |
+|---|---|
+| **Your own account** | Read your details and permissions |
+| **Read users, groups and settings** | Read the tenant's users, groups, organizations and sign-in settings |
+| **Change users, groups and settings** | Change them too |
+| **Roles, passwords and other tokens** | Give roles, set passwords, link accounts, and make SCIM tokens and service accounts |
+| **Read the audit log** | Read and export the [audit log](/portal/console/audit/) |
+| **Export and erase personal data** | Answer [personal data](/portal/console/users/#personal-data) requests |
+| **Manage tenants** | Create and change [tenants](/portal/console/tenants/), for install administrators |
+| **Full access** | All of the above |
+
+A token made before scopes existed has **Full access**. A token asked to do something its scopes do not allow is refused: "This token is not allowed to do this."
+
+From the command line:
+
+```
+portal tokens create <name> --scope tenant:read
+```
 
 ## Revoke a token
 
