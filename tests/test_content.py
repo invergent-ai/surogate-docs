@@ -50,6 +50,14 @@ class Content(unittest.TestCase):
             for word in ('kubectl', 'helm', 'PORTAL_'):
                 self.assertNotIn(word, page(route))
 
+    def test_portal_audit_and_personal_data(self):
+        doc = page('/portal/console/audit/')
+        self.assertIn('<figcaption>The Audit log: the latest events, each with who did it and to what, and the note that the log is intact.</figcaption>', doc)
+        self.assertIn('Personal data', page('/portal/console/users/'))
+        for route in ('/portal/console/audit/', '/portal/console/users/'):
+            for word in ('kubectl', 'helm', 'PORTAL_'):
+                self.assertNotIn(word, page(route))
+
 
 if __name__ == '__main__':
     unittest.main()
