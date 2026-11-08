@@ -55,6 +55,8 @@ When the site's files remove an app, its approval goes too. An app added later u
 
 Each approval and revoke is in the [audit log](/portal/console/audit/), with who did it and what the app was told.
 
+Apps can also send and take [events](/portal/console/events/): an approval also decides what an app is told about the person an event is about.
+
 ## For the apps' developers
 
 At the bottom of the page, **For the apps' developers** shows the portal's **Issuer** and **Keys** for this tenant. An app's developers set both in the app's configuration, so the app can check that each request comes from this portal. Give them these two values when they set up an app.

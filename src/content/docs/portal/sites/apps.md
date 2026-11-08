@@ -144,3 +144,101 @@ A widget can be shown in **modes**:
 And in **window states**, for anyone who sees it: `normal`, `maximized` (it fills the page) or `minimized` (its title only). A widget allows all three unless it lists fewer in `windowStates`; `modes` is `view` alone unless it lists more. Anyone who maximized or minimized a widget can restore it.
 
 The mode and window state are in the page's address, per placement: `?p_welcome_mode=help` or `?p_clock_state=maximized`. The app receives them in `placement.mode` and `placement.windowState`.
+
+## Events
+
+An app can send events and take them. An administrator joins an event to an app that takes it on the console's [Events](/portal/console/events/) page, and the portal checks the two fit.
+
+### Declare them
+
+The manifest's `events` lists what the app **emits** and what it **receives**, each with the fields it carries:
+
+```json
+"events": {
+  "emits": {
+    "deal.won": {
+      "title": { "ro": "Contract câștigat", "en": "Deal won" },
+      "schema": { "type": "object", "properties": { "id": { "type": "string" } }, "required": ["id"] }
+    }
+  },
+  "receives": {
+    "welcome": {
+      "schema": { "type": "object", "properties": { "id": { "type": "string" } }, "required": ["id"] },
+      "webhook": { "url": "/events/welcome" }
+    },
+    "zone.set": {
+      "schema": { "type": "object", "properties": { "zone": { "type": "string" } } },
+      "browser": true
+    }
+  }
+}
+```
+
+- A name is lower-case words joined by dots or hyphens, such as `deal.won`; an app declares at most 50 each way.
+- `schema` takes the same fields as a widget's preferences, without `default`; `title` is optional. An event is at most 32 KB.
+- An emitted event with `browser: true` is sent by the app's components on the page; without it, by its server.
+- A receiver takes events at its `webhook`, on the manifest's own origin, in its components on the page with `browser: true`, or both.
+
+A receiver **fits** an event when every event of that kind gives it what it needs:
+
+- every field the receiver requires, the event requires;
+- a field both have is of the same type; a whole number fits a number;
+- if the receiver has a list of values (`enum`), the event has one too, with no other values;
+- the receiver's `maxLength`, `minimum` and `maximum` are no stricter than the event's.
+
+A receiver also has to be able to get the event: an event the app's server sends reaches a receiver's `webhook`, and one its components send reaches receivers with `browser: true`. The console offers only receivers that fit and can get the event.
+
+A receiver gets only the fields it declares.
+
+The portal's own events are `portal/user.created`, `portal/user.updated`, `portal/user.erased`, `portal/user.signed_in`, `portal/config.activated`, `portal/app.approved` and `portal/app.revoked`. The first four carry `{ id }` and are about that person; an app approved to know who the person is is told so with them. The app id `portal` cannot be used.
+
+### Send an event from the app's server
+
+The app's server sends events with a token from an OAuth client of a [service account](/portal/console/service-accounts/). The client needs the **Publish events** scope, and the app ticked under **Publish events as**. A server sends only events declared without `browser: true`, and no client may send the portal's own events.
+
+```http
+POST /_portal/api/events
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{ "app": "crm", "event": "deal.won", "payload": { "id": "D-17" } }
+```
+
+When the event is about a person, name them in the `X-Portal-Acting-Person` header, by id or email; the client then also needs **Act for a person**. When that person is erased, the events about them are erased too.
+
+The portal answers `202` once the event is kept. It then sends it to every app wired to it and every webhook that takes it, trying again for a day when a receiver fails.
+
+### Take events at a webhook
+
+The portal sends `POST` to the receiver's `webhook` with JSON:
+
+| Field | What it is |
+| --- | --- |
+| `id` | the delivery's id; the same on each try, so a repeat can be dropped |
+| `eventId` | the event's id, as the portal answered whoever sent it; the same for every receiver |
+| `type` | the event, such as `portal/user.created` |
+| `receiver`, `tenant`, `occurredAt` | which receiver, which tenant, and when it happened |
+| `payload` | the fields the receiver declares |
+| `person` | only as far as the app's approval allows, and only for an event about a person |
+
+With it comes an `Authorization: Bearer` token, typed `portal-event+jwt`. Check it as you check a fragment's token: against the tenant's issuer and keys from the app's own configuration, with `aud` `app:<id>`, and `bsha` the SHA-256 of the exact body.
+
+Answer with a `2xx` within the timeout (`timeoutMs`, 3000 if left out). Anything else is tried again after 1 minute, 5 minutes, 30 minutes, 2, 6, 12 and 24 hours; a `410` stops it at once. Events can arrive more than once and in any order. If the receiver's manifest changes before an event is sent, the event is sent only if the receiver still takes it.
+
+### Events between components
+
+On a page where a wire joins two components (both declarations `browser: true`), a component sends an event with:
+
+```js
+this.dispatchEvent(new CustomEvent("portal:emit", {
+  bubbles: true,
+  composed: true,
+  detail: { event: "zone.changed", payload: { zone: "Europe/London" } },
+}));
+```
+
+The portal checks the payload and sends `portal:event` to each placement of the wired app on the page, with `detail: { type, receiver, source, payload }`. The sender does not get its own event. Events in the browser carry no person and never reach a server; any script on the page could send one, so treat them as input, not as proof.
+
+### Webhooks for any service
+
+Services that are not apps take events at a [webhook](/portal/console/events/#webhooks) an administrator adds. Each request carries `webhook-id`, `webhook-timestamp` and `webhook-signature`, as [Standard Webhooks](https://www.standardwebhooks.com/) says: the signature is `v1,` and the base64 HMAC-SHA256 of `<webhook-id>.<webhook-timestamp>.<body>`, keyed with the base64-decoded part of the secret after `whsec_`. Standard Webhooks libraries check it for you.
