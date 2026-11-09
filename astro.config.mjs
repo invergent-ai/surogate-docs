@@ -494,6 +494,7 @@ export default defineConfig({
                 'portal/console/tokens',
                 'portal/console/tenants',
                 'portal/console/studio',
+                'portal/console/pages',
                 'portal/console/versions',
               ],
             },

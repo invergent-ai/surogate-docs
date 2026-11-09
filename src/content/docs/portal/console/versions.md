@@ -3,7 +3,7 @@ title: Versions
 description: Every saved change to a portal's sites is a version you can look back at and undo.
 ---
 
-Every time a change to the portal's sites is saved, the portal keeps it as a version: what changed, who saved it and when. **Versions** lists them, newest first, and lets you undo one. **Versions** is for administrators, on a portal whose site files the portal keeps; the page is not in the menu otherwise.
+Every time a change to the portal's sites is saved, the portal keeps it as a version: what changed, who saved it and when. **Versions** lists them, newest first, and lets you undo one. Saves from [Pages](/portal/console/pages/) and from the design studio are versions too. **Versions** is for administrators, on a portal whose site files the portal keeps; the page is not in the menu otherwise.
 
 ![The Versions page: three saved changes, the newest marked Live, each with who saved it and an Undo button.](../../../../assets/screenshots/portal-versions.png)
 

@@ -160,6 +160,16 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'parse5', 'Open Design'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_pages(self):
+        doc = page('/portal/console/pages/')
+        for anchor in ('the-page-tree', 'edit-a-page', 'move-what-a-page-holds', 'when-a-save-is-refused'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/console/pages/"', page('/portal/console/versions/'))
+        self.assertIn('href="/portal/console/pages/"', page('/portal/sites/layouts/'))
+        source = (ROOT / 'src/content/docs/portal/console/pages.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_versions(self):
         doc = page('/portal/console/versions/')
         for anchor in ('what-the-list-shows', 'undo-a-change'):
