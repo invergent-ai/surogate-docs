@@ -40,6 +40,8 @@ regions:
 
 [Who sees a page](/portal/sites/permissions/) also applies to placements.
 
+Text a page holds itself needs no app: it is an [HTML block](/portal/sites/layouts/#an-html-block).
+
 ## Preferences
 
 What a widget shows is set by its preferences, in this order, field by field:

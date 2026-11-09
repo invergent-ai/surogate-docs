@@ -148,6 +148,15 @@ class Content(unittest.TestCase):
             for word in ('kubectl', 'helm', 'PORTAL_', 'Open Design', 'open-design', 'OpenDesign', 'nexu'):
                 self.assertNotIn(word, text)
 
+    def test_portal_layouts(self):
+        doc = page('/portal/sites/layouts/')
+        for anchor in ('a-layout-of-the-sites-own', 'the-marked-places', 'what-a-frame-may-hold', 'its-stylesheet', 'an-html-block'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/layouts/"', page('/portal/sites/design/'))
+        source = (ROOT / 'src/content/docs/portal/sites/layouts.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'parse5', 'Open Design'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_versions(self):
         doc = page('/portal/console/versions/')
         for anchor in ('what-the-list-shows', 'undo-a-change'):
