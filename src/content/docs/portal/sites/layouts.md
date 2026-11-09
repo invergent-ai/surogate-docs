@@ -7,6 +7,8 @@ Every page has a layout: the frame around its content. The portal has two of its
 
 A page can also hold its own text, written in HTML, without an app: an HTML block.
 
+Administrators can also choose a page's layout and arrange its blocks in the console, under [Pages](/portal/console/pages/).
+
 ## A layout of the site's own
 
 A site's layouts sit in the `layouts` folder beside its pages:
