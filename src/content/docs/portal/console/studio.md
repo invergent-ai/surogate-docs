@@ -10,8 +10,10 @@ The studio appears only on installs where your implementation team has turned de
 ## Turn it on
 
 1. Open **Design studio**.
-2. Press **Turn on**. The studio shows **Starting** while it gets ready, which takes a minute or two the first time.
+2. Press **Turn on**. The studio shows **Starting** while it gets ready, which takes a minute or two the first time. The page updates by itself.
 3. When it shows **Ready**, press **Open studio**.
+
+If it shows **Not running**, the reason is under it; **Start again** tries once more. If it stays that way, tell your implementation team.
 
 The studio opens on its own address, already signed in as you. Only the portal's administrators can open it; anyone else who reaches its address is sent to sign in to the console.
 
@@ -31,6 +33,6 @@ The studio talks to the portal with tokens of its own, which nobody needs to see
 
 ## Erase
 
-**Erase** removes the studio with every project, design and file in it. Type `erase` to confirm. This can't be undone. You can turn on a new, empty studio afterwards.
+**Erase** removes the studio with every project, design and file in it, whether it is on or off. Type `erase` to confirm. This can't be undone. While it goes, the studio shows **Being erased**; if that lasts, press **Erase** again. You can turn on a new, empty studio afterwards.
 
-Turning the studio on and off, new tokens and erasing are in the [audit log](/portal/console/audit/).
+Turning the studio on and off, opening it, new tokens and erasing are in the [audit log](/portal/console/audit/).
