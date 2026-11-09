@@ -126,6 +126,15 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_'):
             self.assertNotIn(word, guide)
 
+    def test_portal_design(self):
+        guide = page('/portal/sites/design/')
+        for anchor in ('the-design-package', 'the-tokens', 'check-it', 'for-apps'):
+            self.assertIn(f'id="{anchor}"', guide)
+        self.assertIn('od-design-system-project/v1', guide)
+        self.assertIn('href="/portal/sites/design/"', page('/portal/sites/build-an-app/'))
+        for word in ('kubectl', 'helm', 'PORTAL_'):
+            self.assertNotIn(word, guide)
+
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
         for anchor in ('make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):
