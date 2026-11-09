@@ -34,6 +34,26 @@ Drag a block or widget by its handle onto another one to put it before it, or on
 
 When you choose a layout without one of the page's parts, what that part held moves to `main`, and the editor says so.
 
+## Fragments
+
+A fragment is text kept once and shown on many pages, such as opening hours or a contact box. Change it once, and every page that holds it changes.
+
+Each site lists its fragments under its pages. **New fragment** asks for:
+- an id, such as `program`: lower-case letters, digits and hyphens, fixed once saved;
+- a name and the text, written in HTML, in each of the site's languages.
+
+**Edit** changes a fragment. In the page editor, **Add a fragment…** places one in a part of the page. It shows as **Fragment:** and its name, with nothing to fill in.
+
+**Remove** takes a fragment off the site. When pages or templates still hold it, the confirmation names them, and the removal is refused until the fragment is taken off them.
+
+## Page templates
+
+A page template is a page's starting point: a layout and what its parts hold.
+
+- **Save as template**, in the page editor, keeps the page's layout and blocks as a template. It asks for an id and a name in each language. The page's address and titles stay with the page.
+- When you make a **New page**, **Start from** offers the site's templates.
+- **Remove** takes a template off the site; pages made from it keep what they hold.
+
 ## When a save is refused
 
 - **Problems**: the save would break the site, so nothing is saved. The editor lists what is wrong.

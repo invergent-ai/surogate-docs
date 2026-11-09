@@ -153,7 +153,7 @@ class Content(unittest.TestCase):
 
     def test_portal_layouts(self):
         doc = page('/portal/sites/layouts/')
-        for anchor in ('a-layout-of-the-sites-own', 'the-marked-places', 'what-a-frame-may-hold', 'its-stylesheet', 'an-html-block'):
+        for anchor in ('a-layout-of-the-sites-own', 'the-marked-places', 'what-a-frame-may-hold', 'its-stylesheet', 'an-html-block', 'fragments-and-page-templates'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/layouts/"', page('/portal/sites/design/'))
         source = (ROOT / 'src/content/docs/portal/sites/layouts.md').read_text()
@@ -162,7 +162,7 @@ class Content(unittest.TestCase):
 
     def test_portal_pages(self):
         doc = page('/portal/console/pages/')
-        for anchor in ('the-page-tree', 'edit-a-page', 'move-what-a-page-holds', 'when-a-save-is-refused'):
+        for anchor in ('the-page-tree', 'edit-a-page', 'move-what-a-page-holds', 'fragments', 'page-templates', 'when-a-save-is-refused'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/pages/"', page('/portal/console/versions/'))
         self.assertIn('href="/portal/console/pages/"', page('/portal/sites/layouts/'))

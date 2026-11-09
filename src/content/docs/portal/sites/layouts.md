@@ -122,6 +122,32 @@ An HTML block is text a page holds itself: `app: portal`, with the text for each
 
 Write each text as a `|` block, as above: a plain value breaks at the first colon followed by a space. Give the text of every language of the site, and no other. The text is checked like a frame, without the portal's own elements, and takes at most 64 KB per language. An HTML block can go in any layout's regions.
 
+## Fragments and page templates
+
+A fragment is text kept once and placed on many pages, in `sites/<site>/fragments/<id>.yaml`:
+
+```yaml
+name: { ro: Program, en: Opening hours }
+html:
+  ro: |
+    <p>Luni–vineri, 8–16.</p>
+  en: |
+    <p>Monday to Friday, 8 to 4.</p>
+```
+
+A page places it by its id; change the file, and every page that holds it changes:
+
+```yaml
+- id: hours
+  app: portal
+  widget: fragment
+  preferences: { fragment: program }
+```
+
+Its text holds what an HTML block holds. A site has at most 200 fragments.
+
+A page template, in `sites/<site>/templates/<id>.yaml`, is a page's starting point. It holds a `name` in each language, a `layout` and `regions`, written as a page's. It is never shown to visitors; administrators start new pages from it in the console. A site has at most 50.
+
 ## Check it
 
 [`portal check`](/portal/sites/check-a-site/) reads the layouts and blocks with the rest of the site, and names each problem with its file:
