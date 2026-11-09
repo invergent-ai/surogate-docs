@@ -5,7 +5,7 @@ description: A site's colours, fonts and spacing come from its design package, k
 
 A site looks the way its design package says: its colours, fonts, text sizes, spacing and corners. The package sits beside the site's pages in the config repository, so a change to the look is reviewed and merged like any other change. Apps' widgets on the site take the same look.
 
-A site without a package has the portal's own look.
+A site without a package has the portal's own look. A site's own frame, its header, navigation and footer, is a [layout](/portal/sites/layouts/) that styles itself with the same tokens.
 
 ## The design package
 
