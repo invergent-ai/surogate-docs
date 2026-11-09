@@ -153,7 +153,7 @@ class Content(unittest.TestCase):
 
     def test_portal_layouts(self):
         doc = page('/portal/sites/layouts/')
-        for anchor in ('a-layout-of-the-sites-own', 'the-marked-places', 'what-a-frame-may-hold', 'its-stylesheet', 'an-html-block', 'fragments-and-page-templates'):
+        for anchor in ('a-layout-of-the-sites-own', 'the-marked-places', 'what-a-frame-may-hold', 'images-in-each-screens-size', 'its-stylesheet', 'an-html-block', 'fragments-and-page-templates'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/layouts/"', page('/portal/sites/design/'))
         source = (ROOT / 'src/content/docs/portal/sites/layouts.md').read_text()

@@ -84,6 +84,10 @@ The portal checks the markup and refuses what it does not take, naming the eleme
 
 A frame takes at most 256 KB.
 
+### Images in each screen's size
+
+Give an image its width in pixels, such as `<img src="https://img.example.ro/hero.jpg" width="640" alt="…">`. The portal then serves it at that width, and twice that for sharp screens, in a lighter format, so phones load less. An image without a width, or with sizes of its own (`srcset`), is shown as it is. If the portal cannot resize an image, visitors get the original.
+
 ## Its stylesheet
 
 The stylesheet styles the frame with the site's [design tokens](/portal/sites/design/), by their own names:
