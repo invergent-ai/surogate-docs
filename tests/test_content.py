@@ -1,7 +1,10 @@
 import re
 import unittest
+from pathlib import Path
 
 from docsite import DIST, page, section
+
+ROOT = Path(__file__).resolve().parent.parent
 
 
 class Content(unittest.TestCase):
@@ -144,6 +147,17 @@ class Content(unittest.TestCase):
             text = page(route)
             for word in ('kubectl', 'helm', 'PORTAL_', 'Open Design', 'open-design', 'OpenDesign', 'nexu'):
                 self.assertNotIn(word, text)
+
+    def test_portal_versions(self):
+        doc = page('/portal/console/versions/')
+        for anchor in ('what-the-list-shows', 'undo-a-change'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/console/versions/"', page('/portal/console/tenants/'))
+        self.assertIn('id="kept-by-the-portal"', page('/portal/console/tenants/'))
+        # The page's own words: what a tenant administrator reads never names the store behind it.
+        source = (ROOT / 'src/content/docs/portal/console/versions.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub'):
+            self.assertNotIn(word, source)
 
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
