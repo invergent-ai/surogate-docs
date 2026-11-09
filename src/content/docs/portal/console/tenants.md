@@ -43,6 +43,14 @@ From the command line, the token comes on standard input so it stays out of your
 portal config source <tenant> <repository address> --username <user name> --token-stdin
 ```
 
+### Kept by the portal
+
+The portal can keep a tenant's site files itself. Each saved change then becomes a version the tenant's administrators can see and undo on their [Versions](/portal/console/versions/) page.
+
+- On an install set up for it, a new tenant's files are kept by the portal from the start. Its card says **Kept by the portal** and has no repository to set.
+- A tenant whose files come from a repository has **Move into the portal**. The portal copies the files as they are now, as one version, and keeps them from then on. The tenant's site stays as it is while it moves. If the files would break the site, nothing moves and the card says what is wrong.
+- Once moved, the files no longer come from the repository.
+
 ## Give a tenant an administrator
 
 A new tenant has no users yet. Give it its first administrator from its page:
