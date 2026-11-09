@@ -497,7 +497,7 @@ export default defineConfig({
             },
             {
               label: 'Sites',
-              items: ['portal/sites/permissions', 'portal/sites/apps', 'portal/sites/build-an-app', 'portal/sites/develop-locally', 'portal/sites/check-a-site', 'portal/sites/agents'],
+              items: ['portal/sites/permissions', 'portal/sites/apps', 'portal/sites/build-an-app', 'portal/sites/develop-locally', 'portal/sites/check-a-site', 'portal/sites/agents', 'portal/sites/previews'],
             },
             {
               label: 'Reference',

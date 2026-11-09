@@ -30,6 +30,7 @@ Make a [service account](/portal/console/service-accounts/) for the agent, with 
 - With it, the agent sees the sites, pages, apps, events, and the names of groups and organizations. People named in a page's permissions are only counted.
 - It never sees people, members, sessions, preferences or the audit log, and changes nothing.
 - Reading the sync history or failed event deliveries needs **Read users, groups and settings** too, and the audit log **Read the audit log**. Each of those shows people, so add them only if the agent needs them.
+- To make [previews](/portal/sites/previews/) of its changes, add **Make preview environments**. Previews hold only fake people, so this scope reads no one either.
 
 ## Connect the MCP server
 
@@ -53,4 +54,4 @@ A tool that cannot answer says why, and which scope its token lacks. The screens
 
 ## The loop
 
-The agent reads the skills and looks at the portal with `list_sites` and `app_manifest`. It changes the files or the app, then runs [`portal check`](/portal/sites/check-a-site/) until it passes, on a [local portal](/portal/sites/develop-locally/) with `--render`. It hands over a pull request with the check's report. A person reviews it, and the change reaches the portal only when it is merged and synced.
+The agent reads the skills and looks at the portal with `list_sites` and `app_manifest`. It changes the files or the app, then runs [`portal check`](/portal/sites/check-a-site/) until it passes, on a [local portal](/portal/sites/develop-locally/) with `--render`. It shows the change on a [preview](/portal/sites/previews/), with screenshots as the people who see it, and hands over a pull request with the check's report. A person reviews it, and the change reaches the portal only when it is merged and synced.

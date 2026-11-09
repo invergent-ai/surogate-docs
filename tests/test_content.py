@@ -126,6 +126,16 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_'):
             self.assertNotIn(word, guide)
 
+    def test_portal_previews(self):
+        guide = page('/portal/sites/previews/')
+        for anchor in ('make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):
+            self.assertIn(f'id="{anchor}"', guide)
+        self.assertIn('manager@preview.example', guide)
+        self.assertIn('href="/portal/sites/previews/"', page('/portal/sites/agents/'))
+        self.assertIn('href="/portal/sites/previews/"', page('/portal/console/tokens/'))
+        for word in ('kubectl', 'helm', 'PORTAL_'):
+            self.assertNotIn(word, guide)
+
     def test_portal_events(self):
         doc = page('/portal/console/events/')
         self.assertIn('<figcaption>The Events page', doc)
