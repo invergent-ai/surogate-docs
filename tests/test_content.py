@@ -89,6 +89,16 @@ class Content(unittest.TestCase):
             for word in ('kubectl', 'helm', 'PORTAL_'):
                 self.assertNotIn(word, page(route))
 
+    def test_portal_app_kit(self):
+        guide = page('/portal/sites/build-an-app/')
+        for anchor in ('start-from-a-working-app', 'check-what-the-portal-sends', 'send-events-from-the-apps-server', 'write-a-web-component', 'types-from-the-manifest'):
+            self.assertIn(f'id="{anchor}"', guide)
+        self.assertIn('portalVerifier', guide)
+        self.assertIn('href="/portal/console/apps/#for-the-apps-developers"', guide)
+        self.assertIn('href="/portal/sites/build-an-app/"', page('/portal/sites/apps/'))
+        for word in ('kubectl', 'helm', 'PORTAL_'):
+            self.assertNotIn(word, guide)
+
     def test_portal_events(self):
         doc = page('/portal/console/events/')
         self.assertIn('<figcaption>The Events page', doc)

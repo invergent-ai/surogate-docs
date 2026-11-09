@@ -52,6 +52,8 @@ Preferences in a widget that runs in the browser reach the visitor's browser. Ne
 
 ## Build an app
 
+This section is what the portal asks of an app. To start from a working one, with a library that does the checks below, see [Build an app](/portal/sites/build-an-app/).
+
 The app serves its manifest as JSON:
 
 ```json
@@ -114,6 +116,8 @@ With it comes an `Authorization: Bearer` token, signed by the portal (ES256). Th
 - `iss` is the tenant's issuer, `typ` is `portal-request+jwt` and `aud` is `app:<id>`. It is valid for 60 seconds.
 - `placement`, `widget`, `mode`, `windowState`, `site` and `page` repeat the body's.
 - `bsha` is the SHA-256 of the exact body bytes, base64url. Compare it with the body you received.
+
+`portalVerifier` in the [developer kit](/portal/sites/build-an-app/#check-what-the-portal-sends) checks all of this.
 - `sub` is the person's id, when the person is sent.
 
 A **component** is a [web component](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) the visitor's browser runs.
