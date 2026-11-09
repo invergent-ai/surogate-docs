@@ -162,7 +162,7 @@ class Content(unittest.TestCase):
 
     def test_portal_pages(self):
         doc = page('/portal/console/pages/')
-        for anchor in ('the-page-tree', 'edit-a-page', 'move-what-a-page-holds', 'fragments', 'page-templates', 'when-a-save-is-refused'):
+        for anchor in ('the-page-tree', 'edit-a-page', 'move-what-a-page-holds', 'fragments', 'page-templates', 'preview-before-saving', 'when-a-save-is-refused'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/pages/"', page('/portal/console/versions/'))
         self.assertIn('href="/portal/console/pages/"', page('/portal/sites/layouts/'))

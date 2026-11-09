@@ -56,6 +56,14 @@ A page template is a page's starting point: a layout and what its parts hold.
 - When you make a **New page**, **Start from** offers the site's templates.
 - **Remove** takes a template off the site; pages made from it keep what they hold.
 
+## Preview before saving
+
+**Preview** shows the page as it is being edited, before anything is saved, as visitors would see it. Choose **Phone**, **Tablet** or **Desktop** to see it at that width, and the language to see it in. Press **Preview** again after more changes.
+
+Only the portal's administrators can open a preview, and only for a quarter of an hour. A preview shows only what anyone may see, and is never shown to search engines. An app that is not live yet shows as waiting.
+
+When the page cannot be shown as it is, the editor lists what is wrong, as it does when a save is refused.
+
 ## When a save is refused
 
 - **Problems**: the save would break the site, so nothing is saved. The editor lists what is wrong.
