@@ -32,6 +32,8 @@ To see it on a portal:
 2. Copy `portal-config/apps/<id>.yaml` into the site's files, under `apps/`, with the address where the app serves its manifest. Place its widgets on a page.
 3. Sync, then [approve](/portal/console/apps/) the app on the console.
 
+On your own machine, [Develop locally](/portal/sites/develop-locally/) does steps 2 and 3's sync for you, again on every change.
+
 ## Check what the portal sends
 
 Every request the portal sends an app carries a token. Check it before you trust the body:
