@@ -170,6 +170,15 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_seo(self):
+        doc = page('/portal/sites/seo/')
+        for anchor in ('what-each-page-says', 'describe-a-page', 'describe-a-site', 'what-crawlers-are-told'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/seo/"', page('/portal/console/pages/'))
+        source = (ROOT / 'src/content/docs/portal/sites/seo.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_versions(self):
         doc = page('/portal/console/versions/')
         for anchor in ('what-the-list-shows', 'undo-a-change'):

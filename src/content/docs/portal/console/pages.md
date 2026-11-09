@@ -20,6 +20,8 @@ Each site lists its pages by address. A page sits under the page above it: `/ser
 - **Title**: one per language of the site.
 - **Layout**: the portal's `one-column` or `two-column`, or one of the site's own [layouts](/portal/sites/layouts/).
 
+**Search and sharing** sets how [search engines and link previews](/portal/sites/seo/) show the page: a description in each language, a share image, and **Hide from search engines**.
+
 Under them, each part of the layout lists what it holds, in order:
 
 - **Add text** adds a text block, written in HTML for each of the site's languages. It holds what an [HTML block](/portal/sites/layouts/#an-html-block) may hold.
