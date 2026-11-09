@@ -15,6 +15,8 @@ The studio appears only on installs where your implementation team has turned de
 
 If it shows **Not running**, the reason is under it; **Start again** tries once more. If it stays that way, tell your implementation team.
 
+![The Design studio page: the studio is Ready, with Open studio, New tokens, Turn off and Erase.](../../../../assets/screenshots/portal-studio.png)
+
 The studio opens on its own address, already signed in as you. Only the portal's administrators can open it; anyone else who reaches its address is sent to sign in to the console.
 
 ## Design in the studio
