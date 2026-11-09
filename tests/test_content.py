@@ -79,6 +79,16 @@ class Content(unittest.TestCase):
         self.assertIn('Who needs it', page('/portal/console/sign-in-policy/'))
         self.assertIn('id="two-step-sign-in"', page('/portal/console/users/'))
 
+    def test_portal_hooks(self):
+        guide = page('/portal/sites/apps/')
+        self.assertIn('id="hooks"', guide)
+        self.assertIn('env.memory', guide)
+        self.assertIn('href="/portal/sites/apps/#hooks"', page('/portal/console/apps/'))
+        self.assertIn('Revoke', page('/portal/console/apps/'))
+        for route in ('/portal/sites/apps/', '/portal/console/apps/', '/portal/console/users/'):
+            for word in ('kubectl', 'helm', 'PORTAL_'):
+                self.assertNotIn(word, page(route))
+
     def test_portal_events(self):
         doc = page('/portal/console/events/')
         self.assertIn('<figcaption>The Events page', doc)
