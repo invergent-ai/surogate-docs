@@ -12,7 +12,7 @@ portal check ./portal-config
 ```
 
 - Every file is checked against its schema, with the file and the field for each problem.
-- Every app's manifest is read from the app, as the portal reads it when it syncs. Every widget a page places, and its preferences, must be one the app has. An app that cannot be reached is named, and everything else is still checked.
+- Every app's manifest is read from the app, as the portal reads it when it syncs. Every widget a page places, and its preferences, must be one the app has. An app that cannot be reached is named, with its address and what it answered, and everything else is still checked.
 - `--offline` checks the files alone and asks no app.
 
 ## Permission sanity
@@ -52,16 +52,16 @@ With `--render`, every page of every site is opened in a headless Chrome, in eac
 - Accessibility is checked with axe, against WCAG 2.1 AA. Serious and critical problems fail the check. Each problem says whether it is in the portal's own markup or in an app's widget, so you know whose it is.
 - A widget that failed to load fails the check, with the reason when the portal is in dev mode. So does a widget whose script never ran, or a request to an app that failed.
 - `--sign-in <email>` also views the pages as that person, reading the password from standard input. On `--start`, `--sign-in admin` uses the throwaway portal's administrator, who also sees the editing menus.
-- `--lighthouse` adds each page's performance score. It is advisory unless you set `--min-performance` (0 to 1).
+- `--lighthouse` adds each page's performance score, as a visitor who is not signed in sees it. It is advisory unless you set `--min-performance` (0 to 1).
 - `--pages <pattern>` checks only some pages, such as `main/servicii`.
 
 ## Compare with the previous run
 
 - Each screenshot is compared with the previous run's, kept in `.portal-check/baseline`. A page fails when more than half a percent of its pixels changed (`--max-diff` sets the share), or when its size changed.
-- After a change you meant, run again with `--update-baseline`. Commit the baseline folder to compare each change with what was merged.
+- After a change you meant, run again with `--update-baseline`: that run accepts the change and passes. Commit the baseline folder to compare each change with what was merged.
 
 ## The report
 
-- Each run writes `.portal-check/latest`: a `report.md` with a row per page (its accessibility, its performance, how much it changed, and links to its screenshot and diff), `report.json`, and the images.
+- Each run writes `.portal-check/latest`: a `report.md` with a row per page (its accessibility, its performance, how much it changed, and links to its screenshot and diff), `report.json`, and the images. The folder is emptied at the start of each run, so `--out` must name a folder of its own.
 - `--summary <file>` adds the report, without links, to a file such as a CI job's summary. Upload `.portal-check/latest` as the job's artifact so reviewers can open the images.
-- The check ends with 0 when it passes and 1 when it fails. It ends with 2 when it could not run, such as with no Chrome, no Docker, or a portal not in dev mode.
+- The check ends with 0 when it passes and 1 when it fails. It ends with 2 when it could not run, such as with no Chrome, no Docker, a portal it cannot reach or not in dev mode, or an option that would do nothing.
