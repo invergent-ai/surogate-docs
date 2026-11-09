@@ -70,3 +70,5 @@ await portal.stop();
 - `portal.upload(files)` changes its config mid-test.
 - Apps your tests run on `localhost` are reachable from it.
 - If a test run is killed, `pruneTestPortals()` removes what it left behind.
+
+Before you push, [check the site](/portal/sites/check-a-site/): the same portal renders every page and checks it.
