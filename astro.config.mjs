@@ -493,6 +493,7 @@ export default defineConfig({
                 'portal/console/audit',
                 'portal/console/tokens',
                 'portal/console/tenants',
+                'portal/console/studio',
               ],
             },
             {

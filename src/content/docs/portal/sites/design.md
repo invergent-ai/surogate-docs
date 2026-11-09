@@ -84,6 +84,10 @@ portal check ./portal-config --start --render
 
 The check fails when text is hard to read against its background, so a palette with too little contrast is caught before anyone sees it. To show the change to others, make a [preview](/portal/sites/previews/).
 
+## Design it in the studio
+
+Administrators can explore a look in the portal's [design studio](/portal/console/studio/) before writing the package: describe the brand, see pages in it, and change it until it is right. The package in the config repository is still what the site uses.
+
 ## For apps
 
 A widget looks like the site it is on when it takes its colours from the page:
