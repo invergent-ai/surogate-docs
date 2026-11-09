@@ -13,6 +13,7 @@ For each app:
 - its name, its version, the address it comes from, and its status;
 - **Widgets**: the parts of a page it offers. A widget **rendered by the app's server** is made by the app and sent to the portal. A widget that **runs in the browser** is a program the visitor's browser loads from the app.
 - where its widgets that run in the browser load their programs from;
+- **What it runs on the portal's server**: its [hooks](/portal/sites/apps/#hooks), such as a check of each person created or changed on the console or through the API, and what it sees of them;
 - **What it may know**: what the portal tells the app about the person looking at the page.
 
 | It asks for | The portal tells the app |
@@ -28,19 +29,21 @@ For each app:
 An app shows nothing on the pages until you approve it. People who may edit a page see **This app is waiting for an administrator's approval.** where it would be. Visitors see the page without it.
 
 1. Read what the app asks to know.
-2. Press **Approve**. The dialog lists it again, with the addresses the app comes from.
+2. Press **Approve**. The dialog lists it again, with what it runs on the portal's server and the addresses it comes from.
 3. Press **Approve** in the dialog. The app shows on the pages at once.
 
 ![The approval dialog lists what the app will be told.](../../../../assets/screenshots/portal-app-approve.png)
 
-Approving decides what the portal **sends** the app. A widget that runs in the browser runs with the visitor's authority, like any program on the page, so approve only apps you trust.
+Approving decides what the portal **sends** the app, and what it may run on the portal's server. A widget that runs in the browser runs with the visitor's authority, like any program on the page, and a hook runs with what its app may know about people; the approval trusts the address the app comes from for whatever it serves there. Approve only apps you trust.
+
+An app's check can refuse a change to a person, with a message on the field it names. If an app's checks stop working and block changes, **Revoke** its approval: its checks stop at once.
 
 ## When an app changes
 
 The status says whether the app needs you again:
 
 - **Approved**: it runs, and is told what you approved.
-- **New permissions**: a new version asks to know more. What it adds is marked **New**. It shows nothing until you approve again.
+- **New permissions**: a new version asks to know more, or to run something new on the portal's server. What it adds is marked **New**. It shows nothing until you approve again.
 - **Waiting for approval**: it has never been approved, or it now comes from another address. It shows nothing until you approve it.
 
 A new version that asks for the same things, or less, stays approved. If the app changed while you were reading, approving it is refused: look at it again and approve what it is now.

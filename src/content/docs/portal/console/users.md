@@ -22,6 +22,8 @@ The list shows 50 users at a time. Use **Previous** and **Next** to move between
 
 If the email is already used, the console says **A user with this email already exists.**
 
+An [app](/portal/console/apps/) can check, or tidy, each person created or changed here. When it refuses, its message shows under the field it names, such as the name; change it and press **Create user** again. When an app's check cannot run, the console says so, and an administrator can revoke the app's approval if it keeps happening.
+
 ## A user's page
 
 Press a user in the list to open their page. The top shows their name, email, the date they were added, and **Active** or **Disabled**.

@@ -242,3 +242,49 @@ The portal checks the payload and sends `portal:event` to each placement of the 
 ### Webhooks for any service
 
 Services that are not apps take events at a [webhook](/portal/console/events/#webhooks) an administrator adds. Each request carries `webhook-id`, `webhook-timestamp` and `webhook-signature`, as [Standard Webhooks](https://www.standardwebhooks.com/) says: the signature is `v1,` and the base64 HMAC-SHA256 of `<webhook-id>.<webhook-timestamp>.<body>`, keyed with the base64-decoded part of the secret after `whsec_`. Standard Webhooks libraries check it for you.
+
+## Hooks
+
+An app can run small checks and changes on the portal's own server, in a sandbox, at **hook points**:
+
+| Hook point | Runs when |
+| --- | --- |
+| `user.validate` | someone creates or changes a person on the console or through the API, to refuse the change |
+| `user.transform` | the same, to change the person before they are saved |
+| `preferences.validate` | an editor saves the preferences of one of the app's widgets |
+
+```json
+"hooks": {
+  "user.validate": { "module": "/hooks/names.wasm", "export": "validate" }
+}
+```
+
+- `module` is a WebAssembly module on the manifest's own origin; `export` is the function to call.
+- `timeoutMs` is how long the hook may take, 10 to 1000 ms, 100 if left out.
+- `onError` is what happens when the hook fails: `refuse` (the default) refuses the change, `allow` lets it through.
+- A hook about people needs the `person` permission. It sees a person's email only with `person.email`, and their fields only with `person.fields`.
+
+Hooks run only for apps an administrator [approved](/portal/console/apps/), and an approval includes the hook points. The approval trusts the app's address for the code it serves there, which may change with each sync. Disabling a person, or people added by a provisioning system, a directory or a sign-in provider, runs no hooks.
+
+### What a hook gets and answers
+
+Each call gets JSON and answers JSON:
+
+- **Validate hooks** get `{ tenant, operation, user }` (or, for preferences, `{ tenant, site, page, placement, widget, preferences }`) and answer `{ "problems": [{ "field": "name", "message": "A name cannot hold <." }] }`, or `{}` when all is well. The portal shows each message on the field it names: `name`, `email`, one of the portal's own fields by its key, or a preference's key; anything else above the form.
+- **Transform hooks** get the same and answer `{ "user": { "name": "…", "fields": { … } } }`. They may change the name, and the fields only with `person.fields`; a field set to `null` is removed. The email and roles never change.
+
+Transforms run first, one app after another; then every validate runs on the result. A request spends at most two seconds on hooks. A hook that fails three times in a row is left alone for a minute, then tried again.
+
+### Build a hook
+
+Any language that compiles to WebAssembly works, such as Rust, AssemblyScript, Zig or C. The module:
+
+- is on the manifest's own origin;
+- imports its memory from the portal as `env.memory`, with a maximum of at most 256 pages (16 MiB), and imports nothing else; each call's memory starts at the size the module declares, so declare what its data and stack need;
+- has no memory or start function of its own, and at most one small table;
+- exports `alloc(len) → ptr`, which the portal calls to get room for the input;
+- exports each hook function as `(ptr, len) → i64`: the portal writes the input's JSON at `ptr` and the function answers where its own JSON output is, as `ptr << 32 | len`. The output is at most 64 KB.
+
+Each call runs in a fresh instance with fresh memory, in a separate process the portal stops when the time is up. The portal reads the module when the site's files are synced and keeps it, so a new version of the module takes effect with the next sync.
+
+Usual build settings: in Rust or C, link with the memory imported and capped at 16 MiB (`--import-memory`, `--max-memory=16777216`) and a small stack; in AssemblyScript, `--importMemory --maximumMemory 256 --runtime stub --use abort=`, so it imports nothing but the memory.
