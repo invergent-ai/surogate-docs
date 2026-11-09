@@ -117,6 +117,15 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_'):
             self.assertNotIn(word, guide)
 
+    def test_portal_agents(self):
+        guide = page('/portal/sites/agents/')
+        for anchor in ('install-the-skills', 'give-the-agent-an-identity', 'connect-the-mcp-server', 'the-loop'):
+            self.assertIn(f'id="{anchor}"', guide)
+        self.assertIn('href="/portal/sites/check-a-site/"', guide)
+        self.assertIn('href="/portal/sites/agents/"', page('/portal/console/tokens/'))
+        for word in ('kubectl', 'helm', 'PORTAL_'):
+            self.assertNotIn(word, guide)
+
     def test_portal_events(self):
         doc = page('/portal/console/events/')
         self.assertIn('<figcaption>The Events page', doc)

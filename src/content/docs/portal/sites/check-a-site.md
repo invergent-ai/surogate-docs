@@ -65,3 +65,5 @@ With `--render`, every page of every site is opened in a headless Chrome, in eac
 - Each run writes `.portal-check/latest`: a `report.md` with a row per page (its accessibility, its performance, how much it changed, and links to its screenshot and diff), `report.json`, and the images. The folder is emptied at the start of each run, so `--out` must name a folder of its own.
 - `--summary <file>` adds the report, without links, to a file such as a CI job's summary. Upload `.portal-check/latest` as the job's artifact so reviewers can open the images.
 - The check ends with 0 when it passes and 1 when it fails. It ends with 2 when it could not run, such as with no Chrome, no Docker, a portal it cannot reach or not in dev mode, or an option that would do nothing.
+
+A [coding agent](/portal/sites/agents/) runs the same loop, with the skills that teach it how.
