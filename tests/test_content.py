@@ -140,13 +140,16 @@ class Content(unittest.TestCase):
 
     def test_portal_studio(self):
         doc = page('/portal/console/studio/')
-        for anchor in ('turn-it-on', 'design-in-the-studio', 'turn-it-off', 'new-tokens', 'erase'):
+        for anchor in ('turn-it-on', 'design-in-the-studio', 'use-a-design-in-a-site', 'turn-it-off', 'new-tokens', 'erase'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/studio/"', page('/portal/sites/design/'))
         for route in ('/portal/console/studio/', '/portal/sites/design/'):
             text = page(route)
             for word in ('kubectl', 'helm', 'PORTAL_', 'Open Design', 'open-design', 'OpenDesign', 'nexu'):
                 self.assertNotIn(word, text)
+        source = (ROOT / 'src/content/docs/portal/console/studio.md').read_text()
+        for word in ('git', 'Git', 'commit', 'repositor', 'Hub', 'merge'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
 
     def test_portal_layouts(self):
         doc = page('/portal/sites/layouts/')
