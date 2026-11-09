@@ -25,6 +25,7 @@ A token can only do what its scopes allow, and never more than you can do in the
 |---|---|
 | **Your own account** | Read your details and permissions |
 | **Read users, groups and settings** | Read the tenant's users, groups, organizations and sign-in settings |
+| **Read how the portal is built** | Read the sites, pages, apps, events, group and organization names and the sync history, never people; for a [coding agent](/portal/sites/agents/) |
 | **Change users, groups and settings** | Change them too |
 | **Roles, passwords and other tokens** | Give roles, set passwords, link accounts, and make SCIM tokens and service accounts |
 | **Read the audit log** | Read and export the [audit log](/portal/console/audit/) |
