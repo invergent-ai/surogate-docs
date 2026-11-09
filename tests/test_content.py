@@ -99,6 +99,15 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_'):
             self.assertNotIn(word, guide)
 
+    def test_portal_develop_locally(self):
+        guide = page('/portal/sites/develop-locally/')
+        for anchor in ('start-the-portal', 'keep-it-in-step-with-your-files', 'test-against-a-throwaway-portal'):
+            self.assertIn(f'id="{anchor}"', guide)
+        self.assertIn('startPortal', guide)
+        self.assertIn('href="/portal/sites/develop-locally/"', page('/portal/sites/build-an-app/'))
+        for word in ('kubectl', 'helm', 'PORTAL_'):
+            self.assertNotIn(word, guide)
+
     def test_portal_events(self):
         doc = page('/portal/console/events/')
         self.assertIn('<figcaption>The Events page', doc)
