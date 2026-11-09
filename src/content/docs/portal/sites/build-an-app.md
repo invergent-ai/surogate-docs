@@ -127,7 +127,7 @@ customElements.define("my-app-counter", Counter);
 - `onPortalEvent` receives the events wired to the widget. Any script on the page could send one: check what it says before acting on it.
 - `propsOf`, `emit` and `onEvent` do the same for any element, without the base class.
 
-Style the widget with the site's design tokens, such as `var(--fg)`, `var(--accent)` and `var(--font-body)`, so it looks like whichever site it is placed on. See [Give a site its look](/portal/sites/design/#for-apps).
+Style the widget with the colours and fonts the page sets from the site's design, such as `var(--foreground)`, `var(--primary)` and `var(--font-body)`, so it looks like whichever site it is placed on. See [Give a site its look](/portal/sites/design/#for-apps).
 
 ## Types from the manifest
 

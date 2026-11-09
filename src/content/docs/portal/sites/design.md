@@ -86,4 +86,8 @@ The check fails when text is hard to read against its background, so a palette w
 
 ## For apps
 
-A widget looks like the site it is on when it uses the tokens: `var(--fg)` and `var(--muted)` for text, `var(--accent)` and `var(--accent-on)` for actions, `var(--font-body)` for its font, `var(--space-4)` and `var(--radius-md)` for spacing and corners. A widget built on the Surogate UI kit takes the site's look by itself. See [Build an app](/portal/sites/build-an-app/).
+A widget looks like the site it is on when it takes its colours from the page:
+- **Colours:** `var(--foreground)` and `var(--muted-foreground)` for text, `var(--primary)` and `var(--primary-foreground)` for actions, `var(--background)`, `var(--card)` and `var(--border)` for surfaces and lines.
+- **Fonts and sizes:** `var(--font-body)` for the font, `var(--space-4)` and `var(--radius-md)` for spacing and corners.
+
+On a page, `--muted`, `--accent` and `--surface` hold the UI kit's light tints, not the site's colours: don't use them for text or actions. A widget built on the Surogate UI kit takes the site's look by itself. See [Build an app](/portal/sites/build-an-app/).
