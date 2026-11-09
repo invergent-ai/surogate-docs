@@ -1,6 +1,6 @@
 ---
 title: Give a site its look
-description: A site's colours, fonts and spacing come from its design package, in Open Design's format, kept with the site's files.
+description: A site's colours, fonts and spacing come from its design package, kept with the site's files.
 ---
 
 A site looks the way its design package says: its colours, fonts, text sizes, spacing and corners. The package sits beside the site's pages in the config repository, so a change to the look is reviewed and merged like any other change. Apps' widgets on the site take the same look.
@@ -18,7 +18,7 @@ sites/main/design/
   tokens.css       the brand in values
 ```
 
-It is an [Open Design](https://github.com/nexu-io/open-design) design-system package, in Open Design's own format, so a package made in Open Design works here as it is.
+The package is plain files, so it is written and reviewed like the rest of the site.
 
 **`manifest.json`** names the package:
 
@@ -72,7 +72,7 @@ Fonts are named, not loaded: name fonts the visitor's device has, or that a late
 [`portal check`](/portal/sites/check-a-site/) reads the package with the rest of the site:
 - A missing required token is named.
 - A value the portal refuses is named, with its reason.
-- A manifest Open Design would not accept is refused.
+- A manifest that is not a design package's is refused.
 
 A package with a problem keeps the whole change from going live, as any problem in the site's files does.
 
