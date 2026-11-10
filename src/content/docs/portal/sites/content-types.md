@@ -131,7 +131,7 @@ Apps and other consumers read a collection's published entries at `/_portal/api/
 
 - Each field is in the asked language, or the site's main one; categories and tags come as they are.
 - A **public** collection answers anyone, unless visitors may not view its site. Answers may be kept for a minute.
-- Any other collection answers only the people who edit its site or library: signed in, or with a token given the content scope.
+- The people who edit its site or library can always read it: signed in, or with a token given the content scope. A collection that is not public answers only them.
 - Anyone else is told there is no such collection.
 - The address has no cross-origin access: call it from a server, or from a page of the same portal.
 - `public` decides only who reads this address; pages show a collection as they show any content.
