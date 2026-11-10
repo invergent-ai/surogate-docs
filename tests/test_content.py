@@ -231,7 +231,7 @@ class Content(unittest.TestCase):
         for anchor in ('write-a-form', 'what-a-form-may-hold', 'translations', 'who-sends-it-and-who-reads-what-was-sent',
                        'put-a-form-on-a-page', 'its-own-address', 'what-the-portal-checks', 'from-an-app',
                        'come-back-to-a-form', 'ask-for-consent', 'tell-the-reviewers', 'keep-submissions-for-a-time',
-                       'fill-in-a-form-offline'):
+                       'fill-in-a-form-offline', 'fields-from-apps'):
             self.assertIn(f'id="{anchor}"', guide)
         console = page('/portal/console/forms/')
         for anchor in ('what-the-list-shows', 'read-a-submission', 'report', 'export', 'delete', 'build-a-form'):
@@ -239,6 +239,7 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/sites/forms/"', console)
         self.assertIn('id="forms"', page('/portal/console/pages/'))
         self.assertIn('href="/portal/console/forms/#build-a-form"', guide)
+        self.assertIn('id="form-fields-and-options"', page('/portal/sites/build-an-app/'))
         for path in ('src/content/docs/portal/sites/forms.md', 'src/content/docs/portal/console/forms.md'):
             source = (ROOT / path).read_text()
             for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'MongoDB', 'Postgres', 'SMTP', 'outbox', 'IndexedDB', 'service worker'):

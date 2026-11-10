@@ -129,6 +129,32 @@ customElements.define("my-app-counter", Counter);
 
 Style the widget with the colours and fonts the page sets from the site's design, such as `var(--foreground)`, `var(--primary)` and `var(--font-body)`, so it looks like whichever site it is placed on. See [Give a site its look](/portal/sites/design/#for-apps).
 
+## Form fields and options
+
+An app can add to the portal's forms: a field type it draws itself, such as a signature pad, and option lists for a form's selects, read from its backend. Declare them in the manifest:
+
+```json
+"forms": {
+  "fields": {
+    "signature": {
+      "title": { "ro": "Semnătură", "en": "Signature" },
+      "module": "/forms/signature.js",
+      "tag": "crm-signature",
+      "value": { "type": "string", "maxLength": 20000 }
+    }
+  },
+  "options": {
+    "counties": { "title": "Counties", "url": "/options/counties", "timeoutMs": 3000 }
+  }
+}
+```
+
+**A field** is a web component on the app's own origin. The form draws its tag, and sets its `value` property to what was entered so far. When the person changes it, the element dispatches a `change` event with `detail: { value }`. The value is a text (`maxLength`, 10,000 unless said), a number (`minimum`, `maximum`) or `true`/`false`, as `value` declares. The portal refuses anything else when the form is sent.
+
+**Options** are asked of the app's server by the portal, never by the browser. The portal POSTs `{ tenant, site, locale, form, field, person? }`, signed as a `portal-options+jwt` token. Check it with `verify(request, { kind: "options" })`; the claims name the site, the form and the field, and `sub` the person when the app may see them. Answer with `{ "options": [{ "label": "Iași", "value": "is" }] }`: 1 to 500 options, each label and value 1 to 200 characters, no value twice. The portal keeps the answer a minute for the same person and field. A choice is checked against the list the portal fetched when the form is sent.
+
+While the app is not approved, forms that use its fields or options are not offered. Forms place them in their file; see [Forms](/portal/sites/forms/#fields-from-apps).
+
 ## Types from the manifest
 
 `src/portal-types.ts` gives each widget's preferences, each event's payload and the person their own type, so the editor and the compiler hold the code to the manifest. A field that is required, or has a default, is always there.

@@ -157,6 +157,18 @@ Open the form at its own address, `/_portal/forms/<id>`, once while online. From
 
 What is sent offline goes as a visitor's, even for a person signed in. Only public forms can be filled in offline. If something kept offline cannot be sent, because the form changed meanwhile or no longer exists, the page asks to fill the form in again.
 
+## Fields from apps
+
+An approved app can add field types and option lists ([Build an app](/portal/sites/build-an-app/#form-fields-and-options)). Use them in the form's file:
+
+```yaml
+components:
+  - { type: appfield, key: sig, label: Semnătură, input: true, app: crm, field: signature, validate: { required: true } }
+  - { type: select, key: county, label: Județ, input: true, dataSrc: app, data: { app: crm, options: counties } }
+```
+
+The app's field is drawn by the app; its value is checked when the form is sent. A select's options come from the app as the person filling the form in. If the app does not answer, the form says it cannot be filled in right now. A form uses at most 10 such selects, and cannot be filled in offline. The console's builder keeps these parts when you edit the form, but does not offer them: write them in the file.
+
 ## From an app
 
 Each sent form raises the portal's `form.submitted` event, with the form's id and the submission's. Wire it to an app's receiver, or to a webhook, on [Events](/portal/console/events/). A program reads submissions with a token given the **forms** scope, as one of the form's reviewers.
