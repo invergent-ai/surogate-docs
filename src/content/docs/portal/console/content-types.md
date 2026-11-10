@@ -28,7 +28,9 @@ Each content type shows its name, its id and how many fields it has. **Edit** op
 
 ## Change a content type
 
-A saved field keeps its id. Entries keep their values when you change the type; a field you remove loses its values the next time each entry is saved. Changing a field's type clears what the new type does not take, such as a list's options.
+A saved field keeps its id, its type and whether it is written in each language, so entries keep their values. You can change its labels, whether it must be filled in, its most characters and its options. To change a field's type, remove it and add a new one: a field you remove loses its values the next time each entry is saved.
+
+While you build a new field, changing its type clears what the new type does not take, such as a list's options.
 
 ## Remove a content type
 
