@@ -41,3 +41,13 @@ They come first on the first page of results for that search, when no filter nar
 - **A word ending in * finds every word it starts**: off by default. On, `noiem*` finds `noiembrie`; the start needs three letters at least.
 
 **Save** keeps the settings as a new version of the site's files. **Use the portal's own** goes back to the defaults. Settings the portal cannot take are refused, and the page says what to change.
+
+## What people search for
+
+Below the settings, **What people search for** shows, over the last 7, 30 or 90 days:
+- how many searches people made in the site's search box;
+- the searches made most, and how often;
+- the searches that found nothing most: words to add as synonyms, pages to write, or results to pin.
+
+Only searches people make in a page's search box count, not suggestions while they type or searches by apps. A search made fewer than three times is left out, and a person repeating a search within the hour counts once. Who searched is never kept; email addresses and long numbers, such as a phone or a personal number, are blanked before a search is kept. Searches are kept 90 days.
+

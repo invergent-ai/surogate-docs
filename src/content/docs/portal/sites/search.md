@@ -19,6 +19,10 @@ Search follows the site: a page saved, or an entry published, unpublished or del
 - A small typo still finds the word.
 - Every word must appear, in the title or the text. Quotes, stars and other signs are read as plain words.
 
+## Suggestions while typing
+
+After two letters, the search box suggests up to five titles under it. Use the arrow keys to choose one and Enter to open it, or Enter to search for what you typed; Escape closes the list. Without script, the box searches as usual.
+
 ## Who finds what
 
 A person finds a page or an entry only when they may view it. Visitors find what visitors may view; people signed in also find what their groups and organizations may view, and what they edit. The counts beside the results count only what the person may see.
@@ -54,4 +58,14 @@ exclude: { paths: [/intern/*], types: [memo] }
 fuzzy: true
 wildcard: false
 ```
+
+## From an app
+
+An app's backend searches a site through the SDK, as a visitor finds it:
+
+```ts
+const found = await portal.search({ q: "taxe locale", site: "main", locale: "ro" });
+```
+
+Each result has a `title`, a `url` on the portal's address, the `kind` and, for content, its `type`; the `snippet` is escaped HTML with the words found in `<mark>`. An app's searches are not counted in [what people search for](/portal/console/search/#what-people-search-for).
 

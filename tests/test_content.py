@@ -218,7 +218,7 @@ class Content(unittest.TestCase):
 
     def test_portal_search(self):
         doc = page('/portal/sites/search/')
-        for anchor in ('what-search-finds', 'how-words-match', 'who-finds-what', 'put-a-search-box-on-a-page'):
+        for anchor in ('what-search-finds', 'how-words-match', 'who-finds-what', 'put-a-search-box-on-a-page', 'suggestions-while-typing', 'from-an-app'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="search"', page('/portal/console/pages/'))
         self.assertIn('href="/portal/sites/search/"', page('/portal/console/pages/'))
@@ -235,7 +235,7 @@ class Content(unittest.TestCase):
 
     def test_portal_search_settings(self):
         doc = page('/portal/console/search/')
-        for anchor in ('weights', 'synonyms', 'pinned-results', 'what-search-leaves-out', 'typos-and-word-starts'):
+        for anchor in ('weights', 'synonyms', 'pinned-results', 'what-search-leaves-out', 'typos-and-word-starts', 'what-people-search-for'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="tune-search"', page('/portal/sites/search/'))
         source = (ROOT / 'src/content/docs/portal/console/search.md').read_text()
