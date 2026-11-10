@@ -197,6 +197,14 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_files(self):
+        doc = page('/portal/console/files/')
+        for anchor in ('folders', 'upload-a-file', 'link-to-a-file', 'remove-a-file'):
+            self.assertIn(f'id="{anchor}"', doc)
+        source = (ROOT / 'src/content/docs/portal/console/files.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'R2', 'S3'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_seo(self):
         doc = page('/portal/sites/seo/')
         for anchor in ('what-each-page-says', 'describe-a-page', 'describe-a-site', 'what-crawlers-are-told'):

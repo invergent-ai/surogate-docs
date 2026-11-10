@@ -497,6 +497,7 @@ export default defineConfig({
                 'portal/console/pages',
                 'portal/console/content',
                 'portal/console/content-types',
+                'portal/console/files',
                 'portal/console/versions',
               ],
             },
