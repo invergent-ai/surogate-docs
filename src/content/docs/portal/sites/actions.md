@@ -95,6 +95,18 @@ The file actions work on a folder of the portal's files, one written in `content
 
 A file written stays written, even if a later action fails.
 
+## UI actions
+
+A form's actions can tell the page what to do once everything else is done. These do not end the run, and at most 10 count:
+
+| Type | What the page does | Takes |
+|---|---|---|
+| `notify` | Shows a notice above the thanks; `{{ vars.name }}` puts in a value an action set | `text`, in each language; `tone`: `info`, `success` or `warning` |
+| `startGuide` | Starts a [user guide](/portal/sites/guides/) that applies to this page | `guide` |
+| `reload` | Reloads the page after a moment | |
+
+A `redirect` wins over them: the person goes elsewhere first. A form sent again answers what it answered the first time; one sent from an offline device shows none of them.
+
 ## When something fails
 
 An action that fails runs its `onError` actions, and the list goes on. Without them, the failure goes up to the enclosing group's `onError`, and otherwise ends the run. Inside `onError`, `vars.error.message` says what went wrong.
