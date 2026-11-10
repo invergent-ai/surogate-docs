@@ -255,6 +255,20 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_flows_and_values(self):
+        doc = page('/portal/sites/flows/')
+        for anchor in ('a-flow', 'call-a-flow', 'contracts', 'tests'):
+            self.assertIn(f'id="{anchor}"', doc)
+        values = page('/portal/sites/values/')
+        for anchor in ('a-value', 'how-long-it-is-kept', 'when-a-value-fails'):
+            self.assertIn(f'id="{anchor}"', values)
+        self.assertIn('id="run-tests"', page('/portal/console/flows/'))
+        self.assertIn('href="/portal/sites/flows/#call-a-flow"', page('/portal/sites/actions/'))
+        for path in ('sites/flows.md', 'sites/values.md', 'console/flows.md'):
+            source = (ROOT / 'src/content/docs/portal' / path).read_text()
+            for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'index', 'repositor', 'store'):
+                self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
+
     def test_portal_files_kept_by_the_portal(self):
         for path in ('src/content/docs/portal/console/tenants.md', 'src/content/docs/portal/sites/previews.md',
                      'src/content/docs/portal/sites/design.md'):

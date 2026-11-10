@@ -3,7 +3,7 @@ title: Actions
 description: Lists of actions that run when something happens, such as a form being sent; values worked out with CEL expressions.
 ---
 
-An action list is a short program written in the portal's files. It runs when something happens. For now that is a form being sent ([After it is sent](/portal/sites/forms/#after-it-is-sent)); later, endpoints, flows and scheduled jobs run them too. Each action does one thing: works out a value, logs a line, tells the person something, sends them elsewhere.
+An action list is a short program written in the portal's files. It runs when something happens. For now that is a form being sent ([After it is sent](/portal/sites/forms/#after-it-is-sent)), or a [logic flow](/portal/sites/flows/) being called; later, endpoints and scheduled jobs run them too. Each action does one thing: works out a value, logs a line, tells the person something, sends them elsewhere.
 
 ## An action list
 
@@ -42,6 +42,7 @@ Values are worked out with [CEL](https://cel.dev), the expression language Keel 
 | `site`, `locale` | The site and the language |
 | `now` | When the run started |
 | `vars` | The values earlier actions set |
+| `values` | The portal's [named values](/portal/sites/values/), as `values.<name>` |
 
 Whole numbers are integers, the others decimals; the two mix in arithmetic, so `form.price * 1.19` works whatever was typed. Reading a field that was not sent is an error; check it first with `has(form.phone)`. A name that is not in the table above is refused when the file is saved. Beside CEL's own functions there are `replace(text, a, b)`, `urlEncode(text)`, `slice(list or text, from, to)`, `sort(list)`, `round`, `floor` and `ceil`.
 
@@ -61,6 +62,7 @@ Whole numbers are integers, the others decimals; the two mix in arithmetic, so `
 | `toJson` | Writes a value as JSON text | `from`, `into` |
 | `message` | Tells the person something, and ends the run; `{{ vars.name }}` puts in a value an action set | `text`, in each language |
 | `redirect` | Sends the person to another page, and ends the run | `to` |
+| `callFlow` | Runs a [logic flow](/portal/sites/flows/#call-a-flow) and keeps its outputs | `flow`, or `contract` and `pick`; `inputs`, `into` |
 
 A `redirect` goes to a page of the same site, or to another https site the form names under `redirects`.
 
