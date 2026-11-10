@@ -23,6 +23,10 @@ Under the form's name is its own address, `/_portal/forms/<id>`, on each site th
 
 What people typed in their own words is never counted.
 
+## Runs
+
+**Runs** lists what the form's [actions](/portal/sites/actions/) did each time it was sent, newest first: when, and whether they finished or failed, with the failure. **Open** shows the run's log. Runs are kept for 30 days.
+
 ## Export
 
 **Export CSV** downloads every submission of the form, at most 50,000, newest first: one row each, with when it was sent, its language, the email of whoever sent it, and one column per field. It opens in Excel or LibreOffice. A value starting like a formula is written so that a spreadsheet does not run it.
