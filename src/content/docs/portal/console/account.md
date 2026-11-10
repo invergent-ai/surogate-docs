@@ -32,3 +32,7 @@ If your portal requires a second step, you cannot remove your last one: add anot
 - **End all other sessions** signs out everywhere but here.
 
 A session an administrator opened while [impersonating](/portal/console/users/#impersonate) you is listed too, with their name.
+
+## Your connections
+
+Some [connectors](/portal/sites/connectors/#each-persons-own-account) sign in with each person's own account on a service. **Your connections** lists them. **Connect** asks for your account's credentials, which are kept sealed and never shown again. **Disconnect** forgets them.

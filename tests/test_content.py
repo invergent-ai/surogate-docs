@@ -269,6 +269,20 @@ class Content(unittest.TestCase):
             for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'index', 'repositor', 'store'):
                 self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
 
+    def test_portal_connectors(self):
+        doc = page('/portal/sites/connectors/')
+        for anchor in ('a-connector', 'credentials', 'call-a-service', 'email',
+                       'hashes-signatures-and-random-values', 'each-persons-own-account', 'in-tests'):
+            self.assertIn(f'id="{anchor}"', doc)
+        for anchor in ('set-credentials', 'test'):
+            self.assertIn(f'id="{anchor}"', page('/portal/console/connectors/'))
+        self.assertIn('id="your-connections"', page('/portal/console/account/'))
+        self.assertIn('href="/portal/sites/connectors/#call-a-service"', page('/portal/sites/actions/'))
+        for path in ('sites/connectors.md', 'console/connectors.md'):
+            source = (ROOT / 'src/content/docs/portal' / path).read_text()
+            for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'index', 'repositor', 'store', 'Vault'):
+                self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
+
     def test_portal_files_kept_by_the_portal(self):
         for path in ('src/content/docs/portal/console/tenants.md', 'src/content/docs/portal/sites/previews.md',
                      'src/content/docs/portal/sites/design.md'):

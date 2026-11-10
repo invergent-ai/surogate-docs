@@ -112,6 +112,6 @@ A flow carries its own tests, at most 50. Each test has a `name`, the `inputs` t
 - `expect: { outputs: { … } }`: each listed output must be exactly this;
 - `expect: { fails: true }`: the flow must fail.
 
-A test can also give a `user`, with `id`, `name`, `email` and `roles`, for a flow that reads the person. Every value the flow reads is worked out afresh for the test. A test that runs out of time fails, whatever it expects.
+A test can also give a `user`, with `id`, `name`, `email` and `roles`, for a flow that reads the person. A test never reaches out: its `mocks` answer the flow's web calls, and its emails are listed, never sent ([In tests](/portal/sites/connectors/#in-tests)). Every value the flow reads is worked out afresh for the test. A test that runs out of time fails, whatever it expects.
 
 Tests run from the console, under [Flows](/portal/console/flows/), and when you [check a site](/portal/sites/check-a-site/): each failing test is reported against its flow. Add `--no-flow-tests` to leave them out.
