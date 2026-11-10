@@ -57,6 +57,25 @@ A page template is a page's starting point: a layout and what its parts hold.
 - When you make a **New page**, **Start from** offers the site's templates.
 - **Remove** takes a template off the site; pages made from it keep what they hold.
 
+## Display pages
+
+A display page shows one entry at a time: each published entry of a content type gets its own address, the page's address followed by the entry's. A display page at `/stire` shows the entry `program-de-iarna` at `/stire/program-de-iarna`.
+
+1. Make a page, such as `/stire`, and choose a type under **One entry at a time**, **Shows one entry of**. Choose a type *from* a library to show that library's entries.
+2. Under **Add content…** in a part of the page, choose **The entry shown here**. It shows the whole entry. To show one field alone, such as its image in a wide part, choose it under **Part of the entry**.
+3. Add anything else the page needs, such as a list of the newest entries beside it.
+
+What visitors see:
+- The page takes the entry's title, in their language or else in the site's main one. Search engines and link previews see the entry's address, title and first image.
+- The page's own address shows nothing: only the entries' addresses do. In the page tree it shows as `/stire/…`.
+- A draft, or an address no entry has, shows the site's "page not found".
+- Lists of the type on the site link each entry's title to its address.
+- If a page of the site has the same address as an entry, visitors see the page.
+
+The home page and personal dashboards cannot be display pages, and a site has one display page per type and library. Choosing **No entries** removes the parts that showed the entry. **Preview** shows a display page with the newest published entry.
+
+Apps on a display page are told the page's address, not which entry it shows.
+
 ## Personal dashboards
 
 A page can be a personal dashboard: each person signed in arranges it for themselves. Under **Personal dashboard** in the editor, tick **People arrange this page for themselves**, then tick what they may add: the apps' widgets that need no settings, and the site's fragments.

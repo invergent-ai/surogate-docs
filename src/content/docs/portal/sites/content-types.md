@@ -63,6 +63,15 @@ template: >-
 
 A rich text field holds paragraphs and other blocks. It stands directly in a block such as a `div` or a `section`, never inside a paragraph or a heading.
 
+When the site has a [display page](#display-pages) for the type, `<portal-entry-link>` links what it holds to the entry's address; it takes a `class` and holds no other link. Without a display page it shows what it holds, unlinked:
+
+```yaml
+template: >-
+  <portal-entry-link class="more"><h2><portal-field name="headline"></portal-field></h2></portal-entry-link>
+```
+
+Without a template, the entry's title is the link.
+
 Each entry is an `article` with the class `portal-content`; a list of entries is a `div` with the class `portal-content-list`. Style them in the site's layout stylesheet.
 
 ## Vocabularies
@@ -153,3 +162,27 @@ A placement of the portal's content widget shows a site's published entries of o
 - **`library`**: the entries of a library instead of the site's own, on a site the library serves: `preferences: { type: news, library: shared, list: { limit: 5 } }`.
 
 A value that no longer fits its field, after the type changed, is left out rather than breaking the page.
+
+## Display pages
+
+A page gives each published entry of a type its own address with `display`:
+
+```yaml
+path: /stire
+title: { ro: Știre, en: News item }
+layout: one-column
+display: { type: news }          # add library: shared for a library's entries
+regions:
+  main:
+    - { id: entry, app: portal, widget: content, preferences: { current: true } }
+  aside:
+    - { id: photo, app: portal, widget: content, preferences: { current: true, field: image } }
+```
+
+- An entry is at the page's address followed by its own: `/stire/program-de-iarna`, `/en/stire/program-de-iarna`. The page's own address shows nothing.
+- **`current: true`** shows the entry the address names; with **`field`**, only that field. These placements go only on a display page, or in a page template.
+- The page takes the entry's title. In the portal's own look the entry then leaves its title out, since the page's heading says it.
+- The home page and a dashboard cannot be display pages. A site has one per type and library. The sitemap lists every published entry's address of a display page visitors may see.
+
+See [Display pages](/portal/console/pages/#display-pages) in the console.
+
