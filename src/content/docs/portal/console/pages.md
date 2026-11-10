@@ -72,7 +72,7 @@ What visitors see:
 - Lists of the type on the site link each entry's title to its address.
 - If a page of the site has the same address as an entry, visitors see the page.
 
-The home page and personal dashboards cannot be display pages, and a site has one display page per type and library. Choosing **No entries** removes the parts that showed the entry. **Preview** shows a display page with the newest published entry.
+The home page and personal dashboards cannot be display pages, and a site has one display page per type and library. Choosing **No entries** removes the parts that showed the entry; choosing another type shows those parts as the whole entry. **Save as template** leaves them out, since a template shows no type of entries. **Preview** shows a display page with the newest published entry.
 
 Apps on a display page are told the page's address, not which entry it shows.
 
