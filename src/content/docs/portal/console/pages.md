@@ -56,6 +56,22 @@ A page template is a page's starting point: a layout and what its parts hold.
 - When you make a **New page**, **Start from** offers the site's templates.
 - **Remove** takes a template off the site; pages made from it keep what they hold.
 
+## Personal dashboards
+
+A page can be a personal dashboard: each person signed in arranges it for themselves. Under **Personal dashboard** in the editor, tick **People arrange this page for themselves**, then tick what they may add: the apps' widgets that need no settings, and the site's fragments.
+
+A dashboard is only for people signed in. If the page was open to everyone, ticking the box lets only people signed in see it.
+
+On the page, people see **Customize this page**. There they can:
+- move a section up or down, or to another part of the page;
+- remove a section;
+- add one of the sections the page offers;
+- go back to the page as it is made.
+
+Each person's changes are theirs alone. A section you add to the page later shows for everyone, where you put it. A section you take off the page goes from everyone's dashboard. A person holds at most 30 sections.
+
+Sections on a dashboard have no menu on the page itself: set their settings here, in the editor. An administrator seeing the portal as someone sees that person's dashboard but cannot change it.
+
 ## Preview before saving
 
 **Preview** shows the page as it is being edited, before anything is saved, as visitors would see it. Choose **Phone**, **Tablet** or **Desktop** to see it at that width, and the language to see it in. Press **Preview** again after more changes.
