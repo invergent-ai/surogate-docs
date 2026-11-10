@@ -88,7 +88,7 @@ Credentials go only over https, unless the portal is installed to reach private 
 
 - **Addresses:** `to` is an address or a list of them. A run sends to at most 10 addresses, or 2 when nobody is signed in.
 - **When it goes:** the email leaves only once the whole run ends well. If a later action fails, nothing is sent.
-- **Limits:** a portal sends at most 500 emails an hour.
+- **Limits:** a portal sends mail to at most 500 addresses an hour.
 - **When nothing can be sent:** if the portal has no mail server, the action fails with "The portal sends no email."
 
 ## Hashes, signatures and random values
@@ -125,4 +125,4 @@ tests:
       outputs: { name: Ana }
 ```
 
-A mock matches the call's method and its path, without the query. A call that no mock answers fails the test.
+A mock matches the call's method and its path, without the query. A call that no mock answers fails the test. In a test, `hmac` signs with a fixed test key, never the connector's secret.
