@@ -25,6 +25,14 @@ Each entry shows where it is:
 - **Rich text** is written in HTML. It holds what a page's [HTML block](/portal/sites/layouts/#an-html-block) may hold.
 - **A link** has an address and its text. **An image** has an address and a description of what it shows.
 
+## Categories and tags
+
+When the portal has vocabularies that sort the content type, the editor lists their categories under the fields, indented under the category above them. Tick the ones the entry belongs to; for a vocabulary that takes only one, choose it, or **None**.
+
+**Tags** are words of your own, separated by commas, such as `iarna, drumuri`. They are kept in lower case, each once, at most 20.
+
+If the portal later drops a category an entry has, the entry simply loses it the next time it is saved or published.
+
 **Save draft** keeps your changes without showing them to visitors. Save as often as you like.
 
 ## Publish
@@ -48,7 +56,7 @@ If someone saved the same entry after you opened it, your save is refused rather
 ## Show content on a page
 
 In the [page editor](/portal/console/pages/), **Add content…** places a content type in a part of the page. It shows either:
-- **The newest entries**: how many, and in what order (newest first, oldest first, or by title);
+- **The newest entries**: how many, and in what order (newest first, oldest first, or by title). **Category** and **Tag** show only the entries in that category (or one under it) and with that tag;
 - **One entry**: by its address.
 
 A page always shows the published entries. A visitor reading in a language an entry does not have sees the site's main language.
