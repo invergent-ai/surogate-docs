@@ -93,6 +93,10 @@ Records are served at the portal's address:
 
 Adding, changing and deleting need someone signed in; an app's token needs the `data` access. A record someone may not see answers as if it did not exist. A value that does not fit its field is refused, naming the field.
 
+## KPIs
+
+A model can declare [KPIs](/portal/sites/kpis/): counts, sums and averages over its records, shown as tiles and bars.
+
 ## GraphQL
 
 The same records answer GraphQL at `POST /_portal/api/graphql`, with the same rules as the API above. Each person sees only the models they may reach:

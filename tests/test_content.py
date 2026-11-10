@@ -325,6 +325,15 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'schema', 'role'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_kpis(self):
+        doc = page('/portal/sites/kpis/')
+        for anchor in ('declare-them', 'show-them', 'what-each-person-sees'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/kpis/"', page('/portal/sites/data-models/'))
+        source = (ROOT / 'src/content/docs/portal/sites/kpis.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'SQL', 'cache'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_listings(self):
         doc = page('/portal/sites/listings/')
         for anchor in ('place-a-listing', 'what-each-person-sees', 'a-models-own-pages-and-form'):
