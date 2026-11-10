@@ -49,5 +49,5 @@ Below the settings, **What people search for** shows, over the last 7, 30 or 90 
 - the searches made most, and how often;
 - the searches that found nothing most: words to add as synonyms, pages to write, or results to pin.
 
-Only searches people make in a page's search box count, not suggestions while they type or searches by apps. A search made only once is left out. Who searched is never kept; email addresses and long numbers, such as a phone or a personal number, are blanked before a search is kept. Searches are kept 90 days.
+Only searches people make in a page's search box count, not suggestions while they type or searches by apps. A search made fewer than three times is left out, and a person repeating a search within the hour counts once. Who searched is never kept; email addresses and long numbers, such as a phone or a personal number, are blanked before a search is kept. Searches are kept 90 days.
 
