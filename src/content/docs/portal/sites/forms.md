@@ -144,6 +144,19 @@ retention:
 
 Submissions older than this are deleted, a few times a day. Without `retention`, they are kept until someone deletes them.
 
+## Fill in a form offline
+
+A public form can be filled in where the connection comes and goes, such as on a tablet in the field:
+
+```yaml
+public: true
+offline: true
+```
+
+Open the form at its own address, `/_portal/forms/<id>`, once while online. From then on, that browser can open the address without a connection. A form sent without a connection is kept on the device, and the page says so. It is sent when the browser is back online: when the page is opened again, or within a minute while it is open. Each form is sent once, even if the connection drops halfway.
+
+What is sent offline goes as a visitor's, even for a person signed in. Only public forms can be filled in offline. If something kept offline cannot be sent, because the form changed meanwhile or no longer exists, the page asks to fill the form in again.
+
 ## From an app
 
 Each sent form raises the portal's `form.submitted` event, with the form's id and the submission's. Wire it to an app's receiver, or to a webhook, on [Events](/portal/console/events/). A program reads submissions with a token given the **forms** scope, as one of the form's reviewers.

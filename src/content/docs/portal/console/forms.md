@@ -15,6 +15,14 @@ Under the form's name is its own address, `/_portal/forms/<id>`, on each site th
 
 **Open** shows each answer under its field's label, in your language. When the form asks for consent, **Agreed to** shows the text the person agreed to. Ticked boxes and several choices are listed together; a checkbox reads Yes or No; a field left empty shows a dash.
 
+## Report
+
+**Report** shows the chosen form's last 30, 90 or 365 days:
+- how many were sent in all, and on each day that had any;
+- for each choice of the form (a list, radio buttons, boxes to tick or a checkbox), how many people chose each option.
+
+What people typed in their own words is never counted.
+
 ## Export
 
 **Export CSV** downloads every submission of the form, at most 50,000, newest first: one row each, with when it was sent, its language, the email of whoever sent it, and one column per field. It opens in Excel or LibreOffice. A value starting like a formula is written so that a spreadsheet does not run it.
@@ -42,6 +50,7 @@ Administrators see **Build forms** at the top of the page: **New form** makes on
   - who is told by email when it is sent, and whether the email holds the answers;
   - whether people must agree to a text before sending, and that text in each language;
   - how many days submissions are kept (empty: always).
+  - whether a public form can be filled in offline at its own address.
 - **Fields:** drag fields from the left onto the form, and drop them where they go.
   - **Fields:** text, text area, number, checkbox, select, radio, select boxes and the submit button.
   - **More fields:** email, web address, phone number, day, time and currency.
