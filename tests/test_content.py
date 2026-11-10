@@ -180,7 +180,7 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
         types = page('/portal/sites/content-types/')
-        for anchor in ('a-content-type', 'field-types', 'how-an-entry-looks', 'vocabularies', 'libraries', 'show-it-on-a-page'):
+        for anchor in ('a-content-type', 'field-types', 'how-an-entry-looks', 'vocabularies', 'libraries', 'collections', 'reading-a-collection', 'show-it-on-a-page'):
             self.assertIn(f'id="{anchor}"', types)
         self.assertIn('href="/portal/console/content/"', types)
         source = (ROOT / 'src/content/docs/portal/sites/content-types.md').read_text()

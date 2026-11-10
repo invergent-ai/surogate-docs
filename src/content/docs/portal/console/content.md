@@ -63,4 +63,6 @@ In the [page editor](/portal/console/pages/), **Add content…** places a conten
 
 **From** chooses where the entries come from: **This site**, or a library that serves the site.
 
+**Add a collection…** places a [collection](/portal/sites/content-types/#collections): entries chosen once for several pages. **Collection** changes which one.
+
 A page always shows the published entries. A visitor reading in a language an entry does not have sees the site's main language.

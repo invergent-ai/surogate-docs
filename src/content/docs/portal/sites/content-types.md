@@ -102,6 +102,40 @@ permissions: { edit: [group:Comunicare] }
 - Removing a library keeps its entries out of reach; saving a library again under the same id brings them back, published ones included.
 - At most 20 libraries.
 
+## Collections
+
+A collection names a set of entries once, for pages and for apps: a hand-picked list, or a saved query. Each is a file, `content/collections/<id>.yaml`:
+
+```yaml
+name: { ro: Pe prima pagină, en: Front page }
+type: news
+site: main               # or library: shared
+entries: [deszapezire, parc-nou]                      # hand-picked, in this order
+# or: query: { category: topics/roads, tag: iarna, order: newest, limit: 10 }
+public: true             # its address answers anyone; left out, only the shelf's editors
+```
+
+- A hand-picked collection names up to 50 entries by their address, each once. An entry not published yet is left out until it is.
+- A query works as a content list's: `category`, `tag`, `order` and `limit`.
+- A page shows it with `preferences: { collection: front }`, and nothing else, on its site or a site its library serves.
+- At most 100 collections.
+
+### Reading a collection
+
+Apps and other consumers read a collection's published entries at `/_portal/api/collections/<id>`, with `?locale=ro` or `en`:
+
+```json
+{ "id": "front", "name": { "ro": "…", "en": "…" }, "type": "news",
+  "items": [{ "id": "…", "slug": "deszapezire", "publishedAt": "2026-11-10T…", "values": { "headline": "…" } }] }
+```
+
+- Each field is in the asked language, or the site's main one; categories and tags come as they are.
+- A **public** collection answers anyone, unless visitors may not view its site. Answers may be kept for a minute.
+- The people who edit its site or library can always read it: signed in, or with a token given the content scope. A collection that is not public answers only them.
+- Anyone else is told there is no such collection.
+- The address has no cross-origin access: call it from a server, or from a page of the same portal.
+- `public` decides only who reads this address; pages show a collection as they show any content.
+
 ## Show it on a page
 
 A placement of the portal's content widget shows a site's published entries of one type:
@@ -115,6 +149,7 @@ A placement of the portal's content widget shows a site's published entries of o
 
 - **`list`**: the newest entries, `limit` from 1 to 50 (10 when left out), `order` `newest`, `oldest` or `title`. `category: topics/roads` shows only the entries in that category or one under it, and `tag: iarna` only those with the tag; both together show the entries that have both.
 - **`entry`**: one entry, by its address: `preferences: { type: news, entry: program-de-iarna }`.
+- **`collection`**: a [collection](#collections), alone: `preferences: { collection: front }`.
 - **`library`**: the entries of a library instead of the site's own, on a site the library serves: `preferences: { type: news, library: shared, list: { limit: 5 } }`.
 
 A value that no longer fits its field, after the type changed, is left out rather than breaking the page.
