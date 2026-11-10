@@ -7,6 +7,8 @@ description: Write a site's news, announcements and other entries, save drafts, 
 
 **Content** is in the menu for the people who edit a site: its administrators, and the editors named for the site or given the site on [Access](/portal/console/access/). An administrator seeing the portal as someone else does not see it.
 
+Next to the sites, **Site** lists the [libraries](/portal/sites/content-types/#libraries) you edit, as **Library:** and their name. A library's entries are written once and shown by every site it serves.
+
 ## Find an entry
 
 Choose the **Site** and the **Content type**. The list shows each entry with its title, its address and when it last changed. **Search** finds entries by their title, their text or their address.
@@ -58,5 +60,7 @@ If someone saved the same entry after you opened it, your save is refused rather
 In the [page editor](/portal/console/pages/), **Add content…** places a content type in a part of the page. It shows either:
 - **The newest entries**: how many, and in what order (newest first, oldest first, or by title). **Category** and **Tag** show only the entries in that category (or one under it) and with that tag;
 - **One entry**: by its address.
+
+**From** chooses where the entries come from: **This site**, or a library that serves the site.
 
 A page always shows the published entries. A visitor reading in a language an entry does not have sees the site's main language.

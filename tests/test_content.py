@@ -175,11 +175,12 @@ class Content(unittest.TestCase):
         for anchor in ('find-an-entry', 'write-an-entry', 'categories-and-tags', 'publish', 'history', 'when-someone-else-is-editing', 'show-content-on-a-page'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/content/#show-content-on-a-page"', page('/portal/console/pages/'))
+        self.assertIn('href="/portal/sites/content-types/#libraries"', doc)
         source = (ROOT / 'src/content/docs/portal/console/content.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
         types = page('/portal/sites/content-types/')
-        for anchor in ('a-content-type', 'field-types', 'how-an-entry-looks', 'vocabularies', 'show-it-on-a-page'):
+        for anchor in ('a-content-type', 'field-types', 'how-an-entry-looks', 'vocabularies', 'libraries', 'show-it-on-a-page'):
             self.assertIn(f'id="{anchor}"', types)
         self.assertIn('href="/portal/console/content/"', types)
         source = (ROOT / 'src/content/docs/portal/sites/content-types.md').read_text()
