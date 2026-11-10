@@ -172,7 +172,7 @@ class Content(unittest.TestCase):
 
     def test_portal_content(self):
         doc = page('/portal/console/content/')
-        for anchor in ('find-an-entry', 'write-an-entry', 'publish', 'when-someone-else-is-editing', 'show-content-on-a-page'):
+        for anchor in ('find-an-entry', 'write-an-entry', 'publish', 'history', 'when-someone-else-is-editing', 'show-content-on-a-page'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/content/#show-content-on-a-page"', page('/portal/console/pages/'))
         source = (ROOT / 'src/content/docs/portal/console/content.md').read_text()
@@ -184,6 +184,16 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/console/content/"', types)
         source = (ROOT / 'src/content/docs/portal/sites/content-types.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'repositor', 'Hub'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
+    def test_portal_content_type_builder(self):
+        doc = page('/portal/console/content-types/')
+        for anchor in ('the-list', 'build-a-content-type', 'change-a-content-type', 'remove-a-content-type'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/console/content-types/"', page('/portal/console/content/'))
+        self.assertIn('href="/portal/console/content-types/"', page('/portal/sites/content-types/'))
+        source = (ROOT / 'src/content/docs/portal/console/content-types.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
     def test_portal_seo(self):

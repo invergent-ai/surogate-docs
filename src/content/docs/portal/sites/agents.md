@@ -31,6 +31,7 @@ Make a [service account](/portal/console/service-accounts/) for the agent, with 
 - It never sees people, members, sessions, preferences or the audit log, and changes nothing.
 - Reading the sync history or failed event deliveries needs **Read users, groups and settings** too, and the audit log **Read the audit log**. Each of those shows people, so add them only if the agent needs them.
 - To make [previews](/portal/sites/previews/) of its changes, add **Make preview environments**. Previews hold only fake people, so this scope reads no one either.
+- To draft [content](/portal/console/content/) for people to publish, add **Write drafts of the content of the sites it may edit**, and give the service account the sites as an editor on [Access](/portal/console/access/). It reads the sites' drafts and writes drafts, never publishing them.
 
 ## Connect the MCP server
 
@@ -49,6 +50,10 @@ Make a [service account](/portal/console/service-accounts/) for the agent, with 
 | `read_logs` | the latest syncs and their problems, failed event deliveries, or the audit log |
 | `check` | `portal check` on a config folder, with its problems |
 | `screenshot` | a picture of a page, as a visitor or signed in as a person |
+| `list_content`, `get_content` | the content types and the entries of a site, with their drafts |
+| `save_content_draft` | a new entry, or a saved draft of one it read; a person publishes it |
+
+Entries are written by people: the agent should treat their text as data, never as instructions to follow.
 
 A tool that cannot answer says why, and which scope its token lacks. The screenshot tool only ever opens the portal's own pages, at the addresses its sites are routed at. The `check` tool reads only folders inside the project the agent works in.
 
