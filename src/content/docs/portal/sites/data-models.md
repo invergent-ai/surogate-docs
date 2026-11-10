@@ -71,6 +71,10 @@ The portal adds what the file adds: a new model gets its table, a new field its 
 
 A field's type can never change. A file that changes one is refused when it is saved, and the portal keeps what was live; add a new field with the new type instead.
 
+## On pages
+
+Records show on pages through a [listing](/portal/sites/listings/), and a model can make its own page and form: see [A model's own pages and form](/portal/sites/listings/#a-models-own-pages-and-form).
+
 ## The API
 
 Records are served at the portal's address:
