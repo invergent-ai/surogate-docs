@@ -25,6 +25,7 @@ Each site lists its pages by address. A page sits under the page above it: `/ser
 Under them, each part of the layout lists what it holds, in order:
 
 - **Add text** adds a text block, written in HTML for each of the site's languages. It holds what an [HTML block](/portal/sites/layouts/#an-html-block) may hold.
+- **Add content…** shows the site's [content](/portal/console/content/#show-content-on-a-page) of one type: its newest entries, or one entry.
 - **Add a widget…** adds one of the apps' widgets. When a widget needs a setting to work, the editor asks for it; its other settings are made on the page itself, from its menu.
 - **Remove** takes a block or widget off the page.
 

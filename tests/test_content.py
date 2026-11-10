@@ -170,6 +170,22 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_content(self):
+        doc = page('/portal/console/content/')
+        for anchor in ('find-an-entry', 'write-an-entry', 'publish', 'when-someone-else-is-editing', 'show-content-on-a-page'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/console/content/#show-content-on-a-page"', page('/portal/console/pages/'))
+        source = (ROOT / 'src/content/docs/portal/console/content.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+        types = page('/portal/sites/content-types/')
+        for anchor in ('a-content-type', 'field-types', 'how-an-entry-looks', 'show-it-on-a-page'):
+            self.assertIn(f'id="{anchor}"', types)
+        self.assertIn('href="/portal/console/content/"', types)
+        source = (ROOT / 'src/content/docs/portal/sites/content-types.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'repositor', 'Hub'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_seo(self):
         doc = page('/portal/sites/seo/')
         for anchor in ('what-each-page-says', 'describe-a-page', 'describe-a-site', 'what-crawlers-are-told'):

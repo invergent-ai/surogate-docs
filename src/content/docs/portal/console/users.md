@@ -97,7 +97,7 @@ To link a **certificate**, choose **Certificate** as the source and type the **C
 
 Under **Personal data** on a person's page, an administrator answers a data protection (GDPR) request.
 
-- **Export data** saves, as one file, everything the portal holds on the person: their details, roles, groups, organizations, linked accounts, tokens, sessions, audit events and how they arranged their personal dashboards, and what each of the portal's apps holds. If an app does not answer, the console says the file is incomplete.
+- **Export data** saves, as one file, everything the portal holds on the person: their details, roles, groups, organizations, linked accounts, tokens, sessions, audit events, how they arranged their personal dashboards and which content entries they wrote or published, and what each of the portal's apps holds. If an app does not answer, the console says the file is incomplete.
 - **Erase person** removes them everywhere. Type their email to confirm and press **Erase**.
 
 ![Erase Dan Ion?, with the email typed to confirm and the Erase button.](../../../../assets/screenshots/portal-erase.png)
