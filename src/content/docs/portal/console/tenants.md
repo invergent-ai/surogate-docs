@@ -25,31 +25,14 @@ Open a tenant to see its **Sites**. A site answers at one or more addresses: a d
 
 The tenant's console is then at `/_portal/admin/` on these addresses, and its administrators sign in there.
 
-## Config
-
-The **Config** card connects the tenant to the place its pages and apps are kept. Your implementation team gives you the **Repository address** and the **Branch or tag**. Press **Sync now** to bring in their latest changes: the card says whether the new config is live or what is wrong with it. A sync also asks each app what it offers. If an app cannot be reached, or offers something wrong, the sync is refused and the pages stay as they were.
-
-### A private repository
-
-If the repository is private, your implementation team also gives you a **User name** and an **Access token** that can read it. Type them under **Private repository** and press **Save**.
-
-- A saved token is never shown again, not even here. To replace it, type a new one and press **Save**; leave the field empty to keep it.
-- **Remove credential** forgets it.
-- The token is only sent to an `https` address. If you change the repository to another server, type the token again.
-
-From the command line, the token comes on standard input so it stays out of your shell history:
-
-```
-portal config source <tenant> <repository address> --username <user name> --token-stdin
-```
+## Site files
 
 ### Kept by the portal
 
-The portal can keep a tenant's site files itself. Each saved change then becomes a version the tenant's administrators can see and undo on their [Versions](/portal/console/versions/) page.
+The portal keeps every tenant's site files itself, your own tenant's too. Each saved change becomes a version the tenant's administrators can see and undo on their [Versions](/portal/console/versions/) page. The card says **Kept by the portal** and since when the site is live.
 
-- On an install set up for it, a new tenant's files are kept by the portal from the start. Its card says **Kept by the portal** and has no repository to set.
-- A tenant whose files come from a repository has **Move into the portal**. The portal copies the files as they are now, as one version, and keeps them from then on. The tenant's site stays as it is while it moves. If the files would break the site, nothing moves and the card says what is wrong.
-- Once moved, the files no longer come from the repository.
+- **Make the newest version live** reads the files again and makes the newest version live. The card says whether it went live or what is wrong with it. It also asks each app what it offers; if an app cannot be reached, or offers something wrong, the pages stay as they were.
+- A tenant the portal does not keep yet, such as one made while the store was not answering, has **Keep its files**. The portal keeps the files that are live now, as one version, and from then on. The site stays as it is.
 
 ## Give a tenant an administrator
 

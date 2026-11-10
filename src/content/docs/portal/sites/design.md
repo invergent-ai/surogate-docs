@@ -3,7 +3,7 @@ title: Give a site its look
 description: A site's colours, fonts and spacing come from its design package, kept with the site's files.
 ---
 
-A site looks the way its design package says: its colours, fonts, text sizes, spacing and corners. The package sits beside the site's pages in the config repository, so a change to the look is reviewed and merged like any other change. Apps' widgets on the site take the same look.
+A site looks the way its design package says: its colours, fonts, text sizes, spacing and corners. The package sits beside the site's pages in its files, so a change to the look is saved, and can be undone, like any other change. Apps' widgets on the site take the same look.
 
 A site without a package has the portal's own look. A site's own frame, its header, navigation and footer, is a [layout](/portal/sites/layouts/) that styles itself with the same tokens.
 
@@ -86,7 +86,7 @@ The check fails when text is hard to read against its background, so a palette w
 
 ## Design it in the studio
 
-Administrators can explore a look in the portal's [design studio](/portal/console/studio/) before writing the package: describe the brand, see pages in it, and change it until it is right. The package in the config repository is still what the site uses.
+Administrators can explore a look in the portal's [design studio](/portal/console/studio/) before writing the package: describe the brand, see pages in it, and change it until it is right. The package in the site's files is still what the site uses.
 
 ## For apps
 

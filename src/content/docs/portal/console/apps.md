@@ -48,7 +48,7 @@ The status says whether the app needs you again:
 
 A new version that asks for the same things, or less, stays approved. If the app changed while you were reading, approving it is refused: look at it again and approve what it is now.
 
-If an app shows **Its manifest has not been read yet**, the portal has not yet read from the app what it offers. Whoever manages tenants presses **Sync now** on the tenant's [Config](/portal/console/tenants/#config) card.
+If an app shows **Its manifest has not been read yet**, the portal has not yet read from the app what it offers. Whoever manages tenants presses **Make the newest version live** on the tenant's [Site files](/portal/console/tenants/#kept-by-the-portal) card.
 
 ## Revoke an app
 
