@@ -283,6 +283,17 @@ class Content(unittest.TestCase):
             for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'index', 'repositor', 'store', 'Vault'):
                 self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
 
+    def test_portal_file_actions(self):
+        doc = page('/portal/sites/actions/')
+        self.assertIn('id="files"', doc)
+        values = (ROOT / 'src/content/docs/portal/sites/values.md').read_text()
+        for kind in ('`http`', '`collection`'):
+            self.assertIn(kind, values)
+        self.assertIn('files: {', (ROOT / 'src/content/docs/portal/sites/flows.md').read_text())
+        source = (ROOT / 'src/content/docs/portal/sites/actions.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_files_kept_by_the_portal(self):
         for path in ('src/content/docs/portal/console/tenants.md', 'src/content/docs/portal/sites/previews.md',
                      'src/content/docs/portal/sites/design.md'):
