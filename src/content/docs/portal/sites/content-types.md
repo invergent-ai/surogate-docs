@@ -65,6 +65,27 @@ A rich text field holds paragraphs and other blocks. It stands directly in a blo
 
 Each entry is an `article` with the class `portal-content`; a list of entries is a `div` with the class `portal-content-list`. Style them in the site's layout stylesheet.
 
+## Vocabularies
+
+A vocabulary sorts entries into categories, such as Topics or Area. Each is a file, `content/vocabularies/<id>.yaml`:
+
+```yaml
+name: { ro: Teme, en: Topics }
+types: [news, events]   # the content types it sorts; left out, all of them
+multiple: true          # an entry may take several of its categories; false allows one
+categories:
+  - id: roads
+    name: { ro: Drumuri, en: Roads }
+    children:
+      - { id: winter, name: { ro: Iarna, en: Winter } }
+  - { id: "2024", name: { ro: "2024", en: "2024" } }
+```
+
+- A category's id is lower-case letters, digits and hyphens, unique in its vocabulary. Categories nest at most five levels deep, 500 per vocabulary; a portal has at most 20 vocabularies.
+- A category is named by its vocabulary and its id: `topics/winter`.
+- People choose an entry's categories, and type its tags, in the [content editor](/portal/console/content/#categories-and-tags).
+- Categories and tags sort and filter entries; pages do not show them yet.
+
 ## Show it on a page
 
 A placement of the portal's content widget shows a site's published entries of one type:
@@ -76,7 +97,7 @@ A placement of the portal's content widget shows a site's published entries of o
   preferences: { type: news, list: { limit: 5, order: newest } }
 ```
 
-- **`list`**: the newest entries, `limit` from 1 to 50 (10 when left out), `order` `newest`, `oldest` or `title`.
+- **`list`**: the newest entries, `limit` from 1 to 50 (10 when left out), `order` `newest`, `oldest` or `title`. `category: topics/roads` shows only the entries in that category or one under it, and `tag: iarna` only those with the tag; both together show the entries that have both.
 - **`entry`**: one entry, by its address: `preferences: { type: news, entry: program-de-iarna }`.
 
 A value that no longer fits its field, after the type changed, is left out rather than breaking the page.
