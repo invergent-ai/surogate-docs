@@ -500,12 +500,13 @@ export default defineConfig({
                 'portal/console/search',
                 'portal/console/files',
                 'portal/console/forms',
+                'portal/console/flows',
                 'portal/console/versions',
               ],
             },
             {
               label: 'Sites',
-              items: ['portal/sites/permissions', 'portal/sites/apps', 'portal/sites/build-an-app', 'portal/sites/develop-locally', 'portal/sites/check-a-site', 'portal/sites/design', 'portal/sites/layouts', 'portal/sites/content-types', 'portal/sites/seo', 'portal/sites/search', 'portal/sites/forms', 'portal/sites/actions', 'portal/sites/agents', 'portal/sites/previews'],
+              items: ['portal/sites/permissions', 'portal/sites/apps', 'portal/sites/build-an-app', 'portal/sites/develop-locally', 'portal/sites/check-a-site', 'portal/sites/design', 'portal/sites/layouts', 'portal/sites/content-types', 'portal/sites/seo', 'portal/sites/search', 'portal/sites/forms', 'portal/sites/actions', 'portal/sites/flows', 'portal/sites/values', 'portal/sites/agents', 'portal/sites/previews'],
             },
             {
               label: 'Reference',

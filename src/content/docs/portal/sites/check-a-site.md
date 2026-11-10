@@ -14,6 +14,7 @@ portal check ./portal-config
 - Every file is checked against its schema, with the file and the field for each problem.
 - Every app's manifest is read from the app, as the portal reads it when it syncs. Every widget a page places, and its preferences, must be one the app has. An app that cannot be reached is named, with its address and what it answered, and everything else is still checked.
 - `--offline` checks the files alone and asks no app.
+- Every [logic flow's tests](/portal/sites/flows/#tests) are run, at most 500 in all. Each failing test is reported against its flow, with why it failed. `--no-flow-tests` leaves them out.
 
 ## Permission sanity
 
