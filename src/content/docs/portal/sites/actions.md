@@ -95,6 +95,20 @@ The file actions work on a folder of the portal's files, one written in `content
 
 A file written stays written, even if a later action fails.
 
+## Records
+
+These actions work on the records of a [data model](/portal/sites/data-models/). They act as the person whose run it is, a visitor too, with the model's permissions.
+
+| Type | What it does | Takes |
+|---|---|---|
+| `createRecord` | Adds a record | `model`, `values` (field: expression), `into` |
+| `updateRecord` | Changes the fields given | `model`, `id`, `values` |
+| `deleteRecord` | Deletes a record | `model`, `id` |
+| `getRecord` | Reads one record | `model`, `id`, `into` |
+| `findRecords` | Finds records by filterable fields | `model`, `where` (field: expression), `sort`, `limit` (at most 100), `into` |
+
+Each change is made at once: when a later action fails, what was changed stays. A run makes at most 20 changes and 50 reads. A [named value](/portal/sites/values/) never reaches records. A flow's test uses its own records: `records: { <model>: [ { ... } ] }`.
+
 ## UI actions
 
 A form's actions can tell the page what to do once everything else is done. These do not end the run, and at most 10 count:

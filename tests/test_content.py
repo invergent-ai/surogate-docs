@@ -305,6 +305,17 @@ class Content(unittest.TestCase):
             for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'index', 'repositor', 'localStorage'):
                 self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
 
+    def test_portal_data_models(self):
+        doc = page('/portal/sites/data-models/')
+        for anchor in ('a-model', 'fields', 'who-may-do-what', 'when-the-file-changes', 'the-api'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('id="records"', page('/portal/sites/actions/'))
+        self.assertIn('href="/portal/sites/data-models/"', page('/portal/console/data/'))
+        for path in ('sites/data-models.md', 'console/data.md'):
+            source = (ROOT / 'src/content/docs/portal' / path).read_text()
+            for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'schema'):
+                self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
+
     def test_portal_files_kept_by_the_portal(self):
         for path in ('src/content/docs/portal/console/tenants.md', 'src/content/docs/portal/sites/previews.md',
                      'src/content/docs/portal/sites/design.md'):
