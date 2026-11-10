@@ -55,4 +55,4 @@ pages:
 
 The title is the model's name when left out. A path that a written page already has is refused.
 
-Each model also has its own form, `model-<id>` (an `_` in the id becomes `-`), to place like any [form](/portal/sites/forms/): one field for each of the model's fields except links, sent to a new record. Who may send it is who may add records.
+Each model also has its own form, `model-<id>` (an `_` in the id becomes `-`), to place like any [form](/portal/sites/forms/): one field for each of the model's fields except links, sent to a new record. Who may send it is who may add records: with `add: [everyone]`, visitors too, even where the form is placed on no page. The record holds what was sent; the form keeps its own copy for a day only.
