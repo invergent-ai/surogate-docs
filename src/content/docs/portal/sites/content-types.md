@@ -86,6 +86,22 @@ categories:
 - People choose an entry's categories, and type its tags, in the [content editor](/portal/console/content/#categories-and-tags).
 - Categories and tags sort and filter entries; pages do not show them yet.
 
+## Libraries
+
+A library holds content shared by several sites, such as announcements every site of a city hall shows. Its own editors write its entries; pages of the sites it serves show them. Each library is a file, `content/libraries/<id>.yaml`:
+
+```yaml
+name: { ro: Comune, en: Shared }
+sites: [main, turism]                    # left out, every site; [] none
+permissions: { edit: [group:Comunicare] }
+```
+
+- Who edits a library: the people and groups its `edit` names, those given it on [Access](/portal/console/access/), and the administrators. A site's editors do not, unless named.
+- A library's entries are written in the portal's languages, Romanian and English. A site shows them in its own languages, falling back to its main one.
+- A site the portal no longer has is forgotten. A library left with no site serves none.
+- Removing a library keeps its entries out of reach; saving a library again under the same id brings them back, published ones included.
+- At most 20 libraries.
+
 ## Show it on a page
 
 A placement of the portal's content widget shows a site's published entries of one type:
@@ -99,5 +115,6 @@ A placement of the portal's content widget shows a site's published entries of o
 
 - **`list`**: the newest entries, `limit` from 1 to 50 (10 when left out), `order` `newest`, `oldest` or `title`. `category: topics/roads` shows only the entries in that category or one under it, and `tag: iarna` only those with the tag; both together show the entries that have both.
 - **`entry`**: one entry, by its address: `preferences: { type: news, entry: program-de-iarna }`.
+- **`library`**: the entries of a library instead of the site's own, on a site the library serves: `preferences: { type: news, library: shared, list: { limit: 5 } }`.
 
 A value that no longer fits its field, after the type changed, is left out rather than breaking the page.
