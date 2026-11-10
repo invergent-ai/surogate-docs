@@ -307,7 +307,7 @@ class Content(unittest.TestCase):
 
     def test_portal_data_models(self):
         doc = page('/portal/sites/data-models/')
-        for anchor in ('a-model', 'fields', 'who-may-do-what', 'when-the-file-changes', 'the-api'):
+        for anchor in ('a-model', 'fields', 'who-may-do-what', 'when-the-file-changes', 'the-api', 'graphql', 'relations'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="records"', page('/portal/sites/actions/'))
         self.assertIn('href="/portal/sites/data-models/"', page('/portal/console/data/'))
