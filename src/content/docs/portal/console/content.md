@@ -9,6 +9,13 @@ description: Write a site's news, announcements and other entries, save drafts, 
 
 Next to the sites, **Site** lists the [libraries](/portal/sites/content-types/#libraries) you edit, as **Library:** and their name. A library's entries are written once and shown by every site it serves.
 
+## Overview
+
+The Content page opens with where your content stands, for each site and library you edit:
+- per content type, how many entries are **Drafts**, **Published**, and published **With changes** not published yet;
+- **Recently changed**: the ten entries changed last, each opening in the editor;
+- **Tags in use**: the tags of published entries, with how many entries have each.
+
 ## Find an entry
 
 Choose the **Site** and the **Content type**. The list shows each entry with its title, its address and when it last changed. **Search** finds entries by their title, their text or their address.
