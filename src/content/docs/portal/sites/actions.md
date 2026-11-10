@@ -43,7 +43,7 @@ Values are worked out with [CEL](https://cel.dev), the expression language Keel 
 | `now` | When the run started |
 | `vars` | The values earlier actions set |
 
-Whole numbers are integers, the others decimals. Reading a field that was not sent is an error; check it first with `has(form.phone)`. Beside CEL's own functions there are `replace(text, a, b)`, `urlEncode(text)`, `slice(list or text, from, to)`, `sort(list)`, `round`, `floor` and `ceil`.
+Whole numbers are integers, the others decimals; the two mix in arithmetic, so `form.price * 1.19` works whatever was typed. Reading a field that was not sent is an error; check it first with `has(form.phone)`. A name that is not in the table above is refused when the file is saved. Beside CEL's own functions there are `replace(text, a, b)`, `urlEncode(text)`, `slice(list or text, from, to)`, `sort(list)`, `round`, `floor` and `ceil`.
 
 ## The actions
 
@@ -59,7 +59,7 @@ Whole numbers are integers, the others decimals. Reading a field that was not se
 | `wait` | Waits up to 5 seconds | `ms` |
 | `parseJson` | Reads JSON text into a value | `from`, `into` |
 | `toJson` | Writes a value as JSON text | `from`, `into` |
-| `message` | Tells the person something, and ends the run | `text`, in each language |
+| `message` | Tells the person something, and ends the run; `{{ vars.name }}` puts in a value an action set | `text`, in each language |
 | `redirect` | Sends the person to another page, and ends the run | `to` |
 
 A `redirect` goes to a page of the same site, or to another https site the form names under `redirects`.
@@ -68,4 +68,4 @@ A `redirect` goes to a page of the same site, or to another https site the form 
 
 An action that fails runs its `onError` actions, and the list goes on. Without them, the failure goes up to the enclosing group's `onError`, and otherwise ends the run. Inside `onError`, `vars.error.message` says what went wrong.
 
-A run stops after 10 seconds or 10,000 steps, and a loop goes over at most 1,000 items. Each run is kept for 30 days, with its log; reviewers see them under **Runs** on [Forms](/portal/console/forms/#runs).
+A run stops after 10 seconds or 10,000 steps, a loop goes over at most 1,000 items, and a value is at most 1 MB. When the portal is very busy, a run may not start; the form is still kept, and the person is told that what follows could not be done. Each run is kept for 30 days, with its log; reviewers see them under **Runs** on [Forms](/portal/console/forms/#runs).
