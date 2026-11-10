@@ -92,3 +92,35 @@ Records are served at the portal's address:
 - `DELETE /_portal/api/data/<model>/<id>` deletes one.
 
 Adding, changing and deleting need someone signed in; an app's token needs the `data` access. A record someone may not see answers as if it did not exist. A value that does not fit its field is refused, naming the field.
+
+## GraphQL
+
+The same records answer GraphQL at `POST /_portal/api/graphql`, with the same rules as the API above. Each person sees only the models they may reach:
+
+- `get_<model>(id: "…")` reads one record, or gives null when there is none for them.
+- `list_<model>(first, after, q, sort, filter)` lists records, with `items` and `next` as above. `filter` takes the filterable fields.
+- `create_<model>(values: {…})`, `update_<model>(id: "…", values: {…})` and `delete_<model>(id: "…")` change records. They are offered only to someone signed in, never to visitors, and never while an administrator sees the portal as someone else.
+
+A record has `id`, `ownerId`, `createdAt`, `updatedAt` and its fields. A link gives the linked record, when the person may see it.
+
+```graphql
+{
+  list_requests(first: 20, filter: { status: "new" }) {
+    items { id subject applicant { name } }
+    next
+  }
+}
+```
+
+```graphql
+mutation {
+  create_requests(values: { subject: "Fence repair" }) { id }
+}
+```
+
+A request may nest 6 levels and ask for 10 things at its top. One that would read more than 2000 records stops with `too_costly`. A refused value names its field in `extensions.field`. Every change is in the [audit log](/portal/console/audit/), one entry each.
+
+## Relations
+
+**Data** in the console draws how the models link, and says the same in words: each link, the model it points at, and whether it holds one record or many.
+
