@@ -5,7 +5,7 @@ description: Write a form, put it on a page or give it its own address, say who 
 
 A form asks visitors or people signed in for something: a request, a registration, a complaint. The portal draws it, checks what is sent, and keeps it for the people who review the form, on [Forms](/portal/console/forms/) in the console.
 
-Forms are written in [form.io](https://form.io)'s format: the components form.io's builder makes, as JSON or YAML.
+Forms are written in [form.io](https://form.io)'s format: the components form.io's builder makes, as JSON or YAML. Administrators can also [build them in the console](/portal/console/forms/#build-a-form), without writing the file.
 
 ## Write a form
 

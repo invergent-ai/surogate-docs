@@ -232,10 +232,11 @@ class Content(unittest.TestCase):
                        'put-a-form-on-a-page', 'its-own-address', 'what-the-portal-checks', 'from-an-app'):
             self.assertIn(f'id="{anchor}"', guide)
         console = page('/portal/console/forms/')
-        for anchor in ('what-the-list-shows', 'read-a-submission', 'export', 'delete'):
+        for anchor in ('what-the-list-shows', 'read-a-submission', 'export', 'delete', 'build-a-form'):
             self.assertIn(f'id="{anchor}"', console)
         self.assertIn('href="/portal/sites/forms/"', console)
         self.assertIn('id="forms"', page('/portal/console/pages/'))
+        self.assertIn('href="/portal/console/forms/#build-a-form"', guide)
         for path in ('src/content/docs/portal/sites/forms.md', 'src/content/docs/portal/console/forms.md'):
             source = (ROOT / path).read_text()
             for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'MongoDB', 'Postgres'):
