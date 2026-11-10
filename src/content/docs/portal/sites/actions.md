@@ -66,8 +66,34 @@ Whole numbers are integers, the others decimals; the two mix in arithmetic, so `
 | `http` | Calls a service through a [connector](/portal/sites/connectors/#call-a-service) | `connector`, `method`, `path`, `query`, `headers`, `body`, `okStatus`, `into` |
 | `email` | Sends an [email](/portal/sites/connectors/#email) once the run ends well | `to`, `subject`, `text` |
 | `hash`, `hmac`, `randomToken`, `uuid` | [Hashes, signatures and random values](/portal/sites/connectors/#hashes-signatures-and-random-values) | |
+| `listFiles` | Lists a [folder](#files)'s files | `folder`, `into` |
+| `readFile` | Reads a file | `folder`, `name`, `encoding` (`text` or `base64`), `into` |
+| `writeFile` | Writes a file | `folder`, `name`, `content`, `encoding` |
+| `deleteFile` | Deletes a file | `folder`, `name` |
 
 A `redirect` goes to a page of the same site, or to another https site the form names under `redirects`.
+
+## Files
+
+The file actions work on a folder of the portal's files, one written in `content/folders/`.
+
+- **Who may do what:**
+  - Someone who edits the folder does what they could under Files in the console.
+  - Anyone else, a visitor too, may only make a new file, and never in a public folder. A file of the same name already there makes the action fail.
+- **Names:** a file's name is lower-case letters, digits, dots, `-` and `_`, with an extension the portal keeps.
+- **Limits:**
+  - a file is at most 700 KB;
+  - a run reads at most 50 times and changes files at most 20 times;
+  - a listing gives at most 1,000 names.
+
+```yaml
+- type: writeFile
+  folder: requests
+  name: '"request-" + submission.id + ".txt"'
+  content: '"From " + form.name + ": " + form.message'
+```
+
+A file written stays written, even if a later action fails.
 
 ## When something fails
 

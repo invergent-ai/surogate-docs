@@ -18,9 +18,17 @@ ttl: 3600
 value: "1.19"
 ```
 
-A value is either:
+A value is one of:
 - `value`: an expression;
 - `flow`: a flow's outputs, with `flow: { id, inputs }`. Read one output as `values.<name>.<output>`.
+- `http`: what a service answers, with `http: { connector, path, query }`.
+  - It is a GET through a web [connector](/portal/sites/connectors/).
+  - The value is the answer's body.
+  - An answer that is not 2xx fails it.
+  - A value kept for the whole portal or a site cannot use a connector that each person connects themselves.
+- `collection`: the published entries of a content collection, with `collection: <id>`.
+  - Each entry is `id`, `slug` and `values`.
+  - It is read before the list runs, and is as fresh as the value's `ttl`.
 
 ## How long it is kept
 
