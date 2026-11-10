@@ -9,8 +9,9 @@ A site's search box finds its pages and its published content, in the visitor's 
 
 - **Pages:** each page's title, its description for search engines, and the text of its text blocks. Text in a part of a page that only some people may see is left out, and so are fragments, which repeat on many pages. Display pages and personal dashboards are not found themselves.
 - **Content:** each published entry that has its own address, through a [display page](/portal/sites/content-types/#display-pages): its title and its text. An entry from a library is found on every site whose display page shows it.
+- **Files:** the files in the tenant's [folders](/portal/console/files/), by the words of their names and by their text: PDF, Word, Excel and PowerPoint documents, OpenDocument files, text, CSV and JSON. Images and ZIP archives are found by their names. A file is found only by people who may download it: anyone for a public folder, the people the folder names (and its editors) for a secure one. A result opens the file.
 
-Search follows the site: a page saved, or an entry published, unpublished or deleted, shows in the results within moments.
+Search follows the site: a page saved, an entry published, unpublished or deleted, or a file uploaded or removed, shows in the results within moments.
 
 ## How words match
 

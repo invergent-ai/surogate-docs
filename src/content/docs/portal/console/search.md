@@ -33,7 +33,7 @@ They come first on the first page of results for that search, when no filter nar
 ## What search leaves out
 
 - **Pages left out**: one address per line. `/intern/*` leaves out `/intern` and everything under it.
-- **Content left out**: tick the content types search never finds.
+- **Content left out**: tick the content types search never finds, or **Files** for it never to find the tenant's files on this site.
 
 ## Typos and word starts
 
