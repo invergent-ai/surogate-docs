@@ -205,6 +205,17 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'R2', 'S3'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_display_pages(self):
+        doc = page('/portal/console/pages/')
+        self.assertIn('id="display-pages"', doc)
+        types = page('/portal/sites/content-types/')
+        self.assertIn('id="display-pages"', types)
+        self.assertIn('href="/portal/console/pages/#display-pages"', types)
+        for path in ('src/content/docs/portal/console/pages.md', 'src/content/docs/portal/sites/content-types.md'):
+            source = (ROOT / path).read_text()
+            for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub'):
+                self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
+
     def test_portal_seo(self):
         doc = page('/portal/sites/seo/')
         for anchor in ('what-each-page-says', 'describe-a-page', 'describe-a-site', 'what-crawlers-are-told'):
