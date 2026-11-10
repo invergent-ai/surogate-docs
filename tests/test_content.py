@@ -172,7 +172,7 @@ class Content(unittest.TestCase):
 
     def test_portal_content(self):
         doc = page('/portal/console/content/')
-        for anchor in ('find-an-entry', 'write-an-entry', 'categories-and-tags', 'publish', 'history', 'when-someone-else-is-editing', 'show-content-on-a-page'):
+        for anchor in ('overview', 'find-an-entry', 'write-an-entry', 'categories-and-tags', 'publish', 'history', 'when-someone-else-is-editing', 'show-content-on-a-page'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/content/#show-content-on-a-page"', page('/portal/console/pages/'))
         self.assertIn('href="/portal/sites/content-types/#libraries"', doc)
