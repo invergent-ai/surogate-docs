@@ -230,17 +230,18 @@ class Content(unittest.TestCase):
         guide = page('/portal/sites/forms/')
         for anchor in ('write-a-form', 'what-a-form-may-hold', 'translations', 'who-sends-it-and-who-reads-what-was-sent',
                        'put-a-form-on-a-page', 'its-own-address', 'what-the-portal-checks', 'from-an-app',
-                       'come-back-to-a-form', 'ask-for-consent', 'tell-the-reviewers', 'keep-submissions-for-a-time'):
+                       'come-back-to-a-form', 'ask-for-consent', 'tell-the-reviewers', 'keep-submissions-for-a-time',
+                       'fill-in-a-form-offline'):
             self.assertIn(f'id="{anchor}"', guide)
         console = page('/portal/console/forms/')
-        for anchor in ('what-the-list-shows', 'read-a-submission', 'export', 'delete', 'build-a-form'):
+        for anchor in ('what-the-list-shows', 'read-a-submission', 'report', 'export', 'delete', 'build-a-form'):
             self.assertIn(f'id="{anchor}"', console)
         self.assertIn('href="/portal/sites/forms/"', console)
         self.assertIn('id="forms"', page('/portal/console/pages/'))
         self.assertIn('href="/portal/console/forms/#build-a-form"', guide)
         for path in ('src/content/docs/portal/sites/forms.md', 'src/content/docs/portal/console/forms.md'):
             source = (ROOT / path).read_text()
-            for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'MongoDB', 'Postgres', 'SMTP', 'outbox'):
+            for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'MongoDB', 'Postgres', 'SMTP', 'outbox', 'IndexedDB', 'service worker'):
                 self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
 
     def test_portal_files_kept_by_the_portal(self):
