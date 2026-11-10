@@ -57,6 +57,10 @@ A page template is a page's starting point: a layout and what its parts hold.
 - When you make a **New page**, **Start from** offers the site's templates.
 - **Remove** takes a template off the site; pages made from it keep what they hold.
 
+## Search
+
+**Add a search box** puts the site's search in a part of the page: a box, and the results below it. See [Search](/portal/sites/search/) for what it finds and for whom.
+
 ## Display pages
 
 A display page shows one entry at a time: each published entry of a content type gets its own address, the page's address followed by the entry's. A display page at `/stire` shows the entry `program-de-iarna` at `/stire/program-de-iarna`.

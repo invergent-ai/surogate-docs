@@ -216,6 +216,16 @@ class Content(unittest.TestCase):
             for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub'):
                 self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
 
+    def test_portal_search(self):
+        doc = page('/portal/sites/search/')
+        for anchor in ('what-search-finds', 'how-words-match', 'who-finds-what', 'put-a-search-box-on-a-page'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('id="search"', page('/portal/console/pages/'))
+        self.assertIn('href="/portal/sites/search/"', page('/portal/console/pages/'))
+        source = (ROOT / 'src/content/docs/portal/sites/search.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'OpenSearch', 'index'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_seo(self):
         doc = page('/portal/sites/seo/')
         for anchor in ('what-each-page-says', 'describe-a-page', 'describe-a-site', 'what-crawlers-are-told'):
