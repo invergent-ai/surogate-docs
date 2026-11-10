@@ -61,6 +61,10 @@ A page template is a page's starting point: a layout and what its parts hold.
 
 **Add a search box** puts the site's search in a part of the page: a box, and the results below it. See [Search](/portal/sites/search/) for what it finds and for whom.
 
+## Forms
+
+**Add a form** puts one of the portal's forms in a part of the page; it offers the forms the site offers, at most five on a page. People who may not send the form do not see it. See [Forms](/portal/sites/forms/) for writing a form and saying who sends it.
+
 ## Display pages
 
 A display page shows one entry at a time: each published entry of a content type gets its own address, the page's address followed by the entry's. A display page at `/stire` shows the entry `program-de-iarna` at `/stire/program-de-iarna`.
