@@ -29,6 +29,9 @@ A value is one of:
 - `collection`: the published entries of a content collection, with `collection: <id>`.
   - Each entry is `id`, `slug` and `values`.
   - It is read before the list runs, and is as fresh as the value's `ttl`.
+  - Only a public collection that visitors may read can be a value, since a value may reach anyone. Each entry's values are shown in the run's language.
+
+A value never reaches the portal's files: a value kept for others must not hold what only some people may read.
 
 ## How long it is kept
 
