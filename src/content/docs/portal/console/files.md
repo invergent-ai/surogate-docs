@@ -27,7 +27,7 @@ Choose the **Folder**, then **Upload** a file. The portal keeps:
 - images (PNG, JPEG, GIF, WebP, AVIF) and text, which browsers show;
 - PDFs, Word, Excel and PowerPoint documents, OpenDocument files, CSV, JSON and ZIP archives, which browsers download.
 
-A file is at most 10 MB. Its name becomes lower case, with other characters as hyphens: `Cerere Înscriere.PDF` becomes `cerere-inscriere.pdf`. Uploading a file of the same name replaces it.
+A file is at most 10 MB. Its name becomes lower case, with other characters as hyphens: `Cerere Înscriere.PDF` becomes `cerere-inscriere.pdf`. Uploading a file of the same name replaces it, after the console asks you; links then open the new file.
 
 ## Link to a file
 
