@@ -40,7 +40,7 @@ A search box shows when the model has searchable fields. Sortable columns sort w
 
 **Open** shows a record's details below the list, with the title of the records it links to when the person may see them. Its address can be shared: `?p_<placement id>_record=<record id>`. Search engines are told not to keep such addresses.
 
-**Add** and **Edit** open a small form with the model's fields; links are not edited there. A change sends only what was changed. A value the model refuses is shown with its field.
+**Add** and **Edit** open a small form with the model's fields. A link is chosen with **Choose**, from a list of the linked model's records, as a form's [record field](/portal/sites/forms/#pick-a-record) does. A change sends only what was changed. A value the model refuses is shown with its field.
 
 ## A model's own pages and form
 
@@ -55,4 +55,4 @@ pages:
 
 The title is the model's name when left out. A path that a written page already has is refused.
 
-Each model also has its own form, `model-<id>` (an `_` in the id becomes `-`), to place like any [form](/portal/sites/forms/): one field for each of the model's fields except links, sent to a new record. Who may send it is who may add records: with `add: [everyone]`, visitors too, even where the form is placed on no page. The record holds what was sent; the form keeps its own copy for a day only.
+Each model also has its own form, `model-<id>` (an `_` in the id becomes `-`), to place like any [form](/portal/sites/forms/): one field for each of the model's fields, links as [record fields](/portal/sites/forms/#pick-a-record), sent to a new record. Who may send it is who may add records: with `add: [everyone]`, visitors too, even where the form is placed on no page. The record holds what was sent; the form keeps its own copy for a day only.

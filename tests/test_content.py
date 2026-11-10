@@ -325,6 +325,12 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'schema', 'role'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_pick_a_record(self):
+        self.assertIn('id="pick-a-record"', page('/portal/sites/forms/'))
+        self.assertIn('href="/portal/sites/forms/#pick-a-record"', page('/portal/sites/listings/'))
+        source = (ROOT / 'src/content/docs/portal/sites/listings.md').read_text()
+        self.assertNotIn('links are not edited there', source)
+
     def test_portal_kpis(self):
         doc = page('/portal/sites/kpis/')
         for anchor in ('declare-them', 'show-them', 'what-each-person-sees'):
