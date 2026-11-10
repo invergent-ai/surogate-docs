@@ -93,6 +93,6 @@ A job tells no page anything and answers no one. It may not use a [connector](/p
 
 ## In the console
 
-**Jobs** lists every job: its trigger, the person it runs as and their roles, when it runs next, whether it runs now, how many changes it still has to run for, and its last runs with their logs. Runs are kept 30 days, with only their errors unless the job has `debug: true`. **Run now** runs it at once, as its person. Only its errors are kept in a run's log, unless the job has `debug: true`.
+**Jobs** lists every job: its trigger, the person it runs as and their roles, when it runs next, whether it runs now, how many changes it still has to run for, and its last runs with their logs. Runs are kept 30 days, with only their errors unless the job has `debug: true`. **Run now** runs it at once, as its person.
 
 The portal runs a job once for each time, however many servers it has.
