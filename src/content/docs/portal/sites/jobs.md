@@ -48,14 +48,51 @@ onError:
 
 `skipIfRunning: false` lets a run wait for the one before to end; by default, a time that comes while the job still runs is skipped and kept in its history. `misfire` says what happens to times missed while the portal was not running: `once` (the default) runs the job once, `skip` goes straight to the next time.
 
+## When records change
+
+A job can also start when a [data model's](/portal/sites/data-models/) records are created, updated or deleted:
+
+```yaml
+trigger:
+  record:
+    model: requests
+    on: [created, updated]
+site: main
+runAs: user:clerk@primaria.ro
+actions:
+  - type: log
+    level: info
+    message: '"Request " + string(trigger.op) + ": " + string(trigger.after.subject)'
+```
+
+Each change runs the job once, the oldest first. The run reads the change as `trigger`:
+
+| | |
+|---|---|
+| `trigger.op` | `created`, `updated` or `deleted` |
+| `trigger.id` | the record's id |
+| `trigger.before` | the record before the change (`null` when it was created) |
+| `trigger.after` | the record after it (`null` when it was deleted) |
+| `trigger.at` | when the change was made |
+
+`before` and `after` hold only what the job's person may see of that model: when they may see only their own records, another person's record is `null` there, and its id alone is given.
+
+A change made by a job may start jobs again, at most three deep, so a job that changes the record it was started by stops there; the job's history says so. At most 100 changes wait for a job; past that, new ones are not run, and the history says so once a minute. A change that is undone never starts a job. When a record linked from another is deleted and the link is cleared, that other record's change starts no job.
+
+**Run now** is for jobs on a time: a job started by records runs only for a change.
+
+## Send mail
+
+A job may send email with the `email` action, as forms do. Its mail leaves once the run ends well, within the portal's hourly room, and at most 100 recipients an hour for each job.
+
 ## What it may do
 
 The actions read `trigger` (`kind` is `time` or `manual`, `at` is the time it was due), the person as `user`, `site`, `vars` and `values`, and may call [flows](/portal/sites/flows/). A run has a minute.
 
-A job tells no page anything, answers no one and sends no mail. It may not use a [connector](/portal/sites/connectors/) that signs in as each person, since no one is at the keyboard.
+A job tells no page anything and answers no one. It may not use a [connector](/portal/sites/connectors/) that signs in as each person, since no one is at the keyboard.
 
 ## In the console
 
-**Jobs** lists every job: its trigger, the person it runs as and their roles, when it runs next, whether it runs now, and its last runs with their logs. **Run now** runs it at once, as its person. Only its errors are kept in a run's log, unless the job has `debug: true`.
+**Jobs** lists every job: its trigger, the person it runs as and their roles, when it runs next, whether it runs now, how many changes it still has to run for, and its last runs with their logs. Runs are kept 30 days, with only their errors unless the job has `debug: true`. **Run now** runs it at once, as its person.
 
 The portal runs a job once for each time, however many servers it has.
