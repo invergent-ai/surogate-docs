@@ -229,7 +229,8 @@ class Content(unittest.TestCase):
     def test_portal_forms(self):
         guide = page('/portal/sites/forms/')
         for anchor in ('write-a-form', 'what-a-form-may-hold', 'translations', 'who-sends-it-and-who-reads-what-was-sent',
-                       'put-a-form-on-a-page', 'its-own-address', 'what-the-portal-checks', 'from-an-app'):
+                       'put-a-form-on-a-page', 'its-own-address', 'what-the-portal-checks', 'from-an-app',
+                       'come-back-to-a-form', 'ask-for-consent', 'tell-the-reviewers', 'keep-submissions-for-a-time'):
             self.assertIn(f'id="{anchor}"', guide)
         console = page('/portal/console/forms/')
         for anchor in ('what-the-list-shows', 'read-a-submission', 'export', 'delete', 'build-a-form'):
@@ -239,7 +240,7 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/console/forms/#build-a-form"', guide)
         for path in ('src/content/docs/portal/sites/forms.md', 'src/content/docs/portal/console/forms.md'):
             source = (ROOT / path).read_text()
-            for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'MongoDB', 'Postgres'):
+            for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'MongoDB', 'Postgres', 'SMTP', 'outbox'):
                 self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
 
     def test_portal_files_kept_by_the_portal(self):
