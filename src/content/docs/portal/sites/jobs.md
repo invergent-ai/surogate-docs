@@ -1,6 +1,6 @@
 ---
 title: Automation jobs
-description: What the portal does on its own, on a schedule, as a set person: a trigger and a list of actions.
+description: "What the portal does on its own, on a schedule, as a set person: a trigger and a list of actions."
 ---
 
 An automation job is work the portal does on its own: count the new requests every morning, close what has waited too long, refresh figures every hour. It is a trigger and a list of [actions](/portal/sites/actions/), run as a set person on a set site.
