@@ -504,6 +504,7 @@ export default defineConfig({
                 'portal/console/connectors',
                 'portal/console/guides',
                 'portal/console/data',
+                'portal/console/data-console',
                 'portal/console/versions',
               ],
             },
