@@ -1,22 +1,22 @@
 ---
 title: Preview a change
-description: Show a change to a portal before it is merged, on a preview of its own, with fake people for each role and no real personal data.
+description: Show a change to a portal before it is saved, on a preview of its own, with fake people for each role and no real personal data.
 ---
 
-A preview is the portal from a branch of its config repository, or from a folder you have not pushed yet. It has its own address and fake people only, so you, a reviewer or a coding agent can see the change as an employee, a manager or a partner would. It expires by itself.
+A preview is the portal from a version of its site files, or from a folder you have not pushed yet. It has its own address and fake people only, so you, a reviewer or a coding agent can see the change as an employee, a manager or a partner would. It expires by itself.
 
 ## Make a preview
 
-From a branch of the portal's config repository:
-
-```sh
-portal preview create feature/new-menu
-```
-
-Or from a config folder on your machine:
+From a config folder on your machine:
 
 ```sh
 portal preview create --dir ./portal-config --ttl 120
+```
+
+Or from a version of the site's files: `main` for the newest, or a version's id from the [Versions](/portal/console/versions/) page:
+
+```sh
+portal preview create main
 ```
 
 The answer says:
@@ -67,9 +67,9 @@ This prints a session cookie for the preview's address, for a browser or a scrip
 
 | Tool | What it does |
 | --- | --- |
-| `create_preview` | makes a preview from a branch or from a folder inside the agent's project |
+| `create_preview` | makes a preview from a version or from a folder inside the agent's project |
 | `list_previews` | the live previews |
-| `sync_preview` | syncs one again, from its branch, another branch or a folder |
+| `sync_preview` | syncs one again, from its version, another version or a folder |
 | `delete_preview` | deletes one now |
 | `screenshot` | with `preview` and `as`, a picture of a preview's page as one of its people, such as `manager@preview.example` |
 | `read_logs` | with `preview`, the preview's own sync history and audit log |
@@ -77,12 +77,12 @@ This prints a session cookie for the preview's address, for a browser or a scrip
 ## Sync it again
 
 ```sh
-portal preview sync <id>                     # its branch again
-portal preview sync <id> feature/other       # another branch, from now on
+portal preview sync <id>                     # its version again
+portal preview sync <id> main                # the newest version, from now on
 portal preview sync <id> --dir ./portal-config
 ```
 
-A sync changes the preview's pages and apps; its people and its expiry stay as they are. A preview made from a folder needs a branch or a folder each time.
+A sync changes the preview's pages and apps; its people and its expiry stay as they are. A preview made from a folder needs a version or a folder each time.
 
 ## Its apps
 

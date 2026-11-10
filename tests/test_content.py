@@ -68,7 +68,7 @@ class Content(unittest.TestCase):
         self.assertIn('Act for a person', doc)
         self.assertIn('id="scopes"', page('/portal/console/tokens/'))
         self.assertIn('id="impersonate"', page('/portal/console/users/'))
-        self.assertIn('Private repository', page('/portal/console/tenants/'))
+        self.assertNotIn('Private repository', page('/portal/console/tenants/'))
         for route in ('/portal/console/service-accounts/', '/portal/console/tokens/',
                       '/portal/console/users/', '/portal/console/tenants/'):
             for word in ('kubectl', 'helm', 'PORTAL_'):
@@ -225,6 +225,13 @@ class Content(unittest.TestCase):
         source = (ROOT / 'src/content/docs/portal/sites/search.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'OpenSearch', 'index'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
+
+    def test_portal_files_kept_by_the_portal(self):
+        for path in ('src/content/docs/portal/console/tenants.md', 'src/content/docs/portal/sites/previews.md',
+                     'src/content/docs/portal/sites/design.md'):
+            source = (ROOT / path).read_text()
+            for word in ('git', 'Git', 'repositor', 'branch'):
+                self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
 
     def test_portal_seo(self):
         doc = page('/portal/sites/seo/')
