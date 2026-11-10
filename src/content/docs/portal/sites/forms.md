@@ -102,10 +102,52 @@ Fields the form does not have are dropped. A form that does not pass is not kept
 
 A visitor sends at most ten forms a minute from one address. A form filled in by a robot is thanked and not kept.
 
+## Come back to a form
+
+A long form can be left and finished later. For a person signed in, the portal keeps what they have typed a couple of seconds after they stop. When they open the form again, on any computer, it is filled in as they left it. What they began is deleted once they send the form, or after 30 days untouched.
+
+A visitor's draft stays in the browser tab only. Reloading the page keeps it; closing the tab forgets it, so nothing is left behind on a shared computer.
+
+Turn drafts off for a form with `drafts: false`.
+
+## Ask for consent
+
+A form can ask people to agree to something before they send it, such as how their data is used:
+
+```yaml
+consent:
+  text:
+    ro: Sunt de acord cu prelucrarea datelor mele pentru această cerere.
+    en: I agree to my data being used for this request.
+```
+
+The form shows a box to tick, with this text, before its button; a step-by-step form shows it as a last step. The form cannot be sent without the box ticked. The portal keeps the text the person agreed to, in their language, with what they sent. Reviewers see it on [Forms](/portal/console/forms/), and it is in the export. If the text changes while someone has the form open, they are asked to load the page again.
+
+## Tell the reviewers
+
+```yaml
+notify:
+  to: [registratura@primarie.ro]
+  answers: false
+```
+
+Each time the form is sent, the addresses under `to` (at most 20) get an email in the form's language with a link to Forms in the console. With `answers: true`, the email also holds the answers. Leave it off when the answers are personal data that should not travel by email. `subject` sets the email's subject in each language.
+
+Email is sent only when the portal has a mail server; ask whoever runs the portal.
+
+## Keep submissions for a time
+
+```yaml
+retention:
+  days: 365
+```
+
+Submissions older than this are deleted, a few times a day. Without `retention`, they are kept until someone deletes them.
+
 ## From an app
 
 Each sent form raises the portal's `form.submitted` event, with the form's id and the submission's. Wire it to an app's receiver, or to a webhook, on [Events](/portal/console/events/). A program reads submissions with a token given the **forms** scope, as one of the form's reviewers.
 
 ## Personal data
 
-What a signed-in person sent is part of their export, and is deleted when they are erased (see [Users](/portal/console/users/)). What a visitor sent names no one.
+What a signed-in person sent, and what they began, are part of their export, and are deleted when they are erased (see [Users](/portal/console/users/)). What a visitor sent names no one.
