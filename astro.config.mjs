@@ -496,6 +496,7 @@ export default defineConfig({
                 'portal/console/studio',
                 'portal/console/pages',
                 'portal/console/content',
+                'portal/console/content-types',
                 'portal/console/versions',
               ],
             },

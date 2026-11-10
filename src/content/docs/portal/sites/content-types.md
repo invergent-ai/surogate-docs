@@ -7,7 +7,7 @@ A content type says what a kind of entry holds, such as a news item's headline, 
 
 ## A content type
 
-Each content type is a file in the portal's files, `content/types/<id>.yaml`, shared by all the sites:
+Each content type is a file in the portal's files, `content/types/<id>.yaml`, shared by all the sites. Administrators can also build them in the console's [Content types](/portal/console/content-types/) page:
 
 ```yaml
 name: { ro: Știri, en: News }

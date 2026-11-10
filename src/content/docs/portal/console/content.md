@@ -3,7 +3,7 @@ title: Content
 description: Write a site's news, announcements and other entries, save drafts, and publish them when they are ready.
 ---
 
-**Content** is where a site's news, announcements and other entries are written. Each entry follows a content type, such as News or Announcement, which says what fields it has. Visitors see an entry only once it is published.
+**Content** is where a site's news, announcements and other entries are written. Each entry follows a content type, such as News or Announcement, which says what fields it has. Administrators build content types on [Content types](/portal/console/content-types/). Visitors see an entry only once it is published.
 
 **Content** is in the menu for the people who edit a site: its administrators, and the editors named for the site or given the site on [Access](/portal/console/access/). An administrator seeing the portal as someone else does not see it.
 
@@ -36,6 +36,10 @@ Each entry shows where it is:
 **Delete** removes the entry, its draft and every published version, after asking.
 
 Each publication is kept, the newest hundred.
+
+## History
+
+A published entry lists its publications under **History**: each version's number, when it was published and by whom. **Bring back version** puts that version back as the draft; publish it to show it to visitors. Save or undo your changes first.
 
 ## When someone else is editing
 
