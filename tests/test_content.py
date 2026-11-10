@@ -331,6 +331,14 @@ class Content(unittest.TestCase):
         source = (ROOT / 'src/content/docs/portal/sites/listings.md').read_text()
         self.assertNotIn('links are not edited there', source)
 
+    def test_portal_endpoints(self):
+        doc = page('/portal/sites/endpoints/')
+        for anchor in ('write-an-endpoint', 'parameters', 'its-actions-and-its-answer', 'who-may-call-it', 'keep-answers-and-other-sites', 'its-calls'):
+            self.assertIn(f'id="{anchor}"', doc)
+        source = (ROOT / 'src/content/docs/portal/sites/endpoints.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'CEL'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_kpis(self):
         doc = page('/portal/sites/kpis/')
         for anchor in ('declare-them', 'show-them', 'what-each-person-sees'):
