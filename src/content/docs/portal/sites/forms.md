@@ -169,6 +169,20 @@ components:
 
 The app's field is drawn by the app; its value is checked when the form is sent. A select's options come from the app as the person filling the form in. If the app does not answer, the form says it cannot be filled in right now. A form uses at most 10 such selects, and cannot be filled in offline. The console's builder keeps these parts when you edit the form, but does not offer them: write them in the file.
 
+## After it is sent
+
+A form can run [actions](/portal/sites/actions/) once it is sent and kept: work out a reference number, tell the person something, or send them to a payment page.
+
+```yaml
+redirects: [https://plati.example.ro]
+actions:
+  submitted:
+    - type: redirect
+      to: '"https://plati.example.ro/plata?ref=" + urlEncode(submission.id)'
+```
+
+If the actions fail, what was sent is still kept, and the person is told so, with the failing action's `errorMessage` when it has one.
+
 ## From an app
 
 Each sent form raises the portal's `form.submitted` event, with the form's id and the submission's. Wire it to an app's receiver, or to a webhook, on [Events](/portal/console/events/). A program reads submissions with a token given the **forms** scope, as one of the form's reviewers.

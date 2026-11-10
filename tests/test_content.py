@@ -245,6 +245,16 @@ class Content(unittest.TestCase):
             for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'MongoDB', 'Postgres', 'SMTP', 'outbox', 'IndexedDB', 'service worker'):
                 self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
 
+    def test_portal_actions(self):
+        doc = page('/portal/sites/actions/')
+        for anchor in ('an-action-list', 'expressions', 'the-actions', 'when-something-fails'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('id="after-it-is-sent"', page('/portal/sites/forms/'))
+        self.assertIn('id="runs"', page('/portal/console/forms/'))
+        source = (ROOT / 'src/content/docs/portal/sites/actions.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_files_kept_by_the_portal(self):
         for path in ('src/content/docs/portal/console/tenants.md', 'src/content/docs/portal/sites/previews.md',
                      'src/content/docs/portal/sites/design.md'):
