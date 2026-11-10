@@ -39,3 +39,19 @@ In a page's file, the search box is the portal's `search` widget:
 `limit` is how many results a page of results shows, from 1 to 50 (10 when left out). The box shows its results below it, with links to narrow them to pages or content, to one content type or one tag, and to the next page of results. It works without script.
 
 When search is not available, the box says so; the rest of the page shows as usual.
+
+## Tune search
+
+Each site can weigh titles against text, give words that mean the same, pin results to a search, leave pages and content types out, and turn typos and word starts on or off. Administrators do it on the console's [Search](/portal/console/search/) page; in the site's files it is `sites/<site>/search.yaml`:
+
+```yaml
+weights: { title: 3, body: 1 }
+synonyms:
+  ro: ["primărie, consiliu local"]
+pinned:
+  - { query: taxe, paths: [/taxe, /plata-online] }
+exclude: { paths: [/intern/*], types: [memo] }
+fuzzy: true
+wildcard: false
+```
+

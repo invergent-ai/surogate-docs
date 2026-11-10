@@ -233,6 +233,15 @@ class Content(unittest.TestCase):
             for word in ('git', 'Git', 'repositor', 'branch'):
                 self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
 
+    def test_portal_search_settings(self):
+        doc = page('/portal/console/search/')
+        for anchor in ('weights', 'synonyms', 'pinned-results', 'what-search-leaves-out', 'typos-and-word-starts'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('id="tune-search"', page('/portal/sites/search/'))
+        source = (ROOT / 'src/content/docs/portal/console/search.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'OpenSearch', 'index', 'repositor'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_seo(self):
         doc = page('/portal/sites/seo/')
         for anchor in ('what-each-page-says', 'describe-a-page', 'describe-a-site', 'what-crawlers-are-told'):
