@@ -157,6 +157,26 @@ Open the form at its own address, `/_portal/forms/<id>`, once while online. From
 
 What is sent offline goes as a visitor's, even for a person signed in. Only public forms can be filled in offline. If something kept offline cannot be sent, because the form changed meanwhile or no longer exists, the page asks to fill the form in again.
 
+## Pick a record
+
+A `record` field picks a record of one of the portal's [data models](/portal/sites/data-models/):
+
+```yaml
+- type: record
+  key: applicant
+  label: Solicitant
+  model: people
+- type: record
+  key: related
+  label: Cereri legate
+  model: requests
+  multiple: true
+```
+
+**Choose** opens a list of the model's records, 20 at a time, with **More** for the next ones and a search box when the model has searchable fields. A record is named by the model's title field, or else its first text field. With `multiple`, a person picks up to 50 and closes the list with **Done**; **Clear** empties the field.
+
+The list shows only the records the person may see, and the record the form makes checks the pick again. A required record field must hold at least one. A form with a record field cannot be filled in offline. In the form builder, **Record** is among **More fields**.
+
 ## Fields from apps
 
 An approved app can add field types and option lists ([Build an app](/portal/sites/build-an-app/#form-fields-and-options)). Use them in the form's file:
