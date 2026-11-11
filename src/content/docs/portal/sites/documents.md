@@ -1,6 +1,6 @@
 ---
 title: Documents
-description: Connect the portal to Surogate DMS, and show a DMS folder's documents in a page.
+description: Connect the portal to Surogate DMS, show a DMS folder's documents in a page, and file new ones from it.
 ---
 
 Surogate DMS keeps the institution's documents. Connected, a page of the portal shows the documents of a DMS folder to the person signed in, as the DMS lets them see it, with a link to each in the DMS and a download.
@@ -17,6 +17,7 @@ app: https://dms.primaria.ro
 - `api`: the DMS's API. Inside the same cluster, its service address works too, such as `http://sdms.surogate-docs.svc`.
 - `app`: the DMS's web app, where a document's link and its downloads go.
 - `timeoutMs`: how long the portal waits for the DMS, from 1,000 to 10,000 ms; 3,000 when left out.
+- `uploadMb`: the largest file a person can file from a page, from 1 to 5,120 megabytes; 100 when left out. See [File documents from a page](#file-documents-from-a-page).
 - `audience`: what the portal names the DMS as in its sign-ins; leave it out unless the DMS's administrator set another.
 - `serviceKey`: the connector holding the DMS's key for its events; see [When something happens in the DMS](#when-something-happens-in-the-dms).
 
@@ -51,6 +52,37 @@ A person signed in sees the folder's documents they may see in the DMS, each wit
 - **An administrator seeing the portal as someone else** does not see that person's documents.
 
 What a document holds, its fields and their values, is never shown in the portal. A page with the widget is never kept in a cache and shown to someone else. Placed without `dms.yaml`, the widget is refused when the files are published.
+
+## File documents from a page
+
+A documents widget can also let people file a new document into its folder, from the page:
+
+```yaml
+- id: requests
+  app: portal
+  widget: documents
+  preferences:
+    folder: 5d8e2c1a-1b2c-4d3e-8f90-112233445566
+    upload: true
+    type: 3c8f7f6e-2a3c-4d5e-9f10-111213141516
+```
+
+- `upload`: `true` shows a form under the list, with a title and a file. When left out, the widget only shows the folder.
+- `type`: the DMS document type new documents are filed under, by its id. When left out, they are filed with no type, if the folder allows that.
+
+The form shows only to people the DMS lets file into the folder, under that type. Everyone else sees the list as before. The file goes to the DMS as the person, and the DMS decides whether to take it. The portal keeps nothing of it. A title left blank becomes the file's name.
+
+After the upload, the page shows what happened:
+
+- **Filed in the DMS:** the document is in the folder, as a draft, and shows in the list.
+- **Larger than this page takes:** the file is over `uploadMb`. Larger files are filed in the DMS itself.
+- **The DMS did not take the file:** the DMS refused it. For example, the type needs fields the form does not ask for, or the folder is closed. File it from the DMS, where the reason is shown.
+- **You may not file documents here:** the DMS does not let the person file into that folder.
+- **The DMS is busy:** try again in a few minutes.
+- **Not filed now:** the DMS did not answer. Try again later.
+- **The DMS has not said whether it filed the document:** the DMS got the whole file but did not answer in time. Look in the folder before filing it again.
+
+An administrator seeing the portal as someone else cannot file for them. Each filing is in the portal's audit log, and in the DMS's.
 
 ## Search the DMS from the portal
 
