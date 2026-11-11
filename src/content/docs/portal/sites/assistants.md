@@ -1,6 +1,6 @@
 ---
 title: Assistants
-description: Put a chat with one of your Surogate agents on a page, for the people signed in to the portal.
+description: Put a chat with one of your Surogate agents on a page, for the people signed in to the portal or for any visitor.
 ---
 
 An assistant is a chat with one of your Surogate agents, on a page of the portal. A person signed in opens it and talks with the agent, which answers with everything it has: its skills, its tools and its knowledge. Each person sees only their own chats, and the agent keeps what it remembers of each person apart from everyone else.
@@ -73,3 +73,46 @@ If you make the agent a new key in Studio, everyone's memory with the agent star
 The agent's usage is billed to the agent's project, as all its work is. The portal keeps the list of each person's chats. The agent keeps the chats themselves, and records each turn.
 
 When a person forgets a chat, it leaves their list in the portal. The agent still keeps the chat, with the person's name and email, as it keeps all its work.
+
+## A chat for visitors
+
+A page can also carry a chat for its visitors, signed in or not: the agent's website channel, the chat Surogate draws on any website. It floats in a corner of the page, or fills its place on it.
+
+1. In Studio, open the agent, then **Channels → Website**. Turn it on, add the portal's address (such as `https://portal.primaria.ro`) to its allowed origins, and copy its publishable key. It starts with `surg_wk_`; it is made to sit in a page.
+
+2. Give the agent its website in `agents.yaml`:
+
+   ```yaml
+   helper:
+     url: https://helper-x1.cloud.surogate.ai
+     agent: 7c1e9a52-3b4d-4e5f-8a6b-1c2d3e4f5a6b
+     website:
+       publishableKey: surg_wk_…
+   ```
+
+   - `publishableKey`: the website channel's key.
+   - `url`: the agent's public https address, which visitors' browsers reach. When the agent's own `url` is https, leave it out. When it is a cluster address, give the public one here.
+   - An agent used only for visitors needs no `key`.
+
+3. Place the portal's `website-chat` widget:
+
+   ```yaml
+   - id: help
+     app: portal
+     widget: website-chat
+     preferences:
+       agent: helper
+       title: { ro: Întrebați-ne, en: Ask us }
+       welcome: { ro: Bună! Cu ce vă putem ajuta?, en: Hi! How can we help? }
+       accent: "#4f46e5"
+   ```
+
+   - `title`: the chat's heading. Without it, the agent's `name`.
+   - `welcome`: a greeting before the first message, up to 500 characters.
+   - `accent`: the chat's colour, as `#rrggbb`.
+   - `position`: `bottom-right` (when left out) or `bottom-left`.
+   - `inline`: `true` draws the chat in its place on the page instead of a corner.
+   - `open`: `true` opens it as the page loads.
+
+Each visitor's chat and the agent's memory of it are their own, kept by their browser. The page is the same for every visitor, so it stays as fast as any public page. The agent answers only on the addresses you allowed in Studio.
+
