@@ -54,7 +54,7 @@ What a document holds, its fields and their values, is never shown in the portal
 
 ## Search the DMS from the portal
 
-A search box can show the DMS's documents too: see [Search](/portal/sites/search/#documents-in-the-dms).
+A search box can show the DMS's documents too, as the person may read them there: see [Search](/portal/sites/search/#documents-in-the-dms). The DMS records each search, naming the portal.
 
 ## Downloads
 
