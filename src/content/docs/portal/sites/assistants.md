@@ -138,18 +138,21 @@ An agent can use the portal itself while it works. It can search a site and read
 
 2. **Give it a token.** Make it a token with the **Use the portal as a tool of an agent** scope (`mcp`). Add the **data models** scope (`data`) when it should read records. Copy the token.
 
-3. **Add the server in Studio.** Add an MCP server:
-   - its address is `https://<the portal's address>/_portal/mcp`;
-   - add the header `Authorization: Bearer <the token>`;
-   - then give the server to the agent.
+3. **Add the server in Studio.**
+   - First put the token in the vault, as a credential.
+   - Then add an MCP server: its transport is HTTP, and its address is the portal's public one, such as `https://portal.primaria.ro/_portal/mcp`. The address names the tenant, so use the one people use.
+   - For its authentication, choose **Bearer** and the credential.
+   - Then give the server to the agent.
 
 The agent then has three tools:
 
 | Tool | What it does |
 | --- | --- |
 | `search_site` | Searches a site as a visitor would: its public pages, news and documents. |
-| `list_records` | Lists the records of a data model the account may see, or those that match words or field values. |
+| `list_records` | Lists the records of a data model the account may see, or those that match words or field values, a page at a time. |
 | `get_record` | Reads one record. |
 
-Each tool asks the portal as the agent's account, so the agent finds only what that account may see, and the portal's audit log names the account. An answer longer than 100 KB is cut, and the agent is told so.
+Each tool asks the portal as the agent's account, so the agent finds only what that account may see. The portal's audit log records each tool the agent uses, naming the account. An answer longer than 100 KB is cut, and the agent is told so.
+
+Surogate checks a tool server's tools when it first meets them, and sets aside a tool whose description later changes. After a portal update that changes these tools, restart the agent's tool connections in Studio if a tool goes missing.
 
