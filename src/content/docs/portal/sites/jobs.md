@@ -159,7 +159,7 @@ The run reads:
 - `trigger.attachments`, each file's `filename`, `contentType` and `size` (the files themselves are not read);
 - `trigger.autoSubmitted` and `trigger.listId`, set for automatic replies and mailing lists.
 
-A message over 5 MB gives only who sent it and its subject, with `trigger.tooLarge` true.
+A message over 5 MB gives only who sent it and its subject, with `trigger.tooLarge` true. A message the portal cannot read at all runs the job with `trigger.unreadable` true and nothing else, so the mail after it is still read.
 
 - **When:** the mailbox is read about once a minute, and up to 20 new messages are taken each time. The job runs once for each.
 - **From when:** the first read only marks where the job begins. Mail that was there before is never run for. The same is true after the job's trigger, the mailbox's server or folder, or its username changes; the job's history says so.
