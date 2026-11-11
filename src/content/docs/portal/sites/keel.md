@@ -59,16 +59,18 @@ A form, a job or an endpoint can start a Keel case or process, or tell Keel some
 
 | Action | What it does | Keys |
 |---|---|---|
-| `startCase` | Starts a case of a Keel case type | `caseType`, `data`, `into` |
-| `startProcess` | Starts a Keel process | `process`, `data`, `into` |
-| `sendMessage` | Gives a message to the processes waiting for it with a key | `name`, `key`, `payload`, `into` |
-| `sendSignal` | Signals every process waiting for it | `name`, `into` |
+| `startCase` | Starts a case of a Keel case type | `caseType`, `data`, `once`, `into` |
+| `startProcess` | Starts a Keel process | `process`, `data`, `once`, `into` |
+| `sendMessage` | Gives a message to the processes waiting for it with a key | `name`, `key`, `payload`, `once`, `into` |
+| `sendSignal` | Signals every process waiting for it | `name`, `once`, `into` |
+
+`caseType` and `process` are the keys Keel gives them, without spaces. A message's or signal's `name` is the name the process waits for, and a message's `key` is an expression giving the key it waits with.
 
 `into` keeps what Keel answered: the case's or process's id and number, how many processes a message reached, or how many a signal is on its way to.
 
 - **Keel's key:** the people who send a form are rarely Keel's staff, so these actions use Keel's key for the project. Add it as a secret [connector](/portal/sites/connectors/), set its value under **Connectors**, and name the connector in `keel.yaml` as `serviceKey`; no other action may use it. The key is kept for the Keel `keel.yaml` names: change its `api` or `project`, and set the key again.
-- **Once each:** a job that runs again for the same event starts nothing twice in Keel: Keel answers with what it did the first time. A person who sends a form again makes a new submission, and a new case.
+- **Once each:** a job that runs again for the same event starts nothing twice in Keel: Keel answers with what it did the first time, even if values in the run changed meanwhile. The portal tells each call apart by where the action is in the list and how many times it has run there. In a loop over a list that may change between runs, give the action `once`: an expression naming the item, such as `vars.item.id`. A person who sends a form again makes a new submission, and a new case.
 - **When Keel refuses:** the action fails with Keel's reason, such as an unknown case type, and the run's `onError` reads it. A form whose Keel call fails keeps its submission, with no case. A call that took too long may still have been done: check Keel before sending again. A message no process waits for reaches none, and the run goes on.
-- **Forms anyone may send** start cases, but never signal Keel or send it messages: those move processes others started. Visitors' forms call Keel at most 200 times an hour.
+- **Forms anyone may send** start cases, but never signal Keel or send it messages, nor do the endpoints and flows they call: those move processes others started. Runs without a person signed in call Keel at most 200 times an hour.
 - **Where:** in a form, job or endpoint that may change records, never in a GET endpoint or one anyone may call. A run takes at most 10 of them.
 
