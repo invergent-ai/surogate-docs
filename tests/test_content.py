@@ -364,7 +364,7 @@ class Content(unittest.TestCase):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/assistants/"', page('/portal/sites/documents/'))
         source = (ROOT / 'src/content/docs/portal/sites/assistants.md').read_text()
-        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'JWT', 'token', 'iframe', 'SSE', 'end_user'):
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'JWT', 'iframe', 'SSE', 'end_user', 'inject'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
     def test_portal_documents(self):
