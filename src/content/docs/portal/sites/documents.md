@@ -17,6 +17,7 @@ app: https://dms.primaria.ro
 - `api`: the DMS's API. Inside the same cluster, its service address works too, such as `http://sdms.surogate-docs.svc`.
 - `app`: the DMS's web app, where a document's link and its downloads go.
 - `timeoutMs`: how long the portal waits for the DMS, from 1,000 to 10,000 ms; 3,000 when left out.
+- `audience`: what the portal names the DMS as in its sign-ins; leave it out unless the DMS's administrator set another.
 
 The DMS must trust the portal. Its administrator adds the portal's **issuer**, shown on the console's **Apps** page under **For the apps' developers**, to the DMS's trusted portals, with the address of the portal's keys. The DMS then finds each person among its people by their email: the email they have in the portal must be the one they have in the DMS.
 
