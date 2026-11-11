@@ -166,6 +166,26 @@ A message over 5 MB gives only who sent it and its subject, with `trigger.tooLar
 - **Failures:** when the mailbox cannot be read (a wrong password, a server that does not answer, a certificate the portal does not trust), **Jobs** shows why, the history says so once, and the next tries wait longer, up to an hour.
 - **Loops:** a job that sends mail to the address it reads starts itself again. Skip machine mail with `condition: trigger.autoSubmitted == null`.
 
+## When an app sends an event
+
+A job can start each time an approved app's server publishes one of its events:
+
+```yaml
+trigger:
+  event:
+    app: shop
+    name: order.paid
+site: main
+runAs: user:registratura@primaria.ro
+actions:
+  - type: createRecord
+    model: payments
+    values:
+      order: trigger.payload.id
+```
+
+The run reads `trigger.app`, `trigger.name`, `trigger.payload` (the event's fields) and `trigger.personId` when the app named a person. Events sent in the browser do not start jobs. A job hears of at most 60 events a minute, and once the app is no longer approved, its events start nothing.
+
 ## Send mail
 
 A job may send email with the `email` action, as forms do. Its mail leaves once the run ends well, within the portal's hourly room, and at most 100 recipients an hour for each job.

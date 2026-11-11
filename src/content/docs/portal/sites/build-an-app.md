@@ -155,6 +155,47 @@ An app can add to the portal's forms: a field type it draws itself, such as a si
 
 While the app is not approved, forms that use its fields or options are not offered. Forms place them in their file; see [Forms](/portal/sites/forms/#fields-from-apps).
 
+## Actions
+
+An app can give the portal's action lists actions its server runs, such as sending an SMS. Declare each with what it takes and what it answers:
+
+```json
+"actions": {
+  "send": {
+    "title": { "ro": "Trimite SMS", "en": "Send an SMS" },
+    "inputs": {
+      "type": "object",
+      "properties": { "to": { "type": "string", "maxLength": 20 }, "text": { "type": "string" } },
+      "required": ["to", "text"]
+    },
+    "outputs": { "type": "object", "properties": { "id": { "type": "string" } } },
+    "url": "/actions/send",
+    "timeoutMs": 5000,
+    "connector": "gateway"
+  }
+}
+```
+
+The portal POSTs `{ call, tenant, site, locale, action, inputs, person?, credentials? }` to the action's URL, signed as a `portal-action+jwt` token. Check it with `verify(request, { kind: "action", action: "send" })`: it refuses a token for another action, and the same call a second time. Answer `{ "outputs": { "id": "m-1" } }`, as the outputs say, within the timeout (at most 10 seconds) and 256 KB. Inputs and outputs are flat: texts, numbers and yes or no, no lists. `person` is there when the app may see the person, without their portal fields.
+
+A site's lists call it with `appAction`; see [Actions](/portal/sites/actions/#app-actions).
+
+## Connector types
+
+An action that needs an account at another service, such as an SMS gateway's key, names a connector type of the app:
+
+```json
+"connectors": {
+  "gateway": { "title": "SMS gateway", "fields": ["apiKey", "sender"] }
+}
+```
+
+An administrator makes a connector of that type and sets its fields in the console. Each call of an action that names the type gets them as `credentials`. They are sent only to your app, over https unless your app runs on the same machine, and only while the connector still names your app and type at the same address.
+
+## Start jobs
+
+The events your server publishes (those without `browser: true`) can start a site's [jobs](/portal/sites/jobs/#when-an-app-sends-an-event). Publish as in [Send events from the app's server](#send-events-from-the-apps-server); each event starts each job that waits for it once.
+
 ## Types from the manifest
 
 `src/portal-types.ts` gives each widget's preferences, each event's payload and the person their own type, so the editor and the compiler hold the code to the manifest. A field that is required, or has a default, is always there.

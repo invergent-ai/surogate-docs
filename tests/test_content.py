@@ -240,6 +240,9 @@ class Content(unittest.TestCase):
         self.assertIn('id="forms"', page('/portal/console/pages/'))
         self.assertIn('href="/portal/console/forms/#build-a-form"', guide)
         self.assertIn('id="form-fields-and-options"', page('/portal/sites/build-an-app/'))
+        for anchor in ('actions', 'connector-types', 'start-jobs'):
+            self.assertIn(f'id="{anchor}"', page('/portal/sites/build-an-app/'))
+        self.assertIn('id="app-actions"', page('/portal/sites/actions/'))
         for path in ('src/content/docs/portal/sites/forms.md', 'src/content/docs/portal/console/forms.md'):
             source = (ROOT / path).read_text()
             for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'MongoDB', 'Postgres', 'SMTP', 'outbox', 'IndexedDB', 'service worker'):
@@ -333,7 +336,7 @@ class Content(unittest.TestCase):
 
     def test_portal_jobs(self):
         doc = page('/portal/sites/jobs/')
-        for anchor in ('write-a-job', 'when-it-runs', 'when-records-change', 'when-people-come-and-go', 'when-the-portal-starts-fails-or-is-asked-for', 'when-mail-arrives', 'send-mail', 'what-it-may-do', 'in-the-console'):
+        for anchor in ('write-a-job', 'when-it-runs', 'when-records-change', 'when-people-come-and-go', 'when-the-portal-starts-fails-or-is-asked-for', 'when-mail-arrives', 'when-an-app-sends-an-event', 'send-mail', 'what-it-may-do', 'in-the-console'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/sites/jobs.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'lease', 'CEL'):

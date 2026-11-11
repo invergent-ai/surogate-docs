@@ -64,6 +64,7 @@ Whole numbers are integers, the others decimals; the two mix in arithmetic, so `
 | `redirect` | Sends the person to another page, and ends the run | `to` |
 | `callFlow` | Runs a [logic flow](/portal/sites/flows/#call-a-flow) and keeps its outputs | `flow`, or `contract` and `pick`; `inputs`, `into` |
 | `callEndpoint` | Runs one of the portal's [endpoints](/portal/sites/endpoints/#private-endpoints) and keeps its answer | `endpoint`, `params`, `okStatus`, `into` |
+| `appAction` | Runs an [app's action](#app-actions) and keeps its outputs | `app`, `action`, `inputs`, `connector`, `into` |
 | `http` | Calls a service through a [connector](/portal/sites/connectors/#call-a-service) | `connector`, `method`, `path`, `query`, `headers`, `body`, `okStatus`, `into` |
 | `email` | Sends an [email](/portal/sites/connectors/#email) once the run ends well | `to`, `subject`, `text` |
 | `hash`, `hmac`, `randomToken`, `uuid` | [Hashes, signatures and random values](/portal/sites/connectors/#hashes-signatures-and-random-values) | |
@@ -127,3 +128,26 @@ A `redirect` wins over them: the person goes elsewhere first. A form sent again 
 An action that fails runs its `onError` actions, and the list goes on. Without them, the failure goes up to the enclosing group's `onError`, and otherwise ends the run. Inside `onError`, `vars.error.message` says what went wrong.
 
 A run stops after 10 seconds or 10,000 steps, a loop goes over at most 1,000 items, and a value is at most 1 MB. When the portal is very busy, a run may not start; the form is still kept, and the person is told that what follows could not be done. Each run is kept for 30 days, with its log; reviewers see them under **Runs** on [Forms](/portal/console/forms/#runs).
+
+## App actions
+
+An approved app can give actions of its own, such as sending an SMS:
+
+```yaml
+- type: appAction
+  app: sms
+  action: send
+  inputs:
+    to: form.phone
+    text: '"Cererea dvs. a fost înregistrată."'
+  connector: sms-gateway
+  into: sent
+```
+
+- **What it takes:** the inputs the app's manifest declares; the portal checks them when the files are published. `connector` names a connector of the app's type, when the action needs one: an administrator sets its credentials under **Connectors**.
+- **What it gives:** `vars.sent` holds the action's outputs.
+- **Where:** in a form, flow, job or endpoint that may change records, never in a GET endpoint or one anyone may call, and never in a flow's tests. A run calls at most 10.
+- **When it fails:** the app is not approved, it does not answer in time, or it answers what its manifest does not say. The run's `onError` reads why.
+
+To write one, see [Build an app](/portal/sites/build-an-app/#actions).
+
