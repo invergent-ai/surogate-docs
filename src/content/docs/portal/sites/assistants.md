@@ -129,3 +129,27 @@ A page can also carry a chat for its visitors, signed in or not: the agent's web
 - A key minted again, or the channel turned off, stops the chat until `agents.yaml` has the new key.
 
 The page is the same for every visitor, so it stays as fast as any public page.
+
+## Give an agent the portal as a tool
+
+An agent can use the portal itself while it works. It can search a site and read the records of the data models its account may see, through the MCP server the portal serves at `/_portal/mcp`.
+
+1. **Make the agent an account.** Make a [service account](/portal/console/service-accounts/) for the agent. Give it the roles, and the data models' permissions, of what it may read. It reads nothing more.
+
+2. **Give it a token.** Make it a token with the **Use the portal as a tool of an agent** scope (`mcp`). Add the **data models** scope (`data`) when it should read records. Copy the token.
+
+3. **Add the server in Studio.** Add an MCP server:
+   - its address is `https://<the portal's address>/_portal/mcp`;
+   - add the header `Authorization: Bearer <the token>`;
+   - then give the server to the agent.
+
+The agent then has three tools:
+
+| Tool | What it does |
+| --- | --- |
+| `search_site` | Searches a site as a visitor would: its public pages, news and documents. |
+| `list_records` | Lists the records of a data model the account may see, or those that match words or field values. |
+| `get_record` | Reads one record. |
+
+Each tool asks the portal as the agent's account, so the agent finds only what that account may see, and the portal's audit log names the account. An answer longer than 100 KB is cut, and the agent is told so.
+
