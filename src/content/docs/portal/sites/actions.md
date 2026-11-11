@@ -79,7 +79,7 @@ A `redirect` goes to a page of the same site, or to another https site the form 
 
 ## Ask an agent
 
-`askAgent` asks one of the agents in `agents.yaml` (an agent with its key) and keeps the answer:
+`askAgent` asks one of the agents in `agents.yaml` (an agent with its key) and keeps the answer. Only a [job](/portal/sites/jobs/) asks an agent: an agent's answer takes longer than a form or an endpoint waits. To summarize what a form receives, start a job when the form is sent.
 
 ```yaml
 - type: askAgent
@@ -97,7 +97,7 @@ A `redirect` goes to a page of the same site, or to another https site the form 
 - `prompt`: an expression giving the words, up to 50,000 characters.
 - `into`: where the answer is kept, as `{ text }`.
 
-Each ask is a conversation of its own, and its use is billed to the agent's project. A run asks agents at most 5 times, and waits for an answer only as long as the run may last, at most two minutes. Runs started by visitors ask agents at most 100 times an hour on the portal. When the agent cannot answer, the run fails there, and an `onError` sees why. An agent never answers a value's expression, a flow's test or an administrator seeing the portal as someone else.
+Each ask is a conversation of its own, and its use is billed to the agent's project. A run asks agents at most 5 times. It waits at most two minutes for an answer, and stops waiting ten seconds before the run's own time is up, so that an `onError` can still run. An answer is at most 256 KB. When the agent cannot answer, or stops to ask a question of its own, the run fails there, and an `onError` sees why. A job that fails is run again, and asks the agent again. An agent never answers a value's expression, a flow's test or an administrator seeing the portal as someone else.
 
 ## Files
 
