@@ -350,6 +350,14 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'CEL'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_keel(self):
+        doc = page('/portal/sites/keel/')
+        for anchor in ('connect-keel', 'my-work'):
+            self.assertIn(f'id="{anchor}"', doc)
+        source = (ROOT / 'src/content/docs/portal/sites/keel.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'JWT', 'token'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_kpis(self):
         doc = page('/portal/sites/kpis/')
         for anchor in ('declare-them', 'show-them', 'what-each-person-sees'):
