@@ -130,6 +130,31 @@ A page can also carry a chat for its visitors, signed in or not: the agent's web
 
 The page is the same for every visitor, so it stays as fast as any public page.
 
+## Help in the console
+
+One agent can also be the console's help. The tenant's administrators then find **Help** in the console's menu. It opens a chat with that agent over the page they are working on.
+
+Give the console its own agent, with its own key connector, as in [Connect your agents](#connect-your-agents):
+
+```yaml
+console-help:
+  url: https://console-help-x1.cloud.surogate.ai
+  agent: 2d4f6a8c-1b3e-4c5d-9e7f-0a1b2c3d4e5f
+  key: console-help-key
+  help: true
+```
+
+- `help: true` goes on one agent at most, and that agent needs its `key`.
+- **Keep the help agent for the console alone.** Anyone who reaches an agent reaches what its tools reach. So:
+  - no page's assistant names it;
+  - no job's `askAgent` asks it;
+  - it has no `website`;
+  - no other agent in `agents.yaml` is the same agent under another name.
+- **Who sees Help:** the tenant's administrators. On the default tenant, its install administrators. No page needs to place the agent for them.
+- **Who does not:** everyone else, and an administrator seeing the portal as someone else.
+- **Each administrator's chats are their own,** as on a page. Signing in again from the chat comes back to the same page of the console.
+- **What the agent knows** is what you give it in Studio. To let it look things up in the portal, give it the portal as a tool, below.
+
 ## Give an agent the portal as a tool
 
 An agent can use the portal itself while it works. It can search a site and read the records of the data models its account may see, through the MCP server the portal serves at `/_portal/mcp`.

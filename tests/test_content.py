@@ -360,7 +360,7 @@ class Content(unittest.TestCase):
 
     def test_portal_assistants(self):
         doc = page('/portal/sites/assistants/')
-        for anchor in ('connect-your-agents', 'place-an-assistant', 'what-people-see', 'who-the-agent-talks-with', 'a-chat-for-visitors', 'give-an-agent-the-portal-as-a-tool'):
+        for anchor in ('connect-your-agents', 'place-an-assistant', 'what-people-see', 'who-the-agent-talks-with', 'a-chat-for-visitors', 'help-in-the-console', 'give-an-agent-the-portal-as-a-tool'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/assistants/"', page('/portal/sites/documents/'))
         source = (ROOT / 'src/content/docs/portal/sites/assistants.md').read_text()
