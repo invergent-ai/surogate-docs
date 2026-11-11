@@ -104,13 +104,41 @@ The run reads `trigger.event`, `trigger.id` (the person's id) and `trigger.at`. 
 
 At most 5,000 people wait for a job, enough for a directory that brings many at once; past that, new ones are not run, and the history says so.
 
+## When the portal starts, fails or is asked for
+
+A job can start when the portal's configuration starts, when a run fails, or when a page is asked for:
+
+```yaml
+trigger:
+  platform:
+    on: [error]
+    sources: [form, endpoint]
+site: main
+runAs: user:admin@primaria.ro
+actions:
+  - type: email
+    to: '"it@primaria.ro"'
+    subject: '"A run failed"'
+    text: 'trigger.source.kind + " " + trigger.source.id + ": " + trigger.message'
+```
+
+- **`started`:** once each time a new configuration is published or rolled back, and when the job first appears. The run reads `trigger.revision`.
+- **`error`:** a form, endpoint or job ended failed. `sources` names which; all three when left out. The run reads `trigger.source.kind`, `trigger.source.id`, `trigger.runId`, `trigger.reason` and `trigger.message`.
+  - Not heard of: a run the portal was too busy to start, the failures of a job that itself hears of failures, and an endpoint another one called (the run that called it is heard of instead).
+  - A job hears of one form, endpoint or job at most once a minute.
+- **`request`:** a page of the job's site was asked for, at or under one of `paths` (1 to 20). `/news` takes `/news` and `/news/today`, never `/newsletter`. The run reads `trigger.path`, `trigger.locale` and `trigger.userId` (`null` for a visitor).
+  - Counted: a page opened. Not counted: a page checked again for changes, a preview, and pages served from a cache before the portal.
+  - A job hears of at most 60 pages a minute; the pages never wait for it.
+
+`paths` goes only with `request`, and `sources` only with `error`. At most 100 events wait for a job; past that, new ones are not run, and the history says so.
+
 ## Send mail
 
 A job may send email with the `email` action, as forms do. Its mail leaves once the run ends well, within the portal's hourly room, and at most 100 recipients an hour for each job.
 
 ## What it may do
 
-The actions read `trigger` (`kind` is `time` or `manual`, `at` is the time it was due), the person as `user`, `site`, `vars` and `values`, and may call [flows](/portal/sites/flows/). A run has a minute.
+The actions read `trigger` (`kind` is `time` or `manual`, `at` is the time it was due; `record`, `user` or `platform` for the triggers above), the person as `user`, `site`, `vars` and `values`, and may call [flows](/portal/sites/flows/). A run has a minute.
 
 A job tells no page anything and answers no one. It may not use a [connector](/portal/sites/connectors/) that signs in as each person, since no one is at the keyboard.
 
