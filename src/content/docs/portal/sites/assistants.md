@@ -171,7 +171,13 @@ console-builder:
 2. **Give it the portal as a tool,** below, with a token holding both **Use the portal as a tool of an agent** (`mcp`) and **Propose changes** (`proposals`). Give it nothing else: everyone who writes content reaches what its tools reach.
 3. **Tell it in Studio what it is for.** For example: describe the change back to the person, make it, propose it with a title and who asked for it, then say that an administrator will look at it.
 
-The builder changes only what a proposal may hold: pages, layouts, designs, forms, flows, values, data models, endpoints, jobs, guides and content types. Everything it proposes is checked, and waits for an administrator.
+The builder changes only what a proposal may hold: pages, layouts, designs, forms, flows, contracts, values, data models, endpoints, jobs, guides, content types, vocabularies and collections. Everything it proposes is checked, and waits for an administrator.
+
+**What the builder reaches:**
+- It works as its own account, for the whole portal. A person who writes one site's content can ask it to read, or to change, any of these files on any site. Nothing goes live until an administrator approves it.
+- Its proposals name the builder's account, not the person who asked. Tell it to write who asked, and why, in each proposal's description.
+- The limits of a proposer are the builder's: at most five proposals waiting, and thirty an hour, for everyone who asks it together. It can withdraw a proposal the person no longer wants.
+- With **Propose changes**, the portal's tools never read records, whatever else its token holds.
 
 ## Suggest tags for content
 
@@ -214,10 +220,13 @@ The agent then has these tools:
 | `search_site` | Searches a site as a visitor would: its public pages, news and documents. |
 | `list_records` | Lists the records of a data model the account may see, or those that match words or field values, a page at a time. |
 | `get_record` | Reads one record. |
-| `list_site_files` | Lists the files a proposal may change, and the newest version. With **Propose changes** only. |
-| `read_site_file` | Reads one of those files. With **Propose changes** only. |
-| `propose_change` | Proposes a change for an administrator to approve. With **Propose changes** only. |
+| `list_site_files` | Lists the files a proposal may change, their sizes, and the newest version. With **Propose changes** only. |
+| `read_site_file` | Reads one of those files, 90,000 characters at a time. With **Propose changes** only. |
+| `propose_change` | Proposes a change for an administrator to approve. Sent again, the same change is proposed once. With **Propose changes** only. |
 | `get_proposal` | Reads where a proposal stands, the administrator's note included. With **Propose changes** only. |
+| `withdraw_proposal` | Withdraws a proposal that still waits. With **Propose changes** only. |
+
+A token with **Propose changes** gets `search_site` and the proposal tools; `list_records` and `get_record` are for agents that do not propose.
 
 Each tool asks the portal as the agent's account, so the agent finds only what that account may see. The portal's audit log records each tool the agent uses, naming the account. An answer longer than 100 KB is cut, and the agent is told so.
 
