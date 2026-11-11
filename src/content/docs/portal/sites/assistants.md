@@ -51,17 +51,24 @@ regions:
 ```
 
 - `agent`: an agent `agents.yaml` names.
-- `title`: the heading above the chat; optional. Without it the chat has no heading, and its frame is named after the agent.
+- `title`: the heading above the chat; optional. Without it, the agent's `name` is the heading; with neither, the chat has no heading.
 
 ## What people see
 
-- **A person signed in:** the chat, in a frame of its own, so neither the site's styles nor the chat's reach the other. They can start a new chat, or go back to one of their earlier chats; the first message names each one.
-- **Visitors:** a prompt to sign in.
+- **A person signed in:** the chat, in a frame of its own, so neither the site's styles nor the chat's reach the other.
+  - They can start a new chat, go back to one of their earlier chats, or forget the one open. The first message names each chat.
+  - The portal's own words follow the page's language; the chat's own controls are in English.
+- **Visitors:** a link to sign in, which brings them back to the page.
+- **People who may not see any page with the assistant:** no chat. An agent is reachable only from the pages that place it, for the people who may see them.
 - **An administrator seeing the portal as someone else:** no chat.
 
 ## Who the agent talks with
 
 The agent is told the person's name and email when a chat starts. Its memory of what one person said stays with that person: no one else's chat reaches it.
+
+Each person may start 20 chats in ten minutes and send 40 messages in five, so that no one holds the agent from everyone else.
+
+If you make the agent a new key in Studio, everyone's memory with the agent starts afresh: it belongs to the key.
 
 The agent's usage is billed to the agent's project, as all its work is. The portal keeps the list of each person's chats. The agent keeps the chats themselves, and records each turn.
 
