@@ -68,16 +68,17 @@ A documents widget can also let people file a new document into its folder, from
 ```
 
 - `upload`: `true` shows a form under the list, with a title and a file. When left out, the widget only shows the folder.
-- `type`: the DMS document type new documents are filed under, by its id. When left out, they are filed with no type, if the folder allows that.
+- `type`: the DMS document type new documents are filed under, by its id. When left out, they are filed with no type, if the folder allows that. A type with a folder of its own in the DMS files there, not in the widget's folder, so its new documents do not show in this list.
 
 The form shows only to people the DMS lets file into the folder, under that type. Everyone else sees the list as before. The file goes to the DMS as the person, and the DMS decides whether to take it. The portal keeps nothing of it. A title left blank becomes the file's name.
 
 After the upload, the page shows what happened:
 
-- **Filed in the DMS:** the document is in the folder, as a draft, and shows in the list.
-- **Larger than this page takes:** the file is over `uploadMb`. Larger files are filed in the DMS itself.
+- **Filed in the DMS:** the document is filed as a draft.
+- **Larger than this page takes:** the file is over `uploadMb`, or over the largest file the DMS takes.
 - **The DMS did not take the file:** the DMS refused it. For example, the type needs fields the form does not ask for, or the folder is closed. File it from the DMS, where the reason is shown.
 - **You may not file documents here:** the DMS does not let the person file into that folder.
+- **The folder is not in the DMS:** the widget's folder was deleted or never existed.
 - **The DMS is busy:** try again in a few minutes.
 - **Not filed now:** the DMS did not answer. Try again later.
 - **The DMS has not said whether it filed the document:** the DMS got the whole file but did not answer in time. Look in the folder before filing it again.
