@@ -155,6 +155,24 @@ console-help:
 - **Each administrator's chats are their own,** as on a page. Signing in again from the chat comes back to the same page of the console.
 - **What the agent knows** is what you give it in Studio. To let it look things up in the portal, give it the portal as a tool, below.
 
+## Describe a change
+
+One agent can be the console's **builder**. Everyone who writes content, and the tenant's administrators, then find **Describe a change** in the console's menu. They describe a page or an app in their own words. The builder writes it as the portal's files and proposes it. An administrator approves it under [Proposed changes](/portal/console/proposals/) before anything goes live.
+
+```yaml
+console-builder:
+  url: https://builder-x1.cloud.surogate.ai
+  agent: 9a1c3e5b-7d2f-4b6a-8c0e-2f4a6b8c0d1e
+  key: console-builder-key
+  builder: true
+```
+
+1. **Mark the agent:** `builder: true` goes on one agent at most, and that agent needs its `key`. Like the help agent, the builder belongs to the console alone, and it is never the help agent too.
+2. **Give it the portal as a tool,** below, with a token holding both **Use the portal as a tool of an agent** (`mcp`) and **Propose changes** (`proposals`). Give it nothing else: everyone who writes content reaches what its tools reach.
+3. **Tell it in Studio what it is for.** For example: describe the change back to the person, make it, propose it with a title and who asked for it, then say that an administrator will look at it.
+
+The builder changes only what a proposal may hold: pages, layouts, designs, forms, flows, values, data models, endpoints, jobs, guides and content types. Everything it proposes is checked, and waits for an administrator.
+
 ## Suggest tags for content
 
 One agent can suggest tags for the content people write. The content editor then shows **Suggest tags** under an entry's tags.
@@ -189,13 +207,17 @@ An agent can use the portal itself while it works. It can search a site and read
    - For its authentication, choose **Bearer** and the credential.
    - Then give the server to the agent.
 
-The agent then has three tools:
+The agent then has these tools:
 
 | Tool | What it does |
 | --- | --- |
 | `search_site` | Searches a site as a visitor would: its public pages, news and documents. |
 | `list_records` | Lists the records of a data model the account may see, or those that match words or field values, a page at a time. |
 | `get_record` | Reads one record. |
+| `list_site_files` | Lists the files a proposal may change, and the newest version. With **Propose changes** only. |
+| `read_site_file` | Reads one of those files. With **Propose changes** only. |
+| `propose_change` | Proposes a change for an administrator to approve. With **Propose changes** only. |
+| `get_proposal` | Reads where a proposal stands, the administrator's note included. With **Propose changes** only. |
 
 Each tool asks the portal as the agent's account, so the agent finds only what that account may see. The portal's audit log records each tool the agent uses, naming the account. An answer longer than 100 KB is cut, and the agent is told so.
 

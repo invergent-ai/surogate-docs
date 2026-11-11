@@ -361,7 +361,7 @@ class Content(unittest.TestCase):
 
     def test_portal_assistants(self):
         doc = page('/portal/sites/assistants/')
-        for anchor in ('connect-your-agents', 'place-an-assistant', 'what-people-see', 'who-the-agent-talks-with', 'a-chat-for-visitors', 'help-in-the-console', 'suggest-tags-for-content', 'give-an-agent-the-portal-as-a-tool'):
+        for anchor in ('connect-your-agents', 'place-an-assistant', 'what-people-see', 'who-the-agent-talks-with', 'a-chat-for-visitors', 'help-in-the-console', 'describe-a-change', 'suggest-tags-for-content', 'give-an-agent-the-portal-as-a-tool'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/assistants/"', page('/portal/sites/documents/'))
         source = (ROOT / 'src/content/docs/portal/sites/assistants.md').read_text()
@@ -424,6 +424,7 @@ class Content(unittest.TestCase):
         for anchor in ('what-may-be-proposed', 'the-list', 'read-a-proposal', 'preview-a-proposal', 'approve-or-reject', 'for-agents-and-developers'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/proposals/"', page('/portal/console/tokens/'))
+        self.assertIn('href="/portal/sites/assistants/#describe-a-change"', doc)
         source = (ROOT / 'src/content/docs/portal/console/proposals.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub'):
             self.assertNotIn(word, source)
