@@ -157,7 +157,7 @@ console-help:
 
 ## Suggest tags for content
 
-One agent can suggest tags for the content people write. The content editor then shows **Suggest tags** beside an entry's tags.
+One agent can suggest tags for the content people write. The content editor then shows **Suggest tags** under an entry's tags.
 
 ```yaml
 tagger:
