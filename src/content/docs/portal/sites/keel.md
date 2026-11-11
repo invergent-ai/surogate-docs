@@ -69,7 +69,7 @@ A link opens Keel's own overview for the same days, with more: by case type, whe
 
 - **Only supervisors** see the figures. Others of the project's staff see that the overview is for its supervisors. Someone Keel does not know as staff sees that they do not work in Keel. Visitors see a prompt to sign in.
 - **When Keel does not answer**, the rest of the page shows as usual, and the widget says the overview cannot be read now. My work is not held back by it.
-- **The figures are a minute old at most.** Keel is asked again for them a minute after a supervisor last saw them.
+- **The figures are a minute old at most.** The portal asks Keel again a minute after it last asked for that person; someone who stops being a supervisor may see the figures for that minute.
 - **On a dashboard**, the page places the widget in its regions. People may move it or take it off their own dashboard, but cannot add it from the dashboard's offers.
 
 A page with the widget is never kept in a cache. Placed without `keel.yaml`, the widget is refused.
