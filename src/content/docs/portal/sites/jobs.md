@@ -200,7 +200,7 @@ A job may send email with the `email` action, as forms do. Its mail leaves once 
 
 ## What it may do
 
-The actions read `trigger` (`kind` is `time` or `manual`, `at` is the time it was due; `record`, `user` or `platform` for the triggers above), the person as `user`, `site`, `vars` and `values`, and may call [flows](/portal/sites/flows/). A run has a minute.
+The actions read `trigger` (`kind` is `time` or `manual`, `at` is the time it was due; `record`, `user` or `platform` for the triggers above), the person as `user`, `site`, `vars` and `values`, and may call [flows](/portal/sites/flows/). A run has three minutes.
 
 A job tells no page anything and answers no one. It may not use a [connector](/portal/sites/connectors/) that signs in as each person, since no one is at the keyboard.
 
