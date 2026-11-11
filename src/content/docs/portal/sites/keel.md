@@ -74,3 +74,60 @@ A form, a job or an endpoint can start a Keel case or process, or tell Keel some
 - **Forms anyone may send** start cases, but never signal Keel or send it messages, nor do the endpoints and flows they call: those move processes others started. Runs without a person signed in call Keel at most 200 times an hour.
 - **Where:** in a form, job or endpoint that may change records, never in a GET endpoint or one anyone may call. A run takes at most 10 of them.
 
+
+## When something happens in Keel
+
+A [job](/portal/sites/jobs/) can run each time something happens in the Keel project: a case opened, entered a stage, closed or reopened, or a process started, ended or was cancelled. For example, a job can mail the person who asked when their case closes. The form that started the case keeps its id in a record:
+
+```yaml
+# forms/request.yaml, its actions
+- type: startCase
+  caseType: permit
+  data:
+    address: form.address
+  into: started
+- type: createRecord
+  model: requests
+  values:
+    caseId: vars.started.caseId
+    email: user.email
+```
+
+```yaml
+# jobs/permit-decided.yaml
+trigger:
+  keel:
+    on: [case.closed]
+    types: [permit]
+site: main
+runAs: user:registratura@primaria.ro
+actions:
+  - type: findRecords
+    model: requests
+    where:
+      caseId: trigger.id
+    limit: 1
+    into: found
+  - type: email
+    condition: size(vars.found) > 0
+    to: vars.found[0].email
+    subject: '"Your request " + trigger.number + " has been decided"'
+    text: '"The decision: " + trigger.resolution'
+```
+
+| Event | When | What the run also reads |
+|---|---|---|
+| `case.opened` | A case starts | `stage` |
+| `case.stage_entered` | A case enters a stage | `stage` |
+| `case.closed` | A case closes | `resolution` |
+| `case.reopened` | A closed case opens again | |
+| `process.started` | A process starts | |
+| `process.ended` | A process ends | `status`: `completed`, `terminated` or `failed` |
+| `process.cancelled` | A process is cancelled | |
+
+- **What the run reads:** `trigger.event` is the event, and `trigger.id`, `trigger.number`, `trigger.type` and `trigger.version` name the case or process. `trigger.at` is when it happened. Keel's events never hold a case's data: keep what you need in a record, as above. `trigger.seq` orders one case's own events.
+- **Which:** `on` names one or more events. `types` narrows them to some case types and processes; without it, all of them.
+- **Keel's key:** the portal reads Keel's events with Keel's key for the project, as for starting cases. Without `serviceKey` in `keel.yaml`, the job is refused.
+- **Once each:** each event runs each job that takes it once, a few seconds after it happens, in the order Keel recorded them. A job that starts cases of the kind it runs on would run itself again: the portal refuses one whose `case.opened` (or `process.started`) takes a type its own actions start. It cannot see such a loop through an endpoint the job calls.
+- **When the portal cannot read Keel:** it tries again, waiting longer each time, and loses nothing. **Jobs** in the console shows when Keel's events were last read, or what went wrong. If Keel has deleted old events the portal had not read yet, the portal reads on from then and says so: those events are lost. Keel keeps them a month unless set otherwise.
+- **Also as events:** each one is also the portal event `portal/keel.<event>`, such as `portal/keel.case.closed`, for [apps and webhooks](/portal/sites/apps/). A webhook that takes every event gets these too.
