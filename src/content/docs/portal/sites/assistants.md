@@ -76,11 +76,15 @@ When a person forgets a chat, it leaves their list in the portal. The agent stil
 
 ## A chat for visitors
 
-A page can also carry a chat for its visitors, signed in or not: the agent's website channel, the chat Surogate draws on any website. It floats in a corner of the page, or fills its place on it.
+A page can also carry a chat for its visitors, signed in or not: the agent's website channel, the chat Surogate draws on any website. It floats in a corner of the page, and opens when the visitor clicks it.
 
-1. In Studio, open the agent, then **Channels → Website**. Turn it on, add the portal's address (such as `https://portal.primaria.ro`) to its allowed origins, and copy its publishable key. It starts with `surg_wk_`; it is made to sit in a page.
+1. **Turn on the website channel in Studio.** Open the agent, then **Channels → Website**. Turn it on and add every address the portal serves the page on to its allowed origins.
+   - Each origin is matched exactly, scheme, host and port: `https://portal.primaria.ro` and `https://www.portal.primaria.ro` are two.
+   - The chat refuses a page on any address not in the list.
+   - Set a limit on the messages of one chat there too: without one, a chat has none.
+   - **Save.** Then copy the publishable key, which starts with `surg_wk_`, and the agent's address from the embed code.
 
-2. Give the agent its website in `agents.yaml`:
+2. **Give the agent its website in `agents.yaml`:**
 
    ```yaml
    helper:
@@ -91,10 +95,10 @@ A page can also carry a chat for its visitors, signed in or not: the agent's web
    ```
 
    - `publishableKey`: the website channel's key.
-   - `url`: the agent's public https address, which visitors' browsers reach. When the agent's own `url` is https, leave it out. When it is a cluster address, give the public one here.
+   - `url`: the agent's own public https address, as the embed code names it. When the agent's `url` is already that address, leave it out.
    - An agent used only for visitors needs no `key`.
 
-3. Place the portal's `website-chat` widget:
+3. **Place the portal's `website-chat` widget,** one on a page:
 
    ```yaml
    - id: help
@@ -107,12 +111,21 @@ A page can also carry a chat for its visitors, signed in or not: the agent's web
        accent: "#4f46e5"
    ```
 
-   - `title`: the chat's heading. Without it, the agent's `name`.
+   - `title`: the chat's heading. Without it, the agent's `name`, or "Assistant".
    - `welcome`: a greeting before the first message, up to 500 characters.
    - `accent`: the chat's colour, as `#rrggbb`.
    - `position`: `bottom-right` (when left out) or `bottom-left`.
-   - `inline`: `true` draws the chat in its place on the page instead of a corner.
-   - `open`: `true` opens it as the page loads.
 
-Each visitor's chat and the agent's memory of it are their own, kept by their browser. The page is the same for every visitor, so it stays as fast as any public page. The agent answers only on the addresses you allowed in Studio.
+**What visitors and the agent keep:**
+- The chat runs on the agent's runtime, which stores each conversation as it stores all the agent's work.
+- A visitor's chat lasts while they stay on the page. Going to another page starts a new chat.
+- The agent's memory of a visitor stays with that visitor, through a cookie the agent's address sets in their browser for a year. Mention it in your cookie notice.
+- Browsers that block cookies of other sites, as Safari does, may not keep that memory, or the chat, when the agent's address is not the portal's.
 
+**The publishable key:**
+- It is made to sit in a page.
+- The allowed origins stop other websites' pages from using it, but not a program that calls the agent directly.
+- All the chat's visitors share the agent's limit on how fast it answers.
+- A key minted again, or the channel turned off, stops the chat until `agents.yaml` has the new key.
+
+The page is the same for every visitor, so it stays as fast as any public page.
