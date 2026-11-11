@@ -105,11 +105,13 @@ An action list calls it, or any other endpoint of the portal, with `callEndpoint
 
 - **What it is given:** `params` gives the endpoint's parameters, each of its type; the portal checks them when the files are published.
 - **What comes back:** `vars.saved` holds `status` and `body`, and `location` for a redirect. An answer outside 200–299 and `okStatus` fails the action; its answer is still kept for `onError`.
-- **As whom:** the endpoint runs as the person the calling list runs as, or as a visitor, on the same site. An endpoint for people signed in needs a person; one for programs with a token is never called this way.
+- **As whom:** the endpoint runs as the person the calling list runs as, or as a visitor, on the same site. An endpoint for people signed in needs a person, so a job calling one needs `runAs`. One for programs with a token is never called this way, and an administrator seeing the portal as someone else calls no endpoint for them.
 - **Where:** a form, flow, job or endpoint that may change records calls endpoints. A GET endpoint, or one anyone may call, does not.
 - **Limits:** a run calls at most 5 endpoints. Endpoints call one another at most three deep, and ten times in all, within the caller's time.
 
-Each call is in the endpoint's calls, naming what called it.
+The portal checks on publishing that no endpoint calls back to itself, and that the endpoints a job calls use no connector that signs in as each person.
+
+Each call is in the endpoint's calls, naming what called it. When the caller handles a failed call itself, with `okStatus` or `onError`, no job hears of that failure.
 
 ## Its calls
 
