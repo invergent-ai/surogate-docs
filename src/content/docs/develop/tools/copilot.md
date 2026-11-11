@@ -20,7 +20,7 @@ It exposes the platform's tools as natural-language commands. Instead of clickin
 | MCP servers | `list_mcp_servers`, `register_mcp_server`, `update_mcp_server`, `delete_mcp_server`, `list_composio_toolkits` |
 | Sub-agents | `list_sub_agents`, `get_sub_agent`, `create_sub_agent`, `update_sub_agent`, `delete_sub_agent` |
 | Programs | `get_programs_overview`, `create_journey`, `add_journey_step`, `simulate_journey`, `activate_journey`, `get_journey_funnel`, and others for journeys, WhatsApp templates and escalations |
-| Simulate | `cast_simulation`, `start_simulation`, `get_simulation`, `end_simulation`, `list_simulations`, `review_simulation`, `propose_simulation_fix`, `apply_simulation_fix`, `undo_simulation_fix` |
+| Simulate | `simulation_plan`, `simulation_start`, `simulation_get`, `simulation_end`, `simulation_review`, `simulation_recheck`, `propose_simulation_fix`, `apply_simulation_fix`, `undo_simulation_fix` |
 | WhatsApp forms | `list_whatsapp_flows`, `create_whatsapp_flow`, `update_whatsapp_flow`, `publish_whatsapp_flow`, `retire_whatsapp_flow`, `make_form_sendable`, `remove_sendable_form`, `list_whatsapp_forms` |
 | People and team | `find_people`, `add_person`, `update_person`, `delete_person`, `bind_person_slack`, `bind_person_whatsapp`, `enroll_person`, `message_person`, `get_person_timeline`, `set_team_member`, and others for program settings, Telegram start links and Slack lookups |
 | Monetize and landing page | `get_monetize`, `create_plan`, `update_plan`, `update_monetize_settings`, `get_landing_page`, `update_landing_page`, and others for replacing and deleting plans |

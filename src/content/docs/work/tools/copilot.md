@@ -95,9 +95,9 @@ Activating a journey, sending a test, enrolling, messaging a person, changing th
 
 ## Testing and improving an agent
 
-**`/improve-agent`** runs an agent through [Simulate](/work/workflow/simulate/). The Copilot picks people from the agent's cast, or writes the ones you describe ("an angry customer who wants a refund"), runs them on a channel, and gives you the run's link so you can watch or take over. When the run is over, it reads you the review: how it went, then each finding, the serious ones first.
+**`/improve-agent`** runs an agent through [Simulate](/work/workflow/simulate/). The Copilot drafts a plan of people with a test each, or builds one from the people you describe ("an angry customer who wants a refund"), runs it, and gives you the link so you can watch or take over. When the run is over, it reads you the result: how many tests passed, then each failure, with why.
 
-For each finding you want fixed, it drafts the change to the identity, a skill or a knowledge base and shows you the diff. Say how you want it worded and it drafts it again from your note. Making a change and undoing one each need your yes on that exact change. It never loosens a safety rule to make a customer happier. To check a fix, it runs the same people again and tells you which changes held and which came back.
+For each failure you want fixed, it drafts the change to the identity, a skill or a knowledge base and shows you the diff. Say how you want it worded and it drafts it again from your note. Making a change and undoing one each need your yes on that exact change. It never loosens a safety rule to make a customer happier. To check a fix, it checks again only the people who failed and tells you which changes held.
 
 ## How it asks before acting
 
