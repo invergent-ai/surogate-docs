@@ -43,3 +43,31 @@ A person signed in sees their open work: each step of a case or task of a proces
 - **An administrator seeing the portal as someone else** does not see that person's work.
 
 A page with the widget is made for each person: it is never kept in a cache and shown to someone else. The portal checks the widget when the files are published: placed without `keel.yaml`, it is refused.
+
+## Start cases from the portal
+
+A form, a job or an endpoint can start a Keel case or process, or tell Keel something, with four [actions](/portal/sites/actions/):
+
+```yaml
+- type: startCase
+  caseType: loan
+  data:
+    applicant: form.name
+    amount: form.amount
+  into: started
+```
+
+| Action | What it does | Keys |
+|---|---|---|
+| `startCase` | Starts a case of a Keel case type | `caseType`, `data`, `into` |
+| `startProcess` | Starts a Keel process | `process`, `data`, `into` |
+| `sendMessage` | Gives a message to the processes waiting for it with a key | `name`, `key`, `payload`, `into` |
+| `sendSignal` | Signals every process waiting for it | `name`, `into` |
+
+`into` keeps what Keel answered: the case's or process's id and number, how many processes a message reached, or how many a signal is on its way to.
+
+- **Keel's key:** the people who send a form are rarely Keel's staff, so these actions use Keel's key for the project. Add it as a secret [connector](/portal/sites/connectors/), set its value under **Connectors**, and name the connector in `keel.yaml` as `serviceKey`. The key is kept for the Keel `keel.yaml` names: change its `api` or `project`, and set the key again.
+- **Once each:** a job that runs again for the same event, or a run tried again, starts nothing twice in Keel.
+- **When Keel refuses:** the action fails with Keel's reason, such as an unknown case type, and the run's `onError` reads it. A form whose Keel call fails keeps its submission, with no case. A call that took too long may still have been done; running it again is safe.
+- **Where:** in a form, job or endpoint that may change records, never in a GET endpoint or one anyone may call. A run takes at most 10 of them.
+
