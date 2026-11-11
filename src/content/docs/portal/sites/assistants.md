@@ -132,22 +132,28 @@ The page is the same for every visitor, so it stays as fast as any public page.
 
 ## Help in the console
 
-One agent can also be the console's help. The tenant's administrators then find **Help** in the console's menu. It opens a chat with that agent beside the page they are working on.
+One agent can also be the console's help. The tenant's administrators then find **Help** in the console's menu. It opens a chat with that agent over the page they are working on.
+
+Give the console its own agent, with its own key connector, as in [Connect your agents](#connect-your-agents):
 
 ```yaml
-helper:
-  url: https://helper-x1.cloud.surogate.ai
-  agent: 7c1e9a52-3b4d-4e5f-8a6b-1c2d3e4f5a6b
-  key: helper-key
+console-help:
+  url: https://console-help-x1.cloud.surogate.ai
+  agent: 2d4f6a8c-1b3e-4c5d-9e7f-0a1b2c3d4e5f
+  key: console-help-key
   help: true
 ```
 
 - `help: true` goes on one agent at most, and that agent needs its `key`.
-- Keep the help agent for the console alone: no page's assistant may name it, and it has no `website`. Anyone who reaches an agent reaches what its tools reach.
+- **Keep the help agent for the console alone.** Anyone who reaches an agent reaches what its tools reach. So:
+  - no page's assistant names it;
+  - no job's `askAgent` asks it;
+  - it has no `website`;
+  - no other agent in `agents.yaml` is the same agent under another name.
 - **Who sees Help:** the tenant's administrators. On the default tenant, its install administrators. No page needs to place the agent for them.
 - **Who does not:** everyone else, and an administrator seeing the portal as someone else.
-- The chat is an assistant's chat. Each administrator sees only their own chats, as on a page.
-- The agent knows what you give it in Studio. To let it look things up in the portal, give it the portal as a tool, below.
+- **Each administrator's chats are their own,** as on a page. Signing in again from the chat comes back to the same page of the console.
+- **What the agent knows** is what you give it in Studio. To let it look things up in the portal, give it the portal as a tool, below.
 
 ## Give an agent the portal as a tool
 
