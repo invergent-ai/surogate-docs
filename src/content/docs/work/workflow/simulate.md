@@ -1,109 +1,92 @@
 ---
 title: Simulate
-description: Rehearse an agent with made-up customers on its real channels, read how it went, and fix what went wrong before anyone real sees it.
+description: Keep named groups of made-up people, run them against your agent on its real channels, and fix what failed before anyone real sees it.
 ---
 
-**Simulate** lets you try an agent on made-up people before real customers reach it. Each person writes to the agent through the same channel setup real customers use: its identity, skills, knowledge, tools, and on WhatsApp its forms and team alerts. Nobody real is ever written to. When the run is over, a review reads the whole thing and tells you what to change, and you can make each change in one click.
+**Simulate** lets you try an agent on made-up people before real customers reach it. Each person writes to the agent through the same channel setup real customers use: its identity, skills, knowledge, tools, and on WhatsApp its forms and team alerts. Nobody real is ever written to. Each person checks one thing, and when the run is over you see who passed and what to change for the ones who did not.
 
 Open it from **Simulate** under the agent in the Work sidebar. Anyone in the project can look; only editors can start a run. It is not offered on system agents such as the Copilot.
+## Simulations
 
-## Pick the people
+A simulation is a named group of made-up people. It is kept, so you can run the same people again after every change and see if it got better.
 
-The **People** tab thinks of six people from the agent itself: who it serves, what they want, how they write. Picking one shows their portrait. **More about them** shows the full persona Autopilot plays. Some are there to **Test what they may do**, and others to **Test something they may not do**: a customer pushing past a rule, asking for something out of scope, or getting angry. **New people** thinks of six more.
+The **Simulations** tab lists them. Each row shows who is in it, the channels, and how the last run went: **Running, 3 of 7 done** while it runs, then for example **6/7 passed**. Anyone who failed has a red ring around their picture. A run is graded on its own as soon as everyone is done; you don't have to open it.
 
-![The People tab: six people the agent thought of, the one picked, and the team's stand-ins](../../../../assets/screenshots/work-simulate-people.png)
+![The Simulations tab: two simulations with the people in them, their channels and their last result](../../../../assets/screenshots/work-simulate-list.png)
 
-To test something specific, tick **Someone else** and describe them in a sentence or two:
+Click a row to see everyone in it: who they are, what they check, and **Passed** or **Failed** with the judge's reason. Below are all its runs. From there, **Edit people**, **Open last run** (**Watch it** while it runs) or **Run** it again.
 
-> A supplier whose invoice is 40 days late. Polite at first, then threatens to stop deliveries. Writes short messages in English.
+![One simulation open: each person's check and result, with the reason for the one that failed](../../../../assets/screenshots/work-simulate-details.png)
 
-On a chat channel you can tick several people and run them all at once. Each gets their own conversation with the agent, and they run side by side.
+## Make one
 
-**Channel** picks where the conversation happens. The agent's connected channels come first. The others are under **Not set up yet**, so you can see how the agent would do on a channel before you connect it.
+Press **New simulation**.
 
-| Channel | Who plays the person |
-|---|---|
-| WhatsApp, Telegram, Slack, Teams, Discord | **Autopilot** writes for them, or you do |
-| Your website, a voice call | You play them, one person per run |
+1. **Where do people write from?** The channels the agent is live on are picked already. Click a channel to add or remove it.
+2. **Suggest people.** The AI reads the agent's instructions, skills and team and suggests a few people, each checking one thing. Most are ordinary, a couple are awkward, and one or two push against the agent's rules. It also names the simulation, for example "Refunds and angry customers". You don't set a difficulty.
 
-**Start simulation** hands the people to Autopilot. **Play them yourself** lets you write as them from the start.
+Each person is a card:
 
-## Your team in the simulation
+- Click what they want, or what they check, to rewrite it.
+- Click the channel to move them to another picked channel.
+- **Someone else** swaps them for a new person. **Remove** drops them.
+- **Add someone** asks the AI for one more person, different from the ones you have.
+- **Suggest new people** replaces them all.
 
-On WhatsApp, the agent's [team](/work/tools/programs-team/) joins the run as **stand-ins**: one phone per member, played by Autopilot from that member's role and permissions. When the agent escalates, the alert lands on the stand-in's phone, not on the real colleague's.
+If the agent has a [team](/work/tools/programs-team/), team members can be people too, with their real rights, on chat channels. For example: "Ioana, nurse. Checks: is refused when she asks for a patient's full phone number."
 
-A stand-in can answer the alert, and the agent passes the answer on to the customer. That way you can see the whole loop: customer asks, agent alerts the right person, the person answers, and the customer hears back.
+Everything is kept as you go; there is no save button. Click the name to rename it. **Run with N people** at the top starts it. Autopilot plays every person on every channel, including your website. The one exception is a voice call: you speak as the person.
 
-To test what a member may do, give them a line under **Have them ask the agent something**. For example, "Ask the agent who it is following up today", or "Ask the agent to add a colleague to the team". **Test what they may do** and **Test something they may not do** fill one in from the member's permissions.
+![A new simulation: the channels picked and the people suggested, each with what they check](../../../../assets/screenshots/work-simulate-people.png)
 
 ## Watch it run
 
-The run opens straight away. The left side lists **People in this simulation** and **Your team in the simulation**. Each person shows how far they have got: *The agent is writing*, *Your turn*, *Went well*, *Gave up*, *Agent went silent*.
+The run opens straight away. The left side lists everyone, with where they are: about to write, waiting for the agent, the agent is writing, done.
 
-The middle shows the selected person's phone, chat, or call as they see it, with buttons, lists, and forms. On WhatsApp the agent's forms open the way they do on a phone, and Autopilot fills them in.
+The middle shows the selected person in their real app: WhatsApp, Telegram, Slack, Teams, Discord, your website, or a phone.
 
-The side panel shows **What's happening**: what the agent read, which tools it called, and what it sent. On narrow screens, the panel button toggles it.
+- **Autopilot / You** switches who writes as that person. Switch back to Autopilot and it carries on from where the conversation is. When Autopilot is done with someone, **Carry on** lets it keep going.
+- **Send the next step now** shows on anyone enrolled in a [Program](/work/tools/programs-team/). Program check-ins reach simulated people only this way.
+- **End now** stops the whole simulation.
 
-To steer a conversation, **take over** a person and write as them, then hand them back to Autopilot. A person handed back carries on from where the conversation is.
+You can leave the page and come back; it keeps going. **Simulate** at the top takes you back to the simulation it came from.
 
-![A run: the people and the team's stand-ins on the left, one customer's WhatsApp in the middle, and how it went on the right](../../../../assets/screenshots/work-simulate-run.png)
+![A run: the people on the left and one patient's WhatsApp chat with the agent](../../../../assets/screenshots/work-simulate-run.png)
 
-A run ends on its own when everyone is done. Autopilot stops a person when they got what they came for, when they would give up, or when the agent stays silent for three minutes. While the agent is still working on its answer, a person waits up to ten minutes. A person stops after 20 messages, and a run after 30 minutes. You can also end a run yourself.
+A run ends on its own when everyone is done. Autopilot stops a person when they got what they came for, when they would give up, or when the agent stays silent for three minutes after its last turn. A person stops after 20 messages, and a run after 30 minutes.
 
-When it ends, **How it went** sums it up: how long it took, how many messages, the agent's steps, how often it reached the team, and how each person's part ended. From there:
+## Results and fixes
 
-- **Run again** runs the same people once more.
-- **Run it harder** runs them again, less patient: they push back, change their mind, and are hard to satisfy.
-- **On another channel** runs them again on a channel you pick.
+When everyone is done, the top of the run says how it went, for example **6 of 7 passed**. Each person shows what they checked, and **Passed** or **Failed** with one sentence on why. **Show the message** scrolls the chat to where it went wrong.
 
-## Read the review
+For each failure there is a change that would fix it, shown as before and after. It changes the identity, a skill, or a note in a knowledge base.
 
-Once everyone in the run is done, **Review it** reads the whole run, including the team's side. The review gives:
+- **Apply** makes the change. **Skip** leaves it. **Write the change** drafts it again.
+- **Apply all N fixes** applies every change you did not skip.
+- A change takes effect on the agent's next conversation, real ones included. A team problem, such as the wrong person being alerted, is fixed on the [Team](/work/tools/programs-team/) tab of Programs.
 
-- **How it went**: *Went well*, *Mixed*, or *Went badly*, with a short summary.
-- **What to fix**: each problem with the agent's own words quoted, why it matters, how serious it is, and where the fix belongs.
+**Check again with the N who failed** runs only those people again, with the same check and channel. They show ✗ → ✓ against the earlier run, so you see which changes held. A change that did not hold needs other wording or another part.
 
-A fix belongs in one of three places:
+Something the agent rightly schedules for later, such as a check-in at 19:00, is not a failure.
 
-| Part | What changes |
-|---|---|
-| **Identity** | The agent's instructions (SOUL.md) |
-| **Skill** | One of the agent's skills |
-| **Knowledge** | A note added to one of the agent's knowledge bases |
+## Learned and History
 
-A team problem, such as the wrong person being alerted, is fixed on the [Team](/work/tools/programs-team/) tab of Programs. **Change it in Team** opens it.
+**Learned** lists every change made from a simulation, the check it fixed, and when. **Undo** puts the identity or skill back as it was, or removes the knowledge note. If the text was edited after the change, undo it where it was edited.
 
-**Review again** reads the run once more. A review is one reader's opinion of one run. If a finding looks wrong to you, dismiss it.
+**History** lists every run, newest first, with its score and the simulation it belongs to. Click one to open it.
 
-## Improve
+## What is real and what is not
 
-The **Improve** tab works through the findings one at a time. **To fix** lists the open ones, the most serious first. **Done** lists the ones you changed or dismissed. Move through the list with `j` and `k`, or the arrow keys.
+Simulated people write to the agent the way real ones do, but nothing real is touched.
 
-For each finding:
-
-1. **Write the change** drafts the edit and shows it as a diff, with a line on why.
-2. If the wording is not right, **Write it again** takes a note, for example "shorter" or "mention the weekend number", and drafts it again.
-3. **Edit** opens the drafted text so you can change it yourself. **Discard my edits** goes back to the draft.
-4. **Make the change** saves it. A change applies to the agent's next conversation, real ones included.
-5. **Dismiss** drops a finding you don't agree with.
-
-![The Improve tab: the findings to fix on the left, one finding with the change written and its diff](../../../../assets/screenshots/work-simulate-improve.png)
-
-After a change or a dismissal, the next open finding opens on its own.
-
-**Undo** puts the identity or skill back exactly as it was before the change. If the text was edited after the change, undo it where it was edited. A knowledge note is removed from its knowledge base.
-
-## See if a change held
-
-After you change something, run the same people again. Their next review opens with **Since last time**, which lists each change from the earlier run as *Held* or *Came back*, and how many of them held. A change that came back did not fix the problem. Write it again or try another part.
-
-## Recent and Learned
-
-**Recent** lists past runs: who was in them, the channel, how each went, and who started them. **Learned** lists every change made from a simulation: what the agent learned, from whom, and when. Each one is live for real conversations too.
+- Tools that only read, such as a lookup, run for real.
+- Tools that change something are not run. The agent gets a plausible answer, and the trace says what it would have done, for example "would have sent an email to ... (not sent)".
+- Simulated people never show up in Users, Sessions or Programs, and never reach your webhooks.
+- A run ends itself, and is deleted after 90 days.
 
 ## Ask the Copilot
 
-The [Copilot](/work/tools/copilot/#testing-and-improving-an-agent) can do all of this for you. Ask it to "test my agent with three hard customers" or "see how my agent handles a refund request". It picks or writes the people, runs them, and reads you the review. For each fix, it shows you the diff and asks before changing anything. It can also write a change again from your note, undo a change, and report whether earlier changes held. Every run it starts shows in **Recent**, marked *Started by Copilot*, so you can watch it and take over.
+The [Copilot](/work/tools/copilot/#testing-and-improving-an-agent) can do all of this for you. Ask it to "test my agent with three hard customers" or "see how my agent handles a refund request". It drafts the plan, runs it, and reads you the result. For each fix it shows the change and asks before applying anything. Every run it starts shows in History, marked *Started by Copilot*, so you can watch it and take over.
 
 ## Related
 
