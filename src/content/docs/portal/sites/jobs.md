@@ -81,6 +81,29 @@ A change made by a job may start jobs again, at most three deep, so a job that c
 
 **Run now** is for jobs on a time: a job started by records runs only for a change.
 
+## When people come and go
+
+A job can start when a person is created, changed or signs in:
+
+```yaml
+trigger:
+  user:
+    on: [created]
+site: main
+runAs: user:admin@primaria.ro
+actions:
+  - type: email
+    to: trigger.user.email
+    subject: '"Bun venit pe portal"'
+    text: '"Bună, " + trigger.user.name + "!"'
+```
+
+`on` lists `created`, `updated` and `signed_in`. The job runs once each time, however it happened: in the console, through SCIM, through a sign-in with a provider or a directory, or through a directory's sync.
+
+The run reads `trigger.event`, `trigger.id` (the person's id) and `trigger.at`. `trigger.user` holds their name and email as they are when the run starts, only when the job runs as an administrator; otherwise, and once the person is gone, it is `null`.
+
+At most 5,000 people wait for a job, enough for a directory that brings many at once; past that, new ones are not run, and the history says so.
+
 ## Send mail
 
 A job may send email with the `email` action, as forms do. Its mail leaves once the run ends well, within the portal's hourly room, and at most 100 recipients an hour for each job.
