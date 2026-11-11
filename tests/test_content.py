@@ -250,7 +250,7 @@ class Content(unittest.TestCase):
 
     def test_portal_actions(self):
         doc = page('/portal/sites/actions/')
-        for anchor in ('an-action-list', 'expressions', 'the-actions', 'when-something-fails'):
+        for anchor in ('an-action-list', 'expressions', 'the-actions', 'ask-an-agent', 'when-something-fails'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="after-it-is-sent"', page('/portal/sites/forms/'))
         self.assertIn('id="runs"', page('/portal/console/forms/'))

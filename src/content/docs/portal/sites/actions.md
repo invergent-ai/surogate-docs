@@ -66,6 +66,7 @@ Whole numbers are integers, the others decimals; the two mix in arithmetic, so `
 | `callEndpoint` | Runs one of the portal's [endpoints](/portal/sites/endpoints/#private-endpoints) and keeps its answer | `endpoint`, `params`, `okStatus`, `into` |
 | `appAction` | Runs an [app's action](#app-actions) and keeps its outputs | `app`, `action`, `inputs`, `connector`, `into` |
 | `startCase`, `startProcess`, `sendMessage`, `sendSignal` | Start a case or process in [Keel](/portal/sites/keel/#start-cases-from-the-portal), or send it a message or signal | see Keel |
+| `askAgent` | Asks one of your [agents](/portal/sites/assistants/) for an answer, a summary or a knowledge-base article, and keeps it | `agent`, `task`, `prompt`, `into` |
 | `http` | Calls a service through a [connector](/portal/sites/connectors/#call-a-service) | `connector`, `method`, `path`, `query`, `headers`, `body`, `okStatus`, `into` |
 | `email` | Sends an [email](/portal/sites/connectors/#email) once the run ends well | `to`, `subject`, `text` |
 | `hash`, `hmac`, `randomToken`, `uuid` | [Hashes, signatures and random values](/portal/sites/connectors/#hashes-signatures-and-random-values) | |
@@ -75,6 +76,28 @@ Whole numbers are integers, the others decimals; the two mix in arithmetic, so `
 | `deleteFile` | Deletes a file | `folder`, `name` |
 
 A `redirect` goes to a page of the same site, or to another https site the form names under `redirects`.
+
+## Ask an agent
+
+`askAgent` asks one of the agents in `agents.yaml` (an agent with its key) and keeps the answer:
+
+```yaml
+- type: askAgent
+  agent: helper
+  task: summary
+  prompt: "'Cererea ' + vars.request.number + ': ' + vars.request.description"
+  into: summary
+- type: updateRecord
+  model: requests
+  id: vars.request.id
+  values: { summary: vars.summary.text }
+```
+
+- `task`: `chat` (when left out) answers the prompt; `summary` summarizes it; `article` writes a knowledge-base article from it, with a title and sections. The answer comes in the prompt's language.
+- `prompt`: an expression giving the words, up to 50,000 characters.
+- `into`: where the answer is kept, as `{ text }`.
+
+Each ask is a conversation of its own, and its use is billed to the agent's project. A run asks agents at most 5 times, and waits for an answer only as long as the run may last, at most two minutes. Runs started by visitors ask agents at most 100 times an hour on the portal. When the agent cannot answer, the run fails there, and an `onError` sees why. An agent never answers a value's expression, a flow's test or an administrator seeing the portal as someone else.
 
 ## Files
 
