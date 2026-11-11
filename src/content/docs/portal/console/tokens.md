@@ -32,7 +32,8 @@ A token can only do what its scopes allow, and never more than you can do in the
 | **Export and erase personal data** | Answer [personal data](/portal/console/users/#personal-data) requests |
 | **Manage tenants** | Create and change [tenants](/portal/console/tenants/), for install administrators |
 | **Make preview environments** | Make, sync and delete [previews](/portal/sites/previews/) with fake people, and sign in to them; nothing of the portal itself. Given by name only, by an administrator |
-| **Full access** | All of the above, but making previews |
+| **Propose changes** | Propose changes to the sites, for an administrator to approve under [Proposed changes](/portal/console/proposals/), and read your own proposals; never approve them. Given by name only, by an administrator |
+| **Full access** | All of the above, but making previews and proposing changes |
 
 A token made before scopes existed has **Full access**. A token asked to do something its scopes do not allow is refused: "This token is not allowed to do this."
 
