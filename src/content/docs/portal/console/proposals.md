@@ -25,8 +25,8 @@ Open a proposal to see:
 
 - **What it is for:** its title and description.
 - **Each file it changes,** with the lines it removes and adds. A file it adds shows every line as added; a file it removes, every line as removed.
-- **Whether it would break the site.** It was checked as a save is. A proposal that would break the site lists why, and cannot be approved.
-- **What to look at closely.** The page lists the files that change:
+- **Whether it would break the site.** It is checked as a save is, and again on the newest version when you preview or approve it. A proposal that would break the site lists why, and cannot be approved.
+- **What to look at closely.** The page lists the files where, compared with before, these change:
   - who a job runs as;
   - who reaches a page, a form or an endpoint;
   - who may see or change something;
@@ -34,7 +34,7 @@ Open a proposal to see:
 
 ## Preview a proposal
 
-**Make a preview** makes a [preview environment](/portal/sites/previews/) of the sites with the change in. Nothing of the change runs before you ask. **Open the preview** opens it, with fake people only. A preview stays seven days, or until the proposal is decided. A portal has at most ten previews at once, its developers' included.
+**Make a preview** makes a [preview environment](/portal/sites/previews/) of the sites, as they are now, with the change in. Nothing of the change runs before you ask. **Open the preview** opens it as a visitor sees it. A preview stays seven days, or until the proposal is decided. A portal has at most ten previews at once, its developers' included.
 
 ## Approve or reject
 
@@ -45,7 +45,7 @@ Open a proposal to see:
   - If other files changed, the proposal is published on top of them.
 - **Reject:** write why. Nothing is changed, and the one who proposed it reads your note.
 
-Whoever proposed a change may withdraw it while it waits. Each proposer has at most five proposals waiting, and the portal twenty.
+Whoever proposed a change may withdraw it while it waits. Each proposer has at most five proposals waiting and makes at most thirty an hour; the portal keeps at most twenty waiting. A decided proposal keeps its files for 90 days.
 
 ## For agents and developers
 
