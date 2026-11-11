@@ -132,6 +132,40 @@ actions:
 
 `paths` goes only with `request`, and `sources` only with `error`. At most 100 events wait for a job; past that, new ones are not run, and the history says so.
 
+## When mail arrives
+
+A job can start for each message that arrives in a [mailbox](/portal/sites/connectors/#mailboxes):
+
+```yaml
+trigger:
+  mail:
+    connector: cereri
+site: main
+runAs: user:registratura@primaria.ro
+actions:
+  - type: createRecord
+    model: requests
+    condition: trigger.autoSubmitted == null
+    values:
+      subject: trigger.subject
+      sender: trigger.from.address
+      body: trigger.text
+```
+
+The run reads:
+
+- `trigger.from` (`address`, `name`), `trigger.to` and `trigger.cc`;
+- `trigger.subject`, `trigger.date` and `trigger.text` (the message's text, at most 64 KB);
+- `trigger.attachments`, each file's `filename`, `contentType` and `size` (the files themselves are not read);
+- `trigger.autoSubmitted` and `trigger.listId`, set for automatic replies and mailing lists.
+
+A message over 5 MB gives only who sent it and its subject, with `trigger.tooLarge` true.
+
+- **When:** the mailbox is read about once a minute, and up to 20 new messages are taken each time. The job runs once for each.
+- **From when:** the first read only marks where the job begins. Mail that was there before is never run for. The same is true after the job's trigger, the mailbox's server or folder, or its username changes; the job's history says so.
+- **Failures:** when the mailbox cannot be read (a wrong password, a server that does not answer, a certificate the portal does not trust), **Jobs** shows why, the history says so once, and the next tries wait longer, up to an hour.
+- **Loops:** a job that sends mail to the address it reads starts itself again. Skip machine mail with `condition: trigger.autoSubmitted == null`.
+
 ## Send mail
 
 A job may send email with the `email` action, as forms do. Its mail leaves once the run ends well, within the portal's hourly room, and at most 100 recipients an hour for each job.

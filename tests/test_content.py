@@ -272,7 +272,7 @@ class Content(unittest.TestCase):
     def test_portal_connectors(self):
         doc = page('/portal/sites/connectors/')
         for anchor in ('a-connector', 'credentials', 'call-a-service', 'email',
-                       'hashes-signatures-and-random-values', 'each-persons-own-account', 'in-tests'):
+                       'hashes-signatures-and-random-values', 'mailboxes', 'each-persons-own-account', 'in-tests'):
             self.assertIn(f'id="{anchor}"', doc)
         for anchor in ('set-credentials', 'test'):
             self.assertIn(f'id="{anchor}"', page('/portal/console/connectors/'))
@@ -333,7 +333,7 @@ class Content(unittest.TestCase):
 
     def test_portal_jobs(self):
         doc = page('/portal/sites/jobs/')
-        for anchor in ('write-a-job', 'when-it-runs', 'when-records-change', 'when-people-come-and-go', 'when-the-portal-starts-fails-or-is-asked-for', 'send-mail', 'what-it-may-do', 'in-the-console'):
+        for anchor in ('write-a-job', 'when-it-runs', 'when-records-change', 'when-people-come-and-go', 'when-the-portal-starts-fails-or-is-asked-for', 'when-mail-arrives', 'send-mail', 'what-it-may-do', 'in-the-console'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/sites/jobs.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'lease', 'CEL'):

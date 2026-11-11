@@ -102,6 +102,25 @@ Credentials go only over https, unless the portal is installed to reach private 
 
 `hmac` signs whatever the list gives it. Do not sign what a visitor typed unless that is the point.
 
+## Mailboxes
+
+A mailbox connector lets a [job](/portal/sites/jobs/#when-mail-arrives) read the mail that arrives at an address:
+
+```yaml
+name: { ro: Cereri prin e-mail, en: Requests by email }
+kind: mailbox
+protocol: imap        # or pop3
+host: mail.primaria.ro
+folder: INBOX         # IMAP only; INBOX when left out
+```
+
+- **Port:** 993 for IMAP and 995 for POP3 when left out.
+- **Security:** `tls` by default. IMAP also takes `starttls`. The mail server needs a certificate the portal trusts, and `none` works only for a server on your own network when the portal allows that.
+- **Credentials:** the mailbox's username and password, set under **Connectors**. They are kept for that server alone; when the host, port, protocol or security changes, set them again.
+- **Test:** **Test** signs in and opens the folder.
+
+The portal only reads. It never marks, moves or deletes a message, so keep the mailbox tidy yourself, and read each mailbox with one job. A POP3 mailbox of more than 10,000 messages is not read.
+
 ## Each person's own account
 
 A connector with `perUser: true` signs in as each person, with the account they connected under **Your connections** on their [account](/portal/console/account/#your-connections). When nobody is signed in, or the person has not connected, the action fails with "The connector is not connected."
