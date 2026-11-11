@@ -176,6 +176,7 @@ class Content(unittest.TestCase):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/content/#show-content-on-a-page"', page('/portal/console/pages/'))
         self.assertIn('href="/portal/sites/content-types/#libraries"', doc)
+        self.assertIn('href="/portal/sites/assistants/#suggest-tags-for-content"', doc)
         source = (ROOT / 'src/content/docs/portal/console/content.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
@@ -360,7 +361,7 @@ class Content(unittest.TestCase):
 
     def test_portal_assistants(self):
         doc = page('/portal/sites/assistants/')
-        for anchor in ('connect-your-agents', 'place-an-assistant', 'what-people-see', 'who-the-agent-talks-with', 'a-chat-for-visitors', 'help-in-the-console', 'give-an-agent-the-portal-as-a-tool'):
+        for anchor in ('connect-your-agents', 'place-an-assistant', 'what-people-see', 'who-the-agent-talks-with', 'a-chat-for-visitors', 'help-in-the-console', 'suggest-tags-for-content', 'give-an-agent-the-portal-as-a-tool'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/assistants/"', page('/portal/sites/documents/'))
         source = (ROOT / 'src/content/docs/portal/sites/assistants.md').read_text()

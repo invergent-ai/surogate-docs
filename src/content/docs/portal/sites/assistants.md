@@ -155,6 +155,24 @@ console-help:
 - **Each administrator's chats are their own,** as on a page. Signing in again from the chat comes back to the same page of the console.
 - **What the agent knows** is what you give it in Studio. To let it look things up in the portal, give it the portal as a tool, below.
 
+## Suggest tags for content
+
+One agent can suggest tags for the content people write. The content editor then shows **Suggest tags** under an entry's tags.
+
+```yaml
+tagger:
+  url: https://tagger-x1.cloud.surogate.ai
+  agent: 5e7a9c1b-2d4f-4a6b-8c0d-1e2f3a4b5c6d
+  key: tagger-key
+  tags: true
+```
+
+- `tags: true` goes on one agent at most, and that agent needs its `key`. The console's help agent cannot be the tagger.
+- The agent is given the entry's title and text, and answers with tags. The portal keeps only what fits as a tag.
+- **Give the tagger an agent with no tools.** Everyone who writes content can ask it, and its words come from what they write.
+- **Who may ask:** the people who edit a site's or a library's content, signed in.
+- **Its use:** each request is a conversation of its own, billed to the agent's project.
+
 ## Give an agent the portal as a tool
 
 An agent can use the portal itself while it works. It can search a site and read the records of the data models its account may see, through the MCP server the portal serves at `/_portal/mcp`.

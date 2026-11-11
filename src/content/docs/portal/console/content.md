@@ -42,6 +42,8 @@ When the portal has vocabularies that sort the content type, the editor lists th
 
 If the portal later drops a category an entry has, the entry simply loses it the next time it is saved or published.
 
+**Suggest tags** asks the portal's [tagger agent](/portal/sites/assistants/#suggest-tags-for-content), when it has one. The agent reads the entry as written, in the site's main language, saved or not. Its tags are added to the ones you typed. Remove the ones you don't want, then save. Each person may ask one at a time, 10 times a minute. Suggestions never take an entry past 20 tags; when there is nothing new to add, the editor says so.
+
 **Save draft** keeps your changes without showing them to visitors. Save as often as you like.
 
 ## Publish
