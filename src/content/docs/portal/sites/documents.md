@@ -1,6 +1,6 @@
 ---
 title: Documents
-description: Connect the portal to Surogate DMS, show a DMS folder's documents in a page, and file new ones from it.
+description: Connect the portal to Surogate DMS, show a DMS folder's documents or one document's versions in a page, and file new ones from it.
 ---
 
 Surogate DMS keeps the institution's documents. Connected, a page of the portal shows the documents of a DMS folder to the person signed in, as the DMS lets them see it, with a link to each in the DMS and a download.
@@ -80,10 +80,42 @@ After the upload, the page shows what happened:
 - **You may not file documents here:** the DMS does not let the person file into that folder.
 - **The folder is not in the DMS:** the widget's folder was deleted or never existed.
 - **The DMS is busy:** try again in a few minutes.
+- **Say in the DMS why you need the document:** the folder or document holds personal data. Open it in the DMS, say why, and try again.
 - **Not filed now:** the DMS did not answer. Try again later.
 - **The DMS has not said whether it filed the document:** the DMS got the whole file but did not answer in time. Look in the folder before filing it again.
 
 An administrator seeing the portal as someone else cannot file for them. Each filing is in the portal's audit log, and in the DMS's.
+
+## Show one document
+
+The `document` widget shows one DMS document and its versions:
+
+```yaml
+- id: regulation
+  app: portal
+  widget: document
+  preferences:
+    document: 0b8f7f6e-2a3c-4d5e-9f10-111213141516
+    versions: 5
+    upload: true
+```
+
+- `document`: the DMS document, by its id. Open it in the DMS and copy the id from its address.
+- `versions`: how many of the newest versions to list, 1 to 50; 10 when left out. A link below the list says how many older ones the DMS holds.
+- `upload`: `true` lets people add a version from the page. When left out, the widget only shows the document.
+
+A person signed in sees the document's title and state, with **Open in the DMS**, where the document is viewed. Below are its versions, newest first: each version's number, date, file, size and comment, and a **Download**. The current version is marked. A file the DMS holds aside after a failed check has no Download.
+
+- **Someone the document is closed to** sees that they may not see it.
+- **A document with personal data** asks the person to open it in the DMS and say why they need it.
+- **A document that was deleted**, or never existed, says it is not in the DMS.
+- **When the versions cannot be read** but the document can, the document still shows.
+
+The DMS records each time a person reads the document through the page, as it does in its own app.
+
+### Add a version
+
+With `upload: true`, people the DMS lets edit the document see a form with a comment and a file. The DMS lets someone edit a document while it is a draft or validated, and not checked out by someone else. A new version of a validated document sends it back to draft, and the form says so. The file goes to the DMS as the person, and the page then says what happened, as for [filing a document](#file-documents-from-a-page). The DMS refuses a file for good reasons, for example while the document is open in the DMS's editor. The page then says the DMS did not take it.
 
 ## Search the DMS from the portal
 
