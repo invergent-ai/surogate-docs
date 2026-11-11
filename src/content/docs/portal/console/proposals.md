@@ -3,7 +3,7 @@ title: Proposed changes
 description: Changes to the sites that wait for an administrator, who reads them, previews them, and approves or rejects them.
 ---
 
-Changes that do not come from the portal's administrators never go straight to the sites. The portal's AI and the people helped by it **propose** a change instead. It waits under **Proposed changes** until an administrator reads it, opens its preview, and approves or rejects it. **Proposed changes** is for administrators, on a portal whose site files the portal keeps.
+Changes that do not come from the portal's administrators never go straight to the sites. The portal's AI, such as the [builder](/portal/sites/assistants/#describe-a-change) people describe a change to, **proposes** a change instead. It waits under **Proposed changes** until an administrator reads it, opens its preview, and approves or rejects it. **Proposed changes** is for administrators, on a portal whose site files the portal keeps.
 
 ## What may be proposed
 
