@@ -419,6 +419,15 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_proposals(self):
+        doc = page('/portal/console/proposals/')
+        for anchor in ('what-may-be-proposed', 'the-list', 'read-a-proposal', 'preview-a-proposal', 'approve-or-reject', 'for-agents-and-developers'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/console/proposals/"', page('/portal/console/tokens/'))
+        source = (ROOT / 'src/content/docs/portal/console/proposals.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub'):
+            self.assertNotIn(word, source)
+
     def test_portal_versions(self):
         doc = page('/portal/console/versions/')
         for anchor in ('what-the-list-shows', 'undo-a-change'):
