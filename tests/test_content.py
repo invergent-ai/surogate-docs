@@ -360,7 +360,7 @@ class Content(unittest.TestCase):
 
     def test_portal_documents(self):
         doc = page('/portal/sites/documents/')
-        for anchor in ('connect-the-dms', 'show-a-folder', 'file-documents-from-a-page', 'search-the-dms-from-the-portal', 'downloads', 'when-something-happens-in-the-dms'):
+        for anchor in ('connect-the-dms', 'show-a-folder', 'file-documents-from-a-page', 'show-one-document', 'add-a-version', 'search-the-dms-from-the-portal', 'downloads', 'when-something-happens-in-the-dms'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/sites/documents.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'JWT', 'token'):
