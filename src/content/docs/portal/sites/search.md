@@ -66,7 +66,7 @@ regions:
 - **When the DMS does not answer**, the site's results show as usual, and the section says the documents cannot be searched now.
 - It shows on the first page of results with no filter chosen.
 
-
+## Tune search
 
 Each site can weigh titles against text, give words that mean the same, pin results to a search, leave pages and content types out, and turn typos and word starts on or off. Administrators do it on the console's [Search](/portal/console/search/) page; in the site's files it is `sites/<site>/search.yaml`:
 
