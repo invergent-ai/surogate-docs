@@ -196,7 +196,7 @@ A receiver also has to be able to get the event: an event the app's server sends
 
 A receiver gets only the fields it declares.
 
-The portal's own events are `portal/user.created`, `portal/user.updated`, `portal/user.erased`, `portal/user.signed_in`, `portal/config.activated`, `portal/app.approved` and `portal/app.revoked`. The first four carry `{ id }` and are about that person; an app approved to know who the person is is told so with them. The app id `portal` cannot be used.
+The portal's own events are `portal/user.created`, `portal/user.updated`, `portal/user.erased`, `portal/user.signed_in`, `portal/config.activated`, `portal/app.approved` and `portal/app.revoked`, and what happens in [Keel](/portal/sites/keel/#when-something-happens-in-keel): `portal/keel.case.opened`, `portal/keel.case.stage_entered`, `portal/keel.case.closed`, `portal/keel.case.reopened`, `portal/keel.process.started`, `portal/keel.process.ended` and `portal/keel.process.cancelled`. The first four carry `{ id }` and are about that person; an app approved to know who the person is is told so with them. The app id `portal` cannot be used.
 
 ### Send an event from the app's server
 
