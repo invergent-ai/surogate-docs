@@ -358,6 +358,14 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'JWT', 'token'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_documents(self):
+        doc = page('/portal/sites/documents/')
+        for anchor in ('connect-the-dms', 'show-a-folder', 'downloads'):
+            self.assertIn(f'id="{anchor}"', doc)
+        source = (ROOT / 'src/content/docs/portal/sites/documents.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'JWT', 'token'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_kpis(self):
         doc = page('/portal/sites/kpis/')
         for anchor in ('declare-them', 'show-them', 'what-each-person-sees'):
