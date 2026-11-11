@@ -136,7 +136,9 @@ An agent can use the portal itself while it works. It can search a site and read
 
 1. **Make the agent an account.** Make a [service account](/portal/console/service-accounts/) for the agent. Give it the roles, and the data models' permissions, of what it may read. It reads nothing more.
 
-2. **Give it a token.** Make it a token with the **Use the portal as a tool of an agent** scope (`mcp`). Add the **data models** scope (`data`) when it should read records. Copy the token.
+2. **Give it a token.** Make it a token with the **Use the portal as a tool of an agent** scope (`mcp`). Copy the token.
+   - When the agent should read records, add **Read and change records of the data models, as the person may** (`data`).
+   - The tools only read, but with that scope the token can also change, through the portal's API, the records the account may change. Keep the token in Studio's vault alone.
 
 3. **Add the server in Studio.**
    - First put the token in the vault, as a credential.
@@ -154,5 +156,5 @@ The agent then has three tools:
 
 Each tool asks the portal as the agent's account, so the agent finds only what that account may see. The portal's audit log records each tool the agent uses, naming the account. An answer longer than 100 KB is cut, and the agent is told so.
 
-Surogate checks a tool server's tools when it first meets them, and sets aside a tool whose description later changes. After a portal update that changes these tools, restart the agent's tool connections in Studio if a tool goes missing.
+The portal keeps these tools' names and descriptions the same from one version to the next: Surogate sets aside a tool whose description changes after it first met it.
 
