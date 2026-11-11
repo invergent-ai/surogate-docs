@@ -77,7 +77,7 @@ A form, a job or an endpoint can start a Keel case or process, or tell Keel some
 
 ## When something happens in Keel
 
-A [job](/portal/sites/jobs/) can run each time something happens in the Keel project: a case opened, entered a stage, closed or reopened, or a process started, ended or was cancelled. For example, a job can mail the person who asked when their case closes. The form that started the case keeps its id in a record:
+A [job](/portal/sites/jobs/) can run each time something happens in the Keel project: a case opened, entered a stage, closed or reopened, or a process started, ended or was cancelled. For example, a job can mail the person who asked when their case closes. The form that started the case keeps its id in a record of a [data model](/portal/sites/data-models/) whose `case_id` field is `filterable: true`, so the job can find it:
 
 ```yaml
 # forms/request.yaml, its actions
@@ -89,7 +89,7 @@ A [job](/portal/sites/jobs/) can run each time something happens in the Keel pro
 - type: createRecord
   model: requests
   values:
-    caseId: vars.started.caseId
+    case_id: vars.started.caseId
     email: user.email
 ```
 
@@ -105,14 +105,14 @@ actions:
   - type: findRecords
     model: requests
     where:
-      caseId: trigger.id
+      case_id: trigger.id
     limit: 1
     into: found
   - type: email
     condition: size(vars.found) > 0
     to: vars.found[0].email
     subject: '"Your request " + trigger.number + " has been decided"'
-    text: '"The decision: " + trigger.resolution'
+    text: '"The decision: " + (has(trigger.resolution) ? trigger.resolution : "see your account")'
 ```
 
 | Event | When | What the run also reads |
@@ -125,9 +125,9 @@ actions:
 | `process.ended` | A process ends | `status`: `completed`, `terminated` or `failed` |
 | `process.cancelled` | A process is cancelled | |
 
-- **What the run reads:** `trigger.event` is the event, and `trigger.id`, `trigger.number`, `trigger.type` and `trigger.version` name the case or process. `trigger.at` is when it happened. Keel's events never hold a case's data: keep what you need in a record, as above. `trigger.seq` orders one case's own events.
+- **What the run reads:** `trigger.event` is the event, and `trigger.id`, `trigger.number`, `trigger.type` and `trigger.version` name the case or process. `trigger.at` is when it happened. `stage`, `resolution` and `status` are left out when Keel gives none: check with `has(trigger.resolution)`. Keel's events never hold a case's data: keep what you need in a record, as above. `trigger.seq` orders one case's own events.
 - **Which:** `on` names one or more events. `types` narrows them to some case types and processes; without it, all of them.
 - **Keel's key:** the portal reads Keel's events with Keel's key for the project, as for starting cases. Without `serviceKey` in `keel.yaml`, the job is refused.
-- **Once each:** each event runs each job that takes it once, a few seconds after it happens, in the order Keel recorded them. A job that starts cases of the kind it runs on would run itself again: the portal refuses one whose `case.opened` (or `process.started`) takes a type its own actions start. It cannot see such a loop through an endpoint the job calls.
-- **When the portal cannot read Keel:** it tries again, waiting longer each time, and loses nothing. **Jobs** in the console shows when Keel's events were last read, or what went wrong. If Keel has deleted old events the portal had not read yet, the portal reads on from then and says so: those events are lost. Keel keeps them a month unless set otherwise.
+- **Once each:** each event runs each job that takes it once, a few seconds after it happens, in the order Keel recorded them. A job that starts cases of the kind it runs on would run itself again: the portal refuses one whose `case.opened` (or `process.started`) takes a type its own actions start. A loop it cannot see, through an endpoint the job calls or between two jobs, ends on its own: the events of a case or process a job started start jobs one step further along a chain, and a chain ends after three, as chains of record changes do.
+- **When the portal cannot read Keel:** it tries again, waiting longer each time, and loses nothing. **Jobs** in the console shows when Keel's events were last read, or what went wrong. If Keel has deleted old events the portal had not read yet, the portal reads on from then, and **Jobs** says when: those events are lost. Take Keel's key away and name it again later, and the portal reads on from then too. Keel keeps them a month unless set otherwise.
 - **Also as events:** each one is also the portal event `portal/keel.<event>`, such as `portal/keel.case.closed`, for [apps and webhooks](/portal/sites/apps/). A webhook that takes every event gets these too.
