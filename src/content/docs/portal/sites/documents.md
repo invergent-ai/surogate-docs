@@ -80,7 +80,6 @@ After the upload, the page shows what happened:
 - **You may not file documents here:** the DMS does not let the person file into that folder.
 - **The folder is not in the DMS:** the widget's folder was deleted or never existed.
 - **The DMS is busy:** try again in a few minutes.
-- **Say in the DMS why you need the document:** the folder or document holds personal data. Open it in the DMS, say why, and try again.
 - **Not filed now:** the DMS did not answer. Try again later.
 - **The DMS has not said whether it filed the document:** the DMS got the whole file but did not answer in time. Look in the folder before filing it again.
 
@@ -115,7 +114,15 @@ The DMS records each time a person reads the document through the page, as it do
 
 ### Add a version
 
-With `upload: true`, people the DMS lets edit the document see a form with a comment and a file. The DMS lets someone edit a document while it is a draft or validated, and not checked out by someone else. A new version of a validated document sends it back to draft, and the form says so. The file goes to the DMS as the person, and the page then says what happened, as for [filing a document](#file-documents-from-a-page). The DMS refuses a file for good reasons, for example while the document is open in the DMS's editor. The page then says the DMS did not take it.
+With `upload: true`, people the DMS lets edit the document see a form with a comment and a file. The DMS lets someone edit a document while it is a draft or validated, and not checked out by someone else. A new version of a validated document sends it back to draft, and the form says so. The file goes to the DMS as the person. The page then says what happened. Most outcomes read as for [filing a document](#file-documents-from-a-page); these differ:
+
+- **The new version is in the DMS:** it is now the current version.
+- **You may not add versions to this document:** the DMS does not let the person edit it.
+- **The document is not in the DMS:** it was deleted.
+- **The DMS has not said whether it added the version:** look at the document before trying again.
+- **Say in the DMS why you need the document:** the document holds personal data. Open it in the DMS, say why, and try again.
+
+The DMS also turns a file down when it cannot take it now, for example while the document is open in the DMS's editor. The page then says the DMS did not take it.
 
 ## Search the DMS from the portal
 
