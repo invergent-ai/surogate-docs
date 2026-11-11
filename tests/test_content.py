@@ -218,7 +218,7 @@ class Content(unittest.TestCase):
 
     def test_portal_search(self):
         doc = page('/portal/sites/search/')
-        for anchor in ('what-search-finds', 'how-words-match', 'who-finds-what', 'put-a-search-box-on-a-page', 'suggestions-while-typing', 'from-an-app'):
+        for anchor in ('what-search-finds', 'how-words-match', 'who-finds-what', 'put-a-search-box-on-a-page', 'suggestions-while-typing', 'documents-in-the-dms', 'from-an-app'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="search"', page('/portal/console/pages/'))
         self.assertIn('href="/portal/sites/search/"', page('/portal/console/pages/'))
@@ -360,7 +360,7 @@ class Content(unittest.TestCase):
 
     def test_portal_documents(self):
         doc = page('/portal/sites/documents/')
-        for anchor in ('connect-the-dms', 'show-a-folder', 'downloads', 'when-something-happens-in-the-dms'):
+        for anchor in ('connect-the-dms', 'show-a-folder', 'search-the-dms-from-the-portal', 'downloads', 'when-something-happens-in-the-dms'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/sites/documents.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'JWT', 'token'):

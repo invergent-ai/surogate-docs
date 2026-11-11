@@ -45,7 +45,28 @@ In a page's file, the search box is the portal's `search` widget:
 
 When search is not available, the box says so; the rest of the page shows as usual.
 
-## Tune search
+## Documents in the DMS
+
+A search box can also show the documents of the [DMS](/portal/sites/documents/) that match, beside the site's own results. Give it `documents`:
+
+```yaml
+regions:
+  main:
+    - id: search
+      app: portal
+      widget: search
+      preferences:
+        limit: 10
+        documents: { limit: 5 }
+```
+
+- **What shows:** after the site's results, a section "In the DMS" lists up to `limit` documents (1 to 10; 5 when left out), each with its folder, state, version and a passage where the words match, and a link to all the results in the DMS.
+- **Who sees what:** the DMS searches as the person signed in, so they find only the documents they may read there, and the DMS records each search, naming the portal. Visitors see no DMS section.
+- **What the DMS gets:** the words of the search, never the site's results or anything else about the person's visit. A document's fields and values never show in the portal.
+- **When the DMS does not answer**, the site's results show as usual, and the section says the documents cannot be searched now.
+- It shows on the first page of results with no filter chosen.
+
+
 
 Each site can weigh titles against text, give words that mean the same, pin results to a search, leave pages and content types out, and turn typos and word starts on or off. Administrators do it on the console's [Search](/portal/console/search/) page; in the site's files it is `sites/<site>/search.yaml`:
 

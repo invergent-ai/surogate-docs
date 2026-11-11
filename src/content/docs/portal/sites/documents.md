@@ -52,6 +52,10 @@ A person signed in sees the folder's documents they may see in the DMS, each wit
 
 What a document holds, its fields and their values, is never shown in the portal. A page with the widget is never kept in a cache and shown to someone else. Placed without `dms.yaml`, the widget is refused when the files are published.
 
+## Search the DMS from the portal
+
+A search box can show the DMS's documents too: see [Search](/portal/sites/search/#documents-in-the-dms).
+
 ## Downloads
 
 **Download** asks the DMS, as the person, for a link to the file that works for a minute, and opens it: the file comes from the DMS, never through the portal.
