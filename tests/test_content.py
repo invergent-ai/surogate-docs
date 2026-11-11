@@ -352,7 +352,7 @@ class Content(unittest.TestCase):
 
     def test_portal_keel(self):
         doc = page('/portal/sites/keel/')
-        for anchor in ('connect-keel', 'my-work', 'start-cases-from-the-portal', 'when-something-happens-in-keel'):
+        for anchor in ('connect-keel', 'my-work', 'the-overview', 'start-cases-from-the-portal', 'when-something-happens-in-keel'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/sites/keel.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'JWT', 'token'):

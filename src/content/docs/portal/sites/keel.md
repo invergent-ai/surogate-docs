@@ -44,6 +44,36 @@ A person signed in sees their open work: each step of a case or task of a proces
 
 A page with the widget is made for each person: it is never kept in a cache and shown to someone else. The portal checks the widget when the files are published: placed without `keel.yaml`, it is refused.
 
+## The overview
+
+Place the portal's `keel-overview` widget on a page, such as a dashboard for the people who supervise the project:
+
+```yaml
+regions:
+  main:
+    - id: overview
+      app: portal
+      widget: keel-overview
+      preferences: { days: 30 }
+```
+
+A supervisor of the Keel project sees its headline figures over the last `days` days (1 to 92; 30 when left out):
+
+- the open cases, and in how many case types;
+- the cases decided, against the same number of days before;
+- the median time from a case's start to its decision, against before;
+- the cases past their deadline;
+- of the open cases, how many are on time, due within a day, and with no deadline.
+
+A link opens Keel's own overview for the same days, with more: by case type, where cases wait, and what needs attention.
+
+- **Only supervisors** see the figures. Others of the project's staff see that the overview is for its supervisors. Someone Keel does not know as staff sees that they do not work in Keel. Visitors see a prompt to sign in.
+- **When Keel does not answer**, the rest of the page shows as usual, and the widget says the overview cannot be read now. My work is not held back by it.
+- **The figures are a minute old at most.** Keel is asked again for them a minute after a supervisor last saw them.
+- **On a dashboard**, the page places the widget in its regions. People may move it or take it off their own dashboard, but cannot add it from the dashboard's offers.
+
+A page with the widget is never kept in a cache. Placed without `keel.yaml`, the widget is refused.
+
 ## Start cases from the portal
 
 A form, a job or an endpoint can start a Keel case or process, or tell Keel something, with four [actions](/portal/sites/actions/):
