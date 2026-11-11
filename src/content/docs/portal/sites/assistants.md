@@ -129,3 +129,32 @@ A page can also carry a chat for its visitors, signed in or not: the agent's web
 - A key minted again, or the channel turned off, stops the chat until `agents.yaml` has the new key.
 
 The page is the same for every visitor, so it stays as fast as any public page.
+
+## Give an agent the portal as a tool
+
+An agent can use the portal itself while it works. It can search a site and read the records of the data models its account may see, through the MCP server the portal serves at `/_portal/mcp`.
+
+1. **Make the agent an account.** Make a [service account](/portal/console/service-accounts/) for the agent. Give it the roles, and the data models' permissions, of what it may read. It reads nothing more.
+
+2. **Give it a token.** Make it a token with the **Use the portal as a tool of an agent** scope (`mcp`). Copy the token.
+   - When the agent should read records, add **Read and change records of the data models, as the person may** (`data`).
+   - The tools only read, but with that scope the token can also change, through the portal's API, the records the account may change. Keep the token in Studio's vault alone.
+
+3. **Add the server in Studio.**
+   - First put the token in the vault, as a credential.
+   - Then add an MCP server: its transport is HTTP, and its address is the portal's public one, such as `https://portal.primaria.ro/_portal/mcp`. The address names the tenant, so use the one people use.
+   - For its authentication, choose **Bearer** and the credential.
+   - Then give the server to the agent.
+
+The agent then has three tools:
+
+| Tool | What it does |
+| --- | --- |
+| `search_site` | Searches a site as a visitor would: its public pages, news and documents. |
+| `list_records` | Lists the records of a data model the account may see, or those that match words or field values, a page at a time. |
+| `get_record` | Reads one record. |
+
+Each tool asks the portal as the agent's account, so the agent finds only what that account may see. The portal's audit log records each tool the agent uses, naming the account. An answer longer than 100 KB is cut, and the agent is told so.
+
+The portal keeps these tools' names and descriptions the same from one version to the next: Surogate sets aside a tool whose description changes after it first met it.
+
