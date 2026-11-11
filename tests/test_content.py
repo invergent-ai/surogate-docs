@@ -94,7 +94,7 @@ class Content(unittest.TestCase):
 
     def test_portal_app_kit(self):
         guide = page('/portal/sites/build-an-app/')
-        for anchor in ('start-from-a-working-app', 'check-what-the-portal-sends', 'send-events-from-the-apps-server', 'write-a-web-component', 'types-from-the-manifest'):
+        for anchor in ('start-from-a-working-app', 'check-what-the-portal-sends', 'send-events-from-the-apps-server', 'write-a-web-component', 'let-the-person-pick-a-dms-document', 'types-from-the-manifest'):
             self.assertIn(f'id="{anchor}"', guide)
         self.assertIn('portalVerifier', guide)
         self.assertIn('href="/portal/console/apps/#for-the-apps-developers"', guide)

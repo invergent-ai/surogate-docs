@@ -129,6 +129,25 @@ customElements.define("my-app-counter", Counter);
 
 Style the widget with the colours and fonts the page sets from the site's design, such as `var(--foreground)`, `var(--primary)` and `var(--font-body)`, so it looks like whichever site it is placed on. See [Give a site its look](/portal/sites/design/#for-apps).
 
+## Let the person pick a DMS document
+
+On a portal connected to [the DMS](/portal/sites/documents/), a widget can let the person pick one of the documents the DMS lets them see:
+
+```ts
+import { pickDocument } from "@invergent/portal-app-sdk/browser";
+
+const picked = await pickDocument({ folder: "5d8e2c1a-1b2c-4d3e-8f90-112233445566" });
+if (picked) {
+  // picked.id, picked.title, picked.versionId, picked.filename, picked.download …
+}
+```
+
+- A dialog shows the person's DMS folders and the documents in the one they open, 50 at a time, and a search of the DMS. The portal reads everything as the person, so they see only what the DMS lets them see.
+- `folder` opens the dialog on that folder. Without it, the dialog starts at the folder tree.
+- `pickDocument` resolves with the document picked, or `null` when the person closes the dialog. Opening another picker closes the first, with `null`.
+- `picked.download` downloads the file through the portal. It works in the person's browser, not from the app's server. `picked.href` opens the document in the DMS.
+- The dialog speaks the page's language, Romanian or English. Its class is `portal-picker`, for the site's styles.
+
 ## Form fields and options
 
 An app can add to the portal's forms: a field type it draws itself, such as a signature pad, and option lists for a form's selects, read from its backend. Declare them in the manifest:
