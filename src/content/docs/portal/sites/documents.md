@@ -18,6 +18,7 @@ app: https://dms.primaria.ro
 - `app`: the DMS's web app, where a document's link and its downloads go.
 - `timeoutMs`: how long the portal waits for the DMS, from 1,000 to 10,000 ms; 3,000 when left out.
 - `audience`: what the portal names the DMS as in its sign-ins; leave it out unless the DMS's administrator set another.
+- `serviceKey`: the connector holding the DMS's key for its events; see [When something happens in the DMS](#when-something-happens-in-the-dms).
 
 The DMS must trust the portal. Its administrator adds the portal's **issuer**, shown on the console's **Apps** page under **For the apps' developers**, to the DMS's trusted portals, with the address of the portal's keys. The DMS then finds each person among its people by their email: the email they have in the portal must be the one they have in the DMS.
 
@@ -57,3 +58,42 @@ What a document holds, its fields and their values, is never shown in the portal
 
 - When the DMS asks why the person opens a document, as it does for documents with personal data, or holds the file aside after a failed check, Download opens the document in the DMS instead, where the person can say why or see what happened.
 - A visitor is asked to sign in first.
+
+## When something happens in the DMS
+
+A [job](/portal/sites/jobs/) can run each time a document is made, given a new version, moved to another state or folder, changed, or deleted in the DMS. The portal reads the DMS's events with a key of its own: ask the DMS's administrator for a service key, add it as a secret [connector](/portal/sites/connectors/), set its value under **Connectors**, and name the connector in `dms.yaml`:
+
+```yaml
+api: https://dms.primaria.ro
+app: https://dms.primaria.ro
+serviceKey: dms-key
+```
+
+Then a job can wait for documents to be approved:
+
+```yaml
+# jobs/document-approved.yaml
+trigger:
+  dms:
+    on: [document.state]
+site: main
+runAs: user:registratura@primaria.ro
+actions:
+  - type: log
+    level: info
+    message: '"Document " + trigger.document + " is now " + trigger.to'
+```
+
+| Event | When | What the run also reads |
+|---|---|---|
+| `document.created` | A document is made | `folder`, `type`, `source` |
+| `document.version` | A new version becomes the current one | `version`, `versionId` |
+| `document.state` | Its state changes | `from`, `to` |
+| `document.moved` | It moves to another folder | `from`, `to` (the folders) |
+| `document.updated` | Its title, type or a field changes | `fields`, the names changed |
+| `document.deleted` | It is deleted after a selection | `selection` |
+
+- **What the run reads:** `trigger.event` is the event, `trigger.document` the document's id, and `trigger.at` when it happened. Events never hold a title, a file name or what a document says.
+- **What the key sees:** the DMS shows its key's account only the events of documents it may read. Ask the DMS's administrator to give the account the right to read the documents your jobs should hear of, the right to read the archive for deletions, and, for documents holding personal data, the clearance for their level. Without them the portal hears of nothing, and no error says so.
+- **Once each:** each event runs each job that takes it once, a few seconds after it happens, in the order the DMS recorded them. When the portal cannot read the DMS, it tries again and loses nothing. **Jobs** in the console shows when the DMS's events were last read. If the DMS has deleted old events the portal had not read yet, the portal reads on from then, and **Jobs** says when: those events are lost.
+- **Also as events:** each one is also the portal event `portal/dms.<event>`, such as `portal/dms.document.state`, for [apps and webhooks](/portal/sites/apps/).

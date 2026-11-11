@@ -186,6 +186,10 @@ actions:
 
 The run reads `trigger.app`, `trigger.name`, `trigger.payload` (the event's fields) and `trigger.personId` when the app named a person. Events sent in the browser do not start jobs. At most 100 events wait for a job; past that, new ones are not run, and the history says so. Once the app is no longer approved, its events start nothing. A job that calls an app whose answer sends the event that starts the job again stops after three rounds.
 
+## When something happens in the DMS
+
+A job can run when a document changes in the DMS: `trigger: { dms: { on: [document.state] } }`. See [Documents](/portal/sites/documents/#when-something-happens-in-the-dms) for the events and what the run reads.
+
 ## When something happens in Keel
 
 A job can run when a case or process changes in Keel: `trigger: { keel: { on: [case.closed] } }`. See [Keel](/portal/sites/keel/#when-something-happens-in-keel) for the events and what the run reads.
