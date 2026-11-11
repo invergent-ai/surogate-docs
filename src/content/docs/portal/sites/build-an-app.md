@@ -176,7 +176,7 @@ An app can give the portal's action lists actions its server runs, such as sendi
 }
 ```
 
-The portal POSTs `{ call, tenant, site, locale, action, inputs, person?, credentials? }` to the action's URL, signed as a `portal-action+jwt` token. Check it with `verify(request, { kind: "action", action: "send" })`: it refuses a token for another action, and the same call a second time. Answer `{ "outputs": { "id": "m-1" } }`, as the outputs say, within the timeout (at most 10 seconds) and 256 KB. Inputs and outputs are flat: texts, numbers and yes or no, no lists. `person` is there when the app may see the person, without their portal fields.
+The portal POSTs `{ call, tenant, site, locale, action, depth, inputs, person?, credentials? }` to the action's URL, signed as a `portal-action+jwt` token. Check it with `verify(request, { kind: "action", action: "send" })`: it refuses a token for another action, and the same call a second time. It remembers calls in its own process; when the app runs as several copies, give the verifier a `seen` store they share. Answer `{ "outputs": { "id": "m-1" } }`, as the outputs say, within the timeout (at most 10 seconds) and 256 KB. Inputs and outputs are flat: texts, numbers and yes or no, no lists. `person` is there when the app may see the person, without their portal fields.
 
 A site's lists call it with `appAction`; see [Actions](/portal/sites/actions/#app-actions).
 
@@ -194,7 +194,7 @@ An administrator makes a connector of that type and sets its fields in the conso
 
 ## Start jobs
 
-The events your server publishes (those without `browser: true`) can start a site's [jobs](/portal/sites/jobs/#when-an-app-sends-an-event). Publish as in [Send events from the app's server](#send-events-from-the-apps-server); each event starts each job that waits for it once.
+The events your server publishes (those without `browser: true`) can start a site's [jobs](/portal/sites/jobs/#when-an-app-sends-an-event). Publish as in [Send events from the app's server](#send-events-from-the-apps-server); each event starts each job that waits for it once. When you publish an event while answering an action call, pass the call's `depth` (`publishEvent({ ..., depth })`): a job that calls your action, which sends the event that starts the job again, then stops after three rounds instead of running forever.
 
 ## Types from the manifest
 

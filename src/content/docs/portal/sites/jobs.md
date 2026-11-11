@@ -184,7 +184,7 @@ actions:
       order: trigger.payload.id
 ```
 
-The run reads `trigger.app`, `trigger.name`, `trigger.payload` (the event's fields) and `trigger.personId` when the app named a person. Events sent in the browser do not start jobs. A job hears of at most 60 events a minute, and once the app is no longer approved, its events start nothing.
+The run reads `trigger.app`, `trigger.name`, `trigger.payload` (the event's fields) and `trigger.personId` when the app named a person. Events sent in the browser do not start jobs. At most 100 events wait for a job; past that, new ones are not run, and the history says so. Once the app is no longer approved, its events start nothing. A job that calls an app whose answer sends the event that starts the job again stops after three rounds.
 
 ## Send mail
 
