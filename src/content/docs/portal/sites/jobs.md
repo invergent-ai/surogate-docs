@@ -102,6 +102,8 @@ actions:
 
 The run reads `trigger.event`, `trigger.id` (the person's id) and `trigger.at`. `trigger.user` holds their name and email as they are when the run starts, only when the job runs as an administrator; otherwise, and once the person is gone, it is `null`.
 
+At most 5,000 people wait for a job, enough for a directory that brings many at once; past that, new ones are not run, and the history says so.
+
 ## Send mail
 
 A job may send email with the `email` action, as forms do. Its mail leaves once the run ends well, within the portal's hourly room, and at most 100 recipients an hour for each job.
