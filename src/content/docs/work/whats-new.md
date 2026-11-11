@@ -2,6 +2,18 @@
 title: What's new
 ---
 
+## November 11, 2026: Surogate 1.31.0 (runtime 2.42.0)
+
+### Simulate, redone
+
+[Simulate](/work/workflow/simulate/) is rebuilt around simulations you keep.
+
+- **Simulations you keep.** Pick the channels, let the AI suggest people (each checking one thing) and change any of them. It is kept as you go, with a name the AI suggests, so you can run the same people again after every change.
+- **Results at a glance.** The list shows each simulation running, then its score. Open one to see every person's check, passed or failed, and why.
+- **Fix and check again.** Apply the proposed changes, then check again only the people who failed, and see which changes held.
+- **Learned and History.** Every change a simulation made, with Undo, and every run so far.
+- **Nothing real is touched.** Tools that change something are not run in a simulation; the trace says what the agent would have done. Simulated people stay out of Users, Sessions, Programs and your webhooks.
+
 ## October 25, 2026: Surogate Keel 0.2.1
 
 ### A user guide for Keel
