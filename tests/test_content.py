@@ -459,6 +459,20 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'outbox', 'vaul'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_comments(self):
+        doc = page('/portal/sites/comments/')
+        for anchor in ('place-the-widgets', 'write-and-answer', 'delete-and-flag', 'rate', 'limits', 'what-happens-to-them-later'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/console/moderation/"', doc)
+        console = page('/portal/console/moderation/')
+        for anchor in ('who-moderates', 'decide-on-a-comment'):
+            self.assertIn(f'id="{anchor}"', console)
+        self.assertIn('href="/portal/sites/comments/#delete-and-flag"', console)
+        for name in ('sites/comments.md', 'console/moderation.md'):
+            source = (ROOT / 'src/content/docs/portal' / name).read_text()
+            for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'subject'):
+                self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
         for anchor in ('make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):
