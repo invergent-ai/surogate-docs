@@ -29,6 +29,7 @@ fields:
 - **`title`** names the text field that names an entry in lists.
 - A field's **`id`** is lower-case letters, digits and hyphens. **`required: true`** must be filled in, in every language, to publish.
 - A portal has at most 100 content types, each with at most 50 fields.
+- **`blog: true`** makes the type a [blog](/portal/sites/blogs/): its entries are posts, each by the person who wrote it.
 
 ## Field types
 

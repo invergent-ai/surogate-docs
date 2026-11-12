@@ -487,6 +487,18 @@ class Content(unittest.TestCase):
             for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'subject', 'stream:'):
                 self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_blogs(self):
+        doc = page('/portal/sites/blogs/')
+        for anchor in ('make-a-blog-type', 'name-the-bloggers', 'show-a-blog', 'show-several-blogs', 'recent-bloggers', 'who-sees-what'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/permissions/#bloggers"', doc)
+        self.assertIn('id="bloggers"', page('/portal/sites/permissions/'))
+        self.assertIn('href="/portal/sites/blogs/#name-the-bloggers"', page('/portal/console/content/'))
+        self.assertIn('href="/portal/sites/blogs/"', page('/portal/sites/content-types/'))
+        source = (ROOT / 'src/content/docs/portal/sites/blogs.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'created_by', 'content_entries'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
         for anchor in ('make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):

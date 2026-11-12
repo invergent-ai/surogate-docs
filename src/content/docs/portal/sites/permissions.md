@@ -69,3 +69,15 @@ permissions:
 ```
 
 Editors and administrators always see what they edit. `everyone` and `signed-in` cannot be editors. Administrators can also add editors on the console's [Access](/portal/console/access/) page, which also checks who may see what, and why.
+
+## Bloggers
+
+`blog` names who may write [blog posts](/portal/sites/blogs/) on a site or a library, their own only:
+
+```yaml
+permissions:
+  edit: [group:Redactori]
+  blog: [group:Angajati]
+```
+
+Bloggers write posts of the blog types alone, and never change anyone else's posts or any other content; editors and administrators may blog too. `everyone` and `signed-in` cannot be bloggers. Bloggers are named in the files only: the Access page adds editors, not bloggers.
