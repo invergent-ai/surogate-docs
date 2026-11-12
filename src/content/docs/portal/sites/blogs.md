@@ -63,7 +63,9 @@ regions:
 - `summary`: a text or textarea field of the type, shown under each post.
 - `image`: an image field of the type.
 
-Each post shows its title, linked to its own page, its author with their [handle](/portal/console/users/#handle), and its date. A post published again keeps its first date and its place.
+Each post shows its title, linked to its own page, its author with their [handle](/portal/console/users/#handle), and its date; the summary and the image show in the page's language when the field has one. A post published again keeps its first date and its place.
+
+A blog lists a post only when its site has a display page for its type that the viewer may see: without one, the blog shows nothing.
 
 Add `?author=` and a handle to the page's address, such as `/blog?author=ana.pop`, to show one author's posts; every blog on that page then shows only theirs, with a link back to all posts. A handle nobody has shows no posts.
 
@@ -81,7 +83,7 @@ The `blogs` widget shows the newest posts of several sites and libraries togethe
 - `from`: the sites, and the libraries this site may show (as `@` and their id), whose posts it reads: 20 at most; this site when left out.
 - `limit`: how many posts it shows (1 to 50; 10 when left out).
 
-A post shows only when its site has a display page for its type that the viewer may see; it links to that page, on its own site's address, and says which site it is on. A post nobody may see from here is left out.
+A post shows only when its site has a display page for its type that the viewer may see; it links to that page, on its own site's address, and says which site it is on. A post nobody may see from here is left out, and so are the posts of a site with no address of its own.
 
 ## Recent bloggers
 
@@ -96,7 +98,7 @@ The `bloggers` widget lists who first published posts lately, the latest first, 
 
 - `from` and `limit` as for `blogs`.
 - `days`: how far back it looks (1 to 365; 30 when left out).
-- `page`: a page of this site with a blog; each name leads to that page with the person's posts.
+- `page`: a page of this site holding a `blog` widget; each name leads to that page with the person's posts. Pick a blog of the same type and site as the posts counted, or a name may lead to an empty list.
 
 It counts only posts the viewer may see, and lists only people whose account is active.
 
