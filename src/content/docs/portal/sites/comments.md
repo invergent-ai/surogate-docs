@@ -32,6 +32,20 @@ When someone answers a comment, its author gets a [notification](/portal/sites/n
 
 A comment that waits for a moderator shows to its author and to the moderators, marked as waiting; no one else sees it. Each person may have 5 comments waiting at a time.
 
+## Name someone
+
+People name someone with `@` and their handle, such as `@ana.pop`, in a comment or an [activity post](/portal/sites/activity/). Next to each author's name, the page shows their handle; an administrator sees and changes it on the person's [page in the console](/portal/console/users/#handle). In what the page shows, each `@handle` stands out.
+
+Each person named gets a [notification](/portal/sites/notifications/), in the site's language, that leads to the comment, once:
+
+- only people who may see the widget the comment was written in, and whose account is active; never the writer;
+- the first 10 names written in a comment; names after those are not told;
+- for a comment waiting for a moderator, only once it is approved;
+- the author of the comment an answer replies to is told of the answer, not also of the mention;
+- the people one person's comments and posts name are told at most 20 times an hour, and no one is told of more than 10 mentions an hour.
+
+`@` inside a word or an email address, as in `ana@example.ro`, names no one.
+
 ## Delete and flag
 
 People delete their own comments. A comment nobody answered is gone from the page; one that others answered stays in its place as **Comment removed**, with no words and no author, so the answers keep their place. A comment a moderator hid cannot be deleted by its author.
@@ -50,4 +64,4 @@ Each person writes at most 10 comments a minute and 20 a day on one page or entr
 
 - Deleting a content entry deletes its comments and ratings.
 - Renaming a page or taking it off the site leaves its comments behind: they come back on a page at the same address.
-- When a person is erased from the portal, their comments, flags and ratings go with them, and so do the notifications that told others of their answers. Their comments that others answered stay with no words and no author: as **Comment removed**, or still hidden when a moderator hid them. A person's comments and ratings are part of what they get when they ask for their data.
+- When a person is erased from the portal, their comments, flags and ratings go with them, and so do the notifications that told others of their answers or that they were named. Their comments that others answered stay with no words and no author: as **Comment removed**, or still hidden when a moderator hid them. A person's comments and ratings are part of what they get when they ask for their data.

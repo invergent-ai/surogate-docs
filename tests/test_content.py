@@ -473,6 +473,20 @@ class Content(unittest.TestCase):
             for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'subject'):
                 self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_activity(self):
+        doc = page('/portal/sites/activity/')
+        for anchor in ('place-the-widget', 'posts', 'comments-and-entries', 'who-is-told-what'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/comments/#name-someone"', doc)
+        comments = page('/portal/sites/comments/')
+        self.assertIn('id="name-someone"', comments)
+        self.assertIn('href="/portal/console/users/#handle"', comments)
+        self.assertIn('id="handle"', page('/portal/console/users/'))
+        for name in ('sites/activity.md', 'sites/comments.md'):
+            source = (ROOT / 'src/content/docs/portal' / name).read_text()
+            for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'subject', 'stream:'):
+                self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
         for anchor in ('make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):
