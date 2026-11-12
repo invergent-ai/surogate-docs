@@ -69,6 +69,7 @@ Whole numbers are integers, the others decimals; the two mix in arithmetic, so `
 | `askAgent` | Asks one of your [agents](/portal/sites/assistants/) for an answer, a summary or a knowledge-base article, and keeps it | `agent`, `task`, `prompt`, `into` |
 | `http` | Calls a service through a [connector](/portal/sites/connectors/#call-a-service) | `connector`, `method`, `path`, `query`, `headers`, `body`, `okStatus`, `into` |
 | `email` | Sends an [email](/portal/sites/connectors/#email) once the run ends well | `to`, `subject`, `text` |
+| `sendNotification` | Sends a [notification](/portal/sites/notifications/) to people of the portal once the run ends well | `to`, `title`, `body`, `link` |
 | `hash`, `hmac`, `randomToken`, `uuid` | [Hashes, signatures and random values](/portal/sites/connectors/#hashes-signatures-and-random-values) | |
 | `listFiles` | Lists a [folder](#files)'s files | `folder`, `into` |
 | `readFile` | Reads a file | `folder`, `name`, `encoding` (`text` or `base64`), `into` |
