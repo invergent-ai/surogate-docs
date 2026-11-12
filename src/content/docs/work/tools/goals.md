@@ -66,7 +66,7 @@ If the evaluator itself fails — a provider error, or a verdict that comes back
 
 Only **one goal** can be active per session. While active, sending `/goal <new text>` is rejected — pause or clear first.
 
-A session is allowed only **one evaluator loop**, so `/goal` and `/mission` can't both run in the same chat — and the block works both ways: starting a `/goal` while a mission is active or paused is refused, and starting a [`/mission`](/work/tools/missions/) (or `/auto-research`) while a goal is set — active *or* paused — is refused too. Clear the goal (`/goal clear`) or cancel the mission (`/mission cancel`) before starting the other — or start it in a new chat.
+A session is allowed only **one evaluator loop**, so `/goal` and `/mission` can't both run in the same chat — and the block works both ways: starting a `/goal` while a mission is active or paused is refused, and starting a [`/mission`](/work/tools/missions/) while a goal is set — active *or* paused — is refused too. Clear the goal (`/goal clear`) or cancel the mission (`/mission cancel`) before starting the other — or start it in a new chat.
 
 ## Iteration budget
 

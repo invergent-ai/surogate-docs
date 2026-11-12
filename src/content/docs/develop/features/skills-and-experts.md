@@ -144,7 +144,7 @@ Users invoke a skill explicitly via `/<skill-name> [args...]`:
 
 Resolution order in the harness:
 
-1. Builtin commands — `/clear`, `/code`, `/compress`, `/deep-research`, `/goal`, `/loop`, `/mission`, `/auto-research`
+1. Builtin commands — `/clear`, `/code`, `/compress`, `/deep-research`, `/goal`, `/loop`, `/mission`
 2. Dynamic skill resolution
 3. Plain user message if no match
 

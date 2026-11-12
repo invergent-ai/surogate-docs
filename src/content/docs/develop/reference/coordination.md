@@ -8,13 +8,13 @@ How a session becomes a strict coordinator that delegates instead of doing the w
 
 Any session that spawns children (`spawn_worker`, `delegate_task`, or `spawn_task`) is acting as a coordinator. Two entry points turn a session into a **strict** coordinator, where the platform structurally prevents the agent from "just doing the work itself".
 
-### Missions and auto-research
+### Missions
 
-Starting a [mission](/work/tools/missions/) with `/mission` (or a research run with `/auto-research`) stamps the session as a strict coordinator. On creation the platform:
+Starting a [mission](/work/tools/missions/) with `/mission` stamps the session as a strict coordinator. On creation the platform:
 
 - sets `coordinator = true` and `strict_coordinator = true` on the session config;
 - **strips implementation tools** — file I/O, terminal/process, web, browser, vision, KB reads, and artifact creation are subtracted from the effective tool set, so the model cannot fall back to direct execution;
-- **preloads an orchestrator skill** — `subagent-task-orchestrator` for missions, or `arbor-coordinator` for research runs — that documents the delegate-everything playbook the tool stripping assumes.
+- **preloads an orchestrator skill** — `subagent-task-orchestrator` — that documents the delegate-everything playbook the tool stripping assumes.
 
 What remains is the coordination surface: `spawn_task` / `delegate_task` / `spawn_worker`, `cancel_task` / `unblock_task`, `consult_expert`, `ask_user_question`, `memory`, `todo`, `session_search`, the skill tools, and the scheduling tools. The coordinator decomposes the goal into specialist sub-agent tasks, gates dependencies with `parents=[…]`, and ends criterion-driven rounds with a verifier task whose evidence the evaluator checks. This filtering is structural, not merely a prompt instruction — the tools are absent from the model's schema, not just discouraged.
 
