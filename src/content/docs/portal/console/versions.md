@@ -47,4 +47,18 @@ Undo puts back what one version changed. Going back puts back everything: every 
 
 Going back is a new version on top, like an undo, so you can undo it in turn. The same checks as any save apply: if the old files would break the site now, nothing changes and the page lists what is wrong. If someone saved a change meanwhile, the portal asks you to look again first.
 
-Saving, undoing, going back and moving into the portal are all in the [audit log](/portal/console/audit/).
+## Send a version to another environment
+
+When the portal names other portals in its [environments](/portal/sites/environments/), such as Production, each version's page offers **Send to Production**.
+
+1. Open the version.
+2. Press **Send to Production**. The portal asks Production what would change there and says how many files are added or changed, and how many removed.
+3. Press **Send**.
+
+The version arrives on Production as a [proposed change](/portal/console/proposals/), named after this portal and the version. Nothing there changes until its administrators approve it. **Open it there** goes to the proposal on Production; when Production is named by an address inside the cluster, find it under **Proposed changes** there.
+
+Sending a version again while its proposal is still open there makes no second one. Once that proposal is rejected or withdrawn, the version can be sent again. If Production refuses, the page says why: the key is not set, is no longer known there or may not propose changes, Production has too many proposals open, or nothing differs.
+
+One sending changes at most 200 files and 500 KB there. When two portals differ a lot, such as the first time, bring them closer by hand first, then send the versions that follow.
+
+Saving, undoing, going back, sending and moving into the portal are all in the [audit log](/portal/console/audit/).
