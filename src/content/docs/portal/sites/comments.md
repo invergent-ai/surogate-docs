@@ -30,6 +30,8 @@ Visitors read the comments and are asked to sign in. People signed in who may [s
 
 When someone answers a comment, its author gets a [notification](/portal/sites/notifications/), in the site's language, that leads to the answer. When the answer waits for a moderator, they are told once it is approved. No one is told of their own answer, and no one is told of more than 10 answers an hour.
 
+A comment that waits for a moderator shows to its author and to the moderators, marked as waiting; no one else sees it. Each person may have 5 comments waiting at a time.
+
 ## Name someone
 
 People name someone with `@` and their handle, such as `@ana.pop`, in a comment or an [activity post](/portal/sites/activity/). Next to each author's name, the page shows their handle; an administrator sees and changes it on the person's [page in the console](/portal/console/users/#handle). In what the page shows, each `@handle` stands out.
@@ -37,14 +39,12 @@ People name someone with `@` and their handle, such as `@ana.pop`, in a comment 
 Each person named gets a [notification](/portal/sites/notifications/), in the site's language, that leads to the comment, once:
 
 - only people who may see the widget the comment was written in, and whose account is active; never the writer;
-- at most 10 people a comment; more names are not told;
+- the first 10 names written in a comment; names after those are not told;
 - for a comment waiting for a moderator, only once it is approved;
 - the author of the comment an answer replies to is told of the answer, not also of the mention;
-- the people one person's comments and posts name are told at most 20 times an hour.
+- the people one person's comments and posts name are told at most 20 times an hour, and no one is told of more than 10 mentions an hour.
 
 `@` inside a word or an email address, as in `ana@example.ro`, names no one.
-
-A comment that waits for a moderator shows to its author and to the moderators, marked as waiting; no one else sees it. Each person may have 5 comments waiting at a time.
 
 ## Delete and flag
 

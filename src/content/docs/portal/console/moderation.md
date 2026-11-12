@@ -11,9 +11,9 @@ The portal's administrators moderate every site, including comments left on site
 
 ## Decide on a comment
 
-Each comment shows its site and page (or the entry it belongs to), its author, its words, whether it waits, and how many people flagged it, with the reasons they gave. Then:
+Each comment shows its site and page (or the entry it belongs to; for a post on an [activity widget](/portal/sites/activity/), **Activity on** and the widget's page), its author, its words, whether it waits, and how many people flagged it, with the reasons they gave. Then:
 
-- **Approve** publishes a comment that waits. When it answers someone, they are told now. For a flagged comment the button reads **Keep**: the comment stays, its flags are cleared, and the people who flagged it cannot flag it again.
+- **Approve** publishes a comment that waits. When it answers someone, they are told now, and so are the people it [names](/portal/sites/comments/#name-someone). For a flagged comment the button reads **Keep**: the comment stays, its flags are cleared, and the people who flagged it cannot flag it again.
 - **Hide** takes the comment off the page for everyone but the moderators, with its answers. It stays on **Moderation**, marked hidden, where **Show** puts it back on the page.
 - **Delete** deletes the comment and its answers.
 

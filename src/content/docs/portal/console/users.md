@@ -36,7 +36,7 @@ Change the **Name** or the portal's own fields and press **Save**.
 
 ### Handle
 
-Each person has a **Handle**, the name others use to [mention them](/portal/sites/comments/#name-someone) with `@` in comments and posts. The portal makes it from their name when they are added: the letters without accents, words joined by dots, so Ștefan Țepeș is `stefan.tepes`. When someone already has it, the next number is added: `ana.pop2`. A name with no Latin letters gives `person`, `person2` and so on.
+Each person has a **Handle**, the name others use to [mention them](/portal/sites/comments/#name-someone) with `@` in comments and posts. The portal makes it from their name when they are added: the Latin letters without accents, words joined by dots, so Ștefan Țepeș is `stefan.tepes` and Łukasz Ørsted is `lukasz.orsted`. When someone already has it, a number is added: `ana.pop2` up to `ana.pop9`, then a longer number. A name with no Latin letters gives `person`, `person2` and so on.
 
 To change it, type a new **Handle** under **Details** and press **Save**. A handle starts with a letter, then letters and digits, joined by single dots or hyphens, 40 characters at most, in lower case. Two people of a tenant never share one. A handle can be changed for someone a directory or SCIM keeps too: it is the portal's own. Service accounts have no handle.
 
