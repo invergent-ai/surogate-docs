@@ -188,12 +188,11 @@ Project threads: a project's coordinator gives out its threads with the same too
 | Call | Use for |
 |---|---|
 | `agent` | Start a thread: a separate agent session that does one piece of the project's work in its own copy and reports back. Returns at once |
-| `agent` with `propose: true` and `where` | Propose a thread for the user to start instead of starting it, including work on the user's computer (`where: "device"`), which only the user can start |
 | `send_message` | Send a follow-up to a thread; a finished thread runs again with what it already knows |
 | `stop_agent` | Stop a working thread; a follow-up starts it again. With `resolve: true`, mark its work done; it moves to Resolved, and a follow-up reopens it |
 | `list_agents` | List the project's threads with where each stands and its status line; with `agent_id`, read a thread's latest report, its files and any question it waits on the user to answer |
 
-Only a project's coordinator can propose or resolve threads. A thread's report reaches the coordinator as a notification, its files in a `<files>` block.
+Only a project's coordinator can resolve threads. In a project on the user's computer, a thread starts once Surogate Desktop there sets up its copy of the project's folder. A thread's report reaches the coordinator as a notification, its files in a `<files>` block.
 
 Hard depth limit: 2 levels of sub-agents beneath the root session.
 

@@ -51,7 +51,6 @@ When a session starts sub-agents with `agent`, their outcomes flow back as event
 | `delegation.stale` | A foreground sub-agent went quiet past a threshold (once per child) |
 | `agent.notification` | A background sub-agent, background command or monitor ended or reported. The session reads it as a notification at its next model request; it wakes a session at rest | `agent_id`, `kind`, `status`, `summary`, `result`, `usage` |
 | `worker.spawned` / `worker.complete` / `worker.failed` | A project's thread started, reported a turn, or failed: the coordinator reads each as a notification, the thread's files in a `<files>` block |
-| `thread.proposed` | A project's coordinator proposed a thread for the user to start, with `agent` and `propose: true`. The cards are drawn from this event | `proposal_id`, `threads` |
 | `coordinator.message` | A project coordinator's follow-up to one of its threads. The thread reads it as a message typed into it, but it is never the user's | `content` |
 | `history.redo` | A project thread was told to redo its change to files its landing left out | `files` |
 | `history.redo_held` | The wake for a thread's redo was held back, by its user's limit or because ops was unreachable. The thread rests and its next turn redoes the change | `redo` |
