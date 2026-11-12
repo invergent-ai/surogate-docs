@@ -499,6 +499,16 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'created_by', 'content_entries'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_forums(self):
+        doc = page('/portal/sites/forums/')
+        for anchor in ('place-a-forum', 'topics-and-answers', 'questions-and-answers', 'moderate-a-forum', 'limits'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/console/moderation/#who-moderates"', doc)
+        self.assertIn('href="/portal/sites/comments/#name-someone"', doc)
+        source = (ROOT / 'src/content/docs/portal/sites/forums.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'subject', 'p_'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
         for anchor in ('make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):
