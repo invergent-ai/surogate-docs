@@ -6,11 +6,11 @@ Every built-in tool an agent can call. These are the names the Governance policy
 
 You don't pick which tool the agent uses for a given turn — the agent does. You decide which tools to **expose**.
 
-The coordination self-tools (`worker_complete`, `worker_block`, `worker_context`, `share_note`, `read_board`, `expand_note`, `unblock_task`, `cancel_task`) are listed below for completeness but are **not configurable** in the allow/deny lists — denying them could strand blocked work, so the policy API refuses them.
+The coordination board's tools (`share_note`, `read_board`, `expand_note`) are listed below for completeness but are **not configurable** in the allow/deny lists — denying them could strand work, so the policy API refuses them.
 
 ### Tools you can't add to a list
 
-Some tools can't be added to an agent's allow or deny list. The project thread tools (`start_thread`, `message_thread`, `stop_thread`, `list_threads`, `read_thread`, `resolve_thread`, `propose_threads`) are always available to a project's coordinator. `end_call` is always available on a phone call, and an allowlist doesn't block it. `whiteboard_draw`, `browser_upload_file`, `office_read` and `office_edit` can't be named in either list, so an agent that uses an allowlist doesn't get them.
+Some tools can't be taken away by an agent's allow or deny list. A project's coordinator always keeps `agent`, `send_message`, `list_agents` and `stop_agent`: they are how it gives out its threads. A sub-agent always keeps `send_message`, and kept only that way it reaches the agent that started it and nobody else. A session whose agents run always keeps `send_message`, `list_agents` and `stop_agent`, so a policy cannot strand work that waits on them. Anywhere else, a policy that denies `agent` denies starting sub-agents. `end_call` is always available on a phone call, and an allowlist doesn't block it. `whiteboard_draw`, `browser_upload_file`, `office_read` and `office_edit` can't be named in either list, so an agent that uses an allowlist doesn't get them.
 
 ## File I/O
 
@@ -163,18 +163,13 @@ Where the agent has no `office_edit`, the built-in `docx`, `xlsx`, `pptx` and `p
 
 | Tool | Use for |
 |---|---|
-| `spawn_worker` | Fire-and-forget async worker session. Returns the worker's ID immediately; results arrive as events next turn. |
-| `send_worker_message` | Send a message to a running worker |
-| `stop_worker` | Stop a running worker |
-| `delegate_task` | Synchronous child session — parent blocks for the result. Supports parallel fan-out via `goals=[...]`. |
-| `spawn_task` | Durable child task — survives parent crash, supports fan-in dependencies, retries, and block/unblock. |
-| `worker_complete` | Worker self-tool: mark your own task attempt done with a structured handoff to the parent |
-| `worker_block` | Worker self-tool: pause your own attempt and wait for parent/human context |
-| `worker_context` | Worker self-tool: read your own goal, parent context, parent-task results, and prior attempts |
-| `unblock_task` | Coordinator-side: resume a blocked child task (optional additional context) |
-| `cancel_task` | Coordinator-side: cancel a non-terminal child task |
+| `agent` | Start one sub-agent from a short `description` and a `prompt` that stands alone, optionally of a pre-configured `agent_type`. In a main session it runs in the background: the call returns its `agent_id` at once and the report arrives as a notification. `run_in_background=false` waits for the report instead. Several calls in one response run in parallel. |
+| `send_message` | Send a running or finished agent a follow-up, a correction or an answer; a finished agent is resumed with its context. A sub-agent reaches its parent with `to: "parent"`. |
+| `list_agents` | List the agents the session started, or read one |
+| `stop_agent` | Stop an agent, with the agents it started, or a background command |
+| `monitor` | Run a command and turn each line it prints into a notification (with `terminal`: a rule on `terminal` covers it) |
 
-Coordination board (parallel workers in a group share verified notes):
+Coordination board (parallel agents in a group share verified notes):
 
 | Tool | Use for |
 |---|---|
@@ -188,21 +183,19 @@ Ambient channel:
 |---|---|
 | `mate_ambient_post` | Post a proactive, confidence-gated message into the channel during an ambient review (Surogate Mate) |
 
-Project threads (a project's coordinator only; see below):
+Project threads: a project's coordinator gives out its threads with the same tools.
 
-| Tool | Use for |
+| Call | Use for |
 |---|---|
-| `start_thread` | Start a thread: a separate agent session that does one piece of the project's work in its own workspace and reports back. Returns at once |
-| `message_thread` | Send a follow-up to a thread; a finished thread runs again with what it already knows |
-| `stop_thread` | Stop a working thread; a follow-up starts it again |
-| `list_threads` | List the project's threads with where each stands and its status line |
-| `read_thread` | Read a thread's latest report, its files and any question it waits on the user to answer |
-| `resolve_thread` | Mark a thread's work done; it moves to Resolved. A follow-up reopens it |
-| `propose_threads` | Propose threads for the user to start instead of starting them, including work on the user's computer, which only the user can start |
+| `agent` | Start a thread: a separate agent session that does one piece of the project's work in its own copy and reports back. Returns at once |
+| `agent` with `propose: true` and `where` | Propose a thread for the user to start instead of starting it, including work on the user's computer (`where: "device"`), which only the user can start |
+| `send_message` | Send a follow-up to a thread; a finished thread runs again with what it already knows |
+| `stop_agent` | Stop a working thread; a follow-up starts it again. With `resolve: true`, mark its work done; it moves to Resolved, and a follow-up reopens it |
+| `list_agents` | List the project's threads with where each stands and its status line; with `agent_id`, read a thread's latest report, its files and any question it waits on the user to answer |
 
-Only a project's coordinator is offered the thread tools. Threads themselves and ordinary chats are not.
+Only a project's coordinator can propose or resolve threads. A thread's report reaches the coordinator as a notification, its files in a `<files>` block.
 
-Hard depth limit: 2 levels of orchestration beneath the root coordinator.
+Hard depth limit: 2 levels of sub-agents beneath the root session.
 
 ## Deep research
 

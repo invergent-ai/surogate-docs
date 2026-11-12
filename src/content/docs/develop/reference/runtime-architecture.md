@@ -47,7 +47,7 @@ While an office document is open in the editor, the editor is its only writer. T
 
 ## Multi-agent topology
 
-Agents can spawn child agents via `spawn_worker`, `delegate_task`, or `spawn_task`. Each child is its own full session with its own event log and iteration budget, but it shares the root session's workspace and storage prefix — no per-child storage is allocated.
+Agents start child agents with the `agent` tool, and follow them up with `send_message`, `list_agents` and `stop_agent`. Each child is its own full session with its own event log and iteration budget, but it shares the root session's workspace and storage prefix — no per-child storage is allocated.
 
 Children inherit the tenant's skills, KBs, MCPs, and memory — and the parent's governance policy **verbatim**. A child is created with the parent's `agent_id`, so its gate is composed from the same policy: same allow-list, same deny-list, same approval requirements. There is no per-sub-agent policy profile.
 
@@ -57,12 +57,12 @@ What actually scopes a child is its [sub-agent](/work/tools/sub-agents/) definit
 |---|---|
 | `tools` | Becomes the child's allow-list — authoritative, not intersected with the parent's |
 | `disallowed_tools` | Dropped from the child's toolset. Only takes effect when the definition sets no `tools`; an allow-list supersedes it |
-| `model` | Used unless the spawn call names a model explicitly |
+| `model` | Used unless the `agent` call names a model explicitly |
 | `max_iterations` | Narrows the child's budget when smaller than the cap |
 
-Both lists are applied as a **toolset filter**, not a runtime denial — an excluded tool's schema never reaches the child's model, so there is nothing for it to refuse or argue around. The iteration cap is **30**, but where a child's budget comes from depends on how it was spawned: `spawn_worker` and `delegate_task` hand over a slice of the parent's *remaining* budget (so a child spawned late in a long turn starts with less), while a `spawn_task` attempt is claimed by the dispatcher with the full 30, narrowed only by the definition's `max_iterations`.
+Both lists are applied as a **toolset filter**, not a runtime denial — an excluded tool's schema never reaches the child's model, so there is nothing for it to refuse or argue around. The iteration cap is **30**, and a child gets at most what is left of the parent's budget (so a child started late in a long turn starts with less), narrowed by the definition's `max_iterations`.
 
-Hard depth limit: **2** (one orchestrator level beneath the root). Prevents runaway delegation trees.
+Hard depth limit: **2** (a sub-agent of the root may start agents of its own; theirs may not). Prevents runaway trees.
 
 **What this means for you**: you can build coordinator agents that fan out work, but you can't build arbitrary-depth agent trees. The 2-level cap is a safety property.
 

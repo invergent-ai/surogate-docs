@@ -2,34 +2,33 @@
 title: Coordination & the board
 ---
 
-How a session becomes a strict coordinator that delegates instead of doing the work itself, and how the fan-out of workers it spawns coordinate through a shared, verified board.
+How a session becomes a strict coordinator that gives out work instead of doing it itself, and how the fan-out of agents it starts coordinate through a shared, verified board.
 
 ## Coordinator sessions
 
-Any session that spawns children (`spawn_worker`, `delegate_task`, or `spawn_task`) is acting as a coordinator. Two entry points turn a session into a **strict** coordinator, where the platform structurally prevents the agent from "just doing the work itself".
+Any session that starts sub-agents with `agent` is acting as a coordinator. Two entry points turn a session into a **strict** coordinator, where the platform structurally prevents the agent from "just doing the work itself": a mission, and a project's coordinator.
 
 ### Missions
 
 Starting a [mission](/work/tools/missions/) with `/mission` stamps the session as a strict coordinator. On creation the platform:
 
 - sets `coordinator = true` and `strict_coordinator = true` on the session config;
-- **strips implementation tools** — file I/O, terminal/process, web, browser, vision, KB reads, and artifact creation are subtracted from the effective tool set, so the model cannot fall back to direct execution;
-- **preloads an orchestrator skill** — `subagent-task-orchestrator` — that documents the delegate-everything playbook the tool stripping assumes.
+- **strips implementation tools** — file I/O, terminal/process, web, browser, vision, KB reads, and artifact creation are subtracted from the effective tool set, so the model cannot fall back to direct execution.
 
-What remains is the coordination surface: `spawn_task` / `delegate_task` / `spawn_worker`, `cancel_task` / `unblock_task`, `consult_expert`, `ask_user_question`, `memory`, `todo`, `session_search`, the skill tools, and the scheduling tools. The coordinator decomposes the goal into specialist sub-agent tasks, gates dependencies with `parents=[…]`, and ends criterion-driven rounds with a verifier task whose evidence the evaluator checks. This filtering is structural, not merely a prompt instruction — the tools are absent from the model's schema, not just discouraged.
+What remains is the coordination surface: `agent`, `send_message`, `list_agents`, `stop_agent`, `consult_expert`, `ask_user_question`, `memory`, `todo`, `session_search`, the skill tools, and the scheduling tools. The coordinator breaks the goal into agents, sequences them itself (it starts the next once a report arrives), and ends criterion-driven rounds with a verifier agent whose report the evaluator checks. This filtering is structural, not merely a prompt instruction — the tools are absent from the model's schema, not just discouraged.
 
-For the operator's view of missions (dashboard, status badges, control commands) see [Missions](/work/tools/missions/); for the sub-agent definitions a coordinator spawns, see [Sub-agents](/work/tools/sub-agents/).
+For the operator's view of missions (dashboard, status badges, control commands) see [Missions](/work/tools/missions/); for the sub-agent definitions a coordinator starts, see [Sub-agents](/work/tools/sub-agents/).
 
 ## The coordination board
 
-The board is the **shared, verified context** for a fan-out of parallel sub-agents. Workers post what they learn; every member of the group — siblings, retries, and the coordinator — sees it, without the information being diluted by routing through the parent. A dead end hit by one worker becomes a note the next worker reads *before* repeating it.
+The board is the **shared, verified context** for a fan-out of parallel sub-agents. Agents post what they learn; every member of the group — siblings and the coordinator — sees it, without the information being diluted by routing through the parent. A dead end hit by one agent becomes a note the next agent reads *before* repeating it.
 
 ### How a group forms
 
 Group formation is automatic — there is no flag and deliberately no enable knob, because a fan-out has a board by definition:
 
-1. On a session's **first spawn** (any of the three paths) it self-assigns `context_group_id = <its own session id>`, and the child inherits it.
-2. Every later spawn — including task retries and orchestrator-role grandchildren — inherits the same id. One board per fan-out tree.
+1. When a session starts its **first child** (an agent, or a project's thread) it self-assigns `context_group_id = <its own session id>`, and the child inherits it.
+2. Every later child — including the agents its agents start — inherits the same id. One board per fan-out tree.
 3. Board tools appear automatically for group members and never for solo sessions.
 
 ### Note types
@@ -64,7 +63,7 @@ Admitted notes emit a `board.note` event on the writer's session for audit.
 
 - **Join snapshot** — the first iteration that sees a non-empty board appends one `board.update` with the windowed render (priority `RESULT` > `FACT` > `FAIL` > `CLAIM`, with budget reserved for `FAIL` so dead ends never scroll out).
 - **Per-iteration deltas** — each iteration appends a compact `board.update` with new notes and transitions (superseded / expired / renewed). Events always append at the **end** of history, never mid-list, so the provider prefix cache and event replay stay stable.
-- **Render format** — `[n42 w3f2/FAIL +2m] content`: note id (for `expand_note`), writer label (`coord` for the group root, `w<hex4>` for a worker), age, and remaining TTL for claims.
+- **Render format** — `[n42 w3f2/FAIL +2m] content`: note id (for `expand_note`), writer label (`coord` for the group root, `w<hex4>` for another member), age, and remaining TTL for claims.
 
 ### Lifecycle
 
@@ -80,11 +79,11 @@ Board behaviour is tuned with `SUROGATES_BOARD_*` environment variables (snapsho
 
 ## Relationship to missions
 
-A mission coordinator spawning tasks is a fan-out root, so a board forms automatically: mission workers coordinate, retries inherit verified knowledge from failed attempts, and the coordinator receives live deltas instead of waiting for each `worker.complete` summary. The board can inform a worker but cannot flip a mission verdict — the judge and mission state machine are untouched.
+A mission coordinator starting agents is a fan-out root, so a board forms automatically: the mission's agents coordinate, a later agent reads what an earlier one verified or found to fail, and the coordinator receives live deltas instead of waiting for each report. The board can inform an agent but cannot flip a mission verdict — the judge and mission state machine are untouched.
 
 ## Related
 
 - [Missions](/work/tools/missions/) — starting and tracking a coordinated goal.
-- [Sub-agents](/work/tools/sub-agents/) — the named definitions a coordinator spawns as workers.
-- [Background jobs](/develop/reference/background-jobs/) — the async primitives that form a coordination group, and the board sweeper.
+- [Sub-agents](/work/tools/sub-agents/) — the named definitions a coordinator starts as agents.
+- [Background jobs](/develop/reference/background-jobs/) — the agent family that forms a coordination group, and the board sweeper.
 - [Event types](/develop/reference/event-types/) — `board.note`, `board.update`, and the sub-agent events.

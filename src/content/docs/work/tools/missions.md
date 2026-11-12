@@ -54,9 +54,9 @@ Running, needs-revision, and paused missions count as **active**; the rest are *
 
 A run started with `/mission` **must** carry a `Rubric:` block. Without one the command is rejected with "missing Rubric: block" and no mission is created — stricter than `/goal`, where the rubric is optional and falls back to a generic default.
 
-The evaluator grades evidence, not prose. It sees the agent's latest reply, but only the structured results the finished tasks reported back count as evidence — so write the rubric against something the work can measure and report: "satisfied when the failing-test count is 0", not "satisfied when the code is clean". A *satisfied* verdict is demoted back to *needs revision* when the mission spawned tasks and none of them completed; task status is recorded by the platform, never claimed by the agent. A mission that spawned no tasks at all is exempt.
+The evaluator grades evidence, not prose. It sees the agent's latest reply, but only the reports of the agents the mission started count as evidence — so write the rubric against something the work can measure and report: "satisfied when a verifier reports 0 failing tests", not "satisfied when the code is clean". A *satisfied* verdict is demoted back to *needs revision* when the mission started agents and none of them completed; an agent's status is recorded by the platform, never claimed by the coordinator. A mission that started no agents at all is exempt.
 
-The evaluator also doesn't read every reply. It runs when a task the mission spawned reaches a terminal state, or when the agent explicitly marks the objective complete, and at most once every 30 seconds per mission. A mission sitting on the same iteration for a while usually means no task has finished yet — not that it is stuck. A run started with `/goal` is different: there the evaluator reads every final response (see [Goals](/work/tools/goals/)).
+The evaluator also doesn't read every reply. It runs when one of the mission's agents ends, or when the agent explicitly marks the objective complete, and never while one of the mission's agents still runs — at most once every 30 seconds per mission. A mission sitting on the same iteration for a while usually means its agents are still working — not that it is stuck. A run started with `/goal` is different: there the evaluator reads every final response (see [Goals](/work/tools/goals/)).
 
 ## Starting and tracking a mission
 
@@ -74,8 +74,8 @@ Missions are steered from the chat, not from this page. Which verbs apply depend
 | `/mission` or `/mission status` | Status, current iteration, and the latest verdict. |
 | `/mission pause [reason]` | Stop automatic continuation. Workers already running keep running. |
 | `/mission resume` | Resume a paused mission and wake the agent. |
-| `/mission cancel [reason]` | End the mission. Running workers finish what they're on; their results are no longer graded. |
-| `/mission cancel --cascade [reason]` | End the mission **and** interrupt every worker still running. |
+| `/mission cancel [reason]` | End the mission. Running agents finish what they're on; their reports are no longer graded. |
+| `/mission cancel --cascade [reason]` | End the mission **and** stop every agent still running, with the agents it started. |
 | `/mission budget <count>` | Set or change the token ceiling; replies with the new ceiling and how much is already spent. |
 | `/mission budget none` | Remove the ceiling (`off`, `clear` and `unlimited` also work). |
 | `/mission accept` | Approve a [proposed rubric](#when-the-rubric-is-the-problem) and put the mission back to work. |
@@ -115,12 +115,12 @@ A `/mission` can carry a ceiling on the tokens it is allowed to spend. Set it wh
 /mission Audit every test file for tests that pass for the wrong reason.
 
 Budget: 20M
-Rubric: every directory under tests/ has a completed task, and each finding
+Rubric: an agent has reported on every directory under tests/, and each finding
 names a file, a test, and a demonstrated reason the test is vacuous.
 ```
 
-Write the count the way you'd say it — `20M`, `500k`, `1.5M`, `2_000_000`, or a plain number. A count that can't be read is rejected rather than quietly meaning "no ceiling". The budget covers the whole run: the coordinating session plus every session its tasks run in, counted from the tokens those sessions actually used.
+Write the count the way you'd say it — `20M`, `500k`, `1.5M`, `2_000_000`, or a plain number. A count that can't be read is rejected rather than quietly meaning "no ceiling". The budget covers the whole run: the coordinating session plus every one of the mission's agents and the agents they started, counted from the tokens those sessions actually used.
 
-When the allowance is gone the mission **pauses** at the next judging point — it is never cut off mid-task. Raise the ceiling with `/mission budget <count>` and `/mission resume` to carry on. With no `Budget:` line the mission is unbounded.
+When the allowance is gone the mission **pauses** at the next judging point — it is never cut off mid-way. Raise the ceiling with `/mission budget <count>` and `/mission resume` to carry on. With no `Budget:` line the mission is unbounded.
 
 See [Slash commands](/work/tools/commands/) for the rest of the command set.

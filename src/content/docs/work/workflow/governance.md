@@ -20,7 +20,8 @@ Turning **Policy enforcement** off drops your rules but keeps the floor — it i
 - A plain denial hands the model a `Blocked: <reason>` tool result and records a `policy.denied` event. The agent will typically tell the user it couldn't perform the action.
 - Denied tools are still advertised to the model and blocked at call time — the agent may try once, get blocked, and adapt.
 - **MCP tools** (`mcp__*`) are outside both lists — the allow/deny fields only accept built-in tool names, so an `mcp__*` name can't be typed into either. They're governed by which MCP servers you attach and by what a buyer's package includes. Egress, sandbox and argument checks still apply to them.
-- **Protected self-tools** (`worker_block`, `worker_complete`, `worker_context`, `share_note`, `read_board`, `expand_note`, `unblock_task`, `cancel_task`) can never be denied — a policy that could strand a blocked task forever isn't accepted.
+- **Protected self-tools** (`share_note`, `read_board`, `expand_note`, and a Keel case step's and item's own tools) can never be denied — a policy that could strand work isn't accepted.
+- **The agent family is kept where a policy would strand work**: a project's coordinator keeps `agent`, `send_message`, `list_agents` and `stop_agent` (they are how it gives out its threads); a sub-agent keeps `send_message`, and kept only that way it reaches the agent that started it and nobody else; a session whose agents run keeps `send_message`, `list_agents` and `stop_agent`. Anywhere else, denying `agent` denies starting sub-agents.
 
 ## Tools that need approval first
 

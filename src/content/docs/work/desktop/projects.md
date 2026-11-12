@@ -42,7 +42,7 @@ The coordinator does not do the work itself. It plans, hands work out and keeps 
 
 Ask for what you want in the project's conversation. The coordinator answers with threads:
 
-- **Proposed threads.** A card lists each proposed thread with its title and goal. Press **Start** on the ones you want, or **Start all**. The card then says **Started**, with **View thread**. A project that works in a folder on your computer always proposes: only you can start its threads, from their cards.
+- **Proposed threads.** A card shows each proposed thread with its title and goal. Press **Start** on the ones you want. The card then says **Started**, with **View thread**. A project that works in a folder on your computer always proposes: only you can start its threads, from their cards.
 - **Started by the coordinator.** In a project in the cloud, the coordinator can also start a thread itself. Ask it to propose first when you want to approve each one.
 
 A thread the coordinator proposes for your own computer, in a project that has no folder, shows **Allow** (to work in a folder of this computer) or **Run in the cloud instead**.

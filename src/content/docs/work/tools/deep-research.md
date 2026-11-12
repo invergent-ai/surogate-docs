@@ -20,10 +20,11 @@ If you send `/deep-research` with no topic, the agent asks what you'd like resea
 
 ## Single-shot semantics
 
-`/deep-research` delegates **exactly once**. It does not retry.
+`/deep-research` starts **exactly one** research agent. It does not retry.
 
 - The topic goes to the sub-agent as a single research goal — it is not split into sub-topics or fanned out into multiple parallel runs.
-- If that one delegation fails or times out, the agent reports the failure to you verbatim and stops, rather than launching more attempts that would burn the same budget again. The wait is capped at **60 minutes** — a sub-agent still running then counts as timed out.
+- The research agent runs in the background: its report reaches the agent as a notification, and until then the agent does not guess at the findings.
+- If the research agent fails, the agent reports the failure to you verbatim and stops, rather than launching more attempts that would burn the same budget again. The planner's wait for the writer is capped at **60 minutes** — a writer still running then counts as timed out.
 
 This keeps a single request from turning into a runaway fleet of research jobs. If a run fails, re-issue the command yourself once you've adjusted the topic.
 

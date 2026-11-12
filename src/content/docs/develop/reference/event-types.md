@@ -40,22 +40,21 @@ For most debugging, the EVENTS tab's TOOLS sub-view filters these for you. Progr
 
 A skill the SKILLS tab shows as loaded but with no `skill.invoked` was simply never slash-invoked — the model was free to reach for it and didn't.
 
-## Sub-agents, tasks and the board
+## Sub-agents, project threads and the board
 
-When a session spawns child sessions via `spawn_worker` / `delegate_task` / `spawn_task`, the children's outcomes flow back as events in the parent's log.
+When a session starts sub-agents with `agent`, their outcomes flow back as events in the parent's log.
 
 | Type | When |
 |---|---|
-| `worker.spawned` | A child session was created |
-| `worker.complete` | Child finished normally; payload includes the truncated result and optional `metadata`. Also reused for successful `spawn_task` completion, with `task_id` for correlation |
-| `worker.failed` | Child errored or hit its iteration budget |
-| `thread.proposed` | A project's coordinator proposed threads for the user to start, with `propose_threads`. The cards are drawn from this event | `proposal_id`, `threads` |
+| `delegation.start` | A sub-agent's child session was created and queued | `child_session_id`, `goal`, `depth`, `agent_type` |
+| `delegation.complete` / `delegation.failed` | The sub-agent's run ended well, or failed or timed out |
+| `delegation.stale` | A foreground sub-agent went quiet past a threshold (once per child) |
+| `agent.notification` | A background sub-agent, background command or monitor ended or reported. The session reads it as a notification at its next model request; it wakes a session at rest | `agent_id`, `kind`, `status`, `summary`, `result`, `usage` |
+| `worker.spawned` / `worker.complete` / `worker.failed` | A project's thread started, reported a turn, or failed: the coordinator reads each as a notification, the thread's files in a `<files>` block |
+| `thread.proposed` | A project's coordinator proposed a thread for the user to start, with `agent` and `propose: true`. The cards are drawn from this event | `proposal_id`, `threads` |
 | `coordinator.message` | A project coordinator's follow-up to one of its threads. The thread reads it as a message typed into it, but it is never the user's | `content` |
 | `history.redo` | A project thread was told to redo its change to files its landing left out | `files` |
 | `history.redo_held` | The wake for a thread's redo was held back, by its user's limit or because ops was unreachable. The thread rests and its next turn redoes the change | `redo` |
-| `delegation.start` / `delegation.complete` / `delegation.failed` / `delegation.stale` | Detailed observability for `delegate_task` calls |
-| `task.blocked` | A task self-paused via `worker_block` |
-| `task.failed` | A task exhausted its retry budget |
 | `board.note` | A note passed admission on the writer's session |
 | `board.update` | The rendered snapshot or delta that re-enters a reader session's conversation on replay |
 
