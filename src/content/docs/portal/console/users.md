@@ -34,6 +34,14 @@ Press a user in the list to open their page. The top shows their name, email, th
 
 Change the **Name** or the portal's own fields and press **Save**.
 
+### Handle
+
+Each person has a **Handle**, the name others use to [mention them](/portal/sites/comments/#name-someone) with `@` in comments and posts. The portal makes it from their name when they are added: the letters without accents, words joined by dots, so Ștefan Țepeș is `stefan.tepes`. When someone already has it, the next number is added: `ana.pop2`. A name with no Latin letters gives `person`, `person2` and so on.
+
+To change it, type a new **Handle** under **Details** and press **Save**. A handle starts with a letter, then letters and digits, joined by single dots or hyphens, 40 characters at most, in lower case. Two people of a tenant never share one. A handle can be changed for someone a directory or SCIM keeps too: it is the portal's own. Service accounts have no handle.
+
+Mentions already written keep their words: a changed handle no longer names the person in them. The handle of someone erased can be given to someone else.
+
 ### Roles
 
 Tick or untick **Administrator** and press **Save roles**. On the main portal there is also **Install administrator**. See [Roles](/portal/reference/roles/).
