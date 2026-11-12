@@ -1,9 +1,9 @@
 ---
 title: Moderation
-description: Approve the comments that wait, and decide on the comments people flag, on the sites you moderate.
+description: Approve the comments that wait, decide on the comments people flag, and show again the ones hidden, on the sites you moderate.
 ---
 
-**Moderation** lists the comments on the sites' pages that need someone to decide: comments that [wait for a moderator](/portal/sites/comments/#place-the-widgets) and comments people [flagged](/portal/sites/comments/#delete-and-flag). The menu shows how many wait.
+**Moderation** lists the comments on the sites' pages that need someone to decide: comments that [wait for a moderator](/portal/sites/comments/#place-the-widgets), comments people [flagged](/portal/sites/comments/#delete-and-flag), and comments a moderator hid. The menu shows how many wait.
 
 ## Who moderates
 
@@ -14,7 +14,7 @@ The portal's administrators moderate every site, including comments left on site
 Each comment shows its site and page (or the entry it belongs to), its author, its words, whether it waits, and how many people flagged it, with the reasons they gave. Then:
 
 - **Approve** publishes a comment that waits. When it answers someone, they are told now. For a flagged comment the button reads **Keep**: the comment stays, its flags are cleared, and the people who flagged it cannot flag it again.
-- **Hide** takes the comment off the page for everyone but the moderators, with its answers.
+- **Hide** takes the comment off the page for everyone but the moderators, with its answers. It stays on **Moderation**, marked hidden, where **Show** puts it back on the page.
 - **Delete** deletes the comment and its answers.
 
 The queue shows the newest 200 comments. Every decision is written to the [audit log](/portal/console/audit/), as are the comments people write, answer, delete and flag.
