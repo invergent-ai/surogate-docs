@@ -204,13 +204,10 @@ Only a project's coordinator is offered the thread tools. Threads themselves and
 
 Hard depth limit: 2 levels of orchestration beneath the root coordinator.
 
-## Research (Arbor + deep research)
+## Deep research
 
 | Tool | Use for |
 |---|---|
-| `idea_tree` | Read and mutate a research run's Idea Tree (view / add / update / prune / set_meta) |
-| `dispatch_experiments` | Dispatch 1–4 pending leaf hypotheses to executor workers in isolated git worktrees |
-| `merge_experiment` | Re-run the held-out test eval in a detached worktree, then merge a done experiment into trunk |
 | `research_memory` | Curated evidence bank for deep research — add / retrieve / list cited sources |
 | `research_outline` | The living research outline (markdown) — set / get |
 

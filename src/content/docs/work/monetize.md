@@ -116,7 +116,7 @@ Every offer carries a package — what the purchase unlocks beyond usage. A segm
 
 | Group | Sellable items |
 |---|---|
-| **Capabilities** | Browser use, Coding agents, Deep research, Research missions, Loops and scheduling, Missions, Goals, Brainstorming, Image generation, Video generation |
+| **Capabilities** | Browser use, Coding agents, Deep research, Loops and scheduling, Missions, Goals, Brainstorming, Image generation, Video generation |
 | **Channels** | Slack, Telegram, Website widget, WhatsApp — the agent's own **web app is always included** and can't be excluded |
 | **Knowledge bases** | The agent's attached KBs, by name |
 | **Connected tools** | The agent's enabled MCP servers and Composio toolkits |

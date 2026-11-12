@@ -33,17 +33,6 @@ Reach for `/deep-research` when you want a **thorough, sourced answer** to an op
 
 For it to work, the agent must have the deep-research workflow enabled (the `/deep-research` capability toggle on the CONFIG → **Capabilities** tab; see [Configure an agent](/work/workflow/configure-agent/)). When enabled, the agent advertises the `deep-research` sub-agent and knows to delegate to it.
 
-## `/deep-research` vs `/auto-research`
-
-These are different tools that both start with "research":
-
-| Command | What it is |
-|---|---|
-| `/deep-research` | Single-shot — one investigation that returns a cited report. Best for "tell me everything about X." |
-| `/auto-research` | An iterative optimization run (Arbor) that grows a hypothesis tree and improves against a measured baseline over many cycles. Best for "make this metric better." |
-
-If you want a report, use `/deep-research`. If you want an autonomous optimization loop, see `/auto-research` in [Slash commands](/work/tools/commands/#auto-research-in-detail).
-
 ## Related pages
 
 - [Slash commands](/work/tools/commands/) — the full command reference.

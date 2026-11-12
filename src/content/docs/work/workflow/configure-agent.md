@@ -79,7 +79,6 @@ Toggle the agent's built-in behaviors. The Brainstorming gate, Live browser, Mul
 | `/compress` | Users manually compress the conversation to free up context |
 | `/code` | The coding-agent commands (Claude Code / Codex on the workspace); also reveals the **Coding** tab |
 | `/deep-research` | A planner + writer sub-agent that produces a cited markdown report |
-| `/auto-research` | An autonomous optimization run (Arbor) over a hypothesis tree |
 | `/loop` | Scheduled recurring runs on an interval or self-paced |
 | `/mission` | Rubric-judged task orchestration that decomposes an objective |
 | `/goal` | A session goal the agent works toward across turns |

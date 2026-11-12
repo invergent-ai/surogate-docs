@@ -81,9 +81,9 @@ Missions are steered from the chat, not from this page. Which verbs apply depend
 | `/mission accept` | Approve a [proposed rubric](#when-the-rubric-is-the-problem) and put the mission back to work. |
 | `/mission reject [reason]` | Turn the proposal down. The mission ends with the verdict that was waiting behind it. |
 
-A run started with `/goal` uses `/goal status`, `/goal pause`, `/goal resume` and `/goal clear` instead; a run started with `/auto-research` uses `/auto-research status`, `pause`, `resume` and `cancel [--cascade]`.
+A run started with `/goal` uses `/goal status`, `/goal pause`, `/goal resume` and `/goal clear` instead.
 
-The families don't share verbs: `/mission` has no `clear`, `/goal` has no `cancel`, `/auto-research` has no `budget`, and `accept` / `reject` are `/mission`-only. An unrecognised verb is read as the text of a *new* run — `/mission clear` fails with a missing-rubric error, and `/goal cancel` would start a goal called "cancel".
+The families don't share verbs: `/mission` has no `clear`, `/goal` has no `cancel`, and `accept` / `reject` are `/mission`-only. An unrecognised verb is read as the text of a *new* run — `/mission clear` fails with a missing-rubric error, and `/goal cancel` would start a goal called "cancel".
 
 ## When the rubric is the problem
 

@@ -73,9 +73,6 @@ Emitted on the coordinator chat session; the mission dashboard polls them.
 | `mission.paused` / `mission.resumed` / `mission.cancelled` | Operator-driven mission state changes |
 | `mission.refinement_proposed` | The evaluator proposed a new rubric instead of a verdict, and the mission paused to wait for a decision. This event is where `/mission accept` reads the new rubric from. Payload: `mission_id`, `old_rubric`, `proposed_rubric`, `evidence`, `held_verdict`, `explanation` |
 | `mission.amended` | The operator accepted the proposed rubric with `/mission accept`. Payload: `mission_id`, `old_rubric`, `new_rubric`, `evidence`, `typed_at` |
-| `research.defined` | A research mission was created |
-| `research.harvested` | Branch digests were folded back into the coordinator's conversation. Payload: `run_id`, `folded` |
-| `research.converged` | The convergence check fired. Payload: `run_id`, `level`, `consecutive_non_improving` |
 
 ## Governance
 
