@@ -16,7 +16,7 @@ regions:
       preferences: { kind: questions, moderation: after, limit: 20 }
 ```
 
-- `kind`: `discussion` (when left out) for topics people talk about, or `questions` for questions and their answers.
+- `kind`: `discussion` (when left out) for topics people talk about, or `questions` for questions and their answers. Changing it later changes the topics started afterwards; each topic keeps the kind it was started with.
 - `moderation`: `after` (when left out) publishes a topic or an answer as soon as it is written; `before` keeps it waiting until a moderator approves it.
 - `limit`: how many topics a page of the list shows (1 to 50; 20 when left out).
 
@@ -32,7 +32,7 @@ Visitors read the topics and are asked to sign in. People signed in who may [see
 
 When someone answers a topic, the person who started it gets a [notification](/portal/sites/notifications/) that leads to the answer.
 
-People delete their own topics and answers, and flag someone else's, as with [comments](/portal/sites/comments/#delete-and-flag). A topic whose author deleted it stays while others have answered it, with no words and no author.
+People delete their own topics and answers, and flag someone else's, as with [comments](/portal/sites/comments/#delete-and-flag). A topic nobody answered goes when its author deletes it. One that others answered stays for their answers, as **Topic removed**, with no title, words or author, and takes no new answers.
 
 ## Questions and answers
 
@@ -54,6 +54,6 @@ Topics and answers that wait, are flagged or were hidden are in the [moderation 
 
 ## Limits
 
-Each person starts at most 5 topics an hour and writes at most 50 messages a day in one topic; the limits of [comments](/portal/sites/comments/#limits) on how fast one writes apply too. A topic takes at most 1,000 answers. Each person gives at most 60 votes an hour.
+Each person starts at most 5 topics an hour and writes at most 50 messages a day in one topic; the limits of [comments](/portal/sites/comments/#limits) on how fast one writes apply too. A topic takes at most 1,000 answers. Each person votes, or takes a vote back, at most 10 times a minute.
 
-When a person is erased from the portal, their topics nobody answered go with them; the ones others answered stay, with no author. Their votes are taken back.
+When a person is erased from the portal, their topics nobody answered go with them; the ones others answered stay for those answers, with no title, words or author. Their votes are taken back.
