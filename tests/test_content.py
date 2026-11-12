@@ -431,7 +431,7 @@ class Content(unittest.TestCase):
 
     def test_portal_versions(self):
         doc = page('/portal/console/versions/')
-        for anchor in ('what-the-list-shows', 'undo-a-change'):
+        for anchor in ('what-the-list-shows', 'see-what-a-version-changed', 'compare-with-the-live-version', 'undo-a-change', 'go-back-to-a-version'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/versions/"', page('/portal/console/tenants/'))
         self.assertIn('id="kept-by-the-portal"', page('/portal/console/tenants/'))
