@@ -7,7 +7,7 @@ A notification tells one person something: a title, a few words, and a page of t
 
 ## Send one
 
-The `sendNotification` action sends one, from a [form](/portal/sites/forms/)'s actions or a [job](/portal/sites/jobs/). Like `email`, it is sent once the run ends well: a run that fails tells no one, and a job run again does not tell anyone twice.
+The `sendNotification` action sends one, from a [form](/portal/sites/forms/)'s actions or a [job](/portal/sites/jobs/). Like `email`, it is sent once the run ends well: a run that fails tells no one, and neither does its `onError` list.
 
 ```yaml
 - type: sendNotification
@@ -17,12 +17,12 @@ The `sendNotification` action sends one, from a [form](/portal/sites/forms/)'s a
   link: "'/cereri'"
 ```
 
-- `to`: whom it goes to, as an expression giving one name or a list: a person's id, their email, or `group:` and a group's id. Names that are no one of the portal's (another portal's people, service accounts, people disabled, unknown emails) are passed by, saying nothing. A notification reaches at most 100 people.
+- `to`: whom it goes to, as an expression giving one name or a list: a person's id, their email, or `group:` and a group's id. Names that are no one of the portal's (another portal's people, service accounts, people disabled, unknown emails) are passed by, saying nothing. A notification reaches at most 100 people; past that, the rest are left out.
 - `title`: an expression giving the title, up to 200 characters.
 - `body`: an expression giving the words, up to 2,000 characters. Optional.
 - `link`: an expression giving a page of the portal, a path such as `/cereri/42` or `/_portal/admin/proposals`. A link to another site is refused when the portal checks the files, and passed by when it is made as the run goes. Optional.
 
-A run sends at most 5 notifications; a run for a visitor, such as a public form sent by someone not signed in, at most 2. Visitors' runs share an allowance of 200 notifications an hour, and a portal sends at most 5,000 an hour. An endpoint sends no notifications.
+A run sends at most 5 notifications; a run for a visitor, such as a public form sent by someone not signed in, at most 2. Visitors' runs share an allowance of 200 notifications an hour, one form or job sends at most 1,000 an hour, and a portal at most 5,000. An endpoint sends no notifications.
 
 ### An agent's answer, as a notification
 
@@ -59,4 +59,4 @@ A person signed in sees how many notifications they have not read, and the newes
 
 ## By email
 
-Everyone chooses on [My account](/portal/console/account/#notifications) whether their notifications come by email too; it is off until they turn it on. The email has the notification's title as its subject, and its words and link. It goes only when the install sends email, and within the portal's hourly allowance of email.
+Everyone chooses on [My account](/portal/console/account/#notifications) whether their notifications come by email too; it is off until they turn it on. The email has the notification's title as its subject, and its words and link. It goes only when the install sends email, and within the portal's hourly allowance of email; when it sends none, the switch is off and says so.
