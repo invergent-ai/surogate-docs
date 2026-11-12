@@ -7,6 +7,8 @@ description: Write a site's news, announcements and other entries, save drafts, 
 
 **Content** is in the menu for the people who edit a site: its administrators, and the editors named for the site or given the site on [Access](/portal/console/access/). An administrator seeing the portal as someone else does not see it.
 
+People a site names as its [bloggers](/portal/sites/blogs/#name-the-bloggers) find **Content** too. For them, **Content type** offers the site's blog types alone and the list shows their own posts, under "Your own posts"; they write, publish and delete those, and nothing else.
+
 Next to the sites, **Site** lists the [libraries](/portal/sites/content-types/#libraries) you edit, as **Library:** and their name. A library's entries are written once and shown by every site it serves.
 
 ## Overview
