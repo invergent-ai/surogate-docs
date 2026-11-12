@@ -10,7 +10,7 @@ Reading and editing the catalog goes through a running agent, so with nothing ru
 
 ## What a sub-agent is
 
-A sub-agent is a named definition (an `AGENT.md` file: YAML frontmatter plus a system prompt) that a coordinator session spawns as a child with `agent_type=<name>`, applying that bundle. It lets a running agent hand a focused task — code review, research, and so on — to a purpose-built persona with its own tool permissions and model.
+A sub-agent is a named definition (an `AGENT.md` file: YAML frontmatter plus a system prompt) that an agent starts as a child with the `agent` tool (`agent_type=<name>`), applying that bundle. It lets a running agent hand a focused task — code review, research, and so on — to a purpose-built persona with its own tool permissions and model.
 
 Sub-agents managed here are **project-wide**: shared by every agent in the project, every operator, and every session. The page shows this warning in orange near the top.
 
@@ -55,12 +55,12 @@ Selecting a sub-agent shows:
 
 The frontmatter fields the definition understands are `name`, `description`, `tools`, `disallowed_tools`, `model`, `max_iterations`, `preloaded_skills`, `category`, `tags`, and `enabled`. Any other key is ignored.
 
-**Max iterations** is capped at 30: a higher number in the frontmatter is reduced to 30, a lower one narrows the sub-agent further. When an agent spawns a sub-agent mid-conversation it can only hand over iterations it still has itself, so late in a long session a sub-agent can start with fewer.
+**Max iterations** is capped at 30: a higher number in the frontmatter is reduced to 30, a lower one narrows the sub-agent further. When an agent starts a sub-agent mid-conversation it can only hand over iterations it still has itself, so late in a long session a sub-agent can start with fewer.
 
 ## Editing and deleting
 
 - **Edit** (editable sub-agents only) opens a dialog with the reconstructed `AGENT.md`. Replace the full content and click **Save**. The `name` in the frontmatter must stay the same. Changes apply project-wide.
-- The **delete** (trash) button asks for confirmation, then permanently removes the sub-agent for every agent in the project. Coordinators that reference the deleted `agent_type` will fail on spawn.
+- The **delete** (trash) button asks for confirmation, then permanently removes the sub-agent for every agent in the project. An `agent` call that names the deleted `agent_type` is refused.
 
 ## Searching
 

@@ -72,7 +72,7 @@ Every change to a line, even a small settings edit, needs your yes to that exact
 
 ## Missions, scheduled work and reports
 
-- *"What is my research agent working on?"* It lists an agent's [missions](/work/tools/missions/) and reads one with its tasks, workers and last evaluation. It can pause, resume or cancel one after your yes. Pausing leaves running workers to finish; cancelling can't be undone and refunds nothing.
+- *"What is my research agent working on?"* It lists an agent's [missions](/work/tools/missions/) and reads one with its agents and last evaluation. It can pause, resume or cancel one after your yes. Pausing leaves running agents to finish; cancelling can't be undone and refunds nothing.
 - *"Which of my loops failed last night?"* It lists an agent's [scheduled work](/work/tools/scheduled-work/) with its status, schedule and last error, and after your yes runs one now, pauses, resumes or cancels it, or changes its name, prompt or schedule. Running one now is a real run: whatever its prompt does, messaging people included, happens.
 - It sees only the missions you started yourself from Work chat, and every schedule of the agent, with who made it.
 - *"Focus Ana's report on billing questions and refresh it."* It sets what a user's next report should focus on, starts a fresh activity report for one of the agent's users, and reads or, after your yes, rebuilds the overview across up to 200 users. Reports use the platform's own model and spend no credits.

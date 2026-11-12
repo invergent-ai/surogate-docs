@@ -30,7 +30,7 @@ Every Surogate term you'll encounter as a builder.
 | **SKILL.md** | A skill file — YAML frontmatter + markdown body. `type: skill` (prompt-based, default) or `type: expert` (model-backed). |
 | **Slug** | URL-safe agent name. Becomes `<slug>.cloud.surogate.ai`. Locked after deployment; use the **Rename** button to change. |
 | **SOUL.md** | An agent's persona — up to 20,000 characters. Tenant-wide, not per-user. Lives in CONFIG → SOUL.md. |
-| **Sub-agent** | A declarative role preset (`AGENT.md`) that a coordinator applies when spawning a child session. The child inherits its parent's `agent_id` and therefore its governance policy verbatim; `tools` / `disallowed_tools` are what narrow it. See [How the runtime behaves](/develop/reference/runtime-architecture/). |
+| **Sub-agent** | A declarative role preset (`AGENT.md`) that an agent applies when it starts a child session with the `agent` tool. The child inherits its parent's `agent_id` and therefore its governance policy verbatim; `tools` / `disallowed_tools` are what narrow it. See [How the runtime behaves](/develop/reference/runtime-architecture/). |
 | **Tool** | A capability the agent can invoke. See [Tool catalog](/develop/reference/tool-catalog/). |
 
 For platform-internal terms (harness loop, sandbox runtime, lease/cursor mechanics, the events table schema), see the [open-source `surogates` repo](https://github.com/invergent-ai/surogates) — they're not relevant to building on the platform.

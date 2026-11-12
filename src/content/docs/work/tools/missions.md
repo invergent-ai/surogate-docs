@@ -72,7 +72,7 @@ Missions are steered from the chat, not from this page. Which verbs apply depend
 | Command | Effect |
 |---|---|
 | `/mission` or `/mission status` | Status, current iteration, and the latest verdict. |
-| `/mission pause [reason]` | Stop automatic continuation. Workers already running keep running. |
+| `/mission pause [reason]` | Stop automatic continuation. Agents already running keep running. |
 | `/mission resume` | Resume a paused mission and wake the agent. |
 | `/mission cancel [reason]` | End the mission. Running agents finish what they're on; their reports are no longer graded. |
 | `/mission cancel --cascade [reason]` | End the mission **and** stop every agent still running, with the agents it started. |
