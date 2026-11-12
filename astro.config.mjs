@@ -496,6 +496,7 @@ export default defineConfig({
                 'portal/console/studio',
                 'portal/console/pages',
                 'portal/console/content',
+                'portal/console/moderation',
                 'portal/console/content-types',
                 'portal/console/search',
                 'portal/console/files',
@@ -511,7 +512,7 @@ export default defineConfig({
             },
             {
               label: 'Sites',
-              items: ['portal/sites/permissions', 'portal/sites/apps', 'portal/sites/build-an-app', 'portal/sites/develop-locally', 'portal/sites/check-a-site', 'portal/sites/design', 'portal/sites/layouts', 'portal/sites/content-types', 'portal/sites/seo', 'portal/sites/search', 'portal/sites/forms', 'portal/sites/actions', 'portal/sites/flows', 'portal/sites/values', 'portal/sites/connectors', 'portal/sites/guides', 'portal/sites/data-models', 'portal/sites/listings', 'portal/sites/kpis', 'portal/sites/keel', 'portal/sites/documents', 'portal/sites/assistants', 'portal/sites/notifications', 'portal/sites/endpoints', 'portal/sites/jobs', 'portal/sites/agents', 'portal/sites/previews', 'portal/sites/environments'],
+              items: ['portal/sites/permissions', 'portal/sites/apps', 'portal/sites/build-an-app', 'portal/sites/develop-locally', 'portal/sites/check-a-site', 'portal/sites/design', 'portal/sites/layouts', 'portal/sites/content-types', 'portal/sites/seo', 'portal/sites/search', 'portal/sites/forms', 'portal/sites/actions', 'portal/sites/flows', 'portal/sites/values', 'portal/sites/connectors', 'portal/sites/guides', 'portal/sites/data-models', 'portal/sites/listings', 'portal/sites/kpis', 'portal/sites/keel', 'portal/sites/documents', 'portal/sites/assistants', 'portal/sites/notifications', 'portal/sites/comments', 'portal/sites/endpoints', 'portal/sites/jobs', 'portal/sites/agents', 'portal/sites/previews', 'portal/sites/environments'],
             },
             {
               label: 'Reference',
