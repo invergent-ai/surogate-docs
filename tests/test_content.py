@@ -431,7 +431,7 @@ class Content(unittest.TestCase):
 
     def test_portal_versions(self):
         doc = page('/portal/console/versions/')
-        for anchor in ('what-the-list-shows', 'see-what-a-version-changed', 'compare-with-the-live-version', 'undo-a-change', 'go-back-to-a-version'):
+        for anchor in ('what-the-list-shows', 'see-what-a-version-changed', 'compare-with-the-live-version', 'undo-a-change', 'go-back-to-a-version', 'send-a-version-to-another-environment'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/versions/"', page('/portal/console/tenants/'))
         self.assertIn('id="kept-by-the-portal"', page('/portal/console/tenants/'))
@@ -439,6 +439,15 @@ class Content(unittest.TestCase):
         source = (ROOT / 'src/content/docs/portal/console/versions.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub'):
             self.assertNotIn(word, source)
+
+    def test_portal_environments(self):
+        doc = page('/portal/sites/environments/')
+        for anchor in ('what-travels', 'name-the-environments', 'make-the-key', 'send-a-version'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/environments/"', page('/portal/console/versions/'))
+        source = (ROOT / 'src/content/docs/portal/sites/environments.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'pat_'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
 
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
