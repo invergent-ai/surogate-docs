@@ -2,7 +2,7 @@
 title: My account
 ---
 
-**My account** is your own page in the console: your password, your two-step sign-in and where you are signed in. Everyone who signs in has it.
+**My account** is your own page in the console: your password, your notifications, your two-step sign-in and where you are signed in. Everyone who signs in has it.
 
 ![My account: the password, two-step sign-in with an app and a passkey, and the sessions.](../../../../assets/screenshots/portal-account.png)
 
@@ -11,6 +11,12 @@ title: My account
 Type your **Current password** and a **New password**, then press **Change password**. The page says how long a password must be here. A password cannot contain your email. Your other sessions end.
 
 People who sign in through a directory change their password there.
+
+## Notifications
+
+What the portal tells you shows on its pages and under the bell at the bottom of the console's menu, with how many you have not read. Open one to go to its page; **Mark all read** clears the count.
+
+Turn on **Email me my notifications** to get each one by email too. It is off until you turn it on.
 
 ## Two-step sign-in
 

@@ -449,6 +449,16 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'pat_'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_notifications(self):
+        doc = page('/portal/sites/notifications/')
+        for anchor in ('send-one', 'an-agents-answer-as-a-notification', 'the-widget', 'by-email'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/notifications/"', page('/portal/sites/actions/'))
+        self.assertIn('id="notifications"', page('/portal/console/account/'))
+        source = (ROOT / 'src/content/docs/portal/sites/notifications.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'outbox', 'vaul'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
         for anchor in ('make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):
