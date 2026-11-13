@@ -24,19 +24,19 @@ Each `wiki` widget is a wiki of its own. Its articles belong to the widget: movi
 
 ## Read and find
 
-The wiki opens on its first article. Above every article, **Front page**, **All articles** (the articles as a tree, each under the one it belongs to), **Recent changes** (the latest 50 saves) and **Search the wiki**, which finds articles by the words of their titles and texts.
+The wiki opens on its first article. Above every article, **Front page**, **All articles** (the articles as a tree, each under the one it belongs to), **Recent changes** (the latest 50 saves) and **Search the wiki**, which finds articles by the words of their titles and texts, with or without accents.
 
 An article shows its text, the articles below it, who changed it last and when, and its **History**: every version kept, each of which can be read.
 
 ## Write
 
-Those who write see **Edit** on an article, and **Write this article** on a link to one that does not exist yet. An article has a title of up to 200 characters, a text of up to 50,000, and may sit under another article. Its address is the name it was linked by, lower case, with hyphens for spaces and without accents: `[[Întrebări frecvente]]` is the article `intrebari-frecvente`. An article's address cannot be changed later.
+Those who write see **Edit** on an article and **New article** above the wiki; following a link to an article that does not exist yet offers **Write this article**. An article has a title of up to 200 characters, a text of up to 50,000, and may sit under another article, at most ten levels deep. Its address is the name it was linked by, lower case, with hyphens for spaces and without accents: `[[Întrebări frecvente]]` is the article `intrebari-frecvente`. A new article written from **New article** takes the address you type, or one made from its title. An article's address cannot be changed later.
 
 The text is written in a small markup:
 
 | Write | To get |
 | --- | --- |
-| `# Heading`, `## Smaller`, `### Smallest` | headings |
+| `# Heading`, `## Smaller`, `### Smallest` | headings, under the article's title |
 | a blank line | a new paragraph |
 | `- item` | a list |
 | `1. item` | a numbered list |
@@ -46,17 +46,17 @@ The text is written in a small markup:
 
 Nothing else is markup: HTML shows as text.
 
-When two people edit the same article and the second saves after the first, the second save is refused: their text is kept, and the form opens again with it and with the text now saved, so they can bring the two together. Any save the wiki refuses keeps the text the same way, for a week.
+When two people edit the same article and the second saves after the first, the second save is refused: their text is kept as their draft, and the form opens again with it and with the text now saved, so they can bring the two together. Any save the wiki refuses keeps the text the same way, for a week. A draft opens whenever its writer edits the article again, marked as their unsaved draft; saving it over a version newer than the one it was written on is refused again, and **Discard the draft** lets it go.
 
-A version can be brought back from the history, as a new version. Each person saves at most 30 times an hour; a wiki holds at most 2,000 articles, and each keeps its newest 50 versions.
+A version can be brought back from the history, as a new version; when the article it sat under is gone, it comes back where the article is now. Each person saves at most 30 times an hour; a wiki holds at most 2,000 articles, and each keeps its newest 50 versions.
 
 ## Look after a wiki
 
 On a wiki its members write, an article people save shows at once: there is no review first. The site's editors watch **Recent changes**, and:
 
 - **Protect** an article, so only the site's editors change it;
-- bring back an earlier version, or **Remove this version's text** from the history, when a version must not stay readable;
-- **Delete the article**, with its history; the articles under it move up.
+- bring back an earlier version, or **Remove this version's text** from the history (its title goes too), when a version must not stay readable;
+- **Delete the article**, with its history, once they tick that they know it goes; the articles under it move up.
 
 ## Knowledge bases
 
