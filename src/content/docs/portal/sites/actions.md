@@ -74,7 +74,7 @@ Extensions add more: the [document actions](/portal/sites/document-actions/) mak
 | `hash`, `hmac`, `randomToken`, `uuid` | [Hashes, signatures and random values](/portal/sites/connectors/#hashes-signatures-and-random-values) | |
 | `listFiles` | Lists a [folder](#files)'s files | `folder`, `into` |
 | `readFile` | Reads a file | `folder`, `name`, `encoding` (`text` or `base64`), `into` |
-| `writeFile` | Writes a file | `folder`, `name`, `content`, `encoding` |
+| `writeFile` | Writes a file | `folder`, `name`, `content`, `encoding` (`text`, `base64`, or `dataUrl` to [save a signature](/portal/sites/form-fields/#save-a-signature-as-a-file)) |
 | `deleteFile` | Deletes a file | `folder`, `name` |
 
 A `redirect` goes to a page of the same site, or to another https site the form names under `redirects`.

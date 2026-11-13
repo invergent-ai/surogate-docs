@@ -36,6 +36,7 @@ Each form is a file of the portal's, `forms/<id>.yaml`. Its id is lower-case let
 ## What a form may hold
 
 - **Fields:** text, text area, number, email, phone number, web address, checkbox, select boxes, select, radio, day, time and currency.
+- **[Extension fields](/portal/sites/form-fields/):** a barcode or QR code, a barcode scanner, an IBAN and a signature.
 - **Layout:** panels, columns, fieldsets, tabs and wells, nested at most eight deep.
 - **Text blocks** (`content`), in the markup a site's pages allow.
 - **One submit button.**

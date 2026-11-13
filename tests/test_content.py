@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # The portal's site pages written UI first: screenshots, then a Config example section.
 UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'assistants.md', 'blogs.md', 'calendar.md',
                   'comments.md', 'connectors.md', 'content-types.md', 'data-models.md', 'endpoints.md', 'environments.md',
-                  'flows.md', 'forms.md', 'forums.md', 'guides.md', 'jobs.md', 'kpis.md', 'layouts.md', 'listings.md',
+                  'flows.md', 'form-fields.md', 'forms.md', 'forums.md', 'guides.md', 'jobs.md', 'kpis.md', 'layouts.md', 'listings.md',
                   'notifications.md', 'permissions.md', 'polls.md', 'previews.md', 'search.md', 'seo.md', 'values.md', 'wiki.md')
 
 # The console pages written the same way.
@@ -612,6 +612,18 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/sites/document-actions/"', page('/portal/sites/actions/'))
         source = (ROOT / 'src/content/docs/portal/sites/document-actions.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'Euro-Office', 'Open Design'):
+            self.assertNotIn(word, source)
+
+    def test_portal_form_fields(self):
+        guide = page('/portal/sites/form-fields/')
+        for anchor in ('what-people-see', 'a-barcode-or-qr-code', 'a-barcode-scanner', 'an-iban', 'a-signature', 'in-the-console', 'save-a-signature-as-a-file', 'config-example'):
+            self.assertIn(f'id="{anchor}"', guide)
+        for word in ('barcodeScanner', 'countries', 'encoding: dataUrl', '90 KB'):
+            self.assertIn(word, guide)
+        self.assertIn('href="/portal/sites/form-fields/"', page('/portal/sites/forms/'))
+        self.assertIn('href="/portal/sites/form-fields/#save-a-signature-as-a-file"', page('/portal/sites/actions/'))
+        source = (ROOT / 'src/content/docs/portal/sites/form-fields.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'bwip', 'zxing', 'Open Design'):
             self.assertNotIn(word, source)
 
     def test_portal_previews(self):
