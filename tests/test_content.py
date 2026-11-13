@@ -561,6 +561,13 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'token'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_push_notifications(self):
+        doc = page('/portal/console/account/')
+        self.assertIn('id="notifications-in-this-browser"', doc)
+        for label in ('Turn on', 'Turn off', 'Remove'):
+            self.assertIn(label, doc)
+        self.assertIn('href="/portal/console/account/#notifications-in-this-browser"', page('/portal/sites/notifications/'))
+
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
         for anchor in ('make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):

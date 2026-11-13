@@ -18,6 +18,17 @@ What the portal tells you shows on its pages and under the bell at the bottom of
 
 Turn on **Email me my notifications** to get each one by email too. It is off until you turn it on.
 
+### Notifications in this browser
+
+Under **Notifications in this browser**, press **Turn on** to have the portal's notifications appear on this device, even when no page of the portal is open; the browser asks you to allow them. Clicking one opens its page and marks it read, after you sign in if you are not signed in. **Turn off** stops them here.
+
+- Each browser and device is turned on by itself, on the address of the portal you use there. You can have up to 10; the oldest gives way to an eleventh. Your other browsers are listed under **Your other browsers**, each with **Remove**.
+- A browser stays on while you stay signed in there. Signing out, or a session that ends, turns it off; signing in again in the same browser turns it back on. Changing your password, and **End all other sessions**, turn off your other browsers, not this one.
+- A notification shows its title and words as they are in the portal, on lock screens too. One you already read in the portal is not shown, and a browser offline for more than a day misses what came meanwhile.
+- At most 60 notifications an hour reach your browsers, each browser counting; past that, they show only in the portal and your email.
+- A browser that got no notification for 60 days, and where you did not sign in again, is turned off.
+- When the portal sends no notifications to browsers, or this browser cannot show them, or you blocked them in its settings, the card says so. To unblock them, allow notifications for the portal's address in the browser's settings. On iPhone and iPad, browsers show the portal's notifications only for a site added to the Home Screen, so the card says this browser cannot show them.
+
 ## Two-step sign-in
 
 After your password, the portal can ask for a second step: a code from an app on your phone, or a passkey.
