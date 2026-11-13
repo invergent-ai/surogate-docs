@@ -23,6 +23,19 @@ Each folder is either:
 
 Folders are made in the portal's files, `content/folders/<id>.yaml` (see the [config example](#config-example)).
 
+## Where files are kept
+
+A folder's files are kept by the portal itself, or in a bucket of an S3-compatible storage service (Amazon S3, Cloudflare R2, MinIO, Garage) that you name with a [bucket connector](/portal/sites/connectors/#buckets). Next to the folder's name, **Files** says which: **In the portal**, or **In** and the connector's name.
+
+![The Files page with the folder Archive chosen: "Only the people it lets view", "In Cloud archive", and the message that the folder's storage is not connected, with Try again.](../../../../assets/screenshots/portal-files-bucket.png)
+
+A folder kept in a bucket works like any other: upload, link, remove, search, and the forms' and jobs' [file actions](/portal/sites/actions/#files). The differences:
+
+- **No earlier versions.** The bucket keeps what its own settings keep.
+- **Its own place.** Its files are under the folder's prefix in the bucket (its id and a slash, unless it says otherwise). Files elsewhere in the bucket, in sub-prefixes, or with names the portal does not serve are not listed.
+- **New files at once.** When two people send a new file of the same name at the same moment, both may be written, and the last one is kept.
+- **When the bucket cannot be reached.** Until its connector's keys are set, **Files** says the folder's storage is not connected; when the bucket refuses or does not answer, it says the bucket could not be read. Search keeps finding the folder's files as they were.
+
 ## Upload a file
 
 Choose the **Folder**, then **Upload** a file. The portal keeps:
@@ -41,7 +54,7 @@ A visitor opening a secure folder's file is asked to sign in; someone the folder
 
 **Remove** takes a file away, after asking. Links to it stop working. Earlier versions of a file, replaced or removed, are kept a month, then gone.
 
-A folder taken out of the portal's files keeps its files; a folder made again under the same id finds them.
+A folder taken out of the portal's files keeps its files; a folder made again under the same id finds them. Earlier versions are the portal's own: a folder kept in a bucket has none.
 
 ## Config example
 
@@ -57,4 +70,20 @@ permissions: { view: [signed-in], edit: [group:Registratura] }
 - `public: true` makes it a public folder; left out, it is secure.
 - `permissions.view`: who may open the files of a secure folder.
 - `permissions.edit`: who edits the folder, besides the administrators.
+
+### A folder kept in a bucket
+
+In `content/folders/<id>.yaml`, here `content/folders/archive.yaml`, with a [bucket connector](/portal/sites/connectors/#a-buckets-file) `archive-bucket`:
+
+```yaml
+name: { ro: Arhivă, en: Archive }
+public: false
+permissions: { view: [group:Staff], edit: [group:Registratura] }
+storage:
+  connector: archive-bucket
+  prefix: city/archive/
+```
+
+- `storage.connector`: a connector of kind `bucket`.
+- `storage.prefix`: where the folder's files are in the bucket: lower-case letters, digits, hyphens, underscores and slashes, ending in a slash, at most 200 characters. When left out, the folder's id and a slash (`archive/`). Two folders never share one place of one bucket.
 

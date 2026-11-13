@@ -76,6 +76,16 @@ A mailbox connector lets a [job](/portal/sites/jobs/#when-mail-arrives) read the
 
 The portal only reads. It never marks, moves or deletes a message, so keep the mailbox tidy yourself, and read each mailbox with one job. A POP3 mailbox of more than 10,000 messages is not read.
 
+## Buckets
+
+A bucket connector names a bucket of an S3-compatible storage service, such as Amazon S3, Cloudflare R2, MinIO or Garage. [Folders](/portal/console/files/#where-files-are-kept) keep their files in it: see the [config example](#a-buckets-file).
+
+- **Credentials:** the bucket's access key ID and secret access key, set under **Connectors**. They are kept for that service, bucket and region alone; when one of them changes, set the keys again. Give the keys only what the folders need: listing, reading, writing and deleting under their prefixes.
+- **Test:** **Test** reads the bucket's first file name, to show that it answers to the keys.
+
+![The Connectors page: the bucket connector Cloud archive, not connected, with its address and bucket, "Access keys", and the Set credentials and Test buttons.](../../../../assets/screenshots/portal-connectors-bucket.png)
+- **Addresses:** the service is reached at its `https:` address. An `http:` address, or one on your own network, works only where the portal allows that.
+
 ## Each person's own account
 
 A connector with `perUser: true` signs in as each person, with the account they connected under **Your connections** on their [account](/portal/console/account/#your-connections). When nobody is signed in, or the person has not connected, the action fails with "The connector is not connected."
@@ -177,6 +187,26 @@ folder: INBOX         # IMAP only; INBOX when left out
 - `folder`: the folder to read; IMAP only, `INBOX` when left out.
 - **Port:** 993 for IMAP and 995 for POP3 when left out.
 - **Security:** `tls` by default. IMAP also takes `starttls`. The mail server needs a certificate the portal trusts, and `none` works only for a server on your own network when the portal allows that.
+
+### A bucket's file
+
+In `connectors/<id>.yaml`:
+
+```yaml
+name: { ro: Arhiva în cloud, en: Cloud archive }
+kind: bucket
+endpoint: https://s3.eu-central-1.amazonaws.com
+bucket: primaria-archive
+region: eu-central-1
+```
+
+- `endpoint`: the service's address, `https://` and a host, with no path. For Cloudflare R2: `https://<account id>.r2.cloudflarestorage.com`.
+- `bucket`: the bucket's name, as the service shows it.
+- `region`: the bucket's region; `auto` when left out, as R2 takes.
+- `virtualHosted`: `true` to reach the bucket as a host of its own (`primaria-archive.s3.example.com`); left out, it is part of the path, which most services take.
+- `timeoutMs`: how long one request waits, up to 60,000 ms; 30,000 when left out.
+
+A bucket connector takes no `baseUrl`, `auth`, `test` or `perUser`: it is the portal's own.
 
 ### A test that mocks the service
 
