@@ -5,7 +5,7 @@ description: Invite people by email to a site; they accept by its link, signing 
 
 **Invitations** sends people an email inviting them to one of the portal's sites. Each person follows the link in the mail to accept: they sign in with the account they have, or make their account there. On accepting, they join the groups the invitation names.
 
-Administrators invite to any site, into any group. A site's editors invite only when the site lets them (see below), and only into the groups it names.
+Administrators invite to any site, into any [group](/portal/console/groups/). A site's [editors](/portal/sites/permissions/) invite only when the site lets them (see below), and only into the groups it names. No one invites while seeing the portal as someone else.
 
 ## Invite people
 
@@ -16,11 +16,11 @@ Administrators invite to any site, into any group. A site's editors invite only 
 5. Set the **Days the link works**: 1 to 30 (7 when left as it is).
 6. Press **Send invitations**.
 
-The mail is in the site's language. Its link opens on the site's own address and works once, until the invitation expires.
+The mail is in the site's language, its times in Romania's time zone. Its link opens on the site's own address and works once, until the invitation expires.
 
-An email already invited to the same site and still waiting is not invited twice: the new invitation replaces it, with a new link. Each person sends at most 100 invitations an hour (a site's editors 20), and keeps at most 200 waiting. The portal also keeps within the number of mails it may send in an hour.
+An email already invited to the same site and still waiting is not invited twice: inviting it again sends the waiting invitation again, with what the new one says and a new link, at most once an hour. A site's editor cannot take over someone else's waiting invitation; an administrator can. An administrator sends at most 100 invitations an hour, a site's editor 20, sending again included, and each keeps at most 200 waiting. The portal also keeps within the number of mails it may send in an hour.
 
-When the portal sends no mail, administrators can still invite. After **Send invitations**, the page shows each person's link, only then: copy each and pass it on yourself, privately. A site's editors cannot invite on such a portal.
+When the portal sends no mail, administrators can still invite. After **Send invitations**, or **Send again**, the page shows each person's link, only then: copy each and pass it on yourself, privately. A site's editors cannot invite on such a portal.
 
 Whoever has the link can accept the invitation, so it goes only to the person invited. An account made by accepting belongs to the portal, not only to the site: it sees what any person signed in sees, and the groups give it the rest.
 
@@ -28,20 +28,20 @@ Whoever has the link can accept the invitation, so it goes only to the person in
 
 The link opens the invitation's page: who invites them, to which site, the message, and until when it is open.
 
-- **Signed in as the person invited:** they press **Accept the invitation**.
+- **Signed in as the person invited:** they press **Accept the invitation**. The page then says they joined the site, with a link to it.
 - **With an account, not signed in:** they press **Sign in to accept** and sign in, by password or with the portal's sign-in providers. Then they come back to the page and accept.
-- **Without an account:** they write their name and a password, and press **Make my account and accept**. They are signed in at once, or, when the portal asks for a second sign-in step, sent to sign in.
+- **Without an account:** they write their name and a password, and press **Make my account and accept**. They are signed in at once and the page says they joined; when the portal asks for a second sign-in step, they are sent to sign in, which says their account is made.
 - **Signed in as someone else:** the page says so, without saying whom it is for, and offers **Sign out**.
 
-An invitation already accepted, withdrawn or expired says so and opens nothing. An invitation for a disabled account cannot be used.
+An invitation already accepted, withdrawn or expired says so and opens nothing. A link replaced by sending again no longer works, and its page says to use the latest email. An invitation for a disabled account cannot be used, nor one whose sender may no longer invite: disabled, no longer an editor of the site, or on a site that stopped letting its editors invite. Of the groups an editor named, the person joins only those the site still lets its editors give.
 
-When an invitation is accepted, the person who sent it is told by a notification.
+When an invitation is accepted, the person who sent it is told by a notification. Invitations sent, sent again, withdrawn and accepted are written to the [audit log](/portal/console/audit/); so is an account made by accepting, and its first sign-in.
 
 ## Follow your invitations
 
 Below the form, **Sent** lists the invitations: **Waiting**, **Accepted**, **Withdrawn** or **Expired**, with their site, groups, and until when they are open. Administrators see every invitation; a site's editors see their own.
 
-- **Send again** sends a waiting or expired invitation with a new link and a new expiry, ending the old link; at most once an hour.
+- **Send again** sends a waiting or expired invitation with a new link and a new expiry, ending the old link. It is offered an hour after the last send; until then the list says when.
 - **Withdraw** ends a waiting invitation's link at once, once you confirm.
 
 ## Let a site's editors invite
@@ -57,7 +57,7 @@ invitations:
 
 - `editors`: whether the site's editors invite people. When left out, only administrators do.
 - `groups`: the groups, by name, that editors may invite people into, 10 at most. Names the portal does not have are left out.
-- `domains`: when given, the email domains editors may invite.
+- `domains`: when given, the email domains editors may invite, matched exactly: `primarie.ro` does not cover `mail.primarie.ro`.
 
 The site's editors then see **Invitations** in the console.
 
