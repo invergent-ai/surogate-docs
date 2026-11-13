@@ -6,6 +6,9 @@ from docsite import DIST, page, section
 
 ROOT = Path(__file__).resolve().parent.parent
 
+# The portal's site pages written UI first: screenshots, then a Config example section.
+UI_FIRST_PAGES = ('assistants.md', 'guides.md', 'notifications.md')
+
 
 class Content(unittest.TestCase):
     def test_quickstart_screenshots_have_captions(self):
@@ -298,9 +301,26 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_pages_show_the_ui_then_the_config(self):
+        # A site page shows how it works in the portal first, with screenshots, and keeps its
+        # YAML under one "Config example" section, at the end.
+        for name in UI_FIRST_PAGES:
+            path = ROOT / 'src/content/docs/portal/sites' / name
+            source = path.read_text()
+            images = re.findall(r'!\[([^\]]+)\]\(([^)]+\.png)\)', source)
+            self.assertTrue(images, name)
+            for alt, src in images:
+                self.assertTrue((path.parent / src).resolve().is_file(), (name, src))
+                self.assertGreater(len(alt), 20, (name, src))
+            heading = source.find('\n## Config example\n')
+            self.assertGreater(heading, 0, name)
+            self.assertNotIn('\n## ', source[heading + 1:], name)
+            self.assertNotIn('```yaml', source[:heading], name)
+            self.assertIn('```yaml', source[heading:], name)
+
     def test_portal_guides(self):
         doc = page('/portal/sites/guides/')
-        for anchor in ('a-guide', 'start-a-guide'):
+        for anchor in ('what-people-see', 'start-a-guide', 'in-the-console', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="ui-actions"', page('/portal/sites/actions/'))
         self.assertIn('href="/portal/sites/guides/"', page('/portal/console/guides/'))
@@ -361,7 +381,7 @@ class Content(unittest.TestCase):
 
     def test_portal_assistants(self):
         doc = page('/portal/sites/assistants/')
-        for anchor in ('connect-your-agents', 'place-an-assistant', 'what-people-see', 'who-the-agent-talks-with', 'a-chat-for-visitors', 'help-in-the-console', 'describe-a-change', 'suggest-tags-for-content', 'give-an-agent-the-portal-as-a-tool'):
+        for anchor in ('connect-your-agents', 'what-people-see', 'who-the-agent-talks-with', 'a-chat-for-visitors', 'help-in-the-console', 'describe-a-change', 'suggest-tags-for-content', 'give-an-agent-the-portal-as-a-tool', 'config-example', 'the-agent-and-its-key', 'the-assistant-on-a-page', 'the-chat-for-visitors', 'the-consoles-agents'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/assistants/"', page('/portal/sites/documents/'))
         source = (ROOT / 'src/content/docs/portal/sites/assistants.md').read_text()
@@ -451,7 +471,7 @@ class Content(unittest.TestCase):
 
     def test_portal_notifications(self):
         doc = page('/portal/sites/notifications/')
-        for anchor in ('send-one', 'an-agents-answer-as-a-notification', 'the-widget', 'by-email'):
+        for anchor in ('where-people-find-them', 'send-one', 'config-example', 'a-forms-message-to-the-clerks', 'an-agents-answer-as-a-notification', 'the-widget-on-a-page'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/notifications/"', page('/portal/sites/actions/'))
         self.assertIn('id="notifications"', page('/portal/console/account/'))
