@@ -9,6 +9,16 @@ A page can also hold its own text, written in HTML, without an app: an HTML bloc
 
 Administrators can also choose a page's layout and arrange its blocks in the console, under [Pages](/portal/console/pages/).
 
+## What people see
+
+Everyone who opens a page sees the layout around its content. Here the site's own layout gives every page the same top bar, menu, language links and footer, and puts the page's title in a band above its content. The page's own regions, `main` and `aside`, fill the places the layout marks:
+
+![The home page of a site in full: a top bar with the opening hours, the menu and the language links, a title band, the page's main content with an aside of opening hours and contact, and a footer with three columns.](../../../../assets/screenshots/portal-layout-home.png)
+
+A page's text is written as HTML blocks and fragments, and shows as part of the page:
+
+![An About page: two HTML blocks, "Who we are" and "How we work", in the main region, and the opening hours and contact fragments in the aside.](../../../../assets/screenshots/portal-layout-blocks.png)
+
 ## A layout of the site's own
 
 A site's layouts sit in the `layouts` folder beside its pages:
@@ -20,29 +30,7 @@ sites/main/layouts/
   civic.css        its stylesheet (optional)
 ```
 
-The name of the file is the name of the layout: lower-case letters, digits and hyphens, starting with a letter. A frame for one language adds the language's two-letter code. A page uses the layout by its name:
-
-```yaml
-path: /despre
-title: { ro: Despre, en: About }
-layout: civic
-regions:
-  main:
-    - id: story
-      app: portal
-      preferences:
-        html:
-          ro: |
-            <h2>Cine suntem</h2>
-            <p>…</p>
-          en: |
-            <h2>Who we are</h2>
-            <p>…</p>
-  aside:
-    - { id: news, app: content-block }
-```
-
-A site has at most 32 layouts. `one-column` and `two-column` are taken.
+The name of the file is the name of the layout: lower-case letters, digits and hyphens, starting with a letter. A frame for one language adds the language's two-letter code. A page uses the layout by its name (see the [config example](#a-page-that-uses-the-layout)). A site has at most 32 layouts. `one-column` and `two-column` are taken.
 
 ## The marked places
 
@@ -109,44 +97,13 @@ The stylesheet styles the frame with the site's [design tokens](/portal/sites/de
 
 ## An HTML block
 
-An HTML block is text a page holds itself: `app: portal`, with the text for each of the site's languages under `preferences.html`. It needs no app and no approval.
-
-```yaml
-- id: story
-  app: portal
-  preferences:
-    html:
-      ro: |
-        <h2>Cine suntem</h2>
-        <p>Program: luni–vineri.</p>
-      en: |
-        <h2>Who we are</h2>
-        <p>Open: Monday to Friday.</p>
-```
+An HTML block is text a page holds itself: `app: portal`, with the text for each of the site's languages under `preferences.html`. It needs no app and no approval (see the [config example](#an-html-block-on-a-page)).
 
 Write each text as a `|` block, as above: a plain value breaks at the first colon followed by a space. Give the text of every language of the site, and no other. The text is checked like a frame, without the portal's own elements, and takes at most 64 KB per language. An HTML block can go in any layout's regions.
 
 ## Fragments and page templates
 
-A fragment is text kept once and placed on many pages, in `sites/<site>/fragments/<id>.yaml`:
-
-```yaml
-name: { ro: Program, en: Opening hours }
-html:
-  ro: |
-    <p>Luni–vineri, 8–16.</p>
-  en: |
-    <p>Monday to Friday, 8 to 4.</p>
-```
-
-A page places it by its id; change the file, and every page that holds it changes:
-
-```yaml
-- id: hours
-  app: portal
-  widget: fragment
-  preferences: { fragment: program }
-```
+A fragment is text kept once and placed on many pages, in `sites/<site>/fragments/<id>.yaml`. A page places it by its id; change the file, and every page that holds it changes (see the [config example](#a-fragment)).
 
 Its text holds what an HTML block holds. A site has at most 200 fragments.
 
@@ -165,3 +122,79 @@ A problem keeps the whole change from going live. To see the layout, render the 
 ```sh
 portal check ./portal-config --start --render
 ```
+
+## Config example
+
+### A page that uses the layout
+
+In a page's file (`sites/<site>/pages/<page>.yaml`):
+
+```yaml
+path: /despre
+title: { ro: Despre, en: About }
+layout: civic
+regions:
+  main:
+    - id: story
+      app: portal
+      preferences:
+        html:
+          ro: |
+            <h2>Cine suntem</h2>
+            <p>…</p>
+          en: |
+            <h2>Who we are</h2>
+            <p>…</p>
+  aside:
+    - { id: news, app: content-block }
+```
+
+- `layout`: the layout's name, the file name without its extension: `civic` for `civic.html`.
+- `regions`: each region the layout marks, such as `main` and `aside`, with the placements in it.
+
+### An HTML block on a page
+
+In a region of a page's file:
+
+```yaml
+- id: story
+  app: portal
+  preferences:
+    html:
+      ro: |
+        <h2>Cine suntem</h2>
+        <p>Program: luni–vineri.</p>
+      en: |
+        <h2>Who we are</h2>
+        <p>Open: Monday to Friday.</p>
+```
+
+- `app: portal`: the portal's own block, which needs no app.
+- `preferences.html`: the text of each of the site's languages, each written as a `|` block.
+
+### A fragment
+
+In `sites/<site>/fragments/<id>.yaml`, here `sites/main/fragments/program.yaml`:
+
+```yaml
+name: { ro: Program, en: Opening hours }
+html:
+  ro: |
+    <p>Luni–vineri, 8–16.</p>
+  en: |
+    <p>Monday to Friday, 8 to 4.</p>
+```
+
+A page places it by its id, in a region of the page's file:
+
+```yaml
+- id: hours
+  app: portal
+  widget: fragment
+  preferences: { fragment: program }
+```
+
+- `name`: the fragment's name, in each language.
+- `html`: its text, for each of the site's languages.
+- `fragment`: the id of the fragment, the file name without its extension.
+

@@ -5,24 +5,31 @@ description: Ask a page's readers one question at a time, and show the results a
 
 The portal's `poll` widget asks a question with two to ten answers. People signed in vote once each, and the results are shown as the poll says.
 
+## What people see
+
+A person signed in who may see the page chooses an answer and presses **Vote**. While the poll is open, **Change my vote** replaces their answer, and the results show each answer's votes and share:
+
+![A poll on a page for a person signed in: the question "What should the city hall do first?", four answers with the first chosen, the Change my vote button, and under it each answer's votes and share, with "your vote" next to the first.](../../../../assets/screenshots/portal-poll-admin.png)
+
+A visitor sees the question and a link to sign in. Here the poll shows its results always, so a visitor sees them too:
+
+![The same poll for a visitor: the question, the four answers, "Sign in to vote." and the results.](../../../../assets/screenshots/portal-poll-visitor.png)
+
+Those who [edit the page](/portal/sites/permissions/) also see **New poll** and **Past polls**.
+
 ## Place a poll
 
-```yaml
-regions:
-  aside:
-    - id: question
-      app: portal
-      widget: poll
-      preferences: { zone: Europe/Bucharest }
-```
-
-- `zone`: the time zone a poll's closing time is read in, such as `Europe/Bucharest` (when left out).
+Place the `poll` widget on a page (see the [config example](#a-poll-on-a-page)). Its `zone` is the time zone a poll's closing time is read in, such as `Europe/Bucharest` (when left out).
 
 Each `poll` widget keeps polls of its own. Its polls belong to the widget: moving it to another page, or giving it another `id`, leaves them behind. A page with a poll is made for each reader and never kept in a cache.
 
 ## Open a poll
 
-Those who [edit the page](/portal/sites/permissions/) see **New poll**. A poll has:
+Those who [edit the page](/portal/sites/permissions/) see **New poll**:
+
+![The New poll form: Question, Answers one a line, when the results are shown, when the poll closes, and the button Open the poll.](../../../../assets/screenshots/portal-poll-new.png)
+
+A poll has:
 
 - a question of up to 300 characters;
 - 2 to 10 answers, one a line, each up to 200 characters and each said once, whatever its capitals;
@@ -48,3 +55,20 @@ Results show each answer's votes and share. Until a poll says they may be seen, 
 ## What happens to them later
 
 When a person is erased from the portal, their votes stay counted, without them, and their drafts go. The answers they gave are part of what they get when they ask for their data.
+
+## Config example
+
+### A poll on a page
+
+In a page's file (`sites/<site>/pages/<page>.yaml`):
+
+```yaml
+regions:
+  aside:
+    - id: question
+      app: portal
+      widget: poll
+      preferences: { zone: Europe/Bucharest }
+```
+
+- `zone`: the time zone a poll's closing time is read in, such as `Europe/Bucharest` (when left out).

@@ -9,7 +9,8 @@ ROOT = Path(__file__).resolve().parent.parent
 # The portal's site pages written UI first: screenshots, then a Config example section.
 UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'assistants.md', 'blogs.md', 'calendar.md',
                   'comments.md', 'connectors.md', 'content-types.md', 'data-models.md', 'endpoints.md', 'environments.md',
-                  'flows.md', 'forms.md', 'forums.md', 'guides.md', 'jobs.md', 'kpis.md', 'notifications.md')
+                  'flows.md', 'forms.md', 'forums.md', 'guides.md', 'jobs.md', 'kpis.md', 'layouts.md', 'listings.md',
+                  'notifications.md', 'permissions.md', 'polls.md', 'previews.md')
 
 # Pages of features with no screen of their own in the portal: no screenshots, but the same Config example section.
 CONFIG_LAST_PAGES = ('document-actions.md', 'documents.md', 'keel.md')
@@ -55,6 +56,8 @@ class Content(unittest.TestCase):
         doc = page('/portal/console/access/')
         self.assertIn('<figcaption>Check access for ana@example.ro on the page main/intranet: Allowed, with the steps down to the group Funcționari.</figcaption>', doc)
         guide = page('/portal/sites/permissions/')
+        for anchor in ('what-people-see', 'restrict-a-page', 'editors', 'bloggers', 'config-example'):
+            self.assertIn(f'id="{anchor}"', guide)
         self.assertIn('group:Funcționari', guide)
         self.assertIn('href="/portal/console/access/"', guide)
         for route in ('/portal/console/access/', '/portal/sites/permissions/'):
@@ -161,7 +164,7 @@ class Content(unittest.TestCase):
 
     def test_portal_layouts(self):
         doc = page('/portal/sites/layouts/')
-        for anchor in ('a-layout-of-the-sites-own', 'the-marked-places', 'what-a-frame-may-hold', 'images-in-each-screens-size', 'its-stylesheet', 'an-html-block', 'fragments-and-page-templates'):
+        for anchor in ('what-people-see', 'config-example', 'a-layout-of-the-sites-own', 'the-marked-places', 'what-a-frame-may-hold', 'images-in-each-screens-size', 'its-stylesheet', 'an-html-block', 'fragments-and-page-templates'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/layouts/"', page('/portal/sites/design/'))
         source = (ROOT / 'src/content/docs/portal/sites/layouts.md').read_text()
@@ -414,7 +417,7 @@ class Content(unittest.TestCase):
 
     def test_portal_listings(self):
         doc = page('/portal/sites/listings/')
-        for anchor in ('place-a-listing', 'what-each-person-sees', 'a-models-own-pages-and-form'):
+        for anchor in ('what-people-see', 'place-a-listing', 'what-each-person-sees', 'a-models-own-pages-and-form', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/listings/"', page('/portal/sites/data-models/'))
         source = (ROOT / 'src/content/docs/portal/sites/listings.md').read_text()
@@ -569,7 +572,7 @@ class Content(unittest.TestCase):
 
     def test_portal_polls(self):
         doc = page('/portal/sites/polls/')
-        for anchor in ('place-a-poll', 'open-a-poll', 'vote', 'results', 'what-happens-to-them-later'):
+        for anchor in ('what-people-see', 'place-a-poll', 'open-a-poll', 'vote', 'results', 'what-happens-to-them-later', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         for label in ('New poll', 'Change my vote', 'Past polls', 'Close the poll'):
             self.assertIn(label, doc)
@@ -608,7 +611,7 @@ class Content(unittest.TestCase):
 
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
-        for anchor in ('make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):
+        for anchor in ('what-people-see', 'config-example', 'make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):
             self.assertIn(f'id="{anchor}"', guide)
         self.assertIn('manager@preview.example', guide)
         self.assertIn('href="/portal/sites/previews/"', page('/portal/sites/agents/'))
