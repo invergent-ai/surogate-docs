@@ -3,7 +3,7 @@ title: Notifications
 description: Tell people of the portal something from a form or a job; they find it on the site, in the console, and by email when they choose.
 ---
 
-A notification tells one person something: a title, a few words, and a page of the portal it leads to. People find theirs in three places: the notifications widget on a site's pages, the bell in the console, and their mailbox, when they chose email on **My account**. A notification is kept for 90 days; each person keeps their newest 500.
+A notification tells one person something: a title, a few words, and a page of the portal it leads to. People find theirs in four places: the notifications widget on a site's pages, the bell in the console, their mailbox when they chose email on **My account**, and their browsers when they turned notifications on there. A notification is kept for 90 days; each person keeps their newest 500.
 
 ## Send one
 
@@ -56,6 +56,10 @@ regions:
 ```
 
 A person signed in sees how many notifications they have not read, and the newest `limit` (1 to 20; 5 when left out). Opening one marks it read and goes to its page. Visitors see nothing, and neither does an administrator seeing the portal as someone else. A page with the widget is made for each person and never kept in a cache.
+
+## In the browser
+
+Everyone may turn on [notifications in their browser](/portal/console/account/#notifications-in-this-browser) on **My account**. Each notification then also appears on that device as the browser's own notification, with its title and words; clicking it opens the notification's page and marks it read. It goes only when the install sends notifications to browsers, through the browsers' own push services.
 
 ## By email
 

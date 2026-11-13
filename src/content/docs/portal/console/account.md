@@ -18,6 +18,17 @@ What the portal tells you shows on its pages and under the bell at the bottom of
 
 Turn on **Email me my notifications** to get each one by email too. It is off until you turn it on.
 
+### Notifications in this browser
+
+Under **Notifications in this browser**, press **Turn on** to have the portal's notifications appear on this device, even when no page of the portal is open; the browser asks you to allow them. Clicking one opens its page. **Turn off** stops them here.
+
+- Each browser and device is turned on by itself, on the address of the portal you use there. You can have up to 10; the oldest gives way to an eleventh.
+- Your other browsers are listed below, each with **Remove**.
+- Signing out of the console turns this browser off. Signing out everywhere turns them all off.
+- A notification shows its title and words as they are in the portal, on lock screens too.
+- When the portal sends no notifications to browsers, or this browser cannot show them, or you blocked them in its settings, the card says so. To unblock them, allow notifications for the portal's address in the browser's settings.
+- At most 60 notifications an hour come to your browsers; past that, they wait in the portal.
+
 ## Two-step sign-in
 
 After your password, the portal can ask for a second step: a code from an app on your phone, or a passkey.
