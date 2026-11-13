@@ -5,17 +5,15 @@ description: Read-only SQL over the portal's data models, with exports and saved
 
 The **Data console** lets the portal's administrators ask questions of the [data models](/portal/sites/data-models/) in SQL: how many requests came in each month, which records have no owner, what a link table holds. It only ever reads. Open it from **Data**, with **Query**.
 
+## What you see
+
+The page lists the tables a query may read, with their columns, beside a box for the SQL. **Run** shows the answer as a table below it:
+
+![The Data console: the tables cereri and cetateni with their columns on the left, a query that counts the requests and adds up their fees by status, and its answer as a table of three rows under Run, Download CSV, Download XLSX and Download JSON.](../../../../assets/screenshots/portal-data-console-query.png)
+
 ## Turn it on
 
-The console is off until the portal's files hold `data-console.yaml`:
-
-```yaml
-enabled: true
-rows: 1000     # the most rows a query shows, 1 to 10000
-seconds: 5     # the most time a query may take, 1 to 30
-```
-
-`rows` and `seconds` may be left out; these are their values then. If the page says the console cannot run here, the install's operators have to allow the portal to set it up.
+The console is off until the portal's files hold `data-console.yaml` (see the [config example](#config-example)). `rows` and `seconds` may be left out; the values in the example are what they are then. If the page says the console cannot run here, the install's operators have to allow the portal to set it up.
 
 ## What a query may read
 
@@ -44,3 +42,18 @@ Give a query a **Name** and **Save** it to find it again in **Saved queries**. A
 ## Who may use it
 
 Only the portal's administrators, never while seeing the portal as someone else. An app's token needs the `tenant:read` and `data` access. Every query run is in the [audit log](/portal/console/audit/), with the tables it read and how many rows it showed, never the query itself.
+
+## Config example
+
+In `data-console.yaml`, at the top of the portal's files:
+
+```yaml
+enabled: true
+rows: 1000     # the most rows a query shows, 1 to 10000
+seconds: 5     # the most time a query may take, 1 to 30
+```
+
+- `enabled: true` turns the console on.
+- `rows`: the most rows a query shows, 1 to 10,000; 1,000 when left out.
+- `seconds`: the most time a query may take, 1 to 30; 5 when left out.
+

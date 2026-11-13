@@ -5,18 +5,19 @@ description: Values worked out once and kept for a while, per portal, site or pe
 
 A named value is a value worked out by the portal and read by name, as `values.<name>`, in any [action list](/portal/sites/actions/) or [logic flow](/portal/sites/flows/). A VAT rate, a greeting, a price list from a flow: each is written once and kept for a while.
 
+## What people see
+
+A named value has no screen of its own: people see what the lists and flows that read it work out. Here the fee of a new dwelling's building permit is the surface times the rate per square metre, and the rate is the named value `cotaTaxa`, 8.5. A request for 120 square metres is told its fee, 1020 lei:
+
+![A building permit request after it was sent: "Request CAS-2026 was registered. Estimated fee: 1020 lei." The fee is the surface, 120, times the named value 8.5.](../../../../assets/screenshots/portal-request-sent.png)
+
+Administrators see the portal's named values on the console's [Flows](/portal/console/flows/) page, under **Named values**, with the expression, who it is kept for and for how long:
+
+![The Flows page: the flow Building permit fee with Run tests, and under Named values "Permit fee rate (lei per m²)", values.cotaTaxa, an expression kept for the whole portal for 3,600 seconds.](../../../../assets/screenshots/portal-values-console.png)
+
 ## A value
 
-A value lives in `values/<name>.yaml`. The file's name is the value's name: letters, digits and `_`, starting with a lower-case letter.
-
-```yaml
-name:
-  ro: Cota TVA
-  en: VAT rate
-cache: install
-ttl: 3600
-value: "1.19"
-```
+A value lives in `values/<name>.yaml`. The file's name is the value's name: letters, digits and `_`, starting with a lower-case letter. See the [config example](#a-values-file).
 
 A value is one of:
 - `value`: an expression;
@@ -53,3 +54,24 @@ Kept values start afresh whenever the portal's files change.
 Every value a list can reach is worked out before the list runs, each after the values it reads. A value that fails is left out, and the run's log says why. Reading it is then the action's error, which its `onError` can catch.
 
 Values are read as `values.<name>`. Any other way, such as `values["name"]`, is refused when the file is saved.
+
+## Config example
+
+### A value's file
+
+In `values/<name>.yaml`, here `values/vatRate.yaml`:
+
+```yaml
+name:
+  ro: Cota TVA
+  en: VAT rate
+cache: install
+ttl: 3600
+value: "1.19"
+```
+
+- `name`: the value's name in the console, in both languages.
+- `cache`: for whom the value is kept: `install`, `site`, `user` or `none`. See [How long it is kept](#how-long-it-is-kept).
+- `ttl`: how many seconds it is kept, 1 to 86,400; 300 when left out.
+- `value`: an expression; or `flow`, `http` or `collection`, as listed under [A value](#a-value).
+

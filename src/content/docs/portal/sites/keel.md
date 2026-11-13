@@ -5,15 +5,13 @@ description: Connect the portal to Surogate Keel, and show each person their ope
 
 Surogate Keel runs the institution's cases and processes. Connected, the portal shows each person signed in the work Keel holds for them, and links each item to it in Keel.
 
+## What people see
+
+A person signed in sees, on a page of the portal, the work Keel holds for them, and a supervisor of the Keel project sees its headline figures. Each item links to Keel's business app. Visitors see a prompt to sign in. The sections below say who sees what, and what happens when Keel does not answer.
+
 ## Connect Keel
 
-Name your Keel in `keel.yaml`, at the top of the portal's files:
-
-```yaml
-api: https://keel-api.primaria.ro
-project: 991bd3e2-3ff7-4352-8d46-bdf087eda408
-app: https://keel-app.primaria.ro
-```
+Name your Keel in `keel.yaml`, at the top of the portal's files (see the [config example](#connect-keel-in-keelyaml)):
 
 - `api`: Keel's API. Inside the same cluster, its service address works too, such as `http://keel-api.keel.svc`.
 - `project`: the Keel project whose work the portal shows, by its id.
@@ -24,16 +22,7 @@ Keel must trust the portal. Its administrator adds the portal's **issuer**, show
 
 ## My work
 
-Place the portal's `my-work` widget on a page:
-
-```yaml
-regions:
-  main:
-    - id: work
-      app: portal
-      widget: my-work
-      preferences: { limit: 10 }
-```
+Place the portal's `my-work` widget on a page (see the [config example](#my-work-on-a-page)).
 
 A person signed in sees their open work: each step of a case or task of a process that waits on them, with its number, the step, its due time and whether it is on track, past its goal or late. `limit` shows 1 to 50 items; 10 when left out. Each item opens in Keel's business app, which asks the person to sign in there if they have not.
 
@@ -46,16 +35,7 @@ A page with the widget is made for each person: it is never kept in a cache and 
 
 ## The overview
 
-Place the portal's `keel-overview` widget on a page, such as a dashboard for the people who supervise the project:
-
-```yaml
-regions:
-  main:
-    - id: overview
-      app: portal
-      widget: keel-overview
-      preferences: { days: 30 }
-```
+Place the portal's `keel-overview` widget on a page, such as a dashboard for the people who supervise the project (see the [config example](#the-overview-on-a-page)).
 
 A supervisor of the Keel project sees its headline figures over the last `days` days (1 to 92; 30 when left out):
 
@@ -76,16 +56,7 @@ A page with the widget is never kept in a cache. Placed without `keel.yaml`, the
 
 ## Start cases from the portal
 
-A form, a job or an endpoint can start a Keel case or process, or tell Keel something, with four [actions](/portal/sites/actions/):
-
-```yaml
-- type: startCase
-  caseType: loan
-  data:
-    applicant: form.name
-    amount: form.amount
-  into: started
-```
+A form, a job or an endpoint can start a Keel case or process, or tell Keel something, with four [actions](/portal/sites/actions/) (see the [config example](#start-a-case-from-a-form)):
 
 | Action | What it does | Keys |
 |---|---|---|
@@ -107,10 +78,94 @@ A form, a job or an endpoint can start a Keel case or process, or tell Keel some
 
 ## When something happens in Keel
 
-A [job](/portal/sites/jobs/) can run each time something happens in the Keel project: a case opened, entered a stage, closed or reopened, or a process started, ended or was cancelled. For example, a job can mail the person who asked when their case closes. The form that started the case keeps its id in a record of a [data model](/portal/sites/data-models/) whose `case_id` field is `filterable: true`, so the job can find it:
+A [job](/portal/sites/jobs/) can run each time something happens in the Keel project: a case opened, entered a stage, closed or reopened, or a process started, ended or was cancelled. For example, a job can mail the person who asked when their case closes. The form that started the case keeps its id in a record of a [data model](/portal/sites/data-models/) whose `case_id` field is `filterable: true`, so the job can find it (see the [config example](#a-job-that-mails-the-person-when-a-case-closes)).
+
+| Event | When | What the run also reads |
+|---|---|---|
+| `case.opened` | A case starts | `stage` |
+| `case.stage_entered` | A case enters a stage | `stage` |
+| `case.closed` | A case closes | `resolution` |
+| `case.reopened` | A closed case opens again | |
+| `process.started` | A process starts | |
+| `process.ended` | A process ends | `status`: `completed`, `terminated` or `failed` |
+| `process.cancelled` | A process is cancelled | |
+
+- **What the run reads:** `trigger.event` is the event, and `trigger.id`, `trigger.number`, `trigger.type` and `trigger.version` name the case or process. `trigger.at` is when it happened. `stage`, `resolution` and `status` are left out when Keel gives none: check with `has(trigger.resolution)`. Keel's events never hold a case's data: keep what you need in a record, as above. `trigger.seq` orders one case's own events.
+- **Which:** `on` names one or more events. `types` narrows them to some case types and processes; without it, all of them.
+- **Keel's key:** the portal reads Keel's events with Keel's key for the project, as for starting cases. Without `serviceKey` in `keel.yaml`, the job is refused.
+- **Once each:** each event runs each job that takes it once, a few seconds after it happens, in the order Keel recorded them. A job that starts cases of the kind it runs on would run itself again: the portal refuses one whose `case.opened` (or `process.started`) takes a type its own actions start. A loop it cannot see, through an endpoint the job calls or between two jobs, ends on its own: the events of a case or process a job started start jobs one step further along a chain, and a chain ends after three, as chains of record changes do.
+- **When the portal cannot read Keel:** it tries again, waiting longer each time, and loses nothing. **Jobs** in the console shows when Keel's events were last read, or what went wrong. If Keel has deleted old events the portal had not read yet, the portal reads on from then, and **Jobs** says when: those events are lost. Take Keel's key away and name it again later, and the portal reads on from then too. Keel keeps them a month unless set otherwise.
+- **Also as events:** each one is also the portal event `portal/keel.<event>`, such as `portal/keel.case.closed`, for [apps and webhooks](/portal/sites/apps/). A webhook that takes every event gets these too.
+
+## Config example
+
+### Connect Keel in `keel.yaml`
+
+At the top of the portal's files:
 
 ```yaml
-# forms/request.yaml, its actions
+api: https://keel-api.primaria.ro
+project: 991bd3e2-3ff7-4352-8d46-bdf087eda408
+app: https://keel-app.primaria.ro
+```
+
+- `api`: Keel's API.
+- `project`: the Keel project whose work the portal shows, by its id.
+- `app`: Keel's business app, where an item's link goes.
+- `timeoutMs` and `serviceKey` are described under [Connect Keel](#connect-keel) and [Start cases from the portal](#start-cases-from-the-portal).
+
+### My work on a page
+
+In a page's file (`sites/<site>/pages/<page>.yaml`):
+
+```yaml
+regions:
+  main:
+    - id: work
+      app: portal
+      widget: my-work
+      preferences: { limit: 10 }
+```
+
+- `limit`: how many items it shows, 1 to 50; 10 when left out.
+
+### The overview on a page
+
+In a page's file:
+
+```yaml
+regions:
+  main:
+    - id: overview
+      app: portal
+      widget: keel-overview
+      preferences: { days: 30 }
+```
+
+- `days`: the figures cover the last `days` days, 1 to 92; 30 when left out.
+
+### Start a case from a form
+
+In a form's actions (`forms/<id>.yaml`, under `actions`), a job's or an endpoint's:
+
+```yaml
+- type: startCase
+  caseType: loan
+  data:
+    applicant: form.name
+    amount: form.amount
+  into: started
+```
+
+- `caseType`: the key Keel gives the case type, without spaces.
+- `data`: what the case starts with, each value an expression.
+- `into`: where Keel's answer is kept.
+
+### A job that mails the person when a case closes
+
+The form keeps the case's id in a record, in its actions (`forms/request.yaml`):
+
+```yaml
 - type: startCase
   caseType: permit
   data:
@@ -123,8 +178,9 @@ A [job](/portal/sites/jobs/) can run each time something happens in the Keel pro
     email: user.email
 ```
 
+The job finds the record when the case closes (`jobs/permit-decided.yaml`):
+
 ```yaml
-# jobs/permit-decided.yaml
 trigger:
   keel:
     on: [case.closed]
@@ -145,19 +201,7 @@ actions:
     text: '"The decision: " + (has(trigger.resolution) ? trigger.resolution : "see your account")'
 ```
 
-| Event | When | What the run also reads |
-|---|---|---|
-| `case.opened` | A case starts | `stage` |
-| `case.stage_entered` | A case enters a stage | `stage` |
-| `case.closed` | A case closes | `resolution` |
-| `case.reopened` | A closed case opens again | |
-| `process.started` | A process starts | |
-| `process.ended` | A process ends | `status`: `completed`, `terminated` or `failed` |
-| `process.cancelled` | A process is cancelled | |
+- `keel.on`: the events that start the job, from the table under [When something happens in Keel](#when-something-happens-in-keel).
+- `keel.types`: narrows them to some case types and processes.
+- `where: { case_id: trigger.id }` finds the record the form made for this case.
 
-- **What the run reads:** `trigger.event` is the event, and `trigger.id`, `trigger.number`, `trigger.type` and `trigger.version` name the case or process. `trigger.at` is when it happened. `stage`, `resolution` and `status` are left out when Keel gives none: check with `has(trigger.resolution)`. Keel's events never hold a case's data: keep what you need in a record, as above. `trigger.seq` orders one case's own events.
-- **Which:** `on` names one or more events. `types` narrows them to some case types and processes; without it, all of them.
-- **Keel's key:** the portal reads Keel's events with Keel's key for the project, as for starting cases. Without `serviceKey` in `keel.yaml`, the job is refused.
-- **Once each:** each event runs each job that takes it once, a few seconds after it happens, in the order Keel recorded them. A job that starts cases of the kind it runs on would run itself again: the portal refuses one whose `case.opened` (or `process.started`) takes a type its own actions start. A loop it cannot see, through an endpoint the job calls or between two jobs, ends on its own: the events of a case or process a job started start jobs one step further along a chain, and a chain ends after three, as chains of record changes do.
-- **When the portal cannot read Keel:** it tries again, waiting longer each time, and loses nothing. **Jobs** in the console shows when Keel's events were last read, or what went wrong. If Keel has deleted old events the portal had not read yet, the portal reads on from then, and **Jobs** says when: those events are lost. Take Keel's key away and name it again later, and the portal reads on from then too. Keel keeps them a month unless set otherwise.
-- **Also as events:** each one is also the portal event `portal/keel.<event>`, such as `portal/keel.case.closed`, for [apps and webhooks](/portal/sites/apps/). A webhook that takes every event gets these too.

@@ -5,29 +5,21 @@ description: "What the portal does on its own, on a schedule, as a set person: a
 
 An automation job is work the portal does on its own: count the new requests every morning, close what has waited too long, refresh figures every hour. It is a trigger and a list of [actions](/portal/sites/actions/), run as a set person on a set site.
 
+## In the console
+
+A job tells no page anything and answers no one, so what people see of it is what it does: a record added, an email sent, a line in a log. Administrators see the jobs under **Jobs** in the console: its trigger, the person it runs as and their roles, when it runs next, whether it runs now, how many changes it still has to run for, and its last runs with their logs:
+
+![The Automation jobs page: the job cerere-inregistrata, which runs when requests are created, and the job cereri-noi, which runs on a schedule, each with the person it runs as and its last runs marked ok, with Log, and Run now for the scheduled one.](../../../../assets/screenshots/portal-jobs-console.png)
+
+**Log** shows what a run wrote:
+
+![The Automation jobs page with the log of a run open under the jobs: "info: Cereri în registru: 4".](../../../../assets/screenshots/portal-jobs-log.png)
+
+Runs are kept 30 days, with only their errors unless the job has `debug: true`. **Run now** runs a job on a time at once, as its person. The portal runs a job once for each time, however many servers it has.
+
 ## Write a job
 
-Each job is a file `jobs/<id>.yaml`:
-
-```yaml
-trigger:
-  cron: "0 7 * * 1-5"
-  timezone: Europe/Bucharest
-site: main
-runAs: user:clerk@primaria.ro
-actions:
-  - type: findRecords
-    model: requests
-    where: { status: '"new"' }
-    into: open
-  - type: log
-    level: info
-    message: '"New requests this morning: " + string(size(vars.open))'
-onError:
-  - type: log
-    level: warn
-    message: error.message
-```
+Each job is a file `jobs/<id>.yaml` (see the [config example](#a-jobs-file)).
 
 - `site` is the site the job runs for; its first language is the run's.
 - `runAs` names the person the job acts as: what they may see and change, the job may. Without it, the job acts as a visitor. When the person no longer exists or may not sign in, the run fails and says so.
@@ -50,22 +42,7 @@ onError:
 
 ## When records change
 
-A job can also start when a [data model's](/portal/sites/data-models/) records are created, updated or deleted:
-
-```yaml
-trigger:
-  record:
-    model: requests
-    on: [created, updated]
-site: main
-runAs: user:clerk@primaria.ro
-actions:
-  - type: log
-    level: info
-    message: '"Request " + string(trigger.op) + ": " + string(trigger.after.subject)'
-```
-
-Each change runs the job once, the oldest first. The run reads the change as `trigger`:
+A job can also start when a [data model's](/portal/sites/data-models/) records are created, updated or deleted (see the [config example](#a-job-that-runs-when-records-change)). Each change runs the job once, the oldest first. The run reads the change as `trigger`:
 
 | | |
 |---|---|
@@ -83,22 +60,7 @@ A change made by a job may start jobs again, at most three deep, so a job that c
 
 ## When people come and go
 
-A job can start when a person is created, changed or signs in:
-
-```yaml
-trigger:
-  user:
-    on: [created]
-site: main
-runAs: user:admin@primaria.ro
-actions:
-  - type: email
-    to: trigger.user.email
-    subject: '"Bun venit pe portal"'
-    text: '"Bună, " + trigger.user.name + "!"'
-```
-
-`on` lists `created`, `updated` and `signed_in`. The job runs once each time, however it happened: in the console, through SCIM, through a sign-in with a provider or a directory, or through a directory's sync.
+A job can start when a person is created, changed or signs in (see the [config example](#a-job-that-runs-when-people-come-and-go)). `on` lists `created`, `updated` and `signed_in`. The job runs once each time, however it happened: in the console, through SCIM, through a sign-in with a provider or a directory, or through a directory's sync.
 
 The run reads `trigger.event`, `trigger.id` (the person's id) and `trigger.at`. `trigger.user` holds their name and email as they are when the run starts, only when the job runs as an administrator; otherwise, and once the person is gone, it is `null`.
 
@@ -106,21 +68,7 @@ At most 5,000 people wait for a job, enough for a directory that brings many at 
 
 ## When the portal starts, fails or is asked for
 
-A job can start when the portal's configuration starts, when a run fails, or when a page is asked for:
-
-```yaml
-trigger:
-  platform:
-    on: [error]
-    sources: [form, endpoint]
-site: main
-runAs: user:admin@primaria.ro
-actions:
-  - type: email
-    to: '"it@primaria.ro"'
-    subject: '"A run failed"'
-    text: 'trigger.source.kind + " " + trigger.source.id + ": " + trigger.message'
-```
+A job can start when the portal's configuration starts, when a run fails, or when a page is asked for (see the [config example](#a-job-that-runs-when-a-run-fails)):
 
 - **`started`:** once each time a new configuration is published or rolled back, and when the job first appears. The run reads `trigger.revision`.
 - **`error`:** a form, endpoint or job ended failed. `sources` names which; all three when left out. The run reads `trigger.source.kind`, `trigger.source.id`, `trigger.runId`, `trigger.reason` and `trigger.message`. The message is the run's own words only for a job that runs as an administrator, since they may hold what people sent; other jobs get only the words the portal shows anyone, or `null`.
@@ -134,25 +82,7 @@ actions:
 
 ## When mail arrives
 
-A job can start for each message that arrives in a [mailbox](/portal/sites/connectors/#mailboxes):
-
-```yaml
-trigger:
-  mail:
-    connector: cereri
-site: main
-runAs: user:registratura@primaria.ro
-actions:
-  - type: createRecord
-    model: requests
-    condition: trigger.autoSubmitted == null
-    values:
-      subject: trigger.subject
-      sender: trigger.from.address
-      body: trigger.text
-```
-
-The run reads:
+A job can start for each message that arrives in a [mailbox](/portal/sites/connectors/#mailboxes) (see the [config example](#a-job-that-runs-when-mail-arrives)). The run reads:
 
 - `trigger.from` (`address`, `name`), `trigger.to` and `trigger.cc`;
 - `trigger.subject`, `trigger.date` and `trigger.text` (the message's text, at most 64 KB);
@@ -168,23 +98,7 @@ A message over 5 MB gives only who sent it and its subject, with `trigger.tooLar
 
 ## When an app sends an event
 
-A job can start each time an approved app's server publishes one of its events:
-
-```yaml
-trigger:
-  event:
-    app: shop
-    name: order.paid
-site: main
-runAs: user:registratura@primaria.ro
-actions:
-  - type: createRecord
-    model: payments
-    values:
-      order: trigger.payload.id
-```
-
-The run reads `trigger.app`, `trigger.name`, `trigger.payload` (the event's fields) and `trigger.personId` when the app named a person. Events sent in the browser do not start jobs. At most 100 events wait for a job; past that, new ones are not run, and the history says so. Once the app is no longer approved, its events start nothing. A job that calls an app whose answer sends the event that starts the job again stops after three rounds.
+A job can start each time an approved app's server publishes one of its events (see the [config example](#a-job-that-runs-when-an-app-sends-an-event)). The run reads `trigger.app`, `trigger.name`, `trigger.payload` (the event's fields) and `trigger.personId` when the app named a person. Events sent in the browser do not start jobs. At most 100 events wait for a job; past that, new ones are not run, and the history says so. Once the app is no longer approved, its events start nothing. A job that calls an app whose answer sends the event that starts the job again stops after three rounds.
 
 ## When something happens in the DMS
 
@@ -204,8 +118,126 @@ The actions read `trigger` (`kind` is `time` or `manual`, `at` is the time it wa
 
 A job tells no page anything and answers no one. It may not use a [connector](/portal/sites/connectors/) that signs in as each person, since no one is at the keyboard.
 
-## In the console
+## Config example
 
-**Jobs** lists every job: its trigger, the person it runs as and their roles, when it runs next, whether it runs now, how many changes it still has to run for, and its last runs with their logs. Runs are kept 30 days, with only their errors unless the job has `debug: true`. **Run now** runs it at once, as its person.
+### A job's file
 
-The portal runs a job once for each time, however many servers it has.
+In `jobs/<id>.yaml`, here `jobs/new-requests.yaml`:
+
+```yaml
+trigger:
+  cron: "0 7 * * 1-5"
+  timezone: Europe/Bucharest
+site: main
+runAs: user:clerk@primaria.ro
+actions:
+  - type: findRecords
+    model: requests
+    where: { status: '"new"' }
+    into: open
+  - type: log
+    level: info
+    message: '"New requests this morning: " + string(size(vars.open))'
+onError:
+  - type: log
+    level: warn
+    message: error.message
+```
+
+- `trigger`: when it runs, from [When it runs](#when-it-runs).
+- `site`, `runAs` and `description` are described under [Write a job](#write-a-job).
+- `actions`: the list the job runs.
+- `onError`: what runs when the list fails.
+
+### A job that runs when records change
+
+```yaml
+trigger:
+  record:
+    model: requests
+    on: [created, updated]
+site: main
+runAs: user:clerk@primaria.ro
+actions:
+  - type: log
+    level: info
+    message: '"Request " + string(trigger.op) + ": " + string(trigger.after.subject)'
+```
+
+- `record.model`: the data model; `record.on`: `created`, `updated` or `deleted`.
+
+### A job that runs when people come and go
+
+```yaml
+trigger:
+  user:
+    on: [created]
+site: main
+runAs: user:admin@primaria.ro
+actions:
+  - type: email
+    to: trigger.user.email
+    subject: '"Bun venit pe portal"'
+    text: '"Bună, " + trigger.user.name + "!"'
+```
+
+- `user.on`: `created`, `updated` and `signed_in`.
+
+### A job that runs when a run fails
+
+```yaml
+trigger:
+  platform:
+    on: [error]
+    sources: [form, endpoint]
+site: main
+runAs: user:admin@primaria.ro
+actions:
+  - type: email
+    to: '"it@primaria.ro"'
+    subject: '"A run failed"'
+    text: 'trigger.source.kind + " " + trigger.source.id + ": " + trigger.message'
+```
+
+- `platform.on`: `started`, `error` or `request`.
+- `platform.sources`: with `error`, which of `form`, `endpoint` and `job`.
+- `platform.paths`: with `request`, the paths asked for.
+
+### A job that runs when mail arrives
+
+```yaml
+trigger:
+  mail:
+    connector: cereri
+site: main
+runAs: user:registratura@primaria.ro
+actions:
+  - type: createRecord
+    model: requests
+    condition: trigger.autoSubmitted == null
+    values:
+      subject: trigger.subject
+      sender: trigger.from.address
+      body: trigger.text
+```
+
+- `mail.connector`: the mailbox [connector](/portal/sites/connectors/#mailboxes).
+- `condition`: skips machine mail.
+
+### A job that runs when an app sends an event
+
+```yaml
+trigger:
+  event:
+    app: shop
+    name: order.paid
+site: main
+runAs: user:registratura@primaria.ro
+actions:
+  - type: createRecord
+    model: payments
+    values:
+      order: trigger.payload.id
+```
+
+- `event.app` and `event.name`: the approved app and the event it sends.

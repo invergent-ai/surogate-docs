@@ -5,39 +5,17 @@ description: Your own tables of records, written as config, with fields, links, 
 
 A data model is a kind of record the portal keeps for you: customers, requests, permits, appointments. You describe it in the portal's files, and the portal makes its table, keeps it in step with the file, and serves its records to people, pages and [action lists](/portal/sites/actions/#records).
 
+## What people see
+
+**Administrators** see the models under **Data** in the console: how they link to each other, each model's fields and about how many records it holds:
+
+![The Data page: Permit requests linked to Residents, drawn as two boxes with an arrow, and under them the two models with their fields and their number of records.](../../../../assets/screenshots/portal-data-models-console.png)
+
+**Visitors and people signed in** see records on pages, through a [listing](/portal/sites/listings/), and add them through a form, as the model's permissions allow. Programs read and write them through [the API](#the-api).
+
 ## A model
 
-A model lives in `models/<id>.yaml`:
-
-```yaml
-name:
-  ro: Cereri
-  en: Requests
-title: subject
-fields:
-  subject:
-    type: text
-    label: { ro: Subiect, en: Subject }
-    required: true
-    searchable: true
-    sortable: true
-  status:
-    type: text
-    label: { ro: Stare, en: Status }
-    filterable: true
-  amount:
-    type: money
-    label: { ro: Sumă, en: Amount }
-  citizen:
-    type: link
-    model: citizens
-    label: { ro: Cetățean, en: Citizen }
-permissions:
-  view: { all: [group:clerks], own: [signed-in] }
-  add: [everyone]
-  edit: { all: [group:clerks] }
-  delete: { all: [role:administrator] }
-```
+A model lives in `models/<id>.yaml`: see the [config example](#a-models-file).
 
 The id, here `requests`, and each field's id are lower-case letters, digits and `_`, starting with a letter, at most 30 characters. A portal has at most 50 models, each with at most 100 fields.
 
@@ -127,4 +105,45 @@ A request may nest 6 levels, ask for 10 things at its top and name 500 fields in
 ## Relations
 
 **Data** in the console draws how the models link, and says the same in words: each link, the model it points at, and whether it holds one record or many.
+
+## Config example
+
+### A model's file
+
+In `models/<id>.yaml`, here `models/requests.yaml`:
+
+```yaml
+name:
+  ro: Cereri
+  en: Requests
+title: subject
+fields:
+  subject:
+    type: text
+    label: { ro: Subiect, en: Subject }
+    required: true
+    searchable: true
+    sortable: true
+  status:
+    type: text
+    label: { ro: Stare, en: Status }
+    filterable: true
+  amount:
+    type: money
+    label: { ro: Sumă, en: Amount }
+  citizen:
+    type: link
+    model: citizens
+    label: { ro: Cetățean, en: Citizen }
+permissions:
+  view: { all: [group:clerks], own: [signed-in] }
+  add: [everyone]
+  edit: { all: [group:clerks] }
+  delete: { all: [role:administrator] }
+```
+
+- `name`: what the model is called, in Romanian and English.
+- `title`: the field that names a record in lists.
+- `fields`: each by its id, with a `type` from the [field types](#fields) and a `label` in both languages. Add `required`, `searchable`, `filterable` or `sortable` as the field needs. A `link` names the `model` it points at.
+- `permissions`: who may `view`, `edit` and `delete` all records or only their own, and who may `add`. See [Who may do what](#who-may-do-what).
 

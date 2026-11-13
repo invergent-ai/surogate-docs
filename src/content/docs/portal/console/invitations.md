@@ -9,6 +9,10 @@ Administrators invite to any site, into any [group](/portal/console/groups/). A 
 
 ## Invite people
 
+The form is at the top of **Invitations**:
+
+![The Invite people form: a note that this portal sends no mail, the Site, Emails one a line, Message optional, Days the link works, and the Send invitations button.](../../../../assets/screenshots/portal-invitations-form.png)
+
 1. Choose the **Site**.
 2. Write the **Emails, one a line**: up to 20 at once.
 3. Tick the **Groups they join**, if any.
@@ -26,7 +30,9 @@ Whoever has the link can accept the invitation, so it goes only to the person in
 
 ## What the person sees
 
-The link opens the invitation's page: who invites them, to which site, the message, and until when it is open.
+The link opens the invitation's page: who invites them, to which site, the message, and until when it is open. The page is in the site's language; here, a person with no account is asked to make one:
+
+![An invitation's page, in the site's language, Romanian: "Invitație la Primăria Demo", who invites, the message, until when it is open, and a form with Email, Name and Password and a button to make the account and accept.](../../../../assets/screenshots/portal-invitation-accept.png)
 
 - **Signed in as the person invited:** they press **Accept the invitation**. The page then says they joined the site, with a link to it.
 - **With an account, not signed in:** they press **Sign in to accept** and sign in, by password or with the portal's sign-in providers. Then they come back to the page and accept.
@@ -46,6 +52,16 @@ Below the form, **Sent** lists the invitations: **Waiting**, **Accepted**, **Wit
 
 ## Let a site's editors invite
 
+A site says in its `site.yaml` whether its editors invite people, into which groups, and for which email domains (see the [config example](#config-example)). The site's editors then see **Invitations** in the console.
+
+## What happens to them later
+
+Invitations ended more than 90 days ago are forgotten. When a person is erased from the portal, the invitations to their email go, and those they sent stay without their name. Both are part of what they get when they ask for their data.
+
+When a directory or SCIM later provides the same person, it may take over the account made by accepting.
+
+## Config example
+
 In the site's `site.yaml`:
 
 ```yaml
@@ -59,10 +75,3 @@ invitations:
 - `groups`: the groups, by name, that editors may invite people into, 10 at most. Names the portal does not have are left out.
 - `domains`: when given, the email domains editors may invite, matched exactly: `primarie.ro` does not cover `mail.primarie.ro`.
 
-The site's editors then see **Invitations** in the console.
-
-## What happens to them later
-
-Invitations ended more than 90 days ago are forgotten. When a person is erased from the portal, the invitations to their email go, and those they sent stay without their name. Both are part of what they get when they ask for their data.
-
-When a directory or SCIM later provides the same person, it may take over the account made by accepting.

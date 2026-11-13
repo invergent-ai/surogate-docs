@@ -5,6 +5,16 @@ description: Send a version of the sites from one portal to another, such as fro
 
 Many institutions run more than one portal: one where changes are tried, such as **Test**, and the one people use, **Production**. Each is an environment. When a version is ready on Test, an administrator sends it to Production, where it arrives as a [proposed change](/portal/console/proposals/). Nothing on Production changes until its administrators approve it.
 
+## What people see
+
+**On Test,** an administrator opens a version on [Versions](/portal/console/versions/#send-a-version-to-another-environment) and presses **Send to Production**. The button is greyed out until the key that Production takes the version with is set. The key is a [connector](/portal/sites/connectors/) of Test, and the console lists it with the others, not connected until its value is set:
+
+![The Connectors page: the connector "Key for Production" among the other keys, marked Not connected, with the Set credentials button.](../../../../assets/screenshots/portal-connectors-console.png)
+
+**On Production,** the version arrives as a proposed change under [Proposed changes](/portal/console/proposals/). Its administrators read it, preview it, and approve or reject it. The key is a token of Production, made by someone signed in there:
+
+![The New token dialog: a Name, and the scopes to pick from, among them "Propose changes to pages, forms and app pieces, for an administrator to approve".](../../../../assets/screenshots/portal-token-new.png)
+
 ## What travels
 
 A version sends the files a proposal may change: pages, layouts, designs, forms, flows, values, data models, endpoints, jobs, guides and content types. Where Production has such a file the version does not have, the proposal removes it there.
@@ -13,14 +23,7 @@ What belongs to each portal stays where it is: each site's own settings (its add
 
 ## Name the environments
 
-Name the portals this one sends to in `environments.yaml`, at the top of the portal's files:
-
-```yaml
-production:
-  name: { ro: Producție, en: Production }
-  url: https://portal.primaria.ro
-  key: production-key
-```
+Name the portals this one sends to in `environments.yaml`, at the top of the portal's files: see the [config example](#config-example).
 
 - The id (`production`): lowercase letters, digits and dashes, starting with a letter. At most 10 environments.
 - `name`: what the console calls it, in Romanian, English or both.
@@ -42,3 +45,28 @@ The version's page on Test then offers **Send to Production**. Until the key is 
 ## Send a version
 
 See [Send a version to another environment](/portal/console/versions/#send-a-version-to-another-environment).
+
+## Config example
+
+### The environments file
+
+In `environments.yaml`, at the top of the portal's files:
+
+```yaml
+production:
+  name: { ro: Producție, en: Production }
+  url: https://portal.primaria.ro
+  key: production-key
+```
+
+The key's connector is a file of its own, `connectors/production-key.yaml`:
+
+```yaml
+name: { ro: Cheia pentru Producție, en: Key for Production }
+kind: secret
+```
+
+- `production`: the environment's id.
+- `name`: what the console calls it.
+- `url`: the other portal's address.
+- `key`: the secret connector holding the key, here `production-key`.

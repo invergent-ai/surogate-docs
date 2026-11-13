@@ -5,6 +5,14 @@ description: Show a change to a portal before it is saved, on a preview of its o
 
 A preview is the portal from a version of its site files, or from a folder you have not pushed yet. It has its own address and fake people only, so you, a reviewer or a coding agent can see the change as an employee, a manager or a partner would. It expires by itself.
 
+## What people see
+
+A preview looks like the portal: the same sites, pages and console, at an address of its own. The people in it are fake, so you can sign in as an employee, a manager or a partner and see what each of them would see. Making a preview is done with a token that holds the **Make preview environments** scope, which an administrator gives by name when making the token:
+
+![The New token dialog: a Name, and the scopes to pick from, among them "Make preview environments, with fake people only".](../../../../assets/screenshots/portal-token-new.png)
+
+The sections below make a preview from the command line, give it people, and sign in to it. A coding agent can do the same through the portal's [MCP server](/portal/sites/agents/#connect-the-mcp-server).
+
 ## Make a preview
 
 From a config folder on your machine:
@@ -39,14 +47,7 @@ Without anything more, a preview has three people:
 | Manager | `manager@preview.example` | the group **Managers** |
 | Partner | `partner@preview.example` | the organization **Partners** |
 
-To use others, add `previews.yaml` at the top of the config folder:
-
-```yaml
-people:
-  - { email: maria@example.com, name: Maria Ionescu, groups: [Managers], organizations: [Acme/HR], fields: { department: HR } }
-  - { email: ion@example.com, name: Ion Popa }
-groups: [Auditors]
-```
+To use others, add `previews.yaml` at the top of the config folder (see the [config example](#the-previews-people)):
 
 - Every group and organization named is made, an organization's parents too: `Acme/HR` makes `Acme` and `HR` in it.
 - `fields` are the portal's user fields.
@@ -106,3 +107,20 @@ Making previews needs a token with the **Make preview environments** [scope](/po
 A token with only this scope reads nothing of the portal's people and changes nothing in the portal. The portal's audit log records each preview made, synced, signed in to and deleted.
 
 Previews are served at an address your install's administrator sets. Without it, making a preview is refused with `previews_off`.
+
+## Config example
+
+### The preview's people
+
+In `previews.yaml`, at the top of the config folder:
+
+```yaml
+people:
+  - { email: maria@example.com, name: Maria Ionescu, groups: [Managers], organizations: [Acme/HR], fields: { department: HR } }
+  - { email: ion@example.com, name: Ion Popa }
+groups: [Auditors]
+```
+
+- `people`: each with an `email` and a `name`, and optionally `groups`, `organizations` and `fields`.
+- `groups`: groups to make besides those the people name.
+

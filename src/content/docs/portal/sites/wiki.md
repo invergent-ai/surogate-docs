@@ -5,20 +5,27 @@ description: Give a site a wiki its people write together, or a knowledge base i
 
 The portal's `wiki` widget is a wiki: articles linked to one another by name, each with its history. As a knowledge base, the site's editors keep its articles in a tree, and readers say whether an article helped them.
 
+## What people see
+
+The wiki opens on its first article. Above every article are the ways around the wiki: **Front page**, **All articles**, **Recent changes**, **New article** and a search box. Below the text are who changed it last, its **History** and, for those who write, **Edit**:
+
+![A wiki's front page: Front page, All articles, Recent changes, New article and Search the wiki above the article "Welcome to the town wiki", with links to two articles, the articles below it, and who last changed it, with History and Edit.](../../../../assets/screenshots/portal-wiki-front.png)
+
+An article that sits under another shows a link to the article above, and its text in the wiki's small markup:
+
+![The article "Rubbish collection": two headings, a numbered list, a link to another article, who changed it last, and the buttons Protect and Delete the article for the site's editors.](../../../../assets/screenshots/portal-wiki-article.png)
+
+**All articles** shows the articles as a tree:
+
+![All articles: "Welcome to the town wiki" with the articles "Parking permits" and "Rubbish collection" under it.](../../../../assets/screenshots/portal-wiki-index.png)
+
+Those who write edit an article in a form, with the markup shown under the text:
+
+![The form Edit: Rubbish collection: its Title, the article it sits under, the Text in the markup, a note for what changed, and the Save button.](../../../../assets/screenshots/portal-wiki-edit.png)
+
 ## Place a wiki
 
-```yaml
-regions:
-  main:
-    - id: wiki
-      app: portal
-      widget: wiki
-      preferences: { kind: wiki, edit: members, home: home }
-```
-
-- `kind`: `wiki` (when left out), or `knowledge` for a knowledge base.
-- `edit`: who writes a wiki: `members` (when left out), everyone signed in who may [see the widget](/portal/sites/permissions/), or `editors`, the site's editors only. A knowledge base is always written by the site's editors.
-- `home`: the address of the article the wiki opens on (`home` when left out).
+Place the `wiki` widget on a page (see the [config example](#a-wiki-on-a-page)). Its `kind` is `wiki` (when left out), or `knowledge` for a knowledge base. Who writes a wiki is `members` (when left out), everyone signed in who may [see the widget](/portal/sites/permissions/), or `editors`, the site's editors only; a knowledge base is always written by the site's editors. `home` is the address of the article the wiki opens on (`home` when left out).
 
 Each `wiki` widget is a wiki of its own. Its articles belong to the widget: moving it to another page, or giving it another `id`, leaves them behind, and they come back if it returns. A page with a wiki is made for each person and never kept in a cache.
 
@@ -65,3 +72,23 @@ A knowledge base is a wiki its site's editors write, its articles arranged in a 
 ## What happens to them later
 
 When a person is erased from the portal, the articles and versions they saved stay, as the wiki's shared text, without their name and without the notes they wrote; their answers to "Did this article help you?" go. The versions they saved are part of what they get when they ask for their data.
+
+## Config example
+
+### A wiki on a page
+
+In a page's file (`sites/<site>/pages/<page>.yaml`):
+
+```yaml
+regions:
+  main:
+    - id: wiki
+      app: portal
+      widget: wiki
+      preferences: { kind: wiki, edit: members, home: home }
+```
+
+- `kind`: `wiki` (when left out), or `knowledge` for a knowledge base.
+- `edit`: who writes a wiki: `members` (when left out), everyone signed in who may [see the widget](/portal/sites/permissions/), or `editors`, the site's editors only. A knowledge base is always written by the site's editors.
+- `home`: the address of the article the wiki opens on (`home` when left out).
+
