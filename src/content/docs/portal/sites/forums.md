@@ -5,20 +5,19 @@ description: Give a site a forum where people start topics and answer each other
 
 The portal's `forum` widget is a board of topics. People signed in start a topic with a title and a message, and others answer it. On a Q&A forum, people vote answers up, and the one who asked accepts the answer that solved it.
 
+## What people see
+
+The forum lists its topics, with a form to start one. On a Q&A forum, a question that has an accepted answer is marked **Answered**:
+
+![A Q&A forum on a page: the form "Ask a question" with Title and Your message, and two questions, one marked Answered with 2 answers and one with none.](../../../../assets/screenshots/portal-forum-list.png)
+
+A topic opens on the same page: its message, then its answers, and a form to answer. On a Q&A forum, each answer shows its votes and the answer that solved the question is marked **Accepted answer**. A moderator also sees **Pin**, **Lock** and **Delete the topic**:
+
+![An open question: its message, the buttons Pin, Lock and Delete the topic for a moderator, the accepted answer marked Accepted answer, a second answer with Accept this answer, and a form to answer.](../../../../assets/screenshots/portal-forum-topic.png)
+
 ## Place a forum
 
-```yaml
-regions:
-  main:
-    - id: forum
-      app: portal
-      widget: forum
-      preferences: { kind: questions, moderation: after, limit: 20 }
-```
-
-- `kind`: `discussion` (when left out) for topics people talk about, or `questions` for questions and their answers. Changing it later changes the topics started afterwards; each topic keeps the kind it was started with.
-- `moderation`: `after` (when left out) publishes a topic or an answer as soon as it is written; `before` keeps it waiting until a moderator approves it.
-- `limit`: how many topics a page of the list shows (1 to 50; 20 when left out).
+Place the `forum` widget on a page (see the [config example](#a-forum-on-a-page)). Its `kind` is `discussion` for topics people talk about, or `questions` for questions and their answers; changing it later changes the topics started afterwards, and each topic keeps the kind it was started with.
 
 Each `forum` widget is a board of its own: two forums, on one page or on two, keep their topics apart. A page with a forum is made for each person and never kept in a cache.
 
@@ -57,3 +56,23 @@ Topics and answers that wait, are flagged or were hidden are in the [moderation 
 Each person starts at most 5 topics an hour and writes at most 50 messages a day in one topic; the limits of [comments](/portal/sites/comments/#limits) on how fast one writes apply too. A topic takes at most 1,000 answers. Each person votes, or takes a vote back, at most 10 times a minute.
 
 When a person is erased from the portal, their topics nobody answered go with them; the ones others answered stay for those answers, with no title, words or author. Their votes are taken back.
+
+## Config example
+
+### A forum on a page
+
+In a page's file (`sites/<site>/pages/<page>.yaml`):
+
+```yaml
+regions:
+  main:
+    - id: forum
+      app: portal
+      widget: forum
+      preferences: { kind: questions, moderation: after, limit: 20 }
+```
+
+- `kind`: `discussion` (when left out) for topics people talk about, or `questions` for questions and their answers. Changing it later changes the topics started afterwards; each topic keeps the kind it was started with.
+- `moderation`: `after` (when left out) publishes a topic or an answer as soon as it is written; `before` keeps it waiting until a moderator approves it.
+- `limit`: how many topics a page of the list shows (1 to 50; 20 when left out).
+

@@ -9,10 +9,10 @@ ROOT = Path(__file__).resolve().parent.parent
 # The portal's site pages written UI first: screenshots, then a Config example section.
 UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'assistants.md', 'blogs.md', 'calendar.md',
                   'comments.md', 'connectors.md', 'content-types.md', 'data-models.md', 'endpoints.md', 'environments.md',
-                  'flows.md', 'guides.md', 'notifications.md')
+                  'flows.md', 'forms.md', 'forums.md', 'guides.md', 'jobs.md', 'kpis.md', 'notifications.md')
 
 # Pages of features with no screen of their own in the portal: no screenshots, but the same Config example section.
-CONFIG_LAST_PAGES = ('document-actions.md', 'documents.md')
+CONFIG_LAST_PAGES = ('document-actions.md', 'documents.md', 'keel.md')
 
 
 class Content(unittest.TestCase):
@@ -237,7 +237,7 @@ class Content(unittest.TestCase):
 
     def test_portal_forms(self):
         guide = page('/portal/sites/forms/')
-        for anchor in ('write-a-form', 'what-a-form-may-hold', 'translations', 'who-sends-it-and-who-reads-what-was-sent',
+        for anchor in ('what-people-see', 'config-example', 'a-forms-file', 'write-a-form', 'what-a-form-may-hold', 'translations', 'who-sends-it-and-who-reads-what-was-sent',
                        'put-a-form-on-a-page', 'its-own-address', 'what-the-portal-checks', 'from-an-app',
                        'come-back-to-a-form', 'ask-for-consent', 'tell-the-reviewers', 'keep-submissions-for-a-time',
                        'fill-in-a-form-offline', 'fields-from-apps'):
@@ -364,7 +364,7 @@ class Content(unittest.TestCase):
 
     def test_portal_jobs(self):
         doc = page('/portal/sites/jobs/')
-        for anchor in ('write-a-job', 'when-it-runs', 'when-records-change', 'when-people-come-and-go', 'when-the-portal-starts-fails-or-is-asked-for', 'when-mail-arrives', 'when-an-app-sends-an-event', 'send-mail', 'what-it-may-do', 'in-the-console'):
+        for anchor in ('config-example', 'write-a-job', 'when-it-runs', 'when-records-change', 'when-people-come-and-go', 'when-the-portal-starts-fails-or-is-asked-for', 'when-mail-arrives', 'when-an-app-sends-an-event', 'send-mail', 'what-it-may-do', 'in-the-console'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/sites/jobs.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'lease', 'CEL'):
@@ -380,7 +380,7 @@ class Content(unittest.TestCase):
 
     def test_portal_keel(self):
         doc = page('/portal/sites/keel/')
-        for anchor in ('connect-keel', 'my-work', 'the-overview', 'start-cases-from-the-portal', 'when-something-happens-in-keel'):
+        for anchor in ('what-people-see', 'connect-keel', 'my-work', 'the-overview', 'start-cases-from-the-portal', 'when-something-happens-in-keel', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/sites/keel.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'JWT', 'token'):
@@ -405,7 +405,7 @@ class Content(unittest.TestCase):
 
     def test_portal_kpis(self):
         doc = page('/portal/sites/kpis/')
-        for anchor in ('declare-them', 'show-them', 'what-each-person-sees'):
+        for anchor in ('what-people-see', 'declare-them', 'show-them', 'what-each-person-sees', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/kpis/"', page('/portal/sites/data-models/'))
         source = (ROOT / 'src/content/docs/portal/sites/kpis.md').read_text()
@@ -528,7 +528,7 @@ class Content(unittest.TestCase):
 
     def test_portal_forums(self):
         doc = page('/portal/sites/forums/')
-        for anchor in ('place-a-forum', 'topics-and-answers', 'questions-and-answers', 'moderate-a-forum', 'limits'):
+        for anchor in ('what-people-see', 'place-a-forum', 'topics-and-answers', 'questions-and-answers', 'moderate-a-forum', 'limits', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/moderation/#who-moderates"', doc)
         self.assertIn('href="/portal/sites/comments/#name-someone"', doc)
