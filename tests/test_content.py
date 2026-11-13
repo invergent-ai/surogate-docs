@@ -518,6 +518,16 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'p_w_'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_calendar(self):
+        doc = page('/portal/sites/calendar/')
+        for anchor in ('place-a-calendar', 'read-it', 'add-events', 'add-it-to-a-calendar-app', 'what-happens-to-them-later'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/permissions/"', doc)
+        self.assertIn('href="/portal/sites/calendar/"', page('/portal/sites/wiki/'))
+        source = (ROOT / 'src/content/docs/portal/sites/calendar.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'p_events_', 'token'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
         for anchor in ('make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):
