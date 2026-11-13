@@ -217,8 +217,10 @@ class Content(unittest.TestCase):
         for anchor in ('what-people-see', 'folders', 'upload-a-file', 'link-to-a-file', 'remove-a-file', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/console/files.md').read_text()
-        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'R2', 'S3'):
+        # Where the portal keeps its own files is never said; S3-compatible buckets are a feature people use.
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
+        self.assertNotIn('kept by the portal itself, on', source)
 
     def test_portal_display_pages(self):
         doc = page('/portal/console/pages/')
@@ -625,6 +627,19 @@ class Content(unittest.TestCase):
         source = (ROOT / 'src/content/docs/portal/sites/form-fields.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'bwip', 'zxing', 'Open Design'):
             self.assertNotIn(word, source)
+
+    def test_portal_bucket_folders(self):
+        files = page('/portal/console/files/')
+        for anchor in ('where-files-are-kept', 'a-folder-kept-in-a-bucket'):
+            self.assertIn(f'id="{anchor}"', files)
+        self.assertIn('storage:', files)
+        self.assertIn('href="/portal/sites/connectors/#buckets"', files)
+        connectors = page('/portal/sites/connectors/')
+        for anchor in ('buckets', 'a-buckets-file'):
+            self.assertIn(f'id="{anchor}"', connectors)
+        self.assertIn('kind: bucket', connectors)
+        for word in ('kubectl', 'helm', 'PORTAL_', 'Open Design', 'Signature V4'):
+            self.assertNotIn(word, files + connectors)
 
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
