@@ -7,7 +7,8 @@ from docsite import DIST, page, section
 ROOT = Path(__file__).resolve().parent.parent
 
 # The portal's site pages written UI first: screenshots, then a Config example section.
-UI_FIRST_PAGES = ('assistants.md', 'guides.md', 'notifications.md')
+UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'assistants.md', 'blogs.md', 'guides.md',
+                  'notifications.md')
 
 
 class Content(unittest.TestCase):
@@ -254,7 +255,7 @@ class Content(unittest.TestCase):
 
     def test_portal_actions(self):
         doc = page('/portal/sites/actions/')
-        for anchor in ('an-action-list', 'expressions', 'the-actions', 'ask-an-agent', 'when-something-fails'):
+        for anchor in ('what-people-see', 'an-action-list', 'expressions', 'the-actions', 'ask-an-agent', 'when-something-fails', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="after-it-is-sent"', page('/portal/sites/forms/'))
         self.assertIn('id="runs"', page('/portal/console/forms/'))
@@ -495,7 +496,7 @@ class Content(unittest.TestCase):
 
     def test_portal_activity(self):
         doc = page('/portal/sites/activity/')
-        for anchor in ('place-the-widget', 'posts', 'comments-and-entries', 'who-is-told-what'):
+        for anchor in ('what-people-see', 'posts', 'comments-and-entries', 'who-is-told-what', 'config-example', 'the-widget-on-a-page'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/comments/#name-someone"', doc)
         comments = page('/portal/sites/comments/')
@@ -509,7 +510,7 @@ class Content(unittest.TestCase):
 
     def test_portal_blogs(self):
         doc = page('/portal/sites/blogs/')
-        for anchor in ('make-a-blog-type', 'name-the-bloggers', 'show-a-blog', 'show-several-blogs', 'recent-bloggers', 'who-sees-what'):
+        for anchor in ('what-people-see', 'make-a-blog-type', 'name-the-bloggers', 'show-a-blog', 'show-several-blogs', 'recent-bloggers', 'who-sees-what', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/permissions/#bloggers"', doc)
         self.assertIn('id="bloggers"', page('/portal/sites/permissions/'))
@@ -552,7 +553,7 @@ class Content(unittest.TestCase):
 
     def test_portal_announcements(self):
         doc = page('/portal/sites/announcements/')
-        for anchor in ('place-the-widget', 'write-an-announcement', 'tell-them', 'read-and-dismiss', 'what-happens-to-them-later'):
+        for anchor in ('what-people-see', 'write-an-announcement', 'tell-them', 'read-and-dismiss', 'what-happens-to-them-later', 'config-example', 'the-widget-on-a-page'):
             self.assertIn(f'id="{anchor}"', doc)
         for label in ('New announcement', 'Manage announcements', 'Tell them by a notification', 'Dismiss'):
             self.assertIn(label, doc)

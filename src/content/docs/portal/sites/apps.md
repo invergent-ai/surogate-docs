@@ -5,16 +5,25 @@ description: Name an app in the site's files, place its widgets on pages, set th
 
 An app is a program deployed on its own, next to the portal. It tells the portal what it offers in a **manifest**: a small JSON file at an address of its own. You name the app in the site's files and place its **widgets** on pages. An administrator then [approves](/portal/console/apps/) it before it shows.
 
+## What people see
+
+**Visitors and people signed in** see an app's widgets as parts of the page, next to the portal's own. A widget that answers late, or with an error, shows **This section is not available right now.**, and the rest of the page still shows. [Who sees a page](/portal/sites/permissions/) also applies to the widgets placed on it.
+
+**People who may edit a page** can change a widget's preferences with **Preferences** on the page (see [Preferences](#preferences)). Until an administrator approves the app, they see **This app is waiting for an administrator's approval.** where it would be; visitors see the page without it.
+
+**An administrator** decides on the console's [Apps](/portal/console/apps/) page whether each app may run, and what it may know about the people using the portal:
+
+![The Apps page: one app approved and one waiting, with their widgets, where they come from and what each asks to know.](../../../../assets/screenshots/portal-apps.png)
+
+Pressing **Approve** opens a dialog that lists what the app will be told:
+
+![The approval dialog lists what the app will be told.](../../../../assets/screenshots/portal-app-approve.png)
+
+The page also shows the tenant's **issuer** and **keys** address, which an app checks what the portal sends it against: see [For the apps' developers](/portal/console/apps/#for-the-apps-developers).
+
 ## Name an app
 
-Each app has a file in `apps/`, named after its id:
-
-```yaml
-# apps/hello.yaml
-id: hello
-name: Hello
-manifest: { url: http://hello.apps.svc:8090/portal-app.json }
-```
+Each app has a file in `apps/`, named after its id. It holds the app's `id`, its `name` and the address of its manifest: see the [config example](#config-example).
 
 The address is `http:` or `https:`, without a user name or password. Whoever may change the site's files decides which addresses the portal reads, inside your network too.
 
@@ -22,17 +31,7 @@ Each sync reads every app's manifest and checks it. If an app cannot be reached,
 
 ## Place a widget
 
-A placement names the app and the widget, and can set the widget's preferences:
-
-```yaml
-regions:
-  main:
-    - id: welcome
-      app: hello
-      widget: greeting
-      preferences: { greeting: Bun venit }
-    - { id: clock, app: hello, widget: clock }
-```
+A placement names the app and the widget, and can set the widget's preferences: see the [config example](#a-widget-on-a-page).
 
 - `widget` can be left out when the app has only one.
 - `preferences` are checked against what the widget accepts. A value that does not fit makes the sync refused, with the file and the field.
@@ -294,3 +293,38 @@ Any language that compiles to WebAssembly works, such as Rust, AssemblyScript, Z
 Each call runs in a fresh instance with fresh memory, in a separate process the portal stops when the time is up. The portal reads the module when the site's files are synced and keeps it, so a new version of the module takes effect with the next sync.
 
 Usual build settings: in Rust or C, link with the memory imported and capped at 16 MiB (`--import-memory`, `--max-memory=16777216`) and a small stack; in AssemblyScript, `--importMemory --maximumMemory 256 --runtime stub --use abort=`, so it imports nothing but the memory.
+
+## Config example
+
+### An app's file
+
+Each app has a file in `apps/`, named after its id, such as `apps/hello.yaml`:
+
+```yaml
+id: hello
+name: Hello
+manifest: { url: http://hello.apps.svc:8090/portal-app.json }
+```
+
+- `id`: the app's id, the same as in the file's name and in the manifest.
+- `name`: what the console calls the app.
+- `manifest`: the address of the app's manifest, `http:` or `https:`, without a user name or password.
+
+### A widget on a page
+
+In a page's file (`sites/<site>/pages/<page>.yaml`):
+
+```yaml
+regions:
+  main:
+    - id: welcome
+      app: hello
+      widget: greeting
+      preferences: { greeting: Bun venit }
+    - { id: clock, app: hello, widget: clock }
+```
+
+- `id`: the placement's id, unique on the page.
+- `app` and `widget`: the app and the widget of its manifest; `widget` can be left out when the app has only one.
+- `preferences`: values for what the widget accepts.
+

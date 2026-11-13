@@ -5,24 +5,23 @@ description: Lists of actions that run when something happens, such as a form be
 
 An action list is a short program written in the portal's files. It runs when something happens. For now that is a form being sent ([After it is sent](/portal/sites/forms/#after-it-is-sent)), or a [logic flow](/portal/sites/flows/) being called; later, endpoints and scheduled jobs run them too. Each action does one thing: works out a value, logs a line, tells the person something, sends them elsewhere.
 
+## What people see
+
+A person who sends a form sees what its actions tell them. Here a resident has filed a building permit request. The form's actions worked out the fee with a [logic flow](/portal/sites/flows/), gave the request a number, kept it as a record, and told the person:
+
+![A building permit request after it was sent: a green notice, "Request CAS-2026 was registered. Estimated fee: 1020 lei.", and under it the message with the request's number and the fee.](../../../../assets/screenshots/portal-request-sent.png)
+
+- The notice at the top is a `notify` action ([UI actions](#ui-actions)). The text under it is a `message` action, which tells the person something and ends the run.
+- `{{ vars.name }}` in a notice or a message puts in a value an earlier action set: here the request's number and the fee.
+- A `redirect` action would have sent the person to another page instead.
+
+**In the console,** the form's reviewers see each run of its actions under **Runs** on [Forms](/portal/console/forms/#runs): when it ran and whether it is done, failed or waiting.
+
+![The Forms page with Runs open: the last run of the Building permit request form, marked Done, above the request that started it.](../../../../assets/screenshots/portal-forms-runs.png)
+
 ## An action list
 
-```yaml
-actions:
-  submitted:
-    - type: set
-      values:
-        reference: '"REQ-" + string(now.getFullYear()) + "-" + form.county'
-    - type: log
-      level: info
-      message: '"Request " + vars.reference'
-    - type: message
-      text:
-        ro: "Cererea {{ vars.reference }} a fost primită."
-        en: "Request {{ vars.reference }} was received."
-```
-
-Every action has a `type`, and may also have:
+An action list is written under a form's `actions` (see the [config example](#config-example)); a flow, a job and an endpoint have lists of their own. Every action has a `type`, and may also have:
 - `description`: a note for whoever reads the file;
 - `condition`: an expression that must be true for the action to run;
 - `onSuccess`: actions run after it succeeds;
@@ -82,26 +81,7 @@ A `redirect` goes to a page of the same site, or to another https site the form 
 
 ## Ask an agent
 
-`askAgent` asks one of the agents in `agents.yaml` (an agent with its key) and keeps the answer. Only a [job](/portal/sites/jobs/) asks an agent: an agent's answer takes longer than a form, an endpoint or a [flow](/portal/sites/flows/) waits. To summarize what a form receives, have the form create a record, and ask the agent from a job that starts when that record is created:
-
-```yaml
-trigger:
-  record:
-    model: requests
-    on: [created]
-site: main
-runAs: user:clerk@primaria.ro
-actions:
-  - type: askAgent
-    agent: helper
-    task: summary
-    prompt: '"Request: " + string(trigger.after.subject) + ". " + string(trigger.after.description)'
-    into: summary
-  - type: updateRecord
-    model: requests
-    id: trigger.id
-    values: { summary: vars.summary.text }
-```
+`askAgent` asks one of the agents in `agents.yaml` (an agent with its key) and keeps the answer. Only a [job](/portal/sites/jobs/) asks an agent: an agent's answer takes longer than a form, an endpoint or a [flow](/portal/sites/flows/) waits. To summarize what a form receives, have the form create a record, and ask the agent from a job that starts when that record is created: see the [config example](#ask-an-agent-from-a-job).
 
 - `task`: `chat` (when left out) answers the prompt; `summary` summarizes it; `article` writes a knowledge-base article from it, with a title and sections. The answer comes in the prompt's language.
 - `prompt`: an expression giving the words, up to 50,000 characters.
@@ -122,14 +102,7 @@ The file actions work on a folder of the portal's files, one written in `content
   - a run reads at most 50 times and changes files at most 20 times;
   - a listing gives at most 1,000 names.
 
-```yaml
-- type: writeFile
-  folder: requests
-  name: '"request-" + submission.id + ".txt"'
-  content: '"From " + form.name + ": " + form.message'
-```
-
-A file written stays written, even if a later action fails.
+A file written stays written, even if a later action fails. See [a file written by a form](#write-a-file) in the config example.
 
 ## Records
 
@@ -165,7 +138,85 @@ A run stops after 10 seconds or 10,000 steps, a loop goes over at most 1,000 ite
 
 ## App actions
 
-An approved app can give actions of its own, such as sending an SMS:
+An approved app can give actions of its own, such as sending an SMS: see [an app's action](#an-apps-action) in the config example.
+
+- **What it takes:** the inputs the app's manifest declares; the portal checks them when the files are published. `connector` names a connector of the app's type, when the action needs one: an administrator sets its credentials under **Connectors**.
+- **What it gives:** `vars.sent` holds the action's outputs.
+- **Where:** in a form, flow, job or endpoint that may change records, never in a GET endpoint or one anyone may call, and never in a flow's tests. A run calls at most 10.
+- **When it fails:** the app is not approved, it does not answer in time, or it answers what its manifest does not say. The run's `onError` reads why.
+
+To write one, see [Build an app](/portal/sites/build-an-app/#actions).
+
+## Config example
+
+### An action list
+
+A form's actions sit in its file, `forms/<id>.yaml`, under `actions`, in the list for the moment they run (`submitted`, once the form is sent and kept):
+
+```yaml
+actions:
+  submitted:
+    - type: set
+      values:
+        reference: '"REQ-" + string(now.getFullYear()) + "-" + form.county'
+    - type: log
+      level: info
+      message: '"Request " + vars.reference'
+    - type: message
+      text:
+        ro: "Cererea {{ vars.reference }} a fost primită."
+        en: "Request {{ vars.reference }} was received."
+```
+
+- `set` works out `reference` from the year and the form's `county` field, and keeps it in `vars`.
+- `log` writes a line in the run's log.
+- `message` tells the person the request was received, with the reference put in, in each language, and ends the run.
+
+### Ask an agent from a job
+
+In a job (`jobs/<id>.yaml`):
+
+```yaml
+trigger:
+  record:
+    model: requests
+    on: [created]
+site: main
+runAs: user:clerk@primaria.ro
+actions:
+  - type: askAgent
+    agent: helper
+    task: summary
+    prompt: '"Request: " + string(trigger.after.subject) + ". " + string(trigger.after.description)'
+    into: summary
+  - type: updateRecord
+    model: requests
+    id: trigger.id
+    values: { summary: vars.summary.text }
+```
+
+- `agent`: an agent `agents.yaml` names.
+- `task`, `prompt` and `into` are described under [Ask an agent](#ask-an-agent).
+- `updateRecord` writes the answer into the request's `summary` field.
+
+### Write a file
+
+In an action list, here a form's:
+
+```yaml
+- type: writeFile
+  folder: requests
+  name: '"request-" + submission.id + ".txt"'
+  content: '"From " + form.name + ": " + form.message'
+```
+
+- `folder`: a folder of the portal's files, one written in `content/folders/`.
+- `name`: an expression giving the file's name, such as `request-<the submission's id>.txt`.
+- `content`: an expression giving the text written.
+
+### An app's action
+
+In a form, flow, job or endpoint:
 
 ```yaml
 - type: appAction
@@ -178,10 +229,6 @@ An approved app can give actions of its own, such as sending an SMS:
   into: sent
 ```
 
-- **What it takes:** the inputs the app's manifest declares; the portal checks them when the files are published. `connector` names a connector of the app's type, when the action needs one: an administrator sets its credentials under **Connectors**.
-- **What it gives:** `vars.sent` holds the action's outputs.
-- **Where:** in a form, flow, job or endpoint that may change records, never in a GET endpoint or one anyone may call, and never in a flow's tests. A run calls at most 10.
-- **When it fails:** the app is not approved, it does not answer in time, or it answers what its manifest does not say. The run's `onError` reads why.
-
-To write one, see [Build an app](/portal/sites/build-an-app/#actions).
+- `app` and `action`: the approved app and the action its manifest declares.
+- `inputs`, `connector` and `into` are described under [App actions](#app-actions).
 
