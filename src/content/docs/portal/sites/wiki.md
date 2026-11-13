@@ -42,7 +42,7 @@ The text is written in a small markup:
 | `1. item` | a numbered list |
 | `**bold**`, `*italic*`, `` `code` `` | bold, italic and code |
 | `[text](https://example.ro)` | a link to a web page, an e-mail (`mailto:`) or a page of the site (`/…`) |
-| `[[Another article]]`, `[[another-article|text]]` | a link to another article; one that does not exist yet is marked |
+| `[[Another article]]`, `[[another-article\|text]]` | a link to another article; one that does not exist yet is marked |
 
 Nothing else is markup: HTML shows as text.
 
