@@ -171,7 +171,7 @@ Do **not** send a user message as well. The handler persists the outcome on `ses
 
 ## Sub-agent observability
 
-A session can have children (via `spawn_worker` / `delegate_task` / `spawn_task`). The session detail shows:
+A session can have children (sub-agents it starts with `agent`, or a project's threads). The session detail shows:
 
 - The **Running** panel in the sidebar — live sub-agent tree, auto-refreshes every 4s while children are active
 - Per-child links — click to drill into the child's own session

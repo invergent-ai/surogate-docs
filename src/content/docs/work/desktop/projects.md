@@ -40,12 +40,9 @@ The gear in the project's header opens **Project settings**. It has the same **N
 
 The coordinator does not do the work itself. It plans, hands work out and keeps track. It does not make documents either: a Word, Excel, PowerPoint or PDF file is a thread's job.
 
-Ask for what you want in the project's conversation. The coordinator answers with threads:
+Ask for what you want in the project's conversation. The coordinator starts a thread for each piece of the work and tells you which. Before it starts work you did not ask for, it asks you in the conversation. To approve every thread before it starts, tell the coordinator so, and it remembers.
 
-- **Proposed threads.** A card lists each proposed thread with its title and goal. Press **Start** on the ones you want, or **Start all**. The card then says **Started**, with **View thread**. A project that works in a folder on your computer always proposes: only you can start its threads, from their cards.
-- **Started by the coordinator.** In a project in the cloud, the coordinator can also start a thread itself. Ask it to propose first when you want to approve each one.
-
-A thread the coordinator proposes for your own computer, in a project that has no folder, shows **Allow** (to work in a folder of this computer) or **Run in the cloud instead**.
+In a project with a folder on your computer, a thread starts once Surogate Desktop has set up its copy of the folder: at once while the app runs, or when your computer is back. If the copy cannot be set up, for example because the project's folder was moved or replaced, the coordinator tells you and the thread does not start.
 
 Each thread is a full chat, with its own sandbox, working on one piece of the project. In a project with a folder, a thread works in its own copy of it. When the thread's turn ends, its changes are applied to the folder. The copy keeps threads from tripping over each other's files. If the same file changed in the folder meanwhile, the thread asks you.
 

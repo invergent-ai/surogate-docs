@@ -2,45 +2,40 @@
 title: Background jobs
 ---
 
-Work that outlives a single agent turn — asynchronous sub-agents, durable tasks, scheduled runs, and the platform sweepers that keep everything tidy.
+Work that outlives a single agent turn — sub-agents running in the background, scheduled runs, and the platform sweepers that keep everything tidy.
 
 There are two families: **agent-initiated background work** (a running agent hands work to children or the future) and **platform maintenance jobs** (periodic sweepers the runtime schedules itself).
 
 ## Agent-initiated background work
 
-An agent has three primitives for offloading work, each with a different durability and result-delivery model.
+An agent starts and follows sub-agents with one family of tools:
 
-| Primitive | Blocks the parent? | Survives crash / retries? | Best for |
-|---|---|---|---|
-| `spawn_worker` | No — returns a `worker_id` immediately | No — single attempt | Fire-and-forget parallel work |
-| `delegate_task` | Yes — parent waits for the result | No — single attempt | A sub-task that needs a fresh context window, whose answer the parent needs now |
-| `spawn_task` | No — returns a `task_id` | Yes — retries, DAG dependencies, pause/resume | Durable work that must outlive the turn or depend on other tasks |
+| Tool | What it does |
+|---|---|
+| `agent` | Starts one sub-agent from a short `description` and a `prompt` that stands alone, optionally of a pre-configured `agent_type`. |
+| `send_message` | Sends a running or finished agent a follow-up: what it should do next, a correction, or an answer to its question. |
+| `list_agents` | Lists the agents the session started, or reads one. |
+| `stop_agent` | Stops an agent, with the agents it started, or a background command. |
+| `monitor` | Runs a command and turns each line it prints into a notification. |
 
-None of the three gives the child its own workspace: every child session — `spawn_worker`, `delegate_task`, and task attempts alike — inherits the parent's `storage_bucket`, `storage_key_prefix`, and `workspace_path` and resolves to the sandbox of the tree's root, so no `sessions/{child_id}/` prefix is allocated and the whole fan-out reads and writes one `/workspace`. Siblings can overwrite each other's files. See [Runtime architecture](/develop/reference/runtime-architecture/).
+Every sub-agent is a full child session with its own event log and iteration budget, on the `delegation` channel. It shares the parent's workspace: every child session inherits the parent's `storage_bucket`, `storage_key_prefix` and `workspace_path` and resolves to the sandbox of the tree's root, so no `sessions/{child_id}/` prefix is allocated and the whole fan-out reads and writes one `/workspace`. Siblings can overwrite each other's files. See [Runtime architecture](/develop/reference/runtime-architecture/).
 
-### Workers (`spawn_worker`)
+### In the background, or in the foreground
 
-A worker is a full child session with its own event log and iteration budget. It runs asynchronously on any worker pod. When it finishes, a `worker.complete` event is emitted into the **parent's** event log and the parent is re-enqueued so it wakes to process the result. The parent can steer a worker with `send_worker_message` (wakes it, even after it completed) or interrupt it with `stop_worker`. Workers cannot spawn their own workers — the coordinator tool family is stripped from a worker's toolset.
+- **Background** (the default for a main session): `agent` returns `{"agent_id", "status": "running"}` at once. When the agent ends, an `agent.notification` event is written into the **parent's** event log and the parent is re-enqueued; it reads the report as a notification at its next model request. At most 5 of a session's agents run in the background at a time.
+- **Foreground** (`run_in_background=false`, and always for a sub-agent's own agents): the call waits for the report and returns it as its result, for up to 60 minutes. The parent's log gets `delegation.start` and `delegation.complete` or `delegation.failed`, and a one-shot `delegation.stale` if the child goes quiet past a threshold.
 
-### Delegation (`delegate_task`)
+Several `agent` calls in one response run in parallel (at most 5 calls a response; any more are dropped, except in a project's coordinator, whose every call starts one thread). Depth is capped at 2 levels: a sub-agent below the limit may start agents of its own, one at the limit may not. A child inherits the parent's `excluded_tools`, and `ask_user_question` is stripped from every child: a child has no path to the user, and asks its parent with `send_message` instead. Artifacts a child creates are propagated up to the parent's chat thread automatically.
 
-Delegation spawns one or more children and **waits** for them, returning their final responses as the tool result. Pass `goals=[...]` to fan out in parallel. The parent polls until each child completes (up to a 60-minute ceiling), emitting `delegation.start` / `delegation.complete` / `delegation.failed` events, and a one-shot `delegation.stale` if a child idles past threshold. Delegation depth is capped (default 2 levels); a `leaf` child cannot delegate further, an `orchestrator` child can. A delegated child inherits the parent's `excluded_tools`, and `ask_user_question`, `spawn_worker`, `send_worker_message`, and `stop_worker` are stripped regardless of preset or of what the parent's own allowlist holds — a child has no path to the user and cannot run its own workers, so design child agents to hand open questions back to the parent. Artifacts a child creates are propagated up to the parent's chat thread automatically.
+### Following up and stopping
 
-### Durable tasks (`spawn_task`)
-
-A task is a row in the database, so it survives the parent's crash. Tasks add three things workers and delegation don't have:
-
-- **Fan-in dependencies** — `parents=[task_id, …]` keeps a task in `todo` until every parent reaches `done`, then it is promoted to `ready` and claimed. Cancelled or failed parents do not promote their children.
-- **Retries** — `max_attempts` (default 3); the dispatcher gives up after that many consecutive crash/timeout attempts and marks the task `failed`. A retry is not a clean slate: attempt 2 onwards opens with a `## Prior attempts on this task` section (up to the last 5 attempts, each with its completion text, block reason, or a crashed placeholder), and the worker can call `worker_context` for the full structured detail. It also inherits the files its predecessor left in the shared workspace, so write task workers to resume rather than to assume an empty one.
-- **Block / unblock** — a worker can `worker_block` to pause and wait for input. Only the session that spawned the task may resume it with `unblock_task` (optionally attaching new context, appended to `task.context` with a timestamp) or stop it with `cancel_task`; both are ownership-checked and reject a call from any other session. Cancelling a running task also interrupts its in-flight child session.
-
-A worker running a task reports back with `worker_complete`, which carries a human-readable `summary` (becomes `task.result`) plus free-form structured `metadata` (e.g. `changed_files`, `tests_run`, `decisions`). Successful completion reuses the `worker.complete` event, carrying the `task_id` so the parent can correlate; `task.blocked` and `task.failed` mark the other transitions.
+`send_message` reaches an agent the caller started, its parent (`to: "parent"`), or a sibling, in the same organisation only. A running agent reads it before its next step; a finished one is resumed with its whole context and the message, and its new report arrives as another notification. `stop_agent` stops an agent and the agents under it; a stopped agent keeps its context, and a message from the agent that stopped it resumes it.
 
 ### How results and progress are tracked
 
-- **Events** — outcomes flow back as `worker.*`, `delegation.*`, and `task.*` events on the parent's log. See [Event types → Sub-agent / task events](/develop/reference/event-types/).
+- **Events** — outcomes flow back as `delegation.*` and `agent.notification` events on the parent's log. See [Event types → Sub-agent events](/develop/reference/event-types/).
 - **Live tree** — a session's detail view shows a Running panel and per-child links; `GET /v1/sessions/{id}/tree` returns the descendant graph. See [Sessions → Sub-agent observability](/develop/features/sessions/).
-- **The board** — a fan-out of workers/tasks shares a coordination board so siblings reuse each other's findings without routing through the parent. See [Coordination & the board](/develop/reference/coordination/).
+- **The board** — a fan-out of agents shares a coordination board so siblings reuse each other's findings without routing through the parent. See [Coordination & the board](/develop/reference/coordination/).
 
 ## Scheduled sessions and loops
 
@@ -82,6 +77,6 @@ The training collector's responsibility ends at the JSONL file — training stra
 ## Related
 
 - [Coordination & the board](/develop/reference/coordination/) — how parallel background work coordinates.
-- [Missions](/work/tools/missions/) — a coordinator that decomposes a goal into durable tasks.
+- [Missions](/work/tools/missions/) — a coordinator that gives a goal out to agents, judged against a rubric.
 - [Sessions](/develop/features/sessions/) — reading a session and its sub-agent tree.
 - [Event types](/develop/reference/event-types/) — the events every background primitive emits.

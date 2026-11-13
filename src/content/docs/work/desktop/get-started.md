@@ -69,10 +69,9 @@ A project is a coordinator chat that splits a larger goal into threads, each a c
 1. Press **Projects** in the sidebar, then **New project**.
 2. Give it a **Name** and a **Goal**, for example "Prepare the quarterly report from the files in this folder".
 3. Press **Choose…** to pick the project's folder, confirm it on the **Work in** sheet, then press **Create project**.
-4. In the project's conversation, ask for the work. The coordinator answers with a card of proposed threads.
-5. Press **Start** on the threads you want, or **Start all**.
-6. Press **Overview** in the project's header to follow the threads. Threads that need your answer are under **Waiting on you**. Open one and answer it there, in the thread.
-7. When a thread's work is done, press **Resolve** on its row.
+4. In the project's conversation, ask for the work. The coordinator starts a thread for each piece of it and says which.
+5. Press **Overview** in the project's header to follow the threads. Threads that need your answer are under **Waiting on you**. Open one and answer it there, in the thread.
+6. When a thread's work is done, press **Resolve** on its row.
 
 Each thread works in its own copy of the folder. When a thread's turn ends, its changes land in the folder. See [Projects in Surogate Desktop](/work/desktop/projects/) for the details.
 
