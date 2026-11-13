@@ -524,6 +524,8 @@ class Content(unittest.TestCase):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/permissions/"', doc)
         self.assertIn('href="/portal/sites/calendar/"', page('/portal/sites/wiki/'))
+        for label in ('Bring back', 'Discard the draft', 'Subscribe (iCal)', 'Share by a private address'):
+            self.assertIn(label, doc)
         source = (ROOT / 'src/content/docs/portal/sites/calendar.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'p_events_', 'token'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
