@@ -1,6 +1,6 @@
 ---
 title: Notifications
-description: Tell people of the portal something from a form or a job; they find it on the site, in the console, and by email when they choose.
+description: Tell people of the portal something from a form or a job; they find it on the site, in the console, by email and in their browsers when they choose.
 ---
 
 A notification tells one person something: a title, a few words, and a page of the portal it leads to. People find theirs in four places: the notifications widget on a site's pages, the bell in the console, their mailbox when they chose email on **My account**, and their browsers when they turned notifications on there. A notification is kept for 90 days; each person keeps their newest 500.
