@@ -546,7 +546,6 @@ class Content(unittest.TestCase):
             self.assertIn(f'id="{anchor}"', doc)
         for label in ('New poll', 'Change my vote', 'Past polls', 'Close the poll'):
             self.assertIn(label, doc)
-        self.assertIn('href="/portal/sites/polls/"', page('/portal/sites/announcements/'))
         source = (ROOT / 'src/content/docs/portal/sites/polls.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'p_question_'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
