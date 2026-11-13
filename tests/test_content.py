@@ -568,6 +568,17 @@ class Content(unittest.TestCase):
             self.assertIn(label, doc)
         self.assertIn('href="/portal/console/account/#notifications-in-this-browser"', page('/portal/sites/notifications/'))
 
+    def test_portal_document_actions(self):
+        guide = page('/portal/sites/document-actions/')
+        for anchor in ('make-a-pdf-from-html', 'work-with-pdfs', 'fill-a-word-template', 'excel-and-csv', 'barcodes-and-qr-codes', 'who-may-do-what', 'limits'):
+            self.assertIn(f'id="{anchor}"', guide)
+        for action in ('htmlToPdf', 'htmlToWord', 'convertToPdf', 'mergePdfs', 'overlayPdf', 'splitPdf', 'readPdf', 'fillWordTemplate', 'readWord', 'writeExcel', 'readExcel', 'excelSheets', 'writeCsv', 'readCsv', 'barcode'):
+            self.assertIn(action, guide)
+        self.assertIn('href="/portal/sites/document-actions/"', page('/portal/sites/actions/'))
+        source = (ROOT / 'src/content/docs/portal/sites/document-actions.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'Euro-Office', 'Open Design'):
+            self.assertNotIn(word, source)
+
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
         for anchor in ('make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):

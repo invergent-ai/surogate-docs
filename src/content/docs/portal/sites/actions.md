@@ -48,6 +48,8 @@ Whole numbers are integers, the others decimals; the two mix in arithmetic, so `
 
 ## The actions
 
+Extensions add more: the [document actions](/portal/sites/document-actions/) make and read PDF, Word, Excel and CSV files and barcode images.
+
 | Type | What it does | Takes |
 |---|---|---|
 | `set` | Works out values into `vars` | `values: { name: expression }` |
