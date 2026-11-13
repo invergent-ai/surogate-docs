@@ -509,6 +509,15 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'subject', 'p_'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_wiki(self):
+        doc = page('/portal/sites/wiki/')
+        for anchor in ('place-a-wiki', 'read-and-find', 'write', 'look-after-a-wiki', 'knowledge-bases', 'what-happens-to-them-later'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/permissions/"', doc)
+        source = (ROOT / 'src/content/docs/portal/sites/wiki.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'p_w_'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
         for anchor in ('make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):
