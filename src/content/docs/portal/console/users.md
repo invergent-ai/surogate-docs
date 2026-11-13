@@ -2,7 +2,7 @@
 title: Users
 ---
 
-**Users** lists the people who can sign in to this portal. You need the **Administrator** role (on the main portal, **Install administrator**).
+**Users** lists the people who can sign in to this portal. You need the **Administrator** role (on the main portal, **Install administrator**). To let people make their own account, [invite them](/portal/console/invitations/).
 
 ## Find a user
 

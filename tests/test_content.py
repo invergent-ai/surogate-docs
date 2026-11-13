@@ -550,6 +550,17 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'p_question_'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_invitations(self):
+        doc = page('/portal/console/invitations/')
+        for anchor in ('invite-people', 'what-the-person-sees', 'follow-your-invitations', 'let-a-sites-editors-invite', 'what-happens-to-them-later'):
+            self.assertIn(f'id="{anchor}"', doc)
+        for label in ('Send invitations', 'Accept the invitation', 'Sign in to accept', 'Make my account and accept', 'Send again', 'Withdraw'):
+            self.assertIn(label, doc)
+        self.assertIn('href="/portal/console/invitations/"', page('/portal/console/users/'))
+        source = (ROOT / 'src/content/docs/portal/console/invitations.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'token'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
         for anchor in ('make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):

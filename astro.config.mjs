@@ -479,6 +479,7 @@ export default defineConfig({
                 'portal/console/sign-in',
                 'portal/console/account',
                 'portal/console/users',
+                'portal/console/invitations',
                 'portal/console/groups',
                 'portal/console/organizations',
                 'portal/console/sign-in-providers',
