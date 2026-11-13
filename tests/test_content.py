@@ -530,6 +530,27 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'p_events_', 'token'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_announcements(self):
+        doc = page('/portal/sites/announcements/')
+        for anchor in ('place-the-widget', 'write-an-announcement', 'tell-them', 'read-and-dismiss', 'what-happens-to-them-later'):
+            self.assertIn(f'id="{anchor}"', doc)
+        for label in ('New announcement', 'Manage announcements', 'Tell them by a notification', 'Dismiss'):
+            self.assertIn(label, doc)
+        source = (ROOT / 'src/content/docs/portal/sites/announcements.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'p_notices_'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
+    def test_portal_polls(self):
+        doc = page('/portal/sites/polls/')
+        for anchor in ('place-a-poll', 'open-a-poll', 'vote', 'results', 'what-happens-to-them-later'):
+            self.assertIn(f'id="{anchor}"', doc)
+        for label in ('New poll', 'Change my vote', 'Past polls', 'Close the poll'):
+            self.assertIn(label, doc)
+        self.assertIn('href="/portal/sites/polls/"', page('/portal/sites/announcements/'))
+        source = (ROOT / 'src/content/docs/portal/sites/polls.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'Postgres', 'p_question_'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_previews(self):
         guide = page('/portal/sites/previews/')
         for anchor in ('make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):
