@@ -5,7 +5,92 @@ description: Named connections to outside services that action lists use by name
 
 A connector is a named connection to a service outside the portal: a CRM, a payments provider, a public register. [Action lists](/portal/sites/actions/) and [logic flows](/portal/sites/flows/) use it by name. Where it goes and how it signs in are written in the portal's files. Its credentials are set in the console, and are never written in files.
 
+## What people see
+
+**Administrators** see the portal's connectors under [Connectors](/portal/console/connectors/) in the console, grouped by their `group`. Each shows its name, its address, how it signs in, and whether it is connected:
+
+![The Connectors page: the mailbox "Requests by email" and several keys, each marked Not connected with Set credentials, and below them the group sales with "My CRM account" and "CRM".](../../../../assets/screenshots/portal-connectors-console.png)
+
+**Set credentials** asks for what the connector's sign-in needs. A token, here, for a connector that signs in with one:
+
+![The dialog "Credentials for CRM": a Token field, with Cancel and Save.](../../../../assets/screenshots/portal-connectors-credentials.png)
+
+**Each person** sees the connectors they connect themselves, under **Your connections** on their account:
+
+![The Your connections section of My account: the connector "My CRM account", Not connected, with a Connect button.](../../../../assets/screenshots/portal-account-connections.png)
+
 ## A connector
+
+A connector lives in `connectors/<id>.yaml`: see the [config example](#a-connectors-file). Its `kind` says what it is:
+
+- `http` is a service the portal calls;
+- `secret` is a key the portal signs with, which makes no calls;
+- `mailbox` is a mail address a [job](/portal/sites/jobs/#when-mail-arrives) reads (see [Mailboxes](#mailboxes)).
+
+## Credentials
+
+Administrators set a connector's credentials under [Connectors](/portal/console/connectors/). They are kept sealed, and they are never shown again or written in a run's log.
+
+Credentials belong to the connector as it was when they were set. If the base address, the auth or the header changes in the files, the connector counts as not connected until its credentials are set again. A change to the files can never send them somewhere else.
+
+Credentials go only over https, unless the portal is installed to reach private networks.
+
+## Call a service
+
+An action list calls a service with the `http` action: see the [config example](#call-a-service-from-an-action-list).
+
+- **When it fails:**
+  - An answer that is not 2xx is an error, unless its status is listed in `okStatus`. The answer is still kept, so `onError` can read it.
+  - The portal does not follow redirects.
+  - It does not reach private network addresses unless it is installed to.
+- **Limits:**
+  - a call stops at the connector's `timeoutMs`;
+  - an answer or body is at most 1 MB;
+  - a run makes at most 20 calls.
+
+## Email
+
+The `email` action sends an email: see the [config example](#send-an-email-from-an-action-list).
+
+- **When it goes:** the email leaves only once the whole run ends well. If a later action fails, nothing is sent.
+- **Limits:** a portal sends mail to at most 500 addresses an hour.
+- **When nothing can be sent:** if the portal has no mail server, the action fails with "The portal sends no email."
+
+## Hashes, signatures and random values
+
+| Type | What it does | Takes |
+|---|---|---|
+| `hash` | A sha256, sha384 or sha512 hash | `algorithm`, `from`, `encoding` (`hex` or `base64`), `into` |
+| `hmac` | A signature with a `secret` connector's key, at least 32 bytes long | `connector`, `algorithm`, `from`, `encoding`, `into` |
+| `randomToken` | 16 to 64 random bytes, as text | `bytes` (32 when left out), `into` |
+| `uuid` | A random id | `into` |
+
+`hmac` signs whatever the list gives it. Do not sign what a visitor typed unless that is the point.
+
+## Mailboxes
+
+A mailbox connector lets a [job](/portal/sites/jobs/#when-mail-arrives) read the mail that arrives at an address: see the [config example](#a-mailboxs-file).
+
+- **Credentials:** the mailbox's username and password, set under **Connectors**. They are kept for that server alone; when the host, port, protocol or security changes, set them again.
+- **Test:** **Test** signs in and opens the folder.
+
+The portal only reads. It never marks, moves or deletes a message, so keep the mailbox tidy yourself, and read each mailbox with one job. A POP3 mailbox of more than 10,000 messages is not read.
+
+## Each person's own account
+
+A connector with `perUser: true` signs in as each person, with the account they connected under **Your connections** on their [account](/portal/console/account/#your-connections). When nobody is signed in, or the person has not connected, the action fails with "The connector is not connected."
+
+A [named value](/portal/sites/values/) kept for the whole portal or a site never uses a person's own connector. No named value sends email.
+
+## In tests
+
+A [flow's tests](/portal/sites/flows/#tests) never reach out. Each web call is answered by the test's `mocks`, and each email is listed in the result, never sent (see the [config example](#a-test-that-mocks-the-service)).
+
+A mock matches the call's method and its path, without the query. A call that no mock answers fails the test. In a test, `hmac` signs with a fixed test key, never the connector's secret.
+
+## Config example
+
+### A connector's file
 
 A connector lives in `connectors/<id>.yaml`:
 
@@ -36,15 +121,9 @@ test:
 - `test`: the connection test, a GET or HEAD to a path under the base address.
 - `perUser: true`: each person connects their own account. See [Each person's own account](#each-persons-own-account).
 
-## Credentials
+### Call a service from an action list
 
-Administrators set a connector's credentials under [Connectors](/portal/console/connectors/). They are kept sealed, and they are never shown again or written in a run's log.
-
-Credentials belong to the connector as it was when they were set. If the base address, the auth or the header changes in the files, the connector counts as not connected until its credentials are set again. A change to the files can never send them somewhere else.
-
-Credentials go only over https, unless the portal is installed to reach private networks.
-
-## Call a service
+In an action list, such as a form's `actions`:
 
 ```yaml
 - type: http
@@ -68,16 +147,8 @@ Credentials go only over https, unless the portal is installed to reach private 
   - `headers` may add headers of your own, but not the sign-in header or the request's own.
   - `body` goes as JSON when it is an object or list, and as text when it is text. GET and DELETE send none.
 - **The answer** lands in `vars.<into>` as `status`, `headers` and `body`. A JSON body is read into values.
-- **When it fails:**
-  - An answer that is not 2xx is an error, unless its status is listed in `okStatus`. The answer is still kept, so `onError` can read it.
-  - The portal does not follow redirects.
-  - It does not reach private network addresses unless it is installed to.
-- **Limits:**
-  - a call stops at the connector's `timeoutMs`;
-  - an answer or body is at most 1 MB;
-  - a run makes at most 20 calls.
 
-## Email
+### Send an email from an action list
 
 ```yaml
 - type: email
@@ -86,25 +157,12 @@ Credentials go only over https, unless the portal is installed to reach private 
   text: '"Your reference is " + vars.reference'
 ```
 
-- **Addresses:** `to` is an address or a list of them. A run sends to at most 10 addresses, or 2 when nobody is signed in.
-- **When it goes:** the email leaves only once the whole run ends well. If a later action fails, nothing is sent.
-- **Limits:** a portal sends mail to at most 500 addresses an hour.
-- **When nothing can be sent:** if the portal has no mail server, the action fails with "The portal sends no email."
+- `to` is an address or a list of them. A run sends to at most 10 addresses, or 2 when nobody is signed in.
+- `subject` and `text` are expressions.
 
-## Hashes, signatures and random values
+### A mailbox's file
 
-| Type | What it does | Takes |
-|---|---|---|
-| `hash` | A sha256, sha384 or sha512 hash | `algorithm`, `from`, `encoding` (`hex` or `base64`), `into` |
-| `hmac` | A signature with a `secret` connector's key, at least 32 bytes long | `connector`, `algorithm`, `from`, `encoding`, `into` |
-| `randomToken` | 16 to 64 random bytes, as text | `bytes` (32 when left out), `into` |
-| `uuid` | A random id | `into` |
-
-`hmac` signs whatever the list gives it. Do not sign what a visitor typed unless that is the point.
-
-## Mailboxes
-
-A mailbox connector lets a [job](/portal/sites/jobs/#when-mail-arrives) read the mail that arrives at an address:
+In `connectors/<id>.yaml`:
 
 ```yaml
 name: { ro: Cereri prin e-mail, en: Requests by email }
@@ -114,22 +172,15 @@ host: mail.primaria.ro
 folder: INBOX         # IMAP only; INBOX when left out
 ```
 
+- `protocol`: `imap` or `pop3`.
+- `host`: the mail server.
+- `folder`: the folder to read; IMAP only, `INBOX` when left out.
 - **Port:** 993 for IMAP and 995 for POP3 when left out.
 - **Security:** `tls` by default. IMAP also takes `starttls`. The mail server needs a certificate the portal trusts, and `none` works only for a server on your own network when the portal allows that.
-- **Credentials:** the mailbox's username and password, set under **Connectors**. They are kept for that server alone; when the host, port, protocol or security changes, set them again.
-- **Test:** **Test** signs in and opens the folder.
 
-The portal only reads. It never marks, moves or deletes a message, so keep the mailbox tidy yourself, and read each mailbox with one job. A POP3 mailbox of more than 10,000 messages is not read.
+### A test that mocks the service
 
-## Each person's own account
-
-A connector with `perUser: true` signs in as each person, with the account they connected under **Your connections** on their [account](/portal/console/account/#your-connections). When nobody is signed in, or the person has not connected, the action fails with "The connector is not connected."
-
-A [named value](/portal/sites/values/) kept for the whole portal or a site never uses a person's own connector. No named value sends email.
-
-## In tests
-
-A [flow's tests](/portal/sites/flows/#tests) never reach out. Each web call is answered by the test's `mocks`, and each email is listed in the result, never sent:
+In a flow's file (`flows/<id>.yaml`), under `tests`:
 
 ```yaml
 tests:
@@ -144,4 +195,6 @@ tests:
       outputs: { name: Ana }
 ```
 
-A mock matches the call's method and its path, without the query. A call that no mock answers fails the test. In a test, `hmac` signs with a fixed test key, never the connector's secret.
+- `mocks`: for each connector, the answers its web calls get, by `method` and `path`.
+- `body`: what the mock answers.
+- `expect`: what the test must see.

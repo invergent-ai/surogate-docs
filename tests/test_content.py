@@ -7,8 +7,8 @@ from docsite import DIST, page, section
 ROOT = Path(__file__).resolve().parent.parent
 
 # The portal's site pages written UI first: screenshots, then a Config example section.
-UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'assistants.md', 'blogs.md', 'guides.md',
-                  'notifications.md')
+UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'assistants.md', 'blogs.md', 'calendar.md',
+                  'comments.md', 'connectors.md', 'content-types.md', 'data-models.md', 'guides.md', 'notifications.md')
 
 
 class Content(unittest.TestCase):
@@ -185,7 +185,7 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
         types = page('/portal/sites/content-types/')
-        for anchor in ('a-content-type', 'field-types', 'how-an-entry-looks', 'vocabularies', 'libraries', 'collections', 'reading-a-collection', 'show-it-on-a-page'):
+        for anchor in ('what-people-see', 'a-content-type', 'field-types', 'how-an-entry-looks', 'vocabularies', 'libraries', 'collections', 'reading-a-collection', 'show-it-on-a-page', 'config-example'):
             self.assertIn(f'id="{anchor}"', types)
         self.assertIn('href="/portal/console/content/"', types)
         source = (ROOT / 'src/content/docs/portal/sites/content-types.md').read_text()
@@ -279,8 +279,9 @@ class Content(unittest.TestCase):
 
     def test_portal_connectors(self):
         doc = page('/portal/sites/connectors/')
-        for anchor in ('a-connector', 'credentials', 'call-a-service', 'email',
-                       'hashes-signatures-and-random-values', 'mailboxes', 'each-persons-own-account', 'in-tests'):
+        for anchor in ('what-people-see', 'a-connector', 'credentials', 'call-a-service', 'email',
+                       'hashes-signatures-and-random-values', 'mailboxes', 'each-persons-own-account', 'in-tests',
+                       'config-example', 'a-connectors-file'):
             self.assertIn(f'id="{anchor}"', doc)
         for anchor in ('set-credentials', 'test'):
             self.assertIn(f'id="{anchor}"', page('/portal/console/connectors/'))
@@ -332,7 +333,7 @@ class Content(unittest.TestCase):
 
     def test_portal_data_models(self):
         doc = page('/portal/sites/data-models/')
-        for anchor in ('a-model', 'fields', 'who-may-do-what', 'when-the-file-changes', 'the-api', 'graphql', 'relations'):
+        for anchor in ('what-people-see', 'a-model', 'fields', 'who-may-do-what', 'when-the-file-changes', 'the-api', 'graphql', 'relations', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="records"', page('/portal/sites/actions/'))
         self.assertIn('href="/portal/sites/data-models/"', page('/portal/console/data/'))
@@ -482,7 +483,7 @@ class Content(unittest.TestCase):
 
     def test_portal_comments(self):
         doc = page('/portal/sites/comments/')
-        for anchor in ('place-the-widgets', 'write-and-answer', 'delete-and-flag', 'rate', 'limits', 'what-happens-to-them-later'):
+        for anchor in ('what-people-see', 'place-the-widgets', 'write-and-answer', 'delete-and-flag', 'rate', 'limits', 'what-happens-to-them-later', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/moderation/"', doc)
         console = page('/portal/console/moderation/')
@@ -541,7 +542,7 @@ class Content(unittest.TestCase):
 
     def test_portal_calendar(self):
         doc = page('/portal/sites/calendar/')
-        for anchor in ('place-a-calendar', 'read-it', 'add-events', 'add-it-to-a-calendar-app', 'what-happens-to-them-later'):
+        for anchor in ('what-people-see', 'read-it', 'add-events', 'add-it-to-a-calendar-app', 'what-happens-to-them-later', 'config-example', 'a-calendar-on-a-page'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/permissions/"', doc)
         self.assertIn('href="/portal/sites/calendar/"', page('/portal/sites/wiki/'))
