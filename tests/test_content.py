@@ -12,6 +12,9 @@ UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'a
                   'flows.md', 'forms.md', 'forums.md', 'guides.md', 'jobs.md', 'kpis.md', 'layouts.md', 'listings.md',
                   'notifications.md', 'permissions.md', 'polls.md', 'previews.md', 'search.md', 'seo.md', 'values.md', 'wiki.md')
 
+# The console pages written the same way.
+CONSOLE_PAGES = ('data-console.md', 'files.md', 'invitations.md')
+
 # Pages of features with no screen of their own in the portal: no screenshots, but the same Config example section.
 CONFIG_LAST_PAGES = ('document-actions.md', 'documents.md', 'keel.md')
 
@@ -211,7 +214,7 @@ class Content(unittest.TestCase):
 
     def test_portal_files(self):
         doc = page('/portal/console/files/')
-        for anchor in ('folders', 'upload-a-file', 'link-to-a-file', 'remove-a-file'):
+        for anchor in ('what-people-see', 'folders', 'upload-a-file', 'link-to-a-file', 'remove-a-file', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/console/files.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'R2', 'S3'):
@@ -313,11 +316,13 @@ class Content(unittest.TestCase):
     def test_portal_pages_show_the_ui_then_the_config(self):
         # A site page shows how it works in the portal first, with screenshots, and keeps its
         # YAML under one "Config example" section, at the end.
-        for name in UI_FIRST_PAGES + CONFIG_LAST_PAGES:
-            path = ROOT / 'src/content/docs/portal/sites' / name
+        pages = [('sites', name) for name in UI_FIRST_PAGES + CONFIG_LAST_PAGES]
+        pages += [('console', name) for name in CONSOLE_PAGES]
+        for folder, name in pages:
+            path = ROOT / 'src/content/docs/portal' / folder / name
             source = path.read_text()
             images = re.findall(r'!\[([^\]]+)\]\(([^)]+\.png)\)', source)
-            if name in UI_FIRST_PAGES:
+            if name not in CONFIG_LAST_PAGES:
                 self.assertTrue(images, name)
             for alt, src in images:
                 self.assertTrue((path.parent / src).resolve().is_file(), (name, src))
@@ -352,7 +357,7 @@ class Content(unittest.TestCase):
 
     def test_portal_data_console(self):
         doc = page('/portal/console/data-console/')
-        for anchor in ('turn-it-on', 'what-a-query-may-read', 'download-and-keep', 'who-may-use-it'):
+        for anchor in ('what-you-see', 'turn-it-on', 'what-a-query-may-read', 'download-and-keep', 'who-may-use-it', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/data-console/"', page('/portal/console/data/'))
         source = (ROOT / 'src/content/docs/portal/console/data-console.md').read_text()
@@ -582,7 +587,7 @@ class Content(unittest.TestCase):
 
     def test_portal_invitations(self):
         doc = page('/portal/console/invitations/')
-        for anchor in ('invite-people', 'what-the-person-sees', 'follow-your-invitations', 'let-a-sites-editors-invite', 'what-happens-to-them-later'):
+        for anchor in ('invite-people', 'what-the-person-sees', 'follow-your-invitations', 'let-a-sites-editors-invite', 'what-happens-to-them-later', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         for label in ('Send invitations', 'Accept the invitation', 'Sign in to accept', 'Make my account and accept', 'Send again', 'Withdraw'):
             self.assertIn(label, doc)
