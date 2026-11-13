@@ -7,15 +7,13 @@ Document actions make files and read them, in the portal's [folders](/portal/con
 
 They are [actions](/portal/sites/actions/) like any other: put them in a form's, a flow's, an endpoint's or a job's action list.
 
+## What people get
+
+Document actions have no screen of their own. What they make is a file in a folder, and people open it where the folder lets them: anyone for a public folder, the people the folder names for a secure one (see [Files](/portal/console/files/#folders)). Each action below has its example in the [config example](#config-example).
+
 ## Make a PDF from HTML
 
-```yaml
-- type: htmlToPdf
-  html: |
-    "<h1>Adeverință nr. " + vars.number + "</h1><p>" + form.name + " a depus cererea.</p>"
-  toFolder: certificates
-  toName: '"adeverinta-" + vars.number + ".pdf"'
-```
+`htmlToPdf` makes a PDF from HTML an expression gives (see the [config example](#a-pdf-from-html-and-a-conversion)).
 
 - `html`: an expression giving the HTML. Headings, paragraphs, tables, lists, links, `<style>` and `style` are kept, with their fonts, colours, borders, backgrounds and alignment.
 - Images must be inside the HTML as `data:image/png`, `jpeg` or `gif`, up to 2 MB each. Any other image, frame, stylesheet or CSS `url()` is left out: the portal fetches nothing from an address.
@@ -24,17 +22,7 @@ They are [actions](/portal/sites/actions/) like any other: put them in a form's,
 
 `htmlToWord` takes the same keys and makes a Word document (`.docx`) instead.
 
-`convertToPdf` makes a PDF of a Word, Excel, PowerPoint or OpenDocument file in a folder:
-
-```yaml
-- type: convertToPdf
-  folder: requests
-  name: '"cerere-" + submission.id + ".docx"'
-  toFolder: requests
-  toName: '"cerere-" + submission.id + ".pdf"'
-```
-
-A file with a password is never converted. These three actions need the portal's document converter. If your portal has none, they fail with "This portal has no document converter."; ask the portal's administrator.
+`convertToPdf` makes a PDF of a Word, Excel, PowerPoint or OpenDocument file in a folder. A file with a password is never converted. These three actions need the portal's document converter. If your portal has none, they fail with "This portal has no document converter."; ask the portal's administrator.
 
 ## Work with PDFs
 
@@ -60,19 +48,7 @@ Your request {number} was approved. The fees:
 {/fees}
 ```
 
-Then fill it:
-
-```yaml
-- type: fillWordTemplate
-  folder: templates
-  name: '"approval.docx"'
-  values:
-    name: user.name
-    number: vars.number
-    fees: "[{'title': 'Certificate', 'amount': 25}, {'title': 'Urgent', 'amount': 50}]"
-  toFolder: approvals
-  toName: '"approval-" + vars.number + ".docx"'
-```
+Then fill it with `fillWordTemplate` (see the [config example](#a-filled-word-template)):
 
 - `{tag}` takes the value of the same name. A value is always text in the document, never formatting.
 - `{#list}` … `{/list}` repeats what is between them for each item of a list, whose fields fill the tags inside.
@@ -83,24 +59,9 @@ Then fill it:
 
 ## Excel and CSV
 
-`writeExcel` writes a list of maps as one sheet: a header row, then a row for each map.
+`writeExcel` writes a list of maps as one sheet: a header row, then a row for each map (see the [config example](#an-excel-file)).
 
-```yaml
-- type: findRecords
-  model: requests
-  where: { status: '"approved"' }
-  into: approved
-- type: writeExcel
-  rows: vars.approved
-  columns:
-    - { key: number, title: Number }
-    - { key: name, title: Name }
-  sheet: Approved
-  toFolder: exports
-  toName: '"approved.xlsx"'
-```
-
-- `columns` picks the columns and their titles, in order; here it leaves out the records' `id`, `ownerId`, `createdAt` and `updatedAt`. Without it, every key of the maps is a column, in the order first met (at most 100).
+- `columns` picks the columns and their titles, in order; in the example it leaves out the records' `id`, `ownerId`, `createdAt` and `updatedAt`. Without it, every key of the maps is a column, in the order first met (at most 100).
 - `sheet`: the sheet's name, `Sheet1` when left out.
 - Numbers stay numbers. Text stays text, even when it starts with `=`, so a spreadsheet never runs it as a formula.
 
@@ -118,15 +79,7 @@ Empty rows are left out. A column with no title is `column1`, `column2` and so o
 
 ## Barcodes and QR codes
 
-```yaml
-- type: barcode
-  value: '"https://primaria.ro/verifica/" + vars.number'
-  format: qrcode
-  toFolder: certificates
-  toName: '"qr-" + vars.number + ".png"'
-```
-
-`format` is `code128` (when left out), `ean13`, `ean8`, `upca`, `code39`, `itf14`, `qrcode`, `datamatrix` or `pdf417`. The image is a PNG. A value the format cannot hold, such as letters in an EAN-13, fails and says why.
+`barcode` makes an image of a value (see the [config example](#a-barcode)). `format` is `code128` (when left out), `ean13`, `ean8`, `upca`, `code39`, `itf14`, `qrcode`, `datamatrix` or `pdf417`. The image is a PNG. A value the format cannot hold, such as letters in an EAN-13, fails and says why.
 
 ## Who may do what
 
@@ -145,3 +98,86 @@ An action that makes a file changes the portal, so a GET or public [endpoint](/p
 - What an action keeps in `vars` is 1 MB at most.
 - Converting HTML takes about two seconds; a form's run has ten. Make long documents in a [job](/portal/sites/jobs/), which has more time.
 - A flow's tests make no documents: a document action fails the test.
+
+## Config example
+
+These go in an action list: a form's `actions` (`forms/<id>.yaml`), a flow, an endpoint or a job.
+
+### A PDF from HTML, and a conversion
+
+```yaml
+- type: htmlToPdf
+  html: |
+    "<h1>Adeverință nr. " + vars.number + "</h1><p>" + form.name + " a depus cererea.</p>"
+  toFolder: certificates
+  toName: '"adeverinta-" + vars.number + ".pdf"'
+```
+
+- `html`: an expression giving the HTML.
+- `toFolder` and `toName`: where the PDF is kept, in a folder of the portal's files.
+
+A Word, Excel, PowerPoint or OpenDocument file in a folder becomes a PDF with `convertToPdf`:
+
+```yaml
+- type: convertToPdf
+  folder: requests
+  name: '"cerere-" + submission.id + ".docx"'
+  toFolder: requests
+  toName: '"cerere-" + submission.id + ".pdf"'
+```
+
+- `folder` and `name`: the file to convert.
+- `toFolder` and `toName`: where the PDF is kept.
+
+### A filled Word template
+
+```yaml
+- type: fillWordTemplate
+  folder: templates
+  name: '"approval.docx"'
+  values:
+    name: user.name
+    number: vars.number
+    fees: "[{'title': 'Certificate', 'amount': 25}, {'title': 'Urgent', 'amount': 50}]"
+  toFolder: approvals
+  toName: '"approval-" + vars.number + ".docx"'
+```
+
+- `folder` and `name`: the template.
+- `values`: what fills the tags, each an expression; a list fills a `{#list}` block.
+- `toFolder` and `toName`: where the filled document is kept.
+
+### An Excel file
+
+```yaml
+- type: findRecords
+  model: requests
+  where: { status: '"approved"' }
+  into: approved
+- type: writeExcel
+  rows: vars.approved
+  columns:
+    - { key: number, title: Number }
+    - { key: name, title: Name }
+  sheet: Approved
+  toFolder: exports
+  toName: '"approved.xlsx"'
+```
+
+- `rows`: a list of maps, here the records `findRecords` found.
+- `columns`: the columns and their titles, in order.
+- `sheet`: the sheet's name.
+
+### A barcode
+
+```yaml
+- type: barcode
+  value: '"https://primaria.ro/verifica/" + vars.number'
+  format: qrcode
+  toFolder: certificates
+  toName: '"qr-" + vars.number + ".png"'
+```
+
+- `value`: an expression giving what the code holds.
+- `format`: the kind of code, here a QR code.
+- `toFolder` and `toName`: where the PNG is kept.

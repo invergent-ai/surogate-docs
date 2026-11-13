@@ -5,9 +5,55 @@ description: Short server logic with typed inputs and outputs, decisions and tes
 
 A logic flow is a short piece of server logic, written in the portal's files. It takes typed inputs, works through its steps, and gives typed outputs. An [action list](/portal/sites/actions/) calls it, and gets the outputs back at once. Anything that waits for a person, a timer or an outside event is not a flow.
 
+## What people see
+
+Flows have no page of their own: a person sees only what the form, job or endpoint that calls them does with the outputs. Administrators see the portal's flows under [Flows](/portal/console/flows/) in the console, with each flow's inputs and outputs. **Run tests** runs the flow's tests and shows each one passing or failing:
+
+![The Flows page: the flow "Building permit fee" with its inputs and outputs, four tests marked Passed, and under Named values the permit fee rate.](../../../../assets/screenshots/portal-flows-tests.png)
+
 ## A flow
 
-A flow lives in `flows/<id>.yaml`. The id is lower-case letters, digits and hyphens.
+A flow lives in `flows/<id>.yaml`. The id is lower-case letters, digits and hyphens. See the [config example](#a-flows-file).
+
+**Inputs and outputs** are names with a type: `text`, `number`, `integer`, `boolean`, `list`, `object` or `any`. Add `optional: true` when one may be left out. A flow has at most 32 of each.
+
+**Steps** have names, and the flow begins at `start`. A step is one of:
+- `actions`: runs an action list, then goes to `next`;
+- `decide`: goes to the first `when` whose `if` holds, else to `otherwise`;
+- `end`: gives the outputs, each worked out with an expression.
+
+A flow has at most 100 steps. Every step must be reachable from the start, and an end must be reachable. Each end sets every output that is not optional.
+
+Expressions in a flow read `inputs`, `user`, `site`, `locale`, `now`, `vars` and [named values](/portal/sites/values/) as `values.<name>`. A flow cannot tell the person something, send them elsewhere, or stop its caller's run; only the list that calls it can.
+
+## Call a flow
+
+An action list calls a flow with `callFlow` (see the [config example](#call-a-flow-from-an-action-list)). The outputs land in `vars.<into>`. The inputs are checked against the flow's types when the call runs. If the flow fails, the calling action fails with the message `Flow <id>: …`, and its `onError` can catch it. Flows can call other flows, at most 8 deep. A flow's steps count toward the run's 10 seconds and 10,000 steps.
+
+## Contracts
+
+A contract is a shared set of inputs and outputs, in `contracts/<id>.yaml` (see the [config example](#a-contract)).
+
+A flow that says `implements: pricing` takes the contract's inputs and outputs, and does not write its own. A caller can then pick one of the contract's flows with an expression: `pick` gives a flow's id. If no such flow implements the contract, the action fails, and no other flow runs.
+
+## Tests
+
+A flow carries its own tests, at most 50. Each test has a `name`, the `inputs` to run with, and what it expects:
+- `expect: { outputs: { … } }`: each listed output must be exactly this;
+- `expect: { fails: true }`: the flow must fail.
+
+A test can also give a `user`, with `id`, `name`, `email` and `roles`, for a flow that reads the person. A test never reaches out: its `mocks` answer the flow's web calls, and its emails are listed, never sent ([In tests](/portal/sites/connectors/#in-tests)). It never touches the portal's files or content either:
+- `files: { <folder>: { <name>: <text> } }` gives the test folders of its own;
+- `values: { <name>: <value> }` gives named values their value for the test;
+- a collection value the test does not give is left out. Every value the flow reads is worked out afresh for the test. A test that runs out of time fails, whatever it expects.
+
+Tests run from the console, under [Flows](/portal/console/flows/), and when you [check a site](/portal/sites/check-a-site/): each failing test is reported against its flow. Add `--no-flow-tests` to leave them out.
+
+## Config example
+
+### A flow's file
+
+In `flows/<id>.yaml`, here `flows/price-with-vat.yaml`, with its tests at the end:
 
 ```yaml
 name:
@@ -50,20 +96,15 @@ tests:
     expect: { outputs: { total: 0 } }
 ```
 
-**Inputs and outputs** are names with a type: `text`, `number`, `integer`, `boolean`, `list`, `object` or `any`. Add `optional: true` when one may be left out. A flow has at most 32 of each.
+- `name`: the flow's name, in both languages.
+- `inputs` and `outputs`: names with a `type`; `optional: true` for an input that may be left out.
+- `start`: the step the flow begins at.
+- `steps`: each by its name, with a `type` of `actions`, `decide` or `end`. A `decide` step has `when` (each with `if` and `go`) and `otherwise`; an `actions` step has `actions` and `next`; an `end` step has `outputs`.
+- `tests`: each with a `name`, its `inputs` and what it expects.
 
-**Steps** have names, and the flow begins at `start`. A step is one of:
-- `actions`: runs an action list, then goes to `next`;
-- `decide`: goes to the first `when` whose `if` holds, else to `otherwise`;
-- `end`: gives the outputs, each worked out with an expression.
+### Call a flow from an action list
 
-A flow has at most 100 steps. Every step must be reachable from the start, and an end must be reachable. Each end sets every output that is not optional.
-
-Expressions in a flow read `inputs`, `user`, `site`, `locale`, `now`, `vars` and [named values](/portal/sites/values/) as `values.<name>`. A flow cannot tell the person something, send them elsewhere, or stop its caller's run; only the list that calls it can.
-
-## Call a flow
-
-An action list calls a flow with `callFlow`:
+In an action list, such as a form's `actions`:
 
 ```yaml
 - type: callFlow
@@ -77,11 +118,13 @@ An action list calls a flow with `callFlow`:
     en: "To pay: {{ vars.price.total }} lei"
 ```
 
-The outputs land in `vars.<into>`. The inputs are checked against the flow's types when the call runs. If the flow fails, the calling action fails with the message `Flow <id>: …`, and its `onError` can catch it. Flows can call other flows, at most 8 deep. A flow's steps count toward the run's 10 seconds and 10,000 steps.
+- `flow`: the flow's id.
+- `inputs`: each input, as an expression.
+- `into`: where the outputs land, as `vars.<into>`.
 
-## Contracts
+### A contract
 
-A contract is a shared set of inputs and outputs, in `contracts/<id>.yaml`:
+In `contracts/<id>.yaml`:
 
 ```yaml
 name:
@@ -93,7 +136,7 @@ outputs:
   total: { type: number }
 ```
 
-A flow that says `implements: pricing` takes the contract's inputs and outputs, and does not write its own. A caller can then pick one of the contract's flows with an expression:
+A flow takes the contract's inputs and outputs by saying `implements: pricing`, and a caller picks one of the contract's flows with an expression:
 
 ```yaml
 - type: callFlow
@@ -104,17 +147,5 @@ A flow that says `implements: pricing` takes the contract's inputs and outputs, 
   into: price
 ```
 
-`pick` gives a flow's id. If no such flow implements the contract, the action fails, and no other flow runs.
-
-## Tests
-
-A flow carries its own tests, at most 50. Each test has a `name`, the `inputs` to run with, and what it expects:
-- `expect: { outputs: { … } }`: each listed output must be exactly this;
-- `expect: { fails: true }`: the flow must fail.
-
-A test can also give a `user`, with `id`, `name`, `email` and `roles`, for a flow that reads the person. A test never reaches out: its `mocks` answer the flow's web calls, and its emails are listed, never sent ([In tests](/portal/sites/connectors/#in-tests)). It never touches the portal's files or content either:
-- `files: { <folder>: { <name>: <text> } }` gives the test folders of its own;
-- `values: { <name>: <value> }` gives named values their value for the test;
-- a collection value the test does not give is left out. Every value the flow reads is worked out afresh for the test. A test that runs out of time fails, whatever it expects.
-
-Tests run from the console, under [Flows](/portal/console/flows/), and when you [check a site](/portal/sites/check-a-site/): each failing test is reported against its flow. Add `--no-flow-tests` to leave them out.
+- `contract`: the contract's id.
+- `pick`: an expression that gives the id of a flow that implements it.

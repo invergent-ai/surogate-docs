@@ -5,14 +5,13 @@ description: Connect the portal to Surogate DMS, show a DMS folder's documents o
 
 Surogate DMS keeps the institution's documents. Connected, a page of the portal shows the documents of a DMS folder to the person signed in, as the DMS lets them see it, with a link to each in the DMS and a download.
 
+## What people see
+
+A person signed in sees, on a page of the portal, the documents of a DMS folder, or one document with its versions, as the DMS lets them see it. Each title opens the document in the DMS, and **Download** gets the file from the DMS. Where the DMS lets them, they also file a new document or a new version from the page. Visitors see a prompt to sign in. The sections below say what each widget shows, and what happens when the DMS does not answer.
+
 ## Connect the DMS
 
-Name your DMS in `dms.yaml`, at the top of the portal's files:
-
-```yaml
-api: https://dms.primaria.ro
-app: https://dms.primaria.ro
-```
+Name your DMS in `dms.yaml`, at the top of the portal's files (see the [config example](#connect-the-dms-in-dmsyaml)):
 
 - `api`: the DMS's API. Inside the same cluster, its service address works too, such as `http://sdms.surogate-docs.svc`.
 - `app`: the DMS's web app, where a document's link and its downloads go.
@@ -25,19 +24,7 @@ The DMS must trust the portal. Its administrator adds the portal's **issuer**, s
 
 ## Show a folder
 
-Place the portal's `documents` widget on a page:
-
-```yaml
-regions:
-  main:
-    - id: rules
-      app: portal
-      widget: documents
-      preferences:
-        folder: 5d8e2c1a-1b2c-4d3e-8f90-112233445566
-        limit: 10
-        sort: newest
-```
+Place the portal's `documents` widget on a page (see the [config example](#a-folder-on-a-page)):
 
 - `folder`: the DMS folder, by its id. Open the folder in the DMS and copy the id from its address.
 - `limit`: how many documents, 1 to 50; 10 when left out.
@@ -55,17 +42,7 @@ What a document holds, its fields and their values, is never shown in the portal
 
 ## File documents from a page
 
-A documents widget can also let people file a new document into its folder, from the page:
-
-```yaml
-- id: requests
-  app: portal
-  widget: documents
-  preferences:
-    folder: 5d8e2c1a-1b2c-4d3e-8f90-112233445566
-    upload: true
-    type: 3c8f7f6e-2a3c-4d5e-9f10-111213141516
-```
+A documents widget can also let people file a new document into its folder, from the page (see the [config example](#a-folder-with-filing-from-the-page)):
 
 - `upload`: `true` shows a form under the list, with a title and a file. When left out, the widget only shows the folder.
 - `type`: the DMS document type new documents are filed under, by its id. When left out, they are filed with no type, if the folder allows that. A type with a folder of its own in the DMS files there, not in the widget's folder, so its new documents do not show in this list.
@@ -87,17 +64,7 @@ An administrator seeing the portal as someone else cannot file for them. Each fi
 
 ## Show one document
 
-The `document` widget shows one DMS document and its versions:
-
-```yaml
-- id: regulation
-  app: portal
-  widget: document
-  preferences:
-    document: 0b8f7f6e-2a3c-4d5e-9f10-111213141516
-    versions: 5
-    upload: true
-```
+The `document` widget shows one DMS document and its versions (see the [config example](#one-document-on-a-page)):
 
 - `document`: the DMS document, by its id. Open it in the DMS and copy the id from its address.
 - `versions`: how many of the newest versions to list, 1 to 50; 10 when left out. A link below the list says how many older ones the DMS holds.
@@ -137,28 +104,7 @@ A search box can show the DMS's documents too, as the person may read them there
 
 ## When something happens in the DMS
 
-A [job](/portal/sites/jobs/) can run each time a document is made, given a new version, moved to another state or folder, changed, or deleted in the DMS. The portal reads the DMS's events with a key of its own: ask the DMS's administrator for a service key, add it as a secret [connector](/portal/sites/connectors/), set its value under **Connectors**, and name the connector in `dms.yaml`:
-
-```yaml
-api: https://dms.primaria.ro
-app: https://dms.primaria.ro
-serviceKey: dms-key
-```
-
-Then a job can wait for documents to be approved:
-
-```yaml
-# jobs/document-approved.yaml
-trigger:
-  dms:
-    on: [document.state]
-site: main
-runAs: user:registratura@primaria.ro
-actions:
-  - type: log
-    level: info
-    message: '"Document " + trigger.document + " is now " + trigger.to'
-```
+A [job](/portal/sites/jobs/) can run each time a document is made, given a new version, moved to another state or folder, changed, or deleted in the DMS. The portal reads the DMS's events with a key of its own: ask the DMS's administrator for a service key, add it as a secret [connector](/portal/sites/connectors/), set its value under **Connectors**, and name the connector in `dms.yaml` as `serviceKey` (see the [config example](#the-service-key-and-a-job)). Then a job can wait for documents to be approved.
 
 | Event | When | What the run also reads |
 |---|---|---|
@@ -173,3 +119,100 @@ actions:
 - **What the key sees:** the DMS shows its key's account only the events of documents it may read. Ask the DMS's administrator to give the account the right to read the documents your jobs should hear of, the right to read the archive for deletions, and, for documents holding personal data, the clearance for their level. Without them the portal hears of nothing, and no error says so.
 - **Once each:** each event runs each job that takes it once, a few seconds after it happens, in the order the DMS recorded them. When the portal cannot read the DMS, it tries again and loses nothing. **Jobs** in the console shows when the DMS's events were last read. If the DMS has deleted old events the portal had not read yet, the portal reads on from then, and **Jobs** says when: those events are lost.
 - **Also as events:** each one is also the portal event `portal/dms.<event>`, such as `portal/dms.document.state`, for [apps and webhooks](/portal/sites/apps/).
+
+## Config example
+
+### Connect the DMS in `dms.yaml`
+
+At the top of the portal's files:
+
+```yaml
+api: https://dms.primaria.ro
+app: https://dms.primaria.ro
+```
+
+- `api`: the DMS's API; `app`: its web app. See [Connect the DMS](#connect-the-dms) for the other keys, `timeoutMs`, `uploadMb`, `audience` and `serviceKey`.
+
+### A folder on a page
+
+In a page's file (`sites/<site>/pages/<page>.yaml`):
+
+```yaml
+regions:
+  main:
+    - id: rules
+      app: portal
+      widget: documents
+      preferences:
+        folder: 5d8e2c1a-1b2c-4d3e-8f90-112233445566
+        limit: 10
+        sort: newest
+```
+
+- `folder`: the DMS folder, by its id.
+- `limit`: how many documents, 1 to 50; 10 when left out.
+- `sort`: `title` (when left out) or `newest`.
+
+### A folder with filing from the page
+
+In a region of a page's file:
+
+```yaml
+- id: requests
+  app: portal
+  widget: documents
+  preferences:
+    folder: 5d8e2c1a-1b2c-4d3e-8f90-112233445566
+    upload: true
+    type: 3c8f7f6e-2a3c-4d5e-9f10-111213141516
+```
+
+- `upload: true` shows the form that files a document.
+- `type`: the DMS document type new documents are filed under, by its id.
+
+### One document on a page
+
+In a region of a page's file:
+
+```yaml
+- id: regulation
+  app: portal
+  widget: document
+  preferences:
+    document: 0b8f7f6e-2a3c-4d5e-9f10-111213141516
+    versions: 5
+    upload: true
+```
+
+- `document`: the DMS document, by its id.
+- `versions`: how many of the newest versions to list, 1 to 50; 10 when left out.
+- `upload: true` lets people add a version from the page.
+
+### The service key and a job
+
+In `dms.yaml`, with the connector that holds the DMS's key:
+
+```yaml
+api: https://dms.primaria.ro
+app: https://dms.primaria.ro
+serviceKey: dms-key
+```
+
+A job that runs when a document changes state, in `jobs/document-approved.yaml`:
+
+```yaml
+trigger:
+  dms:
+    on: [document.state]
+site: main
+runAs: user:registratura@primaria.ro
+actions:
+  - type: log
+    level: info
+    message: '"Document " + trigger.document + " is now " + trigger.to'
+```
+
+- `serviceKey`: the secret connector holding the DMS's key.
+- `trigger.dms.on`: the events that start the job, from the table under [When something happens in the DMS](#when-something-happens-in-the-dms).
+- `runAs`: the person the job acts as.
+

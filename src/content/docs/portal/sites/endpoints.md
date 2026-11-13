@@ -5,30 +5,17 @@ description: The portal's own REST endpoints, written as files, each running a l
 
 An API endpoint answers other programs, apps and pages at an address of the portal: a count of requests, a list of open cases, a record added from another system. It is written as a file, runs a list of [actions](/portal/sites/actions/), and answers as they say.
 
+## What people see
+
+An endpoint has no page of its own: a program, an app or a page of the site calls its address and gets JSON, text or a redirect. Administrators see every endpoint under **Endpoints** in the console, with who may call it and the last calls:
+
+![The API endpoints page: the endpoint GET /_portal/endpoints/program, marked Anyone and "kept 60 s", and under Last calls three calls, each stopped with HTTP 200 and how long it took, with a Log button.](../../../../assets/screenshots/portal-endpoints-console.png)
+
+See [Its calls](#its-calls).
+
 ## Write an endpoint
 
-Each endpoint is a file `endpoints/<id>.yaml`:
-
-```yaml
-path: /requests/count
-method: GET
-access: public
-parameters:
-  status: { type: text, required: true, max: 40 }
-actions:
-  - type: findRecords
-    model: requests
-    where: { status: params.status }
-    into: found
-  - type: respond
-    body: '{"count": size(vars.found)}'
-onError:
-  - type: respond
-    status: 400
-    body: '{"error": error.message}'
-```
-
-It is called at `https://<your portal>/_portal/endpoints/requests/count?status=new`.
+Each endpoint is a file `endpoints/<id>.yaml` (see the [config example](#config-example)). It is called at `https://<your portal>/_portal/endpoints/requests/count?status=new`.
 
 - `path` is lower-case words joined by `/`. `method` is GET, POST, PUT, PATCH or DELETE. Two endpoints may share a path when their methods differ.
 - `description` says what it is for, in the console.
@@ -78,30 +65,9 @@ A call from a page of the portal, as the person signed in, sends the page's CSRF
 
 ## Private endpoints
 
-A private endpoint does work the portal's forms, flows, jobs and other endpoints share, and no one outside calls it:
-
-```yaml
-path: /requests/save
-method: POST
-access: private
-parameters:
-  status: { type: text, required: true }
-actions:
-  - { type: createRecord, model: requests, values: { status: params.status }, into: made }
-  - { type: respond, status: 201, body: '{"id": vars.made.id}' }
-```
-
-Asked for from outside, it answers as an endpoint that is not there. It takes no `cors`, `cache` or `redirects`.
+A private endpoint does work the portal's forms, flows, jobs and other endpoints share, and no one outside calls it (see the [config example](#a-private-endpoint)). Asked for from outside, it answers as an endpoint that is not there. It takes no `cors`, `cache` or `redirects`.
 
 An action list calls it, or any other endpoint of the portal, with `callEndpoint`:
-
-```yaml
-- type: callEndpoint
-  endpoint: save
-  params: { status: '"new"' }
-  okStatus: [409]
-  into: saved
-```
 
 - **What it is given:** `params` gives the endpoint's parameters, each of its type; the portal checks them when the files are published.
 - **What comes back:** `vars.saved` holds `status` and `body`, and `location` for a redirect. An answer outside 200–299 and `okStatus` fails the action; its answer is still kept for `onError`.
@@ -116,3 +82,68 @@ Each call is in the endpoint's calls, naming what called it. When the caller han
 ## Its calls
 
 **Endpoints** in the console lists every endpoint with who may call it, and the last calls: how each ended, its answer's status and how long it took. **Log** shows a call's log. Only its errors are kept, unless the endpoint has `debug: true`; what it answered is never kept.
+
+## Config example
+
+### An endpoint's file
+
+In `endpoints/<id>.yaml`, here `endpoints/requests-count.yaml`:
+
+```yaml
+path: /requests/count
+method: GET
+access: public
+parameters:
+  status: { type: text, required: true, max: 40 }
+actions:
+  - type: findRecords
+    model: requests
+    where: { status: params.status }
+    into: found
+  - type: respond
+    body: '{"count": size(vars.found)}'
+onError:
+  - type: respond
+    status: 400
+    body: '{"error": error.message}'
+```
+
+- `path` and `method`: where and how it is called.
+- `access`: who may call it: `public`, `signed-in`, `token` or `private` (see [Who may call it](#who-may-call-it)).
+- `parameters`: what a call gives, each with its `type`, and `required` or `max` where they apply.
+- `actions`: the list it runs; `respond` gives the answer.
+- `onError`: what runs when the list fails.
+
+### A private endpoint
+
+In `endpoints/<id>.yaml`:
+
+```yaml
+path: /requests/save
+method: POST
+access: private
+parameters:
+  status: { type: text, required: true }
+actions:
+  - { type: createRecord, model: requests, values: { status: params.status }, into: made }
+  - { type: respond, status: 201, body: '{"id": vars.made.id}' }
+```
+
+- `access: private`: only the portal's own actions call it.
+
+### Call an endpoint from an action list
+
+In a form's `actions`, a flow, a job or another endpoint:
+
+```yaml
+- type: callEndpoint
+  endpoint: save
+  params: { status: '"new"' }
+  okStatus: [409]
+  into: saved
+```
+
+- `endpoint`: the endpoint to call.
+- `params`: its parameters, each an expression.
+- `okStatus`: answers outside 200–299 that are not failures.
+- `into`: where the answer is kept, as `vars.<into>`.

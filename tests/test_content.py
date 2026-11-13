@@ -8,7 +8,11 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # The portal's site pages written UI first: screenshots, then a Config example section.
 UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'assistants.md', 'blogs.md', 'calendar.md',
-                  'comments.md', 'connectors.md', 'content-types.md', 'data-models.md', 'guides.md', 'notifications.md')
+                  'comments.md', 'connectors.md', 'content-types.md', 'data-models.md', 'endpoints.md', 'environments.md',
+                  'flows.md', 'guides.md', 'notifications.md')
+
+# Pages of features with no screen of their own in the portal: no screenshots, but the same Config example section.
+CONFIG_LAST_PAGES = ('document-actions.md', 'documents.md')
 
 
 class Content(unittest.TestCase):
@@ -265,7 +269,7 @@ class Content(unittest.TestCase):
 
     def test_portal_flows_and_values(self):
         doc = page('/portal/sites/flows/')
-        for anchor in ('a-flow', 'call-a-flow', 'contracts', 'tests'):
+        for anchor in ('what-people-see', 'a-flow', 'call-a-flow', 'contracts', 'tests', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         values = page('/portal/sites/values/')
         for anchor in ('a-value', 'how-long-it-is-kept', 'when-a-value-fails'):
@@ -306,11 +310,12 @@ class Content(unittest.TestCase):
     def test_portal_pages_show_the_ui_then_the_config(self):
         # A site page shows how it works in the portal first, with screenshots, and keeps its
         # YAML under one "Config example" section, at the end.
-        for name in UI_FIRST_PAGES:
+        for name in UI_FIRST_PAGES + CONFIG_LAST_PAGES:
             path = ROOT / 'src/content/docs/portal/sites' / name
             source = path.read_text()
             images = re.findall(r'!\[([^\]]+)\]\(([^)]+\.png)\)', source)
-            self.assertTrue(images, name)
+            if name in UI_FIRST_PAGES:
+                self.assertTrue(images, name)
             for alt, src in images:
                 self.assertTrue((path.parent / src).resolve().is_file(), (name, src))
                 self.assertGreater(len(alt), 20, (name, src))
@@ -367,7 +372,7 @@ class Content(unittest.TestCase):
 
     def test_portal_endpoints(self):
         doc = page('/portal/sites/endpoints/')
-        for anchor in ('write-an-endpoint', 'parameters', 'its-actions-and-its-answer', 'who-may-call-it', 'keep-answers-and-other-sites', 'private-endpoints', 'its-calls'):
+        for anchor in ('what-people-see', 'write-an-endpoint', 'parameters', 'its-actions-and-its-answer', 'who-may-call-it', 'keep-answers-and-other-sites', 'private-endpoints', 'its-calls', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/sites/endpoints.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'CEL'):
@@ -392,7 +397,7 @@ class Content(unittest.TestCase):
 
     def test_portal_documents(self):
         doc = page('/portal/sites/documents/')
-        for anchor in ('connect-the-dms', 'show-a-folder', 'file-documents-from-a-page', 'show-one-document', 'add-a-version', 'search-the-dms-from-the-portal', 'downloads', 'when-something-happens-in-the-dms'):
+        for anchor in ('what-people-see', 'connect-the-dms', 'show-a-folder', 'file-documents-from-a-page', 'show-one-document', 'add-a-version', 'search-the-dms-from-the-portal', 'downloads', 'when-something-happens-in-the-dms', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/sites/documents.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'JWT', 'token'):
@@ -464,7 +469,7 @@ class Content(unittest.TestCase):
 
     def test_portal_environments(self):
         doc = page('/portal/sites/environments/')
-        for anchor in ('what-travels', 'name-the-environments', 'make-the-key', 'send-a-version'):
+        for anchor in ('what-people-see', 'what-travels', 'name-the-environments', 'make-the-key', 'send-a-version', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/environments/"', page('/portal/console/versions/'))
         source = (ROOT / 'src/content/docs/portal/sites/environments.md').read_text()
@@ -592,7 +597,7 @@ class Content(unittest.TestCase):
 
     def test_portal_document_actions(self):
         guide = page('/portal/sites/document-actions/')
-        for anchor in ('make-a-pdf-from-html', 'work-with-pdfs', 'fill-a-word-template', 'excel-and-csv', 'barcodes-and-qr-codes', 'who-may-do-what', 'limits'):
+        for anchor in ('what-people-get', 'make-a-pdf-from-html', 'work-with-pdfs', 'fill-a-word-template', 'excel-and-csv', 'barcodes-and-qr-codes', 'who-may-do-what', 'limits', 'config-example'):
             self.assertIn(f'id="{anchor}"', guide)
         for action in ('htmlToPdf', 'htmlToWord', 'convertToPdf', 'mergePdfs', 'overlayPdf', 'splitPdf', 'readPdf', 'fillWordTemplate', 'readWord', 'writeExcel', 'readExcel', 'excelSheets', 'writeCsv', 'readCsv', 'barcode'):
             self.assertIn(action, guide)
