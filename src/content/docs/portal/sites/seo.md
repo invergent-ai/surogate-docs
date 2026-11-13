@@ -5,6 +5,12 @@ description: How a site's pages are described to search engines and when they ar
 
 Every page of a site tells search engines and link previews what it is. The portal writes all of this from the site's files, so a page needs nothing more than its title to be found. A site can say more.
 
+## What people see
+
+Visitors see nothing of this on the page: it is what search engines and link previews read. The one part anyone can open is the list of what crawlers are told, at `/robots.txt` on the site's address:
+
+![The robots.txt of a site in a browser: crawlers may read the portal's assets and images, are kept out of the portal's other paths, and are told where the sitemap is.](../../../../assets/screenshots/portal-seo-robots.png)
+
 ## What each page says
 
 - **Its description**: the page's own, else the site's.
@@ -15,14 +21,7 @@ Every page of a site tells search engines and link previews what it is. The port
 
 ## Describe a page
 
-In the site's files, a page's `seo` holds:
-
-```yaml
-seo:
-  description: { ro: Programul și serviciile primăriei., en: The city hall's hours and services. }
-  image: https://img.example.ro/share.png
-  noindex: false
-```
+In the site's files, a page's `seo` holds the following (see the [config example](#a-pages-seo)):
 
 - **`description`**: at most 300 characters. Once it is given in one language, give it in all of the site's languages.
 - **`image`**: an `https:` address. It shows when the page is shared.
@@ -32,20 +31,7 @@ Administrators can set these in the console too, under **Search and sharing** in
 
 ## Describe a site
 
-A site's `site.yaml` can say the same for all its pages, and who is behind it:
-
-```yaml
-seo:
-  description: { ro: Site-ul Primăriei Exemplu., en: Example City Hall's site. }
-  image: https://img.example.ro/share.png
-  organization:
-    name: Primăria Exemplu
-    url: https://example.ro
-    logo: https://img.example.ro/logo.png
-  index: true
-```
-
-A page's own description and image win over the site's. **`index: false`** asks search engines to leave the whole site out.
+A site's `site.yaml` can say the same for all its pages, and who is behind it (see the [config example](#a-sites-seo)). A page's own description and image win over the site's. **`index: false`** asks search engines to leave the whole site out.
 
 ## What crawlers are told
 
@@ -58,3 +44,40 @@ Each address the portal serves answers two files:
   - the pages of a site with `index: false`.
 
 Previews are never listed: their robots.txt keeps every crawler out.
+
+## Config example
+
+### A page's `seo`
+
+In a page's file (`sites/<site>/pages/<page>.yaml`):
+
+```yaml
+seo:
+  description: { ro: Programul și serviciile primăriei., en: The city hall's hours and services. }
+  image: https://img.example.ro/share.png
+  noindex: false
+```
+
+- `description`: at most 300 characters. Once it is given in one language, give it in all of the site's languages.
+- `image`: an `https:` address. It shows when the page is shared.
+- `noindex: true` asks search engines not to list the page.
+
+### A site's `seo`
+
+In `site.yaml`:
+
+```yaml
+seo:
+  description: { ro: Site-ul Primăriei Exemplu., en: Example City Hall's site. }
+  image: https://img.example.ro/share.png
+  organization:
+    name: Primăria Exemplu
+    url: https://example.ro
+    logo: https://img.example.ro/logo.png
+  index: true
+```
+
+- `description` and `image`: the same for all the site's pages; a page's own win.
+- `organization`: who is behind the site, with its `name`, `url` and `logo`.
+- `index: false` asks search engines to leave the whole site out.
+

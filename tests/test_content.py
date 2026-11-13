@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parent.parent
 UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'assistants.md', 'blogs.md', 'calendar.md',
                   'comments.md', 'connectors.md', 'content-types.md', 'data-models.md', 'endpoints.md', 'environments.md',
                   'flows.md', 'forms.md', 'forums.md', 'guides.md', 'jobs.md', 'kpis.md', 'layouts.md', 'listings.md',
-                  'notifications.md', 'permissions.md', 'polls.md', 'previews.md')
+                  'notifications.md', 'permissions.md', 'polls.md', 'previews.md', 'search.md', 'seo.md', 'values.md', 'wiki.md')
 
 # Pages of features with no screen of their own in the portal: no screenshots, but the same Config example section.
 CONFIG_LAST_PAGES = ('document-actions.md', 'documents.md', 'keel.md')
@@ -230,7 +230,7 @@ class Content(unittest.TestCase):
 
     def test_portal_search(self):
         doc = page('/portal/sites/search/')
-        for anchor in ('what-search-finds', 'how-words-match', 'who-finds-what', 'put-a-search-box-on-a-page', 'suggestions-while-typing', 'documents-in-the-dms', 'from-an-app'):
+        for anchor in ('what-people-see', 'config-example', 'what-search-finds', 'how-words-match', 'who-finds-what', 'put-a-search-box-on-a-page', 'suggestions-while-typing', 'documents-in-the-dms', 'from-an-app'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="search"', page('/portal/console/pages/'))
         self.assertIn('href="/portal/sites/search/"', page('/portal/console/pages/'))
@@ -275,7 +275,7 @@ class Content(unittest.TestCase):
         for anchor in ('what-people-see', 'a-flow', 'call-a-flow', 'contracts', 'tests', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         values = page('/portal/sites/values/')
-        for anchor in ('a-value', 'how-long-it-is-kept', 'when-a-value-fails'):
+        for anchor in ('what-people-see', 'a-value', 'how-long-it-is-kept', 'when-a-value-fails', 'config-example'):
             self.assertIn(f'id="{anchor}"', values)
         self.assertIn('id="run-tests"', page('/portal/console/flows/'))
         self.assertIn('href="/portal/sites/flows/#call-a-flow"', page('/portal/sites/actions/'))
@@ -442,7 +442,7 @@ class Content(unittest.TestCase):
 
     def test_portal_seo(self):
         doc = page('/portal/sites/seo/')
-        for anchor in ('what-each-page-says', 'describe-a-page', 'describe-a-site', 'what-crawlers-are-told'):
+        for anchor in ('what-people-see', 'what-each-page-says', 'describe-a-page', 'describe-a-site', 'what-crawlers-are-told', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/seo/"', page('/portal/console/pages/'))
         source = (ROOT / 'src/content/docs/portal/sites/seo.md').read_text()
@@ -541,7 +541,7 @@ class Content(unittest.TestCase):
 
     def test_portal_wiki(self):
         doc = page('/portal/sites/wiki/')
-        for anchor in ('place-a-wiki', 'read-and-find', 'write', 'look-after-a-wiki', 'knowledge-bases', 'what-happens-to-them-later'):
+        for anchor in ('what-people-see', 'place-a-wiki', 'read-and-find', 'write', 'look-after-a-wiki', 'knowledge-bases', 'what-happens-to-them-later', 'config-example'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/permissions/"', doc)
         source = (ROOT / 'src/content/docs/portal/sites/wiki.md').read_text()
