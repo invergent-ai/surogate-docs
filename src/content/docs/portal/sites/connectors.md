@@ -9,7 +9,7 @@ A connector is a named connection to a service outside the portal: a CRM, a paym
 
 **Administrators** see the portal's connectors under [Connectors](/portal/console/connectors/) in the console, grouped by the group each connector is given. Each shows its name, its address, how it signs in, and whether it is connected:
 
-![The Connectors page: the mailbox "Requests by email" and several keys, each marked Not connected with Set credentials, and below them the group sales with "My CRM account" and "CRM".](../../../../assets/screenshots/portal-connectors-console.png)
+![The Connectors page with New connector: Cloud archive, Requests by email and the portal's keys, each Not connected, each with Edit and Set credentials, and Test for those that can be tested.](../../../../assets/screenshots/portal-connectors-console.png)
 
 **Set credentials** asks for what the connector's sign-in needs. A token, here, for a connector that signs in with one:
 
@@ -27,7 +27,7 @@ A connector is one of these kinds:
 - a secret connector is a key the portal signs with, which makes no calls;
 - a mailbox connector is a mail address a [job](/portal/sites/jobs/#when-mail-arrives) reads (see [Mailboxes](#mailboxes)).
 
-The console lists connectors and sets their credentials, but it does not make or change a connector yet. For now, this is set in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-connectors-file).
+Connectors are made, changed and given their credentials in the console: see [Connectors](/portal/console/connectors/#make-or-change-a-connector). Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-connectors-file).
 
 ## Credentials
 
@@ -39,7 +39,7 @@ Credentials go only over https, unless the portal is installed to reach private 
 
 ## Call a service
 
-An action list calls a service through a connector. A call has a method (GET when none is named, POST, PUT, PATCH or DELETE), a path under the connector's address, query values, a body and headers of its own. The answer's status, headers and body are kept under a name the list chooses, and a JSON body is read into values. For now, this is set in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#call-a-service-from-an-action-list).
+An action list calls a service through a connector. A call has a method (GET when none is named, POST, PUT, PATCH or DELETE), a path under the connector's address, query values, a body and headers of its own. The answer's status, headers and body are kept under a name the list chooses, and a JSON body is read into values. In the console, it is the action **Call a web service** in any action list: a form's [steps](/portal/console/forms/#steps), an endpoint's, a job's or a flow's actions. Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#call-a-service-from-an-action-list).
 
 - **Where it goes:** a path is added under the connector's address. It can never climb above it or reach another site. A header of its own cannot replace the sign-in header or the request's own. A GET or DELETE sends no body.
 - **When it fails:**
@@ -53,7 +53,7 @@ An action list calls a service through a connector. A call has a method (GET whe
 
 ## Email
 
-An action list sends an email. For now, this is set in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#send-an-email-from-an-action-list).
+An action list sends an email. In the console, it is the action **Send an email** in an action list: a form's [steps](/portal/console/forms/#steps), or a job's or a flow's actions. Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#send-an-email-from-an-action-list).
 
 - **When it goes:** the email leaves only once the whole run ends well. If a later action fails, nothing is sent.
 - **Limits:** a portal sends mail to at most 500 addresses an hour. A run sends to at most 10 addresses, or 2 when nobody is signed in.
@@ -69,13 +69,13 @@ A mail account connector sends your forms' and jobs' email from your own address
 - **Microsoft 365:** an app registered in your Microsoft Entra directory, with the **Mail.Send** application permission and a client secret. Email goes out from the sender's mailbox; it is not kept in its Sent Items.
 - **Google Workspace:** a service account with domain-wide delegation for `https://www.googleapis.com/auth/gmail.send`. Paste its JSON key file whole; the portal checks it when you save it.
 
-The console sets a mail account's credentials, but it does not make the account yet. For now, this is set in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-mail-accounts-file).
+A mail account is made in the console as a connector of the kind **A mail account**: see [Make or change a connector](/portal/console/connectors/#make-or-change-a-connector). Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-mail-accounts-file).
 
 **Test** signs in to the service without sending anything, and says what is wrong: a secret Microsoft refuses, an app without Mail.Send, a key Google refuses. The credentials are kept for that service, sender and server alone; when one of them changes, set them again. An email already waiting goes out only through the account as it was when the email was queued; one that waits for an account not yet connected is tried again later.
 
 ## Text messages and Slack
 
-An action list can send a text message through Twilio or Clickatell, and post to a Slack channel, each through its connector. For now, this is set in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-text-message-and-a-slack-post).
+An action list can send a text message through Twilio or Clickatell, and post to a Slack channel, each through its connector. In the console, they are the actions **Send a text message** and **Post to Slack** in an action list: a form's [steps](/portal/console/forms/#steps), or a job's or a flow's actions. Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-text-message-and-a-slack-post).
 
 - **When they go:** as emails do, only once the whole run ends well, and then from a queue: a service that is busy or does not answer is tried again after 1, 2, 4… minutes. A message is never sent twice, and never through a connector that changed since.
 - **Numbers:** international numbers, such as `+40712345678`; spaces, dots, dashes, brackets and a written `(0)` are taken out. A run texts at most 10 numbers, or 2 when nobody is signed in. A job texts as nobody unless it runs as someone.
@@ -89,17 +89,17 @@ An action list can send a text message through Twilio or Clickatell, and post to
 - **Text messages:** a text message connector names Twilio or Clickatell and the sender: a number, a Twilio Messaging Service, or a Clickatell sender name. Set Twilio's auth token or Clickatell's API key under **Connectors**; **Test** reads the account without sending anything.
 - **Slack:** a Slack connector is a Slack incoming webhook. Create one in Slack for the channel, and paste its address, `https://hooks.slack.com/services/…`, under **Connectors**. It has no Test: a test would show in the channel.
 
-The console sets these accounts' credentials, but it does not make the connector yet. For now, this is set in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-text-message-and-a-slack-post).
+These are made in the console as connectors of the kinds **Text messages** and **A Slack channel**: see [Make or change a connector](/portal/console/connectors/#make-or-change-a-connector). Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-text-message-and-a-slack-post).
 
 ## Hashes, signatures and random values
 
-An action list can work out a hash (sha256, sha384 or sha512), sign with a secret connector's key, which must be at least 32 bytes long, make 16 to 64 random bytes as text (32 when the list names no number), or make a random id. For now, this is set in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#hashes-signatures-and-random-values).
+An action list can work out a hash (sha256, sha384 or sha512), sign with a secret connector's key, which must be at least 32 bytes long, make 16 to 64 random bytes as text (32 when the list names no number), or make a random id. In the console, these are actions of the **Values** section of any action list. Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#hashes-signatures-and-random-values).
 
 A signature signs whatever the list gives it. Do not sign what a visitor typed unless that is the point.
 
 ## Mailboxes
 
-A mailbox connector lets a [job](/portal/sites/jobs/#when-mail-arrives) read the mail that arrives at an address. For now, this is set in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-mailboxs-file).
+A mailbox connector lets a [job](/portal/sites/jobs/#when-mail-arrives) read the mail that arrives at an address. It is made in the console as a connector of the kind **A mailbox**: see [Make or change a connector](/portal/console/connectors/#make-or-change-a-connector). Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-mailboxs-file).
 
 - **Credentials:** the mailbox's username and password, set under **Connectors**. They are kept for that server alone; when the host, port, protocol or security changes, set them again.
 - **Test:** **Test** signs in and opens the folder.
@@ -108,7 +108,7 @@ The portal only reads. It never marks, moves or deletes a message, so keep the m
 
 ## Buckets
 
-A bucket connector names a bucket of an S3-compatible storage service, such as Amazon S3, Cloudflare R2, MinIO or Garage. [Folders](/portal/console/files/#where-files-are-kept) keep their files in it. For now, this is set in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-buckets-file).
+A bucket connector names a bucket of an S3-compatible storage service, such as Amazon S3, Cloudflare R2, MinIO or Garage. [Folders](/portal/console/files/#where-files-are-kept) keep their files in it. It is made in the console as a connector of the kind **A bucket (S3)**: see [Make or change a connector](/portal/console/connectors/#make-or-change-a-connector). Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-buckets-file).
 
 - **Credentials:** the bucket's access key ID and secret access key, set under **Connectors**. They are kept for that service, bucket and region alone; when one of them changes, set the keys again. Give the keys only what the folders need: listing, reading, writing and deleting under their prefixes.
 - **Test:** **Test** reads the bucket's first file name, to show that it answers to the keys.
@@ -118,7 +118,7 @@ A bucket connector names a bucket of an S3-compatible storage service, such as A
 
 ## File servers
 
-A file server connector names an FTP, FTPS or SFTP server. The [file management actions](/portal/sites/file-management/#files-on-a-server) send files to it, fetch them from it, list its directories and remove files there. For now, this is set in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-file-servers-file).
+A file server connector names an FTP, FTPS or SFTP server. The [file management actions](/portal/sites/file-management/#files-on-a-server) send files to it, fetch them from it, list its directories and remove files there. It is made in the console as a connector of the kind **An FTP or SFTP server**: see [Make or change a connector](/portal/console/connectors/#make-or-change-a-connector). Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-file-servers-file).
 
 - **Credentials:** a user name and a password, set under **Connectors**. An SFTP server can take a private key instead of a password: paste the private key, beginning `BEGIN OPENSSH PRIVATE KEY`, `BEGIN RSA PRIVATE KEY` or `BEGIN EC PRIVATE KEY`, without a passphrase. The portal checks the key when you save it, and refuses a public key or one it cannot read. A server that asks for the password as a question of its own (keyboard-interactive) gets it too. The credentials are kept for that server, port, protocol and key alone; when one of them changes, set them again.
 - **Known servers:** an SFTP server is known by its key. Give the connector the server's fingerprint, as `ssh-keygen -lf` prints it; a server with several keys can have up to five. A server showing another key is not used, and **Test** says which key it showed.
@@ -133,6 +133,6 @@ A [named value](/portal/sites/values/) kept for the whole portal or a site never
 
 ## In tests
 
-A [flow's tests](/portal/sites/flows/#tests) never reach out. Each web call is answered by the answers the test gives for that connector, and each email is listed in the result, never sent. For now, this is set in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-test-that-mocks-the-service).
+A [flow's tests](/portal/sites/flows/#tests) never reach out. Each web call is answered by the answers the test gives for that connector, and each email is listed in the result, never sent. In the console, a test gives them under **More**, as **Answers to web calls**: see [Make or change a flow](/portal/console/flows/#make-or-change-a-flow). Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-test-that-mocks-the-service).
 
 A test's answer matches the call's method and its path, without the query. A call that no answer covers fails the test. In a test, signing uses a fixed test key, never the connector's secret.

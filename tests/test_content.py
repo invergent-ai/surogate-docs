@@ -415,8 +415,10 @@ class Content(unittest.TestCase):
                        'hashes-signatures-and-random-values', 'mailboxes', 'each-persons-own-account', 'in-tests'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="a-connectors-file"', page('/portal/developer/connectors/'))
-        for anchor in ('set-credentials', 'test'):
+        for anchor in ('make-or-change-a-connector', 'set-credentials', 'test'):
             self.assertIn(f'id="{anchor}"', page('/portal/console/connectors/'))
+        # Connectors are made in the console.
+        self.assertNotIn('For now', (ROOT / 'src/content/docs/portal/sites/connectors.md').read_text())
         self.assertIn('id="your-connections"', page('/portal/console/account/'))
         self.assertIn('href="/portal/sites/connectors/#call-a-service"', page('/portal/sites/actions/'))
         for path in ('sites/connectors.md', 'console/connectors.md'):
