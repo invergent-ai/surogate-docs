@@ -635,6 +635,14 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'Hub', 'fflate', 'Open Design'):
             self.assertNotIn(word, source)
 
+    def test_portal_mail_accounts(self):
+        guide = page('/portal/sites/connectors/')
+        for anchor in ('mail-accounts', 'a-mail-accounts-file'):
+            self.assertIn(f'id="{anchor}"', guide)
+        for word in ('microsoft365', 'Mail.Send', 'gmail.send', 'attachments'):
+            self.assertIn(word, guide)
+        self.assertIn('href="/portal/sites/connectors/#mail-accounts"', page('/portal/sites/actions/'))
+
     def test_portal_form_fields(self):
         guide = page('/portal/sites/form-fields/')
         for anchor in ('what-people-see', 'a-barcode-or-qr-code', 'a-barcode-scanner', 'an-iban', 'a-signature', 'in-the-console', 'save-a-signature-as-a-file', 'config-example'):
