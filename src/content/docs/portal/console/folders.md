@@ -33,7 +33,7 @@ On [Files](/portal/console/files/), administrators find **Folder settings** next
 
 ## Settings
 
-![A folder's settings: its names in Romanian and English, its id, whether anyone may download its files, who sees it, who edits it, and where its files are kept.](../../../../assets/screenshots/portal-folder-edit.png)
+![A folder's settings: its names in Romanian and English, its id, whether anyone may download its files, who sees it and who edits it.](../../../../assets/screenshots/portal-folder-edit.png)
 
 ### Who may download
 
