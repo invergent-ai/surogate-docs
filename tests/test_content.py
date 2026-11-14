@@ -512,6 +512,9 @@ class Content(unittest.TestCase):
         doc = page('/portal/sites/jobs/')
         for anchor in ('write-a-job', 'when-it-runs', 'when-records-change', 'when-people-come-and-go', 'when-the-portal-starts-fails-or-is-asked-for', 'when-mail-arrives', 'when-an-app-sends-an-event', 'send-mail', 'what-it-may-do', 'in-the-console'):
             self.assertIn(f'id="{anchor}"', doc)
+        # Jobs are made in the console.
+        self.assertIn('id="make-or-change-a-job"', doc)
+        self.assertNotIn('does not write jobs yet', (ROOT / 'src/content/docs/portal/sites/jobs.md').read_text())
         source = (ROOT / 'src/content/docs/portal/sites/jobs.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'lease', 'CEL'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)

@@ -9,7 +9,7 @@ An automation job is work the portal does on its own: count the new requests eve
 
 A job tells no page anything and answers no one, so what people see of it is what it does: a record added, an email sent, a line in a log. Administrators see the jobs under **Jobs** in the console: its trigger, the person it runs as and their roles, when it runs next, whether it runs now, how many changes it still has to run for, and its last runs with their logs:
 
-![The Automation jobs page: the job cerere-inregistrata, which runs when requests are created, and the job cereri-noi, which runs on a schedule, each with the person it runs as and its last runs marked ok, with Log, and Run now for the scheduled one.](../../../../assets/screenshots/portal-jobs-console.png)
+![The Automation jobs page with New job: the job cerere-inregistrata, which runs when requests are created, and the job cereri-noi, which runs on a schedule, each with the person it runs as, its last runs marked ok with Log, Edit, and Run now for the scheduled one.](../../../../assets/screenshots/portal-jobs-console.png)
 
 **Log** shows what a run wrote:
 
@@ -21,7 +21,19 @@ Runs are kept 30 days, with only their errors unless the job is set to debug. **
 
 A job runs for one site; that site's first language is the run's. It acts as a person it names: what that person may see and change, the job may. Without a person, the job acts as a visitor. When the person no longer exists or may not sign in, the run fails and says so. A description says what the job is for, in the console.
 
-The console shows the portal's jobs and their runs; it does not write jobs yet. For now, this is set in the site's configuration: see [Developer: Automation jobs](/portal/developer/jobs/#write-a-job).
+### Make or change a job
+
+Under **Jobs**, **New job** makes one and **Edit** opens one. A job whose file has problems, or that was written by hand in a shape the console cannot draw, is listed under **Jobs not running**, with **Edit**. The editor has three tabs:
+
+- **When:** **It runs** chooses the kind of trigger, and the rest of the tab asks for what that kind needs: how often, a time of day and its time zone, a cron, a date and time, a model and which changes, a mailbox, an app and its event, or which events of the portal, Keel or the DMS. For a job on a time, **Next run** says when it comes, and two rules: **Skip a run while the last one is still running** (on unless you turn it off) and what happens **After the portal was down**.
+- **Settings:** the id (lower-case letters, digits and hyphens, fixed once saved), a description, the **Site**, and **Runs as**, a person's email; empty, the job runs as a visitor. An email no one in the portal has yet is said, and the job will not run until they are.
+- **Actions:** the actions the job runs, built as a form's [steps](/portal/console/forms/#steps) are, and under **When it fails** those that run instead when one fails. Expressions read what started the job as `trigger`, and the error as `error` when it fails.
+
+![The job cereri-noi's When tab: It runs on a cron schedule, the cron 0 7 * * 1-5 in the time zone Europe/Bucharest, when it runs next, the rule to skip a run while the last still runs, and what happens after the portal was down.](../../../../assets/screenshots/portal-job-edit.png)
+
+Each problem is said at its field as you type, and **Save** waits until there are none; above the tabs, the editor says what it still needs and which tabs have problems. A job on a date that is already past is kept: it has run, and will not run again. **Remove** stops the job, after asking.
+
+Developers can also write jobs in the site's configuration: see [Developer: Automation jobs](/portal/developer/jobs/#write-a-job).
 
 ## When it runs
 
