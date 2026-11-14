@@ -24,12 +24,33 @@ Each site lists its pages by address. A page sits under the page above it: `/ser
 
 Under them, each part of the layout lists what it holds, in order:
 
-- **Add text** adds a text block, written in HTML for each of the site's languages. It holds what an [HTML block](/portal/sites/layouts/#an-html-block) may hold.
+- **Add text** adds a text block, one text for each of the site's languages. See [Write text](#write-text).
 - **Add content…** shows the site's [content](/portal/console/content/#show-content-on-a-page) of one type: its newest entries, or one entry.
 - **Add a widget…** adds one of [the portal's own widgets](#the-portals-widgets) or one of the apps' widgets. A portal widget has its settings in its row. When an app's widget needs a setting to work, the editor asks for it; the app's widget has its other settings on the page itself, from its menu.
 - **Remove** takes a block or widget off the page.
 
 **Save** stays off until something changed and every title, every text and every required setting is filled in.
+
+## Write text
+
+A text block's text is written as in a word processor. Select text, then use the toolbar above it:
+
+- **Bold**, **Italic**, **Underline**, **Strikethrough** and **Code**.
+- **Heading 2**, **Heading 3** and **Heading 4**, and **Paragraph** for ordinary text. The page's title is its only top heading.
+- **Bulleted list**, **Numbered list**, **Quote**, **Code block** and **Horizontal line**.
+- **Link** puts a link on the selected text. Type its **Address**:
+  - a page of the site, such as `/despre`;
+  - a web address (`https://` is added when you leave it out);
+  - an email address or a phone number, which mails or calls.
+  
+  Tick **Open in a new tab** when it should. Addresses the portal does not take, such as the console's own, are refused with the reason.
+- **Remove link**, **Undo** and **Redo**.
+
+![A text block open in the page editor: the toolbar above its text, "Cine suntem" as a heading and two paragraphs; beside it, the page as visitors see it.](../../../../assets/screenshots/portal-rich-text.png)
+
+**Edit as HTML** shows the text's HTML, for those who want it. It holds what an [HTML block](/portal/sites/layouts/#an-html-block) may hold.
+
+A text written with markup the editor cannot keep, such as a class, a table or a picture, opens as HTML, with a note. It stays HTML, so nothing written by hand is ever rewritten. The same editor writes [fragments](#fragments) and content's [rich text](/portal/console/content/#write-an-entry).
 
 ## The portal's widgets
 
@@ -111,7 +132,7 @@ A fragment is text kept once and shown on many pages, such as opening hours or a
 
 Each site lists its fragments under its pages. **New fragment** asks for:
 - an id, such as `program`: lower-case letters, digits and hyphens, fixed once saved;
-- a name and the text, written in HTML, in each of the site's languages.
+- a name and the text in each of the site's languages, written as a page's [text](#write-text).
 
 **Edit** changes a fragment. In the page editor, **Add a fragment…** places one in a part of the page. It shows as **Fragment:** and its name, with nothing to fill in.
 
