@@ -33,7 +33,7 @@ Each entry shows where it is:
 
 - **Address**: lower-case letters, digits and hyphens, such as `program-de-iarna`. It is unique among the site's entries of the type. An entry keeps its address once it is published.
 - **The fields** come from the content type. A field written per language has one box for each of the site's languages, such as **Headline (ro)** and **Headline (en)**. A field marked `*` must be filled in, in every language, before the entry can be published.
-- **Rich text** is written in HTML. It holds what a page's [HTML block](/portal/sites/layouts/#an-html-block) may hold.
+- **Rich text** is written with a toolbar, as a page's [text](/portal/console/pages/#write-text) is: headings, lists, quotes and links. **Edit as HTML** shows its HTML.
 - **A link** has an address and its text. **An image** has an address and a description of what it shows.
 
 ## Categories and tags

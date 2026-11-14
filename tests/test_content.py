@@ -190,6 +190,13 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_rich_text(self):
+        doc = page('/portal/console/pages/')
+        self.assertIn('id="write-text"', doc)
+        self.assertIn('portal-rich-text', (PORTAL / 'console/pages.md').read_text())
+        self.assertIn('href="/portal/console/pages/#write-text"', page('/portal/console/content/'))
+        self.assertNotIn('written in HTML', (PORTAL / 'console/pages.md').read_text())
+
     def test_portal_widgets_in_the_page_editor(self):
         for shot in ('portal-widget-poll-set', 'portal-widget-calendar-set'):
             self.assertIn(shot, (PORTAL / 'console/pages.md').read_text())
