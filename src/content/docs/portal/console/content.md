@@ -38,7 +38,7 @@ Each entry shows where it is:
 
 ## Categories and tags
 
-When the portal has vocabularies that sort the content type, the editor lists their categories under the fields, indented under the category above them. Tick the ones the entry belongs to; for a vocabulary that takes only one, choose it, or **None**.
+When the portal has [vocabularies](/portal/console/vocabularies/) that sort the content type, the editor lists their categories under the fields, indented under the category above them. Tick the ones the entry belongs to; for a vocabulary that takes only one, choose it, or **None**.
 
 **Tags** are words of your own, separated by commas, such as `iarna, drumuri`. They are kept in lower case, each once, at most 20.
 
