@@ -618,11 +618,15 @@ class Content(unittest.TestCase):
 
     def test_portal_file_management(self):
         guide = page('/portal/sites/file-management/')
-        for anchor in ('what-people-get', 'copy-move-and-rename-a-file', 'read-a-files-details', 'zip-archives', 'who-may-do-what', 'limits', 'config-example'):
+        for anchor in ('what-people-get', 'copy-move-and-rename-a-file', 'read-a-files-details', 'zip-archives', 'files-on-a-server', 'who-may-do-what', 'limits', 'config-example'):
             self.assertIn(f'id="{anchor}"', guide)
-        for action in ('copyFile', 'moveFile', 'renameFile', 'fileInfo', 'zipFiles', 'zipNames', 'unzipFile', 'replace: true'):
+        for action in ('copyFile', 'moveFile', 'renameFile', 'fileInfo', 'zipFiles', 'zipNames', 'unzipFile', 'replace: true', 'ftpUpload', 'ftpDownload', 'ftpList', 'ftpDelete'):
             self.assertIn(action, guide)
         self.assertIn('href="/portal/sites/file-management/"', page('/portal/sites/actions/'))
+        connectors = page('/portal/sites/connectors/')
+        for anchor in ('file-servers', 'a-file-servers-file'):
+            self.assertIn(f'id="{anchor}"', connectors)
+        self.assertIn('href="/portal/sites/connectors/#file-servers"', guide)
         files = page('/portal/console/files/')
         self.assertIn('id="move-or-copy-a-file"', files)
         self.assertIn('href="/portal/sites/file-management/"', files)

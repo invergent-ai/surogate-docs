@@ -48,11 +48,31 @@ What an archive's files become when unpacked:
 - A file of a kind the portal does not keep, such as `setup.exe`, and two files that end up with the same name, make the whole archive fail, naming the file. Nothing is written.
 - Without `replace: true`, a file already there makes the whole archive fail too.
 
+## Files on a server
+
+These actions exchange files with an FTP, FTPS or SFTP server, through a [file server connector](/portal/sites/connectors/#file-servers):
+
+| Type | What it does | Takes |
+|---|---|---|
+| `ftpUpload` | Sends 1 to 20 files of a folder to the server, each under its own name | `connector`, `folder`, `names` (a list), `remoteDir`, `replace` |
+| `ftpDownload` | Fetches one file into a folder | `connector`, `remotePath`, `toFolder`, `toName`, `replace` |
+| `ftpList` | Lists a directory of the server | `connector`, `remoteDir`, `into` |
+| `ftpDelete` | Removes a file on the server | `connector`, `remotePath` |
+
+- `remoteDir` and `remotePath` are expressions, under the connector's directory: names separated by `/`, never `.` or `..`. A path going above the directory fails before the server is reached.
+- `ftpUpload` refuses a name the server already has, before sending anything, unless `replace: true`. A file is sent under a temporary name and renamed when whole, so whoever reads the server never sees half a file.
+- `ftpList` keeps a list of `{ name, size, directory, modified }`, at most 1,000 entries; `modified` is a date when the server gives one plainly, else `null`.
+- `ftpDownload` of an empty file fails: the portal keeps no empty file.
+- `ftpDelete` of a file that is not there is no error.
+- The server's own messages are never shown: a failure says what went wrong in the portal's words, such as "The server refused the username, password or key."
+
 ## Who may do what
 
 File management actions keep to the folders' [permissions](/portal/sites/permissions/), as the file actions do. Someone who edits a folder reads its files, makes, replaces and removes them. Anyone else, a visitor too, only makes new files, and never in a public folder. So a form a visitor sends can copy a file into a secure folder, but cannot read, move or unpack one. Every folder is checked before any work is done.
 
-An action that changes files changes the portal, so a GET or public [endpoint](/portal/sites/endpoints/) cannot use it. `fileInfo` and `zipNames` only read, and can be used anywhere.
+An action that changes files changes the portal, so a GET or public [endpoint](/portal/sites/endpoints/) cannot use it. `fileInfo` and `zipNames` only read, and can be used anywhere. The actions on a server all reach another computer, so none of them is in a GET or public endpoint, `ftpList` included.
+
+On a server, the server's own account decides what the portal may do there; in the portal, a visitor's form can send a file to a server only from a folder the visitor may read, which is none, and fetch one only into a secure folder, as a new file.
 
 ## Limits
 
@@ -63,6 +83,8 @@ An action that changes files changes the portal, so a GET or public [endpoint](/
 - A run takes 20 extension actions at most, these and the [document actions](/portal/sites/document-actions/) together.
 - Unpacking into a folder the portal keeps itself writes every file at once, or none. Into a folder kept in a [bucket](/portal/console/files/#where-files-are-kept), files are written one after another; when the bucket stops answering part way, the action says how many were written.
 - A run that is nearly out of time stops changing files. Pack or unpack many files in a [job](/portal/sites/jobs/), which has more time than a form.
+- A file sent or fetched is at most 10 MB; one `ftpUpload` sends 50 MB at most.
+- A file server connector makes at most two calls at once; the others wait their turn, within the run's time.
 - A flow's tests run no extension actions: a file management action fails the test.
 
 ## Config example
@@ -111,6 +133,26 @@ A file renamed in its folder, replacing one of that name:
 
 - `into`: where the details are kept, or `null` when there is no such file.
 - The copy is made only when the report is there.
+
+### Files sent to a server and fetched from it
+
+```yaml
+- type: ftpUpload
+  connector: registry
+  folder: approved
+  names: '["cerere-" + submission.id + ".pdf"]'
+  remoteDir: '"incoming"'
+- type: ftpDownload
+  connector: registry
+  remotePath: '"answers/raspuns-" + submission.id + ".pdf"'
+  toFolder: answers
+  toName: '"raspuns-" + submission.id + ".pdf"'
+```
+
+- `connector`: a file server connector.
+- `names`: the files of `folder` to send.
+- `remoteDir`: where they go, under the connector's directory.
+- `remotePath`: the file to fetch, and `toFolder` and `toName`: where it is kept.
 
 ### An archive packed and unpacked
 

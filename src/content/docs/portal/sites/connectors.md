@@ -86,6 +86,15 @@ A bucket connector names a bucket of an S3-compatible storage service, such as A
 ![The Connectors page: the bucket connector Cloud archive, not connected, with its address and bucket, "Access keys", and the Set credentials and Test buttons.](../../../../assets/screenshots/portal-connectors-bucket.png)
 - **Addresses:** the service is reached at its `https:` address. An `http:` address, or one on your own network, works only where the portal allows that.
 
+## File servers
+
+A file server connector names an FTP, FTPS or SFTP server. The [file management actions](/portal/sites/file-management/#files-on-a-server) send files to it, fetch them from it, list its directories and remove files there: see the [config example](#a-file-servers-file).
+
+- **Credentials:** a user name and a password, set under **Connectors**. An SFTP server can take a private key instead of a password: paste the private key, beginning `BEGIN OPENSSH PRIVATE KEY`, `BEGIN RSA PRIVATE KEY` or `BEGIN EC PRIVATE KEY`, without a passphrase. The portal checks the key when you save it, and refuses a public key or one it cannot read. A server that asks for the password as a question of its own (keyboard-interactive) gets it too. The credentials are kept for that server, port, protocol and key alone; when one of them changes, set them again.
+- **Known servers:** an SFTP server is known by its key. Write its fingerprint in the connector, as `ssh-keygen -lf` prints it; a server with several keys can have up to five. A server showing another key is not used, and **Test** says which key it showed.
+- **Encryption:** FTP goes over TLS (FTPS), and the server's certificate must be one the portal trusts. Plain FTP, without TLS, is only for a server on your own network, where the portal allows that: passwords would otherwise cross the internet in clear.
+- **Test:** **Test** signs in and lists the connector's directory.
+
 ## Each person's own account
 
 A connector with `perUser: true` signs in as each person, with the account they connected under **Your connections** on their [account](/portal/console/account/#your-connections). When nobody is signed in, or the person has not connected, the action fails with "The connector is not connected."
@@ -207,6 +216,41 @@ region: eu-central-1
 - `timeoutMs`: how long one request waits, up to 60,000 ms; 30,000 when left out.
 
 A bucket connector takes no `baseUrl`, `auth`, `test` or `perUser`: it is the portal's own.
+
+### A file server's file
+
+In `connectors/<id>.yaml`, an SFTP server:
+
+```yaml
+name: { ro: Server registratură, en: Registry server }
+kind: ftp
+protocol: sftp
+host: sftp.primaria.ro
+hostKey: SHA256:f2IO2+GZU5y3N8JriSY+2TfVUBjyih6+yr7OnJVUFt8
+directory: /registratura
+```
+
+- `protocol`: `sftp`, or `ftp` for FTP and FTPS.
+- `host`: the server's name or address, with no scheme or port.
+- `hostKey`: the server's key fingerprint, as `ssh-keygen -lf` prints it, or a list of up to five.
+- `directory`: where the actions' paths start; when left out, where the server signs in.
+- `auth: key` signs in with a private key instead of a password.
+- `port`: 22 for SFTP when left out.
+- `timeoutMs`: how long the server may keep the portal waiting, up to 60,000 ms; 10,000 when left out.
+
+An FTPS server:
+
+```yaml
+name: { ro: Server FTP, en: FTP server }
+kind: ftp
+protocol: ftp
+host: ftp.primaria.ro
+security: starttls
+```
+
+- `security`: `starttls` (when left out) secures the connection after it opens; `tls` secures it from the start, on port 990; `none` sends everything in clear, only to a server on your own network.
+
+A file server connector takes no `baseUrl`, `test` or `perUser`: it is the portal's own.
 
 ### A test that mocks the service
 
