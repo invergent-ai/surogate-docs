@@ -48,7 +48,7 @@ Then place the assistant on a page. On [Pages](/portal/console/pages/#the-portal
 - **Agent**: the agent to talk with. It is required, and lists the agents the portal's configuration names for this. When none fits, the widget is listed as **needs an agent** and cannot be added.
 - **Title**: the chat's heading, for each language. Without one, the heading is the agent's name; with neither, the chat has no heading.
 
-The form warns that everyone who may see the page may chat with the agent and use what it can do. Developers: see [Developer: Assistants](/portal/developer/assistants/#the-assistant-on-a-page).
+The form warns that **Who sees this block**, in the widget's row, is who may chat with the agent and use what it can do. Choose it with that in mind. Developers: see [Developer: Assistants](/portal/developer/assistants/#the-assistant-on-a-page).
 
 ## A chat for visitors
 

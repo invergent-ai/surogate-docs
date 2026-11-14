@@ -56,10 +56,10 @@ form.io's own words, such as Next, Previous and the error messages, are translat
 
 ## Who sends it and who reads what was sent
 
-- **Who sends it:** anyone, signed in or not, when the form is made public. Otherwise the form names who may: people signed in, groups, organizations or people. A form that is neither public nor names anyone is for its reviewers alone.
-- **Who reads what was sent:** the form names the people, groups or organizations who read, export and delete its submissions. The administrators always do. Reviewers may send the form too.
+- **Who may send it:** anyone, signed in or not, when you tick **Anyone may send it, signed in or not**. Otherwise **Who may send it** names who may: **Anyone signed in**, groups, organizations or people. By default, and when it names no one, the form is for **Its reviewers only**.
+- **Who reads what was sent:** **Who reads what was sent** names the people, groups or organizations who read, export and delete its submissions. By default it is **Administrators only**. The administrators always read what was sent. Reviewers may send the form too.
 
-Both are set in the [form builder](/portal/console/forms/#build-a-form).
+Both are set in the form builder, on the **Who can use it** tab: see [Build a form](/portal/console/forms/#build-a-form). Each is a picker; [Choose who](/portal/sites/permissions/#choose-who) tells how it works.
 
 People who may not send a form do not see it on a page, and its address answers as if there were no form.
 

@@ -73,6 +73,24 @@ class Content(unittest.TestCase):
             for word in ('kubectl', 'helm', 'PORTAL_'):
                 self.assertNotIn(word, page(route))
 
+    def test_portal_principal_picker(self):
+        # Who sees and who edits are chosen in the console, with the picker, not written in files.
+        perms = (PORTAL / 'sites/permissions.md').read_text()
+        self.assertIn('portal-principal-picker', perms)
+        self.assertIn('portal-principal-picker', page('/portal/sites/permissions/'))
+        self.assertIn('id="choose-who"', page('/portal/sites/permissions/'))
+        self.assertIn('Who edits it', (PORTAL / 'console/sites.md').read_text())
+        self.assertIn('Who writes blog posts', (PORTAL / 'console/sites.md').read_text())
+        self.assertIn('Who sees this block', (PORTAL / 'console/pages.md').read_text())
+        self.assertIn('id="who-sees-and-who-edits"', page('/portal/console/pages/'))
+        forms = (PORTAL / 'console/forms.md').read_text()
+        self.assertNotIn('one per line', forms)
+        self.assertIn('Who may send it', forms)
+        self.assertIn('Who reads what was sent', forms)
+        self.assertIn('Who writes blog posts', (PORTAL / 'sites/blogs.md').read_text())
+        # Only libraries' bloggers are still set in the site's configuration.
+        self.assertEqual(perms.count('For now'), 1)
+
     def test_portal_audit_and_personal_data(self):
         doc = page('/portal/console/audit/')
         self.assertIn('<figcaption>The Audit log: the latest events, each with who did it and to what, and the note that the log is intact.</figcaption>', doc)

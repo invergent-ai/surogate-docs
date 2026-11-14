@@ -17,7 +17,9 @@ A post has a page of its own, with its author, its date and its text:
 
 ## Name the bloggers
 
-A site, or a [library](/portal/sites/content-types/#libraries), names its bloggers, as it names its [editors](/portal/sites/permissions/#bloggers). The console's [Access](/portal/console/access/) page adds editors, not bloggers. For now, this is set in the site's configuration: see [Developer: Blogs](/portal/developer/blogs/#the-bloggers).
+A site, or a [library](/portal/sites/content-types/#libraries), names its bloggers, as it names its [editors](/portal/sites/permissions/#bloggers). Choose a site's bloggers in the console: open **Sites**, then **Settings** on the site, and under **Who writes blog posts** press **Add…**. By default it is **The site's editors**. The console's [Access](/portal/console/access/) page adds editors, not bloggers.
+
+A library's bloggers are not set in the console yet. For now, this is set in the site's configuration: see [Developer: Blogs](/portal/developer/blogs/#the-bloggers).
 
 Bloggers find **Content** in the console, with the site's blog types alone:
 

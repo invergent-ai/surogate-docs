@@ -31,6 +31,16 @@ Under them, each part of the layout lists what it holds, in order:
 
 **Save** stays off until something changed and every title, every text and every required setting is filled in.
 
+## Who sees and who edits
+
+Who sees and who edits a page, and who sees each block, are chosen with the picker described in [Choose who](/portal/sites/permissions/#choose-who). **Add…** opens the choices, and **Remove** takes one away.
+
+- **Who sees this page**, on the page's **Settings** tab. By default it is **Whoever sees the site**. It says: "It only narrows who sees the site." It offers no **Everyone**: a page cannot be wider than its site.
+- **Who edits this page**, on the same tab. By default it is **The site's editors**. It says: "In addition to the site's editors."
+- **Who sees this block**, in each block's row. By default it is **Whoever sees the page**. It says: "It only narrows who sees the page, or the group the block is in." People who may not see a block get the page without it.
+
+Removing the last one chosen under **Who sees this page** or **Who sees this block** leaves **Only editors and administrators**, never more people. **Back to the default** returns to the default on purpose.
+
 ## Write text
 
 A text block's text is written as in a word processor. Select text, then use the toolbar above it:
@@ -106,7 +116,7 @@ Each widget has a page in the guide. It says what people see and what each setti
 
 - A setting left at its default is not saved with the page. The widget uses the portal's default.
 - A setting that names something, such as a data model or an agent, is a list of what the portal has. A setting that asks for several things, such as **Columns**, uses its default when you tick none. The row says what that default is.
-- **Assistant** warns that everyone who may see the page may chat with the agent and use what it can do. Set who sees the page with that in mind.
+- **Assistant** warns that **Who sees this block** is who may chat with the agent and use what it can do. Set it with that in mind.
 - A portal widget the console has no settings for says **Set in the site's files**. The editor keeps it as it is written.
 
 ### Remove one
