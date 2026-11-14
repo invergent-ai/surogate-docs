@@ -132,7 +132,7 @@ The app's field is drawn by the app; its value is checked when the form is sent.
 
 ## After it is sent
 
-A form can run [actions](/portal/sites/actions/) once it is sent and kept: work out a reference number, tell the person something, or send them to a payment page. The form builder does not set them yet. For now, this is set in the site's configuration: see [Developer: Forms](/portal/developer/forms/#actions-after-it-is-sent).
+A form can run [actions](/portal/sites/actions/) once it is sent and kept: work out a reference number, tell the person something, or send them to a payment page. Build them under **Steps** in the form builder: see [Steps](/portal/console/forms/#steps). Developers can also write them in the site's configuration: see [Developer: Forms](/portal/developer/forms/#actions-after-it-is-sent).
 
 If the actions fail, what was sent is still kept, and the person is told so, with the failing action's error message when it has one.
 

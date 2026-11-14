@@ -63,9 +63,29 @@ Administrators see **Build forms** at the top of the page: **New form** makes on
   - **Layout:** panels, columns, fieldsets, tabs, wells and text blocks.
 
   Click a field to change it. **Display** sets its label, the text shown in it, its help, whether it is required, and its options. The **Key** is the name its answer is kept under; it follows the label until you change it. **Shown when** shows the field only when another field has a value. In a step-by-step form, each panel at the top is a step.
+- **Steps:** what the form does once it is sent and kept. See [Steps](#steps) below.
 - **Translations:** a row for each text of the form, with a box for each of its sites' other languages. Every row needs a translation before the form can be saved.
 
 **Save** keeps the form; pages that show it change at once. If the portal refuses it, the reasons are listed above the form. If someone changed the portal's files since you opened the form, reload it and make your changes again. **Remove** takes the form off every page; what was sent through it stays, under its id.
 
 A form written by hand with parts the builder does not keep opens as one the console cannot draw. Change it in the portal's files.
+
+### Steps
+
+**Steps** builds the form's [actions](/portal/sites/actions/): what runs, in order, each time the form is sent and kept. Each action is a row. Click its name to open it; **Up**, **Down** and **Remove** sit beside it.
+
+![The Steps tab of the contact form: four actions in a list, Set values, Show a notice, Send a notification and Show a message. Set values is open, with the value referinta worked out from the submission's id. Under the list, the names expressions can use.](../../../../assets/screenshots/portal-form-steps.png)
+
+- **Add an action…** offers the actions a form can run, by kind: values, control, the page, calls, records and messages.
+- Each action asks for what it needs. A box marked `*` must be filled in. Values are [expressions](/portal/sites/actions/#expressions): under the list, **Expressions can use** names what they may read, such as the form's fields as `form.<key>` and values set by earlier actions as `vars.<name>`.
+- Connectors, models, flows, guides and folders are chosen from the site's own.
+- **More** sets when an action runs (**Only when**), a **Note** for the people who build the form, the **Message if it fails** that the person sees, and actions to run **When it fails**. There, `vars.error` holds what failed: its message and the action.
+- **For each**, **Repeat** and **Group** hold actions of their own, built the same way.
+- A problem the console sees, such as a name an expression cannot read, is said at its box as you type, and the row says it has problems.
+
+If the portal refuses the form for its steps, **Some steps have problems** shows on every tab; **Open Steps** goes to them, each said at its action.
+
+**Other sites it may send people to** lists the addresses outside the portal that **Go to a page** may send people to, each on a line of its own.
+
+Actions the builder does not draw yet, such as those of an app or the file actions, are kept as they are written when you save. Change them in the site's configuration: see [Developer: Forms](/portal/developer/forms/#actions-after-it-is-sent).
 

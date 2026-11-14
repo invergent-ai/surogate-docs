@@ -375,6 +375,11 @@ class Content(unittest.TestCase):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="after-it-is-sent"', page('/portal/sites/forms/'))
         self.assertIn('id="runs"', page('/portal/console/forms/'))
+        # A form's actions are built in the console.
+        self.assertIn('id="steps"', page('/portal/console/forms/'))
+        self.assertIn('href="/portal/console/forms/#steps"', page('/portal/sites/forms/'))
+        self.assertIn('href="/portal/console/forms/#steps"', doc)
+        self.assertNotIn('does not set them yet', (ROOT / 'src/content/docs/portal/sites/forms.md').read_text())
         source = (ROOT / 'src/content/docs/portal/sites/actions.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
