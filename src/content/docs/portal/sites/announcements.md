@@ -11,7 +11,7 @@ A visitor sees the announcements meant for everyone. The important one is marked
 
 ![The announcements widget for a visitor: "Important: The city hall is closed on 1 December" with a red bar, then "New hours at the civil registry".](../../../../assets/screenshots/portal-announcements-visitor.png)
 
-- The widget shows up to 3 announcements at once, or any number from 1 to 10 that the page asks for. Editors' days and times are read in the widget's time zone: Europe/Bucharest unless it names another. The console's page editor does not place it yet. For now, this is set in the site's configuration: see [Developer: Announcements](/portal/developer/announcements/#the-widget-on-a-page).
+- On [Pages](/portal/console/pages/#the-portals-widgets), add **Announcements** with **Add a widget…**, then set its settings in its row. **Announcements shown** is how many it shows at once: up to 3, or any number from 1 to 10. Editors' days and times are read in the widget's **Time zone**: Europe/Bucharest unless you choose another. Developers: see [Developer: Announcements](/portal/developer/announcements/#the-widget-on-a-page).
 - Announcements belong to the site, not to the widget: every announcements widget on the site shows the same ones, so a site can place it on its home page and on any other.
 - A page with the widget is made for each reader and never kept in a cache, visitors' pages included.
 
@@ -30,7 +30,7 @@ An announcement has:
 - a title of up to 200 characters, and a text of up to 2,000, its line breaks kept;
 - how important it is: **For information**, or **Important**, which is marked as such and shown first;
 - who it is for: **Everyone**, visitors included; **People signed in**; or **Those chosen below**, one a line, up to 20: `user:<email>`, `group:<name>`, `organization:<name>/<name>` or `role:administrator`, as [permissions](/portal/sites/permissions/) name them. A group or an organization the portal does not have is refused;
-- when it starts and, if it should stop by itself, when it ends, as a day and a time in the widget's time zone (Europe/Bucharest unless the widget names another); a day given without a time means 00:00 that day. Left empty, it starts at once and stays until an editor deletes it. An end, when given, is in the future and at most a year after the start.
+- when it starts and, if it should stop by itself, when it ends, as a day and a time in the widget's **Time zone** (Europe/Bucharest unless you choose another); a day given without a time means 00:00 that day. Left empty, it starts at once and stays until an editor deletes it. An end, when given, is in the future and at most a year after the start.
 
 **Manage announcements** lists every announcement of the site, 50 a page, with its state: **Scheduled**, **Shown now** or **Ended**; it is the only place an editor sees announcements meant for others.
 

@@ -25,7 +25,13 @@ Those who write edit an article in a form, with the markup shown under the text:
 
 ## Place a wiki
 
-A wiki is a widget placed on a page. It is a wiki, or a knowledge base. Who writes a wiki is its members, which means everyone signed in who may [see the widget](/portal/sites/permissions/), unless the widget says the site's editors only; a knowledge base is always written by the site's editors. The wiki opens on the article whose address is `home`, unless the widget names another. The console's page editor does not place wikis yet. For now, this is set in the site's configuration: see [Developer: Wikis and knowledge bases](/portal/developer/wiki/#a-wiki-on-a-page).
+A wiki is a widget placed on a page. On [Pages](/portal/console/pages/#the-portals-widgets), add **Wiki** with **Add a widget…**, then set its settings in its row:
+
+- **Kind**: **Wiki**, or **Knowledge base**. A wiki unless you choose otherwise.
+- **Who writes**: **Everyone who sees it**, which means everyone signed in who may [see the widget](/portal/sites/permissions/), or **The site's editors**. A knowledge base is always written by the site's editors, so the row does not ask.
+- **Home article**: the article the wiki opens on, by its address: `home`, unless you name another.
+
+Developers: see [Developer: Wikis and knowledge bases](/portal/developer/wiki/#a-wiki-on-a-page).
 
 Each wiki widget is a wiki of its own. Its articles belong to the widget: moving it to another page, or giving it another name in the site's configuration, leaves them behind, and they come back if it returns. A page with a wiki is made for each person and never kept in a cache.
 

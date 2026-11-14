@@ -14,7 +14,7 @@ The calendar opens on a month, as a grid of weeks with each event on its day:
 - Each calendar widget is a calendar of its own. Its events belong to the widget: moving it to another page, or giving it another name in the site's configuration, leaves them behind, and they come back if it returns.
 - A page with a calendar is made for each person and never kept in a cache.
 - Calendars are for the site's pages: a person's dashboard does not take one.
-- The widget says in which time zone it shows its times: Europe/Bucharest unless it names another, such as UTC. The calendar opens on a month, or on the list of what is coming when the widget says so. The console's page editor does not place calendars yet. For now, this is set in the site's configuration: see [Developer: Calendars](/portal/developer/calendar/#a-calendar-on-a-page).
+- On [Pages](/portal/console/pages/#the-portals-widgets), add **Calendar** with **Add a widget…**, then set its settings in its row. **Time zone** is the zone it shows its times in: Europe/Bucharest unless you choose another, such as UTC. **View** is how the calendar opens: **Month**, or **Agenda**, the list of what is coming. Developers: see [Developer: Calendars](/portal/developer/calendar/#a-calendar-on-a-page).
 
 ## Read it
 
@@ -28,7 +28,7 @@ An event's page shows when it starts and ends, where it is, its description and 
 
 ## Add events
 
-Those who may add events see **New event**. By default these are the site's editors and those who [edit the page](/portal/sites/permissions/); a calendar can instead let everyone signed in who may see the widget add events, which makes it a calendar its members write. For now, this is set in the site's configuration: see [Developer: Calendars](/portal/developer/calendar/#a-calendar-on-a-page).
+Those who may add events see **New event**. By default these are the site's editors and those who [edit the page](/portal/sites/permissions/); a calendar can instead let everyone signed in who may see the widget add events, which makes it a calendar its members write. Choose **Everyone who sees it**, or **The page's editors**, under **Who adds events** in the widget's row on [Pages](/portal/console/pages/#the-portals-widgets). Developers: see [Developer: Calendars](/portal/developer/calendar/#a-calendar-on-a-page).
 
 ![The New event form: Title, All day, the start and end day and time, Where, Description, and how the event repeats.](../../../../assets/screenshots/portal-calendar-new.png)
 

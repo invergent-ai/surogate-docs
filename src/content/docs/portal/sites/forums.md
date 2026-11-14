@@ -17,7 +17,13 @@ A topic opens on the same page: its message, then its answers, and a form to ans
 
 ## Place a forum
 
-A forum is a widget placed on a page. It is a discussion, for topics people talk about, or a Q&A, for questions and their answers; a discussion unless the widget says otherwise. Changing it later changes the topics started afterwards, and each topic keeps the kind it was started with. A topic or an answer shows as soon as it is written; a forum can instead ask that they wait until a moderator approves them. The list shows 20 topics a page, or any number from 1 to 50 that the widget asks for. The console's page editor does not place forums yet. For now, this is set in the site's configuration: see [Developer: Forums and Q&A](/portal/developer/forums/#a-forum-on-a-page).
+A forum is a widget placed on a page. On [Pages](/portal/console/pages/#the-portals-widgets), add **Forum** with **Add a widget…**, then set its settings in its row:
+
+- **Kind**: **Discussions**, for topics people talk about, or **Questions and answers**, for questions and their answers. Discussions unless you choose otherwise. Changing it later changes the topics started afterwards, and each topic keeps the kind it was started with.
+- **New topics and replies**: **Shown at once, moderated after**, so a topic or an answer shows as soon as it is written, or **Wait for a moderator**, so it waits until a moderator approves it.
+- **Topics per page**: the list shows 20 topics a page, or any number from 1 to 50.
+
+Developers: see [Developer: Forums and Q&A](/portal/developer/forums/#a-forum-on-a-page).
 
 Each forum widget is a board of its own: two forums, on one page or on two, keep their topics apart. A page with a forum is made for each person and never kept in a cache.
 

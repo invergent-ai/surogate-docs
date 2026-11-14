@@ -7,13 +7,13 @@ A notification tells one person something: a title, a few words, and a page of t
 
 ## Where people find them
 
-**On the site.** A page can show a person's notifications. The heading counts the ones they have not read; opening one marks it read and goes to its page. It shows the newest 5, or another number from 1 to 20 when the page says so.
+**On the site.** A page can show a person's notifications. The heading counts the ones they have not read; opening one marks it read and goes to its page. It shows the newest 5, or another number from 1 to 20 when **Notifications shown** says so.
 
 ![The notifications widget on a site page: "Notifications 2", with two messages, each with its title, its words and when it came.](../../../../assets/screenshots/portal-notifications-widget.png)
 
 Only people signed in see theirs. Visitors see nothing, and neither does an administrator seeing the portal as someone else. A page with the widget is made for each person and never kept in a cache.
 
-The console's page editor does not place this widget yet. For now, this is set in the site's configuration: see [Developer: Notifications](/portal/developer/notifications/#the-widget-on-a-page).
+On [Pages](/portal/console/pages/#the-portals-widgets), add **Notifications** with **Add a widget…**, then set **Notifications shown** in its row. Developers: see [Developer: Notifications](/portal/developer/notifications/#the-widget-on-a-page).
 
 **In the console.** The bell at the bottom of the menu shows how many are unread. Press it to read them, open one, or **Mark all read**.
 

@@ -29,7 +29,7 @@ Each sync reads every app's manifest and checks it. If an app cannot be reached,
 
 ## Place a widget
 
-In the console, **Add a widget…** in the [page editor](/portal/console/pages/#edit-a-page) places one of an app's widgets in a part of the page. When the widget needs a setting to work, the editor asks for it.
+In the console, **Add a widget…** in the [page editor](/portal/console/pages/#edit-a-page) places one of an app's widgets in a part of the page. The apps' widgets are listed apart from [the portal's own](/portal/console/pages/#the-portals-widgets). When the widget needs a setting to work, the editor asks for it.
 
 - A widget's preferences are checked against what the widget accepts. A value that does not fit is refused, with the field.
 - Each widget has a name of its own on its page, in lower-case letters, digits and hyphens. It appears in the page's address when someone changes the widget.

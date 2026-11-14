@@ -190,6 +190,22 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_widgets_in_the_page_editor(self):
+        for shot in ('portal-widget-poll-set', 'portal-widget-calendar-set'):
+            self.assertIn(shot, (PORTAL / 'console/pages.md').read_text())
+        doc = page('/portal/console/pages/')
+        self.assertIn('id="the-portals-widgets"', doc)
+        for route in ('/portal/sites/polls/', '/portal/sites/listings/'):
+            self.assertRegex(doc, rf'href="{route}(#[a-z-]+)?"')
+        # The feature pages tell how to place a widget in the editor, not that the editor cannot.
+        for name in ('activity', 'announcements', 'assistants', 'blogs', 'calendar', 'comments', 'documents', 'forums',
+                     'keel', 'kpis', 'listings', 'notifications', 'polls', 'wiki'):
+            source = (PORTAL / 'sites' / f'{name}.md').read_text()
+            self.assertNotIn('does not place', source, name)
+            self.assertIn('/portal/console/pages/#the-portals-widgets', source, name)
+            self.assertIn('/portal/console/pages/#the-portals-widgets', page(f'/portal/sites/{name}/'), name)
+        self.assertIn('**Add a widget…**', (PORTAL / 'sites/polls.md').read_text())
+
     def test_portal_sites(self):
         doc = page('/portal/console/sites/')
         for anchor in ('the-list', 'make-a-site', 'change-a-sites-settings', 'when-a-save-is-refused'):

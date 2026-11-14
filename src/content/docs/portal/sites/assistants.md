@@ -43,7 +43,12 @@ The portal talks to an agent with the agent's own API key.
 
 The key opens only for the agent and address the configuration names. If you change either, set the key again. No action can use the key.
 
-Then place the assistant on a page. The page's widget names the agent, and may give the chat a heading. Without one, the heading is the agent's name; with neither, the chat has no heading. The console's page editor does not place the assistant yet. For now, this is set in the site's configuration: see [Developer: Assistants](/portal/developer/assistants/#the-assistant-on-a-page).
+Then place the assistant on a page. On [Pages](/portal/console/pages/#the-portals-widgets), add **Assistant** with **Add a widget…**, then set its settings in its row:
+
+- **Agent**: the agent to talk with. It is required, and lists the agents the portal's configuration names for this. When none fits, the widget is listed as **needs an agent** and cannot be added.
+- **Title**: the chat's heading, for each language. Without one, the heading is the agent's name; with neither, the chat has no heading.
+
+The form warns that everyone who may see the page may chat with the agent and use what it can do. Developers: see [Developer: Assistants](/portal/developer/assistants/#the-assistant-on-a-page).
 
 ## A chat for visitors
 
@@ -54,7 +59,15 @@ A page can also carry a chat for its visitors, signed in or not: the agent's web
    - The chat refuses a page on any address not in the list.
    - Set a limit on the messages of one chat there too: without one, a chat has none.
    - **Save.** Then copy the publishable key, which starts with `surg_wk_`, and the agent's address from the embed code.
-2. **Give the agent its website** in the portal's configuration, and **place the website chat**, one on a page. The chat's heading (the agent's name, or "Assistant", when none is given), its greeting of up to 500 characters, its colour and its corner (bottom right, or bottom left) are set with it. For now, this is set in the site's configuration: see [Developer: Assistants](/portal/developer/assistants/#the-chat-for-visitors).
+2. **Give the agent its website** in the portal's configuration. The console has no screen for this yet. For now, this is set in the site's configuration: see [Developer: Assistants](/portal/developer/assistants/#the-chat-for-visitors).
+3. **Place the website chat**, one on a page. On [Pages](/portal/console/pages/#the-portals-widgets), add **Website chat** with **Add a widget…**, then set its settings in its row:
+   - **Agent**: the agent whose website the chat is. It is required, and lists the agents given a website.
+   - **Title**: the chat's heading, for each language: the agent's name, or "Assistant", when none is given.
+   - **Welcome message**: its greeting, of up to 500 characters, for each language.
+   - **Colour**: **The agent's own colour**, unless you set one.
+   - **Position**: its corner, bottom right or bottom left.
+
+   When a page has a website chat, the widget is listed as **one per page** and cannot be added again. Developers: see [Developer: Assistants](/portal/developer/assistants/#the-chat-for-visitors).
 
 **What visitors and the agent keep:**
 - The chat runs on the agent's runtime, which stores each conversation as it stores all the agent's work.

@@ -19,7 +19,7 @@ Those who [edit the page](/portal/sites/permissions/) also see **New poll** and 
 
 ## Place a poll
 
-A poll is a widget placed on a page. Its time zone is the one a poll's closing time is read in: Europe/Bucharest unless the widget names another. The console's page editor does not place polls yet. For now, this is set in the site's configuration: see [Developer: Polls](/portal/developer/polls/).
+A poll is a widget placed on a page. On [Pages](/portal/console/pages/#the-portals-widgets), add **Poll** with **Add a widget…**, then set **Time zone** in its row. It is the zone a poll's closing time is read in: Europe/Bucharest unless you choose another. Developers: see [Developer: Polls](/portal/developer/polls/).
 
 Each poll widget keeps polls of its own. Its polls belong to the widget: moving it to another page, or giving it another name in the site's configuration, leaves them behind. A page with a poll is made for each reader and never kept in a cache.
 

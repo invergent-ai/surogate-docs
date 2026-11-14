@@ -17,11 +17,16 @@ On a page that shows a news entry, the widgets sit below its text. The rating sh
 
 ## Place the widgets
 
-The two widgets are placed on a page, such as the display page of a content type. A comment shows as soon as it is written, and moderators hide or delete it later; a page can instead ask that a comment waits until a moderator approves it. The comments widget shows the newest comments first, each with its answers: 50 comments, or any number from 1 to 100 that the page asks for. Older comments are not shown.
+The two widgets are placed on a page, such as the display page of a content type. A comment shows as soon as it is written, and moderators hide or delete it later; a page can instead ask that a comment waits until a moderator approves it. The comments widget shows the newest comments first, each with its answers: 50 comments, or any number from 1 to 100. Older comments are not shown.
 
 The rating widget has no settings. A page with either widget is made for each person and never kept in a cache. On a page that shows an entry but was opened without one, the widgets offer nothing.
 
-The console's page editor does not place these widgets yet. For now, this is set in the site's configuration: see [Developer: Comments and ratings](/portal/developer/comments/#comments-and-a-rating-on-a-page).
+On [Pages](/portal/console/pages/#the-portals-widgets), add **Comments** and **Rating** with **Add a widget…**. **Rating** has its row, but no settings. **Comments** has two:
+
+- **New comments**: **Shown at once, moderated after**, or **Wait for a moderator**.
+- **Comments shown**: 50, or any number from 1 to 100.
+
+Developers: see [Developer: Comments and ratings](/portal/developer/comments/#comments-and-a-rating-on-a-page).
 
 ## Write and answer
 

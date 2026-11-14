@@ -26,13 +26,13 @@ The DMS must trust the portal. Its administrator adds the portal's **issuer**, s
 
 ## Show a folder
 
-The portal's documents widget is placed on a page. The console's page editor does not place it yet. For now, this is set in the site's configuration: see [Developer: Documents](/portal/developer/documents/#a-folder-on-a-page).
+The portal's documents widget is placed on a page. On [Pages](/portal/console/pages/#the-portals-widgets), add **Documents** with **Add a widget…**. Until the portal is connected to a DMS, the widget is listed as **needs a DMS** and cannot be added. Developers: see [Developer: Documents](/portal/developer/documents/#a-folder-on-a-page).
 
-The widget names:
+Set in its row:
 
-- the DMS folder, by its id. Open the folder in the DMS and copy the id from its address;
-- how many documents it shows, 1 to 50; 10 when none is named;
-- how they are sorted: by title (when none is named) or newest, the ones changed last first.
+- **DMS folder id**: the DMS folder, by its id. It is required. Open the folder in the DMS and copy the id from its address;
+- **Documents shown**: how many documents it shows, 1 to 50; 10 when none is set;
+- **Order**: how they are sorted: **By title** (when none is chosen) or **Newest first**, the ones changed last first.
 
 A person signed in sees the folder's documents they may see in the DMS, each with its state, version, file name, size and date. Each title opens the document in the DMS. Below the list, a link opens the folder in the DMS, saying how many more it holds.
 
@@ -46,10 +46,10 @@ What a document holds, its fields and their values, is never shown in the portal
 
 ## File documents from a page
 
-A documents widget can also let people file a new document into its folder, from the page. For now, this is set in the site's configuration: see [Developer: Documents](/portal/developer/documents/#a-folder-with-filing-from-the-page).
+A documents widget can also let people file a new document into its folder, from the page. Developers: see [Developer: Documents](/portal/developer/documents/#a-folder-with-filing-from-the-page).
 
-- The widget can show a form under the list, with a title and a file. When it does not, the widget only shows the folder.
-- The widget can name the DMS document type new documents are filed under, by its id. When it names none, they are filed with no type, if the folder allows that. A type with a folder of its own in the DMS files there, not in the widget's folder, so its new documents do not show in this list.
+- **People may file documents here**: the widget shows a form under the list, with a title and a file. When it is not ticked, the widget only shows the folder.
+- **Document type id**: the DMS document type new documents are filed under, by its id. The row asks for it only when **People may file documents here** is ticked. When it is empty, they are filed with no type, if the folder allows that. A type with a folder of its own in the DMS files there, not in the widget's folder, so its new documents do not show in this list.
 
 The form shows only to people the DMS lets file into the folder, under that type. Everyone else sees the list as before. The file goes to the DMS as the person, and the DMS decides whether to take it. The portal keeps nothing of it. A title left blank becomes the file's name.
 
@@ -68,13 +68,13 @@ An administrator seeing the portal as someone else cannot file for them. Each fi
 
 ## Show one document
 
-The portal's document widget shows one DMS document and its versions. The console's page editor does not place it yet. For now, this is set in the site's configuration: see [Developer: Documents](/portal/developer/documents/#one-document-on-a-page).
+The portal's document widget shows one DMS document and its versions. On [Pages](/portal/console/pages/#the-portals-widgets), add **Document** with **Add a widget…**. Like **Documents**, it needs a DMS. Developers: see [Developer: Documents](/portal/developer/documents/#one-document-on-a-page).
 
-The widget names:
+Set in its row:
 
-- the DMS document, by its id. Open it in the DMS and copy the id from its address;
-- how many of the newest versions to list, 1 to 50; 10 when none is named. A link below the list says how many older ones the DMS holds;
-- whether people may add a version from the page. When they may not, the widget only shows the document.
+- **DMS document id**: the DMS document, by its id. It is required. Open it in the DMS and copy the id from its address;
+- **Versions shown**: how many of the newest versions to list, 1 to 50; 10 when none is set. A link below the list says how many older ones the DMS holds;
+- **People may add a version**: whether people may add a version from the page. When it is not ticked, the widget only shows the document.
 
 A person signed in sees the document's title and state, with **Open in the DMS**, where the document is viewed. Below are its versions, newest first: each version's number, date, file, size and comment, and a **Download**. The current version is marked. A file the DMS holds aside after a failed check has no Download.
 
