@@ -9,11 +9,11 @@ A logic flow is a short piece of server logic. It takes typed inputs, works thro
 
 Flows have no page of their own: a person sees only what the form, job or endpoint that calls them does with the outputs. Administrators see the portal's flows under [Flows](/portal/console/flows/) in the console, with each flow's inputs and outputs. **Run tests** runs the flow's tests and shows each one passing or failing:
 
-![The Flows page: the flow "Building permit fee" with its inputs and outputs, four tests marked Passed, and under Named values the permit fee rate.](../../../../assets/screenshots/portal-flows-tests.png)
+![The Flows page with New flow: the flow "Building permit fee" with its inputs and outputs, Edit, four tests marked Passed, and under Named values the permit fee rate.](../../../../assets/screenshots/portal-flows-tests.png)
 
 ## A flow
 
-A flow has an id of lower-case letters, digits and hyphens, and a name. The console shows the flows the portal runs; it does not write them yet. For now, this is set in the site's configuration: see [Developer: Logic flows](/portal/developer/flows/#a-flow).
+A flow has an id of lower-case letters, digits and hyphens, and a name. Flows are made and changed in the console, under [Flows](/portal/console/flows/#make-or-change-a-flow). Developers can also write them in the site's configuration: see [Developer: Logic flows](/portal/developer/flows/#a-flow).
 
 **Inputs and outputs** are names with a type: `text`, `number`, `integer`, `boolean`, `list`, `object` or `any`. An input may be optional, which means it may be left out. A flow has at most 32 of each.
 
@@ -30,7 +30,7 @@ Expressions in a flow read the flow's inputs, the person, the site, the language
 
 An action list calls a flow by its id, and keeps its outputs for the actions after it. The inputs are checked against the flow's types when the call runs. If the flow fails, the calling action fails with the message `Flow <id>: …`, and the list's error handling can catch it. Flows can call other flows, at most 8 deep. A flow's steps count toward the run's 10 seconds and 10,000 steps.
 
-For now, this is set in the site's configuration: see [Developer: Logic flows](/portal/developer/flows/#call-a-flow).
+In the console, **Run a logic flow** calls one from any action list: a form's [steps](/portal/console/forms/#steps), an endpoint's or a job's actions, or another flow's. Developers can also write it in the site's configuration: see [Developer: Logic flows](/portal/developer/flows/#call-a-flow).
 
 ## Contracts
 
