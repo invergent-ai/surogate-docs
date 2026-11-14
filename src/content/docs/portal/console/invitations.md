@@ -54,7 +54,7 @@ Below the form, **Sent** lists the invitations: **Waiting**, **Accepted**, **Wit
 
 A site says whether its editors invite people, into which groups (10 at most, by name; names the portal does not have are left out), and for which email domains. When it gives domains, editors may invite only those, matched exactly: primarie.ro does not cover mail.primarie.ro. When it says nothing, only administrators invite. The site's editors then see **Invitations** in the console.
 
-The console has no screen for this yet. For now, this is set in the site's configuration: see [Developer: Invitations](/portal/developer/invitations/).
+Set it in the site's settings, on [Sites](/portal/console/sites/#change-a-sites-settings), under **Invitations**. Developers: see [Developer: Invitations](/portal/developer/invitations/).
 
 ## What happens to them later
 

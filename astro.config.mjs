@@ -503,6 +503,7 @@ export default defineConfig({
                 'portal/console/tokens',
                 'portal/console/tenants',
                 'portal/console/studio',
+                'portal/console/sites',
                 'portal/console/pages',
                 'portal/console/content',
                 'portal/console/moderation',

@@ -5,7 +5,7 @@ description: Build a site's pages in the console, with its page tree and an edit
 
 **Pages** builds the portal's sites in the console. It shows each site's pages as a tree. For each page you set its title, its address and its layout, and arrange what each part of the layout holds. Every save is a [version](/portal/console/versions/) you can undo.
 
-**Pages** is for administrators, on a portal whose site files the portal keeps. It is not in the menu otherwise.
+**Pages** is for administrators, on a portal whose site files the portal keeps. It is not in the menu otherwise. A new site, and a site's name, languages and home page, are made on [Sites](/portal/console/sites/).
 
 ## The page tree
 

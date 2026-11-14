@@ -46,6 +46,7 @@ They can now sign in to the console and manage the portal's people and sign-in.
 
 ## Next
 
+- [Make a site and change its settings](/portal/console/sites/)
 - [Let people sign in with their organisation account](/portal/console/sign-in-providers/)
 - [Build your organisation chart](/portal/console/organizations/)
 - [Put people in groups](/portal/console/groups/)
