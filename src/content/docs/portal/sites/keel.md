@@ -77,7 +77,7 @@ The portal keeps what Keel answered: the case's or process's id and number, how 
 
 ## When something happens in Keel
 
-A [job](/portal/sites/jobs/) can run each time something happens in the Keel project: a case opened, entered a stage, closed or reopened, or a process started, ended or was cancelled. For example, a job can mail the person who asked when their case closes. The form that started the case keeps its id in a record of a [data model](/portal/sites/data-models/) whose case id field can be filtered on, so the job can find it. For now, this is set in the site's configuration: see [Developer: Keel](/portal/developer/keel/#a-job-that-mails-the-person-when-a-case-closes).
+A [job](/portal/sites/jobs/) can run each time something happens in the Keel project: a case opened, entered a stage, closed or reopened, or a process started, ended or was cancelled. For example, a job can mail the person who asked when their case closes. The form that started the case keeps its id in a record of a [data model](/portal/sites/data-models/) whose case id field can be filtered on, so the job can find it. Build the job on the [Jobs](/portal/sites/jobs/) page, with **When** set to an event of Keel; Keel's service key is set under **Integrations → Keel**. Developers: see [Developer: Keel](/portal/developer/keel/#a-job-that-mails-the-person-when-a-case-closes).
 
 | Event | When | What the run also reads |
 |---|---|---|

@@ -87,5 +87,5 @@ If the portal refuses the form for its steps, **Some steps have problems** shows
 
 **Other sites it may send people to** lists the addresses outside the portal that **Go to a page** may send people to, each on a line of its own.
 
-Actions the builder does not draw yet, such as those of an app or the file actions, are kept as they are written when you save. Change them in the site's configuration: see [Developer: Forms](/portal/developer/forms/#actions-after-it-is-sent).
+Every action is built here, an app's and the file actions too. A key the builder does not draw, written by hand, is kept as it is when you save. Developers: see [Developer: Forms](/portal/developer/forms/#actions-after-it-is-sent).
 

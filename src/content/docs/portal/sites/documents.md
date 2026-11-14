@@ -110,7 +110,7 @@ A search box can show the DMS's documents too, as the person may read them there
 
 ## When something happens in the DMS
 
-A [job](/portal/sites/jobs/) can run each time a document is made, given a new version, moved to another state or folder, changed, or deleted in the DMS. The portal reads the DMS's events with a key of its own: ask the DMS's administrator for a service key, add it as a secret [connector](/portal/sites/connectors/), set its value under **Connectors**, and name that connector in the site's configuration as the DMS's key. Then a job can wait for documents to be approved. For now, this is set in the site's configuration: see [Developer: Documents](/portal/developer/documents/#the-service-key-and-a-job).
+A [job](/portal/sites/jobs/) can run each time a document is made, given a new version, moved to another state or folder, changed, or deleted in the DMS. The portal reads the DMS's events with a key of its own: ask the DMS's administrator for a service key, then under **Integrations → Documents (DMS)** choose **New key**, save, and **Set the key**. Then a job can wait for documents to be approved: build it on the [Jobs](/portal/sites/jobs/) page, with **When** set to an event of the DMS. Developers: see [Developer: Documents](/portal/developer/documents/#the-service-key-and-a-job).
 
 | Event | When | What the run also reads |
 |---|---|---|
