@@ -13,7 +13,7 @@ UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'a
                   'notifications.md', 'permissions.md', 'polls.md', 'search.md', 'seo.md', 'values.md', 'wiki.md')
 
 # The console pages written the same way.
-CONSOLE_PAGES = ('data-console.md', 'files.md', 'invitations.md')
+CONSOLE_PAGES = ('data-console.md', 'files.md', 'invitations.md', 'sites.md')
 
 # Developer pages that are not the config of one user page.
 DEVELOPER_ONLY = ('index.md', 'command-line.md', 'develop-locally.md', 'check-a-site.md', 'previews.md', 'agents.md',
@@ -188,6 +188,20 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/console/pages/"', page('/portal/sites/layouts/'))
         source = (ROOT / 'src/content/docs/portal/console/pages.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
+    def test_portal_sites(self):
+        doc = page('/portal/console/sites/')
+        for anchor in ('the-list', 'make-a-site', 'change-a-sites-settings', 'when-a-save-is-refused'):
+            self.assertIn(f'id="{anchor}"', doc)
+        for shot in ('portal-sites-list', 'portal-site-new', 'portal-site-settings', 'portal-site-settings-seo'):
+            self.assertIn(shot, (PORTAL / 'console/sites.md').read_text())
+        self.assertIn('href="/portal/console/sites/"', page('/portal/quickstart/'))
+        self.assertIn('href="/portal/console/sites/"', page('/portal/console/pages/'))
+        self.assertIn('href="/portal/console/sites/#change-a-sites-settings"', page('/portal/sites/seo/'))
+        self.assertIn('href="/portal/console/sites/#change-a-sites-settings"', page('/portal/console/invitations/'))
+        source = (PORTAL / 'console/sites.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml', 'site.yaml'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
     def test_portal_content(self):

@@ -31,7 +31,7 @@ The same settings, as files in the site's configuration, are in [Developer: Sear
 
 ## Describe a site
 
-A site can say the same for all its pages, and who is behind it: the organization, with its name, address and logo. A page's own description and image win over the site's. A site can also ask search engines to leave the whole site out. The console does not set these yet. For now, this is set in the site's configuration: see [Developer: Search engines and link previews](/portal/developer/seo/#a-sites-seo).
+A site can say the same for all its pages, and who is behind it: the organization, with its name, address and logo. A page's own description and image win over the site's. A site can also ask search engines to leave the whole site out. Set them in the site's settings, on [Sites](/portal/console/sites/#change-a-sites-settings), under **Search engines**. Developers: see [Developer: Search engines and link previews](/portal/developer/seo/#a-sites-seo).
 
 ## What crawlers are told
 
