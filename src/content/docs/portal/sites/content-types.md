@@ -72,7 +72,7 @@ A vocabulary sorts entries into categories, such as Topics or Area. It sorts the
 
 ## Libraries
 
-A library holds content shared by several sites, such as announcements every site of a city hall shows. Its own editors write its entries; pages of the sites it serves show them. A library serves the sites it names, or every site. The console does not build libraries yet. For now, this is set in the site's configuration: see [Developer: Content types](/portal/developer/content-types/#a-librarys-file).
+A library holds content shared by several sites, such as announcements every site of a city hall shows. Its own editors write its entries; pages of the sites it serves show them. A library serves the sites it names, or every site. Make and change them on [Libraries](/portal/console/libraries/). Developers: see [Developer: Content types](/portal/developer/content-types/#a-librarys-file).
 
 - Who edits a library: the people and groups it names as editors, those given it on [Access](/portal/console/access/), and the administrators. A site's editors do not, unless named.
 - A library's entries are written in the portal's languages, Romanian and English. A site shows them in its own languages, falling back to its main one.

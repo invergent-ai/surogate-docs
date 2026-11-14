@@ -99,6 +99,8 @@ categories:
 
 ## A library's file
 
+Administrators can also make libraries in the console's [Libraries](/portal/console/libraries/) page. The console does not keep comments written in the file by hand when it saves it.
+
 In `content/libraries/<id>.yaml`:
 
 ```yaml

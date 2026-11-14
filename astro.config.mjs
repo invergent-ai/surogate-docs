@@ -509,6 +509,8 @@ export default defineConfig({
                 'portal/console/moderation',
                 'portal/console/content-types',
                 'portal/console/vocabularies',
+                'portal/console/libraries',
+                'portal/console/folders',
                 'portal/console/search',
                 'portal/console/files',
                 'portal/console/forms',

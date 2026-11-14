@@ -21,11 +21,11 @@ Each folder is either:
 - **Public**: anyone downloads its files, signed in or not;
 - **Secure**: only the people the folder names may open its files, and its editors. A secure folder that names no one is for its editors only.
 
-A folder has a name, in Romanian and English, and is secure unless it is made public. A secure folder names who may open its files, and who edits the folder besides the administrators. The console has no screen to make a folder yet. For now, this is set in the site's configuration: see [Developer: Files](/portal/developer/files/).
+A folder has a name, in Romanian and English, and is secure unless it is made public. A secure folder names who may open its files, and who edits the folder besides the administrators. Administrators make and change folders on [Folders](/portal/console/folders/), which **Folder settings** next to the folder selector opens. Developers: see [Developer: Files](/portal/developer/files/).
 
 ## Where files are kept
 
-A folder's files are kept by the portal itself, or in a bucket of an S3-compatible storage service (Amazon S3, Cloudflare R2, MinIO, Garage) that you name with a [bucket connector](/portal/sites/connectors/#buckets). A folder is kept in a bucket when its configuration names the connector, and, if it wants, a prefix of the bucket for its files. The console has no screen for this yet. For now, this is set in the site's configuration: see [Developer: Files](/portal/developer/files/#a-folder-kept-in-a-bucket). Next to the folder's name, **Files** says which: **In the portal**, or **In** and the connector's name.
+A folder's files are kept by the portal itself, or in a bucket of an S3-compatible storage service (Amazon S3, Cloudflare R2, MinIO, Garage) that you name with a [bucket connector](/portal/sites/connectors/#buckets). Administrators choose it under **Where its files are kept** in the folder's settings, with the connector and, if they want, a prefix of the bucket for its files: see [Folders](/portal/console/folders/#where-its-files-are-kept). Developers: see [Developer: Files](/portal/developer/files/#a-folder-kept-in-a-bucket). Next to the folder's name, **Files** says which: **In the portal**, or **In** and the connector's name.
 
 ![The Files page with the folder Archive chosen: "Only the people it lets view", "In Cloud archive", and the message that the folder's storage is not connected, with Try again.](../../../../assets/screenshots/portal-files-bucket.png)
 
@@ -71,4 +71,4 @@ A file already there under that name is never replaced: the console says so, and
 
 **Remove** takes a file away, after asking. Links to it stop working. Earlier versions of a file, replaced or removed, are kept a month, then gone.
 
-A folder taken out of the site's configuration keeps its files; a folder made again under the same id finds them. Earlier versions are the portal's own: a folder kept in a bucket has none.
+A folder that holds files is never removed: [Folders](/portal/console/folders/#removing) asks you to move or remove its files first. Earlier versions are the portal's own: a folder kept in a bucket has none.
