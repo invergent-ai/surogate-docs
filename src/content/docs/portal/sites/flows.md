@@ -9,7 +9,7 @@ A logic flow is a short piece of server logic. It takes typed inputs, works thro
 
 Flows have no page of their own: a person sees only what the form, job or endpoint that calls them does with the outputs. Administrators see the portal's flows under [Flows](/portal/console/flows/) in the console, with each flow's inputs and outputs. **Run tests** runs the flow's tests and shows each one passing or failing:
 
-![The Flows page with New flow: the flow "Building permit fee" with its inputs and outputs, Edit, four tests marked Passed, and under Named values the permit fee rate.](../../../../assets/screenshots/portal-flows-tests.png)
+![The Flows page with New value, New contract and New flow: the flow "Building permit fee" with its inputs and outputs, Edit, four tests marked Passed, and under Named values the permit fee rate, values.cotaTaxa, an expression kept for the whole portal for 3,600 seconds, with Edit.](../../../../assets/screenshots/portal-flows-tests.png)
 
 ## A flow
 
@@ -36,7 +36,7 @@ In the console, **Run a logic flow** calls one from any action list: a form's [s
 
 A contract is a shared set of inputs and outputs. A flow can implement a contract: it then takes the contract's inputs and outputs, and does not write its own. A caller can then pick one of the contract's flows with an expression that gives a flow's id. If no such flow implements the contract, the action fails, and no other flow runs.
 
-For now, this is set in the site's configuration: see [Developer: Logic flows](/portal/developer/flows/#contracts).
+Contracts are made and changed in the console, under [Flows](/portal/console/flows/#make-or-change-a-contract), and a flow follows one under **Follows a contract**. Developers can also write them in the site's configuration: see [Developer: Logic flows](/portal/developer/flows/#contracts).
 
 ## Tests
 

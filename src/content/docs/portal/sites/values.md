@@ -17,7 +17,7 @@ Administrators see the portal's named values on the console's [Flows](/portal/co
 
 ## A value
 
-A value has a name: letters, digits and `_`, starting with a lower-case letter. The console shows the portal's values; it does not write them yet. For now, this is set in the site's configuration: see [Developer: Named values](/portal/developer/values/#a-value).
+A value has a name: letters, digits and `_`, starting with a lower-case letter. Values are made and changed in the console, under [Flows](/portal/console/flows/#make-or-change-a-named-value). Developers can also write them in the site's configuration: see [Developer: Named values](/portal/developer/values/#a-value).
 
 A value is one of:
 - An expression.
@@ -49,7 +49,7 @@ A value is kept per language too. A value kept for a site or the whole portal ne
 
 Kept values start afresh whenever the site's configuration changes.
 
-For now, this is set in the site's configuration: see [Developer: Named values](/portal/developer/values/#how-long-it-is-kept).
+In the console, **Kept for** and **For how long** set these: see [Make or change a named value](/portal/console/flows/#make-or-change-a-named-value).
 
 ## When a value fails
 
