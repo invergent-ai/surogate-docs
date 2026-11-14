@@ -68,6 +68,22 @@ A mail account connector sends your forms' and jobs' email from your own address
 
 **Test** signs in to the service without sending anything, and says what is wrong: a secret Microsoft refuses, an app without Mail.Send, a key Google refuses. The credentials are kept for that service, sender and server alone; when one of them changes, set them again. An email already waiting goes out only through the account as it was when the email was queued; one that waits for an account not yet connected is tried again later.
 
+## Text messages and Slack
+
+`sendSms` sends a text message through Twilio or Clickatell, and `slackMessage` posts to a Slack channel, each through its connector (see the [config example](#a-text-message-and-a-slack-post)):
+
+- **When they go:** as emails do, only once the whole run ends well, and then from a queue: a service that is busy or does not answer is tried again after 1, 2, 4… minutes. A message is never sent twice, and never through a connector that changed since.
+- **Numbers:** international numbers, such as `+40712345678`; spaces, dots, dashes, brackets and a written `(0)` are taken out. A run texts at most 10 numbers, or 2 when nobody is signed in. A job texts as nobody unless it runs as someone.
+- **Text:** a text message is 1 to 480 characters, or 160 when nobody is signed in, since text messages are paid by the piece: about 67 characters each with Romanian letters. A Slack message is 1 to 4,000 characters, and a run posts at most 5.
+- **A visitor's words in Slack** are written as they are: a visitor cannot mention the whole channel or hide a link under other words.
+- **Each hour:** a portal sends at most 200 text messages, 100 from one form or job and 5 to one number, and posts at most 100 Slack messages. Past these, none of the run's messages leave, and the run's log in the console says why.
+- Neither can be used in an [endpoint](/portal/sites/endpoints/).
+
+## Messaging accounts
+
+- **Text messages:** a connector of kind `sms` names Twilio or Clickatell and the sender: a number, a Twilio Messaging Service, or a Clickatell sender name. Set Twilio's auth token or Clickatell's API key under **Connectors**; **Test** reads the account without sending anything.
+- **Slack:** a connector of kind `slack` is a Slack incoming webhook. Create one in Slack for the channel, and paste its address, `https://hooks.slack.com/services/…`, under **Connectors**. It has no Test: a test would show in the channel.
+
 ## Hashes, signatures and random values
 
 | Type | What it does | Takes |
@@ -206,6 +222,37 @@ Through your own mail account, with a file:
 
 - `connector`: a mail account connector.
 - `attachments.folder`: the folder the files are in; `attachments.names`: an expression giving their names, as a list.
+
+### A text message and a Slack post
+
+```yaml
+- type: sendSms
+  connector: sms
+  to: form.phone
+  text: '"Cererea " + vars.number + " a fost înregistrată."'
+- type: slackMessage
+  connector: team
+  text: '"Cerere nouă: " + vars.number'
+```
+
+In `connectors/sms.yaml`, a Twilio account, and in `connectors/team.yaml`, a Slack webhook:
+
+```yaml
+name: { ro: SMS primărie, en: Town texts }
+kind: sms
+provider: twilio
+from: "+40700000000"
+accountSid: ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+```yaml
+name: { ro: Echipa, en: Team }
+kind: slack
+```
+
+- `provider`: `twilio` or `clickatell`.
+- `from`: the sender: an international number; for Twilio also a Messaging Service's SID (`MG…`); for Clickatell also a name of 3 to 11 letters and digits.
+- `accountSid`: Twilio's account SID, as its console shows it.
 
 ### A mail account's file
 

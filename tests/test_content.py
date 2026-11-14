@@ -643,6 +643,14 @@ class Content(unittest.TestCase):
             self.assertIn(word, guide)
         self.assertIn('href="/portal/sites/connectors/#mail-accounts"', page('/portal/sites/actions/'))
 
+    def test_portal_sms_and_slack(self):
+        guide = page('/portal/sites/connectors/')
+        for anchor in ('text-messages-and-slack', 'messaging-accounts', 'a-text-message-and-a-slack-post'):
+            self.assertIn(f'id="{anchor}"', guide)
+        for word in ('sendSms', 'slackMessage', 'hooks.slack.com', 'clickatell'):
+            self.assertIn(word, guide)
+        self.assertIn('href="/portal/sites/connectors/#text-messages-and-slack"', page('/portal/sites/actions/'))
+
     def test_portal_form_fields(self):
         guide = page('/portal/sites/form-fields/')
         for anchor in ('what-people-see', 'a-barcode-or-qr-code', 'a-barcode-scanner', 'an-iban', 'a-signature', 'in-the-console', 'save-a-signature-as-a-file', 'config-example'):

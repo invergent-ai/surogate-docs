@@ -69,6 +69,8 @@ Extensions add more: the [document actions](/portal/sites/document-actions/) mak
 | `startCase`, `startProcess`, `sendMessage`, `sendSignal` | Start a case or process in [Keel](/portal/sites/keel/#start-cases-from-the-portal), or send it a message or signal | see Keel |
 | `askAgent` | Asks one of your [agents](/portal/sites/assistants/) for an answer, a summary or a knowledge-base article, and keeps it | `agent`, `task`, `prompt`, `into` |
 | `http` | Calls a service through a [connector](/portal/sites/connectors/#call-a-service) | `connector`, `method`, `path`, `query`, `headers`, `body`, `okStatus`, `into` |
+| `sendSms` | Sends a [text message](/portal/sites/connectors/#text-messages-and-slack) through Twilio or Clickatell once the run ends well | `connector`, `to`, `text` |
+| `slackMessage` | Posts to a [Slack channel](/portal/sites/connectors/#text-messages-and-slack) once the run ends well | `connector`, `text` |
 | `email` | Sends an [email](/portal/sites/connectors/#email) once the run ends well, through the portal's mail server or [your own mail account](/portal/sites/connectors/#mail-accounts), with files | `to`, `subject`, `text`, `connector`, `attachments` |
 | `sendNotification` | Sends a [notification](/portal/sites/notifications/) to people of the portal once the run ends well | `to`, `title`, `body`, `link` |
 | `hash`, `hmac`, `randomToken`, `uuid` | [Hashes, signatures and random values](/portal/sites/connectors/#hashes-signatures-and-random-values) | |
