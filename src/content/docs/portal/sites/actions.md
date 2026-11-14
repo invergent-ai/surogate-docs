@@ -5,7 +5,7 @@ description: Lists of actions that run when something happens, such as a form be
 
 An action list is a short program of the portal's. It runs when something happens: a form being sent ([After it is sent](/portal/sites/forms/#after-it-is-sent)), a [logic flow](/portal/sites/flows/) being called, an [endpoint](/portal/sites/endpoints/) being asked or a [scheduled job](/portal/sites/jobs/) running. Each action does one thing: works out a value, logs a line, tells the person something, sends them elsewhere.
 
-The console does not edit action lists yet. For now, this is set in the site's configuration: see [Developer: Actions](/portal/developer/actions/).
+A form's actions are built in the console, under **Steps** in the form builder: see [Steps](/portal/console/forms/#steps). The console does not edit the action lists of flows, endpoints and jobs yet. For now, these are set in the site's configuration: see [Developer: Actions](/portal/developer/actions/).
 
 ## What people see
 
