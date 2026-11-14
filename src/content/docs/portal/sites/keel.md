@@ -24,9 +24,9 @@ Keel must trust the portal. Its administrator adds the portal's **issuer**, show
 
 ## My work
 
-The portal's My work widget is placed on a page. The console's page editor does not place it yet. For now, this is set in the site's configuration: see [Developer: Keel](/portal/developer/keel/#my-work-on-a-page).
+The portal's My work widget is placed on a page. On [Pages](/portal/console/pages/#the-portals-widgets), add **My work** with **Add a widget…**, then set **Tasks shown** in its row. Until the portal is connected to Keel, the widget is listed as **needs Keel** and cannot be added. Developers: see [Developer: Keel](/portal/developer/keel/#my-work-on-a-page).
 
-A person signed in sees their open work: each step of a case or task of a process that waits on them, with its number, the step, its due time and whether it is on track, past its goal or late. The widget shows 1 to 50 items; 10 when it names no number. Each item opens in Keel's business app, which asks the person to sign in there if they have not.
+A person signed in sees their open work: each step of a case or task of a process that waits on them, with its number, the step, its due time and whether it is on track, past its goal or late. **Tasks shown** sets how many items the widget shows: 1 to 50; 10 when none is set. Each item opens in Keel's business app, which asks the person to sign in there if they have not.
 
 - **Visitors** see a prompt to sign in.
 - **Someone Keel does not know as staff** sees that they do not work in Keel.
@@ -37,9 +37,9 @@ A page with the widget is made for each person: it is never kept in a cache and 
 
 ## The overview
 
-The portal's Keel overview widget is placed on a page, such as a dashboard for the people who supervise the project. The console's page editor does not place it yet. For now, this is set in the site's configuration: see [Developer: Keel](/portal/developer/keel/#the-overview-on-a-page).
+The portal's Keel overview widget is placed on a page, such as a dashboard for the people who supervise the project. On [Pages](/portal/console/pages/#the-portals-widgets), add **Work overview** with **Add a widget…**, then set **Days looked back** in its row. Like **My work**, it needs Keel. Developers: see [Developer: Keel](/portal/developer/keel/#the-overview-on-a-page).
 
-A supervisor of the Keel project sees its headline figures over the last days the widget names (1 to 92; 30 when it names none):
+A supervisor of the Keel project sees its headline figures over the last **Days looked back** (1 to 92; 30 when none is set):
 
 - the open cases, and in how many case types;
 - the cases decided, against the same number of days before;

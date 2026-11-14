@@ -18,7 +18,13 @@ The widget has a form to write a post, then the site's activity, newest first:
 
 A page with the widget is made for each person and never kept in a cache.
 
-The widget is placed on a page. It shows the newest 20 things, or any number from 1 to 50 that the page asks for; older ones are not shown. It shows posts, comments and entries, all three unless the page asks for fewer. The console's page editor does not place it yet. For now, this is set in the site's configuration: see [Developer: Activity](/portal/developer/activity/#the-widget-on-a-page).
+The widget is placed on a page. On [Pages](/portal/console/pages/#the-portals-widgets), add **Activity** with **Add a widget…**, then set its settings in its row:
+
+- **Items shown**: the newest 20 things, or any number from 1 to 50. Older ones are not shown.
+- **What it shows**: **Posts written here**, **Comments on the site** and **Entries published on the site**. Tick fewer to show fewer; none ticked shows all three.
+- **New posts**: see [Posts](#posts).
+
+Developers: see [Developer: Activity](/portal/developer/activity/#the-widget-on-a-page).
 
 ## Posts
 
@@ -26,7 +32,7 @@ Visitors read the posts and are asked to sign in. People signed in who may see t
 
 The posts belong to the widget. Two activity widgets have their own posts each, and who may read and write them is who may [see the widget](/portal/sites/permissions/). An activity widget on a page that shows an entry keeps its posts for the widget, not for the entry. A widget set not to show posts takes none.
 
-By default a post shows as soon as it is written, and moderators hide or delete it later. A page can instead ask that a post waits until a moderator approves it. Posts that wait for a moderator, are flagged and are decided on in the [moderation queue](/portal/console/moderation/), where they show as **Activity on** and the page's path. They keep the comments' limits: 10 a minute and 20 a day on one widget for each person. A widget holds as many posts as people write, and shows the newest.
+By default a post shows as soon as it is written, and moderators hide or delete it later. The widget's **New posts** setting chooses: **Shown at once, moderated after**, or **Wait for a moderator**, so a post waits until a moderator approves it. Posts that wait for a moderator, are flagged and are decided on in the [moderation queue](/portal/console/moderation/), where they show as **Activity on** and the page's path. They keep the comments' limits: 10 a minute and 20 a day on one widget for each person. A widget holds as many posts as people write, and shows the newest.
 
 ## Comments and entries
 

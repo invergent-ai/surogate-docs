@@ -23,7 +23,14 @@ A listing is a table of the model's records, with a search box and, for people w
 
 A listing is one of the portal's widgets, placed on a page. It shows the records of one model, with the columns and filters the page chooses: at most 8 columns, none of them a link (left out, the title and up to 3 more fields), and filters on filterable fields, by exact value. Whether it offers **Add**, **Edit** and **Delete** is the page's choice too, but the model's [permissions](/portal/sites/data-models/#who-may-do-what) still decide who may: someone who may only edit their own records sees **Edit** only on theirs.
 
-The console's page editor does not place listings yet. For now, this is set in the site's configuration: see [Developer: Listings](/portal/developer/listings/#a-listing-on-a-page).
+On [Pages](/portal/console/pages/#the-portals-widgets), add **Listing** with **Add a widget…**, then set its settings in its row:
+
+- **Data model**: the model whose records it shows. It is required.
+- **Columns**: the fields to show, at most 8, none of them a link. None ticked: the title field, then the first fields that are not links, four in all.
+- **Filters**: the fields people may filter by. It lists only the fields the model marks filterable.
+- **People may add records**, **People may change records** and **People may remove records**: whether the listing offers **Add**, **Edit** and **Delete**.
+
+Developers: see [Developer: Listings](/portal/developer/listings/#a-listing-on-a-page).
 
 A search box shows when the model has searchable fields. Sortable columns sort when their heading is clicked. A listing shows 20 records, and **Load more** brings the next ones.
 

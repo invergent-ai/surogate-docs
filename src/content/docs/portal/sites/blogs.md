@@ -37,7 +37,15 @@ The author of a post is the person who created it. Marking an existing type as a
 
 ## Show a blog
 
-The portal's blog widget shows the posts of one blog type, newest first: the site's own, or those of a library the site may show. It shows 10 posts, or any number from 1 to 50 that the page asks for. Under each post it may show a summary, from a text or text area field of the type, and an image, from an image field of the type. The console's page editor does not place it yet. For now, this is set in the site's configuration: see [Developer: Blogs](/portal/developer/blogs/#a-blog-on-a-page).
+The portal's blog widget shows the posts of one blog type, newest first: the site's own, or those of a library the site may show. On [Pages](/portal/console/pages/#the-portals-widgets), add **Blog** with **Add a widget…**, then set its settings in its row:
+
+- **Content type**: the blog type to show. It is required, and lists blog types only.
+- **Library**: the library whose posts it shows. Left empty, it shows the site's own.
+- **Posts shown**: 10 posts, or any number from 1 to 50.
+- **Summary field**: a text or text area field of the type, shown as a summary under each post.
+- **Image field**: an image field of the type, shown under each post.
+
+Developers: see [Developer: Blogs](/portal/developer/blogs/#a-blog-on-a-page).
 
 Each post shows its title, linked to its own page, its author with their [handle](/portal/console/users/#handle), and its date; the summary and the image show in the page's language when the field has one. A post published again keeps its first date and its place.
 
@@ -47,15 +55,27 @@ Add `?author=` and a handle to the page's address, such as `/blog?author=ana.pop
 
 ## Show several blogs
 
-The blog aggregator shows the newest posts of several sites and libraries together: up to 20 of them, as the widget names them, or this site alone when it names none. It shows 10 posts, or any number from 1 to 50 that the page asks for. The console's page editor does not place it yet. For now, this is set in the site's configuration: see [Developer: Blogs](/portal/developer/blogs/#several-blogs).
+The blog aggregator shows the newest posts of several sites and libraries together. On [Pages](/portal/console/pages/#the-portals-widgets), add **Blogs** with **Add a widget…**, then set its settings in its row:
+
+- **Blogs of**: the sites and libraries to show, up to 20 of them. None ticked: this site alone.
+- **Posts shown**: 10 posts, or any number from 1 to 50.
+
+Developers: see [Developer: Blogs](/portal/developer/blogs/#several-blogs).
 
 A post shows only when its site has a display page for its type that the viewer may see; it links to that page, on its own site's address, and says which site it is on. A post nobody may see from here is left out, and so are the posts of a site with no address of its own.
 
 ## Recent bloggers
 
-The recent bloggers widget lists who first published posts lately, the latest first, with how many posts each. It looks back 30 days, or any number from 1 to 365 that the page asks for, and lists 10 people, or any number from 1 to 50. It counts the posts of this site, or of the sites and libraries the widget names, as the blog aggregator does. The console's page editor does not place it yet. For now, this is set in the site's configuration: see [Developer: Blogs](/portal/developer/blogs/#who-blogged-lately).
+The recent bloggers widget lists who first published posts lately, the latest first, with how many posts each. On [Pages](/portal/console/pages/#the-portals-widgets), add **Bloggers** with **Add a widget…**, then set its settings in its row:
 
-Each name leads to the page of this site holding a blog that the widget names, with that person's posts. Pick a blog of the same type and site as the posts counted, or a name may lead to an empty list.
+- **Bloggers of**: the sites and libraries whose posts it counts, as the blog aggregator does. None ticked: this site's.
+- **Days looked back**: 30 days, or any number from 1 to 365.
+- **Bloggers shown**: 10 people, or any number from 1 to 50.
+- **Blog page**: the page each name leads to.
+
+Developers: see [Developer: Blogs](/portal/developer/blogs/#who-blogged-lately).
+
+Each name leads to the page of this site holding a blog that the widget names under **Blog page**, with that person's posts. The row lists the pages of this site that hold a blog. Pick one with a blog of the same type and site as the posts counted, or a name may lead to an empty list.
 
 It counts only posts the viewer may see, and lists only people whose account is active.
 

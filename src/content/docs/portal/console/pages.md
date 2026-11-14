@@ -16,7 +16,7 @@ Each site lists its pages by address. A page sits under the page above it: `/ser
 
 ## Edit a page
 
-- **Address**: where the page is, such as `/despre`. The site's home page keeps its address. Changing another page's address asks first: links to the old address stop working, and settings made on the page itself start again.
+- **Address**: where the page is, such as `/despre`. The site's home page keeps its address. Changing another page's address asks first: links to the old address stop working, and settings made on the page itself start again. When the page holds a widget people write in, the question adds that what they wrote stays at the old address, and the page no longer shows it.
 - **Title**: one per language of the site.
 - **Layout**: the portal's `one-column` or `two-column`, or one of the site's own [layouts](/portal/sites/layouts/).
 
@@ -26,10 +26,74 @@ Under them, each part of the layout lists what it holds, in order:
 
 - **Add text** adds a text block, written in HTML for each of the site's languages. It holds what an [HTML block](/portal/sites/layouts/#an-html-block) may hold.
 - **Add content…** shows the site's [content](/portal/console/content/#show-content-on-a-page) of one type: its newest entries, or one entry.
-- **Add a widget…** adds one of the apps' widgets. When a widget needs a setting to work, the editor asks for it; its other settings are made on the page itself, from its menu.
+- **Add a widget…** adds one of [the portal's own widgets](#the-portals-widgets) or one of the apps' widgets. A portal widget has its settings in its row. When an app's widget needs a setting to work, the editor asks for it; the app's widget has its other settings on the page itself, from its menu.
 - **Remove** takes a block or widget off the page.
 
-**Save** stays off until something changed and every title and text is filled in.
+**Save** stays off until something changed and every title, every text and every required setting is filled in.
+
+## The portal's widgets
+
+The portal has widgets of its own, such as a listing, a poll or a calendar. The page editor places each one and sets it in a form. No file needs to be written by hand.
+
+### Add one
+
+1. In the part of the page where it goes, press **Add…**, then **Add a widget…**.
+2. Under **The portal's**, choose the widget. It is added to that part of the page, or to that group. The apps' widgets are in a group of their own.
+3. Open its row. Its settings are there.
+4. Set what you need, then **Save**.
+
+A setting the widget cannot work without, such as the **Data model** of a **Listing**, must be filled in before you can save.
+
+### When one cannot be added
+
+A widget the portal cannot serve is listed, but you cannot choose it. The list says why:
+
+- **needs Keel**: the portal is not connected to [Keel](/portal/sites/keel/#connect-keel). This holds for **My work** and **Work overview**.
+- **needs a DMS**: the portal is not connected to a [DMS](/portal/sites/documents/#connect-the-dms). This holds for **Documents** and **Document**.
+- **needs an agent**: no agent fits yet. See [Assistants](/portal/sites/assistants/#connect-your-agents) for naming agents. This holds for **Assistant** and **Website chat**.
+- **one per page**: the page has a **Website chat** already. A page holds one, in any part or group.
+
+### The widgets
+
+Each widget has a page in the guide. It says what people see and what each setting does.
+
+- **Listing** shows a data model's records as a table. See [Listings](/portal/sites/listings/#place-a-listing).
+- **Figures** shows a model's figures as tiles and bars. See [KPIs](/portal/sites/kpis/#show-them).
+- **My work** shows each person the work Keel holds for them. See [Keel](/portal/sites/keel/#my-work).
+- **Work overview** shows the headline figures of a Keel project. See [Keel](/portal/sites/keel/#the-overview).
+- **Notifications** shows each person's notifications. See [Notifications](/portal/sites/notifications/#where-people-find-them).
+- **Comments** and **Rating** let people signed in comment and give stars. See [Comments and ratings](/portal/sites/comments/#place-the-widgets).
+- **Activity** shows posts, comments and published entries. See [Activity](/portal/sites/activity/#what-people-see).
+- **Blog** shows the posts of one blog type. See [Show a blog](/portal/sites/blogs/#show-a-blog).
+- **Blogs** shows the newest posts of several sites and libraries. See [Show several blogs](/portal/sites/blogs/#show-several-blogs).
+- **Bloggers** lists who blogged lately. See [Recent bloggers](/portal/sites/blogs/#recent-bloggers).
+- **Forum** is a board of topics, or of questions and answers. See [Forums and Q&A](/portal/sites/forums/#place-a-forum).
+- **Wiki** is a wiki, or a knowledge base. See [Wikis and knowledge bases](/portal/sites/wiki/#place-a-wiki).
+- **Calendar** is a calendar of events. See [Calendars](/portal/sites/calendar/#what-people-see).
+- **Announcements** shows what a site's editors want people to know. See [Announcements](/portal/sites/announcements/#what-people-see).
+- **Poll** asks readers one question at a time. See [Place a poll](/portal/sites/polls/#place-a-poll).
+- **Documents** shows the documents of a DMS folder. See [Show a folder](/portal/sites/documents/#show-a-folder).
+- **Document** shows one DMS document and its versions. See [Show one document](/portal/sites/documents/#show-one-document).
+- **Assistant** is a chat with one of your agents, for people signed in. See [Assistants](/portal/sites/assistants/#connect-your-agents).
+- **Website chat** is a chat with an agent for any visitor. See [A chat for visitors](/portal/sites/assistants/#a-chat-for-visitors).
+
+### Settings
+
+- A setting left at its default is not saved with the page. The widget uses the portal's default.
+- A setting that names something, such as a data model or an agent, is a list of what the portal has. A setting that asks for several things, such as **Columns**, uses its default when you tick none. The row says what that default is.
+- **Assistant** warns that everyone who may see the page may chat with the agent and use what it can do. Set who sees the page with that in mind.
+- A portal widget the console has no settings for says **Set in the site's files**. The editor keeps it as it is written.
+
+### Remove one
+
+**Remove** asks first when the widget is one that people write in: **Comments**, **Rating**, **Activity**, **Forum**, **Wiki**, **Calendar** or **Poll**. What people wrote stays in the portal, but no page shows it.
+
+- A **Poll**, **Calendar**, **Wiki**, **Forum** or **Activity** widget keeps what people wrote in it for itself. A new one starts empty. It never shows what was written in one you removed.
+- **Comments** and **Rating** belong to the page, or to the entry it shows, not to the widget. Put them back on the page, and what people wrote shows again.
+
+### When a widget's setting is refused
+
+When a save is refused because of a widget's setting, the problem is listed above the page. Press it to open the widget. The problem also shows at the setting itself. Nothing is saved until every problem is fixed.
 
 ## Move what a page holds
 
@@ -110,7 +174,7 @@ When the page cannot be shown as it is, the editor lists what is wrong, as it do
 
 ## When a save is refused
 
-- **Problems**: the save would break the site, so nothing is saved. The editor lists what is wrong.
+- **Problems**: the save would break the site, so nothing is saved. The editor lists what is wrong. Pressing a problem in a [widget's setting](#when-a-widgets-setting-is-refused) opens the widget.
 - **Someone saved this site meanwhile**: another administrator saved first. **Load the newest** shows the page as it is now. Your changes to it are lost, so the editor asks first.
 
 **Remove page** takes the page off the site, after asking. The home page cannot be removed. Undo the version on [Versions](/portal/console/versions/) to bring a page back.

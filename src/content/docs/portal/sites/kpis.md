@@ -24,7 +24,14 @@ The console does not declare KPIs yet. For now, this is set in the site's config
 
 ## Show them
 
-The portal's KPIs widget shows a model's KPIs, all of them or the ones named. A model can also make its own page of KPIs on a site, as it makes [its own pages](/portal/sites/listings/#a-models-own-pages-and-form). The console's page editor does not place KPIs yet. For now, this is set in the site's configuration: see [Developer: KPIs](/portal/developer/kpis/).
+The portal's KPIs widget shows a model's KPIs, all of them or the ones named. A model can also make its own page of KPIs on a site, as it makes [its own pages](/portal/sites/listings/#a-models-own-pages-and-form).
+
+On [Pages](/portal/console/pages/#the-portals-widgets), add **Figures**, the console's name for this widget, with **Add a widget…**, then set its settings in its row:
+
+- **Data model**: the model whose KPIs it shows. It is required, and lists only models that declare KPIs.
+- **Figures shown**: the KPIs to show. None ticked: all of them.
+
+Developers: see [Developer: KPIs](/portal/developer/kpis/).
 
 ## What each person sees
 
