@@ -82,10 +82,21 @@ A library holds content shared by several sites, such as announcements every sit
 
 ## Collections
 
-A collection names a set of entries once, for pages and for apps: a hand-picked list, or a saved query. The console does not build collections yet. For now, this is set in the site's configuration: see [Developer: Content types](/portal/developer/content-types/#a-collections-file).
+A collection names a set of entries once, for pages and for apps: a hand-picked list, or a saved query. They are made under **Site → Collections** in the console: **New collection**, or **Edit** on one.
 
-- A hand-picked collection names up to 50 entries by their address, each once. An entry not published yet is left out until it is.
-- A query works as a content list's: category, tag, order and how many.
+![The Collections page: the collection Recent news, marked public, of the type stiri on the site primaria, by a query, with Edit and New collection.](../../../../assets/screenshots/portal-collections-console.png)
+
+![The collection editor: the collection stiri-recente, its name in each language, the content type News, the shelf Demo City Hall, and the latest entries by a query: any category, newest first, 5 of them.](../../../../assets/screenshots/portal-collection-edit.png)
+
+- **Content type** and **Shelf**: the type of its entries, and the site or library they are on.
+- **Entries**: **The latest, by a query**, or **Hand-picked**. Switching keeps the other for when you switch back; only the one chosen is saved.
+- **Public**: anyone may read it through the read address below.
+- Removing a collection, or changing its shelf, that a page or a named value still needs is refused, and the console lists what needs it.
+
+Developers: see [Developer: Content types](/portal/developer/content-types/#a-collections-file).
+
+- A hand-picked collection names up to 50 entries by their address, each once, in the order picked. Find them by a word of their title or address; only published entries are offered. An entry not published, or no longer on the shelf, is said as such, and left out until it is.
+- A query works as a content list's: a category (with the categories under it), a tag, the order (newest first unless chosen) and how many (10 unless chosen, up to 50).
 - A page shows a collection with **Add a collection…** in the [page editor](/portal/console/content/#show-content-on-a-page), on its own site or a site its library serves. It takes the collection and nothing else.
 - At most 100 collections.
 
@@ -99,7 +110,7 @@ Apps and other consumers read a collection's published entries from an address o
 - The address has no cross-origin access: call it from a server, or from a page of the same portal.
 - Being public decides only who reads this address; pages show a collection as they show any content.
 
-For now, this is set in the site's configuration: see [Developer: Content types](/portal/developer/content-types/#reading-a-collection).
+Developers: see [Developer: Content types](/portal/developer/content-types/#reading-a-collection).
 
 ## Show it on a page
 
