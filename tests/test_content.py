@@ -396,6 +396,11 @@ class Content(unittest.TestCase):
         self.assertIn('id="make-or-change-a-flow"', page('/portal/console/flows/'))
         self.assertIn('href="/portal/console/flows/#make-or-change-a-flow"', doc)
         self.assertNotIn('does not write them yet', (ROOT / 'src/content/docs/portal/sites/flows.md').read_text())
+        # Contracts and named values are made in the console too.
+        for anchor in ('make-or-change-a-contract', 'make-or-change-a-named-value'):
+            self.assertIn(f'id="{anchor}"', page('/portal/console/flows/'))
+        self.assertNotIn('For now', (ROOT / 'src/content/docs/portal/sites/values.md').read_text())
+        self.assertIn('href="/portal/console/flows/#make-or-change-a-contract"', doc)
         self.assertIn('href="/portal/sites/flows/#call-a-flow"', page('/portal/sites/actions/'))
         for path in ('sites/flows.md', 'sites/values.md', 'console/flows.md'):
             source = (ROOT / 'src/content/docs/portal' / path).read_text()
