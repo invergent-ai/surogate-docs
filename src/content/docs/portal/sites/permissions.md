@@ -28,7 +28,7 @@ Press **Add…** to choose more:
 - **Everyone**, **Anyone signed in** and **Only editors and administrators** are buttons. **Everyone** is offered for a site alone: a page, a block or a form can only narrow who may see or send. **Only editors and administrators** is offered where you choose who sees.
 - **A group**: choose one of the portal's [groups](/portal/console/groups/), then press **Add the group**.
 - **An organization, with those under it**: choose one of the portal's [organizations](/portal/console/organizations/), then press **Add the organization**. Everyone in it and in every organization below it is included.
-- **A person: name or email**: type to search, then press **Add** and their name, such as **Add Ana Pop**.
+- **A person: name or email**: type to search, then press **Add** with their name and email, such as **Add Ana Pop (ana@primarie.ro)**.
 
 The picker is in four places:
 
