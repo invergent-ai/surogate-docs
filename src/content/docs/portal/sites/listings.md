@@ -47,6 +47,6 @@ A search box shows when the model has searchable fields. Sortable columns sort w
 
 ## A model's own pages and form
 
-A model can make its own page on a site, with a listing that offers everything. The page's title is the model's name unless the model gives one. A path that a page already has is refused. For now, this is set in the site's configuration: see [Developer: Listings](/portal/developer/listings/#a-models-own-page).
+A model can make its own page on a site, with a listing that offers everything. The page's title is the model's name unless the model gives one. A path that a page already has is refused. Add it on the model's **Pages** tab: see [On pages](/portal/sites/data-models/#on-pages). Developers: see [Developer: Listings](/portal/developer/listings/#a-models-own-page).
 
 Each model also has its own form, `model-<id>` (an `_` in the id becomes `-`), to place like any [form](/portal/sites/forms/): one field for each of the model's fields, links as [record fields](/portal/sites/forms/#pick-a-record), sent to a new record. Who may send it is who may add records: when everyone may add records, visitors too, even where the form is placed on no page. The record holds what was sent; the form keeps its own copy for a day only.

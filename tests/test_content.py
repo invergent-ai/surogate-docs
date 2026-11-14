@@ -497,8 +497,12 @@ class Content(unittest.TestCase):
 
     def test_portal_data_models(self):
         doc = page('/portal/sites/data-models/')
-        for anchor in ('what-people-see', 'a-model', 'fields', 'who-may-do-what', 'when-the-file-changes', 'the-api', 'graphql', 'relations'):
+        for anchor in ('what-people-see', 'a-model', 'fields', 'who-may-do-what', 'when-a-model-changes', 'on-pages', 'the-api', 'graphql', 'relations'):
             self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/data-models/#a-model"', page('/portal/console/data/'))
+        # Models, their pages and their KPIs are made in the console.
+        for path in ('sites/data-models.md', 'console/data.md', 'sites/kpis.md'):
+            self.assertNotIn('For now', (ROOT / 'src/content/docs/portal' / path).read_text(), path)
         self.assertIn('id="records"', page('/portal/sites/actions/'))
         self.assertIn('href="/portal/sites/data-models/"', page('/portal/console/data/'))
         for path in ('sites/data-models.md', 'console/data.md'):

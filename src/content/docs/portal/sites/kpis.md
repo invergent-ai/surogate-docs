@@ -20,7 +20,11 @@ A model declares its KPIs. A KPI counts the records or works out a sum, an avera
 - Split by a filterable text or yes-or-no field, a KPI makes bars, one for each value. The 10 largest are shown; records with no value make a bar of their own, "—".
 - Followed over time, a KPI makes bars over the last 12 days, weeks, months or years, up to the current one. Weeks start on Monday, and periods follow UTC. The bars count by a date field, a date and time field, or when the record was made, which is the default.
 
-The console does not declare KPIs yet. For now, this is set in the site's configuration: see [Developer: KPIs](/portal/developer/kpis/#kpis-in-a-models-file).
+Declare them on the model's **Figures** tab, under **Data**: **Add figure**, then its id, its label in each language and its **Measure**. **Bars** picks one figure, one bar per value of a field, or one bar per period, with the date it goes by. **Add condition** keeps only the records whose field has a value. The editor offers only the fields each choice takes.
+
+![The Figures tab: the figures of the model cereri, each with its id, label, measure and bars.](../../../../assets/screenshots/portal-model-edit-figures.png)
+
+Developers: see [Developer: KPIs](/portal/developer/kpis/#kpis-in-a-models-file).
 
 ## Show them
 
