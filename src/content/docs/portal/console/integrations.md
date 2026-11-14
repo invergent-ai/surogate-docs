@@ -3,7 +3,7 @@ title: Integrations
 description: Connect the portal to Keel, to the DMS and to Surogate agents.
 ---
 
-Under **Integrations**, administrators connect the portal to the services it works with: [Keel](#keel), the [document management system](#documents-dms) and [Surogate agents](#agents). Each page saves its settings as a new version of the portal, like every other change; a change that would leave something that uses the service without it is refused, and the console lists what uses it.
+Under **Integrations**, administrators connect the portal to the services it works with: [Keel](#keel), the [document management system](#documents-dms), [Surogate agents](#agents) and the [other portals](/portal/sites/environments/#name-the-environments) it sends its versions to. Each page saves its settings as a new version of the portal, like every other change; a change that would leave something that uses the service without it is refused, and the console lists what uses it.
 
 ## Keys
 
@@ -13,9 +13,9 @@ A service's key is never written in its settings. It is kept in a [connector](/p
 - **Set the key** asks for its value, once; the value is never shown again.
 - Beside each key, **Connected** or **Not connected** says whether its value is set.
 
-A key serves one setting only: a key that Keel, the DMS, another agent or an environment holds is listed, but cannot be picked. A key is set for the address it is used with: change Keel's API address or project, the DMS's API address, or an agent's address or id, and the page says to set the key again after saving.
+A key serves one setting only: a key that Keel, the DMS, an agent or an environment holds is listed, but cannot be picked. A key is set for the address it is used with: change Keel's API address or project, the DMS's API address, or an agent's address or id, and the page says to set the key again after saving.
 
-A value that starts as a key does, such as `surg_sk_`, `keel_` or `sdms_sk_`, is refused in any field: paste keys only with **Set the key**.
+A value that starts as a key does, such as `surg_sk_`, `keel_`, `sdms_sk_` or `pat_`, is refused in any field: paste keys only with **Set the key**.
 
 ## Keel
 

@@ -23,16 +23,18 @@ What belongs to each portal stays where it is: each site's own settings (its add
 
 ## Name the environments
 
-A portal names the other portals it sends to. The console has no screen for this yet. For now, this is set in the site's configuration: see [Developer: Environments](/portal/developer/environments/).
+A portal names the other portals it sends to, under **Integrations → Environments** in the console. **Add environment** adds one; **Remove** takes one out when saved, its key staying on its connector. Developers: see [Developer: Environments](/portal/developer/environments/).
+
+![The Environments page: the environment production, with its name in each language, the other portal's address, and its key marked Not connected, with Set the key and New key.](../../../../assets/screenshots/portal-environments-settings.png)
 
 Each environment has:
 
 - an id, such as production: lowercase letters, digits and dashes, starting with a letter. A portal has at most 10 environments;
 - a name, which the console shows, in Romanian, English or both;
 - the other portal's address, with no path. Inside the same cluster, its service address works too;
-- a key: a secret [connector](/portal/sites/connectors/) of this portal, holding the key Production takes the version with.
+- a key: a secret [connector](/portal/sites/connectors/) of this portal, holding the key Production takes the version with. **New key** makes it; **Set the key**, once the environment is saved, sets its value. See [Integrations](/portal/console/integrations/#keys).
 
-The key opens only for the address the environment names. If the address changes, set the key again. The key is for sending versions alone: no action may use it, and Keel, the DMS or an agent may not name it too.
+The key opens only for the address the environment names. If the address changes, the page says to set the key again, after saving. The key is for sending versions alone: no action may use it, and Keel, the DMS or an agent may not name it too.
 
 ## Make the key
 
@@ -40,7 +42,7 @@ The key is a token of the other portal that may propose changes:
 
 1. On **Production**, someone signed in makes a token under **Tokens** with **Propose changes** alone. Proposals arrive under that person's name, and a person never approves what they proposed, so pick someone other than the administrators who will approve: an account made for the purpose works well.
 2. Copy the token.
-3. On **Test**, under **Connectors**, set it as the secret of the connector the environment names.
+3. On **Test**, under **Integrations → Environments**, choose **Set the key** beside the environment's key and paste it.
 
 The version's page on Test then offers **Send to Production**. Until the key is set, the button is greyed out.
 

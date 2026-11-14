@@ -506,6 +506,8 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/console/integrations/#keel"', page('/portal/sites/keel/'))
         self.assertIn('href="/portal/console/integrations/#documents-dms"', page('/portal/sites/documents/'))
         self.assertIn('href="/portal/console/integrations/#agents"', page('/portal/sites/assistants/'))
+        for path in ('sites/environments.md', 'console/data-console.md'):
+            self.assertNotIn('For now', (ROOT / 'src/content/docs/portal' / path).read_text(), path)
         # Keel, the DMS and agents are connected in the console.
         for path in ('sites/keel.md', 'sites/documents.md', 'sites/assistants.md', 'console/integrations.md'):
             source = (ROOT / 'src/content/docs/portal' / path).read_text()

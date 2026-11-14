@@ -13,7 +13,15 @@ The page lists the tables a query may read, with their columns, beside a box for
 
 ## Turn it on
 
-The console is off until it is turned on. The console has no screen for this yet. For now, this is set in the site's configuration: see [Developer: Data console](/portal/developer/data-console/). The configuration also sets the most rows a query shows (1 to 10,000; 1,000 unless it says another number) and the most time a query may take (1 to 30 seconds; 5 unless it says another number). If the page says the console cannot run here, the install's operators have to allow the portal to set it up.
+The console is off until it is turned on. On the console's page, **Turn it on** or **Settings** opens its settings:
+
+- **Administrators may query the data models:** on or off. Turning it on is warned: administrators then read every record of every model, whatever its permissions say.
+- **Rows a query shows at most:** 1 to 10,000; 1,000 when left empty.
+- **Seconds a query may take:** 1 to 30; 5 when left empty.
+
+Turned off, the limits are kept for the next time. These settings stay with this portal: a version sent to another does not carry them. Where the portal does not keep its files, whoever installs the portal turns it on. Developers: see [Developer: Data console](/portal/developer/data-console/).
+
+![The data console's settings: Administrators may query the data models ticked, and the rows and seconds left empty, showing their defaults, 1000 and 5.](../../../../assets/screenshots/portal-data-console-settings.png) If the page says the console cannot run here, the install's operators have to allow the portal to set it up.
 
 ## What a query may read
 
