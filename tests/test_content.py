@@ -16,7 +16,7 @@ UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'a
 CONSOLE_PAGES = ('data-console.md', 'files.md', 'invitations.md')
 
 # Pages of features with no screen of their own in the portal: no screenshots, but the same Config example section.
-CONFIG_LAST_PAGES = ('document-actions.md', 'documents.md', 'keel.md')
+CONFIG_LAST_PAGES = ('document-actions.md', 'documents.md', 'file-management.md', 'keel.md')
 
 
 class Content(unittest.TestCase):
@@ -614,6 +614,20 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/sites/document-actions/"', page('/portal/sites/actions/'))
         source = (ROOT / 'src/content/docs/portal/sites/document-actions.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'Euro-Office', 'Open Design'):
+            self.assertNotIn(word, source)
+
+    def test_portal_file_management(self):
+        guide = page('/portal/sites/file-management/')
+        for anchor in ('what-people-get', 'copy-move-and-rename-a-file', 'read-a-files-details', 'zip-archives', 'who-may-do-what', 'limits', 'config-example'):
+            self.assertIn(f'id="{anchor}"', guide)
+        for action in ('copyFile', 'moveFile', 'renameFile', 'fileInfo', 'zipFiles', 'zipNames', 'unzipFile', 'replace: true'):
+            self.assertIn(action, guide)
+        self.assertIn('href="/portal/sites/file-management/"', page('/portal/sites/actions/'))
+        files = page('/portal/console/files/')
+        self.assertIn('id="move-or-copy-a-file"', files)
+        self.assertIn('href="/portal/sites/file-management/"', files)
+        source = (ROOT / 'src/content/docs/portal/sites/file-management.md').read_text()
+        for word in ('kubectl', 'helm', 'PORTAL_', 'Hub', 'fflate', 'Open Design'):
             self.assertNotIn(word, source)
 
     def test_portal_form_fields(self):
