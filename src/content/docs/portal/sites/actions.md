@@ -135,4 +135,12 @@ An approved app can give actions of its own, such as sending an SMS.
 - **Where:** in a form, flow, job or endpoint that may change records, never in a GET endpoint or one anyone may call, and never in a flow's tests. A run calls at most 10.
 - **When it fails:** the app is not approved, it does not answer in time, or it answers what its manifest does not say. The run's error handler reads why.
 
+In the console, **Run an app's action** is under **Calls** in **Add an action**:
+
+- **App** offers the approved apps that give actions; one that waits for approval is kept and said.
+- **Action** offers the chosen app's actions.
+- **Inputs** offers the action's inputs by their title and type, and says the required ones not given yet. Each value is an expression: write a text in quotes, such as `'0712 345 678'`.
+- **Connector** offers the connectors of the app's type the action needs, and says when it takes none.
+- **Keep it as** names the variable that keeps its outputs.
+
 To write one, see [Build an app](/portal/developer/build-an-app/#actions).
