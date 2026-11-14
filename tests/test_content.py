@@ -509,6 +509,8 @@ class Content(unittest.TestCase):
         for path in ('sites/environments.md', 'console/data-console.md'):
             self.assertNotIn('For now', (ROOT / 'src/content/docs/portal' / path).read_text(), path)
         self.assertNotIn('The console does not build collections', (ROOT / 'src/content/docs/portal/sites/content-types.md').read_text())
+        for path in ('sites/file-management.md', 'sites/document-actions.md'):
+            self.assertNotIn('For now', (ROOT / 'src/content/docs/portal' / path).read_text(), path)
         # Keel, the DMS and agents are connected in the console.
         for path in ('sites/keel.md', 'sites/documents.md', 'sites/assistants.md', 'console/integrations.md'):
             source = (ROOT / 'src/content/docs/portal' / path).read_text()
