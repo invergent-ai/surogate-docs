@@ -26,7 +26,15 @@ Each flow shows its name and id, the contract it implements, and its inputs and 
   - **End** gives each output with an expression; a `*` marks one it must give.
 
   **Add a step** adds one of the type chosen. Removing a step leaves what led to it naming a step that is gone, said at each, to be chosen again.
-- **Tests:** the flow's tests, each with what it expects. Renaming an input or an output carries the new name into the tests and the ends. A test can be removed here; tests are still written in the site's configuration.
+- **Tests:** the flow's tests. **Add a test** adds one; click a test's name to open it:
+  - its **Name**, and whom it **Runs as**: a visitor, or a person with an id, a name, an email and roles;
+  - **Inputs**: tick **Give** for each input the test gives, and write its value; an input marked `*` is required. A value not of its input's type is said: the run refuses it;
+  - **It expects** these outputs, each given exactly (`"5"` is not `5`), or that the flow fails;
+  - **More**: the values it pins, its own records by model, its own files by folder, and the answers its web calls get, by connector, method and path.
+
+  Renaming an input or an output carries the new name into the tests and the ends. Save the flow, then **Run tests** here on the Flows page.
+
+  ![The Tests tab of the flow Building permit fee: the test "locuință de 100 m² la tariful întreg" open, run as a visitor, with its inputs suprafata 100 and tip locuinta given, expecting these outputs, starting with total.](../../../../assets/screenshots/portal-flow-tests.png)
 
 ![The flow Building permit fee's Steps tab: Starts at verifica, and the map: the decision verifica leads to four action steps, invalid, standard, anexa and comercial, which all lead to calcul, then to the end final. Under the map, the steps listed one by one.](../../../../assets/screenshots/portal-flow-edit.png)
 
