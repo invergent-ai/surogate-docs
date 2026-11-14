@@ -7,7 +7,7 @@ The configuration behind [Files](/portal/console/files/). That page covers what 
 
 ## A folder's file
 
-Folders are made in the portal's files, `content/folders/<id>.yaml`.
+Folders are made in the portal's files, `content/folders/<id>.yaml`. Administrators can also make them in the console's [Folders](/portal/console/folders/) page. The console does not keep comments written in the file by hand when it saves it.
 
 In `content/folders/<id>.yaml`, here `content/folders/forms.yaml`:
 

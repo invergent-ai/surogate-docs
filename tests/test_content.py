@@ -88,8 +88,8 @@ class Content(unittest.TestCase):
         self.assertIn('Who may send it', forms)
         self.assertIn('Who reads what was sent', forms)
         self.assertIn('Who writes blog posts', (PORTAL / 'sites/blogs.md').read_text())
-        # Only libraries' bloggers are still set in the site's configuration.
-        self.assertEqual(perms.count('For now'), 1)
+        # Libraries' bloggers are chosen in the console too: nothing here is left to the site's configuration.
+        self.assertEqual(perms.count('For now'), 0)
 
     def test_portal_audit_and_personal_data(self):
         doc = page('/portal/console/audit/')
@@ -219,6 +219,36 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/console/vocabularies/"', page('/portal/console/content/'))
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
+
+    def test_portal_libraries_and_folders(self):
+        libraries = page('/portal/console/libraries/')
+        for anchor in ('the-list', 'make-a-library', 'settings', 'where-it-is-offered', 'who-edits-it', 'who-writes-blog-posts', 'removing', 'when-a-save-is-refused'):
+            self.assertIn(f'id="{anchor}"', libraries)
+        folders = page('/portal/console/folders/')
+        for anchor in ('the-list', 'make-a-folder', 'settings', 'where-its-files-are-kept', 'removing', 'when-a-save-is-refused'):
+            self.assertIn(f'id="{anchor}"', folders)
+        for name, shots in (('libraries', ('portal-libraries-list', 'portal-library-edit')), ('folders', ('portal-folders-list', 'portal-folder-edit'))):
+            source = (PORTAL / f'console/{name}.md').read_text()
+            for shot in shots:
+                self.assertIn(shot, source)
+            for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml', 'Open Design'):
+                self.assertIsNone(re.search(rf'\b{word}', source), (name, word))
+            self.assertIn('href="/portal/sites/permissions/#choose-who"', page(f'/portal/console/{name}/'))
+        self.assertIn('href="/portal/console/libraries/"', page('/portal/sites/content-types/'))
+        self.assertIn('href="/portal/console/libraries/#who-writes-blog-posts"', page('/portal/sites/permissions/'))
+        self.assertIn('href="/portal/console/libraries/#who-writes-blog-posts"', page('/portal/sites/blogs/'))
+        files = page('/portal/console/files/')
+        self.assertIn('href="/portal/console/folders/"', files)
+        self.assertIn('href="/portal/console/folders/#where-its-files-are-kept"', files)
+        self.assertIn('Folder settings', (PORTAL / 'console/files.md').read_text())
+        self.assertIn('href="/portal/console/libraries/"', page('/portal/developer/content-types/'))
+        self.assertIn('href="/portal/console/folders/"', page('/portal/developer/files/'))
+        self.assertIn('href="/portal/developer/files/', folders)
+        self.assertIn('href="/portal/developer/content-types/#a-librarys-file"', libraries)
+        # What is left of the site's configuration is named plainly: the libraries and folders are not.
+        for name in ('content-types', 'blogs', 'permissions'):
+            self.assertNotIn('not set in the console yet', (PORTAL / f'sites/{name}.md').read_text(), name)
+        self.assertNotIn('no screen to make a folder', (PORTAL / 'console/files.md').read_text())
 
     def test_portal_rich_text(self):
         doc = page('/portal/console/pages/')
