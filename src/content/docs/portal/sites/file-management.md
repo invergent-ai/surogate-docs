@@ -48,6 +48,18 @@ What an archive's files become when unpacked:
 - A file of a kind the portal does not keep, such as `setup.exe`, and two files that end up with the same name, make the whole archive fail, naming the file. Nothing is written.
 - Without `replace: true`, a file already there makes the whole archive fail too.
 
+## Images
+
+`resizeImage` makes a resized copy of an image, such as a small preview of a photo someone uploaded (see the [config example](#a-thumbnail-of-an-uploaded-photo)):
+
+- `width` and `height`: whole numbers from 1 to 4000, as expressions; at least one of them.
+- `fit`: `inside` (when left out) keeps the proportions within the width and height; `cover` fills them, cropping the middle; `contain` fits the whole image and pads the rest, white for a JPEG, transparent otherwise.
+- `toName`: its extension decides the format: `.jpg`, `.jpeg`, `.png`, `.webp` or `.avif`.
+- A copy is never larger than the image itself, and it is turned the right way up. When the width and height make a box larger than the image, the box shrinks whole, keeping its shape.
+- JPEG, PNG, WebP, AVIF and still GIF images are resized. An animated image, an image of more than 40 million pixels (16 million for AVIF), or any other file fails, saying why.
+
+`imageInfo` keeps an image's `{ width, height, format }` in `vars.<into>`, turned the right way up, or `null` when the file is not such an image or is not there.
+
 ## Files on a server
 
 These actions exchange files with an FTP, FTPS or SFTP server, through a [file server connector](/portal/sites/connectors/#file-servers):
@@ -70,7 +82,7 @@ These actions exchange files with an FTP, FTPS or SFTP server, through a [file s
 
 File management actions keep to the folders' [permissions](/portal/sites/permissions/), as the file actions do. Someone who edits a folder reads its files, makes, replaces and removes them. Anyone else, a visitor too, only makes new files, and never in a public folder. So a form a visitor sends can copy a file into a secure folder, but cannot read, move or unpack one. Every folder is checked before any work is done.
 
-An action that changes files changes the portal, so a GET or public [endpoint](/portal/sites/endpoints/) cannot use it. `fileInfo` and `zipNames` only read, and can be used anywhere. The actions on a server all reach another computer, so none of them is in a GET or public endpoint, `ftpList` included.
+An action that changes files changes the portal, so a GET or public [endpoint](/portal/sites/endpoints/) cannot use it. `fileInfo`, `zipNames` and `imageInfo` only read, and can be used anywhere. The actions on a server all reach another computer, so none of them is in a GET or public endpoint, `ftpList` included.
 
 On a server, the server's own account decides what the portal may do there; in the portal, a visitor's form can send a file to a server only from a folder the visitor may read, which is none, and fetch one only into a secure folder, as a new file.
 
@@ -133,6 +145,23 @@ A file renamed in its folder, replacing one of that name:
 
 - `into`: where the details are kept, or `null` when there is no such file.
 - The copy is made only when the report is there.
+
+### A thumbnail of an uploaded photo
+
+```yaml
+- type: resizeImage
+  folder: photos
+  name: '"foto-" + submission.id + ".jpg"'
+  toFolder: thumbnails
+  toName: '"foto-" + submission.id + ".webp"'
+  width: "320"
+  height: "320"
+  fit: cover
+```
+
+- `width` and `height`: the box, here a square of 320 pixels.
+- `fit: cover`: the photo fills the square, its middle kept.
+- `toName`: a `.webp` name makes a WebP image.
 
 ### Files sent to a server and fetched from it
 
