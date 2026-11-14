@@ -44,6 +44,8 @@ The portal has widgets of its own, such as a listing, a poll or a calendar. The 
 
 A setting the widget cannot work without, such as the **Data model** of a **Listing**, must be filled in before you can save.
 
+![The page editor with a Poll opened: its Time zone, Europe/Bucharest, and its Classes; beside it, the page as visitors see it.](../../../../assets/screenshots/portal-widget-poll-set.png)
+
 ### When one cannot be added
 
 A widget the portal cannot serve is listed, but you cannot choose it. The list says why:
@@ -78,6 +80,8 @@ Each widget has a page in the guide. It says what people see and what each setti
 - **Website chat** is a chat with an agent for any visitor. See [A chat for visitors](/portal/sites/assistants/#a-chat-for-visitors).
 
 ### Settings
+
+![A Calendar opened in the page editor: Who adds events, The page's editors, with the note that they always may; Time zone; View, Month.](../../../../assets/screenshots/portal-widget-calendar-set.png)
 
 - A setting left at its default is not saved with the page. The widget uses the portal's default.
 - A setting that names something, such as a data model or an agent, is a list of what the portal has. A setting that asks for several things, such as **Columns**, uses its default when you tick none. The row says what that default is.

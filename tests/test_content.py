@@ -191,6 +191,8 @@ class Content(unittest.TestCase):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
     def test_portal_widgets_in_the_page_editor(self):
+        for shot in ('portal-widget-poll-set', 'portal-widget-calendar-set'):
+            self.assertIn(shot, (PORTAL / 'console/pages.md').read_text())
         doc = page('/portal/console/pages/')
         self.assertIn('id="the-portals-widgets"', doc)
         for route in ('/portal/sites/polls/', '/portal/sites/listings/'):
