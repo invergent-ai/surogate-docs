@@ -1,0 +1,64 @@
+---
+title: Named values
+description: The file of a named value, its kinds, and the settings that say for whom it is kept and for how long.
+---
+
+The configuration behind [Named values](/portal/sites/values/). That page says what a named value is, how long it is kept and what happens when it fails.
+
+## A value
+
+A value lives in `values/<name>.yaml`. The file's name is the value's name: letters, digits and `_`, starting with a lower-case letter. See [A value's file](#a-values-file).
+
+A value is one of:
+- `value`: an expression;
+- `flow`: a flow's outputs, with `flow: { id, inputs }`. Read one output as `values.<name>.<output>`.
+- `http`: what a service answers, with `http: { connector, path, query }`.
+  - It is a GET through a web [connector](/portal/sites/connectors/).
+  - The value is the answer's body.
+  - An answer that is not 2xx fails it.
+  - A value kept for the whole portal or a site cannot use a connector that each person connects themselves.
+- `collection`: the published entries of a content collection, with `collection: <id>`.
+  - Each entry is `id`, `slug` and `values`.
+  - It is read before the list runs, and is as fresh as the value's `ttl`.
+  - Only a public collection that visitors may read can be a value, since a value may reach anyone. Each entry's values are shown in the run's language.
+
+A value never reaches the portal's files: a value kept for others must not hold what only some people may read.
+
+## A value's file
+
+In `values/<name>.yaml`, here `values/vatRate.yaml`:
+
+```yaml
+name:
+  ro: Cota TVA
+  en: VAT rate
+cache: install
+ttl: 3600
+value: "1.19"
+```
+
+- `name`: the value's name in the console, in both languages.
+- `cache`: for whom the value is kept: `install`, `site`, `user` or `none`. See [How long it is kept](#how-long-it-is-kept).
+- `ttl`: how many seconds it is kept, 1 to 86,400; 300 when left out.
+- `value`: an expression; or `flow`, `http` or `collection`, as listed under [A value](#a-value).
+
+## How long it is kept
+
+`cache` says for whom a value is kept, and `ttl` how many seconds (1 to 86,400; 300 when left out):
+
+| `cache` | Kept for | Its expression may read |
+|---|---|---|
+| `install` | The whole portal | `locale`, `now`, other `install` values |
+| `site` | Each site | as above, and `site` and `site` values |
+| `user` | Each signed-in person | as above, and `user` and `user` values |
+| `none` | Nobody: worked out every time | everything above |
+
+A value is kept per language too. A value kept for a site or the whole portal never sees the person, even inside a flow it calls: what it keeps is the same for everyone. A value cannot read a value kept for fewer people than it is, and values cannot read each other in a circle. The portal refuses either when the file is saved. A `user` value is never kept for visitors.
+
+Kept values start afresh whenever the portal's files change.
+
+## When a value fails
+
+Every value a list can reach is worked out before the list runs, each after the values it reads. A value that fails is left out, and the run's log says why. Reading it is then the action's error, which its `onError` can catch.
+
+Values are read as `values.<name>`. Any other way, such as `values["name"]`, is refused when the file is saved.

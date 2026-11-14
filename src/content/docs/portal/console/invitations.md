@@ -52,26 +52,12 @@ Below the form, **Sent** lists the invitations: **Waiting**, **Accepted**, **Wit
 
 ## Let a site's editors invite
 
-A site says in its `site.yaml` whether its editors invite people, into which groups, and for which email domains (see the [config example](#config-example)). The site's editors then see **Invitations** in the console.
+A site says whether its editors invite people, into which groups (10 at most, by name; names the portal does not have are left out), and for which email domains. When it gives domains, editors may invite only those, matched exactly: primarie.ro does not cover mail.primarie.ro. When it says nothing, only administrators invite. The site's editors then see **Invitations** in the console.
+
+The console has no screen for this yet. For now, this is set in the site's configuration: see [Developer: Invitations](/portal/developer/invitations/).
 
 ## What happens to them later
 
 Invitations ended more than 90 days ago are forgotten. When a person is erased from the portal, the invitations to their email go, and those they sent stay without their name. Both are part of what they get when they ask for their data.
 
 When a directory or SCIM later provides the same person, it may take over the account made by accepting.
-
-## Config example
-
-In the site's `site.yaml`:
-
-```yaml
-invitations:
-  editors: true
-  groups: [Members]
-  domains: [primarie.ro]
-```
-
-- `editors`: whether the site's editors invite people. When left out, only administrators do.
-- `groups`: the groups, by name, that editors may invite people into, 10 at most. Names the portal does not have are left out.
-- `domains`: when given, the email domains editors may invite, matched exactly: `primarie.ro` does not cover `mail.primarie.ro`.
-

@@ -3,7 +3,7 @@ title: Named values
 description: Values worked out once and kept for a while, per portal, site or person, that action lists and flows read by name.
 ---
 
-A named value is a value worked out by the portal and read by name, as `values.<name>`, in any [action list](/portal/sites/actions/) or [logic flow](/portal/sites/flows/). A VAT rate, a greeting, a price list from a flow: each is written once and kept for a while.
+A named value is a value worked out by the portal and read by its name in any [action list](/portal/sites/actions/) or [logic flow](/portal/sites/flows/). A VAT rate, a greeting, a price list from a flow: each is written once and kept for a while.
 
 ## What people see
 
@@ -17,61 +17,42 @@ Administrators see the portal's named values on the console's [Flows](/portal/co
 
 ## A value
 
-A value lives in `values/<name>.yaml`. The file's name is the value's name: letters, digits and `_`, starting with a lower-case letter. See the [config example](#a-values-file).
+A value has a name: letters, digits and `_`, starting with a lower-case letter. The console shows the portal's values; it does not write them yet. For now, this is set in the site's configuration: see [Developer: Named values](/portal/developer/values/#a-value).
 
 A value is one of:
-- `value`: an expression;
-- `flow`: a flow's outputs, with `flow: { id, inputs }`. Read one output as `values.<name>.<output>`.
-- `http`: what a service answers, with `http: { connector, path, query }`.
+- An expression.
+- A flow's outputs: the flow and the inputs it is given. One output of it can be read on its own.
+- A web call's answer: what a service answers.
   - It is a GET through a web [connector](/portal/sites/connectors/).
   - The value is the answer's body.
   - An answer that is not 2xx fails it.
   - A value kept for the whole portal or a site cannot use a connector that each person connects themselves.
-- `collection`: the published entries of a content collection, with `collection: <id>`.
-  - Each entry is `id`, `slug` and `values`.
-  - It is read before the list runs, and is as fresh as the value's `ttl`.
+- A collection's entries: the published entries of a content collection.
+  - Each entry has its id, its slug and its values.
+  - It is read before the list runs, and is as fresh as the time the value is kept for.
   - Only a public collection that visitors may read can be a value, since a value may reach anyone. Each entry's values are shown in the run's language.
 
 A value never reaches the portal's files: a value kept for others must not hold what only some people may read.
 
 ## How long it is kept
 
-`cache` says for whom a value is kept, and `ttl` how many seconds (1 to 86,400; 300 when left out):
+A value is kept for the whole portal, for each site, for each signed-in person, or for nobody. It is kept for a number of seconds, from 1 to 86,400; 300 when not set:
 
-| `cache` | Kept for | Its expression may read |
-|---|---|---|
-| `install` | The whole portal | `locale`, `now`, other `install` values |
-| `site` | Each site | as above, and `site` and `site` values |
-| `user` | Each signed-in person | as above, and `user` and `user` values |
-| `none` | Nobody: worked out every time | everything above |
+| Kept for | Its expression may read |
+|---|---|
+| The whole portal | the language, the time, other values kept for the whole portal |
+| Each site | as above, and the site and values kept for a site |
+| Each signed-in person | as above, and the person and values kept for a person |
+| Nobody: worked out every time | everything above |
 
-A value is kept per language too. A value kept for a site or the whole portal never sees the person, even inside a flow it calls: what it keeps is the same for everyone. A value cannot read a value kept for fewer people than it is, and values cannot read each other in a circle. The portal refuses either when the file is saved. A `user` value is never kept for visitors.
+A value is kept per language too. A value kept for a site or the whole portal never sees the person, even inside a flow it calls: what it keeps is the same for everyone. A value cannot read a value kept for fewer people than it is, and values cannot read each other in a circle. The portal refuses either when the site's configuration is saved. A value kept for each signed-in person is never kept for visitors.
 
-Kept values start afresh whenever the portal's files change.
+Kept values start afresh whenever the site's configuration changes.
+
+For now, this is set in the site's configuration: see [Developer: Named values](/portal/developer/values/#how-long-it-is-kept).
 
 ## When a value fails
 
-Every value a list can reach is worked out before the list runs, each after the values it reads. A value that fails is left out, and the run's log says why. Reading it is then the action's error, which its `onError` can catch.
+Every value a list can reach is worked out before the list runs, each after the values it reads. A value that fails is left out, and the run's log says why. Reading it is then the action's error, which the list's error handling can catch.
 
-Values are read as `values.<name>`. Any other way, such as `values["name"]`, is refused when the file is saved.
-
-## Config example
-
-### A value's file
-
-In `values/<name>.yaml`, here `values/vatRate.yaml`:
-
-```yaml
-name:
-  ro: Cota TVA
-  en: VAT rate
-cache: install
-ttl: 3600
-value: "1.19"
-```
-
-- `name`: the value's name in the console, in both languages.
-- `cache`: for whom the value is kept: `install`, `site`, `user` or `none`. See [How long it is kept](#how-long-it-is-kept).
-- `ttl`: how many seconds it is kept, 1 to 86,400; 300 when left out.
-- `value`: an expression; or `flow`, `http` or `collection`, as listed under [A value](#a-value).
-
+A value can only be read by its name, written plainly. Any other way of reading it is refused when the site's configuration is saved.

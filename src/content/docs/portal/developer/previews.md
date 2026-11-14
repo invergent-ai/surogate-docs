@@ -11,7 +11,7 @@ A preview looks like the portal: the same sites, pages and console, at an addres
 
 ![The New token dialog: a Name, and the scopes to pick from, among them "Make preview environments, with fake people only".](../../../../assets/screenshots/portal-token-new.png)
 
-The sections below make a preview from the command line, give it people, and sign in to it. A coding agent can do the same through the portal's [MCP server](/portal/sites/agents/#connect-the-mcp-server).
+The sections below make a preview from the command line, give it people, and sign in to it. A coding agent can do the same through the portal's [MCP server](/portal/developer/agents/#connect-the-mcp-server).
 
 ## Make a preview
 
@@ -51,7 +51,7 @@ To use others, add `previews.yaml` at the top of the config folder (see the [con
 
 - Every group and organization named is made, an organization's parents too: `Acme/HR` makes `Acme` and `HR` in it.
 - `fields` are the portal's user fields.
-- Every address must be on a domain kept for examples: `example`, `example.com`, `example.net`, `example.org`, `test`, `invalid`, `localhost`, or a domain under one of them. Any other address could be a real person's, so nothing is made. [`portal check`](/portal/sites/check-a-site/) says so before you try.
+- Every address must be on a domain kept for examples: `example`, `example.com`, `example.net`, `example.org`, `test`, `invalid`, `localhost`, or a domain under one of them. Any other address could be a real person's, so nothing is made. [`portal check`](/portal/developer/check-a-site/) says so before you try.
 - Keep names and other details made up too.
 
 People are made once, with the preview. A later sync keeps them, and says so when `previews.yaml` changed: make a new preview to use the new people.
@@ -64,7 +64,7 @@ People in a preview have no password. Sign in as one from the command line:
 portal preview sign-in <id> manager@preview.example
 ```
 
-This prints a session cookie for the preview's address, for a browser or a script. A coding agent takes screenshots instead, through the portal's [MCP server](/portal/sites/agents/#connect-the-mcp-server):
+This prints a session cookie for the preview's address, for a browser or a script. A coding agent takes screenshots instead, through the portal's [MCP server](/portal/developer/agents/#connect-the-mcp-server):
 
 | Tool | What it does |
 | --- | --- |

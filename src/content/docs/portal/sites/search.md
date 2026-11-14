@@ -38,15 +38,15 @@ A person finds a page or an entry only when they may view it. Visitors find what
 
 In the [page editor](/portal/console/pages/#search), choose **Add a search box** in a part of the page. A page of its own, such as `/cautare`, works well, with a link to it in the site's layout.
 
-In a page's file, the search box is the portal's `search` widget (see the [config example](#a-search-box-on-a-page)). The box shows its results below it, with links to narrow them to pages or content, to one content type or one tag, and to the next page of results. It works without script.
+The box shows its results below it, with links to narrow them to pages or content, to one content type or one tag, and to the next page of results. It works without script. A page of results shows 10 results; a box can be set to show from 1 to 50. The page editor does not set that yet. For now, this is set in the site's configuration: see [Developer: Search](/portal/developer/search/#a-search-box-on-a-page).
 
 When search is not available, the box says so; the rest of the page shows as usual.
 
 ## Documents in the DMS
 
-A search box can also show the documents of the [DMS](/portal/sites/documents/) that match, beside the site's own results. Give it `documents` (see the [config example](#documents-of-the-dms-in-the-search-box)):
+A search box can also show the documents of the [DMS](/portal/sites/documents/) that match, beside the site's own results. The page editor does not set that yet. For now, this is set in the site's configuration: see [Developer: Search](/portal/developer/search/#documents-of-the-dms-in-the-search-box).
 
-- **What shows:** after the site's results, a section "In the DMS" lists up to `limit` documents (1 to 10; 5 when left out), each with its folder, state, version and up to two passages where the words match, and a link to all the results in the DMS.
+- **What shows:** after the site's results, a section "In the DMS" lists up to five documents (a box can be set to show 1 to 10), each with its folder, state, version and up to two passages where the words match, and a link to all the results in the DMS.
 - **Who sees what:** the DMS searches as the person signed in, so they find only the documents they may read there, and the DMS records each search, naming the portal. Visitors see no DMS section.
 - **What the DMS gets:** the words of the search, never the site's results or anything else about the person's visit. A document's fields and values never show in the portal.
 - **When the DMS does not answer**, the site's results show as usual, and the section says the documents cannot be searched now.
@@ -54,68 +54,8 @@ A search box can also show the documents of the [DMS](/portal/sites/documents/) 
 
 ## Tune search
 
-Each site can weigh titles against text, give words that mean the same, pin results to a search, leave pages and content types out, and turn typos and word starts on or off. Administrators do it on the console's [Search](/portal/console/search/) page; in the site's files it is `sites/<site>/search.yaml` (see the [config example](#tune-search-in-searchyaml)).
+Each site can weigh titles against text, give words that mean the same, pin results to a search, leave pages and content types out, and turn typos and word starts on or off. Administrators do it on the console's [Search](/portal/console/search/) page. The same settings, as files in the site's configuration, are in [Developer: Search](/portal/developer/search/#tune-search-in-searchyaml).
 
 ## From an app
 
-An app's backend searches a site through the SDK, as a visitor finds it:
-
-```ts
-const found = await portal.search({ q: "taxe locale", site: "main", locale: "ro" });
-```
-
-Each result has a `title`, a `url` on the portal's address, the `kind` and, for content, its `type`; the `snippet` is escaped HTML with the words found in `<mark>`. An app's searches are not counted in [what people search for](/portal/console/search/#what-people-search-for).
-
-## Config example
-
-### A search box on a page
-
-In a page's file (`sites/<site>/pages/<page>.yaml`):
-
-```yaml
-- id: search
-  app: portal
-  widget: search
-  preferences: { limit: 10 }
-```
-
-- `limit`: how many results a page of results shows, from 1 to 50 (10 when left out).
-
-### Documents of the DMS in the search box
-
-In a region of a page's file:
-
-```yaml
-regions:
-  main:
-    - id: search
-      app: portal
-      widget: search
-      preferences:
-        limit: 10
-        documents: { limit: 5 }
-```
-
-- `documents.limit`: how many of the DMS's documents the section shows, 1 to 10; 5 when left out.
-
-### Tune search in `search.yaml`
-
-In `sites/<site>/search.yaml`:
-
-```yaml
-weights: { title: 3, body: 1 }
-synonyms:
-  ro: ["primărie, consiliu local"]
-pinned:
-  - { query: taxe, paths: [/taxe, /plata-online] }
-exclude: { paths: [/intern/*], types: [memo] }
-fuzzy: true
-wildcard: false
-```
-
-- `weights`: how much a word found in a title counts against one found in the text, each from 1 to 10; the portal's own are 3 and 1.
-- `synonyms`: for each language, groups of words or phrases that mean the same, separated by commas.
-- `pinned`: for a search (`query`), up to five addresses (`paths`) shown first, in that order.
-- `exclude`: `paths` to leave out, where `/intern/*` leaves out `/intern` and everything under it, and content `types` search never finds.
-- `fuzzy`: a word with a typo counts; on by default.
-- `wildcard`: a word ending in `*` finds every word it starts, with three letters at least; off by default.
+An app's backend can search a site through the SDK, and finds what a visitor finds. Each result has a title, an address on the portal, its kind and, for content, its type, and a snippet with the words found marked. An app's searches are not counted in [what people search for](/portal/console/search/#what-people-search-for). How an app makes the call is in [Developer: Search](/portal/developer/search/#from-an-app).

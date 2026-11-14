@@ -34,7 +34,7 @@ Open a proposal to see:
 
 ## Preview a proposal
 
-**Make a preview** makes a [preview environment](/portal/sites/previews/) of the sites, as they are now, with the change in. Nothing of the change runs before you ask. **Open the preview** opens it as a visitor sees it. A preview stays seven days, or until the proposal is decided. A portal has at most ten previews at once, its developers' included.
+**Make a preview** makes a [preview environment](/portal/developer/previews/) of the sites, as they are now, with the change in. Nothing of the change runs before you ask. **Open the preview** opens it as a visitor sees it. A preview stays seven days, or until the proposal is decided. A portal has at most ten previews at once, its developers' included.
 
 ## Approve or reject
 
@@ -49,10 +49,6 @@ Whoever proposed a change may withdraw it while it waits. Each proposer has at m
 
 ## For agents and developers
 
-An agent proposes through the portal's API, with a token holding **Propose changes** (`proposals`), given by name only:
-
-1. `GET /_portal/api/proposals/base` gives the newest version and the files a proposal may change.
-2. `POST /_portal/api/proposals` with `title`, an optional `description`, `baseVersion` and `changes`: each file's new text, or `null` to remove it.
-3. `GET /_portal/api/proposals/<id>` shows where it stands, the note included.
+An agent proposes through the portal's API, with a token holding **Propose changes**, given by name only. The calls are in [Developer: Assistants](/portal/developer/assistants/#propose-a-change-through-the-api).
 
 A token proposes and withdraws; it never approves, whatever else it holds.

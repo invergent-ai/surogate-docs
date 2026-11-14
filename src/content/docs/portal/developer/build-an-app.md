@@ -3,7 +3,7 @@ title: Build an app
 description: Start an app from a working one, check what the portal sends it, send events, and type its code against its manifest.
 ---
 
-An app for the portal is a program of your own that serves a manifest, widgets and, if it needs them, events and hooks. [Apps on a page](/portal/sites/apps/) describes what the portal asks of an app. This page shows how to build one with the portal's developer kit: a starting app and a library, `@invergent/portal-app-sdk`, that does the checks for you.
+An app for the portal is a program of your own that serves a manifest, widgets and, if it needs them, events and hooks. [Apps on a page](/portal/developer/apps/) describes what the portal asks of an app. This page shows how to build one with the portal's developer kit: a starting app and a library, `@invergent/portal-app-sdk`, that does the checks for you.
 
 ## Start from a working app
 
@@ -32,7 +32,7 @@ To see it on a portal:
 2. Copy `portal-config/apps/<id>.yaml` into the site's files, under `apps/`, with the address where the app serves its manifest. Place its widgets on a page.
 3. Sync, then [approve](/portal/console/apps/) the app on the console.
 
-On your own machine, [Develop locally](/portal/sites/develop-locally/) does steps 2 and 3's sync for you, again on every change.
+On your own machine, [Develop locally](/portal/developer/develop-locally/) does steps 2 and 3's sync for you, again on every change.
 
 ## Check what the portal sends
 
@@ -127,7 +127,7 @@ customElements.define("my-app-counter", Counter);
 - `onPortalEvent` receives the events wired to the widget. Any script on the page could send one: check what it says before acting on it.
 - `propsOf`, `emit` and `onEvent` do the same for any element, without the base class.
 
-Style the widget with the colours and fonts the page sets from the site's design, such as `var(--foreground)`, `var(--primary)` and `var(--font-body)`, so it looks like whichever site it is placed on. See [Give a site its look](/portal/sites/design/#for-apps).
+Style the widget with the colours and fonts the page sets from the site's design, such as `var(--foreground)`, `var(--primary)` and `var(--font-body)`, so it looks like whichever site it is placed on. See [Give a site its look](/portal/developer/design/#for-apps).
 
 ## Let the person pick a DMS document
 

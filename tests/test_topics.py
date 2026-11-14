@@ -73,7 +73,7 @@ class Topics(unittest.TestCase):
         self.assertNotIn('rel="prev"', page('/dms/'))
         self.assertNotIn('rel="next"', page('/dms/reference/faq/'))
         self.assertNotIn('rel="prev"', page('/portal/'))
-        self.assertNotIn('rel="next"', page('/portal/reference/roles/'))
+        self.assertNotIn('rel="next"', page('/portal/developer/data-console/'))
 
 
 if __name__ == '__main__':

@@ -23,7 +23,7 @@ The studio opens on its own address, already signed in as you. Only the portal's
 
 The studio is where you explore designs: describe what you want, look at what it makes, and ask for changes. It designs with the portal's own model, so you need no account or key of your own, and it cannot be pointed at another one.
 
-Nothing in the studio reaches visitors by itself. A page you like becomes part of a site when you [use it in a site](#use-a-design-in-a-site). The site's colours and fonts still come from its [design package](/portal/sites/design/).
+Nothing in the studio reaches visitors by itself. A page you like becomes part of a site when you [use it in a site](#use-a-design-in-a-site). The site's colours and fonts still come from its [design package](/portal/developer/design/).
 
 For pages that go into a site whole, ask for a **Portal page**: the studio then marks where the page's content goes and leaves out what a site cannot hold.
 

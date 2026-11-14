@@ -38,7 +38,7 @@ portal dev ./portal-config --watch ../my-app --types my-app=../my-app/src/portal
 - `--once` sends the files once and stops, for a script.
 - Press Ctrl-C to stop.
 
-A new app made with [`create-portal-app`](/portal/sites/build-an-app/#start-from-a-working-app) has a `portal-config` folder with a small site that shows its two widgets. Start there:
+A new app made with [`create-portal-app`](/portal/developer/build-an-app/#start-from-a-working-app) has a `portal-config` folder with a small site that shows its two widgets. Start there:
 
 ```sh
 portal dev ./portal-config --watch . --types my-app=src/portal-types.ts
@@ -71,4 +71,4 @@ await portal.stop();
 - Apps your tests run on `localhost` are reachable from it.
 - If a test run is killed, `pruneTestPortals()` removes what it left behind.
 
-Before you push, [check the site](/portal/sites/check-a-site/): the same portal renders every page and checks it.
+Before you push, [check the site](/portal/developer/check-a-site/): the same portal renders every page and checks it.

@@ -3,7 +3,7 @@ title: Search engines and link previews
 description: How a site's pages are described to search engines and when they are shared, and what crawlers are told.
 ---
 
-Every page of a site tells search engines and link previews what it is. The portal writes all of this from the site's files, so a page needs nothing more than its title to be found. A site can say more.
+Every page of a site tells search engines and link previews what it is. The portal writes all of this itself, so a page needs nothing more than its title to be found. A site can say more.
 
 ## What people see
 
@@ -21,17 +21,17 @@ Visitors see nothing of this on the page: it is what search engines and link pre
 
 ## Describe a page
 
-In the site's files, a page's `seo` holds the following (see the [config example](#a-pages-seo)):
+Administrators set how a page shows to search engines and link previews in the [page editor](/portal/console/pages/), under **Search and sharing**:
 
-- **`description`**: at most 300 characters. Once it is given in one language, give it in all of the site's languages.
-- **`image`**: an `https:` address. It shows when the page is shared.
-- **`noindex: true`**: asks search engines not to list the page.
+- **Description**: at most 300 characters, in each language of the site. Once it is given in one language, give it in all of the site's languages.
+- **Share image**: an `https:` address. It shows when the page is shared.
+- **Hide from search engines**: asks search engines not to list the page.
 
-Administrators can set these in the console too, under **Search and sharing** in the [page editor](/portal/console/pages/).
+The same settings, as files in the site's configuration, are in [Developer: Search engines and link previews](/portal/developer/seo/#a-pages-seo).
 
 ## Describe a site
 
-A site's `site.yaml` can say the same for all its pages, and who is behind it (see the [config example](#a-sites-seo)). A page's own description and image win over the site's. **`index: false`** asks search engines to leave the whole site out.
+A site can say the same for all its pages, and who is behind it: the organization, with its name, address and logo. A page's own description and image win over the site's. A site can also ask search engines to leave the whole site out. The console does not set these yet. For now, this is set in the site's configuration: see [Developer: Search engines and link previews](/portal/developer/seo/#a-sites-seo).
 
 ## What crawlers are told
 
@@ -40,44 +40,7 @@ Each address the portal serves answers two files:
 - **`/robots.txt`** keeps crawlers away from the portal's own paths, but not from what pages need to show, and names the sitemap.
 - **`/sitemap.xml`** lists every page anyone may see, in each language, with its other-language addresses. It leaves out:
   - pages only signed-in people may see;
-  - pages with `noindex`;
-  - the pages of a site with `index: false`.
+  - pages hidden from search engines;
+  - the pages of a site that asks search engines to leave it out.
 
 Previews are never listed: their robots.txt keeps every crawler out.
-
-## Config example
-
-### A page's `seo`
-
-In a page's file (`sites/<site>/pages/<page>.yaml`):
-
-```yaml
-seo:
-  description: { ro: Programul și serviciile primăriei., en: The city hall's hours and services. }
-  image: https://img.example.ro/share.png
-  noindex: false
-```
-
-- `description`: at most 300 characters. Once it is given in one language, give it in all of the site's languages.
-- `image`: an `https:` address. It shows when the page is shared.
-- `noindex: true` asks search engines not to list the page.
-
-### A site's `seo`
-
-In `site.yaml`:
-
-```yaml
-seo:
-  description: { ro: Site-ul Primăriei Exemplu., en: Example City Hall's site. }
-  image: https://img.example.ro/share.png
-  organization:
-    name: Primăria Exemplu
-    url: https://example.ro
-    logo: https://img.example.ro/logo.png
-  index: true
-```
-
-- `description` and `image`: the same for all the site's pages; a page's own win.
-- `organization`: who is behind the site, with its `name`, `url` and `logo`.
-- `index: false` asks search engines to leave the whole site out.
-

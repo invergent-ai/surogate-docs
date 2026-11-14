@@ -38,12 +38,12 @@ When a person forgets a chat, it leaves their list in the portal. The agent stil
 The portal talks to an agent with the agent's own API key.
 
 1. **Copy the agent's key in Studio.** Open the agent, then **Channels → Web → Manage**, and copy the key. It starts with `surg_sk_`. Studio shows it once.
-2. **Name the agent in the portal's files:** a secret [connector](/portal/sites/connectors/) for the key, and the agent in `agents.yaml`. See [the agent and its key](#the-agent-and-its-key).
-3. **Publish the files.** Then, in the console under **Connectors**, set the key's value.
+2. **Name the agent in the portal's configuration:** a secret [connector](/portal/sites/connectors/) for the key, and the agent itself. The console has no screen for this yet. For now, this is set in the site's configuration: see [Developer: Assistants](/portal/developer/assistants/#the-agent-and-its-key).
+3. **Publish the configuration.** Then, in the console under **Connectors**, set the key's value.
 
-The key opens only for the agent and address `agents.yaml` names. If you change either, set the key again. No action can use the key.
+The key opens only for the agent and address the configuration names. If you change either, set the key again. No action can use the key.
 
-Then [place the assistant](#the-assistant-on-a-page) on a page.
+Then place the assistant on a page. The page's widget names the agent, and may give the chat a heading. Without one, the heading is the agent's name; with neither, the chat has no heading. The console's page editor does not place the assistant yet. For now, this is set in the site's configuration: see [Developer: Assistants](/portal/developer/assistants/#the-assistant-on-a-page).
 
 ## A chat for visitors
 
@@ -54,7 +54,7 @@ A page can also carry a chat for its visitors, signed in or not: the agent's web
    - The chat refuses a page on any address not in the list.
    - Set a limit on the messages of one chat there too: without one, a chat has none.
    - **Save.** Then copy the publishable key, which starts with `surg_wk_`, and the agent's address from the embed code.
-2. **Give the agent its website** in `agents.yaml`, and **place the portal's `website-chat` widget**, one on a page. See [the chat for visitors](#the-chat-for-visitors).
+2. **Give the agent its website** in the portal's configuration, and **place the website chat**, one on a page. The chat's heading (the agent's name, or "Assistant", when none is given), its greeting of up to 500 characters, its colour and its corner (bottom right, or bottom left) are set with it. For now, this is set in the site's configuration: see [Developer: Assistants](/portal/developer/assistants/#the-chat-for-visitors).
 
 **What visitors and the agent keep:**
 - The chat runs on the agent's runtime, which stores each conversation as it stores all the agent's work.
@@ -66,7 +66,7 @@ A page can also carry a chat for its visitors, signed in or not: the agent's web
 - It is made to sit in a page.
 - The allowed origins stop other websites' pages from using it, but not a program that calls the agent directly.
 - All the chat's visitors share the agent's limit on how fast it answers.
-- A key minted again, or the channel turned off, stops the chat until `agents.yaml` has the new key.
+- A key minted again, or the channel turned off, stops the chat until the portal's configuration has the new key.
 
 The page is the same for every visitor, so it stays as fast as any public page.
 
@@ -82,11 +82,11 @@ One agent can also be the console's help. The tenant's administrators then find 
 - **What the agent knows** is what you give it in Studio. To let it look things up in the portal, [give it the portal as a tool](#give-an-agent-the-portal-as-a-tool).
 - **Keep the help agent for the console alone.** Anyone who reaches an agent reaches what its tools reach. So:
   - no page's assistant names it;
-  - no job's `askAgent` asks it;
-  - it has no `website`;
-  - no other agent in `agents.yaml` is the same agent under another name.
+  - no job asks it;
+  - it has no website chat;
+  - no other agent in the portal's configuration is the same agent under another name.
 
-Give the console its own agent, with its own key connector: see [the console's agents](#the-consoles-agents).
+Give the console its own agent, with its own key connector. For now, this is set in the site's configuration: see [Developer: Assistants](/portal/developer/assistants/#the-consoles-agents).
 
 ## Describe a change
 
@@ -96,8 +96,8 @@ One agent can be the console's **builder**. Everyone who writes content, and the
 
 The builder writes it as the portal's files and proposes it. An administrator approves it under [Proposed changes](/portal/console/proposals/) before anything goes live.
 
-1. **Mark the agent** as the builder in `agents.yaml`: see [the console's agents](#the-consoles-agents). One agent at most is the builder, and it needs its key. Like the help agent, the builder belongs to the console alone, and it is never the help agent too.
-2. **Give it the portal as a tool,** below, with a token holding both **Use the portal as a tool of an agent** (`mcp`) and **Propose changes** (`proposals`). Give it nothing else: everyone who writes content reaches what its tools reach.
+1. **Mark the agent** as the builder in the portal's configuration. One agent at most is the builder, and it needs its key. Like the help agent, the builder belongs to the console alone, and it is never the help agent too. For now, this is set in the site's configuration: see [Developer: Assistants](/portal/developer/assistants/#the-consoles-agents).
+2. **Give it the portal as a tool,** below, with a token holding both **Use the portal as a tool of an agent** and **Propose changes**. Give it nothing else: everyone who writes content reaches what its tools reach.
 3. **Tell it in Studio what it is for.** For example: describe the change back to the person, make it, propose it with a title and who asked for it, then say that an administrator will look at it.
 
 The builder changes only what a proposal may hold: pages, layouts, designs, forms, flows, contracts, values, data models, endpoints, jobs, guides, content types, vocabularies and collections. Everything it proposes is checked, and waits for an administrator.
@@ -112,7 +112,7 @@ The builder changes only what a proposal may hold: pages, layouts, designs, form
 
 One agent can suggest tags for the content people write. The content editor then shows **Suggest tags** under an entry's tags.
 
-- One agent at most is the tagger, and it needs its key. The console's help agent cannot be the tagger.
+- One agent at most is the tagger, and it needs its key. The console's help agent cannot be the tagger. For now, this is set in the site's configuration: see [Developer: Assistants](/portal/developer/assistants/#the-consoles-agents).
 - The agent is given the entry's title and text, and answers with tags. The portal keeps only what fits as a tag.
 - **Give the tagger an agent with no tools.** Everyone who writes content can ask it, and its words come from what they write.
 - **Who may ask:** the people who edit a site's or a library's content, signed in.
@@ -120,12 +120,12 @@ One agent can suggest tags for the content people write. The content editor then
 
 ## Give an agent the portal as a tool
 
-An agent can use the portal itself while it works. It can search a site and read the records of the data models its account may see, through the MCP server the portal serves at `/_portal/mcp`.
+An agent can use the portal itself while it works. It can search a site and read the records of the data models its account may see, through the MCP server the portal serves.
 
 1. **Make the agent an account.** Make a [service account](/portal/console/service-accounts/) for the agent. Give it the roles, and the data models' permissions, of what it may read. It reads nothing more.
 
-2. **Give it a token.** Make it a token with the **Use the portal as a tool of an agent** scope (`mcp`). Copy the token.
-   - When the agent should read records, add **Read and change records of the data models, as the person may** (`data`).
+2. **Give it a token.** Make it a token with the **Use the portal as a tool of an agent** scope. Copy the token.
+   - When the agent should read records, add **Read and change records of the data models, as the person may**.
    - The tools only read, but with that scope the token can also change, through the portal's API, the records the account may change. Keep the token in Studio's vault alone.
 
 3. **Add the server in Studio.**
@@ -152,108 +152,3 @@ A token with **Propose changes** gets `search_site` and the proposal tools; `lis
 Each tool asks the portal as the agent's account, so the agent finds only what that account may see. The portal's audit log records each tool the agent uses, naming the account. An answer longer than 100 KB is cut, and the agent is told so.
 
 The portal keeps these tools' names and descriptions the same from one version to the next: Surogate sets aside a tool whose description changes after it first met it.
-
-## Config example
-
-### The agent and its key
-
-A secret connector holds the agent's key, such as `connectors/helper-key.yaml`:
-
-```yaml
-name: { ro: Cheia asistentului, en: The assistant's key }
-kind: secret
-```
-
-The agents are named in `agents.yaml`, at the top of the portal's files:
-
-```yaml
-helper:
-  url: https://helper-x1.cloud.surogate.ai
-  agent: 7c1e9a52-3b4d-4e5f-8a6b-1c2d3e4f5a6b
-  key: helper-key
-  name: { ro: Asistentul primăriei, en: City Hall's assistant }
-```
-
-- `url`: where the agent answers, its own address. Inside the same cluster, the agents' service address works too.
-- `agent`: the agent's id, as Studio shows it.
-- `key`: the connector holding the agent's key.
-- `name`: what the portal calls the agent; optional.
-
-### The assistant on a page
-
-In a page's file (`sites/<site>/pages/<page>.yaml`), the portal's `assistant` widget:
-
-```yaml
-regions:
-  main:
-    - id: ask
-      app: portal
-      widget: assistant
-      preferences:
-        agent: helper
-        title: { ro: Întrebați-ne, en: Ask us }
-```
-
-- `agent`: an agent `agents.yaml` names.
-- `title`: the heading above the chat; optional. Without it, the agent's `name` is the heading; with neither, the chat has no heading.
-
-### The chat for visitors
-
-The agent's website, in `agents.yaml`:
-
-```yaml
-helper:
-  url: https://helper-x1.cloud.surogate.ai
-  agent: 7c1e9a52-3b4d-4e5f-8a6b-1c2d3e4f5a6b
-  website:
-    publishableKey: surg_wk_…
-```
-
-- `publishableKey`: the website channel's key.
-- `url`: the agent's own public https address, as the embed code names it. When the agent's `url` is already that address, leave it out.
-- An agent used only for visitors needs no `key`.
-
-The portal's `website-chat` widget, one on a page, in a region of the page's file:
-
-```yaml
-- id: help
-  app: portal
-  widget: website-chat
-  preferences:
-    agent: helper
-    title: { ro: Întrebați-ne, en: Ask us }
-    welcome: { ro: Bună! Cu ce vă putem ajuta?, en: Hi! How can we help? }
-    accent: "#4f46e5"
-```
-
-- `title`: the chat's heading. Without it, the agent's `name`, or "Assistant".
-- `welcome`: a greeting before the first message, up to 500 characters.
-- `accent`: the chat's colour, as `#rrggbb`.
-- `position`: `bottom-right` (when left out) or `bottom-left`.
-
-### The console's agents
-
-The help agent, the builder and the tagger, each with its own key connector, in `agents.yaml`:
-
-```yaml
-console-help:
-  url: https://console-help-x1.cloud.surogate.ai
-  agent: 2d4f6a8c-1b3e-4c5d-9e7f-0a1b2c3d4e5f
-  key: console-help-key
-  help: true
-console-builder:
-  url: https://builder-x1.cloud.surogate.ai
-  agent: 9a1c3e5b-7d2f-4b6a-8c0e-2f4a6b8c0d1e
-  key: console-builder-key
-  builder: true
-tagger:
-  url: https://tagger-x1.cloud.surogate.ai
-  agent: 5e7a9c1b-2d4f-4a6b-8c0d-1e2f3a4b5c6d
-  key: tagger-key
-  tags: true
-```
-
-- `help: true`: the console's Help. On one agent at most.
-- `builder: true`: Describe a change. On one agent at most, never the help agent.
-- `tags: true`: Suggest tags. On one agent at most, never the help agent.
-- Each of them needs its `key`.

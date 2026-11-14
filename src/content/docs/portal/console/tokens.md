@@ -25,23 +25,19 @@ A token can only do what its scopes allow, and never more than you can do in the
 |---|---|
 | **Your own account** | Read your details and permissions |
 | **Read users, groups and settings** | Read the tenant's users, groups, organizations and sign-in settings |
-| **Read how the portal is built** | Read the sites, pages, apps, events, and group and organization names, never people; for a [coding agent](/portal/sites/agents/) |
+| **Read how the portal is built** | Read the sites, pages, apps, events, and group and organization names, never people; for a [coding agent](/portal/developer/agents/) |
 | **Change users, groups and settings** | Change them too |
 | **Roles, passwords and other tokens** | Give roles, set passwords, link accounts, and make SCIM tokens and service accounts |
 | **Read the audit log** | Read and export the [audit log](/portal/console/audit/) |
 | **Export and erase personal data** | Answer [personal data](/portal/console/users/#personal-data) requests |
 | **Manage tenants** | Create and change [tenants](/portal/console/tenants/), for install administrators |
-| **Make preview environments** | Make, sync and delete [previews](/portal/sites/previews/) with fake people, and sign in to them; nothing of the portal itself. Given by name only, by an administrator |
+| **Make preview environments** | Make, sync and delete [previews](/portal/developer/previews/) with fake people, and sign in to them; nothing of the portal itself. Given by name only, by an administrator |
 | **Propose changes** | Propose changes to the sites, for an administrator to approve under [Proposed changes](/portal/console/proposals/), and read your own proposals; never approve them. Given by name only, by an administrator |
 | **Full access** | All of the above, but making previews and proposing changes |
 
 A token made before scopes existed has **Full access**. A token asked to do something its scopes do not allow is refused: "This token is not allowed to do this."
 
-From the command line:
-
-```
-portal tokens create <name> --scope tenant:read
-```
+The command line makes tokens too: see [Developer: The command line](/portal/developer/command-line/#tokens).
 
 ## Revoke a token
 

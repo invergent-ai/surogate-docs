@@ -3,7 +3,7 @@ title: Announcements
 description: Tell everyone, people signed in, or chosen people and groups something for a while, wherever a site shows its announcements.
 ---
 
-The portal's `announcements` widget shows a site's announcements: what its editors want people to know for a while, such as a closed office or a change of hours. Each reader sees the announcements meant for them, the important ones first.
+The portal's announcements widget shows a site's announcements: what its editors want people to know for a while, such as a closed office or a change of hours. Each reader sees the announcements meant for them, the important ones first.
 
 ## What people see
 
@@ -11,8 +11,8 @@ A visitor sees the announcements meant for everyone. The important one is marked
 
 ![The announcements widget for a visitor: "Important: The city hall is closed on 1 December" with a red bar, then "New hours at the civil registry".](../../../../assets/screenshots/portal-announcements-visitor.png)
 
-- The widget shows up to its `limit` announcements at once, 1 to 10 (3 when left out); see the [config example](#config-example).
-- Announcements belong to the site, not to the widget: every `announcements` widget on the site shows the same ones, so a site can place it on its home page and on any other.
+- The widget shows up to 3 announcements at once, or any number from 1 to 10 that the page asks for. Editors' days and times are read in the widget's time zone: Europe/Bucharest unless it names another. The console's page editor does not place it yet. For now, this is set in the site's configuration: see [Developer: Announcements](/portal/developer/announcements/#the-widget-on-a-page).
+- Announcements belong to the site, not to the widget: every announcements widget on the site shows the same ones, so a site can place it on its home page and on any other.
 - A page with the widget is made for each reader and never kept in a cache, visitors' pages included.
 
 ## Read and dismiss
@@ -30,7 +30,7 @@ An announcement has:
 - a title of up to 200 characters, and a text of up to 2,000, its line breaks kept;
 - how important it is: **For information**, or **Important**, which is marked as such and shown first;
 - who it is for: **Everyone**, visitors included; **People signed in**; or **Those chosen below**, one a line, up to 20: `user:<email>`, `group:<name>`, `organization:<name>/<name>` or `role:administrator`, as [permissions](/portal/sites/permissions/) name them. A group or an organization the portal does not have is refused;
-- when it starts and, if it should stop by itself, when it ends, as a day and a time in the widget's time zone (`zone`, `Europe/Bucharest` when left out); a day given without a time means 00:00 that day. Left empty, it starts at once and stays until an editor deletes it. An end, when given, is in the future and at most a year after the start.
+- when it starts and, if it should stop by itself, when it ends, as a day and a time in the widget's time zone (Europe/Bucharest unless the widget names another); a day given without a time means 00:00 that day. Left empty, it starts at once and stays until an editor deletes it. An end, when given, is in the future and at most a year after the start.
 
 **Manage announcements** lists every announcement of the site, 50 a page, with its state: **Scheduled**, **Shown now** or **Ended**; it is the only place an editor sees announcements meant for others.
 
@@ -47,21 +47,3 @@ A new announcement that starts at once can also be sent as a notification: tick 
 ## What happens to them later
 
 When a person is erased from the portal, the announcements they wrote stay, without their name, and what they dismissed is forgotten. Their address leaves every audience; an announcement that was for them alone is deleted. The announcements they wrote, and the titles of those they dismissed, are part of what they get when they ask for their data.
-
-## Config example
-
-### The widget on a page
-
-In a page's file (`sites/<site>/pages/<page>.yaml`):
-
-```yaml
-regions:
-  main:
-    - id: notices
-      app: portal
-      widget: announcements
-      preferences: { limit: 3, zone: Europe/Bucharest }
-```
-
-- `limit`: how many announcements the widget shows at once, 1 to 10 (3 when left out).
-- `zone`: the time zone the editors' days and times are read in, such as `Europe/Bucharest` (when left out).

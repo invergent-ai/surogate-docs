@@ -3,7 +3,7 @@ title: Forums and Q&A
 description: Give a site a forum where people start topics and answer each other, or a Q&A where answers are voted on and the best is accepted.
 ---
 
-The portal's `forum` widget is a board of topics. People signed in start a topic with a title and a message, and others answer it. On a Q&A forum, people vote answers up, and the one who asked accepts the answer that solved it.
+The portal's forum widget is a board of topics. People signed in start a topic with a title and a message, and others answer it. On a Q&A forum, people vote answers up, and the one who asked accepts the answer that solved it.
 
 ## What people see
 
@@ -17,11 +17,11 @@ A topic opens on the same page: its message, then its answers, and a form to ans
 
 ## Place a forum
 
-Place the `forum` widget on a page (see the [config example](#a-forum-on-a-page)). Its `kind` is `discussion` for topics people talk about, or `questions` for questions and their answers; changing it later changes the topics started afterwards, and each topic keeps the kind it was started with.
+A forum is a widget placed on a page. It is a discussion, for topics people talk about, or a Q&A, for questions and their answers; a discussion unless the widget says otherwise. Changing it later changes the topics started afterwards, and each topic keeps the kind it was started with. A topic or an answer shows as soon as it is written; a forum can instead ask that they wait until a moderator approves them. The list shows 20 topics a page, or any number from 1 to 50 that the widget asks for. The console's page editor does not place forums yet. For now, this is set in the site's configuration: see [Developer: Forums and Q&A](/portal/developer/forums/#a-forum-on-a-page).
 
-Each `forum` widget is a board of its own: two forums, on one page or on two, keep their topics apart. A page with a forum is made for each person and never kept in a cache.
+Each forum widget is a board of its own: two forums, on one page or on two, keep their topics apart. A page with a forum is made for each person and never kept in a cache.
 
-The topics belong to the widget where they were started. Moving the widget to another page, or giving it another `id`, leaves its topics behind: they come back if it returns.
+The topics belong to the widget where they were started. Moving the widget to another page, or giving it another name in the site's configuration, leaves its topics behind: they come back if it returns.
 
 ## Topics and answers
 
@@ -35,7 +35,7 @@ People delete their own topics and answers, and flag someone else's, as with [co
 
 ## Questions and answers
 
-On a forum of `kind: questions`:
+On a Q&A forum:
 
 - Each answer shows its votes. People signed in vote an answer up once, never their own, and may take their vote back.
 - The one who asked, or a moderator, accepts an answer; it then shows first, marked **Accepted answer**, and its author is told. The others follow, the most voted first.
@@ -56,23 +56,3 @@ Topics and answers that wait, are flagged or were hidden are in the [moderation 
 Each person starts at most 5 topics an hour and writes at most 50 messages a day in one topic; the limits of [comments](/portal/sites/comments/#limits) on how fast one writes apply too. A topic takes at most 1,000 answers. Each person votes, or takes a vote back, at most 10 times a minute.
 
 When a person is erased from the portal, their topics nobody answered go with them; the ones others answered stay for those answers, with no title, words or author. Their votes are taken back.
-
-## Config example
-
-### A forum on a page
-
-In a page's file (`sites/<site>/pages/<page>.yaml`):
-
-```yaml
-regions:
-  main:
-    - id: forum
-      app: portal
-      widget: forum
-      preferences: { kind: questions, moderation: after, limit: 20 }
-```
-
-- `kind`: `discussion` (when left out) for topics people talk about, or `questions` for questions and their answers. Changing it later changes the topics started afterwards; each topic keeps the kind it was started with.
-- `moderation`: `after` (when left out) publishes a topic or an answer as soon as it is written; `before` keeps it waiting until a moderator approves it.
-- `limit`: how many topics a page of the list shows (1 to 50; 20 when left out).
-
