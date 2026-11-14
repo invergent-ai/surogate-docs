@@ -49,7 +49,11 @@ Open **Settings** on a site. The settings are in three parts, saved together wit
 - **Languages**: the languages the site is in. A language you add starts with the default language's name; change it to the name in that language. Removing a language removes the site's name and description in it.
 - **Default language**: the language people see first.
 - **Home page**: one of the site's pages.
-- **Who sees it**: **Everyone**, or **People signed in**. A site restricted in another way, such as to a group, shows **As set for this site** with who that is. It stays as it is unless you choose **Everyone** or **People signed in**. See [Permissions](/portal/sites/permissions/).
+- **Who sees it**: by default **Everyone**. Choose **Anyone signed in**, a group, an organization or a person instead, or **Only editors and administrators**.
+- **Who edits it**: by default **Administrators only**. It says: "In addition to administrators and people added on Access." Choose the groups, organizations and people who may also edit the site. They can be added on [Access](/portal/console/access/#add-editors) too.
+- **Who writes blog posts**: by default **The site's editors**. Choose the groups, organizations and people who may write their own [blog posts](/portal/sites/blogs/#name-the-bloggers) on the site.
+
+Each is a picker: **Add…** opens the choices, and **Remove** takes one away. See [Choose who](/portal/sites/permissions/#choose-who) for how it works and what the defaults mean.
 
 ![A site's settings: General, with its name in Romanian and English, its languages, its default language, its home page and who sees it.](../../../../assets/screenshots/portal-site-settings.png)
 

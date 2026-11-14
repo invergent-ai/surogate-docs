@@ -47,14 +47,16 @@ Administrators see **Build forms** at the top of the page: **New form** makes on
   - the language its text is written in;
   - whether it goes step by step;
   - the sites that offer it (none ticked: every site);
-  - whether anyone may send it;
-  - who may send it and who reads what was sent, one per line: `signed-in`, `group:<name>`, `organization:<path>` or `user:<email>`;
   - the thanks shown once it is sent, in each language.
   - whether people can leave the form and come back to it;
   - who is told by email when it is sent, and whether the email holds the answers;
   - whether people must agree to a text before sending, and that text in each language;
   - how many days submissions are kept (empty: always).
   - whether a public form can be filled in offline at its own address.
+- **Who can use it:** who sends the form and who reads what was sent. Each uses the picker described in [Choose who](/portal/sites/permissions/#choose-who): **Add…** opens the choices, and **Remove** takes one away.
+  - **Anyone may send it, signed in or not**: tick it to make the form public.
+  - **Who may send it**: by default **Its reviewers only**. It says: "Reviewers also send it. To let anyone send it, make it public." It is off while **Anyone may send it, signed in or not** is ticked. It offers no **Everyone**: to let everyone send the form, make it public.
+  - **Who reads what was sent**: by default **Administrators only**. It says: "Administrators always read what was sent." The people chosen read, export and delete the submissions.
 - **Fields:** drag fields from the left onto the form, and drop them where they go.
   - **Fields:** text, text area, number, checkbox, select, radio, select boxes and the submit button.
   - **More fields:** email, web address, phone number, day, time and currency.

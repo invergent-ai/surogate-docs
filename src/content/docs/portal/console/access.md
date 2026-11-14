@@ -3,7 +3,7 @@ title: Access
 description: Check who may view or edit a site, page or placement, and why, and add editors.
 ---
 
-On **Access**, an administrator checks who may see or edit the portal's sites, pages and placements, and adds editors. Who may *view* a page is set in the site's configuration: see [Who sees a page](/portal/sites/permissions/).
+On **Access**, an administrator checks who may see or edit the portal's sites, pages and placements, and adds editors. Who may *view* a page is chosen in the site's settings, on the page's **Settings** tab and in each block: see [Who sees a page](/portal/sites/permissions/).
 
 ## Check someone's access
 
