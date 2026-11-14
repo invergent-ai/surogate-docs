@@ -486,10 +486,14 @@ class Content(unittest.TestCase):
 
     def test_portal_guides(self):
         doc = page('/portal/sites/guides/')
-        for anchor in ('what-people-see', 'start-a-guide', 'in-the-console'):
+        for anchor in ('what-people-see', 'write-a-guide', 'start-a-guide', 'in-the-console'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="ui-actions"', page('/portal/sites/actions/'))
         self.assertIn('href="/portal/sites/guides/"', page('/portal/console/guides/'))
+        self.assertIn('href="/portal/sites/guides/#write-a-guide"', page('/portal/console/guides/'))
+        # Guides are made in the console.
+        for path in ('sites/guides.md', 'console/guides.md'):
+            self.assertNotIn('For now', (ROOT / 'src/content/docs/portal' / path).read_text(), path)
         for path in ('sites/guides.md', 'console/guides.md'):
             source = (ROOT / 'src/content/docs/portal' / path).read_text()
             for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'index', 'repositor', 'localStorage'):

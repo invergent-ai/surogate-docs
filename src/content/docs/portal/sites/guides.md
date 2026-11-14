@@ -17,11 +17,28 @@ Here a guide starts on someone's first visit to the home page. Its first step po
 
 ## Write a guide
 
-A guide has a name, in every language. It applies to the sites and pages it names; left out, it applies on every site or every page. Each page it names must be a page of one of the guide's sites. It starts when asked for, which is the default, or by itself the first time someone opens one of its pages.
+On [Guides](/portal/console/guides/), **New guide** makes a guide and **Edit** changes one. A portal has at most 50 guides.
 
-A guide has at most 30 steps. Each step has a title and a text in every language, as plain text, and can point at a part of the page. A step that points at nothing, or at a part that is not found, shows on its own.
+![The guide editor: the guide bun-venit, its name in each language, Only these sites with Demo City Hall ticked, and Only these pages with the home page ticked among the site's pages.](../../../../assets/screenshots/portal-guide-edit.png)
 
-The console does not write guides yet. For now, this is set in the site's configuration: see [Developer: User guides](/portal/developer/guides/#a-guides-file).
+- **Id:** lower-case letters, digits and `-`. It is in the guide's address, and cannot change once the guide is saved.
+- **Name**, in every language.
+- **Sites** and **Pages:** **Every site** or **Only these sites**, and **Every page** or **Only these pages**, each with a box to tick per site or page. Only the pages of the sites ticked are offered. With **Only these** and nothing ticked, the guide shows nowhere, and the editor says so. A site or page that no longer exists is listed, ticked, as such: untick it before saving.
+- **Starts:** when asked for, or by itself the first time someone opens one of its pages. A guide that starts when asked for shows the address to add to a page's address, `?guide=<id>`.
+- **Steps:** at most 30, each with a title (at most 120 characters) and a text (at most 1,000) in every language, as plain text without `<`. **Move up**, **Move down** and **Remove step** order them; a guide keeps at least one.
+
+**Points at** chooses what a step highlights:
+
+- **Nothing:** the step shows on its own, without a highlight.
+- **A block** of the guide's pages, by its id, its widget and its pages; a block inside a group too.
+- **A part of the page**, such as its main region.
+- **Something else, by a CSS selector:** for parts of the site's layout, such as its menu, for example `.site-menu` or `nav`. The editor checks the selector as the browser reads it; `< > { } ; ' \` are not allowed.
+
+![A guide's second step in the editor: its title and text in each language, and Points at set to the search block of the home page.](../../../../assets/screenshots/portal-guide-edit-steps.png)
+
+A step whose part is not on the page, or that a visitor cannot see, such as a block only editors see, shows on its own.
+
+Developers can also write a guide as a file: see [Developer: User guides](/portal/developer/guides/#a-guides-file).
 
 ## Start a guide
 
@@ -33,10 +50,10 @@ A guide starts:
 
 Each browser remembers the guides it has shown by themselves and those it finished: a first-visit guide does not start again there, even when the person left the page without closing it. When a page has several first-visit guides, the first by id starts. A browser that keeps nothing never starts a guide by itself.
 
-The console does not add this action to a form yet. For now, this is set in the site's configuration: see [Developer: User guides](/portal/developer/guides/#start-a-guide).
+On a form's **Steps** tab, add **Start a guide** and pick the guide: see [Forms](/portal/sites/forms/). A guide a form or a flow starts cannot be removed until they stop starting it: the console lists them.
 
 ## In the console
 
-[Guides](/portal/console/guides/) lists the portal's guides for administrators: each guide's name and id, how it starts, its number of steps, and the sites and pages it applies to.
+[Guides](/portal/console/guides/) lists the portal's guides for administrators: each guide's name and id, how it starts, its number of steps, and the sites and pages it applies to, with **Edit**.
 
-![The console's Guides page: the guide "Welcome to the site", marked "On the first visit", with 5 steps, on the site primaria at /.](../../../../assets/screenshots/portal-guides-console.png)
+![The console's Guides page, with New guide: the guide "Welcome to the site", marked "On the first visit", with 5 steps, on the site primaria at /, and Edit.](../../../../assets/screenshots/portal-guides-console.png)
