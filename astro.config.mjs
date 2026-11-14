@@ -516,6 +516,7 @@ export default defineConfig({
                 'portal/console/forms',
                 'portal/console/flows',
                 'portal/console/connectors',
+                'portal/console/integrations',
                 'portal/console/guides',
                 'portal/console/data',
                 'portal/console/data-console',

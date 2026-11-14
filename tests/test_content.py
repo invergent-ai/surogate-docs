@@ -499,6 +499,20 @@ class Content(unittest.TestCase):
             for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'index', 'repositor', 'localStorage'):
                 self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
 
+    def test_portal_integrations(self):
+        doc = page('/portal/console/integrations/')
+        for anchor in ('keys', 'keel', 'documents-dms', 'agents'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/console/integrations/#keel"', page('/portal/sites/keel/'))
+        self.assertIn('href="/portal/console/integrations/#documents-dms"', page('/portal/sites/documents/'))
+        self.assertIn('href="/portal/console/integrations/#agents"', page('/portal/sites/assistants/'))
+        # Keel, the DMS and agents are connected in the console.
+        for path in ('sites/keel.md', 'sites/documents.md', 'sites/assistants.md', 'console/integrations.md'):
+            source = (ROOT / 'src/content/docs/portal' / path).read_text()
+            self.assertNotIn('The console has no screen for this yet', source, path)
+            for word in ('kubectl', 'helm', 'PORTAL_', 'yaml'):
+                self.assertIsNone(re.search(rf'\b{word}', source.split('Developer')[0] if path == 'console/integrations.md' else ''), (path, word))
+
     def test_portal_data_models(self):
         doc = page('/portal/sites/data-models/')
         for anchor in ('what-people-see', 'a-model', 'fields', 'who-may-do-what', 'when-a-model-changes', 'on-pages', 'the-api', 'graphql', 'relations'):

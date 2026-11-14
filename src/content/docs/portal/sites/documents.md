@@ -20,9 +20,9 @@ The portal's configuration names your DMS. It gives:
 - What the portal names the DMS as in its sign-ins. Give one only if the DMS's administrator set another.
 - The connector holding the DMS's key for its events; see [When something happens in the DMS](#when-something-happens-in-the-dms).
 
-The console has no screen for this yet. For now, this is set in the site's configuration: see [Developer: Documents](/portal/developer/documents/#connect-the-dms-in-dmsyaml).
+Set these under **Integrations → Documents (DMS)** in the console: see [Integrations](/portal/console/integrations/#documents-dms). Developers: see [Developer: Documents](/portal/developer/documents/#connect-the-dms-in-dmsyaml).
 
-The DMS must trust the portal. Its administrator adds the portal's **issuer**, shown on the console's **Apps** page under **For the apps' developers**, to the DMS's trusted portals, with the address of the portal's keys. The DMS then finds each person among its people by their email: the email they have in the portal must be the one they have in the DMS.
+The DMS must trust the portal. Its administrator adds the portal's **issuer** and the address of its keys, both shown on the Documents (DMS) page under **What it needs from the portal**, to the DMS's trusted portals. The DMS then finds each person among its people by their email: the email they have in the portal must be the one they have in the DMS.
 
 ## Show a folder
 

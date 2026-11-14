@@ -18,9 +18,9 @@ The portal's configuration names your Keel. It gives:
 - Keel's business app, where an item's link goes.
 - How long the portal waits for Keel, from 1,000 to 10,000 ms; 3,000 when none is given.
 
-The console has no screen for this yet. For now, this is set in the site's configuration: see [Developer: Keel](/portal/developer/keel/#connect-keel-in-keelyaml).
+Set these under **Integrations → Keel** in the console: see [Integrations](/portal/console/integrations/#keel). Developers: see [Developer: Keel](/portal/developer/keel/#connect-keel-in-keelyaml).
 
-Keel must trust the portal. Its administrator adds the portal's **issuer**, shown on the console's **Apps** page under **For the apps' developers**, with the project, to Keel's trusted portals. Keel then finds each person among its staff by their email: the email they have in the portal must be the one they have in Keel.
+Keel must trust the portal. Its administrator adds the portal's **issuer**, shown on the Keel page under **What it needs from the portal**, with the project, to Keel's trusted portals. Keel then finds each person among its staff by their email: the email they have in the portal must be the one they have in Keel.
 
 ## My work
 
