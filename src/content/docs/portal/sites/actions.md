@@ -47,7 +47,7 @@ Whole numbers are integers, the others decimals; the two mix in arithmetic, so `
 
 ## The actions
 
-Extensions add more: the [document actions](/portal/sites/document-actions/) make and read PDF, Word, Excel and CSV files and barcode images.
+Extensions add more: the [document actions](/portal/sites/document-actions/) make and read PDF, Word, Excel and CSV files and barcode images, and the [file management actions](/portal/sites/file-management/) copy, move and rename files and make and unpack ZIP archives.
 
 | Type | What it does | Takes |
 |---|---|---|

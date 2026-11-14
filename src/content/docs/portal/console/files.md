@@ -50,6 +50,15 @@ A file is at most 10 MB. Its name becomes lower case, with other characters as h
 
 A visitor opening a secure folder's file is asked to sign in; someone the folder does not let view it is told there is no such file.
 
+## Move or copy a file
+
+**Move** opens a dialog for the file:
+- **Folder**: where it goes, among the folders you edit; the one it is in, to rename it.
+- **Name**: its name there. A name the portal keeps stays as you write it; any other becomes what an upload's would, and the file keeps its extension.
+- **Keep the original here (copy)**: the file stays where it is, and a copy goes to the folder.
+
+A file already there under that name is never replaced: the console says so, and nothing changes. Links to a moved or renamed file stop working; link to its new address. Forms and jobs move, copy and pack files with the [file management actions](/portal/sites/file-management/).
+
 ## Remove a file
 
 **Remove** takes a file away, after asking. Links to it stop working. Earlier versions of a file, replaced or removed, are kept a month, then gone.
