@@ -9,7 +9,7 @@ An API endpoint answers other programs, apps and pages at an address of the port
 
 An endpoint has no page of its own: a program, an app or a page of the site calls its address and gets JSON, text or a redirect. Administrators see every endpoint under **Endpoints** in the console, with who may call it and the last calls:
 
-![The API endpoints page: the endpoint GET /_portal/endpoints/program, marked Anyone and "kept 60 s", and under Last calls three calls, each stopped with HTTP 200 and how long it took, with a Log button.](../../../../assets/screenshots/portal-endpoints-console.png)
+![The API endpoints page with New endpoint: the endpoint GET /_portal/endpoints/program, marked Anyone and "kept 60 s", with Edit, and under Last calls its calls, each stopped with HTTP 200 and how long it took, with a Log button.](../../../../assets/screenshots/portal-endpoints-console.png)
 
 See [Its calls](#its-calls).
 
