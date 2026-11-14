@@ -49,4 +49,4 @@ A test can also give a person, with an id, a name, an email and roles, for a flo
 - it gives named values their value for the test;
 - a collection value the test does not give is left out. Every value the flow reads is worked out afresh for the test. A test that runs out of time fails, whatever it expects.
 
-Tests run from the console, under [Flows](/portal/console/flows/), and when a site is [checked](/portal/developer/check-a-site/): each failing test is reported against its flow. The tests themselves are written with the flow. For now, this is set in the site's configuration: see [Developer: Logic flows](/portal/developer/flows/#tests).
+Tests run from the console, under [Flows](/portal/console/flows/), and when a site is [checked](/portal/developer/check-a-site/): each failing test is reported against its flow. The tests themselves are written with the flow, on its **Tests** tab: see [Make or change a flow](/portal/console/flows/#make-or-change-a-flow). Developers can also write them in the site's configuration: see [Developer: Logic flows](/portal/developer/flows/#tests).
