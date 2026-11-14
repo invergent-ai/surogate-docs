@@ -3,7 +3,7 @@ title: Wikis and knowledge bases
 description: Give a site a wiki its people write together, or a knowledge base its editors keep, with each article's history and a search.
 ---
 
-The portal's `wiki` widget is a wiki: articles linked to one another by name, each with its history. As a knowledge base, the site's editors keep its articles in a tree, and readers say whether an article helped them.
+The portal's wiki widget is a wiki: articles linked to one another by name, each with its history. As a knowledge base, the site's editors keep its articles in a tree, and readers say whether an article helped them.
 
 ## What people see
 
@@ -25,9 +25,9 @@ Those who write edit an article in a form, with the markup shown under the text:
 
 ## Place a wiki
 
-Place the `wiki` widget on a page (see the [config example](#a-wiki-on-a-page)). Its `kind` is `wiki` (when left out), or `knowledge` for a knowledge base. Who writes a wiki is `members` (when left out), everyone signed in who may [see the widget](/portal/sites/permissions/), or `editors`, the site's editors only; a knowledge base is always written by the site's editors. `home` is the address of the article the wiki opens on (`home` when left out).
+A wiki is a widget placed on a page. It is a wiki, or a knowledge base. Who writes a wiki is its members, which means everyone signed in who may [see the widget](/portal/sites/permissions/), unless the widget says the site's editors only; a knowledge base is always written by the site's editors. The wiki opens on the article whose address is `home`, unless the widget names another. The console's page editor does not place wikis yet. For now, this is set in the site's configuration: see [Developer: Wikis and knowledge bases](/portal/developer/wiki/#a-wiki-on-a-page).
 
-Each `wiki` widget is a wiki of its own. Its articles belong to the widget: moving it to another page, or giving it another `id`, leaves them behind, and they come back if it returns. A page with a wiki is made for each person and never kept in a cache.
+Each wiki widget is a wiki of its own. Its articles belong to the widget: moving it to another page, or giving it another name in the site's configuration, leaves them behind, and they come back if it returns. A page with a wiki is made for each person and never kept in a cache.
 
 ## Read and find
 
@@ -72,23 +72,3 @@ A knowledge base is a wiki its site's editors write, its articles arranged in a 
 ## What happens to them later
 
 When a person is erased from the portal, the articles and versions they saved stay, as the wiki's shared text, without their name and without the notes they wrote; their answers to "Did this article help you?" go. The versions they saved are part of what they get when they ask for their data.
-
-## Config example
-
-### A wiki on a page
-
-In a page's file (`sites/<site>/pages/<page>.yaml`):
-
-```yaml
-regions:
-  main:
-    - id: wiki
-      app: portal
-      widget: wiki
-      preferences: { kind: wiki, edit: members, home: home }
-```
-
-- `kind`: `wiki` (when left out), or `knowledge` for a knowledge base.
-- `edit`: who writes a wiki: `members` (when left out), everyone signed in who may [see the widget](/portal/sites/permissions/), or `editors`, the site's editors only. A knowledge base is always written by the site's editors.
-- `home`: the address of the article the wiki opens on (`home` when left out).
-

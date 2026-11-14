@@ -3,7 +3,7 @@ title: Comments and ratings
 description: Let people signed in comment on a page or a content entry, answer each other, rate it from 1 to 5, and flag what should not be there.
 ---
 
-Two widgets of the portal open a page to its readers: `comments`, where people signed in write, answer each other and flag a comment, and `rating`, where they give from 1 to 5 stars. Both work on an ordinary page and on a page that [shows one entry](/portal/sites/content-types/) of a content type; there, the comments and the rating belong to the entry, not to the page. An entry shown on several sites has comments and a rating on each site apart, moderated by that site's moderators.
+Two widgets of the portal open a page to its readers: comments, where people signed in write, answer each other and flag a comment, and rating, where they give from 1 to 5 stars. Both work on an ordinary page and on a page that [shows one entry](/portal/sites/content-types/) of a content type; there, the comments and the rating belong to the entry, not to the page. An entry shown on several sites has comments and a rating on each site apart, moderated by that site's moderators.
 
 ## What people see
 
@@ -17,9 +17,11 @@ On a page that shows a news entry, the widgets sit below its text. The rating sh
 
 ## Place the widgets
 
-Place the two widgets on a page: see the [config example](#config-example). With `moderation: after` (when left out), a comment shows as soon as it is written, and moderators hide or delete it later. With `moderation: before`, it waits until a moderator approves it. `limit` is how many comments the widget shows, newest first, each with its answers (1 to 100; 50 when left out): older comments are not shown.
+The two widgets are placed on a page, such as the display page of a content type. A comment shows as soon as it is written, and moderators hide or delete it later; a page can instead ask that a comment waits until a moderator approves it. The comments widget shows the newest comments first, each with its answers: 50 comments, or any number from 1 to 100 that the page asks for. Older comments are not shown.
 
-The `rating` widget takes no preferences. A page with either widget is made for each person and never kept in a cache. On a page that shows an entry but was opened without one, the widgets offer nothing.
+The rating widget has no settings. A page with either widget is made for each person and never kept in a cache. On a page that shows an entry but was opened without one, the widgets offer nothing.
+
+The console's page editor does not place these widgets yet. For now, this is set in the site's configuration: see [Developer: Comments and ratings](/portal/developer/comments/#comments-and-a-rating-on-a-page).
 
 ## Write and answer
 
@@ -51,7 +53,7 @@ People flag a comment they think should not be there, and may say why. Each pers
 
 ## Rate
 
-The `rating` widget shows the average of the stars people gave and how many gave them. A person signed in gives from 1 to 5 stars, sees the rating they gave, and may change it; each person counts once.
+The rating widget shows the average of the stars people gave and how many gave them. A person signed in gives from 1 to 5 stars, sees the rating they gave, and may change it; each person counts once.
 
 ## Limits
 
@@ -62,26 +64,3 @@ Each person writes at most 10 comments a minute and 20 a day on one page or entr
 - Deleting a content entry deletes its comments and ratings.
 - Renaming a page or taking it off the site leaves its comments behind: they come back on a page at the same address.
 - When a person is erased from the portal, their comments, flags and ratings go with them, and so do the notifications that told others of their answers or that they were named. Their comments that others answered stay with no words and no author: as **Comment removed**, or still hidden when a moderator hid them. A person's comments and ratings are part of what they get when they ask for their data.
-
-## Config example
-
-### Comments and a rating on a page
-
-In a page's file (`sites/<site>/pages/<page>.yaml`), such as the display page of a content type:
-
-```yaml
-regions:
-  main:
-    - id: rating
-      app: portal
-      widget: rating
-    - id: comments
-      app: portal
-      widget: comments
-      preferences: { moderation: before, limit: 20 }
-```
-
-- `moderation`: `after` (when left out) publishes a comment as soon as it is written; moderators hide or delete it later. `before` keeps it waiting until a moderator approves it.
-- `limit`: how many comments the widget shows, newest first, each with its answers (1 to 100; 50 when left out). Older comments are not shown.
-- The `rating` widget takes no preferences.
-

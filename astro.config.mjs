@@ -62,6 +62,14 @@ export default defineConfig({
     // already, because Docusaurus emitted work/settings.html beside a
     // work/settings/ directory and the directory wins on GitHub Pages.
     '/work/settings': '/work/settings/authentication/',
+    // Developer pages that sat under Sites until the portal's guide split its config files into a
+    // Developer section. Their old addresses are linked from outside, so they keep working.
+    '/portal/sites/build-an-app': '/portal/developer/build-an-app/',
+    '/portal/sites/develop-locally': '/portal/developer/develop-locally/',
+    '/portal/sites/check-a-site': '/portal/developer/check-a-site/',
+    '/portal/sites/previews': '/portal/developer/previews/',
+    '/portal/sites/design': '/portal/developer/design/',
+    '/portal/sites/agents': '/portal/developer/agents/',
   },
   integrations: [
     starlight({
@@ -513,12 +521,17 @@ export default defineConfig({
             },
             {
               label: 'Sites',
-              items: ['portal/sites/permissions', 'portal/sites/apps', 'portal/sites/build-an-app', 'portal/sites/develop-locally', 'portal/sites/check-a-site', 'portal/sites/design', 'portal/sites/layouts', 'portal/sites/content-types', 'portal/sites/seo', 'portal/sites/search', 'portal/sites/forms', 'portal/sites/form-fields', 'portal/sites/actions', 'portal/sites/document-actions', 'portal/sites/file-management', 'portal/sites/flows', 'portal/sites/values', 'portal/sites/connectors', 'portal/sites/guides', 'portal/sites/data-models', 'portal/sites/listings', 'portal/sites/kpis', 'portal/sites/keel', 'portal/sites/documents', 'portal/sites/assistants', 'portal/sites/notifications', 'portal/sites/comments', 'portal/sites/activity', 'portal/sites/blogs', 'portal/sites/forums', 'portal/sites/wiki', 'portal/sites/calendar', 'portal/sites/announcements', 'portal/sites/polls', 'portal/sites/endpoints', 'portal/sites/jobs', 'portal/sites/agents', 'portal/sites/previews', 'portal/sites/environments'],
+              items: ['portal/sites/permissions', 'portal/sites/apps', 'portal/sites/layouts', 'portal/sites/content-types', 'portal/sites/seo', 'portal/sites/search', 'portal/sites/forms', 'portal/sites/form-fields', 'portal/sites/actions', 'portal/sites/document-actions', 'portal/sites/file-management', 'portal/sites/flows', 'portal/sites/values', 'portal/sites/connectors', 'portal/sites/guides', 'portal/sites/data-models', 'portal/sites/listings', 'portal/sites/kpis', 'portal/sites/keel', 'portal/sites/documents', 'portal/sites/assistants', 'portal/sites/notifications', 'portal/sites/comments', 'portal/sites/activity', 'portal/sites/blogs', 'portal/sites/forums', 'portal/sites/wiki', 'portal/sites/calendar', 'portal/sites/announcements', 'portal/sites/polls', 'portal/sites/endpoints', 'portal/sites/jobs', 'portal/sites/environments'],
             },
             {
               label: 'Reference',
               collapsed: true,
               items: ['portal/reference/roles'],
+            },
+            {
+              label: 'Developer',
+              collapsed: true,
+              items: ['portal/developer', 'portal/developer/develop-locally', 'portal/developer/check-a-site', 'portal/developer/previews', 'portal/developer/agents', 'portal/developer/command-line', 'portal/developer/build-an-app', 'portal/developer/apps', 'portal/developer/design', 'portal/developer/permissions', 'portal/developer/layouts', 'portal/developer/content-types', 'portal/developer/seo', 'portal/developer/search', 'portal/developer/forms', 'portal/developer/form-fields', 'portal/developer/actions', 'portal/developer/document-actions', 'portal/developer/file-management', 'portal/developer/flows', 'portal/developer/values', 'portal/developer/connectors', 'portal/developer/guides', 'portal/developer/data-models', 'portal/developer/listings', 'portal/developer/kpis', 'portal/developer/keel', 'portal/developer/documents', 'portal/developer/assistants', 'portal/developer/notifications', 'portal/developer/comments', 'portal/developer/activity', 'portal/developer/blogs', 'portal/developer/forums', 'portal/developer/wiki', 'portal/developer/calendar', 'portal/developer/announcements', 'portal/developer/polls', 'portal/developer/endpoints', 'portal/developer/jobs', 'portal/developer/environments', 'portal/developer/files', 'portal/developer/invitations', 'portal/developer/data-console'],
             },
           ],
         },

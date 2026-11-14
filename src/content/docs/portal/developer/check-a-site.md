@@ -41,8 +41,8 @@ portal check ./portal-config --start --render
 portal check ./portal-config --url http://localhost:8080 --yes --render
 ```
 
-- `--start` checks on a throwaway portal of its own, which approves every app. It needs Docker, and the portal image that [Develop locally](/portal/sites/develop-locally/#test-against-a-throwaway-portal) describes.
-- `--url` checks on your [local portal](/portal/sites/develop-locally/). The check replaces that portal's site files with yours, so it asks for `--yes`.
+- `--start` checks on a throwaway portal of its own, which approves every app. It needs Docker, and the portal image that [Develop locally](/portal/developer/develop-locally/#test-against-a-throwaway-portal) describes.
+- `--url` checks on your [local portal](/portal/developer/develop-locally/). The check replaces that portal's site files with yours, so it asks for `--yes`.
 - The portal syncs your files and checks what only a portal can, such as the apps' hook modules. On your own portal, the check also reports apps waiting for [approval](/portal/console/apps/), and people, groups or organizations your files name that the portal does not have.
 
 ## Render every page
@@ -67,4 +67,4 @@ With `--render`, every page of every site is opened in a headless Chrome, in eac
 - `--summary <file>` adds the report, without links, to a file such as a CI job's summary. Upload `.portal-check/latest` as the job's artifact so reviewers can open the images.
 - The check ends with 0 when it passes and 1 when it fails. It ends with 2 when it could not run, such as with no Chrome, no Docker, a portal it cannot reach or not in dev mode, or an option that would do nothing.
 
-A [coding agent](/portal/sites/agents/) runs the same loop, with the skills that teach it how.
+A [coding agent](/portal/developer/agents/) runs the same loop, with the skills that teach it how.

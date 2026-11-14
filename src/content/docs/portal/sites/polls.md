@@ -3,7 +3,7 @@ title: Polls
 description: Ask a page's readers one question at a time, and show the results as the poll says.
 ---
 
-The portal's `poll` widget asks a question with two to ten answers. People signed in vote once each, and the results are shown as the poll says.
+A poll asks a question with two to ten answers. People signed in vote once each, and the results are shown as the poll says.
 
 ## What people see
 
@@ -19,9 +19,9 @@ Those who [edit the page](/portal/sites/permissions/) also see **New poll** and 
 
 ## Place a poll
 
-Place the `poll` widget on a page (see the [config example](#a-poll-on-a-page)). Its `zone` is the time zone a poll's closing time is read in, such as `Europe/Bucharest` (when left out).
+A poll is a widget placed on a page. Its time zone is the one a poll's closing time is read in: Europe/Bucharest unless the widget names another. The console's page editor does not place polls yet. For now, this is set in the site's configuration: see [Developer: Polls](/portal/developer/polls/).
 
-Each `poll` widget keeps polls of its own. Its polls belong to the widget: moving it to another page, or giving it another `id`, leaves them behind. A page with a poll is made for each reader and never kept in a cache.
+Each poll widget keeps polls of its own. Its polls belong to the widget: moving it to another page, or giving it another name in the site's configuration, leaves them behind. A page with a poll is made for each reader and never kept in a cache.
 
 ## Open a poll
 
@@ -55,20 +55,3 @@ Results show each answer's votes and share. Until a poll says they may be seen, 
 ## What happens to them later
 
 When a person is erased from the portal, their votes stay counted, without them, and their drafts go. The answers they gave are part of what they get when they ask for their data.
-
-## Config example
-
-### A poll on a page
-
-In a page's file (`sites/<site>/pages/<page>.yaml`):
-
-```yaml
-regions:
-  aside:
-    - id: question
-      app: portal
-      widget: poll
-      preferences: { zone: Europe/Bucharest }
-```
-
-- `zone`: the time zone a poll's closing time is read in, such as `Europe/Bucharest` (when left out).

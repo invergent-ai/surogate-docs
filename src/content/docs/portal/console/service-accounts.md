@@ -43,10 +43,4 @@ The program asks for tokens at `/_portal/oauth/token` on the tenant's address.
 
 Everything a service account does is in the [audit log](/portal/console/audit/) under its name.
 
-The same can be done from the command line with an administrator's [token](/portal/console/tokens/):
-
-```
-portal service-accounts create <slug> --name "<name>" [--role administrator]
-portal service-accounts token <slug> <token name> --scope <scope>
-portal service-accounts client <slug> --scope <scope> [--audience <app>]
-```
+The same can be done from the command line: see [Developer: The command line](/portal/developer/command-line/#service-accounts).

@@ -11,24 +11,28 @@ A person signed in sees, on a page of the portal, the documents of a DMS folder,
 
 ## Connect the DMS
 
-Name your DMS in `dms.yaml`, at the top of the portal's files (see the [config example](#connect-the-dms-in-dmsyaml)):
+The portal's configuration names your DMS. It gives:
 
-- `api`: the DMS's API. Inside the same cluster, its service address works too, such as `http://sdms.surogate-docs.svc`.
-- `app`: the DMS's web app, where a document's link and its downloads go.
-- `timeoutMs`: how long the portal waits for the DMS, from 1,000 to 10,000 ms; 3,000 when left out.
-- `uploadMb`: the largest file a person can file from a page, from 1 to 5,120 megabytes; 100 when left out. See [File documents from a page](#file-documents-from-a-page).
-- `audience`: what the portal names the DMS as in its sign-ins; leave it out unless the DMS's administrator set another.
-- `serviceKey`: the connector holding the DMS's key for its events; see [When something happens in the DMS](#when-something-happens-in-the-dms).
+- The DMS's API address. Inside the same cluster, its service address works too.
+- The DMS's web app, where a document's link and its downloads go.
+- How long the portal waits for the DMS, from 1,000 to 10,000 ms; 3,000 when none is given.
+- The largest file a person can file from a page, from 1 to 5,120 megabytes; 100 when none is given. See [File documents from a page](#file-documents-from-a-page).
+- What the portal names the DMS as in its sign-ins. Give one only if the DMS's administrator set another.
+- The connector holding the DMS's key for its events; see [When something happens in the DMS](#when-something-happens-in-the-dms).
+
+The console has no screen for this yet. For now, this is set in the site's configuration: see [Developer: Documents](/portal/developer/documents/#connect-the-dms-in-dmsyaml).
 
 The DMS must trust the portal. Its administrator adds the portal's **issuer**, shown on the console's **Apps** page under **For the apps' developers**, to the DMS's trusted portals, with the address of the portal's keys. The DMS then finds each person among its people by their email: the email they have in the portal must be the one they have in the DMS.
 
 ## Show a folder
 
-Place the portal's `documents` widget on a page (see the [config example](#a-folder-on-a-page)):
+The portal's documents widget is placed on a page. The console's page editor does not place it yet. For now, this is set in the site's configuration: see [Developer: Documents](/portal/developer/documents/#a-folder-on-a-page).
 
-- `folder`: the DMS folder, by its id. Open the folder in the DMS and copy the id from its address.
-- `limit`: how many documents, 1 to 50; 10 when left out.
-- `sort`: `title` (when left out) or `newest`, the ones changed last first.
+The widget names:
+
+- the DMS folder, by its id. Open the folder in the DMS and copy the id from its address;
+- how many documents it shows, 1 to 50; 10 when none is named;
+- how they are sorted: by title (when none is named) or newest, the ones changed last first.
 
 A person signed in sees the folder's documents they may see in the DMS, each with its state, version, file name, size and date. Each title opens the document in the DMS. Below the list, a link opens the folder in the DMS, saying how many more it holds.
 
@@ -38,21 +42,21 @@ A person signed in sees the folder's documents they may see in the DMS, each wit
 - **When the DMS does not answer**, the rest of the page shows as usual, and the widget says the documents cannot be read now.
 - **An administrator seeing the portal as someone else** does not see that person's documents.
 
-What a document holds, its fields and their values, is never shown in the portal. A page with the widget is never kept in a cache and shown to someone else. Placed without `dms.yaml`, the widget is refused when the files are published.
+What a document holds, its fields and their values, is never shown in the portal. A page with the widget is never kept in a cache and shown to someone else. Placed on a portal that names no DMS, the widget is refused when the site's configuration is published.
 
 ## File documents from a page
 
-A documents widget can also let people file a new document into its folder, from the page (see the [config example](#a-folder-with-filing-from-the-page)):
+A documents widget can also let people file a new document into its folder, from the page. For now, this is set in the site's configuration: see [Developer: Documents](/portal/developer/documents/#a-folder-with-filing-from-the-page).
 
-- `upload`: `true` shows a form under the list, with a title and a file. When left out, the widget only shows the folder.
-- `type`: the DMS document type new documents are filed under, by its id. When left out, they are filed with no type, if the folder allows that. A type with a folder of its own in the DMS files there, not in the widget's folder, so its new documents do not show in this list.
+- The widget can show a form under the list, with a title and a file. When it does not, the widget only shows the folder.
+- The widget can name the DMS document type new documents are filed under, by its id. When it names none, they are filed with no type, if the folder allows that. A type with a folder of its own in the DMS files there, not in the widget's folder, so its new documents do not show in this list.
 
 The form shows only to people the DMS lets file into the folder, under that type. Everyone else sees the list as before. The file goes to the DMS as the person, and the DMS decides whether to take it. The portal keeps nothing of it. A title left blank becomes the file's name.
 
 After the upload, the page shows what happened:
 
 - **Filed in the DMS:** the document is filed as a draft.
-- **Larger than this page takes:** the file is over `uploadMb`, or over the largest file the DMS takes.
+- **Larger than this page takes:** the file is over the largest size the portal's configuration allows for a page, or over the largest file the DMS takes.
 - **The DMS did not take the file:** the DMS refused it. For example, the type needs fields the form does not ask for, or the folder is closed. File it from the DMS, where the reason is shown.
 - **You may not file documents here:** the DMS does not let the person file into that folder.
 - **The folder is not in the DMS:** the widget's folder was deleted or never existed.
@@ -64,11 +68,13 @@ An administrator seeing the portal as someone else cannot file for them. Each fi
 
 ## Show one document
 
-The `document` widget shows one DMS document and its versions (see the [config example](#one-document-on-a-page)):
+The portal's document widget shows one DMS document and its versions. The console's page editor does not place it yet. For now, this is set in the site's configuration: see [Developer: Documents](/portal/developer/documents/#one-document-on-a-page).
 
-- `document`: the DMS document, by its id. Open it in the DMS and copy the id from its address.
-- `versions`: how many of the newest versions to list, 1 to 50; 10 when left out. A link below the list says how many older ones the DMS holds.
-- `upload`: `true` lets people add a version from the page. When left out, the widget only shows the document.
+The widget names:
+
+- the DMS document, by its id. Open it in the DMS and copy the id from its address;
+- how many of the newest versions to list, 1 to 50; 10 when none is named. A link below the list says how many older ones the DMS holds;
+- whether people may add a version from the page. When they may not, the widget only shows the document.
 
 A person signed in sees the document's title and state, with **Open in the DMS**, where the document is viewed. Below are its versions, newest first: each version's number, date, file, size and comment, and a **Download**. The current version is marked. A file the DMS holds aside after a failed check has no Download.
 
@@ -81,7 +87,7 @@ The DMS records each time a person reads the document through the page, as it do
 
 ### Add a version
 
-With `upload: true`, people the DMS lets edit the document see a form with a comment and a file. The DMS lets someone edit a document while it is a draft or validated, and not checked out by someone else. A new version of a validated document sends it back to draft, and the form says so. The file goes to the DMS as the person. The page then says what happened. Most outcomes read as for [filing a document](#file-documents-from-a-page); these differ:
+When the widget lets people add versions, those the DMS lets edit the document see a form with a comment and a file. The DMS lets someone edit a document while it is a draft or validated, and not checked out by someone else. A new version of a validated document sends it back to draft, and the form says so. The file goes to the DMS as the person. The page then says what happened. Most outcomes read as for [filing a document](#file-documents-from-a-page); these differ:
 
 - **The new version is in the DMS:** it is now the current version.
 - **You may not add versions to this document:** the DMS does not let the person edit it.
@@ -104,115 +110,20 @@ A search box can show the DMS's documents too, as the person may read them there
 
 ## When something happens in the DMS
 
-A [job](/portal/sites/jobs/) can run each time a document is made, given a new version, moved to another state or folder, changed, or deleted in the DMS. The portal reads the DMS's events with a key of its own: ask the DMS's administrator for a service key, add it as a secret [connector](/portal/sites/connectors/), set its value under **Connectors**, and name the connector in `dms.yaml` as `serviceKey` (see the [config example](#the-service-key-and-a-job)). Then a job can wait for documents to be approved.
+A [job](/portal/sites/jobs/) can run each time a document is made, given a new version, moved to another state or folder, changed, or deleted in the DMS. The portal reads the DMS's events with a key of its own: ask the DMS's administrator for a service key, add it as a secret [connector](/portal/sites/connectors/), set its value under **Connectors**, and name that connector in the site's configuration as the DMS's key. Then a job can wait for documents to be approved. For now, this is set in the site's configuration: see [Developer: Documents](/portal/developer/documents/#the-service-key-and-a-job).
 
 | Event | When | What the run also reads |
 |---|---|---|
-| `document.created` | A document is made | `folder`, `type`, `source` |
-| `document.version` | A new version becomes the current one | `version`, `versionId` |
-| `document.state` | Its state changes | `from`, `to` |
-| `document.moved` | It moves to another folder | `from`, `to` (the folders) |
-| `document.updated` | Its title, type or a field changes | `fields`, the names changed |
-| `document.deleted` | It is deleted after a selection | `selection` |
+| A document created | A document is made | its folder, type and source |
+| A new version | A new version becomes the current one | the version's number and id |
+| A state changed | Its state changes | the state it left and the state it entered |
+| A document moved | It moves to another folder | the folder it left and the folder it entered |
+| A document changed | Its title, type or a field changes | the names of what changed |
+| A document deleted | It is deleted after a selection | the selection |
 
-- **What the run reads:** `trigger.event` is the event, `trigger.document` the document's id, and `trigger.at` when it happened. Events never hold a title, a file name or what a document says.
+The names the configuration gives these events are in [Developer: Documents](/portal/developer/documents/#the-dmss-events-in-a-job).
+
+- **What the run reads:** the event, the document's id, and when it happened. Events never hold a title, a file name or what a document says.
 - **What the key sees:** the DMS shows its key's account only the events of documents it may read. Ask the DMS's administrator to give the account the right to read the documents your jobs should hear of, the right to read the archive for deletions, and, for documents holding personal data, the clearance for their level. Without them the portal hears of nothing, and no error says so.
 - **Once each:** each event runs each job that takes it once, a few seconds after it happens, in the order the DMS recorded them. When the portal cannot read the DMS, it tries again and loses nothing. **Jobs** in the console shows when the DMS's events were last read. If the DMS has deleted old events the portal had not read yet, the portal reads on from then, and **Jobs** says when: those events are lost.
-- **Also as events:** each one is also the portal event `portal/dms.<event>`, such as `portal/dms.document.state`, for [apps and webhooks](/portal/sites/apps/).
-
-## Config example
-
-### Connect the DMS in `dms.yaml`
-
-At the top of the portal's files:
-
-```yaml
-api: https://dms.primaria.ro
-app: https://dms.primaria.ro
-```
-
-- `api`: the DMS's API; `app`: its web app. See [Connect the DMS](#connect-the-dms) for the other keys, `timeoutMs`, `uploadMb`, `audience` and `serviceKey`.
-
-### A folder on a page
-
-In a page's file (`sites/<site>/pages/<page>.yaml`):
-
-```yaml
-regions:
-  main:
-    - id: rules
-      app: portal
-      widget: documents
-      preferences:
-        folder: 5d8e2c1a-1b2c-4d3e-8f90-112233445566
-        limit: 10
-        sort: newest
-```
-
-- `folder`: the DMS folder, by its id.
-- `limit`: how many documents, 1 to 50; 10 when left out.
-- `sort`: `title` (when left out) or `newest`.
-
-### A folder with filing from the page
-
-In a region of a page's file:
-
-```yaml
-- id: requests
-  app: portal
-  widget: documents
-  preferences:
-    folder: 5d8e2c1a-1b2c-4d3e-8f90-112233445566
-    upload: true
-    type: 3c8f7f6e-2a3c-4d5e-9f10-111213141516
-```
-
-- `upload: true` shows the form that files a document.
-- `type`: the DMS document type new documents are filed under, by its id.
-
-### One document on a page
-
-In a region of a page's file:
-
-```yaml
-- id: regulation
-  app: portal
-  widget: document
-  preferences:
-    document: 0b8f7f6e-2a3c-4d5e-9f10-111213141516
-    versions: 5
-    upload: true
-```
-
-- `document`: the DMS document, by its id.
-- `versions`: how many of the newest versions to list, 1 to 50; 10 when left out.
-- `upload: true` lets people add a version from the page.
-
-### The service key and a job
-
-In `dms.yaml`, with the connector that holds the DMS's key:
-
-```yaml
-api: https://dms.primaria.ro
-app: https://dms.primaria.ro
-serviceKey: dms-key
-```
-
-A job that runs when a document changes state, in `jobs/document-approved.yaml`:
-
-```yaml
-trigger:
-  dms:
-    on: [document.state]
-site: main
-runAs: user:registratura@primaria.ro
-actions:
-  - type: log
-    level: info
-    message: '"Document " + trigger.document + " is now " + trigger.to'
-```
-
-- `serviceKey`: the secret connector holding the DMS's key.
-- `trigger.dms.on`: the events that start the job, from the table under [When something happens in the DMS](#when-something-happens-in-the-dms).
-- `runAs`: the person the job acts as.
-
+- **Also as events:** each one is also sent to [apps and webhooks](/portal/sites/apps/) as a portal event.

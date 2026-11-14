@@ -6,17 +6,23 @@ from docsite import DIST, page, section
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# The portal's site pages written UI first: screenshots, then a Config example section.
+# The portal's site pages written UI first, with screenshots of what people see.
 UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'assistants.md', 'blogs.md', 'calendar.md',
                   'comments.md', 'connectors.md', 'content-types.md', 'data-models.md', 'endpoints.md', 'environments.md',
                   'flows.md', 'form-fields.md', 'forms.md', 'forums.md', 'guides.md', 'jobs.md', 'kpis.md', 'layouts.md', 'listings.md',
-                  'notifications.md', 'permissions.md', 'polls.md', 'previews.md', 'search.md', 'seo.md', 'values.md', 'wiki.md')
+                  'notifications.md', 'permissions.md', 'polls.md', 'search.md', 'seo.md', 'values.md', 'wiki.md')
 
 # The console pages written the same way.
 CONSOLE_PAGES = ('data-console.md', 'files.md', 'invitations.md')
 
-# Pages of features with no screen of their own in the portal: no screenshots, but the same Config example section.
-CONFIG_LAST_PAGES = ('document-actions.md', 'documents.md', 'file-management.md', 'keel.md')
+# Developer pages that are not the config of one user page.
+DEVELOPER_ONLY = ('index.md', 'command-line.md', 'develop-locally.md', 'check-a-site.md', 'previews.md', 'agents.md',
+                  'build-an-app.md', 'design.md')
+
+# Code a person types into a console screen, not config: search synonyms and pinned results, a data console query.
+TYPED_IN_THE_CONSOLE = {'console/search.md': '', 'console/data-console.md': 'sql'}
+
+PORTAL = ROOT / 'src/content/docs/portal'
 
 
 class Content(unittest.TestCase):
@@ -59,9 +65,9 @@ class Content(unittest.TestCase):
         doc = page('/portal/console/access/')
         self.assertIn('<figcaption>Check access for ana@example.ro on the page main/intranet: Allowed, with the steps down to the group Funcționari.</figcaption>', doc)
         guide = page('/portal/sites/permissions/')
-        for anchor in ('what-people-see', 'restrict-a-page', 'editors', 'bloggers', 'config-example'):
+        for anchor in ('what-people-see', 'restrict-a-page', 'editors', 'bloggers'):
             self.assertIn(f'id="{anchor}"', guide)
-        self.assertIn('group:Funcționari', guide)
+        self.assertIn('group:Funcționari', page('/portal/developer/permissions/'))
         self.assertIn('href="/portal/console/access/"', guide)
         for route in ('/portal/console/access/', '/portal/sites/permissions/'):
             for word in ('kubectl', 'helm', 'PORTAL_'):
@@ -99,56 +105,56 @@ class Content(unittest.TestCase):
     def test_portal_hooks(self):
         guide = page('/portal/sites/apps/')
         self.assertIn('id="hooks"', guide)
-        self.assertIn('env.memory', guide)
+        self.assertIn('env.memory', page('/portal/developer/apps/'))
         self.assertIn('href="/portal/sites/apps/#hooks"', page('/portal/console/apps/'))
         self.assertIn('Revoke', page('/portal/console/apps/'))
-        for route in ('/portal/sites/apps/', '/portal/console/apps/', '/portal/console/users/'):
+        for route in ('/portal/sites/apps/', '/portal/developer/apps/', '/portal/console/apps/', '/portal/console/users/'):
             for word in ('kubectl', 'helm', 'PORTAL_'):
                 self.assertNotIn(word, page(route))
 
     def test_portal_app_kit(self):
-        guide = page('/portal/sites/build-an-app/')
+        guide = page('/portal/developer/build-an-app/')
         for anchor in ('start-from-a-working-app', 'check-what-the-portal-sends', 'send-events-from-the-apps-server', 'write-a-web-component', 'let-the-person-pick-a-dms-document', 'types-from-the-manifest'):
             self.assertIn(f'id="{anchor}"', guide)
         self.assertIn('portalVerifier', guide)
         self.assertIn('href="/portal/console/apps/#for-the-apps-developers"', guide)
-        self.assertIn('href="/portal/sites/build-an-app/"', page('/portal/sites/apps/'))
+        self.assertIn('href="/portal/developer/build-an-app/"', page('/portal/sites/apps/'))
         for word in ('kubectl', 'helm', 'PORTAL_'):
             self.assertNotIn(word, guide)
 
     def test_portal_develop_locally(self):
-        guide = page('/portal/sites/develop-locally/')
+        guide = page('/portal/developer/develop-locally/')
         for anchor in ('start-the-portal', 'keep-it-in-step-with-your-files', 'test-against-a-throwaway-portal'):
             self.assertIn(f'id="{anchor}"', guide)
         self.assertIn('startPortal', guide)
-        self.assertIn('href="/portal/sites/develop-locally/"', page('/portal/sites/build-an-app/'))
+        self.assertIn('href="/portal/developer/develop-locally/"', page('/portal/developer/build-an-app/'))
         for word in ('kubectl', 'helm', 'PORTAL_'):
             self.assertNotIn(word, guide)
 
     def test_portal_check(self):
-        guide = page('/portal/sites/check-a-site/')
+        guide = page('/portal/developer/check-a-site/')
         for anchor in ('check-the-files-and-the-apps', 'permission-sanity', 'render-every-page', 'compare-with-the-previous-run', 'the-report'):
             self.assertIn(f'id="{anchor}"', guide)
-        self.assertIn('href="/portal/sites/develop-locally/"', guide)
-        self.assertIn('href="/portal/sites/check-a-site/"', page('/portal/sites/develop-locally/'))
+        self.assertIn('href="/portal/developer/develop-locally/"', guide)
+        self.assertIn('href="/portal/developer/check-a-site/"', page('/portal/developer/develop-locally/'))
         for word in ('kubectl', 'helm', 'PORTAL_'):
             self.assertNotIn(word, guide)
 
     def test_portal_agents(self):
-        guide = page('/portal/sites/agents/')
+        guide = page('/portal/developer/agents/')
         for anchor in ('install-the-skills', 'give-the-agent-an-identity', 'connect-the-mcp-server', 'the-loop'):
             self.assertIn(f'id="{anchor}"', guide)
-        self.assertIn('href="/portal/sites/check-a-site/"', guide)
-        self.assertIn('href="/portal/sites/agents/"', page('/portal/console/tokens/'))
+        self.assertIn('href="/portal/developer/check-a-site/"', guide)
+        self.assertIn('href="/portal/developer/agents/"', page('/portal/console/tokens/'))
         for word in ('kubectl', 'helm', 'PORTAL_'):
             self.assertNotIn(word, guide)
 
     def test_portal_design(self):
-        guide = page('/portal/sites/design/')
+        guide = page('/portal/developer/design/')
         for anchor in ('the-design-package', 'the-tokens', 'check-it', 'for-apps'):
             self.assertIn(f'id="{anchor}"', guide)
         self.assertIn('od-design-system-project/v1', guide)
-        self.assertIn('href="/portal/sites/design/"', page('/portal/sites/build-an-app/'))
+        self.assertIn('href="/portal/developer/design/"', page('/portal/developer/build-an-app/'))
         for word in ('kubectl', 'helm', 'PORTAL_'):
             self.assertNotIn(word, guide)
 
@@ -156,8 +162,8 @@ class Content(unittest.TestCase):
         doc = page('/portal/console/studio/')
         for anchor in ('turn-it-on', 'design-in-the-studio', 'use-a-design-in-a-site', 'turn-it-off', 'new-tokens', 'erase'):
             self.assertIn(f'id="{anchor}"', doc)
-        self.assertIn('href="/portal/console/studio/"', page('/portal/sites/design/'))
-        for route in ('/portal/console/studio/', '/portal/sites/design/'):
+        self.assertIn('href="/portal/console/studio/"', page('/portal/developer/design/'))
+        for route in ('/portal/console/studio/', '/portal/developer/design/'):
             text = page(route)
             for word in ('kubectl', 'helm', 'PORTAL_', 'Open Design', 'open-design', 'OpenDesign', 'nexu'):
                 self.assertNotIn(word, text)
@@ -167,9 +173,9 @@ class Content(unittest.TestCase):
 
     def test_portal_layouts(self):
         doc = page('/portal/sites/layouts/')
-        for anchor in ('what-people-see', 'config-example', 'a-layout-of-the-sites-own', 'the-marked-places', 'what-a-frame-may-hold', 'images-in-each-screens-size', 'its-stylesheet', 'an-html-block', 'fragments-and-page-templates'):
+        for anchor in ('what-people-see', 'a-layout-of-the-sites-own', 'the-marked-places', 'what-a-frame-may-hold', 'images-in-each-screens-size', 'its-stylesheet', 'an-html-block', 'fragments-and-page-templates'):
             self.assertIn(f'id="{anchor}"', doc)
-        self.assertIn('href="/portal/sites/layouts/"', page('/portal/sites/design/'))
+        self.assertIn('href="/portal/sites/layouts/"', page('/portal/developer/design/'))
         source = (ROOT / 'src/content/docs/portal/sites/layouts.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'parse5', 'Open Design'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
@@ -195,7 +201,7 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
         types = page('/portal/sites/content-types/')
-        for anchor in ('what-people-see', 'a-content-type', 'field-types', 'how-an-entry-looks', 'vocabularies', 'libraries', 'collections', 'reading-a-collection', 'show-it-on-a-page', 'config-example'):
+        for anchor in ('what-people-see', 'a-content-type', 'field-types', 'how-an-entry-looks', 'vocabularies', 'libraries', 'collections', 'reading-a-collection', 'show-it-on-a-page'):
             self.assertIn(f'id="{anchor}"', types)
         self.assertIn('href="/portal/console/content/"', types)
         source = (ROOT / 'src/content/docs/portal/sites/content-types.md').read_text()
@@ -214,7 +220,7 @@ class Content(unittest.TestCase):
 
     def test_portal_files(self):
         doc = page('/portal/console/files/')
-        for anchor in ('what-people-see', 'folders', 'upload-a-file', 'link-to-a-file', 'remove-a-file', 'config-example'):
+        for anchor in ('what-people-see', 'folders', 'upload-a-file', 'link-to-a-file', 'remove-a-file'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/console/files.md').read_text()
         # Where the portal keeps its own files is never said; S3-compatible buckets are a feature people use.
@@ -235,7 +241,7 @@ class Content(unittest.TestCase):
 
     def test_portal_search(self):
         doc = page('/portal/sites/search/')
-        for anchor in ('what-people-see', 'config-example', 'what-search-finds', 'how-words-match', 'who-finds-what', 'put-a-search-box-on-a-page', 'suggestions-while-typing', 'documents-in-the-dms', 'from-an-app'):
+        for anchor in ('what-people-see', 'what-search-finds', 'how-words-match', 'who-finds-what', 'put-a-search-box-on-a-page', 'suggestions-while-typing', 'documents-in-the-dms', 'from-an-app'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="search"', page('/portal/console/pages/'))
         self.assertIn('href="/portal/sites/search/"', page('/portal/console/pages/'))
@@ -245,20 +251,21 @@ class Content(unittest.TestCase):
 
     def test_portal_forms(self):
         guide = page('/portal/sites/forms/')
-        for anchor in ('what-people-see', 'config-example', 'a-forms-file', 'write-a-form', 'what-a-form-may-hold', 'translations', 'who-sends-it-and-who-reads-what-was-sent',
+        for anchor in ('what-people-see', 'write-a-form', 'what-a-form-may-hold', 'translations', 'who-sends-it-and-who-reads-what-was-sent',
                        'put-a-form-on-a-page', 'its-own-address', 'what-the-portal-checks', 'from-an-app',
                        'come-back-to-a-form', 'ask-for-consent', 'tell-the-reviewers', 'keep-submissions-for-a-time',
                        'fill-in-a-form-offline', 'fields-from-apps'):
             self.assertIn(f'id="{anchor}"', guide)
+        self.assertIn('id="a-forms-file"', page('/portal/developer/forms/'))
         console = page('/portal/console/forms/')
         for anchor in ('what-the-list-shows', 'read-a-submission', 'report', 'export', 'delete', 'build-a-form'):
             self.assertIn(f'id="{anchor}"', console)
         self.assertIn('href="/portal/sites/forms/"', console)
         self.assertIn('id="forms"', page('/portal/console/pages/'))
         self.assertIn('href="/portal/console/forms/#build-a-form"', guide)
-        self.assertIn('id="form-fields-and-options"', page('/portal/sites/build-an-app/'))
+        self.assertIn('id="form-fields-and-options"', page('/portal/developer/build-an-app/'))
         for anchor in ('actions', 'connector-types', 'start-jobs'):
-            self.assertIn(f'id="{anchor}"', page('/portal/sites/build-an-app/'))
+            self.assertIn(f'id="{anchor}"', page('/portal/developer/build-an-app/'))
         self.assertIn('id="app-actions"', page('/portal/sites/actions/'))
         for path in ('src/content/docs/portal/sites/forms.md', 'src/content/docs/portal/console/forms.md'):
             source = (ROOT / path).read_text()
@@ -267,7 +274,7 @@ class Content(unittest.TestCase):
 
     def test_portal_actions(self):
         doc = page('/portal/sites/actions/')
-        for anchor in ('what-people-see', 'an-action-list', 'expressions', 'the-actions', 'ask-an-agent', 'when-something-fails', 'config-example'):
+        for anchor in ('what-people-see', 'an-action-list', 'expressions', 'the-actions', 'ask-an-agent', 'when-something-fails'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="after-it-is-sent"', page('/portal/sites/forms/'))
         self.assertIn('id="runs"', page('/portal/console/forms/'))
@@ -277,10 +284,10 @@ class Content(unittest.TestCase):
 
     def test_portal_flows_and_values(self):
         doc = page('/portal/sites/flows/')
-        for anchor in ('what-people-see', 'a-flow', 'call-a-flow', 'contracts', 'tests', 'config-example'):
+        for anchor in ('what-people-see', 'a-flow', 'call-a-flow', 'contracts', 'tests'):
             self.assertIn(f'id="{anchor}"', doc)
         values = page('/portal/sites/values/')
-        for anchor in ('what-people-see', 'a-value', 'how-long-it-is-kept', 'when-a-value-fails', 'config-example'):
+        for anchor in ('what-people-see', 'a-value', 'how-long-it-is-kept', 'when-a-value-fails'):
             self.assertIn(f'id="{anchor}"', values)
         self.assertIn('id="run-tests"', page('/portal/console/flows/'))
         self.assertIn('href="/portal/sites/flows/#call-a-flow"', page('/portal/sites/actions/'))
@@ -292,9 +299,9 @@ class Content(unittest.TestCase):
     def test_portal_connectors(self):
         doc = page('/portal/sites/connectors/')
         for anchor in ('what-people-see', 'a-connector', 'credentials', 'call-a-service', 'email',
-                       'hashes-signatures-and-random-values', 'mailboxes', 'each-persons-own-account', 'in-tests',
-                       'config-example', 'a-connectors-file'):
+                       'hashes-signatures-and-random-values', 'mailboxes', 'each-persons-own-account', 'in-tests'):
             self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('id="a-connectors-file"', page('/portal/developer/connectors/'))
         for anchor in ('set-credentials', 'test'):
             self.assertIn(f'id="{anchor}"', page('/portal/console/connectors/'))
         self.assertIn('id="your-connections"', page('/portal/console/account/'))
@@ -307,37 +314,64 @@ class Content(unittest.TestCase):
     def test_portal_file_actions(self):
         doc = page('/portal/sites/actions/')
         self.assertIn('id="files"', doc)
-        values = (ROOT / 'src/content/docs/portal/sites/values.md').read_text()
+        values = (ROOT / 'src/content/docs/portal/developer/values.md').read_text()
         for kind in ('`http`', '`collection`'):
             self.assertIn(kind, values)
-        self.assertIn('files: {', (ROOT / 'src/content/docs/portal/sites/flows.md').read_text())
+        self.assertIn('files: {', (ROOT / 'src/content/docs/portal/developer/flows.md').read_text())
         source = (ROOT / 'src/content/docs/portal/sites/actions.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
-    def test_portal_pages_show_the_ui_then_the_config(self):
-        # A site page shows how it works in the portal first, with screenshots, and keeps its
-        # YAML under one "Config example" section, at the end.
-        pages = [('sites', name) for name in UI_FIRST_PAGES + CONFIG_LAST_PAGES]
-        pages += [('console', name) for name in CONSOLE_PAGES]
+    def test_portal_pages_show_the_ui(self):
+        # A site page shows how it works in the portal, with screenshots.
+        pages = [('sites', name) for name in UI_FIRST_PAGES] + [('console', name) for name in CONSOLE_PAGES]
         for folder, name in pages:
-            path = ROOT / 'src/content/docs/portal' / folder / name
-            source = path.read_text()
-            images = re.findall(r'!\[([^\]]+)\]\(([^)]+\.png)\)', source)
-            if name not in CONFIG_LAST_PAGES:
-                self.assertTrue(images, name)
+            path = PORTAL / folder / name
+            images = re.findall(r'!\[([^\]]+)\]\(([^)]+\.png)\)', path.read_text())
+            self.assertTrue(images, name)
             for alt, src in images:
                 self.assertTrue((path.parent / src).resolve().is_file(), (name, src))
                 self.assertGreater(len(alt), 20, (name, src))
-            heading = source.find('\n## Config example\n')
-            self.assertGreater(heading, 0, name)
-            self.assertNotIn('\n## ', source[heading + 1:], name)
-            self.assertNotIn('```yaml', source[:heading], name)
-            self.assertIn('```yaml', source[heading:], name)
+
+    def test_portal_user_pages_hold_no_config(self):
+        # Config files are the developers' path: their examples live under Developer, never in the user guide.
+        for folder in ('sites', 'console'):
+            for path in sorted((PORTAL / folder).glob('*.md')):
+                name = f'{folder}/{path.name}'
+                source = path.read_text()
+                fences = re.findall(r'^\s*```(\S*)', source, re.M)[::2]
+                allowed = TYPED_IN_THE_CONSOLE.get(name)
+                self.assertEqual([f for f in fences if f != allowed], [], name)
+                self.assertNotIn('## Config example', source, name)
+                self.assertNotIn('config example', source.lower(), name)
+
+    def test_portal_developer_pages(self):
+        # Each developer page is the config of a user page, links back to it, and is linked from it.
+        index = page('/portal/developer/')
+        for anchor in ('the-files', 'pull-and-push', 'other-ways-in'):
+            self.assertIn(f'id="{anchor}"', index)
+        for word in ('portal config pull', 'portal config push', '--onto-latest'):
+            self.assertIn(word, index)
+        for path in sorted((PORTAL / 'developer').glob('*.md')):
+            source = path.read_text()
+            for word in ('kubectl', 'helm', 'PORTAL_', 'Open Design'):
+                self.assertNotIn(word, source, path.name)
+            if path.name in DEVELOPER_ONLY:
+                continue
+            folder = 'console' if (PORTAL / 'console' / path.name).is_file() and not (PORTAL / 'sites' / path.name).is_file() else 'sites'
+            user = f'/portal/{folder}/{path.stem}/'
+            self.assertIn(f'href="{user}"', page(f'/portal/developer/{path.stem}/'), path.name)
+            self.assertIn(f'href="/portal/developer/{path.stem}/', page(user), path.name)
+            self.assertIn('```', source, path.name)
+
+    def test_portal_moved_developer_pages_redirect(self):
+        for name in ('build-an-app', 'develop-locally', 'check-a-site', 'previews', 'design', 'agents'):
+            self.assertFalse((PORTAL / 'sites' / f'{name}.md').exists(), name)
+            self.assertIn(f'/portal/developer/{name}/', page(f'/portal/sites/{name}/'), name)
 
     def test_portal_guides(self):
         doc = page('/portal/sites/guides/')
-        for anchor in ('what-people-see', 'start-a-guide', 'in-the-console', 'config-example'):
+        for anchor in ('what-people-see', 'start-a-guide', 'in-the-console'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="ui-actions"', page('/portal/sites/actions/'))
         self.assertIn('href="/portal/sites/guides/"', page('/portal/console/guides/'))
@@ -348,7 +382,7 @@ class Content(unittest.TestCase):
 
     def test_portal_data_models(self):
         doc = page('/portal/sites/data-models/')
-        for anchor in ('what-people-see', 'a-model', 'fields', 'who-may-do-what', 'when-the-file-changes', 'the-api', 'graphql', 'relations', 'config-example'):
+        for anchor in ('what-people-see', 'a-model', 'fields', 'who-may-do-what', 'when-the-file-changes', 'the-api', 'graphql', 'relations'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('id="records"', page('/portal/sites/actions/'))
         self.assertIn('href="/portal/sites/data-models/"', page('/portal/console/data/'))
@@ -359,7 +393,7 @@ class Content(unittest.TestCase):
 
     def test_portal_data_console(self):
         doc = page('/portal/console/data-console/')
-        for anchor in ('what-you-see', 'turn-it-on', 'what-a-query-may-read', 'download-and-keep', 'who-may-use-it', 'config-example'):
+        for anchor in ('what-you-see', 'turn-it-on', 'what-a-query-may-read', 'download-and-keep', 'who-may-use-it'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/data-console/"', page('/portal/console/data/'))
         source = (ROOT / 'src/content/docs/portal/console/data-console.md').read_text()
@@ -374,7 +408,7 @@ class Content(unittest.TestCase):
 
     def test_portal_jobs(self):
         doc = page('/portal/sites/jobs/')
-        for anchor in ('config-example', 'write-a-job', 'when-it-runs', 'when-records-change', 'when-people-come-and-go', 'when-the-portal-starts-fails-or-is-asked-for', 'when-mail-arrives', 'when-an-app-sends-an-event', 'send-mail', 'what-it-may-do', 'in-the-console'):
+        for anchor in ('write-a-job', 'when-it-runs', 'when-records-change', 'when-people-come-and-go', 'when-the-portal-starts-fails-or-is-asked-for', 'when-mail-arrives', 'when-an-app-sends-an-event', 'send-mail', 'what-it-may-do', 'in-the-console'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/sites/jobs.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'lease', 'CEL'):
@@ -382,7 +416,7 @@ class Content(unittest.TestCase):
 
     def test_portal_endpoints(self):
         doc = page('/portal/sites/endpoints/')
-        for anchor in ('what-people-see', 'write-an-endpoint', 'parameters', 'its-actions-and-its-answer', 'who-may-call-it', 'keep-answers-and-other-sites', 'private-endpoints', 'its-calls', 'config-example'):
+        for anchor in ('what-people-see', 'write-an-endpoint', 'parameters', 'its-actions-and-its-answer', 'who-may-call-it', 'keep-answers-and-other-sites', 'private-endpoints', 'its-calls'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/sites/endpoints.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'CEL'):
@@ -390,7 +424,7 @@ class Content(unittest.TestCase):
 
     def test_portal_keel(self):
         doc = page('/portal/sites/keel/')
-        for anchor in ('what-people-see', 'connect-keel', 'my-work', 'the-overview', 'start-cases-from-the-portal', 'when-something-happens-in-keel', 'config-example'):
+        for anchor in ('what-people-see', 'connect-keel', 'my-work', 'the-overview', 'start-cases-from-the-portal', 'when-something-happens-in-keel'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/sites/keel.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'JWT', 'token'):
@@ -398,8 +432,10 @@ class Content(unittest.TestCase):
 
     def test_portal_assistants(self):
         doc = page('/portal/sites/assistants/')
-        for anchor in ('connect-your-agents', 'what-people-see', 'who-the-agent-talks-with', 'a-chat-for-visitors', 'help-in-the-console', 'describe-a-change', 'suggest-tags-for-content', 'give-an-agent-the-portal-as-a-tool', 'config-example', 'the-agent-and-its-key', 'the-assistant-on-a-page', 'the-chat-for-visitors', 'the-consoles-agents'):
+        for anchor in ('connect-your-agents', 'what-people-see', 'who-the-agent-talks-with', 'a-chat-for-visitors', 'help-in-the-console', 'describe-a-change', 'suggest-tags-for-content', 'give-an-agent-the-portal-as-a-tool'):
             self.assertIn(f'id="{anchor}"', doc)
+        for anchor in ('the-agent-and-its-key', 'the-assistant-on-a-page', 'the-chat-for-visitors', 'the-consoles-agents'):
+            self.assertIn(f'id="{anchor}"', page('/portal/developer/assistants/'))
         self.assertIn('href="/portal/sites/assistants/"', page('/portal/sites/documents/'))
         source = (ROOT / 'src/content/docs/portal/sites/assistants.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'JWT', 'iframe', 'SSE', 'end_user', 'inject'):
@@ -407,7 +443,7 @@ class Content(unittest.TestCase):
 
     def test_portal_documents(self):
         doc = page('/portal/sites/documents/')
-        for anchor in ('what-people-see', 'connect-the-dms', 'show-a-folder', 'file-documents-from-a-page', 'show-one-document', 'add-a-version', 'search-the-dms-from-the-portal', 'downloads', 'when-something-happens-in-the-dms', 'config-example'):
+        for anchor in ('what-people-see', 'connect-the-dms', 'show-a-folder', 'file-documents-from-a-page', 'show-one-document', 'add-a-version', 'search-the-dms-from-the-portal', 'downloads', 'when-something-happens-in-the-dms'):
             self.assertIn(f'id="{anchor}"', doc)
         source = (ROOT / 'src/content/docs/portal/sites/documents.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'JWT', 'token'):
@@ -415,7 +451,7 @@ class Content(unittest.TestCase):
 
     def test_portal_kpis(self):
         doc = page('/portal/sites/kpis/')
-        for anchor in ('what-people-see', 'declare-them', 'show-them', 'what-each-person-sees', 'config-example'):
+        for anchor in ('what-people-see', 'declare-them', 'show-them', 'what-each-person-sees'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/kpis/"', page('/portal/sites/data-models/'))
         source = (ROOT / 'src/content/docs/portal/sites/kpis.md').read_text()
@@ -424,7 +460,7 @@ class Content(unittest.TestCase):
 
     def test_portal_listings(self):
         doc = page('/portal/sites/listings/')
-        for anchor in ('what-people-see', 'place-a-listing', 'what-each-person-sees', 'a-models-own-pages-and-form', 'config-example'):
+        for anchor in ('what-people-see', 'place-a-listing', 'what-each-person-sees', 'a-models-own-pages-and-form'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/listings/"', page('/portal/sites/data-models/'))
         source = (ROOT / 'src/content/docs/portal/sites/listings.md').read_text()
@@ -432,8 +468,8 @@ class Content(unittest.TestCase):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
     def test_portal_files_kept_by_the_portal(self):
-        for path in ('src/content/docs/portal/console/tenants.md', 'src/content/docs/portal/sites/previews.md',
-                     'src/content/docs/portal/sites/design.md'):
+        for path in ('src/content/docs/portal/console/tenants.md', 'src/content/docs/portal/developer/previews.md',
+                     'src/content/docs/portal/developer/design.md'):
             source = (ROOT / path).read_text()
             for word in ('git', 'Git', 'repositor', 'branch'):
                 self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
@@ -449,7 +485,7 @@ class Content(unittest.TestCase):
 
     def test_portal_seo(self):
         doc = page('/portal/sites/seo/')
-        for anchor in ('what-people-see', 'what-each-page-says', 'describe-a-page', 'describe-a-site', 'what-crawlers-are-told', 'config-example'):
+        for anchor in ('what-people-see', 'what-each-page-says', 'describe-a-page', 'describe-a-site', 'what-crawlers-are-told'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/seo/"', page('/portal/console/pages/'))
         source = (ROOT / 'src/content/docs/portal/sites/seo.md').read_text()
@@ -479,7 +515,7 @@ class Content(unittest.TestCase):
 
     def test_portal_environments(self):
         doc = page('/portal/sites/environments/')
-        for anchor in ('what-people-see', 'what-travels', 'name-the-environments', 'make-the-key', 'send-a-version', 'config-example'):
+        for anchor in ('what-people-see', 'what-travels', 'name-the-environments', 'make-the-key', 'send-a-version'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/environments/"', page('/portal/console/versions/'))
         source = (ROOT / 'src/content/docs/portal/sites/environments.md').read_text()
@@ -488,8 +524,10 @@ class Content(unittest.TestCase):
 
     def test_portal_notifications(self):
         doc = page('/portal/sites/notifications/')
-        for anchor in ('where-people-find-them', 'send-one', 'config-example', 'a-forms-message-to-the-clerks', 'an-agents-answer-as-a-notification', 'the-widget-on-a-page'):
+        for anchor in ('where-people-find-them', 'send-one'):
             self.assertIn(f'id="{anchor}"', doc)
+        for anchor in ('a-forms-message-to-the-clerks', 'an-agents-answer-as-a-notification', 'the-widget-on-a-page'):
+            self.assertIn(f'id="{anchor}"', page('/portal/developer/notifications/'))
         self.assertIn('href="/portal/sites/notifications/"', page('/portal/sites/actions/'))
         self.assertIn('id="notifications"', page('/portal/console/account/'))
         source = (ROOT / 'src/content/docs/portal/sites/notifications.md').read_text()
@@ -498,7 +536,7 @@ class Content(unittest.TestCase):
 
     def test_portal_comments(self):
         doc = page('/portal/sites/comments/')
-        for anchor in ('what-people-see', 'place-the-widgets', 'write-and-answer', 'delete-and-flag', 'rate', 'limits', 'what-happens-to-them-later', 'config-example'):
+        for anchor in ('what-people-see', 'place-the-widgets', 'write-and-answer', 'delete-and-flag', 'rate', 'limits', 'what-happens-to-them-later'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/moderation/"', doc)
         console = page('/portal/console/moderation/')
@@ -512,8 +550,9 @@ class Content(unittest.TestCase):
 
     def test_portal_activity(self):
         doc = page('/portal/sites/activity/')
-        for anchor in ('what-people-see', 'posts', 'comments-and-entries', 'who-is-told-what', 'config-example', 'the-widget-on-a-page'):
+        for anchor in ('what-people-see', 'posts', 'comments-and-entries', 'who-is-told-what'):
             self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('id="the-widget-on-a-page"', page('/portal/developer/activity/'))
         self.assertIn('href="/portal/sites/comments/#name-someone"', doc)
         comments = page('/portal/sites/comments/')
         self.assertIn('id="name-someone"', comments)
@@ -526,7 +565,7 @@ class Content(unittest.TestCase):
 
     def test_portal_blogs(self):
         doc = page('/portal/sites/blogs/')
-        for anchor in ('what-people-see', 'make-a-blog-type', 'name-the-bloggers', 'show-a-blog', 'show-several-blogs', 'recent-bloggers', 'who-sees-what', 'config-example'):
+        for anchor in ('what-people-see', 'make-a-blog-type', 'name-the-bloggers', 'show-a-blog', 'show-several-blogs', 'recent-bloggers', 'who-sees-what'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/permissions/#bloggers"', doc)
         self.assertIn('id="bloggers"', page('/portal/sites/permissions/'))
@@ -538,7 +577,7 @@ class Content(unittest.TestCase):
 
     def test_portal_forums(self):
         doc = page('/portal/sites/forums/')
-        for anchor in ('what-people-see', 'place-a-forum', 'topics-and-answers', 'questions-and-answers', 'moderate-a-forum', 'limits', 'config-example'):
+        for anchor in ('what-people-see', 'place-a-forum', 'topics-and-answers', 'questions-and-answers', 'moderate-a-forum', 'limits'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/console/moderation/#who-moderates"', doc)
         self.assertIn('href="/portal/sites/comments/#name-someone"', doc)
@@ -548,7 +587,7 @@ class Content(unittest.TestCase):
 
     def test_portal_wiki(self):
         doc = page('/portal/sites/wiki/')
-        for anchor in ('what-people-see', 'place-a-wiki', 'read-and-find', 'write', 'look-after-a-wiki', 'knowledge-bases', 'what-happens-to-them-later', 'config-example'):
+        for anchor in ('what-people-see', 'place-a-wiki', 'read-and-find', 'write', 'look-after-a-wiki', 'knowledge-bases', 'what-happens-to-them-later'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/permissions/"', doc)
         source = (ROOT / 'src/content/docs/portal/sites/wiki.md').read_text()
@@ -557,8 +596,9 @@ class Content(unittest.TestCase):
 
     def test_portal_calendar(self):
         doc = page('/portal/sites/calendar/')
-        for anchor in ('what-people-see', 'read-it', 'add-events', 'add-it-to-a-calendar-app', 'what-happens-to-them-later', 'config-example', 'a-calendar-on-a-page'):
+        for anchor in ('what-people-see', 'read-it', 'add-events', 'add-it-to-a-calendar-app', 'what-happens-to-them-later'):
             self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('id="a-calendar-on-a-page"', page('/portal/developer/calendar/'))
         self.assertIn('href="/portal/sites/permissions/"', doc)
         self.assertIn('href="/portal/sites/calendar/"', page('/portal/sites/wiki/'))
         for label in ('Bring back', 'Discard the draft', 'Subscribe (iCal)', 'Share by a private address'):
@@ -569,8 +609,9 @@ class Content(unittest.TestCase):
 
     def test_portal_announcements(self):
         doc = page('/portal/sites/announcements/')
-        for anchor in ('what-people-see', 'write-an-announcement', 'tell-them', 'read-and-dismiss', 'what-happens-to-them-later', 'config-example', 'the-widget-on-a-page'):
+        for anchor in ('what-people-see', 'write-an-announcement', 'tell-them', 'read-and-dismiss', 'what-happens-to-them-later'):
             self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('id="the-widget-on-a-page"', page('/portal/developer/announcements/'))
         for label in ('New announcement', 'Manage announcements', 'Tell them by a notification', 'Dismiss'):
             self.assertIn(label, doc)
         source = (ROOT / 'src/content/docs/portal/sites/announcements.md').read_text()
@@ -579,7 +620,7 @@ class Content(unittest.TestCase):
 
     def test_portal_polls(self):
         doc = page('/portal/sites/polls/')
-        for anchor in ('what-people-see', 'place-a-poll', 'open-a-poll', 'vote', 'results', 'what-happens-to-them-later', 'config-example'):
+        for anchor in ('what-people-see', 'place-a-poll', 'open-a-poll', 'vote', 'results', 'what-happens-to-them-later'):
             self.assertIn(f'id="{anchor}"', doc)
         for label in ('New poll', 'Change my vote', 'Past polls', 'Close the poll'):
             self.assertIn(label, doc)
@@ -589,7 +630,7 @@ class Content(unittest.TestCase):
 
     def test_portal_invitations(self):
         doc = page('/portal/console/invitations/')
-        for anchor in ('invite-people', 'what-the-person-sees', 'follow-your-invitations', 'let-a-sites-editors-invite', 'what-happens-to-them-later', 'config-example'):
+        for anchor in ('invite-people', 'what-the-person-sees', 'follow-your-invitations', 'let-a-sites-editors-invite', 'what-happens-to-them-later'):
             self.assertIn(f'id="{anchor}"', doc)
         for label in ('Send invitations', 'Accept the invitation', 'Sign in to accept', 'Make my account and accept', 'Send again', 'Withdraw'):
             self.assertIn(label, doc)
@@ -607,10 +648,11 @@ class Content(unittest.TestCase):
 
     def test_portal_document_actions(self):
         guide = page('/portal/sites/document-actions/')
-        for anchor in ('what-people-get', 'make-a-pdf-from-html', 'work-with-pdfs', 'fill-a-word-template', 'excel-and-csv', 'barcodes-and-qr-codes', 'who-may-do-what', 'limits', 'config-example'):
+        for anchor in ('what-people-get', 'make-a-pdf-from-html', 'work-with-pdfs', 'fill-a-word-template', 'excel-and-csv', 'barcodes-and-qr-codes', 'who-may-do-what', 'limits'):
             self.assertIn(f'id="{anchor}"', guide)
+        developer = page('/portal/developer/document-actions/')
         for action in ('htmlToPdf', 'htmlToWord', 'convertToPdf', 'mergePdfs', 'overlayPdf', 'splitPdf', 'readPdf', 'fillWordTemplate', 'readWord', 'writeExcel', 'readExcel', 'excelSheets', 'writeCsv', 'readCsv', 'barcode'):
-            self.assertIn(action, guide)
+            self.assertIn(action, developer)
         self.assertIn('href="/portal/sites/document-actions/"', page('/portal/sites/actions/'))
         source = (ROOT / 'src/content/docs/portal/sites/document-actions.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'Euro-Office', 'Open Design'):
@@ -618,14 +660,14 @@ class Content(unittest.TestCase):
 
     def test_portal_file_management(self):
         guide = page('/portal/sites/file-management/')
-        for anchor in ('what-people-get', 'copy-move-and-rename-a-file', 'read-a-files-details', 'zip-archives', 'images', 'files-on-a-server', 'who-may-do-what', 'limits', 'config-example'):
+        for anchor in ('what-people-get', 'copy-move-and-rename-a-file', 'read-a-files-details', 'zip-archives', 'images', 'files-on-a-server', 'who-may-do-what', 'limits'):
             self.assertIn(f'id="{anchor}"', guide)
+        developer = page('/portal/developer/file-management/')
         for action in ('copyFile', 'moveFile', 'renameFile', 'fileInfo', 'zipFiles', 'zipNames', 'unzipFile', 'replace: true', 'resizeImage', 'imageInfo', 'ftpUpload', 'ftpDownload', 'ftpList', 'ftpDelete'):
-            self.assertIn(action, guide)
+            self.assertIn(action, developer)
         self.assertIn('href="/portal/sites/file-management/"', page('/portal/sites/actions/'))
-        connectors = page('/portal/sites/connectors/')
-        for anchor in ('file-servers', 'a-file-servers-file'):
-            self.assertIn(f'id="{anchor}"', connectors)
+        self.assertIn('id="file-servers"', page('/portal/sites/connectors/'))
+        self.assertIn('id="a-file-servers-file"', page('/portal/developer/connectors/'))
         self.assertIn('href="/portal/sites/connectors/#file-servers"', guide)
         files = page('/portal/console/files/')
         self.assertIn('id="move-or-copy-a-file"', files)
@@ -637,26 +679,32 @@ class Content(unittest.TestCase):
 
     def test_portal_mail_accounts(self):
         guide = page('/portal/sites/connectors/')
-        for anchor in ('mail-accounts', 'a-mail-accounts-file'):
-            self.assertIn(f'id="{anchor}"', guide)
-        for word in ('microsoft365', 'Mail.Send', 'gmail.send', 'attachments'):
+        developer = page('/portal/developer/connectors/')
+        self.assertIn('id="mail-accounts"', guide)
+        self.assertIn('id="a-mail-accounts-file"', developer)
+        for word in ('Mail.Send', 'gmail.send'):
             self.assertIn(word, guide)
+        for word in ('microsoft365', 'attachments'):
+            self.assertIn(word, developer)
         self.assertIn('href="/portal/sites/connectors/#mail-accounts"', page('/portal/sites/actions/'))
 
     def test_portal_sms_and_slack(self):
         guide = page('/portal/sites/connectors/')
-        for anchor in ('text-messages-and-slack', 'messaging-accounts', 'a-text-message-and-a-slack-post'):
+        developer = page('/portal/developer/connectors/')
+        for anchor in ('text-messages-and-slack', 'messaging-accounts'):
             self.assertIn(f'id="{anchor}"', guide)
+        self.assertIn('id="a-text-message-and-a-slack-post"', developer)
         for word in ('sendSms', 'slackMessage', 'hooks.slack.com', 'clickatell'):
-            self.assertIn(word, guide)
+            self.assertIn(word, developer)
         self.assertIn('href="/portal/sites/connectors/#text-messages-and-slack"', page('/portal/sites/actions/'))
 
     def test_portal_form_fields(self):
         guide = page('/portal/sites/form-fields/')
-        for anchor in ('what-people-see', 'a-barcode-or-qr-code', 'a-barcode-scanner', 'an-iban', 'a-signature', 'in-the-console', 'save-a-signature-as-a-file', 'config-example'):
+        for anchor in ('what-people-see', 'a-barcode-or-qr-code', 'a-barcode-scanner', 'an-iban', 'a-signature', 'in-the-console', 'save-a-signature-as-a-file'):
             self.assertIn(f'id="{anchor}"', guide)
-        for word in ('barcodeScanner', 'countries', 'encoding: dataUrl', '90 KB'):
-            self.assertIn(word, guide)
+        self.assertIn('90 KB', guide)
+        for word in ('barcodeScanner', 'countries', 'encoding: dataUrl'):
+            self.assertIn(word, page('/portal/developer/form-fields/'))
         self.assertIn('href="/portal/sites/form-fields/"', page('/portal/sites/forms/'))
         self.assertIn('href="/portal/sites/form-fields/#save-a-signature-as-a-file"', page('/portal/sites/actions/'))
         source = (ROOT / 'src/content/docs/portal/sites/form-fields.md').read_text()
@@ -665,24 +713,24 @@ class Content(unittest.TestCase):
 
     def test_portal_bucket_folders(self):
         files = page('/portal/console/files/')
-        for anchor in ('where-files-are-kept', 'a-folder-kept-in-a-bucket'):
-            self.assertIn(f'id="{anchor}"', files)
-        self.assertIn('storage:', files)
+        self.assertIn('id="where-files-are-kept"', files)
+        self.assertIn('id="a-folder-kept-in-a-bucket"', page('/portal/developer/files/'))
+        self.assertIn('storage:', page('/portal/developer/files/'))
         self.assertIn('href="/portal/sites/connectors/#buckets"', files)
         connectors = page('/portal/sites/connectors/')
-        for anchor in ('buckets', 'a-buckets-file'):
-            self.assertIn(f'id="{anchor}"', connectors)
-        self.assertIn('kind: bucket', connectors)
+        self.assertIn('id="buckets"', connectors)
+        self.assertIn('id="a-buckets-file"', page('/portal/developer/connectors/'))
+        self.assertIn('kind: bucket', page('/portal/developer/connectors/'))
         for word in ('kubectl', 'helm', 'PORTAL_', 'Open Design', 'Signature V4'):
             self.assertNotIn(word, files + connectors)
 
     def test_portal_previews(self):
-        guide = page('/portal/sites/previews/')
+        guide = page('/portal/developer/previews/')
         for anchor in ('what-people-see', 'config-example', 'make-a-preview', 'its-people', 'see-it-as-one-of-its-people', 'sync-it-again', 'its-apps', 'when-it-ends', 'who-may-make-previews'):
             self.assertIn(f'id="{anchor}"', guide)
         self.assertIn('manager@preview.example', guide)
-        self.assertIn('href="/portal/sites/previews/"', page('/portal/sites/agents/'))
-        self.assertIn('href="/portal/sites/previews/"', page('/portal/console/tokens/'))
+        self.assertIn('href="/portal/developer/previews/"', page('/portal/developer/agents/'))
+        self.assertIn('href="/portal/developer/previews/"', page('/portal/console/tokens/'))
         for word in ('kubectl', 'helm', 'PORTAL_'):
             self.assertNotIn(word, guide)
 
@@ -692,7 +740,7 @@ class Content(unittest.TestCase):
         self.assertIn('id="webhooks"', doc)
         guide = page('/portal/sites/apps/')
         self.assertIn('id="events"', guide)
-        self.assertIn('portal-event+jwt', guide)
+        self.assertIn('portal-event+jwt', page('/portal/developer/apps/'))
         self.assertIn('href="/portal/console/events/"', guide)
         for route in ('/portal/console/events/', '/portal/sites/apps/'):
             for word in ('kubectl', 'helm', 'PORTAL_', 'whsec_x'):
@@ -705,7 +753,7 @@ class Content(unittest.TestCase):
         self.assertIn('id="for-the-apps-developers"', doc)
         self.assertIn('href="/portal/sites/apps/"', page('/portal/sites/permissions/') + doc)
         guide = page('/portal/sites/apps/')
-        self.assertIn('portal-request+jwt', guide)
+        self.assertIn('portal-request+jwt', page('/portal/developer/apps/'))
         self.assertIn('href="/portal/console/apps/#for-the-apps-developers"', guide)
         for route in ('/portal/console/apps/', '/portal/sites/apps/'):
             for word in ('kubectl', 'helm', 'PORTAL_'):

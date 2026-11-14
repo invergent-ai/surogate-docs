@@ -69,7 +69,7 @@ Fonts are named, not loaded: name fonts the visitor's device has, or that a late
 
 ## Check it
 
-[`portal check`](/portal/sites/check-a-site/) reads the package with the rest of the site:
+[`portal check`](/portal/developer/check-a-site/) reads the package with the rest of the site:
 - A missing required token is named.
 - A value the portal refuses is named, with its reason.
 - A manifest that is not a design package's is refused.
@@ -82,7 +82,7 @@ To see the look, render the pages:
 portal check ./portal-config --start --render
 ```
 
-The check fails when text is hard to read against its background, so a palette with too little contrast is caught before anyone sees it. To show the change to others, make a [preview](/portal/sites/previews/).
+The check fails when text is hard to read against its background, so a palette with too little contrast is caught before anyone sees it. To show the change to others, make a [preview](/portal/developer/previews/).
 
 ## Design it in the studio
 
@@ -94,4 +94,4 @@ A widget looks like the site it is on when it takes its colours from the page:
 - **Colours:** `var(--foreground)` and `var(--muted-foreground)` for text, `var(--primary)` and `var(--primary-foreground)` for actions, `var(--background)`, `var(--card)` and `var(--border)` for surfaces and lines.
 - **Fonts and sizes:** `var(--font-body)` for the font, `var(--space-4)` and `var(--radius-md)` for spacing and corners.
 
-On a page, `--muted`, `--accent` and `--surface` hold the UI kit's light tints, not the site's colours: don't use them for text or actions. A widget built on the Surogate UI kit takes the site's look by itself. See [Build an app](/portal/sites/build-an-app/).
+On a page, `--muted`, `--accent` and `--surface` hold the UI kit's light tints, not the site's colours: don't use them for text or actions. A widget built on the Surogate UI kit takes the site's look by itself. See [Build an app](/portal/developer/build-an-app/).

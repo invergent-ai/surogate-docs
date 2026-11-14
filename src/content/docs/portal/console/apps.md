@@ -2,7 +2,7 @@
 title: Apps
 ---
 
-An app puts something on the portal's pages: a news list, a form, a clock. Your implementation team builds or chooses the apps and [places them on pages](/portal/sites/apps/) in the site's files. **Apps** is where an administrator decides whether each app may run, and what it may know about the people using the portal.
+An app puts something on the portal's pages: a news list, a form, a clock. Your implementation team builds or chooses the apps and [places them on pages](/portal/sites/apps/). **Apps** is where an administrator decides whether each app may run, and what it may know about the people using the portal.
 
 ![The Apps page: one app approved and one waiting, with their widgets, where they come from and what each asks to know.](../../../../assets/screenshots/portal-apps.png)
 

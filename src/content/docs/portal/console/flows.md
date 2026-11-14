@@ -3,7 +3,7 @@ title: Flows
 description: The logic flows, contracts and named values the portal runs, and running each flow's tests.
 ---
 
-**Flows** shows administrators the [logic flows](/portal/sites/flows/), contracts and [named values](/portal/sites/values/) the portal runs now. They are written in the portal's files; this page shows them and runs their tests.
+**Flows** shows administrators the [logic flows](/portal/sites/flows/), contracts and [named values](/portal/sites/values/) the portal runs now. This page shows them and runs their tests. The console does not write them yet. For now, this is set in the site's configuration: see [Developer: Logic flows](/portal/developer/flows/).
 
 ## Logic flows
 

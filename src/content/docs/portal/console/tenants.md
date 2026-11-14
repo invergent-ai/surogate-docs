@@ -46,8 +46,4 @@ If the email is already a user of the tenant, they become an administrator and k
 
 The main portal (the default tenant) has no **Add administrator**: its administrators are install administrators, made on its own [Users](/portal/console/users/#roles) page.
 
-The same works from the command line with an install administrator's [token](/portal/console/tokens/):
-
-```
-portal tenants add-admin <tenant> <email> --name "<name>"
-```
+The same works from the command line: see [Developer: The command line](/portal/developer/command-line/#tenants).

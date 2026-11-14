@@ -3,7 +3,7 @@ title: Who sees a page
 description: Restrict a site, a page or a part of a page to signed-in people, a group, an organization or administrators.
 ---
 
-Each site, page and placement (an [app](/portal/sites/apps/) placed on a page) can say who may see it. You write it in the site's files, next to the page itself, so the change is reviewed and published like any other change to the site.
+Each site, page and placement (an [app](/portal/sites/apps/) placed on a page) can say who may see it. It is part of the site, so a change to it goes live like any other change to the site.
 
 ## What people see
 
@@ -19,88 +19,40 @@ Administrators check who may see what, and why, on the console's [Access](/porta
 
 ## Restrict a page
 
-Add `permissions` to the page's file (see the [config example](#a-page-for-a-group)). Only members of the group **Funcționari** see that page. Everyone else:
+A page can be limited to a group, such as the group **Funcționari**. Only its members see that page. Everyone else:
 
 - if they have not signed in, goes to the sign-in page, and back to the page afterwards;
 - if they have signed in, sees **You do not have access to this page.**
 
+For now, this is set in the site's configuration: see [Developer: Who sees a page](/portal/developer/permissions/#a-page-for-a-group).
+
 ## Who you can name
 
-| Write | Means |
-|---|---|
-| `everyone` | anyone, signed in or not |
-| `signed-in` | anyone who has signed in to this portal |
-| `user:ana@example.ro` | one person, by email |
-| `group:Funcționari` | the members of a [group](/portal/console/groups/) |
-| `organization:Primăria/Direcția IT` | the members of an [organization](/portal/console/organizations/) and of every organization below it, named from the top, joined by `/` |
-| `role:administrator` | the portal's administrators |
+A site, a page or a placement can name:
 
-Put several in the list to let any of them in: `view: [group:Funcționari, organization:Primăria/Direcția IT]`.
+- **Everyone**, signed in or not;
+- **Anyone signed in** to this portal;
+- one person, by email;
+- the members of a [group](/portal/console/groups/);
+- the members of an [organization](/portal/console/organizations/) and of every organization below it;
+- the portal's **Administrators**.
 
-A group or organization is named as it is in the console. If you rename it there, change the files too: a name that matches nothing lets nobody in.
+Name several to let any of them in.
+
+A group or organization is named as it is in the console. If you rename it there, change where the site's configuration names it too: a name that matches nothing lets nobody in. For now, this is set in the site's configuration: see [Developer: Who sees a page](/portal/developer/permissions/#who-you-can-name).
 
 ## Sites, pages and parts of a page
 
-- A **site**'s `permissions` apply to all its pages. Write them in `site.yaml`.
-- A **page** can only narrow what its site allows. On a site for signed-in people, a page with `view: [everyone]` is still for signed-in people.
-- A **placement** can only narrow its page. People who may not see it get the page without it (see the [config example](#a-part-of-a-page)).
+- A **site**'s limits apply to all its pages.
+- A **page** can only narrow what its site allows. On a site for signed-in people, a page open to everyone is still for signed-in people.
+- A **placement** can only narrow its page. People who may not see it get the page without it.
 
-With no `permissions`, everyone may see the site, the page or the placement. `view: []` lets in only editors and administrators.
+With no limit set, everyone may see the site, the page or the placement. A list that names no one lets in only editors and administrators. For now, this is set in the site's configuration: see [Developer: Who sees a page](/portal/developer/permissions/#sites-pages-and-parts-of-a-page).
 
 ## Editors
 
-`edit` names who may edit a site or a page (see the [config example](#editors-and-bloggers)). Editors and administrators always see what they edit. `everyone` and `signed-in` cannot be editors. Administrators can also add editors on the console's [Access](/portal/console/access/) page, which also checks who may see what, and why.
+A site or a page names who may edit it. Editors and administrators always see what they edit. Everyone, and anyone signed in, cannot be editors. Administrators can also add editors on the console's [Access](/portal/console/access/) page, which also checks who may see what, and why. The same settings, as files in the site's configuration, are in [Developer: Who sees a page](/portal/developer/permissions/#editors-and-bloggers).
 
 ## Bloggers
 
-`blog` names who may write [blog posts](/portal/sites/blogs/) on a site or a library, their own only. Bloggers write posts of the blog types alone, and never change anyone else's posts or any other content; editors and administrators may blog too. `everyone` and `signed-in` cannot be bloggers. Bloggers are named in the files only: the Access page adds editors, not bloggers.
-
-## Config example
-
-### A page for a group
-
-In the page's file (`sites/<site>/pages/<page>.yaml`):
-
-```yaml
-path: /intranet
-title: { ro: Intranet, en: Intranet }
-layout: one-column
-permissions:
-  view: [group:Funcționari]
-regions:
-  main:
-    - { id: news, app: content }
-```
-
-- `permissions.view`: who may see the page; see [Who you can name](#who-you-can-name).
-
-### A part of a page
-
-In a placement of the same file:
-
-```yaml
-regions:
-  main:
-    - { id: list, app: content }
-    - id: internal-notes
-      app: content
-      permissions:
-        view: [group:Funcționari]
-```
-
-- The placement `internal-notes` shows only to members of the group; everyone else gets the page without it.
-
-### Editors and bloggers
-
-In `site.yaml`, in a page's file, or in a library's file:
-
-```yaml
-permissions:
-  view: [signed-in]
-  edit: [group:Redactori]
-  blog: [group:Angajati]
-```
-
-- `view`: who may see it.
-- `edit`: who may edit it.
-- `blog`: who may write their own blog posts on a site or a library.
+A site or a library names who may write [blog posts](/portal/sites/blogs/), their own only. Bloggers write posts of the blog types alone, and never change anyone else's posts or any other content; editors and administrators may blog too. Everyone, and anyone signed in, cannot be bloggers. The console's Access page adds editors, not bloggers. For now, this is set in the site's configuration: see [Developer: Who sees a page](/portal/developer/permissions/#editors-and-bloggers).
