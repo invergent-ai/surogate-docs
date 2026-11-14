@@ -38,10 +38,10 @@ When a person forgets a chat, it leaves their list in the portal. The agent stil
 The portal talks to an agent with the agent's own API key.
 
 1. **Copy the agent's key in Studio.** Open the agent, then **Channels → Web → Manage**, and copy the key. It starts with `surg_sk_`. Studio shows it once.
-2. **Name the agent in the portal's configuration:** a secret [connector](/portal/sites/connectors/) for the key, and the agent itself. The console has no screen for this yet. For now, this is set in the site's configuration: see [Developer: Assistants](/portal/developer/assistants/#the-agent-and-its-key).
-3. **Publish the configuration.** Then, in the console under **Connectors**, set the key's value.
+2. **Add the agent** under **Integrations → Agents** in the console: its address and its id from Studio, and its **API key**, a key made there with **New key**. See [Integrations](/portal/console/integrations/#agents).
+3. **Save.** Then, beside the key, **Set the key** and paste its value.
 
-The key opens only for the agent and address the configuration names. If you change either, set the key again. No action can use the key.
+The key opens only for the agent and address it was set for. If you change either, set the key again: the page says so. No action can use the key.
 
 Then place the assistant on a page. On [Pages](/portal/console/pages/#the-portals-widgets), add **Assistant** with **Add a widget…**, then set its settings in its row:
 
@@ -59,7 +59,7 @@ A page can also carry a chat for its visitors, signed in or not: the agent's web
    - The chat refuses a page on any address not in the list.
    - Set a limit on the messages of one chat there too: without one, a chat has none.
    - **Save.** Then copy the publishable key, which starts with `surg_wk_`, and the agent's address from the embed code.
-2. **Give the agent its website** in the portal's configuration. The console has no screen for this yet. For now, this is set in the site's configuration: see [Developer: Assistants](/portal/developer/assistants/#the-chat-for-visitors).
+2. **Give the agent its website** under **Integrations → Agents**: tick **Visitors chat with it on the site** and paste the publishable key. The public address can stay empty when the agent's own address is https. See [Integrations](/portal/console/integrations/#agents).
 3. **Place the website chat**, one on a page. On [Pages](/portal/console/pages/#the-portals-widgets), add **Website chat** with **Add a widget…**, then set its settings in its row:
    - **Agent**: the agent whose website the chat is. It is required, and lists the agents given a website.
    - **Title**: the chat's heading, for each language: the agent's name, or "Assistant", when none is given.
@@ -99,7 +99,7 @@ One agent can also be the console's help. The tenant's administrators then find 
   - it has no website chat;
   - no other agent in the portal's configuration is the same agent under another name.
 
-Give the console its own agent, with its own key connector. For now, this is set in the site's configuration: see [Developer: Assistants](/portal/developer/assistants/#the-consoles-agents).
+Give the console its own agent, with its own key, and the role **Console help** under **Integrations → Agents**. Developers: see [Developer: Assistants](/portal/developer/assistants/#the-consoles-agents).
 
 ## Describe a change
 
@@ -109,7 +109,7 @@ One agent can be the console's **builder**. Everyone who writes content, and the
 
 The builder writes it as the portal's files and proposes it. An administrator approves it under [Proposed changes](/portal/console/proposals/) before anything goes live.
 
-1. **Mark the agent** as the builder in the portal's configuration. One agent at most is the builder, and it needs its key. Like the help agent, the builder belongs to the console alone, and it is never the help agent too. For now, this is set in the site's configuration: see [Developer: Assistants](/portal/developer/assistants/#the-consoles-agents).
+1. **Give the agent the role Builder** under **Integrations → Agents**. One agent at most is the builder, and it needs its key. Like the help agent, the builder belongs to the console alone, and it is never the help agent too.
 2. **Give it the portal as a tool,** below, with a token holding both **Use the portal as a tool of an agent** and **Propose changes**. Give it nothing else: everyone who writes content reaches what its tools reach.
 3. **Tell it in Studio what it is for.** For example: describe the change back to the person, make it, propose it with a title and who asked for it, then say that an administrator will look at it.
 
@@ -125,7 +125,7 @@ The builder changes only what a proposal may hold: pages, layouts, designs, form
 
 One agent can suggest tags for the content people write. The content editor then shows **Suggest tags** under an entry's tags.
 
-- One agent at most is the tagger, and it needs its key. The console's help agent cannot be the tagger. For now, this is set in the site's configuration: see [Developer: Assistants](/portal/developer/assistants/#the-consoles-agents).
+- Give the agent the role **Content tagger** under **Integrations → Agents**. One agent at most is the tagger, and it needs its key. The console's help agent cannot be the tagger.
 - The agent is given the entry's title and text, and answers with tags. The portal keeps only what fits as a tag.
 - **Give the tagger an agent with no tools.** Everyone who writes content can ask it, and its words come from what they write.
 - **Who may ask:** the people who edit a site's or a library's content, signed in.
