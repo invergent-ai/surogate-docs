@@ -520,6 +520,9 @@ class Content(unittest.TestCase):
         doc = page('/portal/sites/endpoints/')
         for anchor in ('what-people-see', 'write-an-endpoint', 'parameters', 'its-actions-and-its-answer', 'who-may-call-it', 'keep-answers-and-other-sites', 'private-endpoints', 'its-calls'):
             self.assertIn(f'id="{anchor}"', doc)
+        # Endpoints are made in the console.
+        self.assertIn('id="in-the-console"', doc)
+        self.assertNotIn('does not write them yet', (ROOT / 'src/content/docs/portal/sites/endpoints.md').read_text())
         source = (ROOT / 'src/content/docs/portal/sites/endpoints.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'repositor', 'CEL'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)

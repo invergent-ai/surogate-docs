@@ -17,7 +17,20 @@ See [Its calls](#its-calls).
 
 An endpoint has a path of lower-case words joined by `/`, and a method: GET, POST, PUT, PATCH or DELETE. Two endpoints may share a path when their methods differ. It is called at `https://<your portal>/_portal/endpoints/requests/count?status=new`. A description says what it is for, in the console.
 
-The console shows the portal's endpoints; it does not write them yet. For now, this is set in the site's configuration: see [Developer: API endpoints](/portal/developer/endpoints/#write-an-endpoint).
+### In the console
+
+Under **Endpoints**, **New endpoint** makes one and **Edit** opens one. The editor has four tabs:
+
+- **Settings:** the id (lower-case letters, digits and hyphens, fixed once saved), a description, the method, the path, and **Who may call it**. **Keep each call's full log (debug)** keeps everything the actions logged.
+- **Parameters:** **Add a parameter** adds a row: its name, its type, whether it is **Required**, and for text its longest. A name given twice keeps the first.
+- **Actions:** the actions the endpoint runs on each call, built as a form's [steps](/portal/console/forms/#steps) are, and under **When it fails** those that run instead when one fails. **Answer the call** gives the answer: as JSON, text or a redirect, with its status. Expressions read each parameter as `params.<name>`, and the error as `error` when it fails. An endpoint that only reads, a GET or one anyone may call, is not offered actions that change records or files.
+- **Web:** for a public GET, how many seconds its answer is kept; the sites that may call it from a browser, and the sites it may send people to, each an https address such as `https://example.ro` on a line of its own. A private endpoint has neither.
+
+![The Actions tab of the endpoint program, which only reads: Set values, then two Answer the call actions. The first is open: Answer as, Status code, its Body built from params.zi, and the address to send people to, left empty.](../../../../assets/screenshots/portal-endpoint-edit.png)
+
+Each problem is said at its field as you type, and **Save** waits until there are none. A problem in another file, such as a form that calls an endpoint you remove, is listed above the tabs with that file's name. **Remove** takes the endpoint away, after asking; its address then answers as one that is not there.
+
+Developers can also write endpoints in the site's configuration: see [Developer: API endpoints](/portal/developer/endpoints/#write-an-endpoint).
 
 ## Parameters
 
