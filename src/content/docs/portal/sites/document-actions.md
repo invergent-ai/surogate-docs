@@ -5,7 +5,7 @@ description: Make and read PDF, Word, Excel and CSV files and barcode images in 
 
 Document actions make files and read them, in the portal's [folders](/portal/console/files/). A form can turn what was sent into a PDF certificate, fill a Word template, export a list to Excel, or read a spreadsheet someone uploaded. They come with the portal's **Documents** extension. As with every extension, they are open to every tenant of the portal.
 
-They are [actions](/portal/sites/actions/) like any other: a form's, a flow's, an endpoint's or a job's action list can hold them. The console does not set action lists yet. For now, this is set in the site's configuration: see [Developer: Document actions](/portal/developer/document-actions/).
+They are [actions](/portal/sites/actions/) like any other: a form's, a flow's, an endpoint's or a job's action list can hold them. In the console, they are under **Documents** in **Add an action**; each asks for its folders, its file names and its choices. Developers: see [Developer: Document actions](/portal/developer/document-actions/).
 
 ## What people get
 

@@ -65,7 +65,7 @@ A form, a job or an endpoint can start a Keel case or process, or tell Keel some
 - **Send a message:** it goes to the processes waiting for it with a key.
 - **Send a signal:** it goes to every process waiting for it.
 
-A case type or a process is named by the key Keel gives it, without spaces. A message or signal is named as the process waits for it, and a message also carries the key it waits with. For now, this is set in the site's configuration: see [Developer: Keel](/portal/developer/keel/#start-a-case-from-a-form).
+A case type or a process is named by the key Keel gives it, without spaces. A message or signal is named as the process waits for it, and a message also carries the key it waits with. They are under **Calls** in **Add an action** of any action list; a public form offers no message or signal, since anyone could send it. Developers: see [Developer: Keel](/portal/developer/keel/#start-a-case-from-a-form).
 
 The portal keeps what Keel answered: the case's or process's id and number, how many processes a message reached, or how many a signal is on its way to.
 

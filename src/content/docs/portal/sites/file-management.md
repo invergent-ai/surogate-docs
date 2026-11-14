@@ -26,13 +26,13 @@ Each action names the file and its folder, and the names can be worked out as th
 - Copying a file onto itself, or renaming it to the name it has, fails with "The file already has this name.".
 - When a move has written the copy but cannot remove the file it came from, it fails and says so. Both files are then there; remove the old one by hand.
 
-For now, this is set in the site's configuration: see [Developer: File management actions](/portal/developer/file-management/#copy-move-and-rename-a-file).
+Build it in any action list, under **Files** in **Add an action**: see [Actions](/portal/sites/actions/). Developers: see [Developer: File management actions](/portal/developer/file-management/#copy-move-and-rename-a-file).
 
 ## Read a file's details
 
 Reading a file's details gives its folder, its name, its size in bytes and the type it is served as, such as `application/pdf`. When there is no such file it gives nothing, so an action list can check whether a file is there before it makes one.
 
-For now, this is set in the site's configuration: see [Developer: File management actions](/portal/developer/file-management/#read-a-files-details).
+Build it in any action list, under **Files** in **Add an action**: see [Actions](/portal/sites/actions/). Developers: see [Developer: File management actions](/portal/developer/file-management/#read-a-files-details).
 
 ## ZIP archives
 
@@ -51,7 +51,7 @@ What an archive's files become when unpacked:
 - A file of a kind the portal does not keep, such as `setup.exe`, and two files that end up with the same name, make the whole archive fail, naming the file. Nothing is written.
 - Unless the action is set to replace files, a file already there makes the whole archive fail too.
 
-For now, this is set in the site's configuration: see [Developer: File management actions](/portal/developer/file-management/#zip-archives).
+Build it in any action list, under **Files** in **Add an action**: see [Actions](/portal/sites/actions/). Developers: see [Developer: File management actions](/portal/developer/file-management/#zip-archives).
 
 ## Images
 
@@ -65,7 +65,7 @@ Resizing makes a resized copy of an image, such as a small preview of a photo so
 
 Reading an image's details gives its width, height and format, turned the right way up, or nothing when the file is not such an image or is not there.
 
-For now, this is set in the site's configuration: see [Developer: File management actions](/portal/developer/file-management/#images).
+Build it in any action list, under **Files** in **Add an action**: see [Actions](/portal/sites/actions/). Developers: see [Developer: File management actions](/portal/developer/file-management/#images).
 
 ## Files on a server
 
@@ -84,7 +84,7 @@ The directory and the path on the server are under the connector's directory: na
 - Removing a file that is not there is no error.
 - The server's own messages are never shown: a failure says what went wrong in the portal's words, such as "The server refused the username, password or key."
 
-For now, this is set in the site's configuration: see [Developer: File management actions](/portal/developer/file-management/#files-on-a-server).
+Build it in any action list, under **Files** in **Add an action**: see [Actions](/portal/sites/actions/). Developers: see [Developer: File management actions](/portal/developer/file-management/#files-on-a-server).
 
 ## Who may do what
 
