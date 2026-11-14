@@ -392,6 +392,10 @@ class Content(unittest.TestCase):
         for anchor in ('what-people-see', 'a-value', 'how-long-it-is-kept', 'when-a-value-fails'):
             self.assertIn(f'id="{anchor}"', values)
         self.assertIn('id="run-tests"', page('/portal/console/flows/'))
+        # Flows are made in the console.
+        self.assertIn('id="make-or-change-a-flow"', page('/portal/console/flows/'))
+        self.assertIn('href="/portal/console/flows/#make-or-change-a-flow"', doc)
+        self.assertNotIn('does not write them yet', (ROOT / 'src/content/docs/portal/sites/flows.md').read_text())
         self.assertIn('href="/portal/sites/flows/#call-a-flow"', page('/portal/sites/actions/'))
         for path in ('sites/flows.md', 'sites/values.md', 'console/flows.md'):
             source = (ROOT / 'src/content/docs/portal' / path).read_text()
