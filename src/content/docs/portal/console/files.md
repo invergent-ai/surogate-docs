@@ -44,6 +44,14 @@ Choose the **Folder**, then **Upload** a file. The portal keeps:
 
 A file is at most 10 MB. Its name becomes lower case, with other characters as hyphens: `Cerere Înscriere.PDF` becomes `cerere-inscriere.pdf`. Uploading a file of the same name replaces it, after the console asks you; links then open the new file.
 
+## Images at a width
+
+Each image under **Files** shows small beside its name. A page can ask for an image at the width it lays it out at, so a phone never downloads a photo made for a print: add `?w=` and a width to the image's address, such as `/_portal/files/news/stadion.jpg?w=512`.
+
+- The widths are 64, 128, 256, 384, 512, 768, 1024, 1536 and 2048 pixels; another width is not found.
+- JPEG, PNG, WebP, AVIF and still GIF images are served as WebP at that width, never wider than the image itself, turned the right way up. Anything else, such as an SVG drawing, an animated GIF or PNG, or a very large image, is served as it is.
+- A secure folder's image keeps to the folder's permissions at every width.
+
 ## Link to a file
 
 **Copy link** copies the file's address, such as `/_portal/files/forms/cerere-inscriere.pdf`. Use it in a page's text, an [HTML block](/portal/sites/layouts/#an-html-block), or a content entry's link or image field.

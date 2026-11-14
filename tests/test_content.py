@@ -618,9 +618,9 @@ class Content(unittest.TestCase):
 
     def test_portal_file_management(self):
         guide = page('/portal/sites/file-management/')
-        for anchor in ('what-people-get', 'copy-move-and-rename-a-file', 'read-a-files-details', 'zip-archives', 'files-on-a-server', 'who-may-do-what', 'limits', 'config-example'):
+        for anchor in ('what-people-get', 'copy-move-and-rename-a-file', 'read-a-files-details', 'zip-archives', 'images', 'files-on-a-server', 'who-may-do-what', 'limits', 'config-example'):
             self.assertIn(f'id="{anchor}"', guide)
-        for action in ('copyFile', 'moveFile', 'renameFile', 'fileInfo', 'zipFiles', 'zipNames', 'unzipFile', 'replace: true', 'ftpUpload', 'ftpDownload', 'ftpList', 'ftpDelete'):
+        for action in ('copyFile', 'moveFile', 'renameFile', 'fileInfo', 'zipFiles', 'zipNames', 'unzipFile', 'replace: true', 'resizeImage', 'imageInfo', 'ftpUpload', 'ftpDownload', 'ftpList', 'ftpDelete'):
             self.assertIn(action, guide)
         self.assertIn('href="/portal/sites/file-management/"', page('/portal/sites/actions/'))
         connectors = page('/portal/sites/connectors/')
@@ -629,6 +629,7 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/sites/connectors/#file-servers"', guide)
         files = page('/portal/console/files/')
         self.assertIn('id="move-or-copy-a-file"', files)
+        self.assertIn('id="images-at-a-width"', files)
         self.assertIn('href="/portal/sites/file-management/"', files)
         source = (ROOT / 'src/content/docs/portal/sites/file-management.md').read_text()
         for word in ('kubectl', 'helm', 'PORTAL_', 'Hub', 'fflate', 'Open Design'):
