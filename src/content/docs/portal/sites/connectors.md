@@ -54,7 +54,19 @@ The `email` action sends an email: see the [config example](#send-an-email-from-
 
 - **When it goes:** the email leaves only once the whole run ends well. If a later action fails, nothing is sent.
 - **Limits:** a portal sends mail to at most 500 addresses an hour.
-- **When nothing can be sent:** if the portal has no mail server, the action fails with "The portal sends no email."
+- **Your own mail account:** with `connector`, the email goes out through one of your [mail accounts](#mail-accounts) instead of the portal's mail server, as its sender.
+- **Files:** `attachments` attaches up to 10 files of a [folder](/portal/console/files/), at most 10 MB together, or 2.5 MB through Microsoft 365. They go as they were when the run ended, even if they change before the email leaves. Only the folder's editors can attach its files: a form a visitor sends that attaches files fails, and sends nothing.
+- **When nothing can be sent:** if the portal has no mail server and the action names no mail account, it fails with "The portal sends no email."
+
+## Mail accounts
+
+A mail account connector sends your forms' and jobs' email from your own address, through your own mail service (see the [config example](#a-mail-accounts-file)):
+
+- **SMTP:** any mail server, with a user name and password.
+- **Microsoft 365:** an app registered in your Microsoft Entra directory, with the **Mail.Send** application permission and a client secret. Email goes out from the sender's mailbox; it is not kept in its Sent Items.
+- **Google Workspace:** a service account with domain-wide delegation for `https://www.googleapis.com/auth/gmail.send`. Paste its JSON key file whole; the portal checks it when you save it.
+
+**Test** signs in to the service without sending anything, and says what is wrong: a secret Microsoft refuses, an app without Mail.Send, a key Google refuses. The credentials are kept for that service, sender and server alone; when one of them changes, set them again. An email already waiting goes out only through the account as it was when the email was queued; one that waits for an account not yet connected is tried again later.
 
 ## Hashes, signatures and random values
 
@@ -178,6 +190,43 @@ In an action list, such as a form's `actions`:
 
 - `to` is an address or a list of them. A run sends to at most 10 addresses, or 2 when nobody is signed in.
 - `subject` and `text` are expressions.
+
+Through your own mail account, with a file:
+
+```yaml
+- type: email
+  connector: town-mail
+  to: form.email
+  subject: '"Your certificate"'
+  text: '"The certificate is attached."'
+  attachments:
+    folder: certificates
+    names: '["adeverinta-" + vars.number + ".pdf"]'
+```
+
+- `connector`: a mail account connector.
+- `attachments.folder`: the folder the files are in; `attachments.names`: an expression giving their names, as a list.
+
+### A mail account's file
+
+In `connectors/<id>.yaml`, a Microsoft 365 account:
+
+```yaml
+name: { ro: Poșta primăriei, en: Town mail }
+kind: mail
+provider: microsoft365
+from: anunturi@primaria.ro
+directory: 3f2a9c4e-0d1b-4e7a-9b5c-8d6e7f001122
+clientId: 7c1e5a2b-4f3d-4c9e-8a7b-6d5e4f003344
+```
+
+- `provider`: `smtp`, `microsoft365` or `google`.
+- `from`: the address the email is sent from.
+- `directory` and `clientId`: Microsoft 365's directory (tenant) id and the app's id, as Microsoft Entra shows them.
+- `fromName`: the sender's name, in Romanian and English (SMTP and Google).
+- `timeoutMs`: how long the service may keep the portal waiting, up to 60,000 ms; 30,000 when left out.
+
+An SMTP server takes `host`, `port` (587 when left out) and `security`: `starttls` (when left out), `tls` (port 465), or `none`, only for a server on your own network. Google Workspace takes only `provider` and `from`.
 
 ### A mailbox's file
 
