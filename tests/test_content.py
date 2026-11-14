@@ -208,6 +208,18 @@ class Content(unittest.TestCase):
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
 
+    def test_portal_vocabularies(self):
+        doc = page('/portal/console/vocabularies/')
+        for anchor in ('the-list', 'make-a-vocabulary', 'categories', 'removing', 'when-a-save-is-refused'):
+            self.assertIn(f'id="{anchor}"', doc)
+        source = (PORTAL / 'console/vocabularies.md').read_text()
+        for shot in ('portal-vocabularies-list', 'portal-vocabulary-edit'):
+            self.assertIn(shot, source)
+        self.assertIn('href="/portal/console/vocabularies/"', page('/portal/sites/content-types/'))
+        self.assertIn('href="/portal/console/vocabularies/"', page('/portal/console/content/'))
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'YAML', 'yaml'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_rich_text(self):
         doc = page('/portal/console/pages/')
         self.assertIn('id="write-text"', doc)

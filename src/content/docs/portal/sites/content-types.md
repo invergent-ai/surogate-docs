@@ -63,7 +63,7 @@ Each entry is an `article` with the class `portal-content`; a list of entries is
 
 ## Vocabularies
 
-A vocabulary sorts entries into categories, such as Topics or Area. It sorts the content types it names, or all of them, and lets an entry take one of its categories or several. The console does not build vocabularies yet. For now, this is set in the site's configuration: see [Developer: Content types](/portal/developer/content-types/#a-vocabularys-file).
+A vocabulary sorts entries into categories, such as Topics or Area. It sorts the content types it names, or all of them, and lets an entry take one of its categories or several. Make and change them on [Vocabularies](/portal/console/vocabularies/). Developers: see [Developer: Content types](/portal/developer/content-types/#a-vocabularys-file).
 
 - Categories nest at most five levels deep, 500 per vocabulary; a portal has at most 20 vocabularies.
 - A category is named by its vocabulary and its id.

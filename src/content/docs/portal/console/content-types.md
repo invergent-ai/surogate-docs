@@ -7,6 +7,8 @@ description: Build the kinds of content the portal's sites hold, their fields an
 
 **Content types** is for administrators, on a portal whose site files the portal keeps. Every save is a [version](/portal/console/versions/) you can undo.
 
+The categories entries are sorted by are made on [Vocabularies](/portal/console/vocabularies/).
+
 ## The list
 
 Each content type shows its name, its id and how many fields it has. **Edit** opens it; **New content type** starts one. A content type whose file cannot be read is marked **Cannot be read**: **Remove** is all it offers.
