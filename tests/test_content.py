@@ -484,6 +484,12 @@ class Content(unittest.TestCase):
             self.assertFalse((PORTAL / 'sites' / f'{name}.md').exists(), name)
             self.assertIn(f'/portal/developer/{name}/', page(f'/portal/sites/{name}/'), name)
 
+    def test_portal_notifications_sent_from_steps(self):
+        # A notification is sent by a step the console builds.
+        source = (ROOT / 'src/content/docs/portal/sites/notifications.md').read_text()
+        self.assertNotIn('For now', source)
+        self.assertIn('**Send a notification**', source)
+
     def test_portal_small_console_gaps(self):
         # The blog mark, field limits, signature looks and the search box are set in the console.
         for path in ('sites/content-types.md', 'sites/blogs.md', 'sites/form-fields.md', 'sites/search.md'):
