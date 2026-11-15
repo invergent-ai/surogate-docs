@@ -30,7 +30,7 @@ An OAuth client gets short-lived tokens from the portal itself, which programs b
 1. Under **OAuth clients**, press **New client**.
 2. Tick its scopes. A client never has **Full access**.
 3. Tick **Act for a person** only if the program does work on a person's behalf: the audit log then names both the program and the person.
-4. Under **App backends**, tick the apps whose backends may use this client to call on behalf of the person signed in to the app. The list shows the apps your implementation team has set up with a backend.
+4. Under **App backends**, tick the apps whose backends may use this client to call on behalf of the person signed in to the app. The list shows the [apps](/portal/console/apps/#add-an-app) set up with a backend: a client is given only apps the portal knows, so add the app first. When an app is removed, or its manifest moves to another server, the clients lose it.
 5. Press **Create client**. Copy the **Client ID** and the **Client secret** and give them to the program's team over a safe channel. The secret is shown this once.
 
 The program asks for tokens at `/_portal/oauth/token` on the tenant's address.

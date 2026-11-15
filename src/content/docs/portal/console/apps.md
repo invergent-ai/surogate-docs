@@ -2,7 +2,7 @@
 title: Apps
 ---
 
-An app puts something on the portal's pages: a news list, a form, a clock. Your implementation team builds or chooses the apps and [places them on pages](/portal/sites/apps/). **Apps** is where an administrator decides whether each app may run, and what it may know about the people using the portal.
+An app puts something on the portal's pages: a news list, a form, a clock. **Apps** is where an administrator adds the apps the portal knows, decides whether each may run, and what it may know about the people using the portal. Its widgets are then [placed on pages](/portal/sites/apps/).
 
 ![The Apps page: one app approved and one waiting, with their widgets, where they come from and what each asks to know.](../../../../assets/screenshots/portal-apps.png)
 
@@ -23,6 +23,23 @@ For each app:
 | Their email | their email address |
 | Their profile fields | the profile fields your portal has |
 | Their roles | their roles in the portal, such as administrator |
+
+## Add an app
+
+1. Press **Add an app**.
+2. Give it an **Id**: lower-case letters, digits and hyphens, starting with a letter. It cannot be changed later, and `portal` is the portal's own.
+3. Give it a **Name**, and its **Manifest address**: where the app serves its manifest, an `http:` or `https:` address with no user name or password. The manifest's id must be the app's id.
+4. Say what it does with **A person's data**: **It keeps no personal data**, or **It exports and erases at an address**, with that address and how long to wait (1,000 to 60,000 milliseconds; 10,000 when left empty). An address on a private network is asked only when the install allows it, or when it is on the server this app was approved from. When an administrator [exports or erases a person](/portal/console/users/), the portal asks every app.
+5. When the app has a backend of its own that it calls as the person signed in, tick **It has a backend of its own** and give its **Audience**, its **Scopes** (one per line) and the **Token lifetime** (60 to 3,600 seconds; 300 when left empty).
+6. Press **Save**. The portal reads the manifest: when it cannot reach it, or the manifest is wrong, nothing is saved and the address says why. Another app the portal cannot reach also keeps the save from going through, and is listed above the form.
+
+A new app waits for approval. **Edit** on its card opens it again. Moving the manifest to another server starts the app over: it waits for approval again, its event wires go, API clients no longer act as it until given it again, and its [connectors](/portal/console/connectors/) need their credentials set again. The editor says so before you save.
+
+An app whose settings have a problem, or whose manifest could not be read, shows as **Not running**, with **Edit** to see why. An app that says nothing about a person's data makes exporting or erasing anyone fail for the whole portal: the editor says so.
+
+## Remove an app
+
+Open it with **Edit** and press **Remove**. The portal refuses while a page, a connector or a job still uses the app, and says where. Its approval and its event wires go, and no API client acts as it any more. The data the app holds is not erased: ask the app first if a person's data must go.
 
 ## Approve an app
 
@@ -54,7 +71,7 @@ If an app shows **Its manifest has not been read yet**, the portal has not yet r
 
 Press **Revoke** and confirm. The app stops showing on the pages at once. Approve it again to bring it back. **Revoke** is there whenever an approval is held, also for an app waiting for new permissions.
 
-When the site's files remove an app, its approval goes too. An app added later under the same name waits for approval.
+When an app is removed, its approval goes too. An app added later under the same id waits for approval.
 
 Each approval and revoke is in the [audit log](/portal/console/audit/), with who did it and what the app was told.
 

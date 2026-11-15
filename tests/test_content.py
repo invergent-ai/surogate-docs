@@ -484,6 +484,14 @@ class Content(unittest.TestCase):
             self.assertFalse((PORTAL / 'sites' / f'{name}.md').exists(), name)
             self.assertIn(f'/portal/developer/{name}/', page(f'/portal/sites/{name}/'), name)
 
+    def test_portal_apps_added_in_the_console(self):
+        # Apps are added, edited and removed on the console's Apps page.
+        self.assertNotIn('For now', (ROOT / 'src/content/docs/portal/sites/apps.md').read_text())
+        doc = page('/portal/console/apps/')
+        for anchor in ('add-an-app', 'remove-an-app'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/console/apps/#add-an-app"', page('/portal/sites/apps/'))
+
     def test_portal_notifications_sent_from_steps(self):
         # A notification is sent by a step the console builds.
         source = (ROOT / 'src/content/docs/portal/sites/notifications.md').read_text()
