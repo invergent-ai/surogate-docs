@@ -491,6 +491,13 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/sites/payments/"', page('/portal/sites/actions/'))
         self.assertIn('id="a-stripe-connector"', page('/portal/developer/payments/'))
 
+    def test_portal_crm(self):
+        doc = page('/portal/sites/crm/')
+        for anchor in ('connect-dynamics-365', 'connect-salesforce', 'work-with-a-record', 'find-records', 'who-may-do-what'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/crm/"', page('/portal/sites/actions/'))
+        self.assertIn('id="a-salesforce-connector"', page('/portal/developer/crm/'))
+
     def test_portal_marketing(self):
         doc = page('/portal/sites/marketing/')
         for anchor in ('connect-mailchimp', 'connect-constant-contact', 'add-a-person-to-a-mailchimp-list', 'add-a-person-to-constant-contact-lists', 'public-forms'):
