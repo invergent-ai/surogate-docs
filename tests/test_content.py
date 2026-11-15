@@ -484,6 +484,12 @@ class Content(unittest.TestCase):
             self.assertFalse((PORTAL / 'sites' / f'{name}.md').exists(), name)
             self.assertIn(f'/portal/developer/{name}/', page(f'/portal/sites/{name}/'), name)
 
+    def test_portal_site_addresses_and_removal(self):
+        doc = page('/portal/console/sites/')
+        for anchor in ('a-sites-addresses', 'remove-a-site'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertNotIn('remove a site', (ROOT / 'src/content/docs/portal/console/sites.md').read_text())
+
     def test_portal_apps_added_in_the_console(self):
         # Apps are added, edited and removed on the console's Apps page.
         self.assertNotIn('For now', (ROOT / 'src/content/docs/portal/sites/apps.md').read_text())

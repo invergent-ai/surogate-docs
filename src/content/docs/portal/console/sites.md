@@ -84,8 +84,26 @@ The portal checks the settings before it keeps them.
 - A problem in one of the site's other files shows under the settings with that file's name. For example, adding a language the site's pages have no titles in yet: give each page its title in that language on [Pages](/portal/console/pages/) first.
 - When someone else saved a change in the meantime, the page says so. Press **Load the newest version**, then **Save** again. What you typed stays.
 
+## A site's addresses
+
+On **Sites**, **Addresses** beside a site lists where it answers: one of the portal's addresses and, if you need one, a path such as `/stiri`. **Add an address** adds one, up to 10, and **Remove** beside an address takes it away; **Save addresses** keeps them all at once.
+
+- An address another site already answers at is refused.
+- A path is a word of lower-case letters, digits and hyphens, never a language such as `/en`. A site under a path where another site of the same address has pages would hide them: refused.
+- The console must keep answering where you use it: a change that would leave no site at the address you are using is refused. Make it from another of the portal's addresses.
+
+## Remove a site
+
+On **Sites**, **Remove** beside a site, then type the site's id and press **Remove**. A portal's only site is never removed.
+
+- Its pages and settings go, and so does what its people left on it: content entries, comments, forum topics, events, announcements, polls, wiki pages, ratings and invitations. This cannot be undone.
+- What forms received stays, with the [audit log](/portal/console/audit/) and the files in the portal's [folders](/portal/console/files/).
+- While a form, a job, a collection, a guide, a data model's pages or a blog widget still names the site, the removal is refused and those files are listed: change them first.
+- Like the addresses, the removal is refused when it would leave no site at the address you are using the console through.
+- Only an administrator signed in to the console removes a site, never an API token.
+
 ## What the console does not do yet
 
-A new domain name is added by the installation's administrator, on [Tenants](/portal/console/tenants/#sites-and-addresses). The console does not yet remove a site, change its id or give it more addresses.
+A new domain name is added by the installation's administrator, on [Tenants](/portal/console/tenants/#sites-and-addresses). The console does not yet change a site's id.
 
 The settings are kept in the site's files, which developers can also change: see [For developers](/portal/developer/).
