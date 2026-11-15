@@ -484,6 +484,13 @@ class Content(unittest.TestCase):
             self.assertFalse((PORTAL / 'sites' / f'{name}.md').exists(), name)
             self.assertIn(f'/portal/developer/{name}/', page(f'/portal/sites/{name}/'), name)
 
+    def test_portal_payments(self):
+        doc = page('/portal/sites/payments/')
+        for anchor in ('connect-your-stripe-account', 'open-a-checkout', 'call-stripe', 'when-stripe-sends-an-event'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/payments/"', page('/portal/sites/actions/'))
+        self.assertIn('id="a-stripe-connector"', page('/portal/developer/payments/'))
+
     def test_portal_mobile_push(self):
         self.assertIn('id="push-notifications-to-a-mobile-app"', page('/portal/sites/connectors/'))
         self.assertIn('id="a-push-notification"', page('/portal/developer/connectors/'))
