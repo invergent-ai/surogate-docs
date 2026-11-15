@@ -491,6 +491,14 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/sites/payments/"', page('/portal/sites/actions/'))
         self.assertIn('id="a-stripe-connector"', page('/portal/developer/payments/'))
 
+    def test_portal_security(self):
+        doc = page('/portal/sites/security/')
+        for anchor in ('make-an-rsa-key-pair', 'check-a-dkim-record'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('id="google-apis"', page('/portal/sites/connectors/'))
+        self.assertIn('href="/portal/sites/security/"', page('/portal/sites/actions/'))
+        self.assertIn('id="a-google-service-account-connector"', page('/portal/developer/security/'))
+
     def test_portal_crm(self):
         doc = page('/portal/sites/crm/')
         for anchor in ('connect-dynamics-365', 'connect-salesforce', 'work-with-a-record', 'find-records', 'who-may-do-what'):
