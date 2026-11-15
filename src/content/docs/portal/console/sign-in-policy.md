@@ -33,3 +33,19 @@ People who sign in through a sign-in provider, or with a certificate, are not as
 **Also sign in a person whose email is in the certificate** signs in someone not linked yet, when their email is in the certificate. It never signs in an administrator, nor someone from a directory, this way.
 
 Press **Save**. The change is in the [audit log](/portal/console/audit/).
+
+## People's own accounts
+
+Under **People's own accounts**, you can let people make their own account and set a new password when they forgot theirs. Both are off until you switch them on, and both need the portal to send mail.
+
+**People may create their own account** adds **Create an account** to the sign-in page of each of your sites.
+
+1. The person writes their email address and agrees that the portal keeps their name and address to let them in.
+2. The portal mails them a link that works for 24 hours. It answers the same whether the address already has an account or not. An address that has one gets a mail saying so, with the sign-in page.
+3. On the link's page they write their name and choose a password, and their account is made. Your apps' person hooks see it first, as for an account you make.
+
+Choose **Groups people who sign up get**, and, to take only some addresses, **Email domains taken**, such as `primaria.ro`. When people also sign in with a provider or a directory, name the domains: accounts made by signing up are kept by the portal, outside the provider's or directory's offboarding and second steps. Required user fields are filled on the person's profile later.
+
+**People may set a new password by a link mailed to them** adds **Forgot your password?** to the sign-in page. The portal mails a link that works for an hour, then ends every session the person had. Some people are never sent a link: administrators, people a directory or SCIM keeps, people who sign in only with a provider, and accounts that are turned off. The page answers the same for them, and for addresses without an account. A link stops working when it is used, when an hour passes, or when the password changes some other way.
+
+Each address gets at most 3 links an hour, and each network 5.

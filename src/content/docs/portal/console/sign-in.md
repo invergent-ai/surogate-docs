@@ -17,6 +17,10 @@ The sign-in page is titled **Portal administration**: "Sign in to manage the por
 
 If the login or the password is wrong, the page says **The login or the password is not right.** After 10 wrong attempts within 15 minutes, the account refuses sign-in for a while, with the same message, even with the right password. Wait 15 minutes, or ask an administrator to [set a new password](/portal/console/users/#password).
 
+## When you forgot your password, or have no account
+
+When your portal allows it, the sign-in page shows **Forgot your password?** and **Create an account**. Both send you a link by email. Open it within the time it says, on the same portal. See [Sign-in policy: People's own accounts](/portal/console/sign-in-policy/#peoples-own-accounts).
+
 ## The second step
 
 When your portal asks for one, signing in has a second step after your password.

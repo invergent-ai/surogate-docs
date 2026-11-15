@@ -491,6 +491,10 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/sites/payments/"', page('/portal/sites/actions/'))
         self.assertIn('id="a-stripe-connector"', page('/portal/developer/payments/'))
 
+    def test_portal_self_service(self):
+        self.assertIn('id="peoples-own-accounts"', page('/portal/console/sign-in-policy/'))
+        self.assertIn('href="/portal/console/sign-in-policy/#peoples-own-accounts"', page('/portal/console/sign-in/'))
+
     def test_portal_people_actions(self):
         doc = page('/portal/sites/people-actions/')
         for anchor in ('the-actions', 'who-may-do-what', 'limits'):
