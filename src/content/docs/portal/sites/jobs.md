@@ -103,6 +103,22 @@ A message over 5 MB gives only who sent it and its subject, and is marked too la
 - **Failures:** when the mailbox cannot be read (a wrong password, a server that does not answer, a certificate the portal does not trust), **Jobs** shows why, the history says so once, and the next tries wait longer, up to an hour.
 - **Loops:** a job that sends mail to the address it reads starts itself again. Skip machine mail by acting only when the message is not an automatic reply.
 
+## When a text message arrives
+
+A job can start for each text message that arrives at a [text message connector](/portal/sites/connectors/#text-messages-and-slack)'s number, through Twilio or Clickatell. In the job editor, **It runs** is **When an SMS arrives**, and **SMS connector** names the connector. The run knows:
+
+- who sent it, the number it was sent to, and its text (at most 1,600 characters; a longer one is cut and marked);
+- how many pictures or files came with it (their contents are not kept);
+- with Twilio, when the message opts the sender out or back in (STOP, START).
+
+To answer, add a **Send a text message** step to the sender.
+
+- **The service's side:** the connector's page shows, under **Replies**, the address to give the service: in Twilio's console, the number's "A message comes in" webhook (HTTP POST); in Clickatell's portal, the integration's reply callback. Twilio signs what it posts; Clickatell's address holds a key, so keep it as you would a password, and **Make a new address** when it may have leaked. A connector sending from a name receives no replies.
+- **Once:** a message the service sends again runs the job once.
+- **Who sent it:** the sender's number is what the service says. Never take it as proof of who someone is.
+- **Limits:** a connector takes up to 600 messages a minute, and up to 50 in one Clickatell call; past that they are not run. At most 100 messages wait for a job; past that, new ones are not run, and the history says so.
+- **Changes:** after the connector's provider, sender or account changes, its Clickatell address stops letting messages in; the connector's page makes a new one and says so.
+
 ## When an app sends an event
 
 A job can start each time an approved app's server publishes one of its events. The run knows the app, the event's name, its fields, and the person when the app named one. Events sent in the browser do not start jobs. At most 100 events wait for a job; past that, new ones are not run, and the history says so. Once the app is no longer approved, its events start nothing. A job that calls an app whose answer sends the event that starts the job again stops after three rounds.

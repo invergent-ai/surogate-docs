@@ -18,7 +18,7 @@ description: Setting, removing and testing the credentials of the portal's conne
 - **A bucket (S3):** the endpoint, the bucket, its region (`auto` when left empty), and whether the bucket is addressed as a host of its own.
 - **An FTP or SFTP server:** the server, its port, for FTP its security, for SFTP the server's keys (paste the lines `ssh-keygen -lf` prints) and whether the portal signs in with a password or a key, and the directory paths start from.
 - **A mail account:** SMTP, Microsoft 365 or Google Workspace, the sender's address and name, and for SMTP its server, or for Microsoft 365 the directory and app ids.
-- **Text messages:** Twilio or Clickatell, the sender, and for Twilio the account SID.
+- **Text messages:** Twilio or Clickatell, the sender, and for Twilio the account SID. Once saved, **Replies** shows the address to give the service so a [job](/portal/sites/jobs/#when-a-text-message-arrives) hears the messages the number receives.
 - **A Slack channel:** its name; the channel's webhook is its credential.
 
 ![The connector crm: its name in each language, its group sales, and its kind, a web service, kept since it was made.](../../../../assets/screenshots/portal-connector-edit.png)

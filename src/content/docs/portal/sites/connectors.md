@@ -86,7 +86,7 @@ An action list can send a text message through Twilio or Clickatell, and post to
 
 ## Messaging accounts
 
-- **Text messages:** a text message connector names Twilio or Clickatell and the sender: a number, a Twilio Messaging Service, or a Clickatell sender name. Set Twilio's auth token or Clickatell's API key under **Connectors**; **Test** reads the account without sending anything.
+- **Text messages:** a text message connector names Twilio or Clickatell and the sender: a number, a Twilio Messaging Service, or a Clickatell sender name. Set Twilio's auth token or Clickatell's API key under **Connectors**; **Test** reads the account without sending anything. A job can also [start for each message the number receives](/portal/sites/jobs/#when-a-text-message-arrives).
 - **Slack:** a Slack connector is a Slack incoming webhook. Create one in Slack for the channel, and paste its address, `https://hooks.slack.com/services/…`, under **Connectors**. It has no Test: a test would show in the channel.
 
 These are made in the console as connectors of the kinds **Text messages** and **A Slack channel**: see [Make or change a connector](/portal/console/connectors/#make-or-change-a-connector). Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-text-message-and-a-slack-post).
