@@ -502,6 +502,16 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/sites/people-actions/"', page('/portal/sites/actions/'))
         self.assertIn('id="load-checks"', page('/portal/developer/people-actions/'))
 
+    def test_portal_google_drive(self):
+        doc = page('/portal/sites/google-drive/')
+        for anchor in ('connect-google-drive', 'the-actions', 'who-may-do-what', 'limits'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/google-drive/"', page('/portal/sites/actions/'))
+        self.assertIn('href="/portal/sites/google-drive/"', page('/portal/sites/connectors/'))
+        dev = page('/portal/developer/google-drive/')
+        for anchor in ('the-connector', 'the-actions', 'load-checks'):
+            self.assertIn(f'id="{anchor}"', dev)
+
     def test_portal_web_pages(self):
         doc = page('/portal/sites/web-pages/')
         for anchor in ('the-actions', 'how-a-site-is-read', 'who-may-do-what', 'treat-what-you-read-as-untrusted', 'limits'):
