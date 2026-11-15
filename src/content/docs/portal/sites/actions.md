@@ -46,7 +46,7 @@ Whole numbers are integers, the others decimals; the two mix in arithmetic, so a
 
 ## The actions
 
-Extensions add more: the [document actions](/portal/sites/document-actions/) make and read PDF, Word, Excel and CSV files and barcode images, the [file management actions](/portal/sites/file-management/) copy, move and rename files and make and unpack ZIP archives, the [payments](/portal/sites/payments/) take payments through Stripe, the [marketing actions](/portal/sites/marketing/) keep newsletter lists in Mailchimp or Constant Contact, and the [CRM actions](/portal/sites/crm/) work with records in Dynamics 365 and Salesforce.
+Extensions add more: the [document actions](/portal/sites/document-actions/) make and read PDF, Word, Excel and CSV files and barcode images, the [file management actions](/portal/sites/file-management/) copy, move and rename files and make and unpack ZIP archives, the [payments](/portal/sites/payments/) take payments through Stripe, the [marketing actions](/portal/sites/marketing/) keep newsletter lists in Mailchimp or Constant Contact, the [CRM actions](/portal/sites/crm/) work with records in Dynamics 365 and Salesforce, and the [security actions](/portal/sites/security/) make RSA keys and check DKIM records.
 
 - Work out values, and keep them for later actions.
 - Run actions together: an error handler of the group catches theirs.

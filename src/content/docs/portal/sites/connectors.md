@@ -51,6 +51,22 @@ An action list calls a service through a connector. A call has a method (GET whe
   - an answer or body is at most 1 MB;
   - a run makes at most 20 calls.
 
+## Google APIs
+
+An http connector can sign in as a Google Cloud **service account**, to call Google's APIs: Sheets, Drive, Calendar, Gmail and the others on `googleapis.com`.
+
+1. In the Google Cloud console, make a service account, turn on the APIs your steps call, and make a JSON key for the account.
+2. On **Connectors**, make an http connector with the API's address, such as `https://sheets.googleapis.com/v4`. Under **Signs in with**, choose **A Google Cloud service account**, and write its **scopes**, one per line, such as `https://www.googleapis.com/auth/spreadsheets`.
+3. To act as a person of your Google Workspace (their Gmail or Calendar), write them under **Acts as**. The Workspace's administrator must first delegate those scopes to the service account.
+4. Set the credential: paste the key file whole.
+
+**Test** asks Google for a token; no API is called. The steps then call the API as with any connector: the portal adds a token, kept until shortly before it ends, and no step ever sees it. Paths keep Google's colons, as in `/spreadsheets/{id}/values/A1:append`.
+
+- The connector's address is on `googleapis.com`, so the token goes only to Google. Services that ask for an identity token, such as Cloud Run or Cloud Functions, are not called this way.
+- Changing the scopes or the person it acts as asks for the key again.
+- If Google refuses the key (revoked, a scope not delegated), the steps fail and say why, for a minute before the portal asks Google again; setting the key again, or a passing **Test**, asks at once.
+- A connector acting as a person is never called from a form anyone may send, or an endpoint anyone may call.
+
 ## Email
 
 An action list sends an email. In the console, it is the action **Send an email** in an action list: a form's [steps](/portal/console/forms/#steps), or a job's or a flow's actions. Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#send-an-email-from-an-action-list).
