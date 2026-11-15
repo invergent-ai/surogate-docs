@@ -91,6 +91,7 @@ On **Sites**, **Addresses** beside a site lists where it answers: one of the por
 - An address another site already answers at is refused.
 - A path is a word of lower-case letters, digits and hyphens, never a language such as `/en`. A site under a path where another site of the same address has pages would hide them: refused.
 - The console must keep answering where you use it: a change that would leave no site at the address you are using is refused. Make it from another of the portal's addresses.
+- An address left with no site of the portal is answered by the installation's main site until one of yours answers there again; the dialog says so before you save. The address stays the portal's, to give a site again.
 
 ## Remove a site
 
@@ -101,6 +102,7 @@ On **Sites**, **Remove** beside a site, then type the site's id and press **Remo
 - While a form, a job, a collection, a guide, a data model's pages or a blog widget still names the site, the removal is refused and those files are listed: change them first.
 - Like the addresses, the removal is refused when it would leave no site at the address you are using the console through.
 - Only an administrator signed in to the console removes a site, never an API token.
+- What its people left is erased once the removal is live. If the portal could not make it live, the site's pages are gone but the rest waits: make the newest version live on [Versions](/portal/console/versions/), then remove the site again.
 
 ## What the console does not do yet
 
