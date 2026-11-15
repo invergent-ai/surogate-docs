@@ -29,7 +29,7 @@ The account's sign-in ends if it is not used for six months, if someone takes it
 ## The actions
 
 - **List a Drive folder** keeps the files of a folder: their ids, names, kinds, sizes, links and whether each is a folder, and whether there are more. A folder is named by its id, as Drive shows it in its address; `root` is the account's own My Drive. **Name contains** matches the start of a word in the file's name.
-- **Send a file to Drive** sends a file of the portal's folders to a Drive folder, at most 10 MB. A file of the same name in that folder is kept, and the step fails, unless you tick **Replace a file of that name**: the new file is sent, then the old one goes to the trash. **Make it a Google Docs, Sheets or Slides file** turns a Word, Excel, PowerPoint, OpenDocument, text or CSV file into Google's own kind.
+- **Send a file to Drive** sends a file of the portal's folders to a Drive folder, at most 10 MB. A file of the same name in that folder is kept, and the step fails, unless you tick **Replace a file of that name**: then only its content changes, and it keeps its id, its shares and its history. A folder of that name is never touched. **Make it a Google Docs, Sheets or Slides file** turns a Word, Excel, PowerPoint, OpenDocument, text or CSV file into Google's own kind; such a file is always a new one, never a replacement.
 - **Keep a Drive file** keeps a Drive file in a portal folder. A Google Docs, Sheets or Slides file is kept as the kind you choose: a Doc as PDF, Word, OpenDocument or text; a Sheet as PDF, Excel, OpenDocument or CSV (its first sheet); Slides as PDF, PowerPoint, OpenDocument or text. The portal file's name ends with that kind's extension, such as `contract.pdf`.
 - **Make a Google Doc from a template** copies a Google Doc into a folder, with the name you give, and puts each value where the template says `{{name}}`, such as `{{client}}`. It keeps the new Doc's id and link, and the placeholders it did not find. A value that holds braces is put in as written.
 - **Share a Drive file** shares a file with one email address (to read, comment or edit), telling them by email unless you untick it, or with **anyone with the link**, to read or comment only.
@@ -40,7 +40,7 @@ Each step keeps what Google answered, so the next steps can use a file's id or l
 ## Who may do what
 
 - **Administrators** and **jobs** use every action.
-- **A job started by anything but time** (a record, a person's change, mail, a payment, an app's event, a page request) does not share or move files to the trash: what started it was written by others. It still lists, sends, keeps and makes Docs.
+- **A job started by anything but time** (a record, a person's change, mail, a payment, an app's event, a page request) does not share, replace or move files to the trash: what started it was written by others. It still lists, sends new files, keeps them and makes Docs.
 - **Forms anyone may send and endpoints anyone may call** use none of these actions. A careers form keeps its files in the portal; a job started by the new record sends them to Drive.
 - The folders and templates a step names are written in the step, never taken from what a person typed. A file's id can come from an earlier step or a record.
 

@@ -41,7 +41,6 @@ clientId: 123456789012-abc123def456ghi789.apps.googleusercontent.com
   folder: cvs
   name: vars.application.cv
   toFolderId: 0AbCdEfGhIjKlMnOpQ
-  replace: true
   into: sent
 - type: googleDriveShare
   connector: drive
@@ -72,12 +71,12 @@ clientId: 123456789012-abc123def456ghi789.apps.googleusercontent.com
 
 - `folderId`, `toFolderId` and `templateId` are written as they are: a Drive id (10 to 200 letters, digits, `-` and `_`), or `root` for a folder. `fileId`, `name`, `toName`, `nameContains`, `max` and `email` are expressions.
 - `googleDriveList` keeps `{files: [{id, name, mimeType, size, modifiedTime, webViewLink, folder}], more}`; `googleDriveUpload` keeps `{id, name, webViewLink}`; `googleDriveDownload` keeps `{id, name, mimeType, size}`; `googleDocFromTemplate` keeps `{id, name, webViewLink, missing}`; `googleDriveShare` keeps `{id}`; `googleDriveDelete` keeps nothing.
-- `convert` and `replace` are `true` or `false`. `as` is `pdf`, `docx`, `odt`, `txt` (a Doc), `pdf`, `xlsx`, `ods`, `csv` (a Sheet) or `pdf`, `pptx`, `odp`, `txt` (Slides); the portal file's name ends with it.
+- `convert` and `replace` are `true` or `false`, never both `true`. `as` is `pdf`, `docx`, `odt`, `txt` (a Doc), `pdf`, `xlsx`, `ods`, `csv` (a Sheet) or `pdf`, `pptx`, `odp`, `txt` (Slides); the portal file's name ends with it.
 - `googleDriveShare` takes `email` or `anyone: true`, one of the two; `role` is `reader`, `commenter` or `writer` (not with `anyone`); `notify` (with `email`) is `true` unless written `false`.
 - `values` names at most 50 placeholders: letters, digits, `.`, `-` and `_`, as the template writes them between `{{` and `}}`.
 
 ## Load checks
 
 - A form with `public: true`, or an endpoint with `access: public` or a `cache`, may not use them: `google_drive_public`.
-- A job not started by time (`every`, `at`, `daily`, `cron`) may not `googleDriveShare` or `googleDriveDelete`, in its actions, its `onError` and the endpoints and flows they reach: `google_drive_untrusted`.
+- A job not started by time (`every`, `at`, `daily`, `cron`) may not `googleDriveShare`, `googleDriveDelete` or `googleDriveUpload` with `replace: true`, in its actions, its `onError` and the endpoints and flows they reach: `google_drive_untrusted`.
 - A `googleDriveShare` with both `email` and `anyone`, or neither: `share`.
