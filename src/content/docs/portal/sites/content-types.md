@@ -31,7 +31,7 @@ A content type is shared by all the sites of the portal. Administrators build co
 - Its **Title** is the text field that names an entry in lists.
 - A field's id is lower-case letters, digits and hyphens. A field marked as **Must be filled in to publish** must be filled in, in every language, to publish.
 - A portal has at most 100 content types, each with at most 50 fields.
-- A content type can be a [blog](/portal/sites/blogs/): its entries are posts, each by the person who wrote it. The console's builder does not turn this on yet. For now, this is set in the site's configuration: see [Developer: Content types](/portal/developer/content-types/#a-content-types-file).
+- A content type can be a [blog](/portal/sites/blogs/): its entries are posts, each by the person who wrote it. Tick **A blog** in the console's builder. Developers: see [Developer: Content types](/portal/developer/content-types/#a-content-types-file).
 
 ## Field types
 

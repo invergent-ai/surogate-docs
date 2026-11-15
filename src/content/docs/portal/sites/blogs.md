@@ -31,7 +31,7 @@ Someone who stops being a blogger, or a type that stops being a blog, leaves the
 
 ## Make a blog type
 
-A blog is a content type marked as one. The console's content type builder does not mark one: it keeps the mark as the site's configuration says it. For now, this is set in the site's configuration: see [Developer: Blogs](/portal/developer/blogs/#a-blog-type).
+A blog is a content type marked as one: tick **A blog: its entries are posts** in the console's [content type builder](/portal/console/content-types/). When the type already has entries, the builder says before you save that whoever created them become their authors. Developers: see [Developer: Blogs](/portal/developer/blogs/#a-blog-type).
 
 A blog type's template, written under **Template** in the console's [content type builder](/portal/console/content-types/), may place two values a post has besides its fields: `_author`, the author's name, and `_published`, the day it was first published. Give the type a [display page](/portal/sites/content-types/#display-pages) on each site that shows its posts, so each post has its own address: the console's [page editor](/portal/console/pages/#display-pages) makes one.
 

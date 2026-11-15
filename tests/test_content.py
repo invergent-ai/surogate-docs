@@ -484,6 +484,13 @@ class Content(unittest.TestCase):
             self.assertFalse((PORTAL / 'sites' / f'{name}.md').exists(), name)
             self.assertIn(f'/portal/developer/{name}/', page(f'/portal/sites/{name}/'), name)
 
+    def test_portal_small_console_gaps(self):
+        # The blog mark, field limits, signature looks and the search box are set in the console.
+        for path in ('sites/content-types.md', 'sites/blogs.md', 'sites/form-fields.md', 'sites/search.md'):
+            self.assertNotIn('For now', (ROOT / 'src/content/docs/portal' / path).read_text(), path)
+        self.assertIn('**Limits**', (ROOT / 'src/content/docs/portal/sites/forms.md').read_text())
+        self.assertIn('**Results on a page**', (ROOT / 'src/content/docs/portal/sites/search.md').read_text())
+
     def test_portal_guides(self):
         doc = page('/portal/sites/guides/')
         for anchor in ('what-people-see', 'write-a-guide', 'start-a-guide', 'in-the-console'):
