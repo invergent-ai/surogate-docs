@@ -23,7 +23,7 @@ The page also shows the tenant's **issuer** and **keys** address, which an app c
 
 ## Name an app
 
-Each app the portal knows has a name and the address of its manifest. The address starts with `http:` or `https:` and holds no user name or password. Whoever may change the site's configuration decides which addresses the portal reads, inside your network too. The console does not add apps yet. For now, this is set in the site's configuration: see [Developer: Apps on a page](/portal/developer/apps/#name-an-app).
+Each app the portal knows has a name and the address of its manifest. The address starts with `http:` or `https:` and holds no user name or password. An administrator decides which addresses the portal reads. An address on a private network is read only when the install allows it, or once the app was approved from that server. Add an app on the console's [Apps](/portal/console/apps/#add-an-app) page. Developers: see [Developer: Apps on a page](/portal/developer/apps/#name-an-app).
 
 Each sync reads every app's manifest and checks it. If an app cannot be reached, or its manifest is wrong, the sync is refused and the pages stay as they were. When an app publishes a new manifest, the next sync brings it in, even with no change to the files.
 
