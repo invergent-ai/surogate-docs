@@ -9,7 +9,7 @@ The portal's **Payments** extension takes payments through [Stripe](https://stri
 
 On **Connectors**, make a connector of the kind **A Stripe account**. Set its credential: Stripe's secret key, from Stripe's Dashboard under **Developers → API keys**. Prefer a restricted key (`rk_…`) that may do only what your steps do. **Test** reads the account's balance; nothing is changed.
 
-To run jobs on Stripe's events, tick **It hears Stripe's events**. The connector's page then shows the address Stripe sends its events to. In Stripe's Dashboard, under **Developers → Webhooks**, add an endpoint with that address. Choose **snapshot** events, of the API version **2024-06-20**, and the event types your jobs use. Then set the endpoint's signing secret (`whsec_…`) as the connector's credential, with the secret key. A connector holds one signing secret: events of your own account and of connected accounts need two endpoints, and two connectors.
+To run jobs on Stripe's events, tick **It hears Stripe's events**. The connector's page then shows the address Stripe sends its events to. In Stripe's Dashboard, under **Developers → Webhooks**, add an endpoint with that address. Choose **snapshot** events, of the API version **2024-06-20**, and the event types your jobs use. Then set the endpoint's signing secret (`whsec_…`) as the connector's credential, with the secret key. A connector holds one signing secret: events of your own account and of connected accounts need two endpoints, and two connectors. Events of test mode never run a live key's jobs, nor live events a test key's.
 
 ## Open a Checkout
 
@@ -21,7 +21,7 @@ In an action list, **Open a Stripe Checkout** makes a Stripe Checkout page and k
 - **Stripe customer** (`cus_…`) or **The person's email**, not both; and **Metadata**, up to 50 names, which go with the payment or subscription too.
 - **Connected account** (`acct_…`): for Stripe Connect, the account the Checkout is made on.
 
-A Checkout is opened once for a run, even when the run is tried again. **Once for** makes it once for a value of yours, such as an order's number, whichever run asks. Visitors open at most 30 Checkouts an hour on a portal.
+A Checkout is opened once for a run, even when the run is tried again. **Once for** makes it once for a value of yours, such as an order's number, whichever run asks. Visitors open at most 600 Checkouts an hour on a portal; a refused attempt is not counted.
 
 ## Call Stripe
 
