@@ -66,6 +66,7 @@ Extensions add more: the [document actions](/portal/sites/document-actions/) mak
 - Call a service through a [connector](/portal/sites/connectors/#call-a-service).
 - Send a [text message](/portal/sites/connectors/#text-messages-and-slack) through Twilio or Clickatell once the run ends well.
 - Post to a [Slack channel](/portal/sites/connectors/#text-messages-and-slack) once the run ends well.
+- Send a [push notification](/portal/sites/connectors/#push-notifications-to-a-mobile-app) to a mobile app's devices once the run ends well.
 - Send an [email](/portal/sites/connectors/#email) once the run ends well, through the portal's mail server or [your own mail account](/portal/sites/connectors/#mail-accounts), with files.
 - Send a [notification](/portal/sites/notifications/) to people of the portal once the run ends well.
 - Make [hashes, signatures and random values](/portal/sites/connectors/#hashes-signatures-and-random-values).

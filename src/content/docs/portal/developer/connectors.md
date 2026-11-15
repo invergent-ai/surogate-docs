@@ -41,6 +41,7 @@ The other kinds of connector:
 - `mailbox` is a mail address a [job](/portal/sites/jobs/#when-mail-arrives) reads (see [A mailbox's file](#a-mailboxs-file));
 - `mail` is a mail account (see [A mail account's file](#a-mail-accounts-file));
 - `sms` and `slack` send text messages and Slack posts (see [A text message and a Slack post](#a-text-message-and-a-slack-post));
+- `mobile` sends push notifications to a mobile app (see [A push notification](#a-push-notification));
 - `bucket` names a bucket of an S3-compatible storage service (see [A bucket's file](#a-buckets-file));
 - `ftp` is an FTP, FTPS or SFTP server (see [A file server's file](#a-file-servers-file)).
 
@@ -147,6 +148,39 @@ kind: slack
 - `accountSid`: Twilio's account SID, as its console shows it.
 - A connector of kind `sms` names Twilio or Clickatell and the sender: a number, a Twilio Messaging Service, or a Clickatell sender name. Set Twilio's auth token or Clickatell's API key under **Connectors**; **Test** reads the account without sending anything.
 - A connector of kind `slack` is a Slack incoming webhook. Create one in Slack for the channel, and paste its address, `https://hooks.slack.com/services/…`, under **Connectors**. It has no Test: a test would show in the channel.
+
+
+## A push notification
+
+`sendPush` sends a push notification to a mobile app's devices through Firebase Cloud Messaging or Pushwoosh. Its limits are on [Push notifications to a mobile app](/portal/sites/connectors/#push-notifications-to-a-mobile-app).
+
+```yaml
+- type: sendPush
+  connector: app
+  to: vars.devices
+  title: '"Cererea " + vars.number'
+  text: '"A fost înregistrată."'
+  link: '"https://primaria.ro/cereri/" + vars.number'
+```
+
+- `to`: one device's push token, or a list.
+- `link`: optional, an https address the app may open (sent as `data.link` through Firebase, as `link` through Pushwoosh).
+
+In `connectors/app.yaml`, a Firebase project, or a Pushwoosh application:
+
+```yaml
+name: { ro: Aplicația primăriei, en: Town app }
+kind: mobile
+provider: firebase
+project: primaria-app
+```
+
+```yaml
+name: { ro: Aplicația primăriei, en: Town app }
+kind: mobile
+provider: pushwoosh
+application: ABCDE-12345
+```
 
 ## Hashes, signatures and random values
 

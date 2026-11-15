@@ -20,6 +20,7 @@ description: Setting, removing and testing the credentials of the portal's conne
 - **A mail account:** SMTP, Microsoft 365 or Google Workspace, the sender's address and name, and for SMTP its server, or for Microsoft 365 the directory and app ids.
 - **Text messages:** Twilio or Clickatell, the sender, and for Twilio the account SID. Once saved, **Replies** shows the address to give the service so a [job](/portal/sites/jobs/#when-a-text-message-arrives) hears the messages the number receives.
 - **A Slack channel:** its name; the channel's webhook is its credential.
+- **A mobile app's push notifications:** Firebase and the project's id, or Pushwoosh and the application's code; the service account key or API access token is its credential.
 
 ![The connector crm: its name in each language, its group sales, and its kind, a web service, kept since it was made.](../../../../assets/screenshots/portal-connector-edit.png)
 
