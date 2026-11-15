@@ -484,6 +484,11 @@ class Content(unittest.TestCase):
             self.assertFalse((PORTAL / 'sites' / f'{name}.md').exists(), name)
             self.assertIn(f'/portal/developer/{name}/', page(f'/portal/sites/{name}/'), name)
 
+    def test_portal_sms_replies(self):
+        self.assertIn('id="when-a-text-message-arrives"', page('/portal/sites/jobs/'))
+        self.assertIn('id="when-a-text-message-arrives"', page('/portal/developer/jobs/'))
+        self.assertIn('href="/portal/sites/jobs/#when-a-text-message-arrives"', page('/portal/console/connectors/'))
+
     def test_portal_site_addresses_and_removal(self):
         doc = page('/portal/console/sites/')
         for anchor in ('a-sites-addresses', 'remove-a-site'):

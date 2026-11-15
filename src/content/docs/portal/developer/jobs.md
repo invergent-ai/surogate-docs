@@ -177,6 +177,31 @@ actions:
 - `mail.connector`: the mailbox [connector](/portal/sites/connectors/#mailboxes).
 - `condition`: skips machine mail.
 
+## When a text message arrives
+
+A job can start for each text message that arrives at a [text message connector](/portal/sites/connectors/#text-messages-and-slack)'s number. The run reads:
+
+- `trigger.from`, `trigger.to` and `trigger.text` (at most 1,600 characters; `trigger.tooLong` true when cut);
+- `trigger.id`, the service's message id, and `trigger.provider` (`twilio` or `clickatell`);
+- `trigger.media`, how many pictures or files came with it;
+- `trigger.optOut`, Twilio's word when the message opts the sender out or back in.
+
+```yaml
+trigger:
+  sms:
+    connector: texts
+site: main
+runAs: user:registratura@primaria.ro
+actions:
+  - type: sendSms
+    connector: texts
+    to: trigger.from
+    text: '"Am primit mesajul dumneavoastră."'
+```
+
+- `sms.connector`: the text message [connector](/portal/sites/connectors/#text-messages-and-slack).
+- The service posts to `/_portal/hooks/sms/<connector>` on one of the portal's addresses: Twilio's posts are checked by their signature, Clickatell's by a key in the address, made in the console.
+
 ## When an app sends an event
 
 A job can start each time an approved app's server publishes one of its events (see [A job that runs when an app sends an event](#a-job-that-runs-when-an-app-sends-an-event)). The run reads `trigger.app`, `trigger.name`, `trigger.payload` (the event's fields) and `trigger.personId` when the app named a person.
