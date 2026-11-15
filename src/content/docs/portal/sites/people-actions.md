@@ -20,8 +20,12 @@ What a directory or SCIM keeps for a person (their name and fields) is not chang
 - **Administrators** do everything, for anyone. On the portal's own tenant, that is an install administrator.
 - **Signed-in people** find and change their own name and fields, nothing else. Any other address is refused the same way, whether it has an account or not.
 - **A job** acts as the person it runs as (**Runs as**), who must be an administrator when the step runs. A job that runs as no one, or as someone who is not an administrator, is refused.
-- **A job started by mail, a text message or a page request** never invites, changes accounts' status or groups, or unlocks: who started it is not known.
+- **A job started by anything but time** (a record, a person's change, mail, a text message, a payment, an app's event, a page request) only finds people: what started it was written by others. A job that changes accounts runs on a schedule.
 - **Forms anyone may send and endpoints anyone may call** use none of these actions.
+
+An API token acts here only when it may change the tenant (`tenant:write`), as in the console. An account a directory turned off is turned on by the directory, never by a step.
+
+A members' form that lets people change their own name and fields lets them write those fields as they like: keep fields your apps or pages trust as an administrator's off such a form.
 
 Each change is in the audit log as the person's, done **by an action**, naming the form, endpoint or job. It raises the same events as the console's changes, so jobs started by people hear of it.
 
@@ -29,4 +33,4 @@ Each change is in the audit log as the person's, done **by an action**, naming t
 
 - Invitations from steps: at most 50 an hour on a portal, besides each inviter's own limit and the portal's mail allowance.
 - A person is not made without an invitation; roles and organizations are changed in the console.
-- An endpoint called with an administrator's API token acts as that administrator.
+- Refusals are in the audit log too, without the address asked for.

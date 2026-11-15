@@ -38,4 +38,4 @@ What these do, and who may run them, are on [Managing people from steps](/portal
 
 - A form with `public: true`, or an endpoint with `access: public` or a `cache`, may not use them: `people_public`.
 - A job using them names `runAs`: `people_needs_run_as`.
-- A job started by `mail`, `sms` or a `platform` `request` may not invite, set `status`, change groups or unlock: `people_untrusted`.
+- A job not started by time (`every`, `at`, `daily`, `cron`) may only `findPerson`, in its actions, its `onError` and the endpoints and flows they reach: `people_untrusted`.
