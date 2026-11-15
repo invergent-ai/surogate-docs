@@ -502,6 +502,13 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/sites/people-actions/"', page('/portal/sites/actions/'))
         self.assertIn('id="load-checks"', page('/portal/developer/people-actions/'))
 
+    def test_portal_web_pages(self):
+        doc = page('/portal/sites/web-pages/')
+        for anchor in ('the-actions', 'how-a-site-is-read', 'who-may-do-what', 'treat-what-you-read-as-untrusted', 'limits'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/web-pages/"', page('/portal/sites/actions/'))
+        self.assertIn('id="load-checks"', page('/portal/developer/web-pages/'))
+
     def test_portal_security(self):
         doc = page('/portal/sites/security/')
         for anchor in ('make-an-rsa-key-pair', 'check-a-dkim-record'):
