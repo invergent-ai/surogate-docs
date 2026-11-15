@@ -13,15 +13,16 @@ The portal's **Web pages** extension lets steps read pages of other sites. A job
 - **Read a site's next pages** reads the next pages of a site being read, at most five at a time, and keeps them as a list, with how many are left. Add a **For each** step after it to keep every page, in a collection for instance.
 - **Stop reading a site** forgets it and the pages it found.
 
-The main content is the page's `<main>`, else its largest article, else its body, without menus, headers, footers, forms, scripts, styles and hidden parts. It is kept as the portal's own markup, as a rich text field holds it: headings, paragraphs, lists, tables, images and links, every link marked `nofollow`. Text and main content are each kept up to 64 KB.
+The main content is the page's `<main>`, else its largest article, else its body, without menus, headers, footers, forms, scripts, styles and hidden parts. It is kept as the portal's own markup, as a rich text field holds it: headings, paragraphs, lists, tables, images and links, every link marked `nofollow`. Text and main content are each kept up to 64 KB: a longer page keeps its first paragraphs whole.
 
 ## How a site is read
 
 A site is read the way a polite reader reads it:
 
 - **Its own pages only:** links are followed on the same site (scheme, host and port), under the paths given, at most ten links deep. Links to other sites, links marked `nofollow`, pages that ask not to be followed, and files such as PDFs and images are left alone. Sitemaps are not read.
-- **Its robots.txt** is honoured for the portal (`SurogatePortal`), else for every reader (`*`); a `Crawl-delay` of up to 10 seconds is kept.
-- **One page a second** from each site, across every server of the portal.
+- **Its robots.txt** is honoured for the portal (`SurogatePortal`), else for every reader (`*`); a `Crawl-delay` of up to 10 seconds is kept. A site whose robots.txt cannot be read just now is tried again later.
+- **One page a second** from each site, across every server and every tenant of the portal.
+- **Where the site lives:** when the first page moved (from `example.ro` to `www.example.ro`, say), the site is read where it moved.
 - **A busy site** (it answers 429 or 5xx, or does not answer) is tried again after 1, 5 and 30 minutes, then given up.
 - Each page is read once, even when two jobs read the same site at once. Tracking parameters (`utm_...`, `fbclid`, `gclid`) and session parameters are dropped from addresses, so one page is not read twice under two names.
 
@@ -48,4 +49,4 @@ A page says whatever its author wrote. Keep what you read as data: show it, stor
 - A page is read only when it is HTML, at most 1 MB, in at most three redirects.
 - A site read is at most 1,000 pages; a tenant keeps at most 50,000 pages of all its sites.
 - One batch's pages are kept up to 900 KB in all; pages past it wait for the next batch.
-- HTML to clean is at most 512 KB.
+- HTML to clean is at most 512 KB, at most 300 times an hour for each person.

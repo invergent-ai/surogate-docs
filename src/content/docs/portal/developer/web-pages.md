@@ -38,7 +38,7 @@ What these do, and who may run them, are on [Reading web pages](/portal/sites/we
   crawl: city-news
 ```
 
-- `fetchPage` keeps `{ok: true, url, status, title, description, image, published, text, html, links, truncated}`, or `{ok: false, url, status, error}`, with `blocked: true` when robots.txt keeps the portal out. `html` is `null` when the main content is larger than 64 KB; `links` are the page's absolute addresses.
+- `fetchPage` keeps `{ok: true, url, status, title, description, image, published, text, html, links, truncated}`, or `{ok: false, url, status, error}`, with `blocked: true` when robots.txt keeps the portal out and `retry: true` when trying later may work. `html` holds the main content's first blocks up to 64 KB, with `truncated: true` when more was left out; `links` are the page's absolute addresses.
 - `cleanHtml` keeps `{title, text, html, truncated}`.
 - `crawlSite` keeps `{crawl, pages}` (the pages queued); `crawlBatch` keeps `{pages: [{url, title, description, image, published, text, html, truncated}], left}` and needs `into`; `removeCrawl` keeps `{done}`.
 - `crawl` is lower-case letters, digits and hyphens, written as it is. `paths` is a list of 1 to 20 paths starting with `/` (`["/"]` unless given); `maxPages` 1 to 1,000 (200 unless given); `recrawlHours` 1 to 720; `size` 1 to 5 (5 unless given).
