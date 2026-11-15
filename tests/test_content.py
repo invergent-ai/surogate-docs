@@ -491,6 +491,13 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/sites/payments/"', page('/portal/sites/actions/'))
         self.assertIn('id="a-stripe-connector"', page('/portal/developer/payments/'))
 
+    def test_portal_people_actions(self):
+        doc = page('/portal/sites/people-actions/')
+        for anchor in ('the-actions', 'who-may-do-what', 'limits'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/people-actions/"', page('/portal/sites/actions/'))
+        self.assertIn('id="load-checks"', page('/portal/developer/people-actions/'))
+
     def test_portal_security(self):
         doc = page('/portal/sites/security/')
         for anchor in ('make-an-rsa-key-pair', 'check-a-dkim-record'):
