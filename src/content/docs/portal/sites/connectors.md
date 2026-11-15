@@ -84,12 +84,23 @@ An action list can send a text message through Twilio or Clickatell, and post to
 - **Each hour:** a portal sends at most 200 text messages, 100 from one form or job and 5 to one number, and posts at most 100 Slack messages. Past these, none of the run's messages leave, and the run's log in the console says why.
 - Neither can be used in an [endpoint](/portal/sites/endpoints/).
 
+## Push notifications to a mobile app
+
+An action list can send a push notification to a mobile app's devices through Firebase Cloud Messaging or Pushwoosh, through a mobile app connector. In the console, it is the action **Send a push notification** in an action list: a form's [steps](/portal/console/forms/#steps), or a job's or a flow's actions. Developers: see [Developer: Connectors](/portal/developer/connectors/#a-push-notification).
+
+- **To:** the devices' push tokens, as your app gives them: Firebase's registration tokens, or Pushwoosh's device tokens. Your app keeps them; the portal does not know who uses which device.
+- **What it says:** a title of 1 to 100 characters and a text; together at most 3,500 bytes (about 1,700 Romanian letters). A link is an https address: your app decides what it opens.
+- **When they go:** as text messages do, only once the whole run ends well, then from a queue, tried again when the service is busy. A device Firebase says is gone is given up.
+- **How many:** a run sends to at most 100 devices, or 5 when nobody is signed in. Each hour, a portal sends at most 1,000 push notifications, 500 from one form or job and 10 to one device.
+- They cannot be used in an [endpoint](/portal/sites/endpoints/). These are the app's notifications, apart from the [notifications](/portal/sites/notifications/) people see on the portal and in their browsers.
+
 ## Messaging accounts
 
 - **Text messages:** a text message connector names Twilio or Clickatell and the sender: a number, a Twilio Messaging Service, or a Clickatell sender name. Set Twilio's auth token or Clickatell's API key under **Connectors**; **Test** reads the account without sending anything. A job can also [start for each message the number receives](/portal/sites/jobs/#when-a-text-message-arrives).
+- **A mobile app:** Firebase, with the project's id as Firebase's console shows it, or Pushwoosh, with the application's code, such as `ABCDE-12345`. Under **Connectors**, set Firebase's service account key (its JSON file, pasted whole; it must be the project's) or Pushwoosh's API access token. Give Firebase a service account of its own with only the Firebase Cloud Messaging role, not the Admin SDK's. **Test** asks Firebase to check a message without sending it; Pushwoosh has no such check, so it has no Test.
 - **Slack:** a Slack connector is a Slack incoming webhook. Create one in Slack for the channel, and paste its address, `https://hooks.slack.com/services/…`, under **Connectors**. It has no Test: a test would show in the channel.
 
-These are made in the console as connectors of the kinds **Text messages** and **A Slack channel**: see [Make or change a connector](/portal/console/connectors/#make-or-change-a-connector). Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-text-message-and-a-slack-post).
+These are made in the console as connectors of the kinds **Text messages**, **A Slack channel** and **A mobile app's push notifications**: see [Make or change a connector](/portal/console/connectors/#make-or-change-a-connector). Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-text-message-and-a-slack-post).
 
 ## Hashes, signatures and random values
 

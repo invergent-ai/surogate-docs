@@ -78,6 +78,7 @@ Extensions add more: the [document actions](/portal/developer/document-actions/)
 | `http` | Calls a service through a [connector](/portal/sites/connectors/#call-a-service) | `connector`, `method`, `path`, `query`, `headers`, `body`, `okStatus`, `into` |
 | `sendSms` | Sends a [text message](/portal/sites/connectors/#text-messages-and-slack) through Twilio or Clickatell once the run ends well | `connector`, `to`, `text` |
 | `slackMessage` | Posts to a [Slack channel](/portal/sites/connectors/#text-messages-and-slack) once the run ends well | `connector`, `text` |
+| `sendPush` | Sends a [push notification](/portal/sites/connectors/#push-notifications-to-a-mobile-app) to a mobile app's devices through Firebase or Pushwoosh once the run ends well | `connector`, `to`, `title`, `text`, `link` |
 | `email` | Sends an [email](/portal/sites/connectors/#email) once the run ends well, through the portal's mail server or [your own mail account](/portal/sites/connectors/#mail-accounts), with files | `to`, `subject`, `text`, `connector`, `attachments` |
 | `sendNotification` | Sends a [notification](/portal/sites/notifications/) to people of the portal once the run ends well | `to`, `title`, `body`, `link` |
 | `hash`, `hmac`, `randomToken`, `uuid` | [Hashes, signatures and random values](/portal/sites/connectors/#hashes-signatures-and-random-values) | |

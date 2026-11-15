@@ -484,6 +484,11 @@ class Content(unittest.TestCase):
             self.assertFalse((PORTAL / 'sites' / f'{name}.md').exists(), name)
             self.assertIn(f'/portal/developer/{name}/', page(f'/portal/sites/{name}/'), name)
 
+    def test_portal_mobile_push(self):
+        self.assertIn('id="push-notifications-to-a-mobile-app"', page('/portal/sites/connectors/'))
+        self.assertIn('id="a-push-notification"', page('/portal/developer/connectors/'))
+        self.assertIn('href="/portal/sites/connectors/#push-notifications-to-a-mobile-app"', page('/portal/sites/actions/'))
+
     def test_portal_sms_replies(self):
         self.assertIn('id="when-a-text-message-arrives"', page('/portal/sites/jobs/'))
         self.assertIn('id="when-a-text-message-arrives"', page('/portal/developer/jobs/'))
