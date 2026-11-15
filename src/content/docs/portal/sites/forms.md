@@ -128,7 +128,7 @@ The list shows only the records the person may see, and the record the form make
 
 An approved app can add field types and option lists ([Build an app](/portal/developer/build-an-app/#form-fields-and-options)). A form uses them like its other fields.
 
-The app's field is drawn by the app; its value is checked when the form is sent. A select's options come from the app as the person filling the form in. If the app does not answer, the form says it cannot be filled in right now. A form uses at most 10 such selects, and cannot be filled in offline. The console's builder keeps these parts when you edit the form, but does not offer them. For now, this is set in the site's configuration: see [Developer: Forms](/portal/developer/forms/#fields-from-an-app).
+The app's field is drawn by the app; its value is checked when the form is sent. A select's options come from the app as the person filling the form in. If the app does not answer, the form says it cannot be filled in right now. A form uses at most 10 such selects, and cannot be filled in offline. In the form builder, drag them from **From apps**: the approved apps' fields and option lists, each named with its app. Developers: see [Developer: Forms](/portal/developer/forms/#fields-from-an-app).
 
 ## After it is sent
 
