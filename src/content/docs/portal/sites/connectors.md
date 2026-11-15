@@ -67,6 +67,8 @@ An http connector can sign in as a Google Cloud **service account**, to call Goo
 - If Google refuses the key (revoked, a scope not delegated), the steps fail and say why, for a minute before the portal asks Google again; setting the key again, or a passing **Test**, asks at once.
 - A connector acting as a person is never called from a form anyone may send, or an endpoint anyone may call.
 
+To work with Drive files from steps without writing API calls, use a **Google Drive** connector and the [Google Drive actions](/portal/sites/google-drive/) instead.
+
 ## Email
 
 An action list sends an email. In the console, it is the action **Send an email** in an action list: a form's [steps](/portal/console/forms/#steps), or a job's or a flow's actions. Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#send-an-email-from-an-action-list).
