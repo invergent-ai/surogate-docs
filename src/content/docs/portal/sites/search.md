@@ -38,13 +38,13 @@ A person finds a page or an entry only when they may view it. Visitors find what
 
 In the [page editor](/portal/console/pages/#search), choose **Add a search box** in a part of the page. A page of its own, such as `/cautare`, works well, with a link to it in the site's layout.
 
-The box shows its results below it, with links to narrow them to pages or content, to one content type or one tag, and to the next page of results. It works without script. A page of results shows 10 results; a box can be set to show from 1 to 50. The page editor does not set that yet. For now, this is set in the site's configuration: see [Developer: Search](/portal/developer/search/#a-search-box-on-a-page).
+The box shows its results below it, with links to narrow them to pages or content, to one content type or one tag, and to the next page of results. It works without script. A page of results shows 10 results; a box can be set to show from 1 to 50: **Results on a page** in the box's block in the page editor. Developers: see [Developer: Search](/portal/developer/search/#a-search-box-on-a-page).
 
 When search is not available, the box says so; the rest of the page shows as usual.
 
 ## Documents in the DMS
 
-A search box can also show the documents of the [DMS](/portal/sites/documents/) that match, beside the site's own results. The page editor does not set that yet. For now, this is set in the site's configuration: see [Developer: Search](/portal/developer/search/#documents-of-the-dms-in-the-search-box).
+A search box can also show the documents of the [DMS](/portal/sites/documents/) that match, beside the site's own results. In the page editor, with a DMS connected, a search box's block sets **Also find the DMS's documents** and how many it shows: 1 to 10, or 5 when left empty. Developers: see [Developer: Search](/portal/developer/search/#documents-of-the-dms-in-the-search-box).
 
 - **What shows:** after the site's results, a section "In the DMS" lists up to five documents (a box can be set to show 1 to 10), each with its folder, state, version and up to two passages where the words match, and a link to all the results in the DMS.
 - **Who sees what:** the DMS searches as the person signed in, so they find only the documents they may read there, and the DMS records each search, naming the portal. Visitors see no DMS section.

@@ -28,7 +28,7 @@ A text box with a **Scan** button. **Scan** opens the camera, the back one first
 
 - The form can name which codes it reads, with **Codes it reads** in the form builder; when it names none, it reads all those a barcode draws, with ITF in place of ITF-14.
 - Without a camera, or when the person refuses it, the field says "There is no camera." and they can still type the code.
-- What it holds is text of at most 2,000 characters, checked like any text field: required, length and pattern. The form builder sets whether it is required; the other checks are not set in the console yet. For now, this is set in the site's configuration: see [Developer: Extension fields](/portal/developer/form-fields/#the-fields).
+- What it holds is text of at most 2,000 characters, checked like any text field: required, length and pattern. The form builder sets whether it is required, and its length and pattern on the field's **Limits** tab. Developers: see [Developer: Extension fields](/portal/developer/form-fields/#the-fields).
 - In a form shown on another site's page, the camera works only when that page allows it.
 
 ## An IBAN
@@ -38,7 +38,7 @@ A text box for a bank account. People may type spaces and lower case; the portal
 ![The IBAN field with a wrong digit: "Account to receive the money is not a valid IBAN."](../../../../assets/screenshots/portal-fields-iban-error.png)
 
 - It is checked in the browser and again by the portal: a country that uses IBANs, that country's length, and the check digits.
-- The form can limit it to some countries, such as Romania only: **Countries** in the form builder.
+- The form can limit it to some countries, such as Romania only: **Countries** in the form builder. Its **Limits** tab can also set a length and a pattern.
 - A field hidden by its condition is not checked.
 
 ## A signature
@@ -46,7 +46,7 @@ A text box for a bank account. People may type spaces and lower case; the portal
 A pad to sign on with a finger, a pen or the mouse. What is kept is the signature's image.
 
 - Under the pad is the form's own text, or "Sign above" in the page's language. In the form builder, it is **Text under the pad**; it is translated like a label.
-- The pad is as wide as the form, or as the form says, up to 2,000 by 1,000 pixels. The form can also set the colour of the pen and of the pad's background. The form builder does not set the size or the colours yet. For now, this is set in the site's configuration: see [Developer: Extension fields](/portal/developer/form-fields/#the-fields).
+- The pad is as wide as the form, or as the form says, up to 2,000 by 1,000 pixels. The form can also set the colour of the pen and of the pad's background. The form builder sets them on the field's **Limits** tab: a size as `100%` or `150px`, a colour as `#1a2b3c`, a colour's name or `rgb(…)`. Developers: see [Developer: Extension fields](/portal/developer/form-fields/#the-fields).
 - A signature is at most 90 KB, so a form holds two.
 - A required signature left empty says the field is required.
 
@@ -60,4 +60,4 @@ The CSV export and the reviewers' email say `signed` instead of the image.
 
 ## Save a signature as a file
 
-A form's actions can save the signature as a PNG in one of the portal's [folders](/portal/console/files/). A [document action](/portal/sites/document-actions/) can put it in a PDF, as an image whose source is the signature. The form builder does not set actions yet. For now, this is set in the site's configuration: see [Developer: Extension fields](/portal/developer/form-fields/#a-signature-saved-as-a-file).
+A form's actions can save the signature as a PNG in one of the portal's [folders](/portal/console/files/). A [document action](/portal/sites/document-actions/) can put it in a PDF, as an image whose source is the signature. The form editor's [**Steps**](/portal/console/forms/#steps) tab sets these actions. Developers: see [Developer: Extension fields](/portal/developer/form-fields/#a-signature-saved-as-a-file).
