@@ -502,6 +502,16 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/sites/people-actions/"', page('/portal/sites/actions/'))
         self.assertIn('id="load-checks"', page('/portal/developer/people-actions/'))
 
+    def test_portal_microsoft_365(self):
+        doc = page('/portal/sites/microsoft-365/')
+        for anchor in ('connect-microsoft-365', 'the-actions', 'who-may-do-what', 'limits'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/microsoft-365/"', page('/portal/sites/actions/'))
+        self.assertIn('href="/portal/sites/microsoft-365/"', page('/portal/sites/connectors/'))
+        dev = page('/portal/developer/microsoft-365/')
+        for anchor in ('the-connector', 'the-actions', 'load-checks'):
+            self.assertIn(f'id="{anchor}"', dev)
+
     def test_portal_google_drive(self):
         doc = page('/portal/sites/google-drive/')
         for anchor in ('connect-google-drive', 'the-actions', 'who-may-do-what', 'limits'):

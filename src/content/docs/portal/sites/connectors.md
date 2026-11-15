@@ -67,7 +67,7 @@ An http connector can sign in as a Google Cloud **service account**, to call Goo
 - If Google refuses the key (revoked, a scope not delegated), the steps fail and say why, for a minute before the portal asks Google again; setting the key again, or a passing **Test**, asks at once.
 - A connector acting as a person is never called from a form anyone may send, or an endpoint anyone may call.
 
-To work with Drive files from steps without writing API calls, use a **Google Drive** connector and the [Google Drive actions](/portal/sites/google-drive/) instead.
+To work with Drive files from steps without writing API calls, use a **Google Drive** connector and the [Google Drive actions](/portal/sites/google-drive/) instead. Files in OneDrive and SharePoint have their own connector too: see [Files in OneDrive and SharePoint](/portal/sites/microsoft-365/).
 
 ## Email
 
