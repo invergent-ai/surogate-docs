@@ -64,7 +64,8 @@ An http connector can sign in as a Google Cloud **service account**, to call Goo
 
 - The connector's address is on `googleapis.com`, so the token goes only to Google. Services that ask for an identity token, such as Cloud Run or Cloud Functions, are not called this way.
 - Changing the scopes or the person it acts as asks for the key again.
-- If Google refuses the key (revoked, a scope not delegated), the steps fail and say why, for a minute before the portal asks Google again.
+- If Google refuses the key (revoked, a scope not delegated), the steps fail and say why, for a minute before the portal asks Google again; setting the key again, or a passing **Test**, asks at once.
+- A connector acting as a person is never called from a form anyone may send, or an endpoint anyone may call.
 
 ## Email
 
