@@ -46,7 +46,7 @@ Whole numbers are integers, the others decimals; the two mix in arithmetic, so a
 
 ## The actions
 
-Extensions add more: the [document actions](/portal/sites/document-actions/) make and read PDF, Word, Excel and CSV files and barcode images, and the [file management actions](/portal/sites/file-management/) copy, move and rename files and make and unpack ZIP archives.
+Extensions add more: the [document actions](/portal/sites/document-actions/) make and read PDF, Word, Excel and CSV files and barcode images, the [file management actions](/portal/sites/file-management/) copy, move and rename files and make and unpack ZIP archives, and the [payments](/portal/sites/payments/) take payments through Stripe.
 
 - Work out values, and keep them for later actions.
 - Run actions together: an error handler of the group catches theirs.
