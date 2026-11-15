@@ -28,7 +28,7 @@ A text box with a **Scan** button. **Scan** opens the camera, the back one first
 
 - The form can name which codes it reads, with **Codes it reads** in the form builder; when it names none, it reads all those a barcode draws, with ITF in place of ITF-14.
 - Without a camera, or when the person refuses it, the field says "There is no camera." and they can still type the code.
-- What it holds is text of at most 2,000 characters, checked like any text field: required, length and pattern. The form builder sets whether it is required. Its length and pattern are for developers: see [Developer: Extension fields](/portal/developer/form-fields/#the-fields).
+- What it holds is text of at most 2,000 characters, checked like any text field: required, length and pattern. The form builder sets whether it is required, and its length and pattern on the field's **Limits** tab. Developers: see [Developer: Extension fields](/portal/developer/form-fields/#the-fields).
 - In a form shown on another site's page, the camera works only when that page allows it.
 
 ## An IBAN
@@ -38,7 +38,7 @@ A text box for a bank account. People may type spaces and lower case; the portal
 ![The IBAN field with a wrong digit: "Account to receive the money is not a valid IBAN."](../../../../assets/screenshots/portal-fields-iban-error.png)
 
 - It is checked in the browser and again by the portal: a country that uses IBANs, that country's length, and the check digits.
-- The form can limit it to some countries, such as Romania only: **Countries** in the form builder.
+- The form can limit it to some countries, such as Romania only: **Countries** in the form builder. Its **Limits** tab can also set a length and a pattern.
 - A field hidden by its condition is not checked.
 
 ## A signature

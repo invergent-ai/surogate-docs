@@ -92,7 +92,9 @@ In a page's file (`sites/<site>/pages/<page>.yaml`):
 
 ## What the portal checks
 
-Lengths and number limits are set under a component's `validate`: `minLength`, `maxLength`, `min` and `max`. `required: true` makes a field required.
+Lengths and number limits are set under a component's `validate`: `minLength`, `maxLength`, `minWords`, `maxWords`, `min` and `max`. `required: true` makes a field required.
+
+`pattern` is a regular expression the whole value must match. The portal checks it in time linear in the value, so it takes no back references (`\1`) and no lookarounds (`(?=…)`, `(?!…)`, `(?<=…)`, `(?<!…)`): a field whose pattern has them refuses every value it is sent. The console says so before it saves.
 
 ## Come back to a form
 

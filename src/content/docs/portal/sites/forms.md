@@ -82,7 +82,7 @@ The browser checks the form as it is filled in. The portal checks it again when 
 
 Fields the form does not have are dropped. A form that does not pass is not kept, and the person is told to check it. What they typed stays.
 
-The form builder sets whether a field is required, and on a field's **Limits** tab: the least and most characters of a text, the least and most words of a long text, the least and most of a number, and a pattern the whole value must match (a regular expression of at most 200 characters; group alternatives, such as `(RO|MD)[0-9]+`). Limits no value could pass, such as a least over its most, or a pattern that is no expression, are said before you save. Developers: see [Developer: Forms](/portal/developer/forms/#what-the-portal-checks).
+The form builder sets whether a field is required, and on a field's **Limits** tab: the least and most characters of a text, the least and most words of a long text, the least and most of a number, and a pattern the whole value must match (a regular expression of at most 200 characters, with no back references or lookarounds; group alternatives, such as `(RO|MD)[0-9]+`). Limits no value could pass, such as a least over its most, or a pattern that is no expression, are said before you save. Developers: see [Developer: Forms](/portal/developer/forms/#what-the-portal-checks).
 
 A visitor sends at most ten forms a minute from one address. A form filled in by a robot is thanked and not kept.
 
