@@ -29,11 +29,11 @@ For each app:
 1. Press **Add an app**.
 2. Give it an **Id**: lower-case letters, digits and hyphens, starting with a letter. It cannot be changed later, and `portal` is the portal's own.
 3. Give it a **Name**, and its **Manifest address**: where the app serves its manifest, an `http:` or `https:` address with no user name or password. The manifest's id must be the app's id.
-4. Say what it does with **A person's data**: **It keeps no personal data**, or **It exports and erases at an address**, with that address and how long to wait (1,000 to 60,000 milliseconds; 10,000 when left empty). When an administrator [exports or erases a person](/portal/console/users/), the portal asks every app.
+4. Say what it does with **A person's data**: **It keeps no personal data**, or **It exports and erases at an address**, with that address and how long to wait (1,000 to 60,000 milliseconds; 10,000 when left empty). An address on a private network is asked only when the install allows it, or when it is on the server this app was approved from. When an administrator [exports or erases a person](/portal/console/users/), the portal asks every app.
 5. When the app has a backend of its own that it calls as the person signed in, tick **It has a backend of its own** and give its **Audience**, its **Scopes** (one per line) and the **Token lifetime** (60 to 3,600 seconds; 300 when left empty).
 6. Press **Save**. The portal reads the manifest: when it cannot reach it, or the manifest is wrong, nothing is saved and the address says why. Another app the portal cannot reach also keeps the save from going through, and is listed above the form.
 
-A new app waits for approval. **Edit** on its card opens it again. Moving the manifest to another server makes the app wait for approval again, and its [connectors](/portal/console/connectors/) need their credentials set again: the editor says so before you save.
+A new app waits for approval. **Edit** on its card opens it again. Moving the manifest to another server starts the app over: it waits for approval again, its event wires go, API clients no longer act as it until given it again, and its [connectors](/portal/console/connectors/) need their credentials set again. The editor says so before you save.
 
 An app whose settings have a problem, or whose manifest could not be read, shows as **Not running**, with **Edit** to see why. An app that says nothing about a person's data makes exporting or erasing anyone fail for the whole portal: the editor says so.
 
