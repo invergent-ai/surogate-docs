@@ -500,7 +500,7 @@ class Content(unittest.TestCase):
 
     def test_portal_small_console_gaps(self):
         # The blog mark, field limits, signature looks and the search box are set in the console.
-        for path in ('sites/content-types.md', 'sites/blogs.md', 'sites/form-fields.md', 'sites/search.md'):
+        for path in ('sites/content-types.md', 'sites/blogs.md', 'sites/forms.md', 'sites/form-fields.md', 'sites/search.md'):
             self.assertNotIn('For now', (ROOT / 'src/content/docs/portal' / path).read_text(), path)
         self.assertIn('**Limits**', (ROOT / 'src/content/docs/portal/sites/forms.md').read_text())
         self.assertIn('**Results on a page**', (ROOT / 'src/content/docs/portal/sites/search.md').read_text())
