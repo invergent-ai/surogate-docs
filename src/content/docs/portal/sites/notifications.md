@@ -30,7 +30,7 @@ On [Pages](/portal/console/pages/#the-portals-widgets), add **Notifications** wi
 
 A [form](/portal/sites/forms/) or a [job](/portal/sites/jobs/) sends a notification. It says whom it goes to, a title of up to 200 characters, and a page of the portal to open. It may also have some words, up to 2,000 characters. The link is a page of the portal, such as a request's page: a link to another site is refused when the site is checked, and left off when the notification is made as the run goes. Like an email a form sends, a notification goes out once the run ends well: a run that fails tells no one.
 
-The console has no screen for this yet. For now, this is set in the site's configuration: see [Developer: Notifications](/portal/developer/notifications/#a-forms-message-to-the-clerks).
+In the console, add a **Send a notification** step to a form's [**Steps**](/portal/console/forms/#steps) or to a [job](/portal/sites/jobs/). Developers: see [Developer: Notifications](/portal/developer/notifications/#a-forms-message-to-the-clerks).
 
 Whom it goes to: people of the portal, by their id or their email, and groups. Names that are no one of the portal's (another portal's people, service accounts, people disabled, unknown emails) are passed by, saying nothing. A notification reaches at most 100 people; past that, the rest are left out.
 
