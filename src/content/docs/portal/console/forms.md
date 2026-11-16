@@ -13,7 +13,7 @@ Under the form's name is its own address, `/_portal/forms/<id>`, on each site th
 
 ## Read a submission
 
-**Open** shows each answer under its field's label, in your language. When the form asks for consent, **Agreed to** shows the text the person agreed to. Ticked boxes and several choices are listed together; a checkbox reads Yes or No; a field left empty shows a dash.
+**Open** shows each answer under its field's label, in your language. When the form asks for consent, **Agreed to** shows the text the person agreed to. Ticked boxes and several choices are listed together; a checkbox reads Yes or No; a field left empty shows a dash. A [formatted text](/portal/sites/form-field-types/#where-people-read-it) shows with the formatting it was written with, and in the list only as its text. A [password](/portal/sites/form-field-types/#where-the-password-goes) is never shown: the form's password field has no row and no column in the export.
 
 ## Report
 
