@@ -10,15 +10,27 @@ Type part of a name or an email in **Search by name or email**. The list follows
 
 ![The Users page: the search field and the list of users, each with their email.](../../../../assets/screenshots/portal-users.png)
 
-The list shows 50 users at a time. Use **Previous** and **Next** to move between pages. A disabled account carries the label **Disabled**.
+The list shows 50 users at a time. Use **Previous** and **Next** to move between pages. A disabled account carries the label **Disabled**, an account waiting for its link **Unconfirmed**, and one locked out by wrong tries **Locked until** a time. Tick **Unconfirmed** or **Locked now** to list only those.
+
+![The Users page with the Locked now and Unconfirmed filters, and the labels on the people they find.](../../../../assets/screenshots/portal-auth-users-filters.png)
 
 ## Add a user
 
 1. Press **New user**.
 2. Type their **Email** and **Name**. They sign in with this email.
-3. **Password (optional)**: at least 12 characters. Leave it empty for someone who signs in with your organisation's account.
+3. Choose **How they sign in**:
+   - **A local account** (the first choice): the portal emails them an activation link, and they choose their own password on its page. You never type or see it.
+   - **An account at a sign-in provider**, **an account in a directory** or **a client certificate**: choose the source and type the person's id there (for a certificate, its issuer and serial number). The other side vouches for the address, so the account is active at once and no mail is sent.
 4. Fill in the portal's own fields, if it has any (a badge number, a department, a phone). Fields marked **Required** must be filled in. A tick box left alone counts as unticked.
 5. Press **Create user**.
+
+![The New user window: Email, Name, how they sign in, and the portal's own fields.](../../../../assets/screenshots/portal-auth-user-new.png)
+
+A local account starts **Unconfirmed**: it has no password and cannot sign in, and its tokens do not work, until its owner proves the address is theirs by opening the link. The link works once, for the days set in the [sign-in policy](/portal/console/sign-in-policy/#passwords-and-sessions) (3 at first), and its page asks for a password that keeps the [password rules](/portal/console/sign-in-policy/#password-rules).
+
+![The page of the activation link: Choose a password for the address, the rules, and Activate account.](../../../../assets/screenshots/portal-auth-activate.png)
+
+When the portal sends no email, a local account cannot be verified, so the console refuses it: **The portal does not send email, so a local account cannot be verified. Link the account to a directory or a sign-in provider.** Linked accounts can still be made.
 
 If the email is already used, the console says **A user with this email already exists.**
 
@@ -50,9 +62,25 @@ A portal always keeps at least one active administrator. Removing the role from 
 
 ### Password
 
-Type a **New password** of at least 12 characters and press **Set password**. The person's other sessions end: they sign in again with the new password. Their tokens keep working. A new password also lets in someone the console locked out after too many wrong passwords.
+Type a **New password** and press **Set password**. It must keep the [password rules](/portal/console/sign-in-policy/#password-rules): the list under the field ticks off what it has so far. The person's other sessions end: they sign in again with the new password. Their tokens keep working. A new password also lets in someone the console locked out after too many wrong passwords, starts its term again, and counts among the passwords they may not reuse. Setting a password asks you to [confirm it is you](/portal/console/sign-in-policy/#confirming-it-is-you-again) when you signed in a while ago.
 
 When you set your own password here, you stay signed in on this browser.
+
+### Email address
+
+The **Email address** card is for local accounts. Type a **New address** and press **Send the confirmation link**: the link goes to the new address, and until its owner opens it the old address stays in force and the person keeps signing in with it. The card says **New email waiting for confirmation** while one is waiting; a newer request replaces it. The change is in the audit log when it is asked and when it is confirmed.
+
+### An account waiting to be activated
+
+An **Unconfirmed** person has **Resend the activation link** at the top of their page. The new link ends the earlier one, and a new one can be sent once an hour at most. When the person says they never got the link, check the address you typed. An unconfirmed account never counts as an active administrator, so the portal still keeps at least one active administrator.
+
+![An unconfirmed person's page: the Unconfirmed label, Resend the activation link, and the Email address card.](../../../../assets/screenshots/portal-auth-user-unconfirmed.png)
+
+An account that was disabled before its owner ever opened the link waits for the link again when you enable it.
+
+### Locked out
+
+A person locked out by too many wrong passwords shows **Locked until** a time. Press **Unlock** at the top of their page to let them in at once; the lock would end by itself at that time. See [Wrong tries](/portal/console/sign-in-policy/#wrong-tries).
 
 ### Disable and enable
 
