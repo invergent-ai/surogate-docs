@@ -341,7 +341,7 @@ In the form builder, drag **Files** onto the form and click it. Its dialog asks 
 - **Several files**: tick it to take more than one file. **Most files** then asks how many, from 1 to 20. A field for one file takes one.
 - **Allowed extensions**: tick at least one of pdf, doc, docx, xls, xlsx, odt, ods, csv, txt, jpg, jpeg, png and zip. Files that run, such as exe, js or html, are never offered and never allowed.
 - **Largest file, in KB**: from 1 KB to 25,600 KB (25 MB). The default, 10,240 KB, is 10 MB.
-- **Files with the same name**: what happens when a person adds a file whose name is one already there. **Rename the new one** keeps both (`report.pdf`, then `report (1).pdf`). **Replace the first** keeps the new one only. **Refuse the new one** says "A file named report.pdf is already there". Names that differ only in capitals count as the same.
+- **Files with the same name**: what happens when a person adds a file whose name is one already there. **Rename the new one** keeps both (`report.pdf`, then `report (1).pdf`). **Replace the first** keeps the new one only. **Refuse the new one** says "A file named report.pdf is already there." Names that differ only in capitals count as the same.
 - **Required**, and the **Key** its answer is kept under.
 
 ![The dialog of a Files field in the form builder: Several files ticked, Most files 3, the extensions pdf, jpg and png ticked, Largest file 5120 KB and Files with the same name set to Rename the new one.](../../../../assets/screenshots/portal-fields-files-builder.png)
@@ -362,13 +362,13 @@ The form cannot be sent while a file is still going up ("Wait for the files to f
 
 A refused file says why, beside its own row:
 
-![Three files added: deed.pdf and id-card.png are Uploaded; scan.pdf is refused with "The file's content does not match the extension .pdf".](../../../../assets/screenshots/portal-fields-files-page.png)
+![Three files added: deed.pdf and id-card.png are Uploaded; scan.pdf is refused with "The file's content does not match the extension .pdf.".](../../../../assets/screenshots/portal-fields-files-page.png)
 
 - "This extension is not allowed. Accepted: pdf, jpg, png."
-- "The file's content does not match the extension .pdf": the portal reads the start of the file, and it must be what its extension says: a PDF, a JPEG or PNG image, an Office or OpenDocument file without macros, a ZIP, or plain text for csv and txt. Renaming a file does not get it through.
-- "The file is larger than 5 MB", "The file is empty." and "The file has no valid name."
+- "The file's content does not match the extension .pdf.": the portal reads the start of the file, and it must be what its extension says: a PDF, a JPEG or PNG image, an Office or OpenDocument file without macros, a ZIP, or plain text for csv and txt. Renaming a file does not get it through.
+- "The file is larger than 5 MB.", "The file is empty." and "The file has no valid name."
 - "No more than 3 files can be added."
-- "A file named deed.pdf is already there": only when the field is set to **Refuse the new one**.
+- "A file named deed.pdf is already there.": only when the field is set to **Refuse the new one**.
 - "Too many files sent from this address. Try again in a minute." A visitor may send 30 files a minute through one form.
 - "Too many files are waiting to be sent. Send the form or remove some." A person may have 100 files waiting, and the visitors of one form 200 between them.
 - "The file could not be uploaded. Try again." and "Files cannot be uploaded right now."
