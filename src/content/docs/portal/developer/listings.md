@@ -25,9 +25,11 @@ regions:
 ```
 
 - `model`: the model whose records it shows.
-- `columns`: the fields shown, at most 8; links are not shown in columns. Left out, the title and up to 3 more fields.
+- `columns`: the fields shown, at most 20; a link shows the title of the record it points at. Left out, the title and the first fields.
 - `filters`: filterable fields to filter on, by exact value: text, numbers, dates, yes or no.
 - `add`, `edit`, `delete`: whether the listing offers them. The model's [permissions](/portal/sites/data-models/#who-may-do-what) still decide who may.
+
+A listing can also show a data source, sort, filter, group and export. Those preferences, and `source`, are in [Developer: Data sources](/portal/developer/data-sources/#a-listing-over-a-model-or-a-source).
 
 ## A model's own page
 

@@ -25,7 +25,8 @@ A connector is one of these kinds:
 
 - an http connector is a service the portal calls;
 - a secret connector is a key the portal signs with, which makes no calls;
-- a mailbox connector is a mail address a [job](/portal/sites/jobs/#when-mail-arrives) reads (see [Mailboxes](#mailboxes)).
+- a mailbox connector is a mail address a [job](/portal/sites/jobs/#when-mail-arrives) reads (see [Mailboxes](#mailboxes));
+- a SQL database connector is a database that [data sources](/portal/sites/data-sources/) read and [database actions](/portal/sites/database-actions/) run statements on (see [SQL databases](#sql-databases)).
 
 Connectors are made, changed and given their credentials in the console: see [Connectors](/portal/console/connectors/#make-or-change-a-connector). Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-connectors-file).
 
@@ -134,6 +135,33 @@ A mailbox connector lets a [job](/portal/sites/jobs/#when-mail-arrives) read the
 - **Test:** **Test** signs in and opens the folder.
 
 The portal only reads. It never marks, moves or deletes a message, so keep the mailbox tidy yourself, and read each mailbox with one job. A POP3 mailbox of more than 10,000 messages is not read.
+
+## SQL databases
+
+A SQL database connector names a database of your own: PostgreSQL, Microsoft SQL Server, MySQL or MariaDB, or Oracle. A [data source](/portal/sites/data-sources/) reads its tables for [listings](/portal/sites/listings/), [field options](/portal/sites/forms/#options-from-a-model-a-data-source-or-a-web-service) and [models](/portal/sites/data-models/#a-model-read-from-a-data-source), and the [database actions](/portal/sites/database-actions/) run statements on it. It is made in the console as a connector of the kind **A SQL database**: see [Make or change a connector](/portal/console/connectors/#make-or-change-a-connector). Developers can also write it in the site's configuration: see [Developer: Connectors](/portal/developer/connectors/#a-sql-databases-file).
+
+![The connector siui in the editor: its name in each language, its kind A SQL database, the engine PostgreSQL, the server, its port and the database siui_demo.](../../../../assets/screenshots/portal-data-connector-sql.png)
+
+- **What it asks:** the engine, the server and its port (the engine's usual port when left empty), the database (for Oracle, the service name), a default schema, and how the connection is secured.
+- **Security:** the connection is encrypted (TLS) unless you say **none**, which is for a server on your own private network. A server whose certificate your own authority signed needs its **CA certificate**, pasted whole as PEM text.
+- **Allow changes:** off by default. With it off, the connector only reads. With it on, [database actions](/portal/sites/database-actions/#changing-data) and a source's add and remove queries may change data.
+- **Most rows a query reads:** 1 to 10,000, and 1,000 when left empty. A query that asks for fewer reads fewer.
+- **Credentials:** a user name and a password, set under **Connectors**. They are kept sealed, and never shown again. Give the account only the rights the sources and actions need: a source that only reads needs an account that only reads.
+- **Test:** **Test** connects, asks the database a trivial question, and says how long it took.
+- **Tables:** **Tables** lists the tables and views the account can read, with the type of each column, so that you can write a query without leaving the portal. The account itself is never shown.
+
+![The dialog Tables and views: public.operatori and public.unitati, each with its columns and their types.](../../../../assets/screenshots/portal-data-connector-tables.png)
+
+What keeps a database safe:
+
+- A statement is one statement. A read is a SELECT, and nothing else; it holds no lock. A change is an INSERT, UPDATE, DELETE, MERGE or CALL. Schema changes, grants, transactions, the database's own procedures and anything that reaches outside the database are never run.
+- Values are never written into the text of a statement. They go to the database apart from it.
+- A read runs inside a read-only transaction. A database is asked for at most 5 statements at once.
+- A server's name is looked up once, and the portal connects to that address. A name that leads to an address on a private network is refused, unless the portal is installed to reach private networks, as for other connectors.
+- A query waits at most as long as the connector's time limit: 10 seconds when none is set, and at most 60.
+- A database that does not answer is said in a fixed sentence, such as "The database server could not be reached." The database's own words are shown only to administrators, in a job's log.
+
+A data source reads as the portal, never as each person, so a connector that signs in as each person is not used for one.
 
 ## Buckets
 
