@@ -81,6 +81,10 @@ The **Sessions** card lists where the person is signed in now, with the browser,
 
 If the person lost their phone, press **Reset two-step sign-in** and confirm. Their authenticator app, passkeys and recovery codes are removed. They sign in with their password and set up a new one, within 7 days.
 
+### Profile
+
+**Show the profile** lists the segments the person is in (or may be, when a segment turns on the page or the device) and the pages they visited in the last 30 days, on sites that remember them. Each look is kept in the audit log. See [Personalization](/portal/sites/personalization/#remembered-pages).
+
 ## People from a directory or an identity system
 
 A user who comes from a [directory](/portal/console/directories/) or from [SCIM](/portal/console/scim/) carries its name in the list. On their page:

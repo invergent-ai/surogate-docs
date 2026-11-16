@@ -29,6 +29,10 @@ Under **Notifications in this browser**, press **Turn on** to have the portal's 
 - A browser that got no notification for 60 days, and where you did not sign in again, is turned off.
 - When the portal sends no notifications to browsers, or this browser cannot show them, or you blocked them in its settings, the card says so. To unblock them, allow notifications for the portal's address in the browser's settings. On iPhone and iPad, browsers show the portal's notifications only for a site added to the Home Screen, so the card says this browser cannot show them.
 
+## Pages you visited
+
+Shown when a site of the portal remembers the pages signed-in people visit (see [Remembered pages](/portal/sites/personalization/#remembered-pages)). It lists the pages kept of the last 30 days. **Clear** removes them. Turning off **Let sites remember the pages I visit** stops it and removes what was kept.
+
 ## Two-step sign-in
 
 After your password, the portal can ask for a second step: a code from an app on your phone, or a passkey.
