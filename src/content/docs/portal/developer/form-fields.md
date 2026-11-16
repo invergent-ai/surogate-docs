@@ -131,7 +131,7 @@ The value is a text of markup. The server cuts it down with `sanitize-html` and 
 
 `p` and `br` are always kept. `class` is the only attribute, and only these classes. A script, a style, an event attribute, a link, an image, a frame, a table and every other tag are taken out and their text stays (the text of `script` and `style` goes too). A `span` without a size and an `li` outside a list are taken out. Markup of a button the field does not offer is taken out the same way, whoever sent it.
 
-Every scan is a single pass, and more than 262,144 characters of markup is refused as `max_length`.
+Every scan is a single pass. More than 262,144 characters of markup is refused as `max_length`, and tags nested more than 128 levels deep are refused as `type`.
 
 ### The check
 
