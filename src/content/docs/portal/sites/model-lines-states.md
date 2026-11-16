@@ -19,6 +19,8 @@ To set it up:
 
 ![The Lines tab of the report: its lines are the records of the model of lines, one for each active waste code, in the order of the codes.](../../../../assets/screenshots/portal-model-logic-lines.png)
 
+A person who may change only their own reports can add, change and remove the lines of their own reports, and of no one else's. A line's history and its archive are its header's: whoever may see the history of the header sees the history of its lines, and a header archived with its lines brings all of them back when it is restored. A line that was removed by itself before stays removed.
+
 A header's calculations can read its lines (`sum(lines.map(l, l.cant_g))`) and a line's calculations and rules can read their header (`parent.luna`). Writing one line works out the header again in the same go. The header and all its lines are saved together or not at all: when one line is refused, nothing is written, and each problem names the line and the field.
 
 Over the API, a header is sent with its lines in one call. See [Developer: Data models](/portal/developer/data-models/#logic-in-a-models-file).
@@ -35,7 +37,7 @@ A field can take its value from another record when the record is opened or save
 
 ![A field that takes last month's closing stock: the model, how the records match, the field taken and what is said when there is none.](../../../../assets/screenshots/portal-model-logic-prefill.png)
 
-A value taken from another record cannot be changed by the people who write the record. A person named in **Who may change it** can write over it: the value they wrote is kept, the flag says so, and later changes to last month no longer replace it. Writing the value taken again puts the field back to following its source. Once a record is checked, its value no longer follows: last month's change leaves it as it was.
+A value taken from another record cannot be changed by the people who write the record, in any state, and also when there is no record to take it from. A person named in **Who may change it** can write over it: the value they wrote is kept, the flag says so, and later changes to last month no longer replace it. Writing the value taken again puts the field back to following its source. Once a record is checked, its value no longer follows: last month's change leaves it as it was. The record is told of it, though. When last month changes after this month was submitted, the portal works the submitted record out again at once and adds a warning to its count of problems (where the model keeps one), which says that the value is not what last month now holds. The value itself stays as it was submitted.
 
 ## States and moves
 
@@ -50,6 +52,8 @@ A record can go through **states**: a draft, submitted, accepted, to be correcte
 Entering a checked state is submitting. The portal then applies every check that was set to count when the record is submitted, and the required fields of that kind. When one fails, the move is refused with the whole list of problems, and the record stays where it was. A draft that lacks them can still be saved.
 
 A move can be made together with changes: **Submit** saves the values and moves the record in one go, or neither. The state cannot be written any other way. The lock counts for moves too: after it holds, only the people it lets through can move a record.
+
+Going back to an older version of a record, and bringing an archived record back, are changes like any other: the lock and the state count. A record that was submitted cannot be taken back to its draft by going back to an old version, because only a move changes its state. What the portal works out itself, such as the calculated fields and the state, is not taken from the old version, and a record is brought back from the archive only where a delete would have been allowed.
 
 Every move is kept in a **log**: who made it, when, from which state to which, and the comment. Where the model also keeps the history of its records, each of these writes makes a version (a header's with its lines), a delete archives the record and its lines, and the version a move into a checked state makes is sealed, so it can no longer change.
 
@@ -69,9 +73,11 @@ with **Calculate only when** holding what must be true first, for example that a
 
 ![A yearly average worked out over the twelve reports of the unit's year, only once all twelve are submitted.](../../../../assets/screenshots/portal-model-logic-rollup.png)
 
-Such a field is worked out again, by the portal, whenever one of the records it reads is written, deleted, or moves to another state: when a month goes back to be corrected, the yearly figure is emptied, and it returns when the month is submitted again. The portal writes these fields even on records that are checked or locked.
+Such a field is worked out again, by the portal, whenever one of the records it reads is written, deleted, or moves to another state: when a month goes back to be corrected, the yearly figure is emptied, and it returns when the month is submitted again. Deleting a report also tells the figures that added up its lines. The portal writes these fields even on records that are checked or locked, but on a record that was checked it writes only these figures and the fields worked out from them. The rest of a submitted record stays as it was submitted.
 
-Changing a list of thresholds changes no figure by itself. **Recalculate** in the model editor works all of them out again, for every record or for those with one value in a field.
+One change works out only so many other records at once. When it reaches more, the rest wait for **Recalculate**, and the [Log tab](/portal/sites/model-logic/#the-log-of-a-model) says that some were left.
+
+Changing a list of thresholds changes no figure by itself. **Recalculate** in the model editor works all of them out again, for every record or for those with one value in a field. It goes a thousand records at a time until none is left, and tells how many it worked out and how many it could not. Those it could not are in the Log tab.
 
 ![The Recalculate section of the model editor: a field and a value to limit it, and the button.](../../../../assets/screenshots/portal-model-logic-recalculate.png)
 

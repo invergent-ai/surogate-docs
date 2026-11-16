@@ -16,6 +16,8 @@ A [data model](/portal/sites/data-models/) can do more than hold values. It can 
 
 Lists and the detail of a record write the number as the field says: with a point, with a comma, or, by default, as the page's language does (a comma on a Romanian page), with a separator of thousands if you ticked it. Only a point is read as the decimal separator when a number is typed. A pasted `12,5` is refused instead of guessed at, because `1,234` could be a thousand or one and a bit.
 
+A number sent from a program as a number, with more than fifteen digits, is refused: a program rounds such a number before it arrives. Send it as text, such as `"0.1234567890123456"`, and it is kept exactly.
+
 The older **Number** and **Amount** types stay as they are.
 
 ## The behaviour area of a field
@@ -91,6 +93,14 @@ The calculated fields show on each record, read-only, in the dialog and on the d
 
 ![The list of reports with the occupancy, a calculated column, and each report's state.](../../../../assets/screenshots/portal-model-logic-listing.png)
 
+## The log of a model
+
+When an expression cannot be worked out, the person saving sees no error: the field stays empty, or the check says it could not be evaluated. The reason is kept in the **Log** tab of the model, for administrators. It lists, newest first, the time, the record, the field or the rule, the line when it was a line, and what happened: a division by zero, a lock that could not be worked out, a recalculation that was cut short. A record that was being made is named once it exists.
+
+![The Log tab of a model: four records whose calculated field divides by the number of occupied beds, which is zero, with the time and the record of each.](../../../../assets/screenshots/portal-model-logic-log.png)
+
+A form asking what a save would do writes nothing to the log. The log keeps the newest entries of the portal, and none older than thirty days. The Log tab is not there for a model that is not saved yet.
+
 ## A lock on records
 
 The **Lock** tab says when a record may no longer be changed, and for whom. **A record may be changed when** is a condition over the record, the person (`user`) and the time (`now`):
@@ -119,7 +129,7 @@ Expressions are the same everywhere in the portal's logic, and are checked as yo
 | Rounding | `round(x, 2)` rounds half away from zero; `floor`, `ceil`, `trunc`, `abs` |
 | Days | `daysInMonth(2028, 2)` is 29; `daysInYear(2028)` is 366 |
 | Lists | `sum`, `avg`, `min`, `max`, `count`, `first`; empty values are left out |
-| Other records | `records.one("model", {"field": value})`, `records.list(…)`, `records.count(…)` |
+| Other records | `records.one("model", {"field": value})`, `records.list(…)`, `records.count(…)`; an empty value finds none, and a list of more than 5,000 records cannot be taken in one calculation |
 | Intervals | `between(x, least, leastIncluded, most, mostIncluded)`; a missing end is open |
 
 Text, lists and conditions use the usual `&&`, `||`, `!`, `in`, `exists`, `filter` and `map`.
