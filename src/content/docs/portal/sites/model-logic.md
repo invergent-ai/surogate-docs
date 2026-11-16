@@ -14,7 +14,7 @@ A [data model](/portal/sites/data-models/) can do more than hold values. It can 
 - **Show a separator of thousands**.
 - **Least** and **Most**.
 
-Only a point is read as the decimal separator. A pasted `12,5` is refused instead of guessed at, because `1,234` could be a thousand or one and a bit.
+Lists and the detail of a record write the number as the field says: with a point, with a comma, or, by default, as the page's language does (a comma on a Romanian page), with a separator of thousands if you ticked it. Only a point is read as the decimal separator when a number is typed. A pasted `12,5` is refused instead of guessed at, because `1,234` could be a thousand or one and a bit.
 
 The older **Number** and **Amount** types stay as they are.
 
