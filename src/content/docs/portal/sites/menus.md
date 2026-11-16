@@ -111,14 +111,14 @@ A data model makes pages of its own, a list of its records and dashboards of its
 
 ![The Pages tab of a data model with one page: its site, its path /registry, its titles, "Show in the main menu" ticked, and Under: First level.](../../../../assets/screenshots/portal-menus-model-pages.png)
 
-A page that the model no longer makes leaves the menu with it.
+A page that the model no longer makes leaves the menu with it. A page whose path you change keeps its item: the item follows the page in the same version as the model, with its place, its text and who sees it.
 
 ## When a page moves or goes
 
 Menu items point at the page, not at its address.
 
 - When a page gets a new address in the page editor, the items that point at it follow it, in the same save. The page editor says which menus follow.
-- When a page is removed, the confirmation names the menus it is in. Its items leave those menus in the same version, and the items that stood under them move up a level. **Undo** on **Versions** brings back the page and its items together.
+- When a page is removed, the confirmation names the menus it is in. Its items leave those menus in the same version, and the items that stood under them move up a level, shown to no more people than they were: an item that only some people saw keeps that for the items that move up. **Undo** on **Versions** brings back the page and its items together.
 
 ## In a layout the site wrote itself
 

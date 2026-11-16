@@ -128,8 +128,10 @@ How the rights work together:
 - **Moving** a page needs the right to move it, and the right to add pages under the place it goes to, or on the first level.
 - The home page is moved and removed by administrators only.
 - A save is checked as a whole, against the rights of the person who makes it. A change outside them refuses the whole save, naming the page and the right missing: "You may not move the page /dsp/b". Nothing is half done.
-- **Only administrators** change who sees, edits, adds, moves and removes. Others see the choices and cannot change them, so nobody gives themselves a right. **Versions** and undoing a version stay with administrators too.
+- **Only administrators** change who sees, edits, adds, moves and removes a page, and who sees a block or a tab on it. Others see the choices and cannot change them, so nobody gives themselves a right. A block moved out of a tab only some people see, or a tab given up its restriction, would show to more people: such a save is refused. A block added to a restricted tab is as restricted as the tab. **Versions** and undoing a version stay with administrators too.
 - The page editor offers someone only the forms they may send and the data models they may read. A form or a data model they may not use is refused on the page, naming it; those the page already uses stay as they are.
+- A chat block, an assistant or a website chat, gives the agent to everyone who sees the page. Someone puts there only an agent they already reach, through a page they see; any other agent is refused, naming it.
+- Someone who may only move or remove a page sees its address and title in the page editor, and nothing of what is on it: no blocks, no rights and no preview. Moving it changes its address and nothing else.
 
 **Pages** is in the menu of every person who holds at least one of these rights over at least one page. They see the pages they hold a right on, and, greyed and with no action, the pages above them. **Edit**, **New page** (under a page), **Remove page** and the address field are there only where the person holds that right.
 
