@@ -43,6 +43,9 @@ Administrators build a form in the console: see [Build a form](/portal/console/f
 - **[A slider](/portal/sites/form-field-types/#slider):** a number picked by moving a handle.
 - **[Extension fields](/portal/sites/form-fields/):** a barcode or QR code, a barcode scanner, an IBAN and a signature.
 - **[Whole numbers, files and fields from JSON](/portal/sites/form-field-types/):** a whole number, files people upload before they send the form, and a zone of fields read from a JSON when the form opens.
+
+- **[Password](/portal/sites/form-field-types/#password):** a password typed twice, kept only as a scrambled value nobody can read.
+- **[Formatted text](/portal/sites/form-field-types/#formatted-text):** text with bold, lists, sizes and alignment.
 - **Layout:** panels, columns, fieldsets, tabs and wells, nested at most eight deep.
 - **Text blocks**, in the markup a site's pages allow.
 - **One submit button.**
@@ -51,7 +54,7 @@ Each field's **Key** is a name, unique in the form, such as `name` or `birth_dat
 
 A field can be shown only when another field has a value: **Shown when**, in the form builder, sets it. A field hidden by its condition is not required, and what was typed in it is not kept.
 
-A form holds no script. The portal refuses a form with custom conditions, calculated values, custom validation, logic, options read from an address, a rich text editor, or a template that calls anything. The refusal names the part. Show and hide fields with conditions instead.
+A form holds no script. The portal refuses a form with custom conditions, calculated values, custom validation, logic, options read from an address, form.io's own rich text editor (use [Formatted text](/portal/sites/form-field-types/#formatted-text) instead), or a template that calls anything. The refusal names the part. Show and hide fields with conditions instead.
 
 ## Translations
 
