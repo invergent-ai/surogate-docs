@@ -13,9 +13,13 @@ In a list, such as **Forms**, **Data**, **Flows**, **Jobs**, **Endpoints** or **
 
 ![The Forms list: two forms each have a square with the initials of the person who has it open, MI and AP.](../../../../assets/screenshots/portal-collab-lists.png)
 
-Inside an editor, the top shows **Editing now:** and the names of the others who have the same item open. In the editors of data models, flows and pages, the field, step or block a person is working on is outlined in their own colour, with their name on the outline. The form builder shows who is in the form, not which field. The same person has the same colour for everyone.
+Inside an editor, the top shows **Editing now:** and the names of the others who have the same item open. In the editors of data models, flows and pages, and in the form builder, the field, step or block a person is working on is outlined in their own colour, with their name on the outline. The same person has the same colour for everyone.
 
 ![The data model editor: Editing now Ana Pop and Mihai Ionescu at the top, and the field Ana is working on outlined with her name.](../../../../assets/screenshots/portal-collab-editor.png)
+
+In the form builder, the field another person chose is outlined the same way.
+
+![The form builder: the message field is outlined with the name of Mihai Ionescu, who chose it.](../../../../assets/screenshots/portal-collab-form-builder.png)
 
 Good to know:
 
@@ -52,7 +56,13 @@ After more than 10 minutes without the connection, your changes are no longer me
 
 - At most 20 people edit the same item at once. The 21st sees the item for reading only, with a message, and can open it again when someone leaves.
 - A shared draft nobody has changed for 7 days is thrown away.
-- Connector credentials are never part of a shared draft and are never shown to other editors. Set them as before.
+- Connector credentials are never part of a shared draft and are never shown to other editors. Set them as before. Connectors show who is editing them, but have no shared draft.
+
+### If you lose the right to edit
+
+If an administrator takes away your permission to edit the portal while you have an item open, the editor turns read-only and says **You can no longer edit the portal**. Your tab stops taking part: you no longer appear to the others, and nothing more of yours is sent. What you changed before stays in the shared draft, under your name, and is saved with the others' changes.
+
+![The data model editor of an administrator whose permission was removed: a message says they can no longer edit the portal, and Save and Remove are greyed out.](../../../../assets/screenshots/portal-collab-rights-lost.png)
 
 ## Save together
 
@@ -84,8 +94,9 @@ When a save is refused because the site moved on while you were editing, the con
 | Pages (with their style sheet) | yes | yes |
 | Forms | yes | yes |
 | Data models | yes | yes |
-| Flows | yes | yes |
-| Jobs, endpoints | yes | not yet |
-| Contracts, named values, connectors, collections, segments, guides, experiments, apps | yes | not yet |
+| Flows, contracts, named values | yes | yes |
+| Jobs, endpoints | yes | yes |
+| Collections, segments, guides, experiments, apps | yes | yes |
+| Connectors | yes | no, because of their credentials |
 
-Editors without a shared draft still show who else has the item open, so that you can agree who changes it. Saving there works as it always did: if someone saved the same item meanwhile, the console says so and offers to load the newest version.
+A connector's editor still shows who else has it open, so that you can agree who changes it. Saving there works as it always did: if someone saved the same connector meanwhile, the console says so and offers to load the newest version.
