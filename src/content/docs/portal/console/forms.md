@@ -53,6 +53,7 @@ Administrators see **Build forms** at the top of the page: **New form** makes on
   - whether people must agree to a text before sending, and that text in each language;
   - how many days submissions are kept (empty: always).
   - whether a public form can be filled in offline at its own address.
+  - the **Model of the data** the form is bound to, if any: it then creates that model's records and opens existing ones to edit. See [Forms for records](/portal/sites/model-forms/).
 - **Who can use it:** who sends the form and who reads what was sent. Each uses the picker described in [Choose who](/portal/sites/permissions/#choose-who): **Add…** opens the choices, and **Remove** takes one away.
   - **Anyone may send it, signed in or not**: tick it to make the form public.
   - **Who may send it**: by default **Its reviewers only**. It says: "Reviewers also send it. To let anyone send it, make it public." It is off while **Anyone may send it, signed in or not** is ticked. It offers no **Everyone**: to let everyone send the form, make it public.
@@ -61,6 +62,7 @@ Administrators see **Build forms** at the top of the page: **New form** makes on
   - **Fields:** text, text area, number, checkbox, select, radio, select boxes and the submit button.
   - **More fields:** email, web address, phone number, day, time and currency.
   - **Layout:** panels, columns, fieldsets, tabs, wells and text blocks.
+  - **Fields of the model:** for a form bound to a model, one entry for each field of the model, and **Lines** where the model has lines, a grid whose columns you choose.
   - **From apps:** the fields and option lists the approved [apps](/portal/console/apps/) give forms, each named with its app, such as **CRM: Signature**. It shows only when an app gives some. A select from an app shows where its options come from instead of its values. A form takes the options of at most 10 lists from apps.
 
   Click a field to change it. **Display** sets its label, the text shown in it, its help, whether it is required, and its options. The **Key** is the name its answer is kept under; it follows the label until you change it. **Shown when** shows the field only when another field has a value. In a step-by-step form, each panel at the top is a step.

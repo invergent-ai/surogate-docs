@@ -169,6 +169,39 @@ Among a form's `components`:
 - `model`: the data model whose records are picked.
 - `multiple: true`: the person picks up to 50.
 
+## A form bound to a model
+
+A form with `model` creates that model's records and opens existing ones to edit: [Forms for records](/portal/sites/model-forms/) in the site guide describes what people see.
+
+```yaml
+name: { ro: Fișa lunară, en: Monthly sheet }
+language: en
+model: monthly_reports
+sites: [reports]
+permissions: { submit: [signed-in] }
+components:
+  - type: panel
+    key: period
+    title: Reporting period
+    components:
+      - { type: textfield, key: year, label: Year, input: true }
+      - { type: textfield, key: month, label: Month, input: true }
+  - type: lines
+    key: lines
+    label: Waste by code
+    lineColumns:
+      - { field: code, label: Code, width: 12 }
+      - { field: generated, label: Generated, width: 12 }
+      - { field: closing }
+```
+
+- `model`: the id of a model of the portal. The form's own address takes `?record=<id>` to open a record.
+- A field is a component whose `key` is a field of the model: the loader refuses any other key on an input component. Its type may be any the form takes; the model, not the component, says what is required, active and read-only, and a `required` set on the component is ignored. A form bound to a model needs no submit button.
+- `lines` is a component for the grid of the model's lines (its `lines` setting): at most one a form, and only in a form bound to a model whose model has lines. `lineColumns` lists 1 to 40 columns, in order: `field` is a field of the line model, never the link back to the record; `label` is the text of the heading, in the form's language and translated like any label (the field's own label when left out); `width` is 4 to 80 characters.
+- The page runs `evaluateAggregate`, the code the server runs, on every change, and asks `POST /_portal/api/data/<model>/evaluate` for what depends on other records. It saves with `POST` or `PATCH` on `/_portal/api/data/<model>` (the header's fields and `lines: [...]` in one body) and moves with `POST /_portal/api/data/<model>/<id>/transition`.
+- `offline: true` is refused on a form bound to a model, and the form keeps no drafts.
+- Each model's own form `model-<id>` is bound to the model, with a `lines` component for the model's lines.
+
 ## Fields from an app
 
 An approved app can add field types and option lists ([Build an app](/portal/developer/build-an-app/#form-fields-and-options)). Use them in the form's file.

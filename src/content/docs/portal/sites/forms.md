@@ -63,6 +63,10 @@ Both are set in the form builder, on the **Who can use it** tab: see [Build a fo
 
 People who may not send a form do not see it on a page, and its address answers as if there were no form.
 
+## Forms for records
+
+A form can be bound to a [data model](/portal/sites/data-models/) to create its records and open existing ones to edit, with the model's figures and checks shown as people type. See [Forms for records](/portal/sites/model-forms/).
+
 ## Put a form on a page
 
 In the [page builder](/portal/console/pages/#forms), **Add a form** to a part of the page. It offers the forms the site offers. A page shows at most five forms.
