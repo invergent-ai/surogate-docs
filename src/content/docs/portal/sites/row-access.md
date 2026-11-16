@@ -107,6 +107,7 @@ A person who does not see a field has no such field, anywhere:
 - It cannot be written by them. What it holds is kept when they save the rest of the record.
 - A [KPI](/portal/sites/kpis/) that groups, sums or filters by it is not shown to them; the figures that do not read it are.
 - A form's check of a record before it is saved (`evaluate`) leaves it out of its answer, and refuses a value for it. So does a save that has rules or calculated fields: what it answers says nothing of the field, nor of what is wrong with it.
+- A form that is bound to the model (a model's own form, or a listing's dialog) is drawn without it: no input, no column, no label. A form that asks for every field of its model leaves the hidden ones empty for them, and the record is made all the same.
 - Going back to an earlier version of a record is refused to someone who does not see every field of it, as it would write the fields they cannot see.
 
 Access is the union of a person's roles: a field is hidden from a person only when each of their roles is ticked. A person with the Viewer role and the DSP role, with the field ticked for Viewer only, sees it. The role **User**, which every account has, counts only when it is all they hold, and a visitor counts as holding it: tick **User** to hide a field from every person with no other role and from visitors. Administrators see every field.
