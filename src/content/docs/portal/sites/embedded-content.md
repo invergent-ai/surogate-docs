@@ -17,6 +17,8 @@ Under **Sites**, open a site's **Settings** and go to **Embedded content**. Admi
 4. Tick **Public pages may use it** only for addresses that are safe for anyone to see. Left unticked, only pages that need a sign-in may show it.
 5. Save the site.
 
+One address is never allowed: the portal's own. A frame of the portal's own address would share its cookies and its scripts, and saving the site is refused with "The portal's own address cannot be embedded". An address saved before that, or put in by uploading the files, is not shown either.
+
 A site lists at most 50 addresses. An address is matched as the browser reads it: the host without regard to capitals, the same port, and the path word by word. So `https://answers.example.ro.evil.example/` and `https://answers.example.ro/dashboardX` do not fall under `https://answers.example.ro/dashboard/`. An address with a login in it, or with an encoded slash, is never allowed.
 
 When you take an address away that pages still show, the console names those pages first.
@@ -66,7 +68,7 @@ The link **Open in a new window** always works, so keep it on until the frame do
 ## What the portal does for safety
 
 - The frame has no more rights than it needs: it may run scripts, send forms, open pop-ups and download files, so a report's export works, and nothing else.
-- The page tells the browser exactly which origins it may frame, and no others.
+- The page tells the browser which origins it may frame: those of the reports it shows, its own host, and the origins of the approved apps it loads, so an app's own frame keeps working. No other.
 - The address is checked when the page is saved, and again each time the page is shown, so taking an address away from the list works at once.
 
 For the files behind it, see [Developer: Embedded content](/portal/developer/embedded-content/).
