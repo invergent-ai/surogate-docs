@@ -63,6 +63,10 @@ Empty rows are left out. A column with no title is `column1`, `column2` and so o
 
 An action can make an image of a value. The kinds of code are Code 128 (when left out), EAN-13, EAN-8, UPC-A, Code 39, ITF-14, QR code, Data Matrix and PDF417. The image is a PNG. A value the format cannot hold, such as letters in an EAN-13, fails and says why.
 
+## Save a map
+
+**Save a map** makes a picture (PNG) or an A4 PDF of the map of a record's place, or of a place the action is given, with the base map and layers you name, a scale, a north arrow, the coordinates, the sources, the date and the portal's name. It answers where the file is and which layers could not be read, and a layer or base map that does not answer is left out and said on the map. See [Maps](/portal/sites/maps/#the-action-save-a-map).
+
 ## Who may do what
 
 Document actions keep to the folders' [permissions](/portal/sites/permissions/), as the file actions do. Someone who edits a folder reads its files and makes or replaces them. Anyone else, a visitor too, only makes new files, and never in a public folder. Every folder is checked before any work is done.

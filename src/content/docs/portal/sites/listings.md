@@ -29,6 +29,7 @@ On [Pages](/portal/console/pages/#the-portals-widgets), add **Listing** with **A
 - **Columns**: the fields to show, at most 8, none of them a link. None ticked: the title field, then the first fields that are not links, four in all.
 - **Filters**: the fields people may filter by. It lists only the fields the model marks filterable.
 - **People may add records**, **People may change records** and **People may remove records**: whether the listing offers **Add**, **Edit** and **Delete**.
+- **Show the map too**: for a model with a location, a [map](/portal/sites/maps/#a-map-on-a-page) above the table that follows its search and filters.
 
 Developers: see [Developer: Listings](/portal/developer/listings/#a-listing-on-a-page).
 

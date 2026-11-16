@@ -1,9 +1,9 @@
 ---
 title: Extension fields
-description: Form fields the portal's extensions add - a barcode or QR code, a barcode scanner, an IBAN and a signature pad.
+description: Form fields the portal's extensions add - a barcode or QR code, a barcode scanner, an IBAN, a signature pad and a location on a map.
 ---
 
-The portal's extensions add four kinds of field to [forms](/portal/sites/forms/): a barcode or QR code drawn on the form, a barcode scanner, an IBAN and a signature. As with every extension, they are open to every tenant of the portal. The form builder offers them in its **Extensions** group.
+The portal's extensions add five kinds of field to [forms](/portal/sites/forms/): a barcode or QR code drawn on the form, a barcode scanner, an IBAN, a signature and a location on a map. As with every extension, they are open to every tenant of the portal. The form builder offers them in its **Extensions** group.
 
 ## What people see
 
@@ -49,6 +49,10 @@ A pad to sign on with a finger, a pen or the mouse. What is kept is the signatur
 - The pad is as wide as the form, or as the form says, up to 2,000 by 1,000 pixels. The form can also set the colour of the pen and of the pad's background. The form builder sets them on the field's **Limits** tab: a size as `100%` or `150px`, a colour as `#1a2b3c`, a colour's name or `rgb(…)`. Developers: see [Developer: Extension fields](/portal/developer/form-fields/#the-fields).
 - A signature is at most 90 KB, so a form holds two.
 - A required signature left empty says the field is required.
+
+## A location
+
+A location field takes a point or a polygon, chosen on a map or typed as coordinates. It sends its place as GeoJSON. In the form builder, **Shape** says whether it takes a point, a polygon or either. See [Maps](/portal/sites/maps/#a-location-on-a-record) for what people do with it.
 
 ## In the console
 

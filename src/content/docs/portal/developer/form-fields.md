@@ -15,6 +15,7 @@ In a form's `components` (`forms/<id>.yaml`):
 - { type: barcodeScanner, key: envelope, label: Code on the envelope, input: true, formats: [ean13, code128, qrcode] }
 - { type: iban, key: account, label: Account to receive the money, input: true, countries: [RO], validate: { required: true } }
 - { type: signature, key: signature, label: Signature, input: true, footer: Sign here, validate: { required: true } }
+- { type: location, key: place, label: Place, shape: point, input: true }
 ```
 
 - `barcode`:
@@ -31,6 +32,9 @@ In a form's `components` (`forms/<id>.yaml`):
   - `footer`: the text under the pad. Translate it under `i18n` like a label.
   - `width` and `height`: such as `100%` or `150px`, at most 2,000 by 1,000 pixels.
   - `penColor` and `backgroundColor`: such as `#1a2b3c`, `black` or `rgb(245, 245, 235)`.
+- `location`:
+  - `shape`: `point`, `polygon` or `any`. Optional; `any` when left out.
+  - It sends a GeoJSON point or polygon, checked again on the server: see [Maps](/portal/developer/maps/#a-location-field).
 
 ## A signature saved as a file
 

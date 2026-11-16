@@ -28,6 +28,7 @@ regions:
 - `columns`: the fields shown, at most 8; links are not shown in columns. Left out, the title and up to 3 more fields.
 - `filters`: filterable fields to filter on, by exact value: text, numbers, dates, yes or no.
 - `add`, `edit`, `delete`: whether the listing offers them. The model's [permissions](/portal/sites/data-models/#who-may-do-what) still decide who may.
+- `map`: `true` shows the map of the model's first location field above the table: see [Maps](/portal/developer/maps/#the-map-widget).
 
 ## A model's own page
 

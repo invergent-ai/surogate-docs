@@ -40,8 +40,9 @@ Developers can also write a model as a file: see [Developer: Data models](/porta
 | Email, Phone, Web address | Checked as what they are; a web address is http, https or mailto |
 | Link | One record of the model it points at |
 | Links | Several records of the model it points at |
+| Location | A point or a simple polygon on a map: see [Maps](/portal/sites/maps/) |
 
-A field can be required, searchable (text, found by search), filterable and sortable. Long texts and Links are neither filtered nor sorted on. Every record also has its id, its owner, and when and by whom it was made and last changed.
+A field can be required, searchable (text, found by search), filterable and sortable. Long texts, Links and Locations are neither filtered nor sorted on. Every record also has its id, its owner, and when and by whom it was made and last changed.
 
 On the **Fields** tab, **Add field** adds one: its id, its type, its label in each language, and its options. A Link or Links field also names the model it points at. **Title field** picks the field that names a record.
 
