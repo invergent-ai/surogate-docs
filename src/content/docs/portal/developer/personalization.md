@@ -34,6 +34,19 @@ personalization: { history: true }
 
 A `visited` rule names a site with `history: true` and one of its pages' paths.
 
+## Recommended pages
+
+```yaml
+- id: next
+  app: portal
+  widget: recommendations
+  preferences:
+    limit: 5                                   # 1 to 10, 5 when left out
+    title: { ro: Pentru tine, en: For you }    # Recommended for you when left out
+```
+
+Only on a site with `personalization: { history: true }`; otherwise `recommendations_preference` with reason `history_off`. Other reasons: `unknown_key`, `limit`, `title`.
+
 ## A placement's audience
 
 ```yaml

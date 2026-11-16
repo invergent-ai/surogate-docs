@@ -50,6 +50,16 @@ A site remembers the pages signed-in people visit only when you turn it on: in *
 
 An administrator sees a person's segments and the pages they visited on the person's page under **Users**: **Profile**, **Show the profile**. Each look is kept in the audit log.
 
+## Recommended pages
+
+On a site that remembers pages, place **Recommended pages** in the page editor (in the portal's widgets): a short list of the site's pages a person may want next, titled **Recommended for you** unless you write another **Title**, with up to 10 **Pages shown** (5 by default).
+
+- For a signed-in person who lets sites remember their pages: the pages that other people who visited the same pages also visited, leaving out those the person visited; then the site's most visited pages.
+- For anyone else, including someone seeing the portal as a person: the site's most visited pages, the same for every visitor.
+- Only pages the person may see, never a personal dashboard, a page that shows entries, or the page they are on. Entries themselves are not recommended.
+- **Privacy.** The list everyone sees shows a page only when at least ten people visited it in the last 30 days. "People like you" are found only through pages at least ten others visited, need at least twenty such people, and each page they suggest was visited by at least five of them; otherwise the person gets the list everyone sees. A site recommends nothing until twenty people's pages are remembered. A person's list changes at most every ten minutes. On a site where anyone can make an account, someone making many accounts could still learn a little about what others visit: weigh that before placing it there.
+- The list shows nothing until there is enough to recommend.
+
 ## Pages and caches
 
 Pages for signed-in people are never kept by shared caches. For visitors, a page is kept as usual unless it shows a block to a segment with a device rule: then it is made for each visitor and never kept. A segment-only block on a busy public page with a device rule costs that page its place in the cache.

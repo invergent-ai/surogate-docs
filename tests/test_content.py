@@ -504,11 +504,11 @@ class Content(unittest.TestCase):
 
     def test_portal_personalization(self):
         doc = page('/portal/sites/personalization/')
-        for anchor in ('segments', 'show-a-block-to-a-segment', 'remembered-pages', 'pages-and-caches', 'limits'):
+        for anchor in ('segments', 'show-a-block-to-a-segment', 'remembered-pages', 'recommended-pages', 'pages-and-caches', 'limits'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/personalization/"', page('/portal/console/pages/'))
         dev = page('/portal/developer/personalization/')
-        for anchor in ('a-segments-file', 'a-site-that-remembers-pages', 'a-placements-audience', 'load-checks'):
+        for anchor in ('a-segments-file', 'a-site-that-remembers-pages', 'recommended-pages', 'a-placements-audience', 'load-checks'):
             self.assertIn(f'id="{anchor}"', dev)
 
     def test_portal_experiments(self):
