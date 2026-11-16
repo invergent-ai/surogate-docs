@@ -51,7 +51,7 @@ Entering a checked state is submitting. The portal then applies every check that
 
 A move can be made together with changes: **Submit** saves the values and moves the record in one go, or neither. The state cannot be written any other way. The lock counts for moves too: after it holds, only the people it lets through can move a record.
 
-Every move is kept in a **log**: who made it, when, from which state to which, and the comment.
+Every move is kept in a **log**: who made it, when, from which state to which, and the comment. Where the model also keeps the history of its records, each of these writes makes a version (a header's with its lines), a delete archives the record and its lines, and the version a move into a checked state makes is sealed, so it can no longer change.
 
 ![The log of a report: submitted by a person, then the correction asked for by someone else, with the comment.](../../../../assets/screenshots/portal-model-logic-transitions.png)
 
