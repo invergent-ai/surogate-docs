@@ -15,6 +15,8 @@ A person only ever sees the records their rules reach. The same list, as two peo
 
 A record out of reach is answered as one that does not exist, wherever it is asked for: in a list, in a search, in the one record's address, in a [KPI](/portal/sites/kpis/), over the [API](/portal/sites/data-models/#the-api) and [GraphQL](/portal/sites/data-models/#graphql), in an [action list](/portal/sites/actions/#records) and in the choices of a link field. A list's page is full of rows the person may see, and what is counted is what is seen.
 
+A model's own rules, calculated fields and checks that look at other records (`records.count("fisa1", {})`, say) are held to the same: they find only the records the person who saves may see, and only the fields they see. A look that names a field the person does not see fails as for a field the model does not have. What a model takes from another record by its own say (a field filled from a reference table) and the check that a code is unique are the portal's own reads: they see every record, whoever saves.
+
 ## Write the conditions
 
 On the model's **Access** tab, under **Access by condition**, each verb (**Read**, **Add**, **Change**, **Remove**) has its own rules:
@@ -104,6 +106,7 @@ A person who does not see a field has no such field, anywhere:
 - A filter, a sort or a search that names it is refused, as for a field the model does not have; a search in the listing looks only in the fields the person sees.
 - It cannot be written by them. What it holds is kept when they save the rest of the record.
 - A [KPI](/portal/sites/kpis/) that groups, sums or filters by it is not shown to them; the figures that do not read it are.
+- A form's check of a record before it is saved (`evaluate`) leaves it out of its answer, and refuses a value for it. So does a save that has rules or calculated fields: what it answers says nothing of the field, nor of what is wrong with it.
 - Going back to an earlier version of a record is refused to someone who does not see every field of it, as it would write the fields they cannot see.
 
 Access is the union of a person's roles: a field is hidden from a person only when each of their roles is ticked. A person with the Viewer role and the DSP role, with the field ticked for Viewer only, sees it. The role **User**, which every account has, counts only when it is all they hold, and a visitor counts as holding it: tick **User** to hide a field from every person with no other role and from visitors. Administrators see every field.
