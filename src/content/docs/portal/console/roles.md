@@ -67,6 +67,17 @@ The same limits hold for the rest of what changes who someone is:
 - Only an administrator changes the sections of the **User** role, which every new account gets, and no one but an administrator ever changes their own fields.
 - The **Data console** is never a section of a role: it reads past the rules of access on records, so only the Administrator has it.
 
+## Roles from an action
+
+A job that runs as an administrator can make and change roles with the Portal administration actions, under the same limits as the console:
+
+- **Make a role** takes the role's id (its code, which never changes), its name in each language, an optional description, and **Rights**: the console sections it opens, each `'view'` or `'edit'` (for example `users: 'view'`, `sign_in: 'edit'`). A section the console does not have is refused.
+- **Change a role** takes the role's id and any of the name, the description and the rights. What it does not name stays as it is. The rights it names replace the role's sections.
+- **Remove a role** is refused while a model, a site, a form or an endpoint names the role, while a group mapping gives it, and while any person still holds it: take it from them first with **Give or take roles**.
+- **Give or take roles** works on any role of the portal, as the console does it. A run does not give the Administrator role unless it holds it, and does not leave the portal without an active administrator.
+
+A run never gives a role a section it does not hold itself, and never changes a role that carries one it lacks.
+
 ## Where a role is used
 
 Choose **A role** in the picker that asks who may see or edit something: a site, a page, a block, a form, a library, a folder, and who may use a model's records. See [Choose who](/portal/sites/permissions/#choose-who). A role also narrows who may call an [endpoint](/portal/sites/endpoints/#who-may-call-it), and a [service account](/portal/console/service-accounts/) can hold any role.
