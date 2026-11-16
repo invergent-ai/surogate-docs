@@ -57,7 +57,7 @@ On a site that remembers pages, place **Recommended pages** in the page editor (
 - For a signed-in person who lets sites remember their pages: the pages that other people who visited the same pages also visited, leaving out those the person visited; then the site's most visited pages.
 - For anyone else, including someone seeing the portal as a person: the site's most visited pages, the same for every visitor.
 - Only pages the person may see, never a personal dashboard, a page that shows entries, or the page they are on. Entries themselves are not recommended.
-- **Privacy.** A page is recommended only when at least five other people visited it in the last 30 days, and a site recommends nothing until twenty people's pages are remembered. On a site where anyone can make an account, someone making several accounts could still learn a little about what others visit: weigh that before placing it there.
+- **Privacy.** The list everyone sees shows a page only when at least ten people visited it in the last 30 days. "People like you" are found only through pages at least ten others visited, need at least twenty such people, and each page they suggest was visited by at least five of them; otherwise the person gets the list everyone sees. A site recommends nothing until twenty people's pages are remembered. A person's list changes at most every ten minutes. On a site where anyone can make an account, someone making many accounts could still learn a little about what others visit: weigh that before placing it there.
 - The list shows nothing until there is enough to recommend.
 
 ## Pages and caches
