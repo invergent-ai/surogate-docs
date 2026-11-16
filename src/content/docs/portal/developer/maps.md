@@ -93,12 +93,12 @@ All under `/_portal/api/maps` at the host's tenant; a token needs the `data` sco
 |---|---|
 | `GET /config?locale=` | The base maps (`id`, `name`, `tiles`, `attribution`, `minZoom`, `maxZoom`, `default`) and the layers the caller may see. Never a service's address. |
 | `GET /tiles/<base map>/<z>/<x>/<y>` | The tile, a PNG, JPEG, WebP or GIF as its first bytes say. 502 `map_unavailable` when the service fails, answers more than 2 MB, or sends no image. Kept an hour; 1,500 tiles a minute for one address. |
-| `GET /features?model=&field=&record=&fields=&filter.<f>=&q=&locale=` | A GeoJSON `FeatureCollection` of the places the caller may see, each with `properties.__title` and `__rows`. 413 `too_many` past 5,000. |
-| `GET /layers/<id>/features?bbox=w,s,e,n&zoom=&locale=` | The layer's objects in the view, in WGS84, with `truncated` past 5,000. 400 `zoom_too_far`, 403 for a layer the caller may not see, 502 `layer_unavailable`. |
+| `GET /features?model=&field=&record=&fields=&filter.<f>=&q=&locale=` | A GeoJSON `FeatureCollection` of the places the caller may see, each with `properties.__title` and `__rows`. 413 `too_many` past 5,000 records or 100,000 points in all; 429 past 120 asks a minute for one address. |
+| `GET /layers/<id>/features?bbox=w,s,e,n&zoom=&locale=` | The layer's objects in the view, in WGS84, with `truncated` past 5,000. 400 `zoom_too_far`, 403 for a layer the caller may not see, 502 `layer_unavailable`, 429 past 300 asks a minute for one address, 503 `layer_busy` when 8 sources are being asked and 32 are waiting. |
 | `GET /layers/<id>/tiles/<z>/<x>/<y>` | A WMS layer's tile, in web Mercator. |
 | `GET /layers/<id>/info?lat=&lng=&zoom=` | What a WMS says is at a place: `{ rows }`. |
 | `GET /snapshots?model=&record=&field=` | A record's saved maps, newest first (up to 10): `state`, `trigger`, `createdAt`, `missingLayers`, and `url` for those who may open the folder. |
-| `POST /snapshots` `{ model, record, field }` | Asks for another map: 202 `{ id }`. A session only, never while seeing the portal as someone else. A map already waiting is the one asked for. |
+| `POST /snapshots` `{ model, record, field }` | Asks for another map: 202 `{ id }`. A session only, never while seeing the portal as someone else. A map already waiting is the one asked for; 429 past 10 asks an hour for one record. |
 
 ## The Map widget
 
@@ -137,8 +137,7 @@ fields:
     type: location
     snapshot:
       when: [change, state]
-      stateField: stare
-      states: [Transmisă]
+      states: [transmisa]
       format: png
       size: { width: 1600, height: 1000 }
       baseMap: osm
@@ -146,10 +145,10 @@ fields:
       folder: dosare
 ```
 
-- `when`: `change` (each save that changes the place), `state` (a save after which `stateField` holds one of `states`, from another value), or both.
+- `when`: `change` (each save that changes the place), `state` (a move into one of `states`, the ids of the model's own [states](/portal/developer/data-models/), whose field the model names; the model must have states, and each id must be one of them), or both.
 - `format`: `png` (with an optional `size`, 800×600 to 3000×2000, 1200×800 when left out) or `pdf` (an A4 page, landscape).
 - `folder` must exist and must not be public: `portal check` refuses a public one. `baseMap` and `layers` must exist.
-- The save asks for the map in its own transaction, through the change queue that also feeds [jobs](/portal/developer/jobs/): a row of `map_snapshots`, with the place as it was saved. A worker on the server makes it after the save, as the person who saved, with three tries 15 seconds apart. A save is never held up, and a failure leaves the record as it was.
+- The save asks for the map in its own transaction, through the change queue that also feeds [jobs](/portal/developer/jobs/): a row of `map_snapshots`, with the place as it was saved. A worker on the server makes it after the save, as the person who saved, with three tries 15 seconds apart. One map of a kind waits for a place at a time: a place saved again before it is made updates the waiting row. With 500 rows waiting for a portal, the next is kept as failed ("Too many maps were asked for at once") and asked for again by hand. The worker takes one row at a time and gives the services of one map 90 seconds; a row begun three times that never ended (the server went away) is marked failed. A save is never held up, and a failure leaves the record as it was.
 - The file is `<model>-<record id>-harta-<yyyymmdd-hhmmss>.<ext>` (the portal's time zone), a new one each time. It is at most 10 MB. A layer that does not answer is left out, and named on the picture and in the row's `missing_layers`.
 - Text is drawn as outlines, so the machine needs no font.
 

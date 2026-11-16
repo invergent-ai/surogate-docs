@@ -23,7 +23,7 @@ The map works from the keyboard: the arrow keys move it, + and - zoom, and Tab g
 
 In a [data model](/portal/sites/data-models/), add a field of the type **Location**. Its **Shape** says what it takes: **Point**, **Polygon** or **Point or polygon**. A location is neither filtered nor sorted on, and it can be required.
 
-![The model editor on a location field called Headquarters: its shape Point, its label in each language, and under Save the map automatically its settings.](../../../../assets/screenshots/portal-maps-model-field.png)
+![The model editor on a location field called Headquarters: its shape Point, its label in each language, and under Save the map automatically its settings, with the states of the model that save a map ticked.](../../../../assets/screenshots/portal-maps-model-field.png)
 
 A saved field keeps its type. Its shape can change to **Point or polygon** at any time. It cannot change from points to polygons while the table holds points.
 
@@ -121,12 +121,12 @@ A page that shows a case gets the record from its address, as above: link to it 
 
 A location field can keep a picture or a PDF of its map by itself. On the field, tick **Save the map automatically** (see the model editor above) and choose:
 
-- **When**: each time the place changes, and/or when the record enters a state. For a state, name the field that holds it and the states that save a map;
+- **When**: each time the place changes, and/or when the record moves into a state. For a state, tick the states of the model that save a map (the model needs [states](/portal/sites/data-models/) for this; without them the option is off);
 - **Format**: **PDF, A4**, or **PNG** with its size, from 800×600 to 3000×2000 pixels;
 - **Folder**, which must be a secure folder: a public folder is refused when the model is saved, because it would show the map of every record;
 - **Base map** and **Layers included**.
 
-The file is made after the record is saved and **never holds the save up**. It is named `<model>-<record id>-harta-<yyyymmdd-hhmmss>.<png or pdf>`. Every save that asks for a map makes a new file, and the old files stay, as the proof of each view.
+The file is made after the record is saved and **never holds the save up**. A place saved again before its map is made is one map, of the newest place. It is named `<model>-<record id>-harta-<yyyymmdd-hhmmss>.<png or pdf>`. Every save that asks for a map makes a new file, and the old files stay, as the proof of each view.
 
 ![A saved map: the title and the time at the top, OpenStreetMap with the parcels layer over it and the unit's place marked in red, a scale and a north arrow, and under the map the coordinates, the sources and the portal's name.](../../../../assets/screenshots/portal-maps-saved-file.png)
 
@@ -139,9 +139,9 @@ A map holds:
 
 The words on it are in the default language of the portal's first site. A PDF is an A4 page; a file is at most 10 MB.
 
-![A unit's page, with the maps saved of it: Generate again, and the two files, newest first.](../../../../assets/screenshots/portal-maps-saved.png)
+![A unit's page, with the maps saved of it: Generate again, and the files saved, newest first.](../../../../assets/screenshots/portal-maps-saved.png)
 
-On the record's page the map lists the files made, to those who may open the folder. If a map cannot be made, the portal tries again, three times in all. If it still fails, the page says "The map could not be saved", gives the reason, and offers **Generate again**.
+On the record's page the map lists the files made, to those who may open the folder. If a map cannot be made, the portal tries again, three times in all. If it still fails, the page says "The map could not be saved", gives the reason, and offers **Generate again**. A person can ask for a map of one record ten times an hour. When a portal already has 500 maps waiting (after an import of many records, say), the next ones say that too many were asked for at once, and are asked for again from the record's page.
 
 If a layer, or the base map, does not answer when the map is made, the file is made without it and says so on the map ("The layer … could not be read at …"). With no base map, the place is drawn on white with its coordinates.
 
@@ -153,6 +153,8 @@ If a layer, or the base map, does not answer when the map is made, the file is m
 
 - 5,000 objects on a map, and 5,000 a layer request.
 - 20 base maps and 50 layers.
-- A source that does not answer in 10 seconds is "unavailable". The portal keeps a base map's tiles an hour.
+- A source that does not answer in 10 seconds is "unavailable". The portal keeps a base map's tiles an hour. A map being saved gives its sources 90 seconds in all; what has not come by then is left out and said on the map.
+- 300 asks a minute for the objects or information of layers, and 1,500 for tiles, from one address; the places of a model's records, 120 a minute. A map shows at most 100,000 points of the records' places: past that, narrow the filters.
+- A base map's or a layer's attribution is plain text: it may not hold `<` or `>`.
 - A map's files are at most 10 MB, and the picture of a map is at most 3000×2000 pixels.
 - Out of scope: searching for an address; drawing on a map outside a location field; routes and distances; maps that work offline.
