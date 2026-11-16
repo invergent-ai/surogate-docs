@@ -144,3 +144,21 @@ Reading gives a list of maps, the first row naming the columns:
 - `value`: an expression giving what the code holds.
 - `format`: the kind of code, here a QR code.
 - `toFolder` and `toName`: where the PNG is kept.
+
+## An image in a PDF
+
+```yaml
+- type: pdfImage
+  folder: fise
+  name: "'fisa-usp-123.pdf'"
+  imageFolder: fise
+  image: "'qr-123.png'"
+  pages: "'first'"          # all | first | last | 1-3,5
+  corner: top-right         # top-left | top-right | bottom-left | bottom-right
+  x: "10"                   # millimetres from the corner
+  y: "10"
+  width: "25"               # or height, or both
+  opacity: "100"            # 0 to 100
+  toFolder: fise
+  toName: "'fisa-usp-123-qr.pdf'"
+```

@@ -73,19 +73,29 @@ The run knows what happened, the person's id and when. It also has their name an
 
 At most 5,000 people wait for a job, enough for a directory that brings many at once; past that, new ones are not run, and the history says so.
 
-## When the portal starts, fails or is asked for
+## When the portal starts or stops, a run fails, or a request begins or ends
 
-A job can start when the portal's configuration starts, when a run fails, or when a page is asked for:
+A job can start when the portal starts or stops, when a run fails, or at the start or the end of a request:
 
-- **The portal starts:** once each time a new configuration is published or rolled back, and when the job first appears. The run knows the revision.
+![The job editor's When tab for a job that starts when a request has ended: the events to choose from, Forms sent and Endpoint calls ticked, and the form contact named.](../../../../assets/screenshots/portal-job-trigger-request-end.png)
+
+- **The portal starts:** under **What counts as the portal starting** tick when it counts:
+  - **A new configuration is published:** once each time a new configuration is published or rolled back, and when the job first appears. The run knows the revision, and `trigger.reason` is `configuration`.
+  - **A server of the portal starts:** once for each server that starts, after it is ready to serve. `trigger.reason` is `instance`, `trigger.instance` is the server's name, and `trigger.previousStopClean` says whether it was last stopped in order (`true`), was not (`false`), or has never been here (`null`). A server that restarts in a loop starts the job at most once a minute; the history says so when it holds more back. The job never delays the server.
+
+![The job editor's When tab for a job that starts when the portal starts: the new configuration and the server of the portal starting both ticked.](../../../../assets/screenshots/portal-job-trigger-server.png)
+
+- **A server of the portal stops:** when a server is told to stop, as when it is updated, resized or stopped by hand, it runs these jobs on itself before it goes. The run knows `trigger.instance`, `trigger.startedAt` and `trigger.reason`, which is `shutdown`. All the stop jobs of a server share 20 seconds: one that is not done by then is cut short, and its history says "Interrupted at shutdown". The installation must give the server at least 30 seconds between the stop signal and its forced end (the portal's chart does). A server that is killed, runs out of memory or loses its machine runs nothing; the next server to start notes in the history of each stop job that the server stopped unexpectedly, and `trigger.previousStopClean` is `false` for that server's next start. **Run now** is not offered for a stop job.
 - **A run fails:** a form, endpoint or job ended failed. The job names which of the three it hears of; all three when it names none. The run knows which kind and which one, the run's id, the reason and the message. The message is the run's own words only for a job that runs as an administrator, since they may hold what people sent; other jobs get only the words the portal shows anyone, or none.
   - Not heard of: a run the portal was too busy to start, the failures of a job that itself hears of failures, and an endpoint another one called (the run that called it is heard of instead).
   - A job hears of one form, endpoint or job at most once a minute.
-- **A page is asked for:** a page of the job's site was asked for, at or under one of the paths the job names (1 to 20). `/news` takes `/news` and `/news/today`, never `/newsletter`. The run knows the path (an article's own address, such as `/news/my-article`), the language and the person's id (none for a visitor).
-  - Counted: a page opened. Not counted: a page checked again for changes, a preview, and pages served from a cache before the portal.
-  - A job hears of at most 60 pages a minute; the pages never wait for it.
+- **A page is asked for**, and **a request has ended:** the job names **which requests** it hears of: **page views** (a page of the job's site, at or under one of the paths the job names, 1 to 20), **forms sent** (the forms it names, or every form when it names none) and **endpoint calls** (the endpoints it names, or every endpoint when it names none). At least one kind is chosen; page views are the default. The first starts the job when the request begins, the second after the answer has been sent, so the job never delays the answer and never changes it.
+  - Both read `trigger.kind` (`page`, `form` or `endpoint`), `trigger.method`, `trigger.locale`, `trigger.userId` (none for a visitor), `trigger.at`, and `trigger.requestId`, which is the same at the start and at the end of one request. A page gives `trigger.path`; a form `trigger.form`; an endpoint `trigger.endpoint`.
+  - The end also reads `trigger.status`, the HTTP code that was sent (a form refused for what was filled in gives 422 or 400), and `trigger.durationMs`. A request the person gave up on before the answer is reported with the status 499.
+  - Counted: a page opened, a form sent, an endpoint called. Not counted: a page checked again for changes, a preview, files, health checks, the console's own requests, and what the portal's own runs ask of the portal, so that a job calling an endpoint never starts itself.
+  - A job hears of at most 60 requests a minute; past that they are not run, and the history says so once a minute. Requests never wait for the job.
 
-Paths are named only for a job that starts when a page is asked for, and the kinds of run only for one that starts when a run fails. At most 100 events wait for a job; past that, new ones are not run, and the history says so.
+Paths are named only for a job that hears of page views, forms and endpoints only for one that hears of those, and the kinds of run only for one that starts when a run fails. At most 100 events wait for a job; past that, new ones are not run, and the history says so.
 
 ## When mail arrives
 
@@ -130,6 +140,48 @@ A job can run when a document changes in the DMS. See [Documents](/portal/sites/
 ## When something happens in Keel
 
 A job can run when a case or process changes in Keel. See [Keel](/portal/sites/keel/#when-something-happens-in-keel) for the events and what the run reads.
+
+## Scripts and programs
+
+A job can run a script or a program apart from the portal, in the **executor**: a container the installation provides, with no network of its own. See [Developer: The executor](/portal/developer/executor/) for how an installation sets one up. Without one, **Run a script** and **Run a program** are listed under **Code** in **Add an action…** but cannot be chosen, and say so.
+
+Under **Jobs**, **Executor** shows what the executor holds:
+
+![The Executor page: its state Available, its interpreters Python 3 and Bash with their versions, and one program, ogr2ogr, with its SHA-256 and the box Allowed ticked.](../../../../assets/screenshots/portal-executor-page.png)
+
+- **Interpreters** and their versions: the languages a script can be written in.
+- **Programs:** what the installation put in the executor. A job runs one only when an administrator ticks **Allowed**; none is allowed at first, and ticking or unticking it is in the audit log. A program cannot be uploaded from the console. A job that names a program that is not allowed, or is gone from the executor, does not run, and is listed under **Jobs not running** with the reason.
+
+Both actions are for a job's own actions (not a form, flow or endpoint), and only administrators add or change them. They give the run:
+
+- **Arguments:** a list of expressions, each worked out and given as one argument. They never pass through a shell, so `; rm -rf /` arrives as that text and nothing more.
+- **Input:** an expression written as JSON on the standard input, at most 1 MB.
+- **Folder and names of the files to read:** at most 20 files and 50 MB together, which the script finds under `in/`. The files are read as the person the job runs as may read them.
+- **Folder for the files made:** what the script writes under `out/` is saved there, at most 20 files of at most 10 MB each, of the kinds Files keeps. A name with `..` or `/`, or of a kind not kept, fails the action and writes nothing: all the files are written or none.
+- **Longest time:** 1 to 170 seconds (30 when empty), and never more than what the job's own time leaves, less 10 seconds so that **When it fails** can still run. **Most memory:** 64 to 1024 MB (256 when empty). **The output is JSON** reads the standard output as JSON.
+
+![The job's Actions tab with Run a script open: the language python3, the script in an editor with its syntax coloured, the arguments one to a line, and the input.](../../../../assets/screenshots/portal-job-run-script.png)
+
+What it keeps (**Keep it as**): `exitCode`, `stdout` (the text, or the JSON when asked), `stderr` (at most 64 KB, also copied to the run's log), `files` (the names saved) and `durationMs`. The action fails when the exit code is not 0, when the time or the memory is past, when the output is not JSON though asked for, or when it is too large. **When it fails** reads `error.code`: `exit`, `timeout`, `memory`, `output`, `busy`, `unavailable`, `missing` or `changed`, and `error.message`.
+
+Each run has a directory of its own, removed after; runs as an unprivileged user with no network, no environment of the portal's, no access to its database or connectors, and a limit on processes; and a script that runs past its time is stopped with every process it started. At most 4 scripts run at once on a portal; the others wait for their turn within the job's time, and a full line fails with `busy`. Before each run of a program, the executor checks that its file is the one the installation declared; if it is not, the run is refused ("The program is no longer the one declared") and the refusal is in the audit log.
+
+## Run JavaScript
+
+**Run JavaScript** (under **Code**, in a form, flow, endpoint or job) runs the body of a JavaScript function on the server. It reads `input`, an object made from the expressions **Input** names, and returns a value:
+
+![The job's Actions tab with Run JavaScript open: the code in an editor with its syntax coloured, the input linii, the longest time 1000 and the name total.](../../../../assets/screenshots/portal-job-run-javascript.png)
+
+- The value returned must be JSON and at most 1 MB; `console.log` writes to the run's log (at most 64 KB):
+
+![The log of a run of the job: "info: linii: 3", written by console.log, and "info: Total kg: 60", the sum the code returned.](../../../../assets/screenshots/portal-jobs-run-javascript-log.png)
+
+- The code is at most 64 KB. It runs in a JavaScript engine compiled to WebAssembly (QuickJS), in a process of its own that is stopped when it runs past its **Longest time** (100 to 5000 ms, 1000 when empty, never more than the run has left) or its 64 MB. It has no network, files, modules (`require`, `import`, `fetch`) or timers, and nothing passes from one run to the next.
+- An error thrown is the action's error, with its message; **When it fails** reads `error.code`: `exception`, `timeout`, `memory` or `output`. A value that is not JSON, such as a function, fails with "The result is not JSON."
+- At most 10 JavaScript actions run in one run. In a flow's tests the code runs as it does everywhere: nothing outside is touched.
+- Only administrators add or change this code, and a save by anyone else is refused and is in the audit log. Proposed changes list every action that runs code, and its changes, among what to look at closely.
+
+JavaScript in people's browsers is not run: the pages never run script a site's author wrote.
 
 ## Send mail
 

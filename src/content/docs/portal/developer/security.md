@@ -48,3 +48,31 @@ auth:
 - `baseUrl`: https on `googleapis.com`. `scopes`: 1 to 20. `subject`: optional, the Workspace person it acts as. `perUser` is not taken.
 - A connector with a `subject` is never called from what anyone may reach: `google_public`.
 - Its credential is `serviceAccountKey`, the key's JSON file, set in the console.
+
+## Encrypt and decrypt
+
+```yaml
+- type: aesEncrypt
+  connector: cheie-cnp          # a secret connector of 32 bytes in base64
+  text: form.cnp
+  aad: "'responsabil-1'"        # optional associated data
+  inputEncoding: text           # or base64
+  into: cnpCriptat
+- type: aesDecrypt
+  connector: cheie-cnp
+  text: vars.cnpCriptat
+  aad: "'responsabil-1'"
+  outputEncoding: text          # or base64
+  into: cnp
+- type: rsaEncrypt
+  connector: rsa-insp           # a secret connector with the pair; or publicKey: "-----BEGIN PUBLIC KEY-----…"
+  text: form.mesaj
+  into: sigilat
+- type: rsaDecrypt
+  connector: rsa-insp
+  text: vars.sigilat
+  into: mesaj
+```
+
+`connector` is a reference, never an expression. AES output is base64 of `IV(12) ‖ ciphertext ‖ tag(16)`. RSA is OAEP with SHA-256. `rsaEncrypt` takes `connector` or `publicKey`, one of the two. `aesDecrypt` and `rsaDecrypt` are refused in a public form or endpoint.
+

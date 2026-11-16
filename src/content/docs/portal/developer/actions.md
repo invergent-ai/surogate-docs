@@ -54,7 +54,7 @@ Whole numbers are integers, the others decimals; the two mix in arithmetic, so `
 
 ## The actions
 
-Extensions add more: the [document actions](/portal/developer/document-actions/) make and read PDF, Word, Excel and CSV files and barcode images, and the [file management actions](/portal/developer/file-management/) copy, move and rename files and make and unpack ZIP archives.
+Extensions add more: the [script and program actions](/portal/developer/executor/), the [portal administration actions](/portal/developer/portal-actions/), the [document actions](/portal/developer/document-actions/) make and read PDF, Word, Excel and CSV files and barcode images, and the [file management actions](/portal/developer/file-management/) copy, move and rename files and make and unpack ZIP archives.
 
 | Type | What it does | Takes |
 |---|---|---|
@@ -68,6 +68,8 @@ Extensions add more: the [document actions](/portal/developer/document-actions/)
 | `wait` | Waits up to 5 seconds | `ms` |
 | `parseJson` | Reads JSON text into a value | `from`, `into` |
 | `toJson` | Writes a value as JSON text | `from`, `into` |
+| `parseXml` | Reads XML into a value, refusing a DTD or an entity | `from` (an expression), or `folder` and `name` (a file); `into` |
+| `runJs` | Runs the body of a JavaScript function on the server, in a sandbox | `code`, `input` (names to expressions), `timeoutMs` (100 to 5000), `into` |
 | `message` | Tells the person something, and ends the run; `{{ vars.name }}` puts in a value an action set | `text`, in each language |
 | `redirect` | Sends the person to another page, and ends the run | `to` |
 | `callFlow` | Runs a [logic flow](/portal/sites/flows/#call-a-flow) and keeps its outputs | `flow`, or `contract` and `pick`; `inputs`, `into` |
