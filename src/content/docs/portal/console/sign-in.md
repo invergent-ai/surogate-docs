@@ -15,7 +15,7 @@ The sign-in page is titled **Portal administration**: "Sign in to manage the por
 
 ![The sign-in page with Email or username, when the portal has a directory.](../../../../assets/screenshots/portal-sign-in-username.png)
 
-If the login or the password is wrong, the page says **The login or the password is not right.** After 10 wrong attempts within 15 minutes from the same network, sign-in to that account from that network is refused for a while, with the same message, even with the right password. Someone guessing from elsewhere does not lock you out. Wait 15 minutes, or ask an administrator to [set a new password](/portal/console/users/#password).
+If the login or the password is wrong, the page says **The login or the password is not right.** After 10 wrong attempts within 15 minutes, sign-in to that account is refused for a while, with the same message, even with the right password. When the portal knows where visitors connect from (the team that runs it sets this up), the 10 attempts count per network, so someone guessing from elsewhere does not lock you out. Wait 15 minutes, or set a new password with **Forgot your password?**, which lets you in at once.
 
 ## When you forgot your password, or have no account
 
