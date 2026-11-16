@@ -38,6 +38,7 @@ Administrators build a form in the console: see [Build a form](/portal/console/f
 
 - **Fields:** text, text area, number, email, phone number, web address, checkbox, select boxes, select, radio, day, time and currency.
 - **[Extension fields](/portal/sites/form-fields/):** a barcode or QR code, a barcode scanner, an IBAN and a signature.
+- **[Whole numbers, files and fields from JSON](/portal/sites/form-field-types/):** a whole number, files people upload before they send the form, and a zone of fields read from a JSON when the form opens.
 - **Layout:** panels, columns, fieldsets, tabs and wells, nested at most eight deep.
 - **Text blocks**, in the markup a site's pages allow.
 - **One submit button.**
@@ -65,7 +66,7 @@ People who may not send a form do not see it on a page, and its address answers 
 
 ## Put a form on a page
 
-In the [page builder](/portal/console/pages/#forms), **Add a form** to a part of the page. It offers the forms the site offers. A page shows at most five forms.
+In the [page builder](/portal/console/pages/#forms), **Add a form** to a part of the page. It offers the forms the site offers. A page shows at most five forms. A form can open in a [pop-up window](/portal/console/pages/#pop-up-windows) from a button.
 
 ## Its own address
 
