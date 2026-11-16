@@ -99,8 +99,8 @@ x-portal-csrf: <token>
 ```
 
 - The body is the file's bytes. Whoever may send the form may upload, with the same host, site, CSRF and visitor rules.
-- It answers 201 `{ id, name, size }`, or 400, 413 or 429 with `{ error, message, setting? }`. `error` is `file_extension`, `file_content`, `file_size`, `file_empty`, `file_name`, `too_many` (a visitor sent more than 30 in a minute from one address) or `too_many_files` (100 are waiting for a person, 200 for all the visitors of a form).
-- The last extension of the name, in lower case, must be in the field's list. The content must be what the extension says: a PDF's header, a JPEG's or PNG's signature, a compound file for `doc` and `xls`, the parts of an Office Open XML or OpenDocument ZIP with no macro, a ZIP, or UTF-8 text without NUL for `csv` and `txt`.
+- It answers 201 `{ id, name, size }`, or 400, 413 or 429 with `{ error, message, setting? }`. `error` is `file_extension`, `file_content`, `file_size`, `file_empty`, `file_name`, `too_many` (a visitor sent more than 30 in a minute from one address, a signed-in person more than 60), `too_many_files` (100 are waiting for a person to the form, and 100 for the visitors of one network) or `uploads_full` (the files that wait take 512 MB for the sender, 2 GB for all the visitors of the tenant, 4 GB for the whole tenant). Waiting uploads are counted and kept in one step per tenant, so uploads that come at once cannot pass the limit together.
+- The last extension of the name, in lower case, must be in the field's list. The content must be what the extension says, at the start of the file: a PDF's header at byte 0, a JPEG's or PNG's signature, a compound file for `doc` and `xls`, the parts of an Office Open XML or OpenDocument ZIP with no macro, a ZIP, or UTF-8 text without NUL for `csv` and `txt`. A file that starts as a program (ELF, Mach-O, or a Windows program's `MZ` header) is `file_content` whatever its extension, and an Office Open XML or OpenDocument file must start with the ZIP signature.
 - The name loses its path, control characters and edge spaces, keeps its diacritics, and is at most 200 characters with its extension.
 - The bytes go to the portal's files, under the form, never under the person's name.
 
@@ -110,7 +110,7 @@ x-portal-csrf: <token>
 - The count is checked again (`file_count`). Names that read the same without regard to capitals are dealt with as `duplicates` says: `report (1).pdf`; the newest stays; or 400 `file_duplicate` with the name. A reference to a file that was never uploaded this way is 400 `file_unknown`.
 - `validate.required` with no file is `required`.
 
-**Waiting.** An upload that no submission holds is deleted after 24 hours, unless the person's draft of the form names it. A draft keeps only references to the person's own waiting uploads.
+**Waiting.** An upload that no submission holds is deleted after 24 hours, unless the person's draft of the form names it. A draft keeps only references to the person's own waiting uploads. A visitor's upload is kept with the network it came from (`form_uploads.network`), which is what its limit counts. Erasing a person (GDPR) deletes the uploads they left waiting, rows and bytes; an upload whose submission is gone can no longer be sent.
 
 **Reading.** `GET /_portal/api/forms/<form>/submissions/<id>/files/<file>` is for the form's reviewers: for anyone else it is 404, checked at every download. It answers the bytes with `Content-Disposition: attachment`, `X-Content-Type-Options: nosniff` and a sandboxing `Content-Security-Policy`. The console lists the files as links. The CSV and the notification email carry their names only. Deleting a submission, or its retention purging it, deletes its files.
 

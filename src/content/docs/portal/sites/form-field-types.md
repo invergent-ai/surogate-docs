@@ -365,12 +365,13 @@ A refused file says why, beside its own row:
 ![Three files added: deed.pdf and id-card.png are Uploaded; scan.pdf is refused with "The file's content does not match the extension .pdf.".](../../../../assets/screenshots/portal-fields-files-page.png)
 
 - "This extension is not allowed. Accepted: pdf, jpg, png."
-- "The file's content does not match the extension .pdf.": the portal reads the start of the file, and it must be what its extension says: a PDF, a JPEG or PNG image, an Office or OpenDocument file without macros, a ZIP, or plain text for csv and txt. Renaming a file does not get it through.
+- "The file's content does not match the extension .pdf.": the portal reads the start of the file, and it must be what its extension says: a PDF (that starts with its header), a JPEG or PNG image, an Office or OpenDocument file without macros, a ZIP, or plain text for csv and txt. A program is never accepted, whatever it is called. Renaming a file does not get it through.
 - "The file is larger than 5 MB.", "The file is empty." and "The file has no valid name."
 - "No more than 3 files can be added."
 - "A file named deed.pdf is already there.": only when the field is set to **Refuse the new one**.
-- "Too many files sent from this address. Try again in a minute." A visitor may send 30 files a minute through one form.
-- "Too many files are waiting to be sent. Send the form or remove some." A person may have 100 files waiting, and the visitors of one form 200 between them.
+- "Too many files sent too fast. Try again in a minute." A visitor may send 30 files a minute through one form from one address, and a person who is signed in 60.
+- "Too many files are waiting to be sent. Send the form or remove some." A person may have 100 files waiting to one form, and so may the visitors of one network (an address, or for IPv6 the /64 network of a home). One visitor filling their own share leaves the others' alone.
+- "No more files can be kept waiting right now. Send the form or try again later." The files that wait take room in the portal's storage: 512 MB for one person or one network, 2 GB for all the visitors together and 4 GB for everyone, across the forms of the site. The room comes back when the files are sent or removed, and a file that waits goes after a day.
 - "The file could not be uploaded. Try again." and "Files cannot be uploaded right now."
 - "The file is no longer available. Upload it again.": the portal no longer holds a file that waited too long.
 
