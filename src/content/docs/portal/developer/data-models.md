@@ -225,7 +225,8 @@ A header's `POST` and `PATCH` take `lines`: a list of `{ "id"?, …fields }`, wr
 - `GET /_portal/api/data/<model>/<id>/transitions` answers the log: `items` with `from`, `to`, `transition`, `by` (`id`, `name`), `at` and `comment`.
 - GraphQL has `transition_<model>(id, to, transition, comment, values)`.
 - The action `changeState` takes `model`, `id`, `to` and, optionally, `comment` and `values`, all expressions.
-- `POST /_portal/api/data/<model>/recalculate` takes `{ "filter"? }` of filterable fields and works out again the fields calculated over other records, for people who may change every record. The action `recalculateRecords` takes `model` and `where`.
+- `POST /_portal/api/data/<model>/recalculate` takes `{ "filter"?, "after"? }`, `filter` of filterable fields, and works out again the fields calculated over other records, for people who may change every record, a page of 1,000 records at a time. It answers `{ "recalculated", "failed", "next" }`: ask again with `"after": <next>` until `next` is `null`. The action `recalculateRecords` takes `model` and `where` and goes through all the pages.
+- `GET /_portal/api/tenant/data/model-log?model=<id>&limit=<n>&before=<id>` is the model's log, newest first, for administrators: `{ "items": [{ "id", "at", "model", "recordId", "field", "rule", "line", "kind", "message" }], "next" }`.
 
 Calculated fields, fields written by the portal (the state, the figures kept of the checks, the flag of a value written by hand) and, for people not named in `editableBy`, a field with that key are refused when a write changes them.
 
