@@ -46,6 +46,7 @@ Administrators see **Build forms** at the top of the page: **New form** makes on
   - its name in each language;
   - the language its text is written in;
   - whether it goes step by step;
+  - where field labels go, as the default for every field: above, to the left or to the right;
   - the sites that offer it (none ticked: every site);
   - the thanks shown once it is sent, in each language.
   - whether people can leave the form and come back to it;
@@ -63,7 +64,7 @@ Administrators see **Build forms** at the top of the page: **New form** makes on
   - **Layout:** panels, columns, fieldsets, tabs, wells and text blocks.
   - **From apps:** the fields and option lists the approved [apps](/portal/console/apps/) give forms, each named with its app, such as **CRM: Signature**. It shows only when an app gives some. A select from an app shows where its options come from instead of its values. A form takes the options of at most 10 lists from apps.
 
-  Click a field to change it. **Display** sets its label, the text shown in it, its help, whether it is required, and its options. The **Key** is the name its answer is kept under; it follows the label until you change it. **Shown when** shows the field only when another field has a value. In a step-by-step form, each panel at the top is a step.
+  Click a field to change it. **Display** sets its label, the text shown in it, its help, where its [label goes and its instructions](/portal/sites/form-field-types/#label-position-and-instructions), whether it is required, and its options. A select can also search and take many values: see [Dropdown with search and with checkboxes](/portal/sites/form-field-types/#dropdown-with-search-and-with-checkboxes). **Slider** is in **More fields**: see [Slider](/portal/sites/form-field-types/#slider). The **Key** is the name its answer is kept under; it follows the label until you change it. **Shown when** shows the field only when another field has a value. In a step-by-step form, each panel at the top is a step.
 - **Steps:** what the form does once it is sent and kept. See [Steps](#steps) below.
 - **Translations:** a row for each text of the form, with a box for each of its sites' other languages. Every row needs a translation before the form can be saved.
 
