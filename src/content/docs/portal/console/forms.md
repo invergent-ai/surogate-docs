@@ -60,6 +60,7 @@ Administrators see **Build forms** at the top of the page: **New form** makes on
 - **Fields:** drag fields from the left onto the form, and drop them where they go.
   - **Fields:** text, text area, number, checkbox, select, radio, select boxes and the submit button.
   - **More fields:** email, web address, phone number, day, time and currency.
+  - **[Form fields](/portal/sites/form-field-types/):** **Whole number** among the fields, and **Files** and **Fields from JSON** among the more fields.
   - **Layout:** panels, columns, fieldsets, tabs, wells and text blocks.
   - **From apps:** the fields and option lists the approved [apps](/portal/console/apps/) give forms, each named with its app, such as **CRM: Signature**. It shows only when an app gives some. A select from an app shows where its options come from instead of its values. A form takes the options of at most 10 lists from apps.
 
