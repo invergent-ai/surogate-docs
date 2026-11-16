@@ -502,6 +502,15 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/sites/people-actions/"', page('/portal/sites/actions/'))
         self.assertIn('id="load-checks"', page('/portal/developer/people-actions/'))
 
+    def test_portal_personalization(self):
+        doc = page('/portal/sites/personalization/')
+        for anchor in ('segments', 'show-a-block-to-a-segment', 'pages-and-caches', 'limits'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/personalization/"', page('/portal/console/pages/'))
+        dev = page('/portal/developer/personalization/')
+        for anchor in ('a-segments-file', 'a-placements-audience', 'load-checks'):
+            self.assertIn(f'id="{anchor}"', dev)
+
     def test_portal_analytics(self):
         doc = page('/portal/sites/analytics/')
         for anchor in ('turn-it-on', 'what-is-counted-and-what-never-is', 'the-report', 'limits'):

@@ -41,6 +41,8 @@ Who sees and who edits a page, and who sees each block, are chosen with the pick
 
 Removing the last one chosen under **Who sees this page** or **Who sees this block** leaves **Only editors and administrators**, never more people. **Back to the default** returns to the default on purpose.
 
+**Show to**, in each block's row, shows the block only to some [segments](/portal/sites/personalization/), or to everyone except them. It chooses what people are shown, not what they may see.
+
 ## Write text
 
 A text block's text is written as in a word processor. Select text, then use the toolbar above it:
