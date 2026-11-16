@@ -516,6 +516,7 @@ class Content(unittest.TestCase):
         for anchor in ('make-an-experiment', 'who-is-in-it', 'run-it', 'results', 'limits'):
             self.assertIn(f'id="{anchor}"', doc)
         self.assertIn('href="/portal/sites/experiments/"', page('/portal/sites/analytics/'))
+        self.assertIn('href="/portal/sites/experiments/"', page('/portal/console/pages/'))
         dev = page('/portal/developer/experiments/')
         for anchor in ('an-experiments-file', 'a-placement-that-is-a-version', 'load-checks'):
             self.assertIn(f'id="{anchor}"', dev)
