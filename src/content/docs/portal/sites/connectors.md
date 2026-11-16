@@ -155,6 +155,8 @@ A SQL database connector names a database of your own: PostgreSQL, Microsoft SQL
 What keeps a database safe:
 
 - A statement is one statement. A read is a SELECT, and nothing else; it holds no lock. A change is an INSERT, UPDATE, DELETE, MERGE or CALL. Schema changes, grants, transactions, the database's own procedures and anything that reaches outside the database are never run.
+- The portal reads each statement before it sends it, as the engine would: a quote after a name, a comment the database runs (in MySQL, `/*! … */` and `/*+ … */`), a second statement with no `;` between (in SQL Server) and a function of the database's own behind quotes or escapes do not get past it. For PostgreSQL the database's own parser reads it a second time, and the statement is always sent apart from any other. These checks are a guard, not the lock: the real lock is the account's own rights.
+- **Give the connector an account that only reads**, and, where **Allow changes** is on, one that may change only the tables the statements need. A database cannot be made safe from an account that may do everything.
 - Values are never written into the text of a statement. They go to the database apart from it.
 - A read runs inside a read-only transaction. A database is asked for at most 5 statements at once.
 - A server's name is looked up once, and the portal connects to that address. A name that leads to an address on a private network is refused, unless the portal is installed to reach private networks, as for other connectors.

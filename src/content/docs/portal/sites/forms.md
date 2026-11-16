@@ -138,7 +138,7 @@ A **Select**, **Radio** or **Select boxes** field can take its options from some
 ![A form Waste report with the field Waste code: the option "Deseuri infectioase" is shown, taken from the model of waste codes.](../../../../assets/screenshots/portal-data-form-options.png)
 
 - The portal asks for the options, never the person's browser, and only for what that person may see: the model's permissions, or the source's **Who may use this source**, apply.
-- A field offers at most 1,000 options. The choice is checked again when the form is sent: a value the source does not offer that person is refused. The label of the choice is kept with the value.
+- A field offers at most 1,000 options at once; a longer list is chosen from by searching. The choice is checked again when the form is sent, by itself, however long the list has grown: a value the source does not offer that person is refused. The label of the choice is kept with the value.
 - A field can depend on another: when the county changes, the list of units is asked for again.
 - A form that anyone may send, signed in or not, cannot take options that depend on the person, or from a source only some may use.
 - When the options cannot be had, the field says "The options cannot be had right now."

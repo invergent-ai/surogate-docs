@@ -81,6 +81,8 @@ Rows added or removed this way are written to the connector's database as the co
 - The source's **Who may use this source** decides who reads it. Everyone else is told there is no such list.
 - A query over the portal's data goes further: whoever uses it reads only the records the models let them see.
 - A SQL source reads inside a read-only transaction, and a database is asked for at most 5 statements at once per connector. A query waits at most as long as the connector's time limit.
+- A query over the portal's data runs at most 3 at once for a portal; the next waits its turn, up to its own time limit, and is then told the portal is busy.
+- A source of form submissions that each person reads only their own is narrowed to the person's own where the submissions are kept, however many others there are.
 - A source reads at most as many rows as **Most rows** says. **Try it** says when there are more rows than it read, and a JSON web service that answers more than 5,000 rows is not shown, with a sentence saying so.
 
 ## Failures, in words

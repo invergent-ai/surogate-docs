@@ -51,7 +51,7 @@ Each column heading is a link: a click sorts by that column, and a second click 
 
 ![The listing Monthly reports sorted by County then by Period, filtered to a quantity of at least 100: the line "Quantity (kg): ≥ 100" with Clear filters, and the rows under it.](../../../../assets/screenshots/portal-data-listing-sorted.png)
 
-What is filtered shows as a line above the table, one entry for each filter, with **Clear filters**. The address of the page keeps the sort, the filters, the search and the page, so that a view can be shared or bookmarked.
+What is filtered shows as a line above the table, one entry for each filter, with **Clear filters**. The address of the page keeps the sort, the filters, the search and the page, so that a view can be shared or bookmarked. An address that names a column alone sorts on it going up, and a minus before it, going down.
 
 ## Group
 
