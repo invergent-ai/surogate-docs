@@ -502,6 +502,7 @@ export default defineConfig({
                 'portal/console/audit',
                 'portal/console/tokens',
                 'portal/console/tenants',
+                'portal/console/operate',
                 'portal/console/studio',
                 'portal/console/sites',
                 'portal/console/pages',
