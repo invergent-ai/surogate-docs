@@ -17,7 +17,7 @@ In the console, **Segments** lists the tenant's segments and how many people wit
   - **Role**: administrators.
   - **In the organization**: an organization, which holds the people of every organization under it too.
   - **A field of theirs**: one of the [user fields](/portal/console/users/) *is*, *is not*, *contains* (text), *is more than* or *is less than* (numbers and dates), *is filled in* or *is empty*. Text is compared without regard to case.
-  - **Pages they visited**: a page of a site that remembers pages, or any page under it, at least so many times in the last so many days (up to 395). See [Remembered pages](#remembered-pages).
+  - **Pages they visited**: a page of a site that remembers pages, or any page under it (the home page `/` counts alone), at least so many times in the last so many days (up to 395). See [Remembered pages](#remembered-pages).
   - **The page's language**.
   - **Their device**: a phone, a tablet or a computer. An iPad that asks for desktop sites counts as a computer.
 
@@ -42,7 +42,8 @@ A group of blocks works the same way, for all its blocks: this is how a page has
 A site remembers the pages signed-in people visit only when you turn it on: in **Sites**, open the site, and under **Personalization** tick **Remember the pages signed-in people visit**. Then:
 
 - Each page a signed-in person opens is counted once per view, per day, by the page's own path: the home page by its path, an entry by the display page that shows it. Visitors who are not signed in are never remembered, nor an administrator seeing the portal as someone.
-- What is kept is kept 13 months, then removed. Turning the setting off removes what the site kept within six hours.
+- Days are counted by calendar day in UTC: "the last 1 day" is since midnight UTC.
+- What is kept is kept 13 months, then removed. Turning the setting off removes what the site kept as soon as the change is live. A site's pages that a segment's **Pages they visited** rule names cannot stop remembering until that rule is changed or removed.
 - A segment's **Pages they visited** rule can then use it.
 
 **Tell your people.** Remembering pages is personal data: say so in your privacy notice. Each person sees the pages kept of the last 30 days on their account page (**My account**, **Pages you visited**), clears them, or stops sites remembering theirs; stopping removes what was kept at once. A person's data export lists the pages kept, and erasing them removes them.
