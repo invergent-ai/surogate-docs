@@ -1,6 +1,6 @@
 ---
 title: Health, logs and updates
-description: For install administrators: whether what the portal needs answers, who is told when something is down, the servers' warnings and errors, and which version runs.
+description: "For install administrators: whether what the portal needs answers, who is told when something is down, the servers' warnings and errors, and which version runs."
 ---
 
 These pages are for **install administrators**, on the main portal's console, next to **Tenants**.
