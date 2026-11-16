@@ -169,9 +169,11 @@ POST /_portal/api/forms/<form>/fields/<key>
 { "locale": "en", "values": { "waste_code": "18 01 03" }, "site": "main", "replaces": "<token>" }
 ```
 
-- It answers 200 `{ token, fields, components }`, 502 `fields_unavailable` when the source cannot be read (an error, no answer in 5 seconds, a status that is not 2xx), 422 `fields_refused` with `reason` (and `field`) when the JSON is read but refused, or 429 `too_many` past 60 asks a minute from one place.
+- It answers 200 `{ token, fields, components }`, 502 `fields_unavailable` when the source cannot be read (an error, no answer in 5 seconds, a status that is not 2xx), 422 `fields_refused` with `reason` (and `field`) when the JSON is read but refused, 429 `too_many` past 60 asks a minute from one place, or 429 `fields_full` when the person (or, for a visitor, the place) already holds 100 descriptions and `replaces` names none of them.
 - A `value` or `web` source is read by the actions' own engine: its connectors, credentials, guarded calls and time limit are those of every form action. A visitor's call is made as a visitor.
-- The portal keeps what it served for 24 hours under `token`.
+- The portal keeps what it served for 24 hours under `token`. Asking again for the same description (the same form, container, source answer, asker and values of the `dependsOn` fields) gives the same `token` and starts its 24 hours over: no row is added.
+- `replaces` is the token the page holds. When the page asks again for other values, the row it names is dropped, if it is the asker's own; a token that is another's, or none the portal keeps, replaces nothing.
+- The token belongs to the asker: the person signed in, or a visitor. It is kept with the values of the `dependsOn` fields it was asked for.
 
 **Sending.** The form is sent with the values under the container's key and the tokens:
 
@@ -180,7 +182,7 @@ POST /_portal/api/forms/<form>/fields/<key>
 ```
 
 - The values are checked as the form's own fields are, against the fields served under the token, not against what the source says now. A name the fields do not have is `unknown_field`; the errors name `load.cantitate`.
-- A container that served nothing and was sent nothing is left out of the submission, unless it is required (`fields_unavailable`). Values sent with no token the portal knows are `fields_expired`.
+- A container that served nothing and was sent nothing is left out of the submission, unless it is required (`fields_unavailable`). Values sent with no token the portal knows are `fields_expired`; so are values sent with a token that was served to someone else (a visitor's token sent by a person signed in, or the reverse), or for other values of the `dependsOn` fields than the form holds when it is sent. The page asks for the fields again.
 
 **In actions.** The values are `form.<key>.<field>`, such as `form.load.cantitate`, in the form's [actions](/portal/developer/actions/). The Forms page, the CSV export and the notification email show them as `cantitate: 120`.
 
