@@ -43,6 +43,8 @@ Removing the last one chosen under **Who sees this page** or **Who sees this blo
 
 **Show to**, in each block's row, shows the block only to some [segments](/portal/sites/personalization/), or to everyone except them. It chooses what people are shown, not what they may see.
 
+**Experiment**, in each block's row, makes the block (or group) one version of an [experiment](/portal/sites/experiments/): choose the experiment, then its **Version**. The block is shown only to the people who see that version. An experiment whose goal is this page is not offered.
+
 ## Write text
 
 A text block's text is written as in a word processor. Select text, then use the toolbar above it:
