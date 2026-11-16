@@ -66,7 +66,7 @@ Administrators bind a form on [Forms](/portal/console/forms/#build-a-form). **Ne
 
    ![The settings of the Waste panel: its title, Active when with the condition no_beds_in_use != true, and its key.](../../../../assets/screenshots/portal-forms-model-section-edit.png)
 
-   The condition belongs to the fields in the section, so it holds wherever they are written: in another form, in a listing's dialog, through the API. Two forms cannot put one field under different conditions, and a step of a step-by-step form cannot have one (put it on a section inside the step). A condition that cannot be worked out counts as false.
+   The condition belongs to the fields in the section, so it holds wherever they are written: in another form, in a listing's dialog, through the API. Two forms cannot put one field under different conditions, and a form that shows the field outside the section does not fit one that puts it under a condition (the condition would hide the field there): put the same condition on both. A model's own form follows the model as it is. A step of a step-by-step form cannot have a condition (put it on a section inside the step). A condition that cannot be worked out counts as false.
 
 A form has one grid, and a form bound to a model is not filled in offline and keeps no drafts of its own: the record is saved as a draft record instead.
 
@@ -86,7 +86,7 @@ A listing without a form keeps its small dialog for **Add** and **Edit**. For a 
 
 ## Who sees and does what
 
-- The form is for people signed in. A visitor sees the form run the model's checks as they type, and sends it as any form is sent; the portal's data is written only by a person signed in.
+- A person signed in saves with the form's own buttons, and the record is written as they are. A visitor, where the form is open to everyone, sends it as any form is sent, with the rows written in the grid; the record is made by the form's **Create a record** action, with the same checks, and the visitor does not see the record again. A model's own form makes the record and carries the rows. A form open to everyone that is bound to a model must have that action, or the portal refuses it.
 - What a person may change in a record, field by field, comes from the model: its permissions, the rights set on a field, the state the record is in and its lock.
 - The portal checks everything again when the record is saved, however it is sent: the form, a listing's dialog, the API or an action. The form is the first look, not the check.
 - What the portal calculates is never sent by the form; a value taken from another record is sent only when the person wrote it themselves.

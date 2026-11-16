@@ -380,6 +380,10 @@ class Content(unittest.TestCase):
             self.assertIn('href="/portal/sites/model-forms/', page(route), route)
         self.assertIn('id="a-form-bound-to-a-model"', page('/portal/developer/forms/'))
         self.assertIn('href="/portal/developer/forms/#a-form-bound-to-a-model"', guide)
+        # What a form bound to a model sends to every browser, and what a form open to everyone must do.
+        developer = page('/portal/developer/forms/')
+        for text in ('Everything the model says is in the page', 'public_no_record', 'public_no_lines'):
+            self.assertIn(text, developer, text)
         # What the guide shows is the portal's own screens, one picture each.
         source = (PORTAL / 'sites/model-forms.md').read_text()
         for shot in ('forms-model-setting', 'forms-model-builder', 'forms-model-lines-edit', 'forms-model-sheet',
