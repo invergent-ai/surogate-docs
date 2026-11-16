@@ -168,6 +168,61 @@ A page template is a page's starting point: a layout and what its parts hold.
 
 **Add a form** puts one of the portal's forms in a part of the page; it offers the forms the site offers, at most five on a page. People who may not send the form do not see it. See [Forms](/portal/sites/forms/) for writing a form and saying who sends it.
 
+## Pop-up windows
+
+A pop-up window opens over the page, from a button or a link, and holds other blocks, usually a form. People stay on the page: the page behind the window is dimmed, and cannot be used until the window is closed.
+
+### A pop-up window block
+
+1. In the part of the page where it goes, press **Add…**, then **Pop-up window**.
+2. Open its row. Write the **Window title**, once for each language of the site. It is shown at the top of the window and read out by screen readers.
+3. Write the **Button text**, once for each language, to put a button on the page that opens the window. Without button text, the window opens only from a link to `#popup-` and the block's id, such as `#popup-feedback`. The row shows the link it needs.
+4. Put in the window what it holds: press **Add…** inside its row, or drag a block into it. With the keyboard, **Move into pop-up window** moves a block into it.
+
+![The page editor with a pop-up window opened: its Window title in Romanian and in English, its Button text, and the link it opens from, #popup-feedback; beside it, the page as visitors see it.](../../../../assets/screenshots/portal-popups-block-editor.png)
+
+- The editor asks for the title in every language, and for the button text in every language once it is written in one.
+- A pop-up window holds no other pop-up window. Put the second one beside the first.
+- A window shows only when something in it shows to the person: a form they may not send takes its window with it.
+- A page shows at most five [forms](#forms), and the ones in pop-up windows count.
+
+### A form that opens in a pop-up window
+
+A form needs no window block to open in one. **Add a form…**, open the form's row and tick **Open in a pop-up window**. The page then shows a button, and the form opens in a window over the page. **Button text** is in each language; left empty, the button carries the form's name.
+
+![The page editor with a form opened: Open in a pop-up window is ticked, and the Button text is "Ask us to call you" in Romanian and in English; beside it, the page as visitors see it.](../../../../assets/screenshots/portal-popups-form-editor.png)
+
+### A listing's Add and Edit
+
+A [listing](/portal/sites/listings/) opens its own small form for **Add** and **Edit**. Under **Add opens this form in a pop-up window** and **Edit opens this form in a pop-up window**, in the listing's row, choose one of the site's forms for either. **Add** or **Edit** then opens that form in a pop-up window. **Edit** fills it in with the record's values, in the fields whose **Key** is the model's field name. Left empty, a button keeps the listing's own window.
+
+![The page editor with a Listing opened: the data model Requests, People may add records with Add opens this form in a pop-up window set to Add a request, and People may change records with Edit opens this form in a pop-up window set to Change a request.](../../../../assets/screenshots/portal-popups-listing-editor.png)
+
+A person who may not send the form is not offered its button. The form's [steps](/portal/sites/actions/#close-a-pop-up-window) save the record and close the window.
+
+### What people see
+
+![A help page with two buttons, Ask us to call you and Leave feedback.](../../../../assets/screenshots/portal-popups-page.png)
+
+The button opens the window over the page, with its title and a button to close it. The window holds what the page put in it: the feedback form here.
+
+![The Leave feedback window open over the dimmed page: its title, a close button and the form, filled in.](../../../../assets/screenshots/portal-popups-open-feedback.png)
+
+- **Esc** or the close button, **Close the window**, closes it. **Tab** stays inside the window, and focus goes back to the button that opened it.
+- Closing a window with something typed in its form asks "Discard your changes?". A window never closes while its form is being sent, and a form that was sent closes without asking.
+- A form in a window is new each time the window opens.
+- A form's thanks shows in its window, which stays open until the person closes it. The form's [steps](/portal/sites/actions/#close-a-pop-up-window) can close the window once the form is sent.
+
+![A booking form's window after it was sent: the title Book a visit and the thanks, Thank you! Your visit is booked.](../../../../assets/screenshots/portal-popups-thanks.png)
+
+On a listing that opens forms, **Add** and **Edit** open the forms the page chose:
+
+![The Requests listing as an administrator sees it: a search box, Add, and the requests with Open and Edit beside each.](../../../../assets/screenshots/portal-popups-listing-page.png)
+
+![The Requests listing with an Edit window open: "Change a request" holds Andrei Popescu and the note Wants a second copy of the deed.](../../../../assets/screenshots/portal-popups-open-edit.png)
+
+Developers: see [Developer: Page layouts](/portal/developer/layouts/#a-pop-up-window).
+
 ## Display pages
 
 A display page shows one entry at a time: each published entry of a content type gets its own address, the page's address followed by the entry's. A display page at `/stire` shows the entry `program-de-iarna` at `/stire/program-de-iarna`.

@@ -28,6 +28,20 @@ regions:
 - `columns`: the fields shown, at most 8; links are not shown in columns. Left out, the title and up to 3 more fields.
 - `filters`: filterable fields to filter on, by exact value: text, numbers, dates, yes or no.
 - `add`, `edit`, `delete`: whether the listing offers them. The model's [permissions](/portal/sites/data-models/#who-may-do-what) still decide who may.
+- `addForm`, `editForm`: the id of a form of the site that **Add** or **Edit** opens in a [pop-up window](/portal/developer/layouts/#a-pop-up-window), instead of the listing's own window. They belong to `add` and `edit`.
+
+```yaml
+      preferences:
+        model: requests
+        add: true
+        edit: true
+        addForm: request-add
+        editForm: request-edit
+```
+
+- **Edit** fills the form in with the record's values, in the fields whose key is the model's field name, and sends the record's id, which the form's actions read as `submission.record`. The form saves the record itself, for example with `updateRecord` on `id: submission.record`.
+- A person who may not send a form is not offered its button. Both forms count among the page's five.
+- The form's `closeFormPopup` action, with `reload: listing`, closes the window and has the listing ask for its rows again.
 
 ## A model's own page
 

@@ -29,6 +29,7 @@ On [Pages](/portal/console/pages/#the-portals-widgets), add **Listing** with **A
 - **Columns**: the fields to show, at most 8, none of them a link. None ticked: the title field, then the first fields that are not links, four in all.
 - **Filters**: the fields people may filter by. It lists only the fields the model marks filterable.
 - **People may add records**, **People may change records** and **People may remove records**: whether the listing offers **Add**, **Edit** and **Delete**.
+- **Add opens this form in a pop-up window** and **Edit opens this form in a pop-up window**: one of the site's forms for either button, in place of the listing's own small form. See [Pop-up windows](/portal/console/pages/#a-listings-add-and-edit).
 
 Developers: see [Developer: Listings](/portal/developer/listings/#a-listing-on-a-page).
 

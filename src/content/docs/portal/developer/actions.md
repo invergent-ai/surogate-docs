@@ -164,6 +164,15 @@ A form's actions can tell the page what to do once everything else is done. Thes
 | `notify` | Shows a notice above the thanks; `{{ vars.name }}` puts in a value an action set | `text`, in each language; `tone`: `info`, `success` or `warning` |
 | `startGuide` | Starts a [user guide](/portal/sites/guides/) that applies to this page | `guide` |
 | `reload` | Reloads the page after a moment | |
+| `closeFormPopup` | Closes the [pop-up window](/portal/developer/layouts/#a-pop-up-window) of the form that ran it | `reload`: `none` (the default), `page` or `listing` |
+| `closePopup` | Closes the pop-up window the form is in | `popup`: the id of a pop-up window block, none for the window the form is in; `reload` as above |
+
+A close action closes its window once the run ends. `reload` then reloads nothing (`none`), the page (`page`), or the listings on the page (`listing`: they ask their rows again, with no page load).
+
+- The form tells the page which window it is in when it is sent: `popup: "window:<id>"` for a form in a pop-up window block, and `popup: "form:<id>"` for a form in a window of its own (opened by its own button, or by a listing's Add or Edit). A form sent from anywhere else has none.
+- In a form that is in no such window, both actions do nothing, say so in the run's log, and leave the page's answer without them. `closePopup` with a `popup` that is not the window the form is in closes nothing.
+- A `popup` that no page of a site that offers the form has as a pop-up window block is refused (`unknown_popup`).
+- Like the other UI actions, they do not end the run, count among the 10, and are refused in flows. A `redirect` wins over them.
 
 ## When something fails
 
