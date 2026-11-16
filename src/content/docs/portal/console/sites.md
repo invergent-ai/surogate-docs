@@ -62,6 +62,7 @@ Each is a picker: **Add…** opens the choices, and **Remove** takes one away. S
 What search engines and link previews show for the whole site. A page's own description and image win over the site's. See [Search engines and link previews](/portal/sites/seo/).
 
 - **Description**: one per language of the site.
+- **Keywords**: for each language, words for the pages that have none of their own. Type a word, then **Enter** or a comma. See [Keywords](/portal/console/pages/#keywords).
 - **Image for link previews**: the address of an image shown when a link to the site is shared.
 - **Organization**, **Organization's address** and **Organization's logo**: who is behind the site. The address and the logo are kept only with the organization's name.
 - **Search engines may list the site**: untick it to ask search engines to leave the whole site out.
@@ -85,6 +86,16 @@ Whether the site's visits and page views are counted, and how. See [Analytics](/
 - **Recognise signed-in people who consent, by a code of their account**: only with consent asked.
 
 The part shows only when the install has an analytics service. A site with analytics on has **Analytics** on **Sites**, its report.
+
+## Who may add, move and remove pages
+
+On a site's settings, three more pickers say who may change the pages' structure on the whole site, for the pages that say nothing of their own:
+
+- **Who adds pages**: on the first level too, and under every page that names nobody of its own.
+- **Who moves pages**.
+- **Who removes pages**.
+
+By default each is **Only administrators**. A page can give more for its own pages, in its settings. See [Pages](/portal/console/pages/#who-may-add-move-and-remove-pages).
 
 ## When a save is refused
 

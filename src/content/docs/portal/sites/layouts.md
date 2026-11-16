@@ -32,6 +32,7 @@ A layout marks the places where a page's content goes:
 - **Regions:** the main content of the page, in a region called `main`, which every layout needs. A layout can add others, such as `aside`, each name once; the page's content goes in them by name.
 - **The title:** the page's title, as its heading; at most once. Without a place for it, the title opens the main region.
 - **The languages:** links to the same page in each of the site's languages; at most once.
+- **A menu:** one of the site's [menus](/portal/sites/menus/), by its id, such as the main menu (`principal`); each menu at most once. A layout that places a menu the site does not have is refused, naming it. The portal's own layouts show the main menu above the page.
 
 A frame for one language has the same regions as the layout's frame for every language. For now, this is set in the site's configuration: see [Developer: Give a site its own layout](/portal/developer/layouts/#the-marked-places).
 
