@@ -52,7 +52,9 @@ Administrators see **Build forms** at the top of the page: **New form** makes on
   - who is told by email when it is sent, and whether the email holds the answers;
   - whether people must agree to a text before sending, and that text in each language;
   - how many days submissions are kept (empty: always).
-  - whether a public form can be filled in offline at its own address.
+  - whether a public form can be filled in offline at its own address;
+  - whether visitors must pass the anti-robot check before a public form is sent: **Ask visitors to pass the anti-robot check before it is sent**;
+  - whether people signed in must confirm who they are again when they send it, if they have not lately: **Ask people to confirm who they are again when they send it, if they have not lately**.
 - **Who can use it:** who sends the form and who reads what was sent. Each uses the picker described in [Choose who](/portal/sites/permissions/#choose-who): **Add…** opens the choices, and **Remove** takes one away.
   - **Anyone may send it, signed in or not**: tick it to make the form public.
   - **Who may send it**: by default **Its reviewers only**. It says: "Reviewers also send it. To let anyone send it, make it public." It is off while **Anyone may send it, signed in or not** is ticked. It offers no **Everyone**: to let everyone send the form, make it public.

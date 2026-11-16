@@ -63,6 +63,22 @@ Both are set in the form builder, on the **Who can use it** tab: see [Build a fo
 
 People who may not send a form do not see it on a page, and its address answers as if there were no form.
 
+## Ask people to confirm who they are
+
+A form that changes something important can ask the person to prove who they are again before it is sent. In the form builder, tick **Ask people to confirm who they are again when they send it, if they have not lately**. It is for forms people sign in to send: it cannot be ticked for a public form, whose visitors have no account to confirm, nor for a form bound to a data model, which asks through its model's own moves (see [Confirm a move](#confirm-a-move)).
+
+When the person sends the form and has not proved who they are within the minutes set in [Sign-in policy](/portal/console/sign-in-policy/#confirming-it-is-you-again), the page opens the window **Confirm it is you**: the password, and the code or passkey of the second step, or a button back to the provider for someone who signs in there. What they wrote stays; once they confirm, the form is sent. If they cancel, nothing is sent. Signing in counts as proof. The portal asks every time, not only the page: a form sent without the proof is refused.
+
+## Confirm a move
+
+A [data model](/portal/sites/data-models/) with states can ask for the same proof before a move from one state to another. In the model editor, on the **States** tab, tick **Asks the person to confirm who they are again** on the move. The record page, the listing's dialog and every other way of making the move (the data API, GraphQL, and a new record made with its move) refuse the move to someone who has not proved who they are lately, and the pages open the same window and make the move once it is confirmed. An action an administrator wrote makes its moves without asking: nobody sits there to answer, and an administrator chose it. An API token is not asked either.
+
+## Keep robots out of a public form
+
+A public form can ask visitors to pass the portal's own anti-robot check before anything is kept. In the form builder, tick **Ask visitors to pass the anti-robot check before it is sent**. The visitor's browser solves a small puzzle in the background, in a second or two, and sends the answer with the form; nothing leaves the portal. A solution works once. A visitor who fails the check is refused and counted against their network address, as at sign-in. People signed in are not asked. The setting is for public forms that are not filled in offline, since what is sent offline goes later and its puzzle would have run out. How hard the puzzle is, is set in [Sign-in policy](/portal/console/sign-in-policy/#anti-robot-check).
+
+A public form whose steps ask for a new account must carry the check. The step that asks for an account refuses a visitor who has not passed it, and says so.
+
 ## Put a form on a page
 
 In the [page builder](/portal/console/pages/#forms), **Add a form** to a part of the page. It offers the forms the site offers. A page shows at most five forms.
