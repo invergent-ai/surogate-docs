@@ -1,6 +1,6 @@
 ---
 title: Personalization
-description: Group people into segments by who they are or how they visit, and show some blocks of a page, or a group of them, only to a segment.
+description: Group people into segments by who they are, the pages they visited or how they visit, and show some blocks of a page, or a group of them, only to a segment.
 ---
 
 A page can show different blocks to different people. A town hall shows "Pay your taxes online" to signed-in residents, a short welcome to everyone else, and an "Install the app" banner to visitors on phones. You do it in two steps: make **segments**, groups of people defined by rules, then choose who each block is shown to.
@@ -17,10 +17,11 @@ In the console, **Segments** lists the tenant's segments and how many people wit
   - **Role**: administrators.
   - **In the organization**: an organization, which holds the people of every organization under it too.
   - **A field of theirs**: one of the [user fields](/portal/console/users/) *is*, *is not*, *contains* (text), *is more than* or *is less than* (numbers and dates), *is filled in* or *is empty*. Text is compared without regard to case.
+  - **Pages they visited**: a page of a site that remembers pages, or any page under it, at least so many times in the last so many days (up to 395). See [Remembered pages](#remembered-pages).
   - **The page's language**.
   - **Their device**: a phone, a tablet or a computer. An iPad that asks for desktop sites counts as a computer.
 
-The language and device rules hold for visitors who are not signed in too; every other rule needs a signed-in person. The count on **Segments** is of people with an account: exact, or "up to" and "at least" when a segment turns on the language or device of the page being shown.
+The language and device rules hold for visitors who are not signed in too; every other rule needs a signed-in person. The count on **Segments** is of people with an account: exact, or "up to" and "at least" when a segment turns on the language or device of the page being shown, or on the pages people visited.
 
 A segment that blocks are shown to cannot be removed: change those blocks first.
 
@@ -35,6 +36,18 @@ In the page editor, open a block's row. **Show to** chooses:
 A group of blocks works the same way, for all its blocks: this is how a page has variants. Put each variant in a group shown to its segment, and one more group shown to everyone except them. Someone in two segments sees both groups, so make segments that do not overlap when only one variant should show.
 
 **Show to chooses what people are shown, not what they may see.** A block's text shown only to a segment is still the page's: what must stay hidden uses **Who sees this block** (see [Who sees and who edits](/portal/console/pages/#who-sees-and-who-edits)). Search never finds the text of a block shown only to some segments.
+
+## Remembered pages
+
+A site remembers the pages signed-in people visit only when you turn it on: in **Sites**, open the site, and under **Personalization** tick **Remember the pages signed-in people visit**. Then:
+
+- Each page a signed-in person opens is counted once per view, per day, by the page's own path: the home page by its path, an entry by the display page that shows it. Visitors who are not signed in are never remembered, nor an administrator seeing the portal as someone.
+- What is kept is kept 13 months, then removed. Turning the setting off removes what the site kept within six hours.
+- A segment's **Pages they visited** rule can then use it.
+
+**Tell your people.** Remembering pages is personal data: say so in your privacy notice. Each person sees the pages kept of the last 30 days on their account page (**My account**, **Pages you visited**), clears them, or stops sites remembering theirs; stopping removes what was kept at once. A person's data export lists the pages kept, and erasing them removes them.
+
+An administrator sees a person's segments and the pages they visited on the person's page under **Users**: **Profile**, **Show the profile**. Each look is kept in the audit log.
 
 ## Pages and caches
 
