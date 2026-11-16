@@ -41,7 +41,7 @@ When the portal has no address you may use, the page says to ask the installatio
 
 ## Change a site's settings
 
-Open **Settings** on a site. The settings are in three parts, saved together with **Save**.
+Open **Settings** on a site. The settings are in four parts, saved together with **Save**.
 
 **General**
 
@@ -75,6 +75,16 @@ Who may invite people to the site. See [Invitations](/portal/console/invitations
 - **The site's editors may invite people**: when it is not ticked, only administrators invite.
 - **Groups people are invited into**: 10 at most.
 - **Email domains people may be invited from**: one per line, such as `primarie.ro`. Editors may then invite only those domains, matched exactly. When there are none, they may invite any address.
+
+**Analytics**
+
+Whether the site's visits and page views are counted, and how. See [Analytics](/portal/sites/analytics/).
+
+- **Count this site's page views**: the first save makes the site's place in the install's analytics service.
+- **Ask visitors' consent to recognise them on later visits**.
+- **Recognise signed-in people who consent, by a code of their account**: only with consent asked.
+
+The part shows only when the install has an analytics service. A site with analytics on has **Analytics** on **Sites**, its report.
 
 ## When a save is refused
 

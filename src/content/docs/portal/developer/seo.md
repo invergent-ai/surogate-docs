@@ -38,3 +38,21 @@ seo:
 - `description` and `image`: the same for all the site's pages; a page's own win.
 - `organization`: who is behind the site, with its `name`, `url` and `logo`.
 - `index: false` asks search engines to leave the whole site out.
+
+## A site's `analytics`
+
+Whether the site's page views are counted by the install's analytics service. In `site.yaml`:
+
+```yaml
+analytics:
+  on: true
+  consent: true
+  userId: true
+```
+
+- `on`: count the site's page views. The site's place in the analytics service is made from the console (saving the site's settings, or **Start counting this site's page views** on its report), never written here.
+- `consent: true` asks visitors' consent before recognising them on later visits.
+- `userId: true` recognises signed-in people who consented by a code of their account; without `consent: true` it is refused (`analytics_user_id`).
+
+See [Analytics](/portal/sites/analytics/).
+
