@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parent.parent
 UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'assistants.md', 'blogs.md', 'calendar.md',
                   'comments.md', 'connectors.md', 'content-types.md', 'data-models.md', 'endpoints.md', 'environments.md',
                   'flows.md', 'form-fields.md', 'forms.md', 'forums.md', 'guides.md', 'jobs.md', 'kpis.md', 'layouts.md', 'listings.md',
+                  'model-lines-states.md', 'model-logic.md',
                   'notifications.md', 'permissions.md', 'polls.md', 'search.md', 'seo.md', 'values.md', 'wiki.md')
 
 # The console pages written the same way.
@@ -19,8 +20,10 @@ CONSOLE_PAGES = ('data-console.md', 'files.md', 'invitations.md', 'sites.md')
 DEVELOPER_ONLY = ('index.md', 'command-line.md', 'develop-locally.md', 'check-a-site.md', 'previews.md', 'agents.md',
                   'build-an-app.md', 'design.md')
 
-# Code a person types into a console screen, not config: search synonyms and pinned results, a data console query.
-TYPED_IN_THE_CONSOLE = {'console/search.md': '', 'console/data-console.md': 'sql'}
+# Code a person types into a console screen, not config: search synonyms and pinned results, a data console query,
+# the expressions of a model's rules and calculations.
+TYPED_IN_THE_CONSOLE = {'console/search.md': '', 'console/data-console.md': 'sql',
+                        'sites/model-logic.md': 'text', 'sites/model-lines-states.md': 'text'}
 
 PORTAL = ROOT / 'src/content/docs/portal'
 

@@ -17,7 +17,7 @@ A data model is a kind of record the portal keeps for you: customers, requests, 
 
 A model has a name, in Romanian and English, a title field that names a record in lists, its fields, and its permissions. The Data page lists each model's name and id.
 
-On **Data**, **New model** makes one and **Edit** changes one. The editor has four tabs: **Fields**, **Access**, **Pages** and **Figures**. **Save** stays off until the model has an id, a name in each language and at least one field; what is still missing is listed above the form, and a problem shows at the field that has it.
+On **Data**, **New model** makes one and **Edit** changes one. The editor has eight tabs: **Fields**, **Rules**, **Lines**, **States**, **Lock**, **Access**, **Pages** and **Figures**. The first four after Fields, and the **Behaviour** area of each field, are described in [Calculated fields and checks](/portal/sites/model-logic/) and [Lines, values from other records and states](/portal/sites/model-lines-states/). **Save** stays off until the model has an id, a name in each language and at least one field; what is still missing is listed above the form, and a problem shows at the field that has it.
 
 ![The model editor on its Fields tab: the model cereri, its name in each language, and its fields, each with its type, its label in each language and its options.](../../../../assets/screenshots/portal-model-edit.png)
 
@@ -35,6 +35,7 @@ Developers can also write a model as a file: see [Developer: Data models](/porta
 | Long text | Text, up to 1,000,000 characters |
 | Number | A number |
 | Amount | An amount with up to 4 decimals |
+| Exact decimal | A number kept exactly, with 0 to 6 places that you choose; sums and comparisons never drift, and a point is its separator |
 | Date, Date and time, Time | A day, a day and a time, or a time of day |
 | Yes or no | Yes or no |
 | Email, Phone, Web address | Checked as what they are; a web address is http, https or mailto |
@@ -52,6 +53,10 @@ Removing a saved field keeps its values in the table, and the editor says so. A 
 A link to a record that is deleted is cleared; a record's own links to others go with it.
 
 Developers: see [Developer: Data models](/portal/developer/data-models/#fields).
+
+## What a model can do with its values
+
+A field can be calculated by the portal, required only when it applies, taken from another record, changeable by some people only, and checked against other fields. A model can have lines, states with moves between them, and a lock after a date. See [Calculated fields and checks](/portal/sites/model-logic/) and [Lines, values from other records and states](/portal/sites/model-lines-states/).
 
 ## Who may do what
 
