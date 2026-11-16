@@ -9,7 +9,7 @@ Every time a change to the portal's sites is saved, the portal keeps it as a ver
 
 ## What the list shows
 
-- Each version's description, who saved it and when.
+- Each version's description, who saved it and when. When several administrators worked on the same item together before one of them saved, the line reads, for example, **Ana Pop, with changes by Mihai Ionescu**; see [Working together](/portal/console/collaboration/).
 - **Live** marks the version visitors see now. Usually it is the newest. If the newest could not go live, the page says **The newest version is not live yet**; press **See what is not live** to compare it with the live version, or **Make it live** to try again.
 - **Moved into the portal** is the version the portal started from, when the sites were moved in. It cannot be undone.
 - **Undid an earlier change** is an undo.
