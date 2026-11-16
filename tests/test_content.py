@@ -511,6 +511,15 @@ class Content(unittest.TestCase):
         for anchor in ('a-segments-file', 'a-site-that-remembers-pages', 'a-placements-audience', 'load-checks'):
             self.assertIn(f'id="{anchor}"', dev)
 
+    def test_portal_experiments(self):
+        doc = page('/portal/sites/experiments/')
+        for anchor in ('make-an-experiment', 'who-is-in-it', 'run-it', 'results', 'limits'):
+            self.assertIn(f'id="{anchor}"', doc)
+        self.assertIn('href="/portal/sites/experiments/"', page('/portal/sites/analytics/'))
+        dev = page('/portal/developer/experiments/')
+        for anchor in ('an-experiments-file', 'a-placement-that-is-a-version', 'load-checks'):
+            self.assertIn(f'id="{anchor}"', dev)
+
     def test_portal_analytics(self):
         doc = page('/portal/sites/analytics/')
         for anchor in ('turn-it-on', 'what-is-counted-and-what-never-is', 'the-report', 'limits'):

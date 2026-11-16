@@ -15,7 +15,7 @@ In the console, open **Sites**, then **Settings** on a site. Under **Analytics**
 
 ## What is counted, and what never is
 
-- **No cookie** is set, whether a visitor consents or not.
+- **No cookie** is set without consent. With consent, and only while an [experiment](/portal/sites/experiments/) runs, the portal sets one cookie for the site, holding the same random code, so that the visitor sees the same version of the experiment. It lasts a day, renewed by each page, and goes at once when they say no.
 - **Without consent**, visits are counted without recognising anyone again: the same person on two days counts as two visitors.
 - **With consent**, the browser keeps a random code for the site, and the visitor is recognised on later visits. The site's other settings, and other sites on the same address, ask on their own.
 - A browser that asks not to be tracked (Global Privacy Control, Do Not Track) is never asked, and never recognised.
