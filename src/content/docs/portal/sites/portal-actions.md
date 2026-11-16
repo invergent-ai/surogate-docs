@@ -15,6 +15,8 @@ The **Portal administration** actions do from an action list what an administrat
 - **Who may run them.** A **job** only when **Runs as** is an administrator; a **form or endpoint** only when the person who sends it is one, checked when it runs: the action fails with "You are not allowed to do this." and the refusal is in the audit log. They are never allowed in a form anyone may send or a public endpoint, and a job started by anything but time may not use them.
 - **Audit and review.** Each change is in the audit log as done **by an action**, naming the job, form or endpoint. Proposed changes lists these actions among what to look at closely.
 
+Going back over a version that adds or removes code (an undo, or a restore of a version) is for administrators, as saving that code is.
+
 The actions that only read (**Read a page**, **Read a portal (a site)**, **Read a text block's HTML**) run anywhere, and give only what the person may see.
 
 ## Pages
@@ -22,14 +24,14 @@ The actions that only read (**Read a page**, **Read a portal (a site)**, **Read 
 - **Make a page:** the site, the address (`/` or lower-case words joined by hyphens), a title in each language, optionally a layout or a **page template** to start from (its blocks and style are copied), and who sees and who edits it. It keeps `{site, path}`.
 - **Change a page:** its title (the languages you give change, the others stay), layout, description, who sees and edits it, or its address. A new address that another page has is refused.
 - **Remove a page:** the home page is never removed, and neither is a page that has pages under it ("The page has pages under it."); nothing is removed in a cascade.
-- **Read a page:** keeps its site, address, title, layout, description, `parts` (each with its blocks: `id`, `kind` and `settings`) and who sees it. Blocks the person may not see are left out.
+- **Read a page:** keeps its site, address, title, layout, description, `parts` (each with its blocks: `id`, `kind` and `settings`) and who sees it. Blocks the person may not see are left out, and the list of who sees it (which names people and groups) is given to administrators only; anyone else gets nothing there.
 
 ## Portals (sites)
 
 - **Make a portal:** a name in each language, one of the portal's own hosts, a path on it, the languages, who sees it, and optionally **Copy the structure of this site**: its pages, layouts, fragments, templates and design are copied as they are. A portal has at most 50 sites. It keeps `{site, url}`.
 - **Change a portal:** its name, languages, home page, who sees and edits it, and its description.
 - **Remove a portal:** refused while a job uses the site, and when it is the only one with an address.
-- **Read a portal:** its id, name, languages, home page, who sees it and the addresses of its pages.
+- **Read a portal:** its id, name, languages, home page, who sees it and the addresses of its pages. A portal the person may not see is "not there" for them, and the pages they may not see are left out of the list; who sees it is given to administrators only. Reading uses the files as they were read a moment ago while the site has not changed, so a page that many visitors' forms read does not go to the store each time.
 
 ## Blocks
 
@@ -43,4 +45,4 @@ A block has an **id** that stays the same, which the actions name. **Add a block
 
 ## Roles and people
 
-**Give or take roles** gives a person roles and takes others, by their email, as the console does. A run never gives a role it does not hold, and never leaves the portal without an active administrator; roles a directory gives are not taken. **Make a role**, **Change a role** and **Remove a role** work with the roles an organisation defines; a portal that has only the two fixed roles says "no roles of its own to define". Deleting a person is in [Managing people from steps](/portal/sites/people-actions/).
+**Give or take roles** gives a person roles and takes others, by their email, as the console does. A run never gives a role it does not hold, and never leaves the portal without an active administrator; roles a directory gives are not taken. **Make a role**, **Change a role** and **Remove a role** work with the roles an organisation defines; a portal that has only the two fixed roles says "no roles of its own to define". A role carries no right its maker may not give: where the roles store cannot say what the person holds, a role is made with no rights at all. Deleting a person is in [Managing people from steps](/portal/sites/people-actions/).

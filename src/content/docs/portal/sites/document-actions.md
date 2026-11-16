@@ -92,5 +92,5 @@ An action that makes a file changes the portal, so a GET or public [endpoint](/p
 - **Opacity**, 0 to 100;
 - the **folder and name** the new PDF is written to.
 
-What goes past a page's edge is cut by the edge, not refused. The usual limits and rules of document actions apply: a PDF of at most 10 MB and 500 pages, a PDF with a password is refused, and the folders' permissions decide who may read and make files.
+An image of more than 25 million pixels (as its header says, however small its file) is refused before it is read: a 30,000 by 30,000 picture is a few hundred bytes that take gigabytes to draw. What goes past a page's edge is cut by the edge, not refused. The usual limits and rules of document actions apply: a PDF of at most 10 MB and 500 pages, a PDF with a password is refused, and the folders' permissions decide who may read and make files.
 

@@ -148,7 +148,7 @@ Reading gives a list of maps, the first row naming the columns:
 ## An image in a PDF
 
 ```yaml
-- type: pdfImage
+- type: pdfImage   # an image of more than 25 million pixels is refused before it is decoded
   folder: fise
   name: "'fisa-usp-123.pdf'"
   imageFolder: fise

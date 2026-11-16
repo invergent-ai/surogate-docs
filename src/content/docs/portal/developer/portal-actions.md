@@ -76,4 +76,4 @@ actions:
 
 - Keys written as expressions (`path`, `folder`, `block`, `role`, `email`, lists) are worked out at run time, so a run can name what an earlier step made; `site` is a literal id.
 - The changes are made on a working copy of the configuration's files, each checked as a save is, and written as one version at the end of a run that did not fail (`portal.via: action` in the version's data). A site's database rows (its address) are made just before the files are saved and undone if they cannot be.
-- A job with these actions needs `runAs` an administrator and must not start from anything but time; neither is allowed in a form anyone may send. The load actions may run anywhere.
+- A job with these actions needs `runAs` an administrator and must not start from anything but time; neither is allowed in a form anyone may send. The load actions may run anywhere and give only what the person may see: `loadSite` refuses a site the person may not see and leaves out the pages they may not, and `whoSees` is `null` in `loadSite` and `loadPage` unless the person is an administrator. They read the files kept from a moment ago while the site is at the same version.

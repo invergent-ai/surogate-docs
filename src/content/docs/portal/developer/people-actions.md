@@ -54,13 +54,14 @@ What these do, and who may run them, are on [Managing people from steps](/portal
 - type: registerPerson
   email: form.email
   name: form.nume
-  password: form.parola   # optional: left out, the person chooses it
+  password: form.parola   # optional, a job's or an administrator's only: left out, the owner of the address chooses it
   fields:
-    unitate: form.unitate # user field: expression
+    unitate: form.unitate # user field: expression, a job's or an administrator's only
   site: primaria
   into: cont              # {status: pending | exists}
 ```
 
 - `deletePerson` is for a job with `runAs` an administrator, never a form; a job started by anything but time may not delete.
-- `checkCredentials` and `registerPerson` may be in a form anyone may send. `registerPerson` needs `signUp` on in the sign-in policy and mail; the sign-up is kept in `self_service_tokens` with its fields and a password hash until the link is used.
+- `checkCredentials` and `registerPerson` may be in a form anyone may send. Without a job or an administrator, `registerPerson` refuses `password` and `fields` ("Only an administrator or a job may give a new account its password."), and `checkCredentials` answers `reason: invalid` for every failure.
+- `deletePerson`, `setPersonRoles` and `registerPerson` act in the database when they run, not with the run's changes to the portal's files, which are written once at its end: a later failure leaves the person changed. `registerPerson` needs `signUp` on in the sign-in policy and mail; the sign-up is kept in `self_service_tokens` with its fields and a password hash until the link is used.
 

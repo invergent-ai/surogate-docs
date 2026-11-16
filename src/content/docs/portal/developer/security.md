@@ -74,5 +74,5 @@ auth:
   into: mesaj
 ```
 
-`connector` is a reference, never an expression. AES output is base64 of `IV(12) ‖ ciphertext ‖ tag(16)`. RSA is OAEP with SHA-256. `rsaEncrypt` takes `connector` or `publicKey`, one of the two. `aesDecrypt` and `rsaDecrypt` are refused in a public form or endpoint.
+`connector` is a reference, never an expression. AES output is base64 of `IV(12) ‖ ciphertext ‖ tag(16)`. RSA is OAEP with SHA-256. `rsaEncrypt` takes `connector` or `publicKey`, one of the two. `aesDecrypt` and `rsaDecrypt` are refused in a public form or endpoint, and take an optional `who`, an expression for a list of up to 20 principals (`"['group:HR', 'user:ana@example.ro']"`) that alone may read the text. What they return is replaced by `[sensibil]` in the run's log, in its errors and in the outcome kept in the history.
 
