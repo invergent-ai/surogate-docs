@@ -98,6 +98,7 @@ Each widget has a page in the guide. It says what people see and what each setti
 - **Figures** shows a model's figures as tiles and bars. See [KPIs](/portal/sites/kpis/#show-them).
 - **My work** shows each person the work Keel holds for them. See [Keel](/portal/sites/keel/#my-work).
 - **Work overview** shows the headline figures of a Keel project. See [Keel](/portal/sites/keel/#the-overview).
+- **Embedded content** shows another tool's page, such as a report, in a frame, from the addresses the site allows. See [Embedded content](/portal/sites/embedded-content/).
 - **Notifications** shows each person's notifications. See [Notifications](/portal/sites/notifications/#where-people-find-them).
 - **Comments** and **Rating** let people signed in comment and give stars. See [Comments and ratings](/portal/sites/comments/#place-the-widgets).
 - **Activity** shows posts, comments and published entries. See [Activity](/portal/sites/activity/#what-people-see).

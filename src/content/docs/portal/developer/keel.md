@@ -162,3 +162,32 @@ A [job](/portal/sites/jobs/) takes Keel's events in its `trigger`:
 - **Also as events:** each one is also the portal event `portal/keel.<event>`, such as `portal/keel.case.closed`, for [apps and webhooks](/portal/developer/apps/#events). A webhook that takes every event gets these too.
 
 What happens when the portal cannot read Keel is on [When something happens in Keel](/portal/sites/keel/#when-something-happens-in-keel).
+
+## The Workflows section
+
+For what people do in the console, see [Workflows](/portal/console/workflows/). `keel.yaml` may also say:
+
+```yaml
+builder: https://keel-builder.example.ro
+access:
+  view: ["group:Analysts"]
+  edit: ["group:Designers"]
+  admin: ["role:administrator"]
+staff: ["group:Case workers"]
+supervisors: ["group:Supervisors"]
+flows:
+  verificare-fisa-1:
+    modify: ["group:Designers"]
+    start: ["group:Case workers"]
+```
+
+- `builder`: Keel's builder, an https origin with no path (http only to this machine).
+- `access`: who opens the section at each level. Each list names at most 50 groups, organizations or people, never everyone or signed-in. A person has the highest level they are in; administrators have `admin`.
+- `staff`, `supervisors`: who works in Keel. Every token the portal signs for Keel then carries `keel_role` (`supervisor`, `staff` or `none`), and Keel makes the person staff, or a supervisor, at each request, or refuses them. Left out, Keel keeps its own staff.
+- `flows`: by Keel's key (at most 200). `modify` lists who may change the workflow in the builder; `start` lists who may start it from the portal. A workflow with no list for a verb is open to everyone who has it.
+
+**The frame.** The console frames `<builder>/?host=portal` and answers the builder's messages from its window alone, at the builder's origin: `keel-builder:ready` and `keel-builder:refresh` are answered with `keel-builder:session` (`token`, `expiresAt`, `project`, `role`, `person`), written to that origin only, or `keel-builder:ended` when the person is no longer signed in or no longer has the section. The first token is `POST /_portal/api/me/keel/workflows/open` (the audit log's "Opened the Workflows section"); later ones are `POST /_portal/api/me/keel/workflows/token`. They are for a person's own browser session, never a program's token, never an administrator seeing the portal as them, and live 2 minutes.
+
+**What Keel checks.** The token is the usual `portal-keel+jwt` with `builder_role` (`viewer`, `editor` or `owner`) and, for those below `admin`, `builder_deny`: the keys of the workflows whose `modify` list does not name them. Keel signs the person in to its `/api/build/` routes with that role, in the one project its issuer is bound to, without Studio, and refuses saves, reverts, removals and restores on the workflows in `builder_deny`. The builder's own server must name the portal's origin (the chart's `console.builder.config.portalOrigins`, or the builder server's list of portal origins), so that it sends `frame-ancestors` for it and reads the portal's messages; the portal's console allows only that origin as a frame.
+
+**Who starts a workflow.** The actions **Start a case** and **Start a process**, run for a person, fail with `You may not start the workflow "<key>".` when the workflow's `start` list does not name the person. A run with no person calls Keel with the project's service key as before.

@@ -119,3 +119,7 @@ On **Sites**, **Remove** beside a site, then type the site's id and press **Remo
 A new domain name is added by the installation's administrator, on [Tenants](/portal/console/tenants/#sites-and-addresses). The console does not yet change a site's id.
 
 The settings are kept in the site's files, which developers can also change: see [For developers](/portal/developer/).
+
+## Embedded content
+
+A site's settings also keep the addresses its pages may show in a frame, under **Embedded content**: a name, an address prefix and whether pages anyone may see may use it. Only administrators change the list. See [Embedded content](/portal/sites/embedded-content/).
