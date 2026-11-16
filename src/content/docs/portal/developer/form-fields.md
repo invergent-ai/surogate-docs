@@ -430,7 +430,7 @@ The answer is 400 `invalid` with `errors: [{ path, message }]`. It never holds e
 
 ### What is kept
 
-`checkSubmission` replaces the value by an Argon2id hash with a salt of its own (`Bun.password.hashSync(text, { algorithm: "argon2id" })`). The hash is what `checked.data` carries, what the submission keeps, and what the form's actions read as `form.secret`. There is no other copy of the text and nothing to read it back with. The field is never a barcode source.
+`checkSubmission` checks the two texts and the length, and holds the password where nothing that writes a value out can reach it. Once the submission has passed every check, the portal hashes it with Argon2id and a salt of its own (`Bun.password.hash(text, { algorithm: "argon2id" })`, off the event loop, so other requests are not held up). The hash is what the submission keeps and what the form's actions read as `form.secret`. There is no other copy of the text and nothing to read it back with. The field is never a barcode source.
 
 The hash is not shown anywhere either:
 
