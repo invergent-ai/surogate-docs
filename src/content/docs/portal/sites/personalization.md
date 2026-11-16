@@ -7,7 +7,7 @@ A page can show different blocks to different people. A town hall shows "Pay you
 
 ## Segments
 
-In the console, **Segments** lists the tenant's segments and how many signed-in people each holds now. **New segment** makes one:
+In the console, **Segments** lists the tenant's segments and how many people with an account each holds now. **New segment** makes one:
 
 - **Name**, in each language, and an **Id** (blocks name the segment by it).
 - **Holds people who meet** **All the rules** or **Any of the rules**.
@@ -20,7 +20,7 @@ In the console, **Segments** lists the tenant's segments and how many signed-in 
   - **The page's language**.
   - **Their device**: a phone, a tablet or a computer. An iPad that asks for desktop sites counts as a computer.
 
-The language and device rules hold for visitors who are not signed in too; every other rule needs a signed-in person. The count on **Segments** is of signed-in people: exact, or "up to" and "at least" when a segment turns on the language or device of the page being shown.
+The language and device rules hold for visitors who are not signed in too; every other rule needs a signed-in person. The count on **Segments** is of people with an account: exact, or "up to" and "at least" when a segment turns on the language or device of the page being shown.
 
 A segment that blocks are shown to cannot be removed: change those blocks first.
 
@@ -43,4 +43,5 @@ Pages for signed-in people are never kept by shared caches. For visitors, a page
 ## Limits
 
 - At most 100 segments, each with at most 20 rules; a block shown to at most 10 segments.
-- Blocks shown to segments are for pages and page templates, not for the blocks people add to their own dashboards.
+- Blocks shown to segments are for pages and page templates, not for the blocks people add to their own dashboards. On a dashboard, a person arranges a block shown to segments only when it is shown to them.
+- The count on **Segments** reads up to 50,000 people; past that it says "at least".
