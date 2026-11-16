@@ -77,7 +77,7 @@ With the history on:
 
 - **Every save makes a version.** A version holds the whole record as it was after the save, who made it, with their name and email as they were then, when, how (a form, a listing, the API, GraphQL, a job or an endpoint), and which fields changed. A save that changes nothing makes no version, and neither does one that is refused. Versions are numbered 1, 2, 3 for each record, with no gaps, even when two people save at once.
 - **A version is never changed or removed.** Nothing in the console or the API can do it, not even for an administrator. An attempt is refused and recorded in the [audit log](/portal/console/audit/), and every new version is recorded there too, with the model, the record, the version number and what was done, never the values.
-- **The records that are already there** get a first version when you save the setting, made by the system and marked as the first.
+- **The records that are already there** get a first version after you save the setting, made by the system and marked as the first, a batch at a time in the background; a record saved before its turn gets its first version at that save. If the history was off for a while, what changed meanwhile is told by a version of what the record became.
 - **The person who made a version stays named.** If their account is disabled the history says so beside their name, and if it is erased, it says the account is deleted. The name and email stay on purpose, so that what was reported can always be traced. Before you erase a person, the console tells you how many versions keep their name: see [Users](/portal/console/users/#personal-data).
 - **Lists, searches, figures, exports, the API and the choices in link fields all show the current version only.** Earlier versions are read on purpose, from the history.
 
@@ -89,7 +89,9 @@ With the history on:
 
 Other records that link to an archived one keep their link. A listing shows the linked record's name followed by "(archived)", and the archived record is not offered again when someone picks a record to link to.
 
-Turn **Deleting archives** off to keep versions but let deleting remove records for good.
+Turn **Deleting archives** off to keep versions but let deleting remove records for good. The record's last version then says it was deleted, the past that reports read no longer holds it from that moment, and the records that linked to it get a version of the link that was cleared.
+
+A model's history cannot be turned off while it has archived records: they would come back in lists, and could be deleted for good. Restore them first.
 
 ### Restoring and going back
 
@@ -114,7 +116,7 @@ Someone sees a record's history only if they are on that list **and** may read t
 
 ### Reports and closed periods
 
-A model can name **State of a closed period**, one of its states, such as accepted. The version sealed when a record enters that state is the one a report reads for a closed period, whatever the record is now: see [Developer: Data models](/portal/developer/data-models/#reports-and-closed-periods).
+The past is the history's: reading a record or a list as it was at a date, or as accepted, needs the right to see the history, and a record that is archived now is in that past only for those who see archived records. A model can name **State of a closed period**, one of its states, such as accepted. The version sealed when a record enters that state is the one a report reads for a closed period, whatever the record is now: see [Developer: Data models](/portal/developer/data-models/#reports-and-closed-periods).
 
 A version made as a record enters a state that seals it is marked **Sealed**, with a label such as "Accepted 12.11.2026 09:30", and gets a fingerprint of its content and of the sealed version before it. **Check integrity** in the history recalculates the chain: it says the sealed versions are intact, or which version was changed. A correction never changes a sealed version: the record goes back to a state that may be changed, the changes make new versions, and sending it again seals a new one.
 

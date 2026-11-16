@@ -128,7 +128,7 @@ On a model that keeps its history:
 - `DELETE /_portal/api/data/<model>/<id>` archives. `?reason=` gives the reason; a model that asks for one refuses without it, naming `reason`. An archived record answers as if it did not exist, except to those who see archived records.
 - `GET /_portal/api/data/<model>?archived=only` lists only the archived records; `includeArchived=true` adds them to the others, and the same on one record. Archived records have `archivedAt`, `archivedBy` and `archiveReason`. For anyone who may not see them, `archived=only` is an empty list and `includeArchived` changes nothing.
 - `POST /_portal/api/data/<model>/<id>/restore` brings an archived record back.
-- `GET /_portal/api/data/<model>/<id>/versions` lists its versions, oldest first: `version`, `at`, `operation` (`create`, `update`, `transition`, `archive`, `restore`, `revert`, `auto` or `initial`), `detail`, `channel` (`form`, `listing`, `rest`, `graphql`, `job` or `endpoint`), `author` (kind, name and email as they were, and `status`: `active`, `disabled` or `deleted`), `onBehalf`, `changed`, `sealed`, `sealState` and `sealLabel`. `?sealed=true` lists only the sealed ones.
+- `GET /_portal/api/data/<model>/<id>/versions` lists its versions, oldest first, at most `limit` (200 by default, 500 at most) after the version `after`, with `truncated: true` when there are more: `version`, `at`, `operation` (`create`, `update`, `transition`, `archive`, `restore`, `revert`, `auto`, `initial` or `delete`, the last version of a record deleted for good), `detail`, `channel` (`form`, `listing`, `rest`, `graphql`, `job` or `endpoint`; `listing` is taken from a person's session only), `author` (kind, name and email as they were, and `status`: `active`, `disabled` or `deleted`), `onBehalf`, `changed`, `sealed`, `sealState` and `sealLabel`. `?sealed=true` lists only the sealed ones.
 - `GET .../versions/<n>` gives one version with its `values` and `refs`, the title each link had.
 - `GET .../versions/compare?from=<n>&to=<m>` gives the fields that differ, each with its value in both.
 - `GET .../versions/verify` recalculates the sealed versions' fingerprints: `{ ok: true, checked: N }`, or `{ ok: false, version: N }` for the first that was changed.
@@ -142,11 +142,12 @@ A person sees a record's versions only when `permissions.history` names them and
 
 `GET /_portal/api/data/<model>` and `GET .../<id>` read the past:
 
+- Both need the right to see the history (a visitor or anyone else is answered as for a model that has none); a record that is archived now is in the past only for those who see archived records.
 - `asOf=<date or date and time>` gives each record as it was by then: its last version made at or before that moment. A time written without a zone is Romania's, compared in UTC; `2026-11-15T00:00Z` or `+02:00` are taken as written. A record not yet made is not there; one archived by then is not there either.
 - `version=accepted` gives each record's last version sealed in the model's `referenceState`, whatever it is now. A record that was never sealed in that state is not there, and neither is one that is archived now. With `asOf`, the last such version made by then.
 - Both keep the caller's reach: a person who reads their own records gets only those. Each item has `_version`, the version it is.
 
-A reporting tool that loads the versions itself reads `portal__versions` in the [data console](/portal/console/data-console/): `seq` only grows, so `where seq > <the last taken>` gives what is new and nothing twice; `portal__reference` gives each record's reference version.
+A reporting tool that loads the versions itself reads them in the [data console](/portal/console/data-console/). `portal__versions` has every version with `seq` and `tx`, the transaction that wrote it. `seq` is given when a version is written and not when it stands, so a lower one can stand after a higher one was read: `seq` alone is no safe watermark. Read `portal__settled`, the versions no open transaction of the server can still add to, by `where (tx, seq) > (<last tx>, <last seq>) order by tx, seq`. `portal__reference` gives each record's reference version.
 
 ## GraphQL
 
@@ -156,7 +157,7 @@ The same records answer GraphQL at `POST /_portal/api/graphql`, with the same ru
 - `list_<model>(first, after, q, sort, filter)` lists records, with `items` and `next` as above. `filter` takes the filterable fields.
 - `create_<model>(values: {…})`, `update_<model>(id: "…", values: {…})` and `delete_<model>(id: "…")` change records. They are offered only to someone signed in, never to visitors, and never while an administrator sees the portal as someone else.
 
-On a model that keeps its history, `get_<model>` and `list_<model>` also take `asOf` and `version: "accepted"`, and `includeArchived` (`onlyArchived` for a list); a record has `archivedAt`. `versions_<model>(id: "…")` lists the versions and `version_<model>(id: "…", number: 1)` opens one, each with `values`, for those the model names. `restore_<model>(id: "…")` and `revert_<model>(id: "…", version: 1)` bring a record back and write a version back; `delete_<model>` takes `reason`. What a person may not do is not in their schema.
+On a model that keeps its history, `get_<model>` and `list_<model>` also take `asOf` and `version: "accepted"`, and `includeArchived` (`onlyArchived` for a list); a record has `archivedAt`. `versions_<model>(id: "…")` lists the versions and `version_<model>(id: "…", number: 1)` opens one, each with `values`, for those the model names. `restore_<model>(id: "…")` and `revert_<model>(id: "…", version: 1)` bring a record back and write a version back; `delete_<model>` takes `reason`. What a person may not do is not in their schema: `asOf` and `version` are offered to those who see the history, `includeArchived` and `onlyArchived` to those who see the archived. A link to an archived record is named by its title and `archivedAt`.
 
 A record has `id`, `ownerId`, `createdAt`, `updatedAt` and its fields. A link gives the linked record, when the person may see it.
 
