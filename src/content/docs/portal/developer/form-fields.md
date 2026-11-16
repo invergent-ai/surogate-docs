@@ -313,3 +313,85 @@ POST /_portal/api/forms/<form>/dates/<key>
 The answer is `{ "earliest": "2026-12-01", "latest": null }`: the end an expression gives, as a day, a month or a UTC moment, and `null` for an end that is not an expression's or not applied. A session sends its CSRF token; a caller is limited to 60 requests a minute per form and address; a limit that cannot be worked out is `422 limit_unavailable`.
 
 **Fields from JSON.** A [description of fields](/portal/developer/forms/) of type `date` or `datetime` is this field, as `kind` `date` or `dateTime`, with its `min` and `max` as fixed limits. A `datetime`'s default, written as Romania's clocks show it, is kept as the moment it is in UTC. A model's `date` and `datetime` fields are this field in the model's own form.
+
+## Label position and instructions
+
+On the form and on any component, in `forms/<id>.yaml`:
+
+```yaml
+labelPosition: left # the form's default for every field: top (default), left or right
+components:
+  - type: number
+    key: amount
+    label: Amount generated (kg)
+    input: true
+    labelPosition: top # this field's own; it wins over the form's
+    instructions: Enter the monthly amount, with a decimal point.
+    instructionsAs: icon # below (default) or icon
+```
+
+- `labelPosition`: `top`, `left` or `right`. A field's own wins, then the form's, then `top`. `left` puts the label before the field on the same row, `right` after it, in a column 30% wide; under 600 px wide every label is above. A lone checkbox keeps its label after the box unless its own `labelPosition` is `top` or `left`. Any other value is refused: `label_position`, at `/components/<n>/labelPosition`.
+- `instructions`: plain text of at most 500 characters. Longer is refused as `instructions`; markup, as `text`.
+- `instructionsAs`: `below` or `icon`; anything else is `instructions_as`.
+- Instructions are texts the form's `i18n` must translate, like a label. A translation over 500 characters is refused as `translation_long`, at `/i18n/<locale>/<text>`.
+- The page writes each component's instructions with an `id` of `<component id>-<key>-instructions` and names it in the control's `aria-describedby`. The icon is a `button` named "Instructions for <label>" that shows them on hover, focus and tap.
+
+## Select with search and with checkboxes
+
+A `select` takes four more properties:
+
+```yaml
+- type: select
+  key: codes
+  label: Waste codes treated
+  input: true
+  dataSrc: values # or app
+  data: { values: [{ label: Paper, value: c1 }, { label: Glass, value: c2 }] }
+  autocomplete: true # search, yes or no
+  minChars: 2 # 0 to 3, characters typed before suggestions (default 0)
+  multiple: true # a list of checkboxes
+  minValues: 1 # whole numbers from 1 up
+  maxValues: 6
+```
+
+- `autocomplete` is `true` or `false`; `minChars` is a whole number from 0 to 3. Others are refused: `select_autocomplete`, `select_min_chars`.
+- `minValues` and `maxValues` count only with `multiple: true`. They are whole numbers from 1 up, the least no more than the most, and, for options written in the form, no more than the number of options: `select_values`.
+- A select that asks for search or `multiple`, or has over 200 options, is drawn as the portal's own control; any other is the browser's. Options from an app are fetched before the form is drawn, as before.
+- Matching ignores accents and capitals and tries the start of each word.
+
+When a form is sent (`POST /_portal/api/forms/:form/submissions`), a `multiple` select's value is a list of option values. The answer to a wrong one is a 400 with the field's `path` and a `message`:
+
+```json
+{ "errors": [{ "path": "codes", "message": "max_values" }] }
+```
+
+- `max_values` and `min_values`: more or fewer values than the field takes. The fewest is asked once a value is sent; nothing sent is `required`'s to say.
+- A value that is none of the options is refused as before, and so is one sent twice (`type`).
+
+## Slider
+
+```yaml
+- type: slider
+  key: level
+  label: Treatment level
+  input: true
+  min: 0
+  max: 100
+  step: 5 # default 1
+  start: 0 # where the handle starts; default the least
+  showValue: true # default true
+  unit: "%" # at most 20 characters; a translatable text
+  validate: { required: true }
+```
+
+- `min` and `max` are numbers with `min` below `max`; `step` is above 0 and fits the range a whole number of times. Decimals are exact: `0` to `1` by `0.1` fits, `0` to `1` by `0.3` does not. At most six decimal places.
+- `start` is in the range and on a step. It is where the handle starts, never a value, so a slider left alone sends nothing. Do not write `defaultValue`: form.io would fill it in as the answer, so the loader refuses it.
+- The loader refuses `slider_bounds` (at `/min` or `/max`), `slider_step`, `slider_start`, `slider_unit` and `slider_show`.
+- A value sent is a number in the range and on a step, or the field is refused with `slider_range`; it is kept as a number, whole when `min`, `max` and `step` are.
+
+```json
+{ "errors": [{ "path": "level", "message": "slider_range" }] }
+```
+
+The page words it "The value must be between {min} and {max}, in steps of {step}." In a zone of fields read from a JSON, a described field of type `slider` is drawn as this field, with its `min`, `max` and `step` (0, 100 and 1 where it gives none), and a `slider` whose range or default cannot work refuses the description (`bad_limits`, `bad_default`).
+

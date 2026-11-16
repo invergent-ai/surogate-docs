@@ -38,6 +38,9 @@ Administrators build a form in the console: see [Build a form](/portal/console/f
 
 - **Fields:** text, text area, number, email, phone number, web address, checkbox, select boxes, select, radio, day, time and currency.
 - **[Currency, phone number and date and time fields](/portal/sites/form-field-types/):** an amount with its currency and separators, a phone number kept in the international form, and a date, a month or a moment kept inside limits.
+
+- **[A select with search or checkboxes](/portal/sites/form-field-types/#dropdown-with-search-and-with-checkboxes):** it narrows as a person types, or takes many values from a list of checkboxes.
+- **[A slider](/portal/sites/form-field-types/#slider):** a number picked by moving a handle.
 - **[Extension fields](/portal/sites/form-fields/):** a barcode or QR code, a barcode scanner, an IBAN and a signature.
 - **[Whole numbers, files and fields from JSON](/portal/sites/form-field-types/):** a whole number, files people upload before they send the form, and a zone of fields read from a JSON when the form opens.
 - **Layout:** panels, columns, fieldsets, tabs and wells, nested at most eight deep.
