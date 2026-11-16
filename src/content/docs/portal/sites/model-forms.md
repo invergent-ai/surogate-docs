@@ -14,7 +14,9 @@ A person opens the form from a page, from a [listing](#open-a-record), or at its
 ![The monthly sheet form for May: panels Reporting period, Beds and occupancy and Waste. Days in the month and Occupancy are grey, filled in by the portal. A grid has a row for each waste code, with Opening stock, Generated, Treated, Closing stock and Difference. Under the Closing stock of 180103* a red message says the sheet has a deficit of 1189.7500 kg.](../../../../assets/screenshots/portal-forms-model-sheet.png)
 
 - **Figures the model calculates** are grey and cannot be typed in. They change as the person types: here the days in the month, the occupancy, each row's difference and the total.
-- **A field that does not apply** is hidden, or shown but off, as the model says. A value typed into it is cleared. In the grid, a cell can be off on one row and on in another: the treated cell of a waste code that is not treated is off.
+- **A field that does not apply** is hidden, or shown but off, as the model says. A value typed into it is cleared. The same goes for a whole section that carries a condition ([see below](#make-a-form-for-a-model)):
+
+  ![The monthly sheet with Does not apply ticked: Why it does not apply is asked for and the Waste section is gone, with its grid and total.](../../../../assets/screenshots/portal-forms-model-section.png) In the grid, a cell can be off on one row and on in another: the treated cell of a waste code that is not treated is off.
 - **A field that is asked for** has a star. It may be asked for at every save, or only when the record is submitted; the star is the same.
 - **A field the person may not change** is grey, for them only. Another person may change it.
 - **A message** shows under the field, or under the grid cell, once the person has touched it, and under all of them once they have tried to save. A form just opened does not fill up with errors.
@@ -60,7 +62,15 @@ Administrators bind a form on [Forms](/portal/console/forms/#build-a-form). **Ne
 
 4. **Who can use it** sets who may open the form. A person who may not send the form but may see or change the model's records may still open it, to read or to change a record.
 
+5. **Show a section on a condition.** A panel, a fieldset, a well or a tab can say when it applies. In its settings, **Active when** takes a condition over the model's fields, such as `no_beds_in_use != true`: the section is shown only while it is true, and what is in it is not asked for and not kept while it is false. The field appears among the settings only for a form bound to a model.
+
+   ![The settings of the Waste panel: its title, Active when with the condition no_beds_in_use != true, and its key.](../../../../assets/screenshots/portal-forms-model-section-edit.png)
+
+   The condition belongs to the fields in the section, so it holds wherever they are written: in another form, in a listing's dialog, through the API. Two forms cannot put one field under different conditions, and a step of a step-by-step form cannot have one (put it on a section inside the step). A condition that cannot be worked out counts as false.
+
 A form has one grid, and a form bound to a model is not filled in offline and keeps no drafts of its own: the record is saved as a draft record instead.
+
+A bound form can go step by step: each panel at the top is a step, what was written on one step is kept on the next, and **Save** and the model's moves are the form's own buttons, below the steps, as for any bound form.
 
 Each model also has a form of its own, `model-<id>`, made for it: every field of the model, calculated ones read-only, and the grid of its lines. It works as a form you bind yourself.
 

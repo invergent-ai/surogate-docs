@@ -40,7 +40,7 @@ A search box shows when the model has searchable fields. Sortable columns sort w
 - Everyone sees only the records they may see: their own, where that is all they may see.
 - Someone who may neither see the records nor add any sees nothing of the listing.
 - Adding, editing and deleting are offered only to people signed in, never to visitors.
-- A row that the model's [lock](/portal/sites/data-models/) holds closed, such as a sheet of a year that has ended, has **Open** only. The rows a search, a sort or **Load more** brings in later show **Edit** and **Delete**, and the portal refuses the change there.
+- A row that the model's [lock](/portal/sites/data-models/) holds closed, such as a sheet of a year that has ended, has **Open** only: also the rows a search, a sort or **Load more** brings in later, which the page asks the portal about.
 - Values show as text; dates and times in the person's own time; web addresses as links only when they are http, https or mailto.
 
 **Open** shows a record's details below the list, with the title of the records it links to when the person may see them. Its address can be shared: `?p_<placement id>_record=<record id>`. Search engines are told not to keep such addresses.

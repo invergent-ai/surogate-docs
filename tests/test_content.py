@@ -384,7 +384,7 @@ class Content(unittest.TestCase):
         source = (PORTAL / 'sites/model-forms.md').read_text()
         for shot in ('forms-model-setting', 'forms-model-builder', 'forms-model-lines-edit', 'forms-model-sheet',
                      'forms-model-problems', 'forms-model-comment', 'forms-model-submitted', 'forms-model-listing',
-                     'forms-model-dialog'):
+                     'forms-model-dialog', 'forms-model-section', 'forms-model-section-edit'):
             self.assertIn(f'portal-{shot}.png', source, shot)
         for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'Postgres'):
             self.assertIsNone(re.search(rf'\b{word}', source), word)
