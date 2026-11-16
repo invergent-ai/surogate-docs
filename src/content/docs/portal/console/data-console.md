@@ -30,6 +30,8 @@ A query is one `SELECT`. It reads:
 - each model's table, by the model's id, with its fields as columns and `id`, `owner_id`, `created_at`, `created_by`, `updated_at` and `updated_by`;
 - each many-links field's table, `<model>__<field>`, with `from_id` and `to_id`.
 
+- where a model [keeps its history](/portal/sites/data-models/#history-and-archiving), the table `portal__versions`, which holds every version of every such model (a `seq` that only grows, the model, the record, the version number, the time, what was done, who, the values as JSON, whether it is sealed), and the view `portal__reference`, which holds, for each record, its last sealed version in the model's state of a closed period. A reporting tool reads new versions with `where seq > <the last one it took>`: it gets only what is new, and nothing twice. Records that are archived stay in their model's table, with `archived_at` filled.
+
 The page lists these tables and their columns beside the query. Joins, subqueries, `WITH` (not recursive), `GROUP BY`, window functions, `CASE` and casts to the usual types work. So do the common functions for counting, adding up, text, numbers and dates. A query that asks for anything else, or names a table by another prefix, is refused before it runs, and the page says why.
 
 ```sql

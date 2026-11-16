@@ -105,7 +105,7 @@ These actions work on the records of a [data model](/portal/sites/data-models/).
 
 - Add a record.
 - Change the fields given.
-- Delete a record.
+- Delete a record. Where the model [archives](/portal/sites/data-models/#archiving), it is archived, not removed, and the action can say why, which a model that asks for a reason needs.
 - Read one record.
 - Find records by filterable fields, in an order, at most 100.
 

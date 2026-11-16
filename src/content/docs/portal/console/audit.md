@@ -30,4 +30,6 @@ Press **Verify the log**. The portal checks every event against the one before i
 
 Passwords, tokens and what people typed into forms are never in the log. A refused sign-in keeps the login that was tried only when it is a user's email or username; anything else might be a password typed in the wrong field, and is not kept.
 
+Where a data model [keeps its history](/portal/sites/data-models/#history-and-archiving), every new version of a record is an event too: it names the model, the record, the version number and what was done, never the values. An attempt to change or remove a version is refused and shows as **Refused**.
+
 Events are kept for two years unless whoever runs the portal sets another period. When a person is erased, their name, email and address are removed from the events about them; the events themselves stay.

@@ -45,6 +45,18 @@ A search box shows when the model has searchable fields. Sortable columns sort w
 
 **Add** and **Edit** open a small form with the model's fields. A link is chosen with **Choose**, from a list of the linked model's records, as a form's [record field](/portal/sites/forms/#pick-a-record) does. A change sends only what was changed. A value the model refuses is shown with its field.
 
+## Archiving and the history
+
+Where the model keeps its [history](/portal/sites/data-models/#history-and-archiving) and archives what is deleted, a listing says **Archive** where it said **Delete**. A record that is archived leaves the list. When the model asks for a reason, the listing asks for it first, and nothing is archived without one.
+
+![The Monthly sheets listing: the Archived filter next to Search, and Open, Edit and Archive on each row.](../../../../assets/screenshots/portal-history-listing.png)
+
+People who may see archived records have an **Archived** filter next to the search. It lists what is archived, each with **Restore** for those who may restore, and without **Edit** or **Archive**.
+
+![The Monthly sheets listing filtered on Archived: the sheet that was entered twice, with its Restore button.](../../../../assets/screenshots/portal-history-archived.png)
+
+**Open** on a record shows **History** to those who may see it: its versions, each one's values, a comparison of two, the check of the sealed versions and the record as it was at a date. **Go back to this version** is offered to those who may change the record. See [Reading the history](/portal/sites/data-models/#reading-the-history).
+
 ## A model's own pages and form
 
 A model can make its own page on a site, with a listing that offers everything. The page's title is the model's name unless the model gives one. A path that a page already has is refused. Add it on the model's **Pages** tab: see [On pages](/portal/sites/data-models/#on-pages). Developers: see [Developer: Listings](/portal/developer/listings/#a-models-own-page).

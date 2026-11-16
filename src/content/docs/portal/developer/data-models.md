@@ -67,6 +67,30 @@ A field can be `required`, `searchable` (text, searched by `q`), `filterable` an
 
 A link to a record that is deleted is cleared; a record's own links to others go with it.
 
+## History
+
+`history` makes the model keep a version of every write and archive what is deleted: see [History and archiving](/portal/sites/data-models/#history-and-archiving).
+
+```yaml
+history:
+  enabled: true
+  archive: true
+  archiveReason: true
+  referenceState: accepted
+permissions:
+  history: [group:auditors]
+  archive: { all: [group:clerks], own: [signed-in] }
+  viewArchived: [group:clerks]
+  restore: [role:administrator]
+```
+
+- `enabled`: keep every version. The default when `history` is there; `false` turns it off and keeps what was written.
+- `archive`: deleting archives. The default while the history is on; `false` keeps versions but deletes for good.
+- `archiveReason`: archiving needs a reason. Not with `archive: false`.
+- `referenceState`: the state whose sealed version stands for a closed period, read with `version=accepted`.
+- `permissions.history`: who sees the versions of the records they may read; none, administrators only. `archive`, `viewArchived` and `restore` say who archives (all or own, as deleting), who sees what is archived and who restores. These four need `history`.
+- A model with a history has the columns `archived_at`, `archived_by` and `archive_reason`, which no field may use as its id, and a table of versions, `portal__versions`, and a view of each record's reference version, `portal__reference`, which the [data console](/portal/console/data-console/) reads.
+
 ## Who may do what
 
 `permissions` says, for each role, whether it may view, edit and delete **all** records or only its **own**, and who may **add** records. Principals are those used everywhere in the portal: `everyone`, `signed-in`, `role:administrator`, `user:<email>`, `group:<name>`, `organization:<path>`. Administrators may always do everything; with no `permissions`, only they may.
@@ -97,6 +121,33 @@ Records are served at the portal's address:
 
 Adding, changing and deleting need someone signed in; an app's token needs the `data` access. A record someone may not see answers as if it did not exist. A value that does not fit its field is refused, naming the field.
 
+### History and archiving through the API
+
+On a model that keeps its history:
+
+- `DELETE /_portal/api/data/<model>/<id>` archives. `?reason=` gives the reason; a model that asks for one refuses without it, naming `reason`. An archived record answers as if it did not exist, except to those who see archived records.
+- `GET /_portal/api/data/<model>?archived=only` lists only the archived records; `includeArchived=true` adds them to the others, and the same on one record. Archived records have `archivedAt`, `archivedBy` and `archiveReason`. For anyone who may not see them, `archived=only` is an empty list and `includeArchived` changes nothing.
+- `POST /_portal/api/data/<model>/<id>/restore` brings an archived record back.
+- `GET /_portal/api/data/<model>/<id>/versions` lists its versions, oldest first: `version`, `at`, `operation` (`create`, `update`, `transition`, `archive`, `restore`, `revert`, `auto` or `initial`), `detail`, `channel` (`form`, `listing`, `rest`, `graphql`, `job` or `endpoint`), `author` (kind, name and email as they were, and `status`: `active`, `disabled` or `deleted`), `onBehalf`, `changed`, `sealed`, `sealState` and `sealLabel`. `?sealed=true` lists only the sealed ones.
+- `GET .../versions/<n>` gives one version with its `values` and `refs`, the title each link had.
+- `GET .../versions/compare?from=<n>&to=<m>` gives the fields that differ, each with its value in both.
+- `GET .../versions/verify` recalculates the sealed versions' fingerprints: `{ ok: true, checked: N }`, or `{ ok: false, version: N }` for the first that was changed.
+- `POST .../versions/<n>/revert` writes version *n*'s values as a new version, as a save by the caller: the model's checks apply.
+- `GET .../<id>/title` gives `{ id, title, archived }` for a record that a link points at, an archived one too.
+- Versions are never changed: `PATCH`, `PUT` and `DELETE` on `.../versions` and `.../versions/<n>` answer 403 `version_immutable` and are in the audit log.
+
+A person sees a record's versions only when `permissions.history` names them and they may read the record. For anyone else every one of these answers as for a record that does not exist.
+
+#### Reports and closed periods
+
+`GET /_portal/api/data/<model>` and `GET .../<id>` read the past:
+
+- `asOf=<date or date and time>` gives each record as it was by then: its last version made at or before that moment. A time written without a zone is Romania's, compared in UTC; `2026-11-15T00:00Z` or `+02:00` are taken as written. A record not yet made is not there; one archived by then is not there either.
+- `version=accepted` gives each record's last version sealed in the model's `referenceState`, whatever it is now. A record that was never sealed in that state is not there, and neither is one that is archived now. With `asOf`, the last such version made by then.
+- Both keep the caller's reach: a person who reads their own records gets only those. Each item has `_version`, the version it is.
+
+A reporting tool that loads the versions itself reads `portal__versions` in the [data console](/portal/console/data-console/): `seq` only grows, so `where seq > <the last taken>` gives what is new and nothing twice; `portal__reference` gives each record's reference version.
+
 ## GraphQL
 
 The same records answer GraphQL at `POST /_portal/api/graphql`, with the same rules as the API above. Each person sees only the models they may reach:
@@ -104,6 +155,8 @@ The same records answer GraphQL at `POST /_portal/api/graphql`, with the same ru
 - `get_<model>(id: "…")` reads one record, or gives null when there is none for them.
 - `list_<model>(first, after, q, sort, filter)` lists records, with `items` and `next` as above. `filter` takes the filterable fields.
 - `create_<model>(values: {…})`, `update_<model>(id: "…", values: {…})` and `delete_<model>(id: "…")` change records. They are offered only to someone signed in, never to visitors, and never while an administrator sees the portal as someone else.
+
+On a model that keeps its history, `get_<model>` and `list_<model>` also take `asOf` and `version: "accepted"`, and `includeArchived` (`onlyArchived` for a list); a record has `archivedAt`. `versions_<model>(id: "…")` lists the versions and `version_<model>(id: "…", number: 1)` opens one, each with `values`, for those the model names. `restore_<model>(id: "…")` and `revert_<model>(id: "…", version: 1)` bring a record back and write a version back; `delete_<model>` takes `reason`. What a person may not do is not in their schema.
 
 A record has `id`, `ownerId`, `createdAt`, `updatedAt` and its fields. A link gives the linked record, when the person may see it.
 
