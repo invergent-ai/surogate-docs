@@ -72,11 +72,13 @@ The **Email address** card is for local accounts. Type a **New address** and pre
 
 ### An account waiting to be activated
 
-An **Unconfirmed** person has **Resend the activation link** at the top of their page. The new link ends the earlier one, and a new one can be sent once an hour at most. When the person says they never got the link, check the address you typed. An unconfirmed account never counts as an active administrator, so the portal still keeps at least one active administrator.
+An **Unconfirmed** person has **Resend the activation link** at the top of their page. The new link ends the earlier one, and a new one can be sent once an hour at most. A link works only while the account is **Unconfirmed**: once it is switched off, or the account is activated, an old link no longer does anything. When the person says they never got the link, check the address you typed. An unconfirmed account never counts as an active administrator, so the portal still keeps at least one active administrator.
 
 ![An unconfirmed person's page: the Unconfirmed label, Resend the activation link, and the Email address card.](../../../../assets/screenshots/portal-auth-user-unconfirmed.png)
 
-An account that was disabled before its owner ever opened the link waits for the link again when you enable it.
+An account that was disabled before its owner ever opened the link waits for the link again when you enable it, and **Enable** or adding the person as an administrator never activates an unconfirmed account in the owner's place: only the link does.
+
+To correct the address of an **Unconfirmed** account, type the right one in **New address**: it changes at once (nobody had proved the old one), the old link stops working, and a new link goes to the new address.
 
 ### Locked out
 
