@@ -44,7 +44,9 @@ It can compare with `==`, `!=`, `<`, `<=`, `>` and `>=`, join with `&&` and `||`
 | A provider reads and changes the sheets of their own entities | `record.entitate in user.fields.entitati` |
 | Only the records the person added | `record.owner == user.id` |
 
-When the person has no value for a field the condition reads, the condition is false for every record: a DSP user with no county sees nothing. It is never an error. To ask whether a field is set, compare with `null`: `user.fields.judet != null`.
+When the person has no value for a field the condition reads, the condition is false for every record: a DSP user with no county sees nothing. It is never an error. The same holds for a record that has no value for a field the condition reads. Turning the condition round does not make it true: `!(record.judet == user.fields.judet)` is also false for a person with no county, and for the records with no county. To ask whether a field is set, compare with `null`: `user.fields.judet != null`, or `record.judet == null` for the records with no county.
+
+A text field can be compared with a link, a date or a time: they are compared as the text they are written as, so a text that is not a valid id is simply not equal to one.
 
 The console refuses a condition with a syntax error, a field the model does not have, a user field the portal does not have, a comparison of values of different kinds, or a read through a field that is not a link. The message names the model and the rule.
 
@@ -65,9 +67,15 @@ A change is made on behalf of an entity when the record's holder is not one of t
 1. Only the people named under **Who may work on behalf** may, and only where the entry's condition holds, such as `user.fields.judet != null` so that a person with no county cannot. Administrators may too. Anyone else is refused: **Nu puteți opera în numele acestei entități.**
 2. The person gives a **reason**, 5 to 1,000 characters. On a page's list the portal asks for it; without it the change does not happen: **Motivul intervenției este obligatoriu.** The model can offer **Reasons offered**, one a line, besides free text.
 3. The change is kept with the holder, the person, their institution, the day and time, what was done and the reason.
-4. The person cannot change which entity the record is about while working for it.
+4. The person cannot change which entity the record is about while working for it, unless the record is in the state it starts in (see below).
 
 A person who works on a record of one of their own entities is not asked for a reason, and nothing is kept.
+
+Every version the change makes, in the record's history, says which entity it was done for and why, next to the person who did it.
+
+### The entity changes only in the first state
+
+Where the model has states, the entity a record is about can be changed only while the record is in the state it starts in (Draft, say), and only to an entity the person may write, by the rules above. Once the record has left that state, nobody changes it, administrators included: the answer is **Entitatea titulară se schimbă doar cât înregistrarea este în starea în care începe.** The refused attempt is kept in the audit log. A model without states has no such rule.
 
 Through the API, give the reason as the `reason` parameter, or as the `X-Portal-Reason` header written as percent-encoded text; through GraphQL, as the `reason` argument of the change; in an [action list](/portal/sites/actions/#records), in the action's **Reason** expression.
 
@@ -80,3 +88,22 @@ In the [audit log](/portal/console/audit/), choose the action **Work on behalf o
 Each entry names the entity, the person, the institution and the reason. An attempt that was refused, for no reason given or no right to work for the entity, is there too, as **Refused**, and nothing was written. The CSV download has the institution and the reason as columns.
 
 Developers: see [Developer: Data models](/portal/developer/data-models/#access-by-condition).
+
+
+## Fields hidden from a role
+
+Some fields are for some roles only: a viewer sees the sheets but not the contact person's phone. On the model's **Fields** tab, each field has **Hidden from roles**: tick the roles that do not see it.
+
+![The Fields tab of the model Monthly sheet 1: the field Contact person has Hidden from roles with the Viewer user role ticked.](../../../../assets/screenshots/portal-model-field-hidden.png)
+
+A person who does not see a field has no such field, anywhere:
+
+![The sheet register as a person with the Viewer user role: the same sheets, with no Contact person column.](../../../../assets/screenshots/portal-register-vlad.png)
+
+- It is missing, not empty, from lists, from the record, from its history and past versions, from the [API](/portal/sites/data-models/#the-api) and [GraphQL](/portal/sites/data-models/#graphql) (the schema does not have it), from the fields of a form to add or change a record, and from what an [action list](/portal/sites/actions/#records) or a [job](/portal/sites/jobs/) reads.
+- A filter, a sort or a search that names it is refused, as for a field the model does not have; a search in the listing looks only in the fields the person sees.
+- It cannot be written by them. What it holds is kept when they save the rest of the record.
+- A [KPI](/portal/sites/kpis/) that groups, sums or filters by it is not shown to them; the figures that do not read it are.
+- Going back to an earlier version of a record is refused to someone who does not see every field of it, as it would write the fields they cannot see.
+
+Access is the union of a person's roles: a field is hidden from a person only when each of their roles is ticked. A person with the Viewer role and the DSP role, with the field ticked for Viewer only, sees it. The role **User**, which every account has, counts only when it is all they hold, and a visitor counts as holding it: tick **User** to hide a field from every person with no other role and from visitors. Administrators see every field.

@@ -35,6 +35,25 @@ They come first on the first page of results for that search, when no filter nar
 - **Pages left out**: one address per line. `/intern/*` leaves out `/intern` and everything under it.
 - **Content left out**: tick the content types search never finds, or **Files** for it never to find the tenant's files on this site.
 
+### Left out for a role
+
+Below, **Left out for a role** keeps pages, content types and folders out of the results of the people with a role, though they may view them: the staff's inner pages are not found by the public role, say.
+
+![The Search settings of a site: under Left out for a role, a rule for the Viewer user role leaves out the pages under /intern, the content type Memos and the folder Records.](../../../../assets/screenshots/portal-search-role-rule.png)
+
+1. Press **Leave out for a role**.
+2. Choose the **Role**.
+3. Under **Pages left out**, one address per line, as above; tick the content types and **Files**, and the folders of files, to leave out.
+4. **Save**. **Remove rule** takes one away.
+
+The same search for "cerere", by a person with only the Viewer user role and by an administrator:
+
+![The site's search page as a person with the Viewer user role: one result, the page Cerere de autorizație.](../../../../assets/screenshots/portal-search-viewer.png)
+
+![The same search as an administrator: two results, the page Cerere de autorizație and the internal guide, which the Viewer user role does not find.](../../../../assets/screenshots/portal-search-administrator.png)
+
+The results, their number and the filters beside them all leave out what a role does not find; a pinned result of such a page is left out too. A person with several roles finds what any of them finds: a page is left out for them only when each of their roles leaves it out. The role **User**, which every account has, counts only when it is all they hold, and a visitor counts as holding it: a rule for **User** applies to visitors and to people with no other role.
+
 ## Typos and word starts
 
 - **A word with a typo counts**: on by default, so `noembrie` finds `noiembrie`.

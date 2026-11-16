@@ -99,6 +99,10 @@ permissions:
 
 The condition reads `record.<field>` (and `record.<link>.<field>`, up to four links deep, and `record.owner` and `record.id`), `user.id`, `user.roles` and `user.fields.<key>`. It may use `==`, `!=`, `<`, `<=`, `>`, `>=`, `&&`, `||`, `!` and `in`. A value the person has no value for makes the condition false. The file is refused when a condition does not read, names a field or a user field that does not exist, or compares unlike values.
 
+Where the model has `states`, `holder` changes only while the record is in `states.initial`; the attempt in any other state is refused with `holder_locked`, and kept in the audit log.
+
+A field can name the roles it is hidden from, `hiddenFor: [user_viz]` (role codes, each once). The field is absent for a person whose roles that count are all listed; see [Fields hidden from a role](/portal/sites/row-access/#fields-hidden-from-a-role).
+
 `holder` names a link field of the model; `onBehalf` says who may work on a record whose holder is not one of the person's own entities, with an optional condition; `reasons` are the reasons the console offers. The reason is asked of every such change, through `reason` on the REST API (a query parameter, or the percent-encoded `X-Portal-Reason` header), `reason` on a GraphQL change, and `reason` on the record actions. See [Access to records by condition](/portal/sites/row-access/).
 
 ### User fields
@@ -169,3 +173,7 @@ mutation {
 ```
 
 A request may nest 6 levels, ask for 10 things at its top and name 500 fields in all. One that would read more than 2000 records stops with a single `too_costly` error and no data. A refused value names its field in `extensions.field`. Every change is in the [audit log](/portal/console/audit/), one entry each.
+
+## Reading records as a person may
+
+For a read the portal's own pages and APIs do not make (an export, say), ask the person's rights once and use what comes back: `RowAccess.readable(model)` answers whether they may see any record, which (`scope`: their own, or a condition as SQL), the model without the fields hidden from them, and the field ids; `RowAccess.list(model, query)` and `RowAccess.get(model, id)` are the data API's own list and get with the rules and the hidden fields applied. Do not read the table or `listRecords` directly: nothing else is held to the rules.

@@ -60,6 +60,13 @@ Someone who is not an administrator, but whose roles open **Roles** or **Users**
 
 Each of these answers **You cannot give or take a role that has more access than you have.**
 
+The same limits hold for the rest of what changes who someone is:
+
+- A person who is not an administrator cannot set the password, reset the second step, end the sessions, link a sign-in identity, disable, export or erase a person, nor make a token or a client for a service account, when that person or program holds the Administrator role or a role with a section the first person does not have.
+- They cannot change or delete such a role either, and they cannot map an outside group to the Administrator role or to a role with more access than they have, in a directory or a provider.
+- Only an administrator changes the sections of the **User** role, which every new account gets, and no one but an administrator ever changes their own fields.
+- The **Data console** is never a section of a role: it reads past the rules of access on records, so only the Administrator has it.
+
 ## Where a role is used
 
 Choose **A role** in the picker that asks who may see or edit something: a site, a page, a block, a form, a library, a folder, and who may use a model's records. See [Choose who](/portal/sites/permissions/#choose-who). A role also narrows who may call an [endpoint](/portal/sites/endpoints/#who-may-call-it), and a [service account](/portal/console/service-accounts/) can hold any role.

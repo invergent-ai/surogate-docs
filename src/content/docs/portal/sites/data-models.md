@@ -45,6 +45,8 @@ A field can be required, searchable (text, found by search), filterable and sort
 
 On the **Fields** tab, **Add field** adds one: its id, its type, its label in each language, and its options. A Link or Links field also names the model it points at. **Title field** picks the field that names a record.
 
+Each field also has **Hidden from roles**: the roles that do not see the field at all. See [Fields hidden from a role](/portal/sites/row-access/#fields-hidden-from-a-role).
+
 A saved field keeps its id, and the model a link points at. Its type can change only among the text types, which are kept alike: Text, Long text, Email, Phone and Web address. Changing to a type that does not take an option, such as a Long text that is filtered on, drops that option.
 
 Removing a saved field keeps its values in the table, and the editor says so. A field added again with the same id has them back; it must have the type it had, and the editor says so until it does. If the removed field was the title field, the model has no title field until one is picked.

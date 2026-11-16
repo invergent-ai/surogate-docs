@@ -37,7 +37,7 @@ Press a user in the list to open their page. The top shows their name, email, th
 
 ### Details
 
-Change the **Name** or the portal's own fields and press **Save**. A field that points at records, such as a county or the entities a person works for, is filled by searching the records and choosing them: see [User fields](/portal/console/user-fields/). A change counts from the person's next request; they do not sign in again.
+Change the **Name** or the portal's own fields and press **Save**. A field that points at records, such as a county or the entities a person works for, is filled by searching the records and choosing them: see [User fields](/portal/console/user-fields/). A change counts from the person's next request; they do not sign in again. The fields decide what a person may reach, so only an administrator changes their own: a person with a role that opens **Users** changes other people's fields and name, and their own name, but not their own fields (**You cannot change your own fields.**). They also cannot act on a person who holds more than they do: see [Who may give which role](/portal/console/roles/#who-may-give-which-role).
 
 ### Handle
 
