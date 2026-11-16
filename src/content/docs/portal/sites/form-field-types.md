@@ -356,9 +356,9 @@ A drop zone: "Drag files here or **Choose files**", with the limits under it: "A
 
 Each file goes up as soon as it is added, one at a time. Its row shows its name and size, a progress bar while it goes up, **Uploaded** when it is done, and **Remove** to take it off. The form is sent with the files that went up well.
 
-![A file going up: deed.pdf is Uploaded, annual-report.pdf shows its progress bar, and the field says "Wait for the files to finish uploading."](../../../../assets/screenshots/portal-fields-files-progress.png)
+![A file going up: deed.pdf is Uploaded and annual-report.pdf shows its progress bar. Nothing is said at the field yet.](../../../../assets/screenshots/portal-fields-files-progress.png)
 
-The form cannot be sent while a file is still going up ("Wait for the files to finish uploading.") or when one failed ("Remove the files that could not be uploaded.").
+The form cannot be sent while a file is still going up or when one failed. While files go up, each one shows its own state and the field says nothing. Only when the person presses send does the field say "Wait for the files to finish uploading." or, when a file failed, "Remove the files that could not be uploaded."
 
 A refused file says why, beside its own row:
 
