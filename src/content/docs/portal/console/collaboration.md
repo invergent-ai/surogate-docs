@@ -25,7 +25,7 @@ Good to know:
 
 - What people do shows up within a couple of seconds. Someone who closes the tab disappears at once, and someone whose connection drops disappears after at most 30 seconds.
 - Only administrators who may edit the portal see this, and are seen.
-- Opening and leaving an editor is not written to the [audit log](/portal/console/audit/). Saves are, as always.
+- Nobody learns another person's tab; only names and what they are on. Opening and leaving an editor is not written to the [audit log](/portal/console/audit/). Saves are, as always.
 - An administrator seeing the portal as someone else is not part of this, and cannot edit the configuration while doing so.
 - Lists and editors of every kind of item show who is there. The items that are edited together are listed under [Which editors share a draft](#which-editors-share-a-draft).
 
@@ -35,10 +35,10 @@ Everyone who opens the same item edits one shared draft, kept by the portal. Eac
 
 When two people change the same thing at once:
 
-- **Different parts.** Both changes stay. One person adds a field while another drags a different field to a new place: both see the field added and the field moved, in the same order.
+- **Different parts.** Both changes stay. One person adds a field while another drags a different field to a new place: both see the field added and the field moved, in the same order. A list of actions has no names to go by, so it is merged element by element: an action each person added stays, an edit of one action and the deletion of another both stay. If both touched the same action, or one person only moved actions about, the later list stands and the note names the whole list.
 - **The same long text.** Two people can type in the same text, such as the text of a page, at the same time. Their changes are merged word by word, so what both wrote is kept. If both rewrite the very same word, the later change stands.
-- **The same short setting,** such as a label or a tick box. The last change wins and everyone sees it. The person whose value was replaced sees a note: **Mihai Ionescu changed "name › en" while you were editing it.** Press **Put my value back** to restore their value for everyone.
-- **A deletion against an edit.** If one person deletes a field while another edits it, the deletion wins. The person who edited it sees **"…" was deleted by Ana Pop** and can press **Restore**.
+- **The same short setting,** such as a label or a tick box. The last change wins and everyone sees it. The note goes to whoever last wrote that setting, in whichever of their tabs: **Mihai Ionescu changed "name › en" while you were editing it.** Press **Put my value back** to restore their value for everyone. **Dismiss** puts a note away for you alone.
+- **A deletion against an edit.** If one person deletes a field while another edits it, the deletion wins. The person who edited it sees **"…" was deleted by Ana Pop** and can press **Restore**. If the whole item is removed from the site while you have it open, you are told, what you typed stays, and **Save** waits until you press **Restore it**.
 
 ![The data model editor with a note that Mihai Ionescu changed the English name, offering Put my value back and Dismiss, above the Save button that includes his changes.](../../../../assets/screenshots/portal-collab-notice.png)
 
@@ -55,7 +55,7 @@ After more than 10 minutes without the connection, your changes are no longer me
 ### Limits
 
 - At most 20 people edit the same item at once. The 21st sees the item for reading only, with a message, and can open it again when someone leaves.
-- A shared draft nobody has changed for 7 days is thrown away.
+- A shared draft nobody has changed for 7 days is thrown away, and so is the draft of an item that is removed or made anew. The portal keeps at most 500 drafts.
 - Connector credentials are never part of a shared draft and are never shown to other editors. Set them as before. Connectors show who is editing them, but have no shared draft.
 
 ### If you lose the right to edit
@@ -68,7 +68,7 @@ If an administrator takes away your permission to edit the portal while you have
 
 Anyone who edits the item can press **Save**. The button says what it includes, for example **Save (includes changes from Mihai Ionescu)**.
 
-- Pressing **Save** makes one version with everyone's changes in it. The other editors see **Ana Pop saved.** and carry on from the new version, in the same place, with nothing to reload.
+- The editor sends what you typed last before it saves, so the version holds it. Pressing **Save** makes one version with everyone's changes in it. The other editors see **Ana Pop saved.** and carry on from the new version, in the same place, with nothing to reload.
 - [Versions](/portal/console/versions/) shows who saved it and who else shared in it, for example **Admin, with changes by Mihai Ionescu**. The [audit log](/portal/console/audit/) keeps a line for each person who shared in the version, as well as the one for the person who saved.
 
 ![The Versions page: the newest version, Model cereri saved, made by Admin with changes by Mihai Ionescu.](../../../../assets/screenshots/portal-collab-version.png)
