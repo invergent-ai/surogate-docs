@@ -74,6 +74,8 @@ Nothing after `respond` runs. With no `respond`, the answer is empty (204). When
 - `token`: only a program with such a token.
 - `private`: only the portal's own actions. See [Private endpoints](#private-endpoints).
 
+A `signed-in` or `token` endpoint can also say `roles: [admin_platforma, user_dsp]`, a list of role codes: only someone who holds one of them, or an administrator, may call it. A program holds a role through its service account.
+
 ## Keep answers, and other sites
 
 `cache: { seconds: 60 }` keeps a public GET endpoint's answer for that long, for everyone. It is then always made as a visitor. A change to the portal's files makes it again.

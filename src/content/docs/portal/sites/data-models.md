@@ -65,6 +65,8 @@ The **Access** tab has a list for each: read every record, read their own, add r
 
 ![The Access tab of the model cereri: administrators read every record, anyone signed in reads their own, and everyone adds records, with the warning that this makes a public form.](../../../../assets/screenshots/portal-model-edit-access.png)
 
+To give a verb to some people only for some records, such as the sheets of their own county, and to keep who worked for which entity, see [Access to records by condition](/portal/sites/row-access/).
+
 Developers: see [Developer: Data models](/portal/developer/data-models/#who-may-do-what).
 
 ## When a model changes

@@ -29,6 +29,9 @@ Press **Add…** to choose more:
 - **A group**: choose one of the portal's [groups](/portal/console/groups/), then press **Add the group**.
 - **An organization, with those under it**: choose one of the portal's [organizations](/portal/console/organizations/), then press **Add the organization**. Everyone in it and in every organization below it is included.
 - **A person: name or email**: type to search, then press **Add** with their name and email, such as **Add Ana Pop (ana@primarie.ro)**.
+- **A role**: choose one of the portal's [roles](/portal/console/roles/), then press **Add role**. Everyone who holds the role is included, and a role keeps its place when it is renamed: it is named by its code. The picker offers roles wherever it can name a group.
+
+A role that no longer exists lets nobody in, as a group that is gone does. The console does not let you delete a role while a permission still names it.
 
 The picker is in six places:
 

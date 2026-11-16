@@ -2,13 +2,15 @@
 title: Users
 ---
 
-**Users** lists the people who can sign in to this portal. You need the **Administrator** role (on the main portal, **Install administrator**). To let people make their own account, [invite them](/portal/console/invitations/).
+**Users** lists the people who can sign in to this portal. You need the **Administrator** role (on the main portal, **Install administrator**), or a [role](/portal/console/roles/) that opens **Users**. To let people make their own account, [invite them](/portal/console/invitations/).
 
 ## Find a user
 
 Type part of a name or an email in **Search by name or email**. The list follows as you type. When nothing matches, the page says **No user matches.**; press **Clear the search** to see everyone.
 
 ![The Users page: the search field and the list of users, each with their email.](../../../../assets/screenshots/portal-users.png)
+
+To see the people who hold one role, choose it under **Role**. **Any role** shows everyone again.
 
 The list shows 50 users at a time. Use **Previous** and **Next** to move between pages. A disabled account carries the label **Disabled**.
 
@@ -17,10 +19,13 @@ The list shows 50 users at a time. Use **Previous** and **Next** to move between
 1. Press **New user**.
 2. Type their **Email** and **Name**. They sign in with this email.
 3. **Password (optional)**: at least 12 characters. Leave it empty for someone who signs in with your organisation's account.
-4. Fill in the portal's own fields, if it has any (a badge number, a department, a phone). Fields marked **Required** must be filled in. A tick box left alone counts as unticked.
-5. Press **Create user**.
+4. Under **Roles**, tick at least one. **User** is ticked to begin with. The person has the rights of every role ticked.
+5. Fill in the portal's own fields, if it has any (a badge number, a department, a county, the entities they work for). Fields marked **Required** must be filled in. A tick box left alone counts as unticked. See [User fields](/portal/console/user-fields/).
+6. Press **Create user**.
 
-If the email is already used, the console says **A user with this email already exists.**
+![The New user dialog: email, name, password, then the Roles to tick, with User ticked, and the portal's own fields County, Institution and Own entities.](../../../../assets/screenshots/portal-users-new.png)
+
+If you untick every role, the console says **Choose at least one role.** If the email is already used, it says **A user with this email already exists.**
 
 An [app](/portal/console/apps/) can check, or tidy, each person created or changed here. When it refuses, its message shows under the field it names, such as the name; change it and press **Create user** again. When an app's check cannot run, the console says so, and an administrator can revoke the app's approval if it keeps happening.
 
@@ -32,7 +37,7 @@ Press a user in the list to open their page. The top shows their name, email, th
 
 ### Details
 
-Change the **Name** or the portal's own fields and press **Save**.
+Change the **Name** or the portal's own fields and press **Save**. A field that points at records, such as a county or the entities a person works for, is filled by searching the records and choosing them: see [User fields](/portal/console/user-fields/). A change counts from the person's next request; they do not sign in again.
 
 ### Handle
 
@@ -44,7 +49,11 @@ Mentions already written keep their words: a changed handle no longer names the 
 
 ### Roles
 
-Tick or untick **Administrator** and press **Save roles**. On the main portal there is also **Install administrator**. See [Roles](/portal/reference/roles/).
+Tick every role the person should hold and press **Save roles**. A person can hold several: they have the rights of each. On the main portal there is also **Install administrator**. See [Roles](/portal/console/roles/) and [the roles of a portal](/portal/reference/roles/).
+
+![A user's Roles card: Developer, Manager and the roles of the demo, with DSP/DMS user and Viewer user ticked.](../../../../assets/screenshots/portal-user-roles.png)
+
+Someone who is not an administrator cannot give or take the **Administrator** role, or a role with a section they do not have themselves, and cannot change their own roles.
 
 A portal always keeps at least one active administrator. Removing the role from the last one says **This is the portal's last active administrator. Give the role to someone else first.**
 
