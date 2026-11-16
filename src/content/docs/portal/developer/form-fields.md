@@ -211,7 +211,7 @@ The configuration behind [Currency](/portal/sites/form-field-types/#currency). I
 - `thousandsSeparator`: `none`, `'.'`, `','`, `space` or `narrow` (a narrow no-break space). `'.'` when the decimal separator is a comma, `','` when it is a point.
 - `decimals`: 0 to 4. Left out, the currency's own; always 0 for a currency such as `JPY`.
 - `validate.min` and `validate.max`: numbers or texts holding one, compared as decimals.
-- form.io's own `decimalLimit` and `delimiter` are no more taken; the portal refuses a form that has them.
+- A form saved with form.io's own `decimalLimit` and `delimiter` still loads: when it is loaded, or cleaned by the console, `decimalLimit` becomes `decimals`, and `delimiter: true` becomes a `thousandsSeparator` (`','`, or `'.'` when the field's `decimalSeparator` is a comma; `delimiter: false` is `none`). The old field wrote its decimals with a point, so `decimalSeparator` is `'.'` when the field names none. What the field says in the new way stands over the old keys, and the old keys are never written back: the console shows and saves the new ones.
 
 The console refuses the form when the two separators are the same (`currency_separators`), the decimals are not 0 to 4 (`currency_decimals`), the currency is not one of the list (`currency_code`), a position, display or separator is not one of the choices (`currency_options`), a bound is not an amount or has more decimals than the field (`currency_bounds`), or `min` is above `max` (`limits`).
 
@@ -253,7 +253,7 @@ The console refuses the form when a country is not one the numbering library kno
 - `phone`: not a valid number, or not in the international form. A national number such as `0723456789` is refused, since the API has no country to read it in.
 - `phone_country`: a valid number of a country not among `countries`.
 
-The page loads the numbering library from `/_portal/assets/libphonenumber/1.12.10/libphonenumber-min.js` (served by the portal, one fixed file, `immutable`), and only on a page whose form has a phone field.
+The page loads the numbering library from `/_portal/assets/libphonenumber/<version>/libphonenumber-min.js`, where `<version>` is the version of `libphonenumber-js` the portal is installed with (served by the portal, one fixed file, `immutable`: a new version is a new address), and only on a page whose form has a phone field.
 
 ## Date and time
 
@@ -303,7 +303,7 @@ The console refuses the form when `kind` is not one of the three, a limit is mal
 - `date_limit`: outside the limits as worked out when the form is sent.
 - `date_limit_error`: a limit could not be worked out, such as an expression that failed.
 
-The limits are worked out again on the server whatever the page showed. A value that is the same as the record held before (`previous`, in the options `checkSubmission` takes for a form that changes a record) is not judged again, so an old date that is now in the past does not block a change to another field.
+The limits are worked out again on the server whatever the page showed. A value that is the same as the record held before (`previous`, in the options `checkSubmission` takes for a form that changes a record) is not judged again, so an old date that is now in the past does not block a change to another field. A form that a listing opens for Edit (`editForm`) sends the record's id as `record`; the portal reads that record as the sender may read it, and a record the sender may not read, or that does not exist, is treated as none.
 
 **The limits of an expression, for the page.** The page asks, as the person fills the form in and when a field the expression reads changes:
 
@@ -311,6 +311,8 @@ The limits are worked out again on the server whatever the page showed. A value 
 POST /_portal/api/forms/<form>/dates/<key>
 { "site": "primaria", "locale": "en", "values": { "start": "2026-11-01" } }
 ```
+
+`values` holds only the fields the limits name (`form.<key>`, or the field a limit is set to), as plain values; the page never sends a password, and the portal takes no other field.
 
 The answer is `{ "earliest": "2026-12-01", "latest": null }`: the end an expression gives, as a day, a month or a UTC moment, and `null` for an end that is not an expression's or not applied. A session sends its CSRF token; a caller is limited to 60 requests a minute per form and address; a limit that cannot be worked out is `422 limit_unavailable`.
 
@@ -443,6 +445,8 @@ The hash is not shown anywhere either:
 - **Keys the form no longer has:** a value that is a password hash is left out wherever it is read, so a removed or retyped field shows nothing.
 
 The portal's password rules for signing in are not applied to this field: its own `minLength` is the rule.
+
+A signed-in person may send a form that holds a password 20 times a minute per form; more is `429 too_many`, before anything is hashed. A field that a condition hides keeps nothing, even with `clearOnHide: false`.
 
 ## The formatted text field
 
