@@ -28,7 +28,7 @@ The list shows 50 users at a time. Use **Previous** and **Next** to move between
 
 A local account starts **Unconfirmed**: it has no password and cannot sign in, and its tokens do not work, until its owner proves the address is theirs by opening the link. The link works once, for the days set in the [sign-in policy](/portal/console/sign-in-policy/#passwords-and-sessions) (3 at first), and its page asks for a password that keeps the [password rules](/portal/console/sign-in-policy/#password-rules).
 
-![The page of the activation link: Choose a password for the address, the rules, and Activate account.](../../../../assets/screenshots/portal-auth-activate.png)
+![The page of the activation link: Choose a password for the address, the rules ticked as the password is typed, and Activate account.](../../../../assets/screenshots/portal-auth-activate.png)
 
 When the portal sends no email, a local account cannot be verified, so the console refuses it: **The portal does not send email, so a local account cannot be verified. Link the account to a directory or a sign-in provider.** Linked accounts can still be made.
 
