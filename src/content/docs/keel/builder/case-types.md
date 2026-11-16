@@ -36,6 +36,17 @@ Editors and owners see **New case type** in the page header.
 
 The new case type has one stage, **First stage**, with nothing in it, and no fields. The designer opens on it in the draft. Nothing published changes until the draft is published.
 
+## Clone a case type
+
+Editors and owners see **Clone** at the end of each row, beside **Retire**. It makes a new case type from an existing one.
+
+1. Press **Clone** on the row.
+2. Give the copy a **Name**. The **Key** starts as the original's with `-copy`, and the **Number prefix** as the original's with `2`; change them if you like. Both are checked as for **New case type**, and no other case type may have the same prefix.
+3. Pick the **Draft** to save the copy in: a new one, or an open one.
+4. Press **Clone**. The builder saves the copy in the draft and opens it in the designer.
+
+A published case type is copied as the version published now. A case type that only a draft holds has **Clone** too, and is copied as the draft's file holds it. The copy has the original's scenarios and connections; a connection's credentials are not copied, so set them on the copy. Nothing published changes, and the copy is published on its own, from version 1.
+
 ## Retire a case type
 
 Retiring a case type stops new cases. Cases already running carry on to the end. Editors and owners see **Retire** at the end of each published case type's row.

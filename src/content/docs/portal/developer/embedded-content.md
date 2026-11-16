@@ -48,6 +48,10 @@ regions:
 
 A page is public when its site, the page and the block all let everyone view. On a public page the address must fall under a prefix with `public: true`; a check of the files refuses the block otherwise, with the problem `embed_preference` (reason `public`). An address under no prefix is the reason `not_allowed`.
 
+## Taking an address away
+
+Saving a site's settings without an address that a page's block still shows is refused, naming the pages. The settings request takes `removeEmbeds: true` to take, in the same version, the `embed` blocks of the site's pages that no longer fall under a listed prefix, wherever they are in a page's regions; nothing else of the pages changes. The console offers it as "Also take the Embedded content blocks off those pages when I save".
+
 ## What the page sends
 
 The frame is `<iframe loading="lazy" referrerpolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads" allow="fullscreen">`, with `src` the address as the browser reads it. The response's content security policy carries `frame-src 'self' <origin> …`, one origin for each frame the page shows to that person, and the page keeps no other `frame-src` than that; a page with no embedded content has none.

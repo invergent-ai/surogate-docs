@@ -19,7 +19,14 @@ Under **Sites**, open a site's **Settings** and go to **Embedded content**. Admi
 
 A site lists at most 50 addresses. An address is matched as the browser reads it: the host without regard to capitals, the same port, and the path word by word. So `https://answers.example.ro.evil.example/` and `https://answers.example.ro/dashboardX` do not fall under `https://answers.example.ro/dashboard/`. An address with a login in it, or with an encoded slash, is never allowed.
 
-When you take an address away that pages still show, the console names those pages first, and the save is refused until their blocks are changed.
+When you take an address away that pages still show, the console names those pages first.
+
+![The Embedded content part of a site's settings after Public reports was removed: a notice names the page /rapoarte, with a box "Also take the Embedded content blocks off those pages when I save".](../../../../assets/screenshots/portal-embed-remove-also.png)
+
+- **Tick the box** and save: the portal takes the Embedded content blocks that show the address off those pages in the same save. The pages keep everything else.
+- **Leave it unticked** and the save is refused, naming the pages, until their blocks are changed or the address is put back.
+
+So taking an address away never leaves you stuck: you do not have to open each page first.
 
 ## Put the block on a page
 
