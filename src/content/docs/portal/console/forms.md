@@ -59,7 +59,7 @@ Administrators see **Build forms** at the top of the page: **New form** makes on
   - **Who reads what was sent**: by default **Administrators only**. It says: "Administrators always read what was sent." The people chosen read, export and delete the submissions.
 - **Fields:** drag fields from the left onto the form, and drop them where they go.
   - **Fields:** text, text area, number, checkbox, select, radio, select boxes and the submit button.
-  - **More fields:** email, web address, phone number, day, time and currency.
+  - **More fields:** email, web address, phone number, day, time, currency and date and time. See [Form fields](/portal/sites/form-field-types/#currency) for the currency, phone number and date and time fields.
   - **Layout:** panels, columns, fieldsets, tabs, wells and text blocks.
   - **From apps:** the fields and option lists the approved [apps](/portal/console/apps/) give forms, each named with its app, such as **CRM: Signature**. It shows only when an app gives some. A select from an app shows where its options come from instead of its values. A form takes the options of at most 10 lists from apps.
 
