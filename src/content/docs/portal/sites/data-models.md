@@ -49,6 +49,23 @@ On the **Fields** tab, **Add field** adds one: its id, its type, its label in ea
 
 Each field also has **Hidden from roles**: the roles that do not see the field at all. See [Fields hidden from a role](/portal/sites/row-access/#fields-hidden-from-a-role).
 
+### Instructions on a field
+
+Each field also has **Instructions**: the words a person reads to fill the field in, such as "The number of beds the unit has on the last day of the month." Write them on the field's card, in a box for each language:
+
+![The model editor's card of the field Number of beds: its label in each language and, under them, its Instructions (ro) and Instructions (en), with what they are for.](../../../../assets/screenshots/portal-model-instructions-editor.png)
+
+The console shows the same card in Romanian when the console is in Romanian:
+
+![The same card in the Romanian console: Instrucțiuni (ro) and Instrucțiuni (en).](../../../../assets/screenshots/portal-model-instructions-editor-ro.png)
+
+- Instructions are plain text of up to 500 characters in each language. Markup is refused, and the field shows what is wrong.
+- Write one language or both. Where a language is left empty, the people who read it are shown the other one, never nothing.
+- Leave both empty for a field that needs none: the file then has no instructions on it.
+- A form translates a text by its words. Two fields cannot have the same instructions in Romanian with a different English, and instructions cannot be worded as a label that is translated another way: the console refuses the save and says which field to reword.
+- They are shown wherever the field is filled in, and are read to a person who uses a screen reader when they reach the field: under the field in a [form for records](/portal/sites/model-forms/#instructions-on-the-fields), in the model's own form and in a listing's **Add** and **Edit** window, and behind a **?** on the column of a grid of lines.
+- A person who may not see a field, because it is [hidden from their role](/portal/sites/row-access/#fields-hidden-from-a-role), is not shown its instructions either.
+
 A saved field keeps its id, and the model a link points at. Its type can change only among the text types, which are kept alike: Text, Long text, Email, Phone and Web address. Changing to a type that does not take an option, such as a Long text that is filtered on, drops that option.
 
 Removing a saved field keeps its values in the table, and the editor says so. A field added again with the same id has them back; it must have the type it had, and the editor says so until it does. If the removed field was the title field, the model has no title field until one is picked.
