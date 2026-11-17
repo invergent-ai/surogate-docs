@@ -30,6 +30,8 @@ People who sign in through a sign-in provider, or with a certificate, are not as
 
 **Allow certificate sign-in** shows **Sign in with a certificate** on the sign-in page. People sign in with a certificate the server checks, such as a qualified electronic signature card; the team that runs the portal sets this up. Link each person's certificate on their [user page](/portal/console/users/#linked-accounts); a person has one linked certificate at a time.
 
+**Certificate authorities this portal trusts**: paste the certificate of each authority that issues your people's cards (PEM text, starting `-----BEGIN CERTIFICATE-----`), one after another, up to 10. List the authority named as the issuer on the cards, often an intermediate rather than the root. Only certificates one of them issued sign in, and certificate sign-in cannot be turned on without at least one. Several organisations can share one server, and its gateway accepts every one of their authorities; this list keeps another organisation's cards out of your portal.
+
 **Also sign in a person whose email is in the certificate** signs in someone not linked yet, when their email is in the certificate. It never signs in an administrator, nor someone from a directory, this way.
 
 Press **Save**. The change is in the [audit log](/portal/console/audit/).
