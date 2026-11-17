@@ -72,12 +72,14 @@ Whatever you choose at sign-in, **Create an account** and **Forgot your password
 
 ## Rules for each role
 
-![The Rules for each role card: a second step, idle minutes, days and password term for the Administrator role.](../../../../assets/screenshots/portal-auth-policy-roles.png)
+![Two blocks of the Rules for each role card: the Greeter, a role of this portal's own that opens nothing in the console, with the second step left to choose, and the Supervisor, which edits Users, with the second step required and locked; each with its idle minutes, session days and password days.](../../../../assets/screenshots/portal-auth-policy-custom-roles.png)
 
-**Rules for each role** has one block for each role. A role can ask for:
+**Rules for each role** has one block for each role of the portal: the roles of the Roles page, the Administrator first, then the others by their codes, and on the default portal the Install administrator. A role you make yourself is there as soon as it exists, named as the Roles page names it. A role can ask for:
 
-- **A second step is required.** It is ticked, and cannot be unticked, for every role that administers (Administrator and Install administrator); the portal and its API refuse to change it.
+- **A second step is required.** It is ticked, and cannot be unticked, for every role that administers: the Administrator, the Install administrator and every role that opens a section of the console, such as a Supervisor that edits Users. The portal and its API refuse to change it. A role that opens no section of the console, such as a Greeter, may choose.
 - **Idle minutes before a session ends**, **days a session lasts at most** and **days a password lives**. Empty means the general value above.
+
+Whoever holds a role that opens the console is guarded as an administrator is: their second step is asked for, their sign-in from a network address over its limit is refused, and coming to hold such a role (given by hand, by a group mapping, or by the role being given its first section) starts the 14 days to set the second step up. The rules of a role that is deleted go with it; saving this page drops any that were left.
 
 Someone with several roles gets the strictest value of each setting. When a person is given a role that needs a second step, they set it up at their next sign-in, within 14 days, as in [Two-step sign-in](#two-step-sign-in); the portal needs its secret key to keep the authenticator app's secret. Losing a role relaxes the rules from the next sign-in; making a rule stricter applies to open sessions at once. A person who signs in at a provider or with a certificate is not asked for the portal's second step: ask your provider to require its own for the roles that administer.
 
