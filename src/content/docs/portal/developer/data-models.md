@@ -261,6 +261,56 @@ permissions:
 
 A record is someone's own when they added it. A visitor owns nothing: with `add: [everyone]`, a public form can add records that its visitors then cannot see.
 
+### Access by condition
+
+`permissions` can also hold `rules`, a `holder` and who may work on its behalf. A rule gives a verb (`view`, `add`, `edit` or `delete`) to some principals only for the records a [CEL](/portal/developer/actions/) condition picks, over `record` and `user`:
+
+```yaml
+permissions:
+  view: { all: [role:user_vizualizare] }
+  rules:
+    view:
+      - to: [role:user_dsp]
+        when: record.entitate.judet == user.fields.judet || record.entitate.retea == user.fields.retea
+      - to: [role:user_furnizor]
+        when: record.entitate in user.fields.entitati
+    edit:
+      - to: [role:user_furnizor]
+        when: record.entitate in user.fields.entitati
+  holder: entitate
+  onBehalf:
+    - to: [role:user_dsp]
+      when: user.fields.judet != null
+  reasons:
+    - Spitalul nu are acces la internet
+```
+
+The condition reads `record.<field>` (and `record.<link>.<field>`, up to four links deep, and `record.owner` and `record.id`), `user.id`, `user.roles` and `user.fields.<key>`. It may use `==`, `!=`, `<`, `<=`, `>`, `>=`, `&&`, `||`, `!` and `in`. A value the person has no value for makes the condition false. The file is refused when a condition does not read, names a field or a user field that does not exist, or compares unlike values.
+
+Where the model has `states`, `holder` changes only while the record is in `states.initial`; the attempt in any other state is refused with `holder_locked`, and kept in the audit log.
+
+A field can name the roles it is hidden from, `hiddenFor: [user_viz]` (role codes, each once). The field is absent for a person whose roles that count are all listed; see [Fields hidden from a role](/portal/sites/row-access/#fields-hidden-from-a-role).
+
+`holder` names a link field of the model; `onBehalf` says who may work on a record whose holder is not one of the person's own entities, with an optional condition; `reasons` are the reasons the console offers. The reason is asked of every such change, through `reason` on the REST API (a query parameter, or the percent-encoded `X-Portal-Reason` header), `reason` on a GraphQL change, and `reason` on the record actions. See [Access to records by condition](/portal/sites/row-access/).
+
+### User fields
+
+The fields the portal keeps of each person are `users/fields.yaml`, a list. Besides `text`, `number`, `boolean`, `date`, `email` and `phone`, a field can be a `link` or `links` with the `model` it points at; `institution: true` marks the link that names the person's institution, and `ownEntities: true` the links that name the entities they work for:
+
+```yaml
+- key: judet
+  label: { ro: Județ, en: County }
+  type: link
+  model: judete
+- key: entitati
+  label: { ro: Entitățile proprii, en: Own entities }
+  type: links
+  model: entitati
+  ownEntities: true
+```
+
+Rules and expressions read a field as `user.fields.<key>`: the id of the record, or the list of ids.
+
 ## When the file changes
 
 The portal adds what the file adds: a new model gets its table, a new field its column. It never takes anything away: a field or model taken out of the file keeps its data, and comes back with it if it is put back.
@@ -345,3 +395,7 @@ A request may nest 6 levels, ask for 10 things at its top and name 500 fields in
 ## Links in depth
 
 `unique`, `lookup` and a model read from a data source (`source`) are in [Developer: Data sources](/portal/developer/data-sources/#entities).
+
+## Reading records as a person may
+
+For a read the portal's own pages and APIs do not make (an export, say), ask the person's rights once and use what comes back: `RowAccess.readable(model)` answers whether they may see any record, which (`scope`: their own, or a condition as SQL), the model without the fields hidden from them, and the field ids; `RowAccess.list(model, query)` and `RowAccess.get(model, id)` are the data API's own list and get with the rules and the hidden fields applied. Do not read the table or `listRecords` directly: nothing else is held to the rules.

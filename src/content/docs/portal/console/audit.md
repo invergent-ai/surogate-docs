@@ -11,7 +11,7 @@ On **Audit log**, an administrator sees everything that changed something in the
 
 Narrow the list with:
 
-- **Action**: what was done, such as **Changed roles**.
+- **Action**: what was done, such as **Changed roles** or **Work on behalf of an entity**.
 - **Outcome**: **Done**, **Refused** or **Failed**.
 - **From** and **To**: the days to look at, both included, in your own time.
 
@@ -19,7 +19,9 @@ Each event shows when it happened and the address it came from. Press **Load mor
 
 To see what one person did and what was done to them, open their page under **Users** and press **See their audit events**. Press **Show everyone** to go back to the whole log.
 
-**Download CSV** saves the events the filters show, for a spreadsheet or an auditor. A very large download says at its end that it was cut short; narrow the filters for the rest.
+Work done on behalf of an entity is kept with the entity, the person, their institution and the reason: see [Access to records by condition](/portal/sites/row-access/#working-on-behalf-of-an-entity). The changes to roles and to people's own fields are kept with what they were and what they became.
+
+**Download CSV** saves the events the filters show, for a spreadsheet or an auditor; it has the institution and the reason as columns. A very large download says at its end that it was cut short; narrow the filters for the rest.
 
 ## Check that the log was not changed
 

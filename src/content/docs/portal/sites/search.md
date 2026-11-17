@@ -34,6 +34,8 @@ After two letters, the search box suggests up to five titles under it. Use the a
 
 A person finds a page or an entry only when they may view it. Visitors find what visitors may view; people signed in also find what their groups and organizations may view, and what they edit. The counts beside the results count only what the person may see.
 
+A site can also leave pages, content types and folders out of the results of some roles, though their people may view them: see [Search settings](/portal/console/search/#left-out-for-a-role).
+
 ## Put a search box on a page
 
 In the [page editor](/portal/console/pages/#search), choose **Add a search box** in a part of the page. A page of its own, such as `/cautare`, works well, with a link to it in the site's layout.

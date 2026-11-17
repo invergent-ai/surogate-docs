@@ -37,6 +37,7 @@ regions:
 | `group:Funcționari` | the members of a [group](/portal/console/groups/) |
 | `organization:Primăria/Direcția IT` | the members of an [organization](/portal/console/organizations/) and of every organization below it, named from the top, joined by `/` |
 | `role:administrator` | the portal's administrators |
+| `role:user_furnizor` | everyone who holds the [role](/portal/console/roles/) with this code, such as one you made in the console |
 
 Put several in the list to let any of them in: `view: [group:Funcționari, organization:Primăria/Direcția IT]`.
 
