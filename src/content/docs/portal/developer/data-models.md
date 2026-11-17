@@ -57,6 +57,7 @@ A model can also declare [KPIs](/portal/sites/kpis/), and make its own pages: se
 | `largeText` | Text, up to 1,000,000 characters |
 | `number` | A number |
 | `money` | An amount with up to 4 decimals, answered as text such as `12.5000` |
+| `decimal` | An exact decimal with `decimals` places (0 to 6, 2 by default), answered as text such as `125.750`; sent as a number or as text with a point; more places than the field has are refused, never rounded |
 | `date`, `datetime`, `time` | `2026-11-10`, `2026-11-10T09:30:00Z`, `09:30` |
 | `boolean` | `true` or `false` |
 | `email`, `phone`, `url` | Checked as what they are; a `url` is http, https or mailto |
@@ -66,6 +67,168 @@ A model can also declare [KPIs](/portal/sites/kpis/), and make its own pages: se
 A field can be `required`, `searchable` (text, searched by `q`), `filterable` and `sortable`. Every record also has its `id`, its owner, and when and by whom it was made and last changed.
 
 A link to a record that is deleted is cleared; a record's own links to others go with it.
+
+## Logic in a model's file
+
+The model editor writes these keys; they can also be written by hand. They are described for people in [Calculated fields and checks](/portal/sites/model-logic/) and [Lines, values from other records and states](/portal/sites/model-lines-states/). Expressions are CEL, with exact decimals, in the language that page lists.
+
+A field takes, besides `type`, `label`, `required`, `searchable`, `filterable`, `sortable` and `model`:
+
+```yaml
+fields:
+  grad_ocupare:
+    type: decimal
+    decimals: 2              # 0 to 6
+    separator: point         # point, comma; left out: the page's language
+    thousands: true
+    min: 0
+    max: 100
+    calculated:
+      expression: paturi_ocupate / (paturi_total * zile_luna) * 100
+      when: se_aplica && paturi_total > 0      # empty when false
+  media_an:
+    type: decimal
+    decimals: 4
+    calculated:
+      expression: avg(set.map(r, r.kg_pat_luna))
+      when: luna == 12 && size(set) == 12
+      over:                  # over other records; they are `set`
+        model: fisa
+        match: { unitate: unitate, an: an }     # their field: an expression of this record
+        where: row.stare in ['transmisa']       # optional, over `row` and `record`
+  paturi_ocupate:
+    type: decimal
+    decimals: 0
+    required: true
+    requiredAt: submit       # save (default) or submit
+    requiredMessage: { ro: …, en: … }
+    requiredWhen: { when: paturi_total > 0, at: save }
+    activeWhen: se_aplica
+    inactive: hidden         # or disabled
+    editableBy: [group:dsp, role:administrator]
+    validators:
+      - kind: integer        # integer, positive_integer, email, date
+        message: { en: Whole beds only }
+      - expression: paturi_ocupate >= 0        # true when valid
+        when: se_aplica
+        message: { ro: …, en: … }
+        severity: warning    # error (default) or warning
+        at: submit
+  cant_sp:
+    type: decimal
+    prefill:
+      model: fisa_linie
+      match:
+        fisa.unitate: parent.unitate           # a field, or a link's field
+        fisa.luna: "parent.luna == 1 ? 12 : parent.luna - 1"
+        cod_deseu: cod_deseu
+      field: cant_rs                           # or: expression over `source`
+      missing: { value: "0", message: { ro: …, en: … } }
+      states: [ciorna, corectat]               # default: every state that is not checked
+      manualFlag: sp_manual
+  fisa:
+    type: link
+    model: fisa
+    lineOf: true             # this model's records are lines of fisa
+  stare:
+    type: text
+    system: true             # only the portal writes it
+```
+
+A model takes:
+
+```yaml
+results: { problemCount: nr_probleme, complete: complet }
+rules:
+  - id: paturi
+    label: { ro: …, en: … }
+    check: paturi_ocupate <= paturi_total * zile_luna   # true when valid
+    when: se_aplica                                      # optional
+    field: paturi_ocupate                                # where the words are said
+    message: { ro: "Maximum {{paturi_total * zile_luna}}", en: "At most {{paturi_total * zile_luna}}" }
+    severity: error          # or warning
+    at: save                 # or submit
+    disabled: false
+  - id: unica
+    label: { ro: …, en: … }
+    unique: [unitate, an, luna]
+    field: luna
+    message: { ro: …, en: … }
+lines:
+  model: fisa_linie
+  rows:
+    mode: fixed              # one line for each record of `from`
+    from: nom_cod
+    where: { activ: true }
+    order: ord
+    field: cod_deseu         # the line's link field that takes the record
+    # or: { mode: free, min: 0, max: 20 }
+states:
+  field: stare
+  initial: ciorna
+  submittedAt: transmis_la   # optional
+  submittedBy: transmis_de   # optional, the person's id
+  list:
+    ciorna: { label: { ro: …, en: … }, editableBy: [group:furnizori] }
+    transmisa: { label: { ro: …, en: … }, checked: true }
+  transitions:
+    - id: transmite
+      label: { ro: Transmite, en: Submit }
+      from: [ciorna]
+      to: transmisa
+      by: [group:furnizori]
+      when: complet           # optional
+      comment: false          # true asks for one
+lock:
+  editable: now < startOfDay(an + 1, 4, 1) || user.roles.exists(r, r == 'administrator')
+  message: { ro: …, en: … }
+  covers: [update, delete, transition]   # default: all three
+```
+
+### What a write answers
+
+Every way of writing a record gives a refusal the same shape. A write that breaks a check answers `400` with `error: "record_invalid"` and the whole list of `problems`:
+
+```json
+{
+  "error": "record_invalid",
+  "message": "Maximum 3000 (beds × days in the month)",
+  "field": "paturi_ocupate",
+  "problems": [
+    {
+      "field": "paturi_ocupate",
+      "line": null,
+      "message": "Maximum 3000 (beds × days in the month)",
+      "severity": "error",
+      "at": "save",
+      "rule": "paturi"
+    }
+  ]
+}
+```
+
+`line` is `{ "index", "id", "key" }` for a problem of a line: its place in the record's lines, its id once saved and, for a fixed row, the id of the record it was made from. `at` is `save` or `submit`. A record held by its lock answers `403` with `error: "record_locked"` and the words of the lock; one in a state nobody may change it in answers `403` with `state_locked`. In GraphQL the error's `extensions` carry `code`, `field` and `problems`. In an action, the message lists the problems of severity error.
+
+A write that goes through answers the record as before, and also `_problems` (what did not stop it: warnings, and checks that wait for submitting) and, for a header, `_lines`. A value taken from another record that was not found adds `_notes`. `GET /_portal/api/data/<model>/<id>` of a header carries `_lines` too, and GraphQL records have `_problems` and `_lines`.
+
+### Lines
+
+A header's `POST` and `PATCH` take `lines`: a list of `{ "id"?, …fields }`, written with the header in one transaction. Fixed rows are matched by `id` or by the row's link field and are neither added nor removed; with free rows the list sent is the whole list. A single line can also be written, changed or deleted on its own at `/_portal/api/data/<line model>`, and the header is worked out again in the same transaction. In GraphQL, `create_<model>` and `update_<model>` take `lines` among their `values`.
+
+### What a form needs
+
+`POST /_portal/api/data/<model>/evaluate` takes `{ "id"?, "values"?, "lines"? }` and writes nothing. It answers what the write would do: `values` (calculated and taken values included), `active`, `required` (`save`, `submit` or `null`), `editable` (rights, lock, state, and fields only the portal writes taken into account), `lines`, `problems`, `notes`, `locked`, `state` and the `transitions` the person may make from where the record is. It is what opens a form with last month's value in it, and checks it as it is filled.
+
+### States
+
+- `POST /_portal/api/data/<model>/<id>/transition` takes `{ "to"` (or `"transition"` for a move's id)`, "comment"?, "values"?, "lines"? }`. The values and the move are one write. It answers the record as `PATCH` does.
+- `GET /_portal/api/data/<model>/<id>/transitions` answers the log: `items` with `from`, `to`, `transition`, `by` (`id`, `name`), `at` and `comment`.
+- GraphQL has `transition_<model>(id, to, transition, comment, values)`.
+- The action `changeState` takes `model`, `id`, `to` and, optionally, `comment` and `values`, all expressions.
+- `POST /_portal/api/data/<model>/recalculate` takes `{ "filter"?, "after"? }`, `filter` of filterable fields, and works out again the fields calculated over other records, for people who may change every record, a page of 1,000 records at a time. It answers `{ "recalculated", "failed", "next" }`: ask again with `"after": <next>` until `next` is `null`. The action `recalculateRecords` takes `model` and `where` and goes through all the pages.
+- `GET /_portal/api/tenant/data/model-log?model=<id>&limit=<n>&before=<id>` is the model's log, newest first, for administrators: `{ "items": [{ "id", "at", "model", "recordId", "field", "rule", "line", "kind", "message" }], "next" }`.
+
+Calculated fields, fields written by the portal (the state, the figures kept of the checks, the flag of a value written by hand) and, for people not named in `editableBy`, a field with that key are refused when a write changes them.
 
 ## History
 
