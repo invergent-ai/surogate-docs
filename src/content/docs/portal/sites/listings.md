@@ -50,7 +50,7 @@ Each column heading is a link: a click sorts by that column, and a second click 
 
 - **Sort ascending**, **Sort descending** and **Add to sort**. A listing sorts by up to 3 columns: the first sorted shows 1, the next 2, and so on. Shift and click on a heading adds it to the sort too.
 - **A filter**, by how the column's values compare. Text: contains, is, starts with, is empty, is not empty. Numbers, dates and times of the day: =, ≠, <, ≤, >, ≥, between two values, is empty, is not empty. Yes or no: is yes or is no. A link: one of the records, chosen from those the person may read. A time of day only says empty or not.
-- A column that can be searched has a search of its own.
+- A column that can be searched has a search of its own. A column of files has none of these.
 
 ![The listing Monthly reports sorted by County then by Period, filtered to a quantity of at least 100: the line "Quantity (kg): ≥ 100" with Clear filters, and the rows under it.](../../../../assets/screenshots/portal-data-listing-sorted.png)
 
@@ -97,12 +97,17 @@ For a model that keeps its history and archives what is deleted, the button that
 - Adding, editing and deleting are offered only to people signed in, never to visitors.
 - A row that the model's [lock](/portal/sites/data-models/) holds closed, such as a sheet of a year that has ended, has **Open** only: also the rows a search, a sort or **Load more** brings in later, which the page asks the portal about.
 - Values show as text; dates and times in the person's own time; web addresses as links only when they are http, https or mailto.
+- A [File](/portal/sites/data-models/#files-in-records) column shows the names of the record's files, each a download for those who may read the record. It has no filter, no sort and no search, and a listing cannot group on it.
 
 **Open** shows a record's details below the list, with the title of the records it links to when the person may see them. Its address can be shared: `?p_<placement id>_record=<record id>`. Search engines are told not to keep such addresses.
 
 **Add** and **Edit** open a small form with the model's fields. A link is chosen with **Choose**, from a list of the linked model's records, as a form's [record field](/portal/sites/forms/#pick-a-record) does. A change sends only what was changed. A value the model refuses is shown with its field.
 
-For a model that calculates figures, checks its records, hides fields on a condition or has states, the dialog runs the model's own logic as the person types, as a [form for records](/portal/sites/model-forms/) does: what the portal calculates shows grey, what is asked for has a star, each message shows at its field, and the state's moves are buttons beside **Save**:
+For a model that calculates figures, checks its records, hides fields on a condition, has states or has a File field, the dialog runs the model's own logic as the person types, as a [form for records](/portal/sites/model-forms/) does: what the portal calculates shows grey, what is asked for has a star, each message shows at its field, and the state's moves are buttons beside **Save**:
+
+A File field in the dialog is the same drop zone a form has: **Choose a file** or **Choose files**, the limits under it, and each file with its size, **Uploaded** and **Remove**:
+
+![The Add dialog of a requests listing: Applicant filled in, Copy of ID and Supporting documents with Choose a file and Choose files and their limits, and certificat-urbanism.pdf uploaded, with Save and Cancel.](../../../../assets/screenshots/portal-model-file-dialog.png)
 
 ![The Add dialog of an orders listing. Quantity of 150 shows the message At most 100 pieces in one order. Total, calculated, is grey. Management approval, asked for because the total is over 1000, has a star.](../../../../assets/screenshots/portal-forms-model-dialog.png)
 

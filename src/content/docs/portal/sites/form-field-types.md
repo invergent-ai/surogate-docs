@@ -338,7 +338,7 @@ A formatted text field cannot be the text a barcode draws.
 
 ## Files
 
-**Files** is in the **More fields** group of the form builder. People add files to the form before they send it, and the form's reviewers download them from the submission.
+**Files** is in the **More fields** group of the form builder. People add files to the form before they send it, and the form's reviewers download them from the submission. In a form [bound to a data model](/portal/sites/model-forms/), a File field of the model is drawn as this field, with the model's limits, and its files are kept with the record: see [Files in records](/portal/sites/data-models/#files-in-records).
 
 In the form builder, drag **Files** onto the form and click it. Its dialog asks for:
 

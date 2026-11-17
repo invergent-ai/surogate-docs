@@ -42,8 +42,9 @@ Developers can also write a model as a file: see [Developer: Data models](/porta
 | Link | One record of the model it points at |
 | Links | Several records of the model it points at |
 | Location | A point or a simple polygon on a map: see [Maps](/portal/sites/maps/) |
+| File | One file, or several: documents, pictures, archives. See [Files in records](#files-in-records) |
 
-A field can be required, searchable (text, found by search), filterable and sortable. Long texts, Links and Locations are neither filtered nor sorted on. Every record also has its id, its owner, and when and by whom it was made and last changed.
+A field can be required, searchable (text, found by search), filterable and sortable. Long texts, Links, Locations and Files are neither filtered nor sorted on. Every record also has its id, its owner, and when and by whom it was made and last changed.
 
 On the **Fields** tab, **Add field** adds one: its id, its type, its label in each language, and its options. A Link or Links field also names the model it points at. **Title field** picks the field that names a record.
 
@@ -73,6 +74,46 @@ Removing a saved field keeps its values in the table, and the editor says so. A 
 A link to a record that is deleted is cleared; a record's own links to others go with it. Where a model [keeps its history](#history-and-archiving), deleting archives instead, and links to an archived record stay.
 
 Developers: see [Developer: Data models](/portal/developer/data-models/#fields).
+
+## Files in records
+
+A **File** field keeps documents with a record: the plans of a permit request, a copy of an ID, a signed contract. A model can have several File fields, each with its own limits.
+
+On the **Fields** tab, choose the type **File** for a new field. The field then asks for:
+
+- **Several files**: tick it to take more than one file. **Most files** then asks how many, from 1 to 20. A field for one file takes one.
+- **Allowed extensions**: tick at least one of pdf, doc, docx, xls, xlsx, odt, ods, csv, txt, jpg, jpeg, png and zip. Files that run, such as exe, js or html, are never offered and never allowed. A file must also hold what its extension says: a program renamed `plan.pdf` is refused.
+- **Largest file, in KB**: from 1 KB to 25,600 KB (25 MB). The default, 10,240 KB, is 10 MB.
+- **Files with the same name**: what happens when a person adds a file whose name is one the field already has. **Rename the new one** keeps both (`report.pdf`, then `report (1).pdf`). **Replace the first** keeps the new one only. **Refuse the new one** says "A file named report.pdf is already there." Names that differ only in capitals count as the same.
+- **Required**, and **Hidden from roles**, as for any field.
+
+![The editor card of the field Supporting documents, of type File: Several files ticked, Most files 3, Largest file 5120 KB, Files with the same name set to Rename the new one, and the extensions pdf, docx, xlsx, jpg and png ticked.](../../../../assets/screenshots/portal-model-file-editor.png)
+
+A File field cannot be filtered, sorted, searched, calculated or filled in from another record. A model that is the lines of another model takes no File field (put it on the model the lines belong to), and neither does a model read from a data source.
+
+### Adding and removing files
+
+People add files wherever they write the record: a [form for records](/portal/sites/model-forms/), the model's own form, the **Add** and **Edit** dialog of a [listing](/portal/sites/listings/), the API. The field is a drop zone with the limits under it; each file goes up as soon as it is chosen, one at a time, with its progress, and **Remove** takes it off. The record is saved with the files that went up well.
+
+![The model's own form for Permit requests: Applicant filled in, Copy of ID with buletin.png uploaded, and Supporting documents with plan-situatie.pdf and memoriu-tehnic.pdf uploaded, each with its size, Uploaded and Remove.](../../../../assets/screenshots/portal-model-file-form.png)
+
+- A signed-in person may add files where they may add records, or change some. A visitor may add files only where the model lets everyone add records, from the form that does so. A visitor uploads at most 30 files a minute from one network, a signed-in person 60.
+- A file waits for its record. If the record is not saved within a day, the file is removed, and a file that has waited more than a day can no longer be saved with a record. A visitor's file is taken only by the form the visitor sent it with, from the same network.
+- Saving the record keeps its files with it. Taking a file off and saving removes the file for good. Deleting the record removes its files. Where the model [keeps its history](#history-and-archiving) and deleting archives the record, the archived record keeps its files.
+- Going back to an older version of a record does not bring back a file taken off since: the older version still names it, but the file is gone. A file taken off a model for good, by removing the File field, is kept for 30 days in case that was a mistake, then removed.
+- When a person is [erased](/portal/console/users/), the files they had uploaded and not yet saved are removed. The records keep their files, as they keep their other values.
+
+### Who reads the files
+
+A file is downloaded from its record, and the portal checks every download as it checks a read of the record: the person must be able to read the record (their own records only, or those a [row rule](/portal/sites/row-access/) picks), and the field must not be [hidden from their roles](/portal/sites/row-access/#fields-hidden-from-a-role). A file of a past version downloads only for those who may see the record's history, and only while the record still holds the file. A download is always a download: the browser never opens the file, and it never runs.
+
+### Lists, exports, expressions and the API
+
+A [listing](/portal/sites/listings/) shows the names of a record's files as downloads, to those who may read the record:
+
+![A listing of permit requests: Applicant, Copy of ID and Supporting documents. Each file name is a link: buletin-ionescu.png, plan-situatie.pdf and memoriu-tehnic.pdf.](../../../../assets/screenshots/portal-model-file-listing.png)
+
+An export names the files, never carries them: `plan-situatie.pdf; memoriu-tehnic.pdf` in one cell. The history of a record shows the names a version held. In a model's [expressions](/portal/sites/model-logic/) the field is a list of files, each with `name`, `size` (in bytes) and `type`, such as `record.documents.all(f, f.type == 'application/pdf')`; the portal's own id of a file is never in it. Developers: see [Developer: Data models](/portal/developer/data-models/#files).
 
 ## What a model can do with its values
 

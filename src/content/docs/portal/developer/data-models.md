@@ -64,8 +64,9 @@ A model can also declare [KPIs](/portal/sites/kpis/), and make its own pages: se
 | `link` | One record of the model named by `model` |
 | `links` | Several records of the model named by `model` |
 | `location` | A GeoJSON point or polygon; `shape` and `snapshot` are its own keys: see [Maps](/portal/developer/maps/#a-location-field) |
+| `file` | A list of files; `multiple`, `maxFiles`, `extensions`, `maxSizeKb` and `duplicates` are its own keys: see [Files](#files) |
 
-A field can be `required`, `searchable` (text, searched by `q`), `filterable` and `sortable`. Every record also has its `id`, its owner, and when and by whom it was made and last changed.
+A field can be `required`, `searchable` (text, searched by `q`), `filterable` and `sortable`. Links, long texts, locations and files are neither filtered nor sorted on. Every record also has its `id`, its owner, and when and by whom it was made and last changed.
 
 ### Instructions
 
@@ -89,6 +90,51 @@ fields:
 - **Hidden fields:** the instructions of a field in `hiddenFor` are left out, with the component and its words, for a person who does not see the field.
 
 A link to a record that is deleted is cleared; a record's own links to others go with it.
+
+### Files
+
+A `file` field holds uploaded files:
+
+```yaml
+fields:
+  documents:
+    type: file
+    label: { ro: Documente justificative, en: Supporting documents }
+    multiple: true        # several files; one when left out
+    maxFiles: 3           # 1 to 20, with multiple; 5 when left out
+    extensions: [pdf, docx, jpg, png]
+    maxSizeKb: 5120       # 1 to 25600; 10240 when left out
+    duplicates: rename    # rename (default), overwrite or refuse
+```
+
+- `extensions` is required: at least one of `pdf`, `doc`, `docx`, `xls`, `xlsx`, `odt`, `ods`, `csv`, `txt`, `jpg`, `jpeg`, `png` and `zip`, each once. A file that runs (`exe`, `js`, `html`, `svg`, a document with macros, and the like) is refused in the file, with its own reason. Each file is also checked by what it holds, not by its name.
+- The field is not `filterable`, `sortable` or `searchable`, and takes no `calculated`, `prefill`, `validators` or `system`. It is refused on a model that is the lines of another (a link marked `lineOf`) and on a model with a `source`. `required`, `hiddenFor`, `editableBy`, `activeWhen` and `instructions` work as for any field.
+- A form bound to the model keeps these limits: a `file` field is placed in the form as a `files` component with the field's id as its key, and no other kind of component takes that key. Its settings for the extensions, the count and the size are the model's, whatever the component says. A `files` component on any other field of the model is the form's own upload, as before.
+
+A record's value for the field is a list of `{ id, name, size, type }`: the id the portal keeps the file under, its name, its size in bytes and its media type. An empty field is `[]`. The API answers it so, GraphQL gives `docs { id name size type }`, and an expression reads `name`, `size` and `type` only.
+
+**Upload.** A file is sent before the record that holds it:
+
+```
+POST /_portal/api/data/<model>/files?field=<field>&name=<file name>
+content-type: application/octet-stream
+
+<the bytes>
+```
+
+It answers `201` with `{ id, name, size, type }`, and, for a visitor, a `claim`: a secret that only the uploader is given. The person must be signed in with the `data` access (an app's token too) and be allowed to add records of the model or change some, or be a visitor where the model lets everyone add; a field hidden from them answers `404`. It is refused with `400` and `file_name`, `file_empty`, `file_extension` or `file_content`, with `413` and `file_size`, and with `429` and `too_many` (more than 60 uploads a minute for a person, 30 for one visitor network) or `too_many_files` and `uploads_full` (too many files or bytes waiting: 100 files and 512 MB for one sender, 2 GB for all visitors, 4 GB in all). The file waits a day for its record, after which a write can no longer take it; the bytes are kept in the tenant's own files under a name no folder has.
+
+**Write.** Name the files in the record's values, by id:
+
+```json
+{ "applicant": "Maria Ionescu", "documents": [{ "id": "7f1e…" }, { "id": "c3d2…" }] }
+```
+
+Each is a file the record already holds (kept as it is: send the list back as it was read, less what is taken off) or an upload of the same sender to this field. The name, size and type are always the portal's, whatever was sent. The count, the way with names that are taken (`duplicates`) and the other checks hold; a file that is not there, is another sender's, or has waited over a day is refused with `400` at the field. A write that no signed-in person makes (a visitor's form, an endpoint or a job) names a visitor's upload with the claim as well: `{ "id": "7f1e…", "claim": "…" }`; a bound form of visitors also takes it only from the network the file was uploaded from. The record claims its uploads in the transaction that writes it, through the API, GraphQL, actions, a bound form and a listing's dialog alike; a refused write claims nothing. A file the new list leaves out is let go, and removed once the change stands; `null` or `[]` lets all go; a deleted record lets all its files go. A model that archives keeps the files of an archived record. The files of a `file` field that is removed from the model stay 30 days, then go.
+
+**Download.** `GET /_portal/api/data/<model>/<id>/files/<field>/<file id>` answers the bytes as `Content-Disposition: attachment`, with `X-Content-Type-Options: nosniff` and a `Content-Security-Policy: sandbox` that lets nothing run. It is a read of the record: the record must be one the person reaches, by their own records and their row rules, and the field not hidden from them; otherwise `404`. `?includeArchived=true` reads an archived record's file for those who see archived records. `?version=<n>` and `?asOf=<time>` serve a file of a past version to those who see the record's history, while the record still holds the file.
+
+Going back to a version with `revert` leaves the file fields as they are: files taken off are gone.
 
 ## Logic in a model's file
 
@@ -394,7 +440,7 @@ The same records answer GraphQL at `POST /_portal/api/graphql`, with the same ru
 
 On a model that keeps its history, `get_<model>` and `list_<model>` also take `asOf` and `version: "accepted"`, and `includeArchived` (`onlyArchived` for a list); a record has `archivedAt`. `versions_<model>(id: "…")` lists the versions and `version_<model>(id: "…", number: 1)` opens one, each with `values`, for those the model names. `restore_<model>(id: "…")` and `revert_<model>(id: "…", version: 1)` bring a record back and write a version back; `delete_<model>` takes `reason`. What a person may not do is not in their schema: `asOf` and `version` are offered to those who see the history, `includeArchived` and `onlyArchived` to those who see the archived. A link to an archived record is named by its title and `archivedAt`.
 
-A record has `id`, `ownerId`, `createdAt`, `updatedAt` and its fields. A link gives the linked record, when the person may see it.
+A record has `id`, `ownerId`, `createdAt`, `updatedAt` and its fields. A link gives the linked record, when the person may see it. A `file` field gives a list of `{ id name size type }` (`docs { id name size type }`) and is written as a list of `{ id }` of uploads and files the record holds, as in [Files](#files); the bytes are downloaded from the data API.
 
 ```graphql
 {
