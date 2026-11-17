@@ -89,6 +89,13 @@ In a page's file (`sites/<site>/pages/<page>.yaml`):
 ```
 
 - `form`: the id of a form the site offers.
+- `popup: true`: the page shows a button, and the form opens in a [pop-up window](/portal/developer/layouts/#a-pop-up-window) over the page. `button` is the button's words, `{ ro, en }` in every language of the site; the form's name when left out. `button` belongs to `popup: true`.
+
+```yaml
+- { id: callback, app: portal, widget: form, preferences: { form: callback, popup: true, button: { ro: Rugați-ne să vă sunăm, en: Ask us to call you } } }
+```
+
+A form in a pop-up window is sent with `popup` in its body, naming the window (`form:<id>`, or `window:<id>` for a form in a pop-up window block), so that [`closeFormPopup` and `closePopup`](/portal/developer/actions/#ui-actions) know which window to close.
 
 ## What the portal checks
 

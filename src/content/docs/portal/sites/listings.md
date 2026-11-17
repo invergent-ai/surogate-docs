@@ -36,6 +36,7 @@ On [Pages](/portal/console/pages/#the-portals-widgets), add **Listing** with **A
 - **Row operations:** **People can add**, **People can edit**, **People can delete** and **People can archive**. A source's rows can only be added and removed, and only when the source says how.
 - **Form that adds and opens records**: a [form bound to the model](/portal/sites/model-forms/). With one, **Add** opens the form, and **Open** and **Edit** open it on the record, in place of the details below the list and the small dialog. It lists the forms bound to the model you chose, the model's own among them.
 - **Show the map too**: for a model with a location, a [map](/portal/sites/maps/#a-map-on-a-page) above the table that follows its search and filters.
+- **Add opens this form in a pop-up window** and **Edit opens this form in a pop-up window**: one of the site's forms for either button, in place of the listing's own small form. See [Pop-up windows](/portal/console/pages/#a-listings-add-and-edit).
 
 Developers: see [Developer: Data sources](/portal/developer/data-sources/#a-listing-over-a-model-or-a-source) and [Developer: Listings](/portal/developer/listings/#a-listing-on-a-page).
 

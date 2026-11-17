@@ -36,7 +36,8 @@ Administrators build a form in the console: see [Build a form](/portal/console/f
 
 ## What a form may hold
 
-- **Fields:** text, text area, number, email, phone number, web address, checkbox, select boxes, select, radio, day, time and currency.
+- **Fields:** text, text area, whole number, number, email, web address, checkbox, select boxes, select, radio, day and time. A select can search and take many values.
+- **More fields:** phone number, currency, date and time, slider, files, password, formatted text and fields from a JSON. [Form fields](/portal/sites/form-field-types/) describes each one and every setting its dialog offers, and how a field's label and instructions are placed.
 - **[Extension fields](/portal/sites/form-fields/):** a barcode or QR code, a barcode scanner, an IBAN and a signature.
 - **Layout:** panels, columns, fieldsets, tabs and wells, nested at most eight deep.
 - **Text blocks**, in the markup a site's pages allow.
@@ -46,7 +47,7 @@ Each field's **Key** is a name, unique in the form, such as `name` or `birth_dat
 
 A field can be shown only when another field has a value: **Shown when**, in the form builder, sets it. A field hidden by its condition is not required, and what was typed in it is not kept.
 
-A form holds no script. The portal refuses a form with custom conditions, calculated values, custom validation, logic, options read from an address, a rich text editor, or a template that calls anything. The refusal names the part. Show and hide fields with conditions instead.
+A form holds no script. The portal refuses a form with custom conditions, calculated values, custom validation, logic, options read from an address, form.io's own rich text editor (use [Formatted text](/portal/sites/form-field-types/#formatted-text) instead), or a template that calls anything. The refusal names the part. Show and hide fields with conditions instead.
 
 ## Translations
 
@@ -99,7 +100,7 @@ A public form whose steps ask for a new account must carry the check. The step t
 
 ## Put a form on a page
 
-In the [page builder](/portal/console/pages/#forms), **Add a form** to a part of the page. It offers the forms the site offers. A page shows at most five forms.
+In the [page builder](/portal/console/pages/#forms), **Add a form** to a part of the page. It offers the forms the site offers. A page shows at most five forms. A form can open in a [pop-up window](/portal/console/pages/#pop-up-windows) from a button.
 
 ## Its own address
 

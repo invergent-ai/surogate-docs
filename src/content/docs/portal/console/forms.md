@@ -13,7 +13,7 @@ Under the form's name is its own address, `/_portal/forms/<id>`, on each site th
 
 ## Read a submission
 
-**Open** shows each answer under its field's label, in your language. When the form asks for consent, **Agreed to** shows the text the person agreed to. Ticked boxes and several choices are listed together; a checkbox reads Yes or No; a field left empty shows a dash.
+**Open** shows each answer under its field's label, in your language. When the form asks for consent, **Agreed to** shows the text the person agreed to. Ticked boxes and several choices are listed together; a checkbox reads Yes or No; a field left empty shows a dash. A [formatted text](/portal/sites/form-field-types/#where-people-read-it) shows with the formatting it was written with, and in the list only as its text. A [password](/portal/sites/form-field-types/#where-the-password-goes) is never shown: the form's password field has no row and no column in the export.
 
 ## Report
 
@@ -46,6 +46,7 @@ Administrators see **Build forms** at the top of the page: **New form** makes on
   - its name in each language;
   - the language its text is written in;
   - whether it goes step by step;
+  - where field labels go, as the default for every field: above, to the left or to the right;
   - the sites that offer it (none ticked: every site);
   - the thanks shown once it is sent, in each language.
   - whether people can leave the form and come back to it;
@@ -61,13 +62,13 @@ Administrators see **Build forms** at the top of the page: **New form** makes on
   - **Who may send it**: by default **Its reviewers only**. It says: "Reviewers also send it. To let anyone send it, make it public." It is off while **Anyone may send it, signed in or not** is ticked. It offers no **Everyone**: to let everyone send the form, make it public.
   - **Who reads what was sent**: by default **Administrators only**. It says: "Administrators always read what was sent." The people chosen read, export and delete the submissions.
 - **Fields:** drag fields from the left onto the form, and drop them where they go.
-  - **Fields:** text, text area, number, checkbox, select, radio, select boxes and the submit button.
-  - **More fields:** email, web address, phone number, day, time and currency.
+  - **Fields:** text, text area, whole number, number, checkbox, select, radio, select boxes and the submit button.
+  - **More fields:** email, web address, phone number, day, time, currency, date and time, slider, files, password, formatted text and fields from JSON. [Form fields](/portal/sites/form-field-types/) describes each one.
   - **Layout:** panels, columns, fieldsets, tabs, wells and text blocks.
   - **Fields of the model:** for a form bound to a model, one entry for each field of the model, and **Lines** where the model has lines, a grid whose columns you choose.
   - **From apps:** the fields and option lists the approved [apps](/portal/console/apps/) give forms, each named with its app, such as **CRM: Signature**. It shows only when an app gives some. A select from an app shows where its options come from instead of its values. A form takes the options of at most 10 lists from apps.
 
-  Click a field to change it. **Display** sets its label, the text shown in it, its help, whether it is required, and its options. The **Key** is the name its answer is kept under; it follows the label until you change it. **Shown when** shows the field only when another field has a value. In a step-by-step form, each panel at the top is a step.
+  Click a field to change it. **Display** sets its label, the text shown in it, its help, where its [label goes and its instructions](/portal/sites/form-field-types/#label-position-and-instructions), whether it is required, and its options. A select can also search and take many values: see [Dropdown with search and with checkboxes](/portal/sites/form-field-types/#dropdown-with-search-and-with-checkboxes). **Slider** is in **More fields**: see [Slider](/portal/sites/form-field-types/#slider). The **Key** is the name its answer is kept under; it follows the label until you change it. **Shown when** shows the field only when another field has a value. In a step-by-step form, each panel at the top is a step.
 - **Steps:** what the form does once it is sent and kept. See [Steps](#steps) below.
 - **Translations:** a row for each text of the form, with a box for each of its sites' other languages. Every row needs a translation before the form can be saved.
 

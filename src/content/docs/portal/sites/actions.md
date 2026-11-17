@@ -120,8 +120,32 @@ A form's actions can tell the page what to do once everything else is done. Thes
 - Show a notice above the thanks, with its text in each language and a tone: information, success or warning. The text can put in a value an action set.
 - Start a [user guide](/portal/sites/guides/) that applies to this page.
 - Reload the page after a moment.
+- Close a [pop-up window](/portal/console/pages/#pop-up-windows): see [Close a pop-up window](#close-a-pop-up-window).
 
 A redirect wins over them: the person goes elsewhere first. A form sent again answers what it answered the first time; one sent from an offline device shows none of them.
+
+### Close a pop-up window
+
+A form shown in a [pop-up window](/portal/console/pages/#pop-up-windows) can close its window once it has done everything else. In the form builder, on the **Steps** tab, **Add an action…** offers two, under **The page**:
+
+- **Close the pop-up form** closes the pop-up window of the form that ran it. In a form that is not in a pop-up window it does nothing.
+- **Close the pop-up window** closes the pop-up window the form is in. **Pop-up window** names the window, by the id of its block on the page, such as `feedback`. Left empty, it is the window the form is in. A form that is in another window than the one named closes nothing.
+
+![The Steps tab of the form that adds a request: Create a record, Show a notice, and Close the pop-up form, open, with Reload after closing set to The listing on the page.](../../../../assets/screenshots/portal-popups-action-close-form.png)
+
+![The Steps tab of the feedback form: Show a notice, and Close the pop-up window, open, with Pop-up window set to feedback and Reload after closing set to Nothing.](../../../../assets/screenshots/portal-popups-action-close-window.png)
+
+Both ask **Reload after closing**, once the window is closed:
+
+- **Nothing**: the page stays as it is.
+- **The page**: the page is loaded again.
+- **The listing on the page**: the [listings](/portal/sites/listings/) on the page ask for their rows again, with no page load. Use it after a form that adds or changes a record.
+
+A notice the form shows is put on the page when its window closes, since the window is gone. A form that is not in any pop-up window does nothing for these actions, and its run says so in its log. A redirect wins: the person leaves the page, whatever the window was asked to do.
+
+![The Requests listing after a request was added in a pop-up window: the window is closed, the new request is first in the list, and the notice "The request was added." is shown.](../../../../assets/screenshots/portal-popups-after-send.png)
+
+Developers: see [Developer: Actions](/portal/developer/actions/#ui-actions).
 
 ## When something fails
 

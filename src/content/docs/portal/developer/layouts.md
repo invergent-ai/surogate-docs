@@ -131,6 +131,30 @@ An HTML block is text a page holds itself: `app: portal`, with the text for each
 
 Write each text as a `|` block, as above: a plain value breaks at the first colon followed by a space. Give the text of every language of the site, and no other. The text is checked like a frame, without the portal's own elements, and takes at most 64 KB per language. An HTML block can go in any layout's regions.
 
+## A pop-up window
+
+A pop-up window is a block that holds other blocks and opens over the page. It is the portal's `popup` widget, with the blocks it holds under `blocks`, as a group holds its own. In a region of a page's file:
+
+```yaml
+- id: feedback
+  app: portal
+  widget: popup
+  preferences:
+    title: { ro: Spuneți-ne părerea dumneavoastră, en: Tell us what you think }
+    button: { ro: Lăsați o părere, en: Leave feedback }
+  blocks:
+    - { id: feedback-form, app: portal, widget: form, preferences: { form: feedback } }
+```
+
+- `id`: the window's id, lower-case letters, digits and hyphens. It makes the element `<dialog id="popup-<id>">`.
+- `title`: the window's title, in every language of the site, at most 200 characters.
+- `button`: the words of the button that opens it, in every language of the site, at most 100 characters. Without it, the window opens only from a link to `#popup-<id>`, such as one in an HTML block.
+- A window takes no other `preferences` (`popup_preference`, with the reason `title`, `button` or `unknown_key`), and holds no other pop-up window (`nested`).
+- It is drawn only when something in it shows to the viewer: a form they may not send takes it away. A page's forms count those in windows among their five.
+- It is a native `<dialog>` opened with `showModal()` by `/_portal/assets/popups.<hash>.js`: the page behind it is inert, **Tab** stays inside it, **Esc** and its close button ask to close it, and focus goes back to what opened it. A form in a window is drawn when the window opens, new each time. Closing with something typed asks first (`window.confirm`); a window never closes while its form is being sent; a close the form's own [actions](/portal/developer/actions/#ui-actions) ask for asks nothing.
+
+A form opens in a window of its own with `popup: true` on its placement, and a listing's **Add** and **Edit** open forms in one: see [Forms](/portal/developer/forms/#a-form-on-a-page) and [Listings](/portal/developer/listings/#a-listing-on-a-page).
+
 ## A fragment
 
 A fragment is text kept once and placed on many pages, in `sites/<site>/fragments/<id>.yaml`. A page places it by its id; change the file, and every page that holds it changes. Its text holds what an HTML block holds. A site has at most 200 fragments.

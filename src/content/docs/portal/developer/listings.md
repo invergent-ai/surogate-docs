@@ -30,6 +30,20 @@ regions:
 - `add`, `edit`, `delete`: whether the listing offers them. The model's [permissions](/portal/sites/data-models/#who-may-do-what) still decide who may.
 - `form`: the id of a [form bound to the model](/portal/developer/forms/#a-form-bound-to-a-model), the model's own `model-<id>` or one you wrote. **Add** then links to the form, and **Open** and **Edit** to the form with `?record=<id>`, in place of the page's own detail and dialog. A form that is none, or bound to another model, is refused.
 - `map`: `true` shows the map of the model's first location field above the table: see [Maps](/portal/developer/maps/#the-map-widget).
+- `addForm`, `editForm`: the id of a form of the site that **Add** or **Edit** opens in a [pop-up window](/portal/developer/layouts/#a-pop-up-window), instead of the listing's own window. They belong to `add` and `edit`.
+
+```yaml
+      preferences:
+        model: requests
+        add: true
+        edit: true
+        addForm: request-add
+        editForm: request-edit
+```
+
+- **Edit** fills the form in with the record's values, in the fields whose key is the model's field name, and sends the record's id, which the form's actions read as `submission.record`. The form saves the record itself, for example with `updateRecord` on `id: submission.record`.
+- A person who may not send a form is not offered its button. Both forms count among the page's five.
+- The form's `closeFormPopup` action, with `reload: listing`, closes the window and has the listing ask for its rows again.
 
 For a model with calculated fields, rules, conditions, states or lines, the dialog of **Add** and **Edit** loads the model's logic with the page (`/_portal/assets/model-form.<hash>.js`) and runs it as the person types.
 
