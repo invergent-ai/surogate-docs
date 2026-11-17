@@ -64,6 +64,9 @@ The same limits hold for the rest of what changes who someone is:
 
 - A person who is not an administrator cannot set the password, reset the second step, end the sessions, link a sign-in identity, disable, export or erase a person, nor make a token or a client for a service account, when that person or program holds the Administrator role or a role with a section the first person does not have.
 - They cannot change or delete such a role either, and they cannot map an outside group to the Administrator role or to a role with more access than they have, in a directory or a provider.
+- A job runs with the rights of the person it names. Someone who is not an administrator saves a job that runs as themselves, or as a person who holds no administrator role and no section they lack, and asks for a job to run at once only on the same terms. A job that runs as an administrator is changed by an administrator.
+- Who may use a model or an endpoint is the **Access** section's: someone who edits **Data** or **Endpoints** without it saves a model or an endpoint only if its permissions, the roles that hide its fields and the roles that may call it stay as they were. Writing to a database with SQL in a form, an endpoint or a job needs **Connectors** at **Edit**.
+- Roles, relations, who may use the executor, a job run at once, a data source or an endpoint saved, and a model or job that gives or hides access ask the person to confirm it is them when they signed in a while ago.
 - Only an administrator changes the sections of the **User** role, which every new account gets, and no one but an administrator ever changes their own fields.
 - The **Data console** is never a section of a role: it reads past the rules of access on records, so only the Administrator has it.
 
