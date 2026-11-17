@@ -410,13 +410,15 @@ The keys behind the **Password** field of [Form fields](/portal/sites/form-field
   input: true
   confirm: true      # default true: two boxes
   minLength: 14      # 8 to 128, default 12
+  applyPolicy: true  # default false: also hold it to the portal's password policy
   validate: { required: true }
 ```
 
+- `applyPolicy`: a boolean. `true` holds the password to the tenant's sign-in policy (`passwordMinLength` and the `password` rules for upper case, lower case, digit and symbol) as it is when the form is sent. Anything else than a boolean is refused with the reason `password_apply_policy`.
 - `confirm`: a boolean. The builder writes `confirm: false` when the box is cleared, and the console's cleaning keeps it.
 - `minLength`: a whole number from 8 to 128, counted in characters. It sits on the field, not under `validate`.
 - `validate` takes only `required`. Any other key is refused with the reason `password_validate`, and a `defaultValue` with `password_default`.
-- Loader reasons, all under the problem code `form_component`: `password_confirm`, `password_min_length`, `password_default`, `password_validate`. A form with `offline: true` that holds the field has the problem `form` with the reason `offline_password`.
+- Loader reasons, all under the problem code `form_component`: `password_confirm`, `password_apply_policy`, `password_min_length`, `password_default`, `password_validate`. A form with `offline: true` that holds the field has the problem `form` with the reason `offline_password`.
 
 ### What is sent
 
@@ -429,8 +431,13 @@ The page sends `{ "value": "…", "confirm": "…" }` when confirmation is asked
 | `password_mismatch` | The two texts differ. |
 | `password_min_length` | Shorter than `minLength`. |
 | `password_max_length` | Longer than 1,024 characters. |
+| `password_policy` | The field has `applyPolicy` and the password breaks the portal's rules. The error carries `rules`, the ids of the rules broken in the order they are shown: `length`, `upper`, `lower`, `digit`, `symbol`. |
 
-The answer is 400 `invalid` with `errors: [{ path, message }]`. It never holds either text.
+The answer is 400 `invalid` with `errors: [{ path, message }]`, and `rules` for `password_policy`. It never holds either text.
+
+### The rules, for the page
+
+`GET /_portal/api/forms/:form/password-policy?site=&locale=` answers `{ minLength, rules: [{ id, text }] }`: the rules of the policy that apply to a field, each worded in the page's language. It answers only for a form that holds a password field with `applyPolicy`, to those who may send the form (anyone else gets 404). The page lists the rules under the box and ticks them as the password is typed. The rules about the person (their email, their name) and the history of passwords are not applied to a form field: the password may be for an account that is not the sender's.
 
 ### What is kept
 
@@ -444,7 +451,7 @@ The hash is not shown anywhere either:
 - **Action runs:** a text of a run's log, outcome or error that holds the hash is replaced by `[hidden]` before it is kept or answered.
 - **Keys the form no longer has:** a value that is a password hash is left out wherever it is read, so a removed or retyped field shows nothing.
 
-The portal's password rules for signing in are not applied to this field: its own `minLength` is the rule.
+Without `applyPolicy`, the portal's password rules for signing in are not applied to the field: its own `minLength` is the rule.
 
 A signed-in person may send a form that holds a password 20 times a minute per form; more is `429 too_many`, before anything is hashed. A field that a condition hides keeps nothing, even with `clearOnHide: false`.
 

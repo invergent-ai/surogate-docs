@@ -230,11 +230,12 @@ The **Password** field asks a person for a password they choose, such as when a 
 
 In the form builder, open **More fields** and drag in **Password**. Click the field's edit button to open its dialog:
 
-![The form builder's Password dialog: Label, Help, Ask for confirmation ticked, Minimum length 12, Required and Key, with a preview of the field.](../../../../assets/screenshots/portal-fields-password-builder.png)
+![The form builder's Password dialog: Label, Help, Ask for confirmation and Apply the portal's password policy ticked, Minimum length 12, Required and Key, with a preview of the field.](../../../../assets/screenshots/portal-fields-password-builder.png)
 
 - **Label** and **Help**: the text above the field and a hint under it.
 - **Ask for confirmation**: ticked, the person types the password twice. It is ticked unless you clear it.
-- **Minimum length**: from 8 to 128 characters. Left empty, it is 12.
+- **Apply the portal's password policy**: ticked, the password must also keep the rules set under **Security**, **Sign-in policy**: the length, and an upper-case letter, a lower-case letter, a digit and a symbol where the policy asks for them. Left clear, only the field's own **Minimum length** applies. What names the person (their email or name) is not asked of this field, since the password may be for an account that is not theirs, and nor is the history of earlier passwords.
+- **Minimum length**: from 8 to 128 characters. Left empty, it is 12. When the policy asks for more characters, the policy's length also has to be kept.
 - **Required**: the form cannot be sent without a password.
 - **Key**: the name the answer is kept under.
 
@@ -252,7 +253,11 @@ The form is not sent while there is something to put right, and the message is n
 - **The password must have at least 12 characters.** appears when the password is shorter than the **Minimum length**.
 - A password has at most 1,024 characters.
 
-The portal checks all of this again when the form is sent, so a form sent by other means is refused in the same way. The portal's sign-in password rules are not applied to this field: its own **Minimum length** is the rule.
+When the field applies the portal's password policy, the rules are listed under the box and ticked as the password is typed. The list follows the policy as it is now: change the policy and the form follows. Pressing send with a rule not kept says which ones are still needed.
+
+![The same form with a password that keeps the length and a symbol: the rules are listed under the box, the length and the symbol ticked, an upper-case letter and a digit not yet, and "The password still needs: an upper-case letter, a digit."](../../../../assets/screenshots/portal-fields-password-policy.png)
+
+The portal checks all of this again when the form is sent, so a form sent by other means is refused in the same way, with the rules that are not kept named.
 
 ### Where the password goes
 
