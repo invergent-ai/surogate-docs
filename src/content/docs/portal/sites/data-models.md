@@ -62,6 +62,7 @@ The console shows the same card in Romanian when the console is in Romanian:
 - Instructions are plain text of up to 500 characters in each language. Markup is refused, and the field shows what is wrong.
 - Write one language or both. Where a language is left empty, the people who read it are shown the other one, never nothing.
 - Leave both empty for a field that needs none: the file then has no instructions on it.
+- A form translates a text by its words. Two fields cannot have the same instructions in Romanian with a different English, and instructions cannot be worded as a label that is translated another way: the console refuses the save and says which field to reword.
 - They are shown wherever the field is filled in, and are read to a person who uses a screen reader when they reach the field: under the field in a [form for records](/portal/sites/model-forms/#instructions-on-the-fields), in the model's own form and in a listing's **Add** and **Edit** window, and behind a **?** on the column of a grid of lines.
 - A person who may not see a field, because it is [hidden from their role](/portal/sites/row-access/#fields-hidden-from-a-role), is not shown its instructions either.
 
