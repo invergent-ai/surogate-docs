@@ -523,6 +523,7 @@ export default defineConfig({
                 'portal/console/data-console',
                 'portal/console/proposals',
                 'portal/console/versions',
+                'portal/console/collaboration',
               ],
             },
             {
