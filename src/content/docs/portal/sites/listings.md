@@ -30,6 +30,7 @@ On [Pages](/portal/console/pages/#the-portals-widgets), add **Listing** with **A
 - **Filters**: the fields people may filter by. It lists only the fields the model marks filterable.
 - **People may add records**, **People may change records** and **People may remove records**: whether the listing offers **Add**, **Edit** and **Delete**.
 - **Form that adds and opens records**: a [form bound to the model](/portal/sites/model-forms/). With one, **Add** opens the form, and **Open** and **Edit** open it on the record, in place of the details below the list and the small dialog. It lists the forms bound to the model you chose, the model's own among them.
+- **Show the map too**: for a model with a location, a [map](/portal/sites/maps/#a-map-on-a-page) above the table that follows its search and filters.
 
 Developers: see [Developer: Listings](/portal/developer/listings/#a-listing-on-a-page).
 

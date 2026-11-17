@@ -63,6 +63,7 @@ A model can also declare [KPIs](/portal/sites/kpis/), and make its own pages: se
 | `email`, `phone`, `url` | Checked as what they are; a `url` is http, https or mailto |
 | `link` | One record of the model named by `model` |
 | `links` | Several records of the model named by `model` |
+| `location` | A GeoJSON point or polygon; `shape` and `snapshot` are its own keys: see [Maps](/portal/developer/maps/#a-location-field) |
 
 A field can be `required`, `searchable` (text, searched by `q`), `filterable` and `sortable`. Every record also has its `id`, its owner, and when and by whom it was made and last changed.
 

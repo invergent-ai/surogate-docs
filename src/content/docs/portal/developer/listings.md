@@ -29,6 +29,7 @@ regions:
 - `filters`: filterable fields to filter on, by exact value: text, numbers, dates, yes or no.
 - `add`, `edit`, `delete`: whether the listing offers them. The model's [permissions](/portal/sites/data-models/#who-may-do-what) still decide who may.
 - `form`: the id of a [form bound to the model](/portal/developer/forms/#a-form-bound-to-a-model), the model's own `model-<id>` or one you wrote. **Add** then links to the form, and **Open** and **Edit** to the form with `?record=<id>`, in place of the page's own detail and dialog. A form that is none, or bound to another model, is refused.
+- `map`: `true` shows the map of the model's first location field above the table: see [Maps](/portal/developer/maps/#the-map-widget).
 
 For a model with calculated fields, rules, conditions, states or lines, the dialog of **Add** and **Edit** loads the model's logic with the page (`/_portal/assets/model-form.<hash>.js`) and runs it as the person types.
 

@@ -129,6 +129,10 @@ Reading gives a list of maps, the first row naming the columns:
 | `excelSheets` | `folder`, `name`, `into`: the sheets' names |
 | `readCsv` | `folder` and `name`, or `text` (an expression holding CSV); `separator`; `into` |
 
+## A map
+
+`mapSnapshot` makes a PNG or a PDF of a place on the portal's own base maps and layers: see [Maps](/portal/developer/maps/#the-action).
+
 ## A barcode
 
 `barcode` makes an image of a value. `format` is `code128` (when left out), `ean13`, `ean8`, `upca`, `code39`, `itf14`, `qrcode`, `datamatrix` or `pdf417`. The image is a PNG.
