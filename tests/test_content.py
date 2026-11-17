@@ -49,7 +49,7 @@ class Content(unittest.TestCase):
 
     def test_portal_pages_show_the_console(self):
         doc = page('/portal/quickstart/')
-        self.assertIn('<figcaption>The New user dialog: Email, Name and Password (optional).</figcaption>', doc)
+        self.assertIn('<figcaption>The New user dialog: Email, Name, how they sign in and the Roles.</figcaption>', doc)
         self.assertRegex(doc, r'<figure>\s*<img[^>]+src="/_astro/')
         tenants = page('/portal/console/tenants/')
         self.assertIn('Add administrator', tenants)

@@ -31,9 +31,7 @@ The list shows 50 users at a time. Use **Previous** and **Next** to move between
 5. Fill in the portal's own fields, if it has any (a badge number, a department, a county, the entities they work for). Fields marked **Required** must be filled in. A tick box left alone counts as unticked. See [User fields](/portal/console/user-fields/).
 6. Press **Create user**.
 
-![The New user dialog: email, name, password, then the Roles to tick, with User ticked, and the portal's own fields County, Institution and Own entities.](../../../../assets/screenshots/portal-users-new.png)
-
-![The New user window: Email, Name, how they sign in, and the portal's own fields.](../../../../assets/screenshots/portal-auth-user-new.png)
+![The New user dialog: email, name, how they sign in, then the Roles to tick, with User ticked, and the portal's own fields County, Institution, Own entities and Network.](../../../../assets/screenshots/portal-users-new.png)
 
 A local account starts **Unconfirmed**: it has no password and cannot sign in, and its tokens do not work, until its owner proves the address is theirs by opening the link. The link works once, for the days set in the [sign-in policy](/portal/console/sign-in-policy/#passwords-and-sessions) (3 at first), and its page asks for a password that keeps the [password rules](/portal/console/sign-in-policy/#password-rules).
 
