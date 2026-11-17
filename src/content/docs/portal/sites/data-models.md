@@ -81,9 +81,9 @@ People add files wherever they write the record: a [form for records](/portal/si
 ![The model's own form for Permit requests: Applicant filled in, Copy of ID with buletin.png uploaded, and Supporting documents with plan-situatie.pdf and memoriu-tehnic.pdf uploaded, each with its size, Uploaded and Remove.](../../../../assets/screenshots/portal-model-file-form.png)
 
 - A signed-in person may add files where they may add records, or change some. A visitor may add files only where the model lets everyone add records, from the form that does so. A visitor uploads at most 30 files a minute from one network, a signed-in person 60.
-- A file waits for its record. If the record is not saved within a day, the file is removed.
+- A file waits for its record. If the record is not saved within a day, the file is removed, and a file that has waited more than a day can no longer be saved with a record. A visitor's file is taken only by the form the visitor sent it with, from the same network.
 - Saving the record keeps its files with it. Taking a file off and saving removes the file for good. Deleting the record removes its files. Where the model [keeps its history](#history-and-archiving) and deleting archives the record, the archived record keeps its files.
-- Going back to an older version of a record does not bring back a file taken off since: the older version still names it, but the file is gone.
+- Going back to an older version of a record does not bring back a file taken off since: the older version still names it, but the file is gone. A file taken off a model for good, by removing the File field, is kept for 30 days in case that was a mistake, then removed.
 - When a person is [erased](/portal/console/users/), the files they had uploaded and not yet saved are removed. The records keep their files, as they keep their other values.
 
 ### Who reads the files

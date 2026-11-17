@@ -68,7 +68,7 @@ Administrators bind a form on [Forms](/portal/console/forms/#build-a-form). **Ne
 
    The condition belongs to the fields in the section, so it holds wherever they are written: in another form, in a listing's dialog, through the API. Two forms cannot put one field under different conditions, and a form that shows the field outside the section does not fit one that puts it under a condition (the condition would hide the field there): put the same condition on both. A model's own form follows the model as it is. A step of a step-by-step form cannot have a condition (put it on a section inside the step). A condition that cannot be worked out counts as false.
 
-   A **File** field of the model is a **Files** field of the form, with the limits of the model's field: the extensions, the number of files, the largest file and the way with names that are taken are written once, on the model. The form's own settings for the field do not change them, and a form is not saved with a Files field for a field that is not a File field, nor with another kind of field for a File field. See [Files in records](/portal/sites/data-models/#files-in-records).
+   A **File** field of the model is a **Files** field of the form, with the limits of the model's field: the extensions, the number of files, the largest file and the way with names that are taken are written once, on the model. The form's own settings for the field do not change them, and a form is not saved with another kind of field for a File field. See [Files in records](/portal/sites/data-models/#files-in-records).
 
 A form has one grid, and a form bound to a model is not filled in offline and keeps no drafts of its own: the record is saved as a draft record instead.
 
