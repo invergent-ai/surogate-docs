@@ -37,7 +37,7 @@ The console opens the new user's page.
 1. On the user's page, under **Roles**, tick **Administrator**.
 2. Press **Save roles**. The console says **Roles saved.**
 
-They can now sign in to the console and manage the portal's people and sign-in.
+Once they open the link the portal mailed them and choose their password, they can sign in to the console and manage the portal's people and sign-in. As administrators, they set up a second step (an authenticator app or a passkey) at their first sign-in.
 
 ## 4. Create a token for yourself
 
