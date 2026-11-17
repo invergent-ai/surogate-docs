@@ -22,7 +22,28 @@ A person opens the form from a page, from a [listing](#open-a-record), or at its
 - **A message** shows under the field, or under the grid cell, once the person has touched it, and under all of them once they have tried to save. A form just opened does not fill up with errors.
 - **A value taken from another record** shows when the form opens, and again when the fields that choose it change: the opening stock above is last month's closing stock, taken from the sheet of the month before. When there is no such record, the form says so and shows the value the model gives.
 
+- **Instructions** under a field tell the person how to fill it in: see [Instructions on the fields](#instructions-on-the-fields).
+
 If something in the form changed on the portal while the person was typing, the portal's answer wins: it shows its values and its messages, and keeps what the person typed.
+
+### Instructions on the fields
+
+The model can give each of its fields [instructions](/portal/sites/data-models/#instructions-on-a-field), in each language. A form bound to the model shows them under the field, in the language the person reads. Here the form is in English and the fields Number of beds and Bed-days occupied in the month have instructions:
+
+![The monthly sheet form: under the field Number of beds, its instructions, The number of beds the unit has on the last day of the month, and under Bed-days occupied in the month its own.](../../../../assets/screenshots/portal-model-instructions-form.png)
+
+The same form for a person who reads Romanian shows them in Romanian:
+
+![The same form in Romanian: Număr de paturi with its instructions under it in Romanian.](../../../../assets/screenshots/portal-model-instructions-form-ro.png)
+
+- **You write nothing on the form.** A field placed from **Fields of the model** takes the model's instructions, in the form's language, and the other language is among the form's translations.
+- **The form's own instructions win.** To say something else on this form, click the field in the builder and write **Instructions** on its **Display** tab, as for any [form field](/portal/sites/form-field-types/#label-position-and-instructions): they replace the model's, and they are translated on the form's **Translations** tab. A field whose own instructions are empty takes the model's.
+- **A grid shows them on the column.** A column whose field has instructions has a **?** button on its heading. The explanation shows when the mouse is over it, when it has the keyboard focus and on a tap; **Escape** closes it. The cells of the column read the same instructions to a screen reader when a person reaches them.
+
+  ![The grid of the sheet with the ? of the column Generated in focus: its explanation, The kilograms generated in the month, with a decimal point, shows under the heading.](../../../../assets/screenshots/portal-model-instructions-grid.png)
+
+- **Every other way to fill the field in shows them too:** the model's own form, `model-<id>`, and the **Add** and **Edit** window of a listing ([below](#open-a-record)).
+- A person who does not see a field, because it is [hidden from their role](/portal/sites/row-access/#fields-hidden-from-a-role), is not shown its instructions.
 
 ### Save, and move between states
 
@@ -83,6 +104,10 @@ A [listing](/portal/sites/listings/) can name a form bound to its model. **Add**
 A listing without a form keeps its small dialog for **Add** and **Edit**. For a model that calculates, checks or has states, the dialog works as the form does:
 
 ![The Add dialog of an orders listing. Quantity of 150 shows the message At most 100 pieces in one order. Total, calculated, is grey. Management approval, asked for because the total is over 1000, has a star.](../../../../assets/screenshots/portal-forms-model-dialog.png)
+
+The dialog shows each field's [instructions](#instructions-on-the-fields) under it, for every model, with or without logic, and reads them to a screen reader when the person reaches the field:
+
+![The Add dialog of the orders listing with the focus in Quantity: under it, The number of pieces, at most 100 in one order, and under Unit price, The price of one piece, with a decimal point.](../../../../assets/screenshots/portal-model-instructions-dialog.png)
 
 ## Who sees and does what
 

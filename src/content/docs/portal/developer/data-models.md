@@ -67,6 +67,26 @@ A model can also declare [KPIs](/portal/sites/kpis/), and make its own pages: se
 
 A field can be `required`, `searchable` (text, searched by `q`), `filterable` and `sortable`. Every record also has its `id`, its owner, and when and by whom it was made and last changed.
 
+### Instructions
+
+A field takes `instructions`, what a person reads under it to fill it in, in the page's languages:
+
+```yaml
+fields:
+  amount:
+    type: decimal
+    label: { ro: Cantitate (kg), en: Amount (kg) }
+    instructions:
+      ro: Introduceți cantitatea lunară, cu punct zecimal.
+      en: Enter the monthly amount, with a decimal point.
+```
+
+- **Shape:** a map of `ro` and `en`, at least one of them, each a text that says something. Each is at most 500 characters, the same limit as a [form field's](/portal/developer/form-fields/#label-position-and-instructions) `instructions`. They are plain text: `<` and templates such as `{{ … }}` are refused. Anything else is the problem `instructions`, with the path of the language it is about, such as `/fields/amount/instructions/en`.
+- **Which text:** the page's language, else Romanian, else English.
+- **Where it shows:** under the field in a form [bound to the model](/portal/developer/forms/#a-form-bound-to-a-model) and in the model's own form `model-<id>`, in the listing's **Add** and **Edit** window, and behind a `?` on the heading of a column of a `lines` grid. Each is tied to its control by `aria-describedby`.
+- **In a bound form:** when the configuration loads, each input component whose `key` is a field of the model and whose own `instructions` are empty takes the model's, written in the form's `language`; the other languages are added to the form's `i18n`, with the same text where the model has none in that language. A component that writes its own `instructions` keeps them, and so does its translation. The form's file is not changed: the loaded form is.
+- **Hidden fields:** the instructions of a field in `hiddenFor` are left out, with the component and its words, for a person who does not see the field.
+
 A link to a record that is deleted is cleared; a record's own links to others go with it.
 
 ## Logic in a model's file
