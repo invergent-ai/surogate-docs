@@ -15,6 +15,8 @@ A person only ever sees the records their rules reach. The same list, as two peo
 
 A record out of reach is answered as one that does not exist, wherever it is asked for: in a list, in a search, in the one record's address, in a [KPI](/portal/sites/kpis/), over the [API](/portal/sites/data-models/#the-api) and [GraphQL](/portal/sites/data-models/#graphql), in an [action list](/portal/sites/actions/#records) and in the choices of a link field. A list's page is full of rows the person may see, and what is counted is what is seen.
 
+The same holds for a [listing's grid](/portal/sites/listings/): its rows, the count of them, its groups and their totals, its search and its filters read only the records the person may see, and so do the files it exports in every format. It holds for the options a form field takes from a model, and for a data source that queries the portal's own data: the query is answered over the records the person may see, as if the others were not in the tables.
+
 A model's own rules, calculated fields and checks that look at other records (`records.count("fisa1", {})`, say) are held to the same: they find only the records the person who saves may see, and only the fields they see. A look that names a field the person does not see fails as for a field the model does not have. What a model takes from another record by its own say (a field filled from a reference table) and the check that a code is unique are the portal's own reads: they see every record, whoever saves.
 
 ## Write the conditions
@@ -107,6 +109,7 @@ A person who does not see a field has no such field, anywhere:
 - It cannot be written by them. What it holds is kept when they save the rest of the record.
 - A [KPI](/portal/sites/kpis/) that groups, sums or filters by it is not shown to them; the figures that do not read it are.
 - A form's check of a record before it is saved (`evaluate`) leaves it out of its answer, and refuses a value for it. So does a save that has rules or calculated fields: what it answers says nothing of the field, nor of what is wrong with it.
+- A listing's grid and its exports have no column for it, and a search, a filter, a sort or a group that names it is ignored as for a column the listing does not have. A data source that queries the portal's data gets no such column: a query that names it is refused. A form field cannot take its options from it, nor order them by it.
 - A form that is bound to the model (a model's own form, or a listing's dialog) is drawn without it: no input, no column, no label. A form that asks for every field of its model leaves the hidden ones empty for them, and the record is made all the same.
 - Going back to an earlier version of a record is refused to someone who does not see every field of it, as it would write the fields they cannot see.
 
