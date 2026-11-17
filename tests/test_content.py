@@ -18,7 +18,7 @@ CONSOLE_PAGES = ('data-console.md', 'files.md', 'invitations.md', 'sites.md')
 
 # Developer pages that are not the config of one user page.
 DEVELOPER_ONLY = ('index.md', 'command-line.md', 'develop-locally.md', 'check-a-site.md', 'previews.md', 'agents.md',
-                  'build-an-app.md', 'design.md')
+                  'build-an-app.md', 'design.md', 'executor.md')
 
 # Code a person types into a console screen, not config: search synonyms and pinned results, a data console query,
 # the expressions of a model's rules and calculations.
@@ -765,7 +765,7 @@ class Content(unittest.TestCase):
 
     def test_portal_jobs(self):
         doc = page('/portal/sites/jobs/')
-        for anchor in ('write-a-job', 'when-it-runs', 'when-records-change', 'when-people-come-and-go', 'when-the-portal-starts-fails-or-is-asked-for', 'when-mail-arrives', 'when-an-app-sends-an-event', 'send-mail', 'what-it-may-do', 'in-the-console'):
+        for anchor in ('write-a-job', 'when-it-runs', 'when-records-change', 'when-people-come-and-go', 'when-the-portal-starts-or-stops-a-run-fails-or-a-request-begins-or-ends', 'when-mail-arrives', 'when-an-app-sends-an-event', 'send-mail', 'what-it-may-do', 'in-the-console'):
             self.assertIn(f'id="{anchor}"', doc)
         # Jobs are made in the console.
         self.assertIn('id="make-or-change-a-job"', doc)
