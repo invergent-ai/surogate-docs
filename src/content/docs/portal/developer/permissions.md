@@ -84,3 +84,23 @@ permissions:
 - `view`: who may see it.
 - `edit`: who may edit it.
 - `blog`: who may write their own blog posts on a site or a library.
+
+## Who may add, move and remove pages
+
+Three more lists say who may change the pages' structure. They name people, never `everyone` or `signed-in`, and administrators always may. In a page's file:
+
+```yaml
+permissions:
+  edit: [group:DSP]
+  add: [group:DSP]
+  move: [group:DSP]
+  delete: [group:DSP]
+```
+
+- `add`: who adds pages under this page, those whose address begins with this page's address and a `/`.
+- `move`: who changes this page's address.
+- `delete`: who removes it.
+
+In `site.yaml` the same three are `addPages`, `movePages` and `deletePages`: the defaults for the site's pages, `addPages` covering the first level too. The nearest page above a place that names a list decides, and the site's list where none does. An empty list, `[]`, is administrators alone. A move needs `move` on the page and `add` where it goes. The home page is moved and removed by administrators alone. In the console these are on the page's and the site's settings, see [Pages](/portal/console/pages/#who-may-add-move-and-remove-pages).
+
+Page rights are checked when a page is saved from the console. Files pushed with the command line are the administrators' own, and are not checked this way.

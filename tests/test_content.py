@@ -91,6 +91,32 @@ class Content(unittest.TestCase):
         # Libraries' bloggers are chosen in the console too: nothing here is left to the site's configuration.
         self.assertEqual(perms.count('For now'), 0)
 
+    def test_portal_menus_and_pages(self):
+        # Menus, scheduled publication, keywords, tabs and the rights over pages: console first, each with its picture.
+        menus = page('/portal/sites/menus/')
+        for anchor in ('who-sees-an-item', 'show-a-page-in-the-menu', 'a-data-models-pages', 'when-a-page-moves-or-goes'):
+            self.assertIn(f'id="{anchor}"', menus)
+        for shot in ('menus-editor', 'menus-site', 'menus-site-visitor', 'menus-list',
+                     'menus-page-settings', 'menus-model-pages'):
+            self.assertIn(f'portal-{shot}', menus)
+        pages = page('/portal/console/pages/')
+        for anchor in ('publish-on-a-schedule', 'keywords', 'tabs', 'who-may-add-move-and-remove-pages'):
+            self.assertIn(f'id="{anchor}"', pages)
+        for shot in ('pages-tree', 'pages-publication', 'pages-keywords', 'pages-tabs-editor',
+                     'pages-tabs-site', 'pages-rights', 'pages-editor-view'):
+            self.assertIn(f'portal-{shot}', pages)
+        # Every picture is a file, and the guide says nothing of files or YAML where it teaches the console.
+        shots = ROOT / 'src/assets/screenshots'
+        for name in ('menus-editor', 'menus-site', 'menus-site-visitor', 'menus-list', 'menus-page-settings',
+                     'menus-model-pages', 'pages-tree', 'pages-publication', 'pages-keywords',
+                     'pages-tabs-editor', 'pages-tabs-site', 'pages-rights', 'pages-editor-view'):
+            self.assertTrue((shots / f'portal-{name}.png').exists(), name)
+        for word in ('yaml', 'sites/<site>'):
+            self.assertNotIn(word, (PORTAL / 'sites/menus.md').read_text().lower())
+        self.assertIn('portal-menu', page('/portal/developer/layouts/'))
+        self.assertIn('keywords', page('/portal/developer/seo/'))
+        self.assertIn('addPages', page('/portal/developer/permissions/'))
+
     def test_portal_audit_and_personal_data(self):
         doc = page('/portal/console/audit/')
         self.assertIn('<figcaption>The Audit log: the latest events, each with who did it and to what, and the note that the log is intact.</figcaption>', doc)

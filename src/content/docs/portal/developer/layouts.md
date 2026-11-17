@@ -20,13 +20,14 @@ The name of the file is the name of the layout: lower-case letters, digits and h
 
 ## The marked places
 
-The frame is HTML, with three elements of the portal's own, each written empty with its end tag:
+The frame is HTML, with four elements of the portal's own, each written empty with its end tag:
 
 | Element | What goes there |
 | --- | --- |
 | `<portal-region name="main"></portal-region>` | the page's main content; required. Add other regions, such as `name="aside"`, as the layout needs, each name once; a page's `regions` name them. |
 | `<portal-title></portal-title>` | the page's title, as its heading; at most once. Without one, the title opens the main region. |
 | `<portal-locales></portal-locales>` | links to the same page in each of the site's languages; at most once. |
+| `<portal-menu name="principal"></portal-menu>` | one of the site's [menus](/portal/sites/menus/), by its id, as a navigation; each menu at most once, and it may take a `class`. Its menu is `sites/<site>/menus/<id>.yaml`, and the main menu, `principal`, is there even with no file. A name the site has no menu for is refused (`layout_menu`). |
 
 They stand at the top of the frame, or directly inside `div`, `section`, `article`, `aside`, `header`, `footer`, `nav`, `li`, `td`, `th`, `figure`, `details` or `blockquote`.
 

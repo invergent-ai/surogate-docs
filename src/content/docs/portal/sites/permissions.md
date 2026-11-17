@@ -30,10 +30,11 @@ Press **Add…** to choose more:
 - **An organization, with those under it**: choose one of the portal's [organizations](/portal/console/organizations/), then press **Add the organization**. Everyone in it and in every organization below it is included.
 - **A person: name or email**: type to search, then press **Add** with their name and email, such as **Add Ana Pop (ana@primarie.ro)**.
 
-The picker is in six places:
+The picker is in seven places:
 
-- A site's settings: **Who sees it**, **Who edits it** and **Who writes blog posts**. See [Sites](/portal/console/sites/#change-a-sites-settings).
-- A page's **Settings** tab: **Who sees this page** and **Who edits this page**. See [Pages](/portal/console/pages/#who-sees-and-who-edits).
+- A site's settings: **Who sees it**, **Who edits it**, **Who writes blog posts** and who adds, moves and removes pages. See [Sites](/portal/console/sites/#change-a-sites-settings).
+- A menu item's **Who sees**. See [Menus](/portal/sites/menus/#who-sees-an-item).
+- A page's **Settings** tab: **Who sees this page**, **Who edits this page** and who adds pages under it, moves it and removes it. See [Pages](/portal/console/pages/#who-sees-and-who-edits).
 - A block's row in the page editor: **Who sees this block**.
 - A form's **Who can use it** tab: **Who may send it** and **Who reads what was sent**. See [Forms](/portal/sites/forms/#who-sends-it-and-who-reads-what-was-sent).
 - A library's settings: **Who edits it** and **Who writes blog posts**. See [Libraries](/portal/console/libraries/#settings).

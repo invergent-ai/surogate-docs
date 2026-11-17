@@ -12,11 +12,13 @@ In the site's files, a page's `seo` holds the following. Administrators can set 
 ```yaml
 seo:
   description: { ro: Programul și serviciile primăriei., en: The city hall's hours and services. }
+  keywords: { ro: [program, servicii], en: [hours, services] }
   image: https://img.example.ro/share.png
   noindex: false
 ```
 
 - `description`: at most 300 characters. Once it is given in one language, give it in all of the site's languages.
+- `keywords`: per language, at most 20 words, each 1 to 50 characters with no `<`, `>` or `"`. Once there are some in one language, give them in all of the site's languages (`seo_keywords`). The page's head carries them as `<meta name="keywords">`, trimmed and with a word written twice kept once. A site's `seo.keywords` are the default for pages with none of their own in the language.
 - `image`: an `https:` address. It shows when the page is shared.
 - `noindex: true` asks search engines not to list the page.
 
@@ -35,7 +37,7 @@ seo:
   index: true
 ```
 
-- `description` and `image`: the same for all the site's pages; a page's own win.
+- `description`, `keywords` and `image`: the same for all the site's pages; a page's own win.
 - `organization`: who is behind the site, with its `name`, `url` and `logo`.
 - `index: false` asks search engines to leave the whole site out.
 
