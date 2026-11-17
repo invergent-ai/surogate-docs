@@ -68,3 +68,19 @@ The full table is in [Roles and permissions](/keel/reference/roles/).
 ## Phones
 
 The designer needs a desktop screen. On a phone, a case type shows **The designer needs a wider screen** and asks you to open it on a computer. The other pages work on a phone.
+
+## Signing in from a portal
+
+When your organisation runs Surogate Portal, its console may open Keel Builder in its **Workflows** section. You are then signed in with the portal, with no second sign-in: your role in the project is the one the portal gives you, **Viewer**, **Editor** or **Owner**, and the project is the one the portal is connected to. See [Workflows](/portal/console/workflows/).
+
+In that window the builder asks the portal for a new sign-in every few minutes, and ends the session, with "The portal ended this session", when the portal no longer gives one: you signed out of the portal, or you no longer have the section. Open **Workflows** in the portal again.
+
+With the portal's sign-in you work with the project's workflows, not with Studio:
+
+- The designer agent, the agents and knowledge bases lists and the project's helpers are not offered: they need a sign-in through Studio.
+- A draft that names an agent or a knowledge base cannot be checked, so it cannot be tested or published from the portal's window; use a sign-in through Studio.
+- You cannot create a service key; you can see the project's keys and revoke one.
+- The portal may keep you from changing some workflows: saving, reverting, retiring, moving instances, setting credentials, and updating, publishing or discarding a draft that changes one then answer "You may not change the workflow …".
+- The builder runs only in the portal's window, and only when the portal opened it: opened by any other page in a frame, it says "This page cannot be used in a frame".
+
+Agents, knowledge bases and project members come from Studio, which this sign-in does not reach: their pickers are empty, and the designer agent is not offered. Use the Studio sign-in for them.

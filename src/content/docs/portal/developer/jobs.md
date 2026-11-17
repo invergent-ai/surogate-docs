@@ -117,11 +117,13 @@ actions:
 
 A job can start when the portal's configuration starts, when a run fails, or when a page is asked for (see [A job that runs when a run fails](#a-job-that-runs-when-a-run-fails)):
 
-- **`started`:** once each time a new configuration is published or rolled back, and when the job first appears. The run reads `trigger.revision`.
+- **`started`:** with `when` left out or `configuration`, once each time a new configuration is published or rolled back, and when the job first appears; the run reads `trigger.revision`. With `instance`, once for each server of the portal that starts, after it serves (at most once a minute per server and job): the run reads `trigger.reason` (`configuration` or `instance`), `trigger.instance` (the server's name), `trigger.revision` and `trigger.previousStopClean` (`true`, `false`, or `null` the first time).
+- **`stopped`:** when a server of the portal is told to stop, it runs the job on itself before it goes, with all stop jobs sharing 20 seconds. The run reads `trigger.instance`, `trigger.startedAt` and `trigger.reason` (`shutdown`). A job cut short is in the history as "Interrupted at shutdown"; a server that stopped unasked is noted in the history of the next server to start. Needs a grace period of at least 30 seconds between the stop signal and the forced end.
 - **`error`:** a form, endpoint or job ended failed. `sources` names which; all three when left out. The run reads `trigger.source.kind`, `trigger.source.id`, `trigger.runId`, `trigger.reason` and `trigger.message`. The message is the run's own words only for a job that runs as an administrator, since they may hold what people sent; other jobs get only the words the portal shows anyone, or `null`.
-- **`request`:** a page of the job's site was asked for, at or under one of `paths` (1 to 20). `/news` takes `/news` and `/news/today`, never `/newsletter`. The run reads `trigger.path` (an article's own address, such as `/news/my-article`), `trigger.locale` and `trigger.userId` (`null` for a visitor).
+- **`requestEnd`:** the same requests, after the answer has gone: the run also reads `trigger.status` and `trigger.durationMs`; a request the person gave up on is `499`. With `kinds`, a page, a form sent or an endpoint called, each with `trigger.kind`, `trigger.method`, `trigger.requestId` (the same as at the start) and its own `trigger.path`, `trigger.form` or `trigger.endpoint`. What the portal's own runs ask of the portal is never counted: their calls to the portal's own addresses carry a mark the portal signs for the run (valid for a quarter of an hour, and sent to no other address), and a header a visitor writes by hand counts for nothing.
+- **`request`:** a page of the job's site was asked for, at or under one of `paths` (1 to 20); with `kinds`, a form sent or an endpoint called too. `/news` takes `/news` and `/news/today`, never `/newsletter`. The run reads `trigger.path` (an article's own address, such as `/news/my-article`), `trigger.locale` and `trigger.userId` (`null` for a visitor).
 
-`paths` goes only with `request`, and `sources` only with `error`.
+`paths` goes with the kind `page` of `request` and `requestEnd`, `forms` and `endpoints` with their kinds, `when` only with `started`, and `sources` only with `error`.
 
 ## A job that runs when a run fails
 
@@ -139,9 +141,12 @@ actions:
     text: 'trigger.source.kind + " " + trigger.source.id + ": " + trigger.message'
 ```
 
-- `platform.on`: `started`, `error` or `request`.
+- `platform.on`: `started`, `stopped`, `error`, `request` or `requestEnd`.
+- `platform.when`: with `started`, which of `configuration` (a new configuration is published; the default) and `instance` (a server of the portal starts), at least one.
+- `platform.kinds`: with `request` and `requestEnd`, which of `page` (the default), `form` and `endpoint`.
+- `platform.paths`: with the kind `page`, the paths asked for; required there.
+- `platform.forms` and `platform.endpoints`: with the kinds `form` and `endpoint`, the ids named; every form or endpoint when left out.
 - `platform.sources`: with `error`, which of `form`, `endpoint` and `job`.
-- `platform.paths`: with `request`, the paths asked for.
 
 ## When mail arrives
 

@@ -24,6 +24,7 @@ Visitors see nothing of this on the page: it is what search engines and link pre
 Administrators set how a page shows to search engines and link previews in the [page editor](/portal/console/pages/), under **Search and sharing**:
 
 - **Description**: at most 300 characters, in each language of the site. Once it is given in one language, give it in all of the site's languages.
+- **Keywords**: words in each language, as tags. Up to 20 in a language, each 1 to 50 characters, and some in every language once there are in one. The page tells search engines its keywords in the visitor's language. See [Keywords](/portal/console/pages/#keywords).
 - **Share image**: an `https:` address. It shows when the page is shared.
 - **Hide from search engines**: asks search engines not to list the page.
 
@@ -31,7 +32,7 @@ The same settings, as files in the site's configuration, are in [Developer: Sear
 
 ## Describe a site
 
-A site can say the same for all its pages, and who is behind it: the organization, with its name, address and logo. A page's own description and image win over the site's. A site can also ask search engines to leave the whole site out. Set them in the site's settings, on [Sites](/portal/console/sites/#change-a-sites-settings), under **Search engines**. Developers: see [Developer: Search engines and link previews](/portal/developer/seo/#a-sites-seo).
+A site can say the same for all its pages, and who is behind it: the organization, with its name, address and logo. A page's own description and image win over the site's, and its keywords win over the site's too. A site can also ask search engines to leave the whole site out. Set them in the site's settings, on [Sites](/portal/console/sites/#change-a-sites-settings), under **Search engines**. Developers: see [Developer: Search engines and link previews](/portal/developer/seo/#a-sites-seo).
 
 ## What crawlers are told
 

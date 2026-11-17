@@ -26,6 +26,7 @@ A value that starts as a key does, such as `surg_sk_`, `keel_`, `sdms_sk_` or `p
 - **Service key:** the key of Keel's project, for [Keel actions](/portal/sites/keel/) and jobs on Keel's events. Not needed to show Keel's work on pages.
 - **Advanced:** the audience the portal names Keel with, and how long it waits, from 1,000 to 10,000 ms.
 - **What it needs from the portal:** the portal's issuer and keys address, with **Copy**, for Keel's administrator.
+- **Workflows section:** where Keel's builder is, who opens the console's [Workflows](/portal/console/workflows/) section at each level, who works in Keel and who supervises, and who may change and start each workflow.
 
 **Turn off** disconnects Keel. The key's value stays on its connector. See [Keel](/portal/sites/keel/).
 

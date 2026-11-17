@@ -20,13 +20,14 @@ The name of the file is the name of the layout: lower-case letters, digits and h
 
 ## The marked places
 
-The frame is HTML, with three elements of the portal's own, each written empty with its end tag:
+The frame is HTML, with four elements of the portal's own, each written empty with its end tag:
 
 | Element | What goes there |
 | --- | --- |
 | `<portal-region name="main"></portal-region>` | the page's main content; required. Add other regions, such as `name="aside"`, as the layout needs, each name once; a page's `regions` name them. |
 | `<portal-title></portal-title>` | the page's title, as its heading; at most once. Without one, the title opens the main region. |
 | `<portal-locales></portal-locales>` | links to the same page in each of the site's languages; at most once. |
+| `<portal-menu name="principal"></portal-menu>` | one of the site's [menus](/portal/sites/menus/), by its id, as a navigation; each menu at most once, and it may take a `class`. Its menu is `sites/<site>/menus/<id>.yaml`, and the main menu, `principal`, is there even with no file. A name the site has no menu for is refused (`layout_menu`). |
 
 They stand at the top of the frame, or directly inside `div`, `section`, `article`, `aside`, `header`, `footer`, `nav`, `li`, `td`, `th`, `figure`, `details` or `blockquote`.
 
@@ -129,6 +130,30 @@ An HTML block is text a page holds itself: `app: portal`, with the text for each
 - `preferences.html`: the text of each of the site's languages, each written as a `|` block.
 
 Write each text as a `|` block, as above: a plain value breaks at the first colon followed by a space. Give the text of every language of the site, and no other. The text is checked like a frame, without the portal's own elements, and takes at most 64 KB per language. An HTML block can go in any layout's regions.
+
+## A pop-up window
+
+A pop-up window is a block that holds other blocks and opens over the page. It is the portal's `popup` widget, with the blocks it holds under `blocks`, as a group holds its own. In a region of a page's file:
+
+```yaml
+- id: feedback
+  app: portal
+  widget: popup
+  preferences:
+    title: { ro: Spuneți-ne părerea dumneavoastră, en: Tell us what you think }
+    button: { ro: Lăsați o părere, en: Leave feedback }
+  blocks:
+    - { id: feedback-form, app: portal, widget: form, preferences: { form: feedback } }
+```
+
+- `id`: the window's id, lower-case letters, digits and hyphens. It makes the element `<dialog id="popup-<id>">`.
+- `title`: the window's title, in every language of the site, at most 200 characters.
+- `button`: the words of the button that opens it, in every language of the site, at most 100 characters. Without it, the window opens only from a link to `#popup-<id>`, such as one in an HTML block.
+- A window takes no other `preferences` (`popup_preference`, with the reason `title`, `button` or `unknown_key`), and holds no other pop-up window (`nested`).
+- It is drawn only when something in it shows to the viewer: a form they may not send takes it away. A page's forms count those in windows among their five.
+- It is a native `<dialog>` opened with `showModal()` by `/_portal/assets/popups.<hash>.js`: the page behind it is inert, **Tab** stays inside it, **Esc** and its close button ask to close it, and focus goes back to what opened it. A form in a window is drawn when the window opens, new each time. Closing with something typed asks first (`window.confirm`); a window never closes while its form is being sent; a close the form's own [actions](/portal/developer/actions/#ui-actions) ask for asks nothing.
+
+A form opens in a window of its own with `popup: true` on its placement, and a listing's **Add** and **Edit** open forms in one: see [Forms](/portal/developer/forms/#a-form-on-a-page) and [Listings](/portal/developer/listings/#a-listing-on-a-page).
 
 ## A fragment
 

@@ -5,14 +5,19 @@ description: Build a site's pages in the console, with its page tree and an edit
 
 **Pages** builds the portal's sites in the console. It shows each site's pages as a tree. For each page you set its title, its address and its layout, and arrange what each part of the layout holds. Every save is a [version](/portal/console/versions/) you can undo.
 
-**Pages** is for administrators, on a portal whose site files the portal keeps. It is not in the menu otherwise. A new site, and a site's name, languages and home page, are made on [Sites](/portal/console/sites/).
+**Pages** is for administrators, and for the people who hold a right over some page, on a portal whose site files the portal keeps. It is not in the menu otherwise. See [Who may add, move and remove pages](#who-may-add-move-and-remove-pages). A new site, and a site's name, languages and home page, are made on [Sites](/portal/console/sites/).
+
+The **Menus** tab builds the site's [menus](/portal/sites/menus/); the **Fragments** and **Page templates** tabs hold what pages share.
 
 ## The page tree
 
 Each site lists its pages by address. A page sits under the page above it: `/servicii/taxe` under `/servicii`. The home page is marked **Home page**. A page file the portal cannot read is marked **Cannot be read**; fix or remove it where the site's files are edited.
 
 - **Edit** opens a page in the editor.
-- **New page** opens the editor for a new page of that site.
+- **New page** opens the editor for a new page of that site. The one on a page's row makes a page under it, with its address already begun.
+- A page published on a schedule shows where it stands: **Scheduled** with the time, **Published until** with the time, **Published** or **Expired**. A page with no schedule shows nothing.
+
+![The page tree of a site: the home page, a page scheduled for 01.12.2026 08:00, a page with pages under it, and a page marked Expired.](../../../../assets/screenshots/portal-pages-tree.png)
 
 ## Edit a page
 
@@ -20,13 +25,16 @@ Each site lists its pages by address. A page sits under the page above it: `/ser
 - **Title**: one per language of the site.
 - **Layout**: the portal's `one-column` or `two-column`, or one of the site's own [layouts](/portal/sites/layouts/).
 
-**Search and sharing** sets how [search engines and link previews](/portal/sites/seo/) show the page: a description in each language, a share image, and **Hide from search engines**.
+**Search and sharing** sets how [search engines and link previews](/portal/sites/seo/) show the page: a description in each language, [keywords](#keywords), a share image, and **Hide from search engines**.
+
+The page's **Settings** also hold [who sees, edits, adds, moves and removes](#who-sees-and-who-edits), when the page is [published](#publish-on-a-schedule), and whether it is in the site's [main menu](/portal/sites/menus/#show-a-page-in-the-menu).
 
 Under them, each part of the layout lists what it holds, in order:
 
 - **Add text** adds a text block, one text for each of the site's languages. See [Write text](#write-text).
 - **Add content…** shows the site's [content](/portal/console/content/#show-content-on-a-page) of one type: its newest entries, or one entry.
 - **Add a widget…** adds one of [the portal's own widgets](#the-portals-widgets) or one of the apps' widgets. A portal widget has its settings in its row. When an app's widget needs a setting to work, the editor asks for it; the app's widget has its other settings on the page itself, from its menu.
+- **Add tabs** adds [tabs](#tabs).
 - **Remove** takes a block or widget off the page.
 
 **Save** stays off until something changed and every title, every text and every required setting is filled in.
@@ -44,6 +52,90 @@ Removing the last one chosen under **Who sees this page** or **Who sees this blo
 **Show to**, in each block's row, shows the block only to some [segments](/portal/sites/personalization/), or to everyone except them. It chooses what people are shown, not what they may see.
 
 **Experiment**, in each block's row, makes the block (or group) one version of an [experiment](/portal/sites/experiments/): choose the experiment, then its **Version**. The block is shown only to the people who see that version. An experiment whose goal is this page is not offered.
+
+## Publish on a schedule
+
+A page can be published from a time, until a time, or both. On the page's **Settings**, **Publication** has **Published from** and **Published until**. Both are optional, to the minute, and typed in Bucharest's time, whatever the time zone of your computer. The portal keeps them in UTC.
+
+![The Publication part of a page's settings: Published from 12/01/2026, 08:00 AM, and Published until left empty.](../../../../assets/screenshots/portal-pages-publication.png)
+
+Outside the time it is published, a page is nothing to the people who do not edit it:
+
+- its address answers **page not found**, not "no access";
+- it is in no [menu](/portal/sites/menus/), no `sitemap.xml`, no search of the site, and no list's link to its entries;
+- the people who edit the page, and the administrators, still see it, with a band that says when it is published or that it expired.
+
+The change happens by itself, within a minute of the time, with no save and no job to set up. A cache that keeps pages for visitors is told to keep them no longer than the next change.
+
+Some rules keep it safe:
+
+- **The home page cannot be scheduled**: the site would be left without one. The save is refused with the reason, and so is making a scheduled page the site's home page on [Sites](/portal/console/sites/).
+- **Published until** must be later than **Published from**. A time that has already passed is allowed for **Published until**: the page is expired as soon as it is saved, and the editor says so before you save.
+- A time that does not exist, such as 03:30 on the night the clocks go forward, is refused at the field.
+- Pages under a page do not take its schedule. Each page has its own; when a page has expired, its item and the items under it leave the menu.
+- A form placed on a page that has expired still opens at its own address.
+- **Preview** shows the page whatever its schedule.
+
+## Keywords
+
+**Search and sharing** has **Keywords** for each language of the site. Type a word and press **Enter** or a comma; each word has a button to remove it.
+
+![The Search and sharing tab of a page: description in each language, Keywords in each language as tags (medical waste, reporting, guide; deșeuri medicale, raportare, ghid), and the share image.](../../../../assets/screenshots/portal-pages-keywords.png)
+
+- At most 20 words in a language, each 1 to 50 characters, with no `<`, `>` or `"`. The same word typed twice, in capitals or not, is kept once.
+- Once there are keywords in one language, there must be some in each of the site's languages, as for the description.
+- The page's head carries them in the visitor's language: `<meta name="keywords" content="medical waste, reporting, guide">`. A page with none of its own takes the site's, set on [Sites](/portal/console/sites/) under **Search engines**.
+- A page hidden from search engines keeps its keywords, and says it is not to be listed.
+
+## Tabs
+
+**Add tabs** adds a container of tabs to a part of the page, or to a group. It starts with two tabs.
+
+![The page editor with a Tabs container: three tabs, each with its label in two languages, who sees it, and its own blocks; the third tab is for the platform's administrators only.](../../../../assets/screenshots/portal-pages-tabs-editor.png)
+
+- Each tab has a **label** in each language, 40 characters at most, and its own blocks: text, content, a widget, a form, a listing, a group, as anywhere else on the page. Blocks move into a tab as they move between parts of the page.
+- A container has from 2 to 12 tabs. **Add tab**, **Move the tab up**, **Move the tab down** and **Remove** change them.
+- **Who sees the tab** uses the usual choice of people, and the container has its own **Who sees this block**. A tab nobody may see is not in the page at all, its label included.
+- Tabs inside tabs are not allowed: the editor does not offer them, and a file that has them is refused. Tabs can be in a group, and a tab can hold a group, within the four levels groups may nest.
+- A page people arrange for themselves cannot hold tabs.
+
+What visitors get is a set of tabs you can use from the keyboard:
+
+![A page with tabs as a signed-in supplier sees it: two tabs, Reports to validate and County situation; the third, for administrators, is not there.](../../../../assets/screenshots/portal-pages-tabs-site.png)
+
+- The arrow keys move among the tabs and **Enter** or **Space** opens the one in focus. The first tab a person may see is open at first.
+- The open tab is in the address (`#tab-…`), so a link or a refresh opens the same tab. An address that names a tab the person cannot see, or that is not there, opens the first.
+- A tab that is not open is hidden, not removed: a form in it keeps what was typed, and a list in it works when the tab is opened.
+- When only one tab is left for a person, its content shows with no tab bar. When none is left, the container is not there.
+- Without scripts, the tabs are sections one after another, each with its label as a heading.
+- On a narrow screen the tabs scroll sideways.
+
+## Who may add, move and remove pages
+
+Seeing a page and editing it are not the only rights. Three more are chosen with the same [people picker](/portal/sites/permissions/#choose-who), on a page's **Settings**:
+
+![A page's Settings: Who sees this page, Who edits this page, Who adds pages under this page, Who moves this page and Who removes this page, each with "Only administrators, unless the site says otherwise."](../../../../assets/screenshots/portal-pages-rights.png)
+
+- **Who adds pages under this page**: they make pages whose address is this page's address and more, such as `/dsp/instructions` under `/dsp`. It covers the pages under it that name nobody of their own.
+- **Who moves this page**: they change its address, which puts it under another page.
+- **Who removes this page**: they remove it. The pages under it stay where they are.
+- **Who edits this page** now means the page's content and its properties: titles, layout, search and sharing, publication, keywords, tabs and its place in the menu.
+
+A site has the same three choices for all its pages, on [Sites](/portal/console/sites/#who-may-add-move-and-remove-pages), the first one covering the first level too. They are **Only administrators** when left alone. A page can give more than the site, for its own pages: "the DSP staff add pages under `/dsp`". The nearest page above a place that names anybody decides; if none does, the site does.
+
+How the rights work together:
+
+- **Moving** a page needs the right to move it, and the right to add pages under the place it goes to, or on the first level.
+- The home page is moved and removed by administrators only.
+- A save is checked as a whole, against the rights of the person who makes it. A change outside them refuses the whole save, naming the page and the right missing: "You may not move the page /dsp/b". Nothing is half done.
+- **Only administrators** change who sees, edits, adds, moves and removes a page, and who sees a block or a tab on it. Others see the choices and cannot change them, so nobody gives themselves a right. A block moved out of a tab only some people see, or a tab given up its restriction, would show to more people: such a save is refused. A block added to a restricted tab is as restricted as the tab. **Versions** and undoing a version stay with administrators too.
+- The page editor offers someone only the forms they may send and the data models they may read. A form or a data model they may not use is refused on the page, naming it; those the page already uses stay as they are.
+- A chat block, an assistant or a website chat, gives the agent to everyone who sees the page. Someone puts there only an agent they already reach, through a page they see; any other agent is refused, naming it.
+- Someone who may only move or remove a page sees its address and title in the page editor, and nothing of what is on it: no blocks, no rights and no preview. Moving it changes its address and nothing else.
+
+**Pages** is in the menu of every person who holds at least one of these rights over at least one page. They see the pages they hold a right on, and, greyed and with no action, the pages above them. **Edit**, **New page** (under a page), **Remove page** and the address field are there only where the person holds that right.
+
+![The Pages screen of a person who is not an administrator: the DSP dashboard with its two pages under it, Edit and New page only where they hold the right, and no Menus, Fragments or Page templates.](../../../../assets/screenshots/portal-pages-editor-view.png)
 
 ## Write text
 
@@ -98,6 +190,7 @@ Each widget has a page in the guide. It says what people see and what each setti
 - **Figures** shows a model's figures as tiles and bars. See [KPIs](/portal/sites/kpis/#show-them).
 - **My work** shows each person the work Keel holds for them. See [Keel](/portal/sites/keel/#my-work).
 - **Work overview** shows the headline figures of a Keel project. See [Keel](/portal/sites/keel/#the-overview).
+- **Embedded content** shows another tool's page, such as a report, in a frame, from the addresses the site allows. See [Embedded content](/portal/sites/embedded-content/).
 - **Notifications** shows each person's notifications. See [Notifications](/portal/sites/notifications/#where-people-find-them).
 - **Comments** and **Rating** let people signed in comment and give stars. See [Comments and ratings](/portal/sites/comments/#place-the-widgets).
 - **Activity** shows posts, comments and published entries. See [Activity](/portal/sites/activity/#what-people-see).
@@ -167,6 +260,61 @@ A page template is a page's starting point: a layout and what its parts hold.
 ## Forms
 
 **Add a form** puts one of the portal's forms in a part of the page; it offers the forms the site offers, at most five on a page. People who may not send the form do not see it. See [Forms](/portal/sites/forms/) for writing a form and saying who sends it.
+
+## Pop-up windows
+
+A pop-up window opens over the page, from a button or a link, and holds other blocks, usually a form. People stay on the page: the page behind the window is dimmed, and cannot be used until the window is closed.
+
+### A pop-up window block
+
+1. In the part of the page where it goes, press **Add…**, then **Pop-up window**.
+2. Open its row. Write the **Window title**, once for each language of the site. It is shown at the top of the window and read out by screen readers.
+3. Write the **Button text**, once for each language, to put a button on the page that opens the window. Without button text, the window opens only from a link to `#popup-` and the block's id, such as `#popup-feedback`. The row shows the link it needs.
+4. Put in the window what it holds: press **Add…** inside its row, or drag a block into it. With the keyboard, **Move into pop-up window** moves a block into it.
+
+![The page editor with a pop-up window opened: its Window title in Romanian and in English, its Button text, and the link it opens from, #popup-feedback; beside it, the page as visitors see it.](../../../../assets/screenshots/portal-popups-block-editor.png)
+
+- The editor asks for the title in every language, and for the button text in every language once it is written in one.
+- A pop-up window holds no other pop-up window. Put the second one beside the first.
+- A window shows only when something in it shows to the person: a form they may not send takes its window with it.
+- A page shows at most five [forms](#forms), and the ones in pop-up windows count.
+
+### A form that opens in a pop-up window
+
+A form needs no window block to open in one. **Add a form…**, open the form's row and tick **Open in a pop-up window**. The page then shows a button, and the form opens in a window over the page. **Button text** is in each language; left empty, the button carries the form's name.
+
+![The page editor with a form opened: Open in a pop-up window is ticked, and the Button text is "Ask us to call you" in Romanian and in English; beside it, the page as visitors see it.](../../../../assets/screenshots/portal-popups-form-editor.png)
+
+### A listing's Add and Edit
+
+A [listing](/portal/sites/listings/) opens its own small form for **Add** and **Edit**. Under **Add opens this form in a pop-up window** and **Edit opens this form in a pop-up window**, in the listing's row, choose one of the site's forms for either. **Add** or **Edit** then opens that form in a pop-up window. **Edit** fills it in with the record's values, in the fields whose **Key** is the model's field name. Left empty, a button keeps the listing's own window.
+
+![The page editor with a Listing opened: the data model Requests, People may add records with Add opens this form in a pop-up window set to Add a request, and People may change records with Edit opens this form in a pop-up window set to Change a request.](../../../../assets/screenshots/portal-popups-listing-editor.png)
+
+A person who may not send the form is not offered its button. The form's [steps](/portal/sites/actions/#close-a-pop-up-window) save the record and close the window.
+
+### What people see
+
+![A help page with two buttons, Ask us to call you and Leave feedback.](../../../../assets/screenshots/portal-popups-page.png)
+
+The button opens the window over the page, with its title and a button to close it. The window holds what the page put in it: the feedback form here.
+
+![The Leave feedback window open over the dimmed page: its title, a close button and the form, filled in.](../../../../assets/screenshots/portal-popups-open-feedback.png)
+
+- **Esc** or the close button, **Close the window**, closes it. **Tab** stays inside the window, and focus goes back to the button that opened it.
+- Closing a window with something typed in its form asks "Discard your changes?". A window never closes while its form is being sent, and a form that was sent closes without asking.
+- A form in a window is new each time the window opens.
+- A form's thanks shows in its window, which stays open until the person closes it. The form's [steps](/portal/sites/actions/#close-a-pop-up-window) can close the window once the form is sent.
+
+![A booking form's window after it was sent: the title Book a visit and the thanks, Thank you! Your visit is booked.](../../../../assets/screenshots/portal-popups-thanks.png)
+
+On a listing that opens forms, **Add** and **Edit** open the forms the page chose:
+
+![The Requests listing as an administrator sees it: a search box, Add, and the requests with Open and Edit beside each.](../../../../assets/screenshots/portal-popups-listing-page.png)
+
+![The Requests listing with an Edit window open: "Change a request" holds Andrei Popescu and the note Wants a second copy of the deed.](../../../../assets/screenshots/portal-popups-open-edit.png)
+
+Developers: see [Developer: Page layouts](/portal/developer/layouts/#a-pop-up-window).
 
 ## Display pages
 

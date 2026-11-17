@@ -89,6 +89,13 @@ In a page's file (`sites/<site>/pages/<page>.yaml`):
 ```
 
 - `form`: the id of a form the site offers.
+- `popup: true`: the page shows a button, and the form opens in a [pop-up window](/portal/developer/layouts/#a-pop-up-window) over the page. `button` is the button's words, `{ ro, en }` in every language of the site; the form's name when left out. `button` belongs to `popup: true`.
+
+```yaml
+- { id: callback, app: portal, widget: form, preferences: { form: callback, popup: true, button: { ro: Rugați-ne să vă sunăm, en: Ask us to call you } } }
+```
+
+A form in a pop-up window is sent with `popup` in its body, naming the window (`form:<id>`, or `window:<id>` for a form in a pop-up window block), so that [`closeFormPopup` and `closePopup`](/portal/developer/actions/#ui-actions) know which window to close.
 
 ## What the portal checks
 
@@ -150,6 +157,39 @@ offline: true
 
 - `offline: true` lets the browser fill the form in without a connection; the form must be public.
 
+## Confirm who sends it
+
+```yaml
+public: false
+reauth: true
+```
+
+- `reauth: true` asks a person signed in to prove who they are again before the form is sent, if they have not within the sign-in policy's minutes; the server answers `403` with `reauth_required` and the page asks and sends again. A public form, and a form bound to a model (`model:`), cannot take it: a bound form's moves ask with `reauth: true` on the transition in the model's `states`.
+
+```yaml
+states:
+  field: stare
+  initial: draft
+  list: {…}
+  transitions:
+    - id: send
+      label: { ro: Transmite, en: Send }
+      from: [draft]
+      to: sent
+      by: [group:staff]
+      reauth: true
+```
+
+## Keep robots out
+
+```yaml
+public: true
+captcha: true
+```
+
+- `captcha: true` makes a visitor send, with the form, a solution of a challenge asked of `/_portal/api/auth/captcha?form=form` and solved with the worker the portal serves at `/_portal/captcha/worker.js`: `{ "data": {…}, "captcha": { "challenge": "…", "nonce": "…" } }`. A missing or wrong solution is answered `400`, `captcha_required` or `captcha_failed`, and nothing is kept. The form must be public and cannot be offline.
+- The actions `checkCredentials` and `registerPerson` take an optional `captcha` expression (a map of `challenge` and `nonce`), solved for the form `check` or `register`. A visitor's run of `registerPerson` needs it unless the form it runs for has `captcha: true`.
+
 ## A record field
 
 Among a form's `components`:
@@ -168,6 +208,42 @@ Among a form's `components`:
 
 - `model`: the data model whose records are picked.
 - `multiple: true`: the person picks up to 50.
+
+## A form bound to a model
+
+A form with `model` creates that model's records and opens existing ones to edit: [Forms for records](/portal/sites/model-forms/) in the site guide describes what people see.
+
+```yaml
+name: { ro: Fișa lunară, en: Monthly sheet }
+language: en
+model: monthly_reports
+sites: [reports]
+permissions: { submit: [signed-in] }
+components:
+  - type: panel
+    key: period
+    title: Reporting period
+    components:
+      - { type: textfield, key: year, label: Year, input: true }
+      - { type: textfield, key: month, label: Month, input: true }
+  - type: lines
+    key: lines
+    label: Waste by code
+    lineColumns:
+      - { field: code, label: Code, width: 12 }
+      - { field: generated, label: Generated, width: 12 }
+      - { field: closing }
+```
+
+- `model`: the id of a model of the portal. The form's own address takes `?record=<id>` to open a record.
+- A field is a component whose `key` is a field of the model: the loader refuses any other key on an input component. Its type may be any the form takes; the model, not the component, says what is required, active and read-only, and a `required` set on the component is ignored. A form bound to a model needs no submit button.
+- `lines` is a component for the grid of the model's lines (its `lines` setting): at most one a form, and only in a form bound to a model whose model has lines. `lineColumns` lists 1 to 40 columns, in order: `field` is a field of the line model, never the link back to the record; `label` is the text of the heading, in the form's language and translated like any label (the field's own label when left out); `width` is 4 to 80 characters.
+- The page runs `evaluateAggregate`, the code the server runs, on every change, and asks `POST /_portal/api/data/<model>/evaluate` for what depends on other records. It saves with `POST` or `PATCH` on `/_portal/api/data/<model>` (the header's fields and `lines: [...]` in one body) and moves with `POST /_portal/api/data/<model>/<id>/transition`.
+- A panel, a fieldset or a well may carry `activeWhen: <CEL>`, and so may a tab of a `tabs` component (`{ label, key, activeWhen, components }`): a condition over the model's fields, at most 2,000 characters. The loader gives it to the fields the section holds: each such field's `activeWhen` becomes `(its own) && (the section's)`, and a grid's columns get it with the header's names written `parent.<name>`. So the portal enforces it on every path (a value sent for an inactive field is refused, a stored one is cleared, none is required), and the models the portal runs differ from the model files. It is refused on a form with no model (`section_unbound`), on a step of a `wizard` (`section_wizard`), when it does not hold over the model's fields (`section_condition`), and when another form puts the same field under a different condition, or shows it outside any section (`section_conflict`: a model's own form claims nothing, and one form uses a key once, so a field is never in two sections of one form).
+- A form bound to a model with `public: true` sends its answer as any form does, and the record is made only by a `createRecord` action for the model among `actions.submitted` (reason `public_no_record` when there is none). With a `lines` grid, the action's `values` must carry the rows, with a `lines` key such as `lines: 'form["lines"]'` (reason `public_no_lines`): the page puts the rows written in the grid in the submission under the grid's `key`, as a list of objects with the line model's fields, and the data layer checks them as it checks any write. `model-<id>` forms do this for you.
+- **Everything the model says is in the page.** The page runs the model's own logic, so the model's rules, lock, states, prefill, results and linked models, with their expressions and messages, are sent to the browser of anyone who can open a bound form, signed in or not (a public bound form too). Keep nothing in a model's expressions or messages that a person who may open a form bound to it should not read.
+- `offline: true` is refused on a form bound to a model, and the form keeps no drafts. `display: wizard` works: each top-level panel is a step.
+- Each model's own form `model-<id>` is bound to the model, with a `lines` component for the model's lines.
 
 ## Fields from an app
 
@@ -202,3 +278,7 @@ actions:
 - `actions.submitted`: the [actions](/portal/sites/actions/) that run once the form is sent and kept.
 
 The keys of an action list are in [Developer: Actions](/portal/developer/actions/).
+
+## Options from a model, a data source or a web service
+
+A choice field's `optionsFrom` is in [Developer: Data sources](/portal/developer/data-sources/#a-fields-options).

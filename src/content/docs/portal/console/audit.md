@@ -11,7 +11,7 @@ On **Audit log**, an administrator sees everything that changed something in the
 
 Narrow the list with:
 
-- **Action**: what was done, such as **Changed roles**.
+- **Action**: what was done, such as **Changed roles** or **Work on behalf of an entity**.
 - **Outcome**: **Done**, **Refused** or **Failed**.
 - **From** and **To**: the days to look at, both included, in your own time.
 
@@ -19,7 +19,9 @@ Each event shows when it happened and the address it came from. Press **Load mor
 
 To see what one person did and what was done to them, open their page under **Users** and press **See their audit events**. Press **Show everyone** to go back to the whole log.
 
-**Download CSV** saves the events the filters show, for a spreadsheet or an auditor. A very large download says at its end that it was cut short; narrow the filters for the rest.
+Work done on behalf of an entity is kept with the entity, the person, their institution and the reason: see [Access to records by condition](/portal/sites/row-access/#working-on-behalf-of-an-entity). The changes to roles and to people's own fields are kept with what they were and what they became.
+
+**Download CSV** saves the events the filters show, for a spreadsheet or an auditor; it has the institution and the reason as columns. A very large download says at its end that it was cut short; narrow the filters for the rest.
 
 ## Check that the log was not changed
 
@@ -29,5 +31,7 @@ Press **Verify the log**. The portal checks every event against the one before i
 - **The log was changed at event N.** Someone with access to the database altered or removed events from that one on. Tell whoever runs the portal.
 
 Passwords, tokens and what people typed into forms are never in the log. A refused sign-in keeps the login that was tried only when it is a user's email or username; anything else might be a password typed in the wrong field, and is not kept.
+
+Where a data model [keeps its history](/portal/sites/data-models/#history-and-archiving), every new version of a record is an event too: it names the model, the record, the version number and what was done, never the values. An attempt to change or remove a version is refused and shows as **Refused**.
 
 Events are kept for two years unless whoever runs the portal sets another period. When a person is erased, their name, email and address are removed from the events about them; the events themselves stay.

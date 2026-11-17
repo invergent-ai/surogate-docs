@@ -36,7 +36,8 @@ Administrators build a form in the console: see [Build a form](/portal/console/f
 
 ## What a form may hold
 
-- **Fields:** text, text area, number, email, phone number, web address, checkbox, select boxes, select, radio, day, time and currency.
+- **Fields:** text, text area, whole number, number, email, web address, checkbox, select boxes, select, radio, day and time. A select can search and take many values.
+- **More fields:** phone number, currency, date and time, slider, files, password, formatted text and fields from a JSON. [Form fields](/portal/sites/form-field-types/) describes each one and every setting its dialog offers, and how a field's label and instructions are placed.
 - **[Extension fields](/portal/sites/form-fields/):** a barcode or QR code, a barcode scanner, an IBAN and a signature.
 - **Layout:** panels, columns, fieldsets, tabs and wells, nested at most eight deep.
 - **Text blocks**, in the markup a site's pages allow.
@@ -46,7 +47,7 @@ Each field's **Key** is a name, unique in the form, such as `name` or `birth_dat
 
 A field can be shown only when another field has a value: **Shown when**, in the form builder, sets it. A field hidden by its condition is not required, and what was typed in it is not kept.
 
-A form holds no script. The portal refuses a form with custom conditions, calculated values, custom validation, logic, options read from an address, a rich text editor, or a template that calls anything. The refusal names the part. Show and hide fields with conditions instead.
+A form holds no script. The portal refuses a form with custom conditions, calculated values, custom validation, logic, options read from an address, form.io's own rich text editor (use [Formatted text](/portal/sites/form-field-types/#formatted-text) instead), or a template that calls anything. The refusal names the part. Show and hide fields with conditions instead.
 
 ## Translations
 
@@ -63,9 +64,43 @@ Both are set in the form builder, on the **Who can use it** tab: see [Build a fo
 
 People who may not send a form do not see it on a page, and its address answers as if there were no form.
 
+## Forms for records
+
+A form can be bound to a [data model](/portal/sites/data-models/) to create its records and open existing ones to edit, with the model's figures and checks shown as people type. See [Forms for records](/portal/sites/model-forms/).
+
+## Ask people to confirm who they are
+
+A form that changes something important can ask the person to prove who they are again before it is sent. In the form builder, tick **Ask people to confirm who they are again when they send it, if they have not lately**. It is for forms people sign in to send: it cannot be ticked for a public form, whose visitors have no account to confirm, nor for a form bound to a data model, which asks through its model's own moves (see [Confirm a move](#confirm-a-move)).
+
+![The form builder's Who can use it tab for a form that is not public: "Ask people to confirm who they are again when they send it, if they have not lately" is ticked, and the boxes for offline and the anti-robot check are greyed out.](../../../../assets/screenshots/portal-auth-form-reauth-setting.png)
+
+When the person sends the form and has not proved who they are within the minutes set in [Sign-in policy](/portal/console/sign-in-policy/#confirming-it-is-you-again), the page opens the window **Confirm it is you**: the password, and the code or passkey of the second step, or a button back to the provider for someone who signs in there. What they wrote stays; once they confirm, the form is sent. If they cancel, nothing is sent. Signing in counts as proof. The portal asks every time, not only the page: a form sent without the proof is refused.
+
+![A form with its fields filled in, and over it the window "Confirm it is you": "To go on, the portal asks you to prove who you are again. What you filled in is kept." with boxes for the password and for the code of the second step, and the buttons Confirm and Cancel.](../../../../assets/screenshots/portal-auth-form-reauth-dialog.png)
+
+## Confirm a move
+
+A [data model](/portal/sites/data-models/) with states can ask for the same proof before a move from one state to another. In the model editor, on the **States** tab, tick **Asks the person to confirm who they are again** on the move. The record page, the listing's dialog and every other way of making the move (the data API, GraphQL, and a new record made with its move) refuse the move to someone who has not proved who they are lately, and the pages open the same window and make the move once it is confirmed. ![The States tab of a model: the move "submit", with "Asks the person to confirm who they are again" ticked, beside "Asks for a comment", the button's words, the states it goes from and who may make it.](../../../../assets/screenshots/portal-auth-move-setting.png)
+
+![The monthly sheet of a form bound to a model, a draft, and over it the window "Confirm it is you" that opened when the person pressed Submit.](../../../../assets/screenshots/portal-auth-bound-move-dialog.png)
+
+An action an administrator wrote makes its moves without asking: nobody sits there to answer, and an administrator chose it. An API token is not asked either.
+
+## Keep robots out of a public form
+
+A public form can ask visitors to pass the portal's own anti-robot check before anything is kept. In the form builder, tick **Ask visitors to pass the anti-robot check before it is sent**. The visitor's browser solves a small puzzle in the background, in a second or two, and sends the answer with the form; nothing leaves the portal. A solution works once.
+
+![The form builder's Who can use it tab for a public form: "Anyone may send it" and "Ask visitors to pass the anti-robot check before it is sent" are ticked.](../../../../assets/screenshots/portal-auth-form-captcha-setting.png)
+
+![A public form filled in by a visitor, with the line "Checking…" under the Send button while the browser solves the puzzle.](../../../../assets/screenshots/portal-auth-form-captcha.png)
+
+A visitor who fails the check is refused and counted against their network address, as at sign-in. People signed in are not asked. The setting is for public forms that are not filled in offline, since what is sent offline goes later and its puzzle would have run out. How hard the puzzle is, is set in [Sign-in policy](/portal/console/sign-in-policy/#anti-robot-check).
+
+A public form whose steps ask for a new account must carry the check. The step that asks for an account refuses a visitor who has not passed it, and says so.
+
 ## Put a form on a page
 
-In the [page builder](/portal/console/pages/#forms), **Add a form** to a part of the page. It offers the forms the site offers. A page shows at most five forms.
+In the [page builder](/portal/console/pages/#forms), **Add a form** to a part of the page. It offers the forms the site offers. A page shows at most five forms. A form can open in a [pop-up window](/portal/console/pages/#pop-up-windows) from a button.
 
 ## Its own address
 
@@ -123,6 +158,25 @@ A record field picks a record of one of the portal's [data models](/portal/sites
 **Choose** opens a list of the model's records, 20 at a time, with **More** for the next ones and a search box when the model has searchable fields. A record is named by the model's title field, or else its first text field. With many records allowed, a person picks up to 50 and closes the list with **Done**; **Clear** empties the field.
 
 The list shows only the records the person may see, and the record the form makes checks the pick again. A required record field must hold at least one. A form with a record field cannot be filled in offline. In the form builder, **Record** is among **More fields**.
+
+## Options from a model, a data source or a web service
+
+A **Select**, **Radio** or **Select boxes** field can take its options from somewhere other than the list written in the field. In the form builder, open the field and choose **Options come from**:
+
+![The form builder with the field Waste code open: its options table, and below it Options come from set to A data model, with the model coduri, the field that is the value (cod) and the field that is the label.](../../../../assets/screenshots/portal-data-form-builder-options.png)
+
+- **The list written here:** the options typed in the field.
+- **A data model:** the records of a [data model](/portal/sites/data-models/). **Field that is the value** (the record's id when left empty), **Field that is the label** (the model's title when left empty), **Order by (field)** (a `-` before it orders from the last), and a **Filter** that a record meets to be offered, such as only the values that are active, or only those of the county chosen in another field.
+- **A data source:** one of the portal's [data sources](/portal/sites/data-sources/), whose columns **value** and **label** give the options.
+- **A web service (JSON):** a **Web connector**, a **Path**, a **Query string** whose values are expressions over the form, the person and what was typed, **Where the list is in the answer**, the **Path of the value** and **Path of the label** in each item, and how long to **Keep the answer**.
+
+![A form Waste report with the field Waste code: the option "Deseuri infectioase" is shown, taken from the model of waste codes.](../../../../assets/screenshots/portal-data-form-options.png)
+
+- The portal asks for the options, never the person's browser, and only for what that person may see: the model's permissions, or the source's **Who may use this source**, apply.
+- A field offers at most 1,000 options at once; a longer list is chosen from by searching. The choice is checked again when the form is sent, by itself, however long the list has grown: a value the source does not offer that person is refused. The label of the choice is kept with the value.
+- A field can depend on another: when the county changes, the list of units is asked for again.
+- A form that anyone may send, signed in or not, cannot take options that depend on the person, or from a source only some may use.
+- When the options cannot be had, the field says "The options cannot be had right now."
 
 ## Fields from apps
 

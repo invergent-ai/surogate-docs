@@ -22,6 +22,10 @@ Set these under **Integrations → Keel** in the console: see [Integrations](/po
 
 Keel must trust the portal. Its administrator adds the portal's **issuer**, shown on the Keel page under **What it needs from the portal**, with the project, to Keel's trusted portals. Keel then finds each person among its staff by their email: the email they have in the portal must be the one they have in Keel.
 
+## Workflows in the console
+
+The portal's console can open Keel's builder in its own **Workflows** section, with the same sign-in, people and roles, and say who works in Keel and who may change and start each workflow. See [Workflows](/portal/console/workflows/).
+
 ## My work
 
 The portal's My work widget is placed on a page. On [Pages](/portal/console/pages/#the-portals-widgets), add **My work** with **Add a widget…**, then set **Tasks shown** in its row. Until the portal is connected to Keel, the widget is listed as **needs Keel** and cannot be added. Developers: see [Developer: Keel](/portal/developer/keel/#my-work-on-a-page).

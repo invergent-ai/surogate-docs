@@ -16,6 +16,18 @@ The console says **Allowed** or **Not allowed**. When access is allowed, it list
 
 ![Check access for ana@example.ro on the page main/intranet: Allowed, with the steps down to the group Funcționari.](../../../../assets/screenshots/portal-access-check.png)
 
+## Check access to data, endpoints and sections
+
+Under **Check access to data, endpoints and sections**, choose what to check:
+
+- **Records**: type the person's **Email** (leave it empty for a visitor), choose the **Model**, the **Verb** (**Read**, **Add**, **Change** or **Remove**) and, if you like, a **Record id**. With a record, the answer is for that record; without one, it says whether the person may do the verb on some records.
+- **Endpoint**: choose the endpoint. The answer says whether the person, or a visitor, may call it.
+- **Console section**: choose the **Section** and the **Level**. The answer says whether the person's roles open it.
+
+Press **Check**. The console says **Allowed** or **Not allowed**. When it is allowed, the steps say which role gave it and, for records, which rule held:
+
+![Check access to data: ana.pop@example.com may change a sheet of her county, by the role DSP/DMS user and the rule on the sheet's entity.](../../../../assets/screenshots/portal-access-check-record.png)
+
 ## Add editors
 
 Editors may edit a site or a page, and so they can also see it, whatever its files say about viewing.

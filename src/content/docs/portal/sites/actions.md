@@ -46,7 +46,7 @@ Whole numbers are integers, the others decimals; the two mix in arithmetic, so a
 
 ## The actions
 
-Extensions add more: the [document actions](/portal/sites/document-actions/) make and read PDF, Word, Excel and CSV files and barcode images, the [file management actions](/portal/sites/file-management/) copy, move and rename files and make and unpack ZIP archives, the [payments](/portal/sites/payments/) take payments through Stripe, the [marketing actions](/portal/sites/marketing/) keep newsletter lists in Mailchimp or Constant Contact, the [CRM actions](/portal/sites/crm/) work with records in Dynamics 365 and Salesforce, the [security actions](/portal/sites/security/) make RSA keys and check DKIM records, the [people actions](/portal/sites/people-actions/) find, invite and change the portal's own people, the [web pages actions](/portal/sites/web-pages/) read other sites' pages, the [Google Drive actions](/portal/sites/google-drive/) work with files in Google Drive and make Google Docs from templates, and the [Microsoft 365 actions](/portal/sites/microsoft-365/) work with files in OneDrive and SharePoint.
+Extensions add more: the [document actions](/portal/sites/document-actions/) make and read PDF, Word, Excel and CSV files and barcode images, the [file management actions](/portal/sites/file-management/) copy, move and rename files and make and unpack ZIP archives, the [payments](/portal/sites/payments/) take payments through Stripe, the [marketing actions](/portal/sites/marketing/) keep newsletter lists in Mailchimp or Constant Contact, the [CRM actions](/portal/sites/crm/) work with records in Dynamics 365 and Salesforce, the [security actions](/portal/sites/security/) make RSA keys, check DKIM records, and encrypt and decrypt with AES and RSA, the [portal administration actions](/portal/sites/portal-actions/) make and change the portal's own pages, sites, folders and roles, the [people actions](/portal/sites/people-actions/) find, invite and change the portal's own people, the [web pages actions](/portal/sites/web-pages/) read other sites' pages, the [Google Drive actions](/portal/sites/google-drive/) work with files in Google Drive and make Google Docs from templates, the [Microsoft 365 actions](/portal/sites/microsoft-365/) work with files in OneDrive and SharePoint, and the [database actions](/portal/sites/database-actions/) run SQL on your own databases and load the rows into a data model.
 
 - Work out values, and keep them for later actions.
 - Run actions together: an error handler of the group catches theirs.
@@ -56,6 +56,8 @@ Extensions add more: the [document actions](/portal/sites/document-actions/) mak
 - Write a line in the run's log, as information or as a warning.
 - Wait up to 5 seconds.
 - Read JSON text into a value, or write a value as JSON text.
+- **Read XML** (under **Values**, anywhere): turns XML into a value. Each element is a key (a namespace prefix stays, as `soap:Body`), attributes are `@name`, text is `#text` when an element has attributes or children and the element itself otherwise, repeated elements are a list, and an empty element is an empty text. Values stay text; convert them in an expression, such as `int(...)`. The XML is taken from an expression's text or from a file of a folder. A DTD, `<!DOCTYPE` or an entity is refused ("The XML has a DTD or entities: this is not accepted."), so nothing outside is read; only the five predefined entities and numeric references are taken. XML is at most 2 MB, 64 levels deep and 100,000 elements; malformed XML says "The XML is not valid at line L, column C."
+- **Run JavaScript**, and in a job **Run a script** and **Run a program**, under **Code**: see [Automation jobs](/portal/sites/jobs/#run-javascript).
 - Tell the person something, in each language, and end the run. The text can put in a value an action set.
 - Send the person to another page, and end the run.
 - Run a [logic flow](/portal/sites/flows/#call-a-flow) and keep its outputs.
@@ -105,7 +107,7 @@ These actions work on the records of a [data model](/portal/sites/data-models/).
 
 - Add a record.
 - Change the fields given.
-- Delete a record.
+- Delete a record. Where the model [archives](/portal/sites/data-models/#archiving), it is archived, not removed, and the action can say why, which a model that asks for a reason needs.
 - Read one record.
 - Find records by filterable fields, in an order, at most 100.
 
@@ -118,8 +120,32 @@ A form's actions can tell the page what to do once everything else is done. Thes
 - Show a notice above the thanks, with its text in each language and a tone: information, success or warning. The text can put in a value an action set.
 - Start a [user guide](/portal/sites/guides/) that applies to this page.
 - Reload the page after a moment.
+- Close a [pop-up window](/portal/console/pages/#pop-up-windows): see [Close a pop-up window](#close-a-pop-up-window).
 
 A redirect wins over them: the person goes elsewhere first. A form sent again answers what it answered the first time; one sent from an offline device shows none of them.
+
+### Close a pop-up window
+
+A form shown in a [pop-up window](/portal/console/pages/#pop-up-windows) can close its window once it has done everything else. In the form builder, on the **Steps** tab, **Add an action…** offers two, under **The page**:
+
+- **Close the pop-up form** closes the pop-up window of the form that ran it. In a form that is not in a pop-up window it does nothing.
+- **Close the pop-up window** closes the pop-up window the form is in. **Pop-up window** names the window, by the id of its block on the page, such as `feedback`. Left empty, it is the window the form is in. A form that is in another window than the one named closes nothing.
+
+![The Steps tab of the form that adds a request: Create a record, Show a notice, and Close the pop-up form, open, with Reload after closing set to The listing on the page.](../../../../assets/screenshots/portal-popups-action-close-form.png)
+
+![The Steps tab of the feedback form: Show a notice, and Close the pop-up window, open, with Pop-up window set to feedback and Reload after closing set to Nothing.](../../../../assets/screenshots/portal-popups-action-close-window.png)
+
+Both ask **Reload after closing**, once the window is closed:
+
+- **Nothing**: the page stays as it is.
+- **The page**: the page is loaded again.
+- **The listing on the page**: the [listings](/portal/sites/listings/) on the page ask for their rows again, with no page load. Use it after a form that adds or changes a record.
+
+A notice the form shows is put on the page when its window closes, since the window is gone. A form that is not in any pop-up window does nothing for these actions, and its run says so in its log. A redirect wins: the person leaves the page, whatever the window was asked to do.
+
+![The Requests listing after a request was added in a pop-up window: the window is closed, the new request is first in the list, and the notice "The request was added." is shown.](../../../../assets/screenshots/portal-popups-after-send.png)
+
+Developers: see [Developer: Actions](/portal/developer/actions/#ui-actions).
 
 ## When something fails
 

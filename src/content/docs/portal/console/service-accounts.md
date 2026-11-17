@@ -9,7 +9,7 @@ A service account is an account for a program, such as a case system or a nightl
 1. Press **New service account**.
 2. **Name**: what people call the program, such as "Keel".
 3. **Slug**: a short name for it in lower-case letters, digits and hyphens, such as `keel`. It cannot change.
-4. Tick **Administrator** if the program manages users, groups or settings. Leave it unticked for a program that only reads its own data.
+4. Tick the [roles](/portal/console/roles/) the program holds. Tick **Administrator** if it manages users, groups or settings; tick a role you made for a program that only reads or writes what that role allows, such as an endpoint's roles. Tick none for a program that only reads its own data.
 5. Press **Create account**. The account's page opens.
 
 ![A service account's page: its API tokens, and its OAuth clients with their scopes and backends.](../../../../assets/screenshots/portal-service-account.png)

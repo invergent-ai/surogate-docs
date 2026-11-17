@@ -2,7 +2,7 @@
 title: Users
 ---
 
-**Users** lists the people who can sign in to this portal. You need the **Administrator** role (on the main portal, **Install administrator**). To let people make their own account, [invite them](/portal/console/invitations/).
+**Users** lists the people who can sign in to this portal. You need the **Administrator** role (on the main portal, **Install administrator**), or a [role](/portal/console/roles/) that opens **Users**. To let people make their own account, [invite them](/portal/console/invitations/).
 
 ## Find a user
 
@@ -10,15 +10,36 @@ Type part of a name or an email in **Search by name or email**. The list follows
 
 ![The Users page: the search field and the list of users, each with their email.](../../../../assets/screenshots/portal-users.png)
 
-The list shows 50 users at a time. Use **Previous** and **Next** to move between pages. A disabled account carries the label **Disabled**.
+**People** and **Deleted people** switch the list between the people who can sign in and those an automation job deleted. A deleted person keeps their records and their name in history, and cannot sign in. Open one and press **Restore** to bring the account back.
+
+![The Users page with Deleted people chosen: Fost Angajat, marked Deleted.](../../../../assets/screenshots/portal-users-deleted.png)
+
+To see the people who hold one role, choose it under **Role**. **Any role** shows everyone again.
+
+The list shows 50 users at a time. Use **Previous** and **Next** to move between pages. A disabled account carries the label **Disabled**, an account waiting for its link **Unconfirmed**, and one locked out by wrong tries **Locked until** a time. Tick **Unconfirmed** or **Locked now** to list only those.
+
+![The Users page with the Locked now and Unconfirmed filters, and the labels on the people they find.](../../../../assets/screenshots/portal-auth-users-filters.png)
 
 ## Add a user
 
 1. Press **New user**.
 2. Type their **Email** and **Name**. They sign in with this email.
-3. **Password (optional)**: at least 12 characters. Leave it empty for someone who signs in with your organisation's account.
-4. Fill in the portal's own fields, if it has any (a badge number, a department, a phone). Fields marked **Required** must be filled in. A tick box left alone counts as unticked.
-5. Press **Create user**.
+3. Choose **How they sign in**:
+   - **A local account** (the first choice): the portal emails them an activation link, and they choose their own password on its page. You never type or see it.
+   - **An account at a sign-in provider**, **an account in a directory** or **a client certificate**: choose the source and type the person's id there (for a certificate, its issuer and serial number). The other side vouches for the address, so the account is active at once and no mail is sent.
+4. Under **Roles**, tick at least one. **User** is ticked to begin with. The person has the rights of every role ticked.
+5. Fill in the portal's own fields, if it has any (a badge number, a department, a county, the entities they work for). Fields marked **Required** must be filled in. A tick box left alone counts as unticked. See [User fields](/portal/console/user-fields/).
+6. Press **Create user**.
+
+![The New user dialog: email, name, how they sign in, then the Roles to tick, with User ticked, and the portal's own fields County, Institution, Own entities and Network.](../../../../assets/screenshots/portal-users-new.png)
+
+A local account starts **Unconfirmed**: it has no password and cannot sign in, and its tokens do not work, until its owner proves the address is theirs by opening the link. The link works once, for the days set in the [sign-in policy](/portal/console/sign-in-policy/#passwords-and-sessions) (3 at first), and its page asks for a password that keeps the [password rules](/portal/console/sign-in-policy/#password-rules).
+
+![The page of the activation link: Choose a password for the address, the rules ticked as the password is typed, and Activate account.](../../../../assets/screenshots/portal-auth-activate.png)
+
+When the portal sends no email, a local account cannot be verified, so the console refuses it: **The portal does not send email, so a local account cannot be verified. Link the account to a directory or a sign-in provider.** Linked accounts can still be made.
+
+If you untick every role, the console says **Choose at least one role.**
 
 If the email is already used, the console says **A user with this email already exists.**
 
@@ -32,7 +53,7 @@ Press a user in the list to open their page. The top shows their name, email, th
 
 ### Details
 
-Change the **Name** or the portal's own fields and press **Save**.
+Change the **Name** or the portal's own fields and press **Save**. A field that points at records, such as a county or the entities a person works for, is filled by searching the records and choosing them: see [User fields](/portal/console/user-fields/). A change counts from the person's next request; they do not sign in again. The fields decide what a person may reach, so only an administrator changes their own: a person with a role that opens **Users** changes other people's fields and name, and their own name, but not their own fields (**You cannot change your own fields.**). They also cannot act on a person who holds more than they do: see [Who may give which role](/portal/console/roles/#who-may-give-which-role).
 
 ### Handle
 
@@ -44,15 +65,37 @@ Mentions already written keep their words: a changed handle no longer names the 
 
 ### Roles
 
-Tick or untick **Administrator** and press **Save roles**. On the main portal there is also **Install administrator**. See [Roles](/portal/reference/roles/).
+Tick every role the person should hold and press **Save roles**. A person can hold several: they have the rights of each. On the main portal there is also **Install administrator**. See [Roles](/portal/console/roles/) and [the roles of a portal](/portal/reference/roles/).
+
+![A user's Roles card: Developer, Manager and the roles of the demo, with DSP/DMS user and Viewer user ticked.](../../../../assets/screenshots/portal-user-roles.png)
+
+Someone who is not an administrator cannot give or take the **Administrator** role, or a role with a section they do not have themselves, and cannot change their own roles.
 
 A portal always keeps at least one active administrator. Removing the role from the last one says **This is the portal's last active administrator. Give the role to someone else first.**
 
 ### Password
 
-Type a **New password** of at least 12 characters and press **Set password**. The person's other sessions end: they sign in again with the new password. Their tokens keep working. A new password also lets in someone the console locked out after too many wrong passwords.
+Type a **New password** and press **Set password**. It must keep the [password rules](/portal/console/sign-in-policy/#password-rules): the list under the field ticks off what it has so far. The person's other sessions end: they sign in again with the new password. Their tokens keep working. A new password also lets in someone the console locked out after too many wrong passwords, starts its term again, and counts among the passwords they may not reuse. Setting a password asks you to [confirm it is you](/portal/console/sign-in-policy/#confirming-it-is-you-again) when you signed in a while ago.
 
 When you set your own password here, you stay signed in on this browser.
+
+### Email address
+
+The **Email address** card is for local accounts. Type a **New address** and press **Send the confirmation link**: the link goes to the new address, and until its owner opens it the old address stays in force and the person keeps signing in with it. The card says **New email waiting for confirmation** while one is waiting; a newer request replaces it. The change is in the audit log when it is asked and when it is confirmed.
+
+### An account waiting to be activated
+
+An **Unconfirmed** person has **Resend the activation link** at the top of their page. The new link ends the earlier one, and a new one can be sent once an hour at most. A link works only while the account is **Unconfirmed**: once it is switched off, or the account is activated, an old link no longer does anything. When the person says they never got the link, check the address you typed. An unconfirmed account never counts as an active administrator, so the portal still keeps at least one active administrator.
+
+![An unconfirmed person's page: the Unconfirmed label, Resend the activation link, and the Email address card.](../../../../assets/screenshots/portal-auth-user-unconfirmed.png)
+
+An account that was disabled before its owner ever opened the link waits for the link again when you enable it, and **Enable** or adding the person as an administrator never activates an unconfirmed account in the owner's place: only the link does.
+
+To correct the address of an **Unconfirmed** account, type the right one in **New address**: it changes at once (nobody had proved the old one), the old link stops working, and a new link goes to the new address.
+
+### Locked out
+
+A person locked out by too many wrong passwords shows **Locked until** a time. Press **Unlock** at the top of their page to let them in at once; the lock would end by itself at that time. See [Wrong tries](/portal/console/sign-in-policy/#wrong-tries).
 
 ### Disable and enable
 
@@ -113,6 +156,10 @@ Under **Personal data** on a person's page, an administrator answers a data prot
 - **Erase person** removes them everywhere. Type their email to confirm and press **Erase**.
 
 ![Erase Dan Ion?, with the email typed to confirm and the Erase button.](../../../../assets/screenshots/portal-erase.png)
+
+Where data models [keep their history](/portal/sites/data-models/#history-and-archiving), the person's name and email stay in the versions they made, so that what was reported can always be traced. Before you confirm, the dialog says how many versions keep them, and in which models. The history shows such an author as "(account deleted)".
+
+![Erase Maria Furnizor?, with the note that their name and email stay in the history of 2 versions of the model fise, and the email to type to confirm.](../../../../assets/screenshots/portal-history-erase.png)
 
 Erasing asks every app to erase the person first. If an app cannot, the console names it, and the person stays disabled until you try again. If an app has not been set up to erase people, nothing is done and the console names it. When every app has erased them, they are removed from the portal, and their name and email are removed from the audit log.
 

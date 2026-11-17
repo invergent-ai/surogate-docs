@@ -57,6 +57,10 @@ An endpoint never sends mail and never signs with a connector's secret. A GET en
 - Programs with a token: only a program with such a token.
 - Only the portal's own actions: a private endpoint. See [Private endpoints](#private-endpoints).
 
+For **People signed in** and **Programs with a token**, tick **Only people with these roles** to narrow it: only someone who holds one of the ticked [roles](/portal/console/roles/), or an administrator, may call it. A program holds a role through its [service account](/portal/console/service-accounts/). A person without one is refused with **403**. Leave every role unticked to admit anyone the access admits.
+
+![An endpoint's Settings: who may call it is People signed in, narrowed to the roles Platform administrator and DSP/DMS user.](../../../../assets/screenshots/portal-endpoint-roles.png)
+
 A call from a page of the portal, as the person signed in, sends the page's CSRF token as the other API calls do.
 
 ## Keep answers, and other sites

@@ -8,8 +8,9 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # The portal's site pages written UI first, with screenshots of what people see.
 UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'assistants.md', 'blogs.md', 'calendar.md',
-                  'comments.md', 'connectors.md', 'content-types.md', 'data-models.md', 'endpoints.md', 'environments.md',
+                  'comments.md', 'connectors.md', 'content-types.md', 'data-models.md', 'data-sources.md', 'database-actions.md', 'endpoints.md', 'environments.md',
                   'flows.md', 'form-fields.md', 'forms.md', 'forums.md', 'guides.md', 'jobs.md', 'kpis.md', 'layouts.md', 'listings.md',
+                  'model-forms.md', 'model-lines-states.md', 'model-logic.md',
                   'notifications.md', 'permissions.md', 'polls.md', 'search.md', 'seo.md', 'values.md', 'wiki.md')
 
 # The console pages written the same way.
@@ -17,10 +18,12 @@ CONSOLE_PAGES = ('data-console.md', 'files.md', 'invitations.md', 'sites.md')
 
 # Developer pages that are not the config of one user page.
 DEVELOPER_ONLY = ('index.md', 'command-line.md', 'develop-locally.md', 'check-a-site.md', 'previews.md', 'agents.md',
-                  'build-an-app.md', 'design.md')
+                  'build-an-app.md', 'design.md', 'executor.md')
 
-# Code a person types into a console screen, not config: search synonyms and pinned results, a data console query.
-TYPED_IN_THE_CONSOLE = {'console/search.md': '', 'console/data-console.md': 'sql'}
+# Code a person types into a console screen, not config: search synonyms and pinned results, a data console query,
+# the expressions of a model's rules and calculations.
+TYPED_IN_THE_CONSOLE = {'console/search.md': '', 'console/data-console.md': 'sql',
+                        'sites/model-logic.md': 'text', 'sites/model-lines-states.md': 'text'}
 
 PORTAL = ROOT / 'src/content/docs/portal'
 
@@ -46,7 +49,7 @@ class Content(unittest.TestCase):
 
     def test_portal_pages_show_the_console(self):
         doc = page('/portal/quickstart/')
-        self.assertIn('<figcaption>The New user dialog: Email, Name and Password (optional).</figcaption>', doc)
+        self.assertIn('<figcaption>The New user dialog: Email, Name, how they sign in and the Roles.</figcaption>', doc)
         self.assertRegex(doc, r'<figure>\s*<img[^>]+src="/_astro/')
         tenants = page('/portal/console/tenants/')
         self.assertIn('Add administrator', tenants)
@@ -90,6 +93,32 @@ class Content(unittest.TestCase):
         self.assertIn('Who writes blog posts', (PORTAL / 'sites/blogs.md').read_text())
         # Libraries' bloggers are chosen in the console too: nothing here is left to the site's configuration.
         self.assertEqual(perms.count('For now'), 0)
+
+    def test_portal_menus_and_pages(self):
+        # Menus, scheduled publication, keywords, tabs and the rights over pages: console first, each with its picture.
+        menus = page('/portal/sites/menus/')
+        for anchor in ('who-sees-an-item', 'show-a-page-in-the-menu', 'a-data-models-pages', 'when-a-page-moves-or-goes'):
+            self.assertIn(f'id="{anchor}"', menus)
+        for shot in ('menus-editor', 'menus-site', 'menus-site-visitor', 'menus-list',
+                     'menus-page-settings', 'menus-model-pages'):
+            self.assertIn(f'portal-{shot}', menus)
+        pages = page('/portal/console/pages/')
+        for anchor in ('publish-on-a-schedule', 'keywords', 'tabs', 'who-may-add-move-and-remove-pages'):
+            self.assertIn(f'id="{anchor}"', pages)
+        for shot in ('pages-tree', 'pages-publication', 'pages-keywords', 'pages-tabs-editor',
+                     'pages-tabs-site', 'pages-rights', 'pages-editor-view'):
+            self.assertIn(f'portal-{shot}', pages)
+        # Every picture is a file, and the guide says nothing of files or YAML where it teaches the console.
+        shots = ROOT / 'src/assets/screenshots'
+        for name in ('menus-editor', 'menus-site', 'menus-site-visitor', 'menus-list', 'menus-page-settings',
+                     'menus-model-pages', 'pages-tree', 'pages-publication', 'pages-keywords',
+                     'pages-tabs-editor', 'pages-tabs-site', 'pages-rights', 'pages-editor-view'):
+            self.assertTrue((shots / f'portal-{name}.png').exists(), name)
+        for word in ('yaml', 'sites/<site>'):
+            self.assertNotIn(word, (PORTAL / 'sites/menus.md').read_text().lower())
+        self.assertIn('portal-menu', page('/portal/developer/layouts/'))
+        self.assertIn('keywords', page('/portal/developer/seo/'))
+        self.assertIn('addPages', page('/portal/developer/permissions/'))
 
     def test_portal_audit_and_personal_data(self):
         doc = page('/portal/console/audit/')
@@ -369,6 +398,29 @@ class Content(unittest.TestCase):
             for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'MongoDB', 'Postgres', 'SMTP', 'outbox', 'IndexedDB', 'service worker'):
                 self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
 
+    def test_portal_forms_for_records(self):
+        guide = page('/portal/sites/model-forms/')
+        for anchor in ('what-people-see', 'save-and-move-between-states', 'make-a-form-for-a-model', 'open-a-record',
+                       'who-sees-and-does-what'):
+            self.assertIn(f'id="{anchor}"', guide)
+        # The other pages send people to it, and its developer part is in Developer: Forms.
+        for route in ('/portal/sites/forms/', '/portal/sites/listings/', '/portal/console/forms/'):
+            self.assertIn('href="/portal/sites/model-forms/', page(route), route)
+        self.assertIn('id="a-form-bound-to-a-model"', page('/portal/developer/forms/'))
+        self.assertIn('href="/portal/developer/forms/#a-form-bound-to-a-model"', guide)
+        # What a form bound to a model sends to every browser, and what a form open to everyone must do.
+        developer = page('/portal/developer/forms/')
+        for text in ('Everything the model says is in the page', 'public_no_record', 'public_no_lines'):
+            self.assertIn(text, developer, text)
+        # What the guide shows is the portal's own screens, one picture each.
+        source = (PORTAL / 'sites/model-forms.md').read_text()
+        for shot in ('forms-model-setting', 'forms-model-builder', 'forms-model-lines-edit', 'forms-model-sheet',
+                     'forms-model-problems', 'forms-model-comment', 'forms-model-submitted', 'forms-model-listing',
+                     'forms-model-dialog', 'forms-model-section', 'forms-model-section-edit'):
+            self.assertIn(f'portal-{shot}.png', source, shot)
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'Postgres'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
+
     def test_portal_actions(self):
         doc = page('/portal/sites/actions/')
         for anchor in ('what-people-see', 'an-action-list', 'expressions', 'the-actions', 'ask-an-agent', 'when-something-fails'):
@@ -423,7 +475,7 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/sites/connectors/#call-a-service"', page('/portal/sites/actions/'))
         for path in ('sites/connectors.md', 'console/connectors.md'):
             source = (ROOT / 'src/content/docs/portal' / path).read_text()
-            for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'index', 'repositor', 'store', 'Vault'):
+            for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres(?!QL)', 'index', 'repositor', 'store', 'Vault'):
                 self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
 
     def test_portal_file_actions(self):
@@ -483,6 +535,34 @@ class Content(unittest.TestCase):
         for name in ('build-an-app', 'develop-locally', 'check-a-site', 'previews', 'design', 'agents'):
             self.assertFalse((PORTAL / 'sites' / f'{name}.md').exists(), name)
             self.assertIn(f'/portal/developer/{name}/', page(f'/portal/sites/{name}/'), name)
+
+    def test_portal_data_sources(self):
+        sources = page('/portal/sites/data-sources/')
+        for anchor in ('what-people-see', 'the-kinds-of-source', 'make-or-change-a-data-source', 'try-it',
+                       'add-remove-and-open-a-row', 'who-reads-what'):
+            self.assertIn(f'id="{anchor}"', sources)
+        for shot in ('portal-data-sources-list', 'portal-data-source-try', 'portal-data-source-operations'):
+            self.assertIn(shot, (PORTAL / 'sites/data-sources.md').read_text())
+        actions = page('/portal/sites/database-actions/')
+        for anchor in ('run-a-sql-query', 'changing-data', 'load-records-from-a-list'):
+            self.assertIn(f'id="{anchor}"', actions)
+        self.assertIn('portal-data-action-runsql', (PORTAL / 'sites/database-actions.md').read_text())
+        self.assertIn('href="/portal/sites/database-actions/"', page('/portal/sites/actions/'))
+        self.assertIn('id="sql-databases"', page('/portal/sites/connectors/'))
+        self.assertIn('id="a-sql-databases-file"', page('/portal/developer/connectors/'))
+        listings = page('/portal/sites/listings/')
+        for anchor in ('sort-filter-and-search', 'group', 'export', 'a-listing-of-a-data-source', 'archive'):
+            self.assertIn(f'id="{anchor}"', listings)
+        for shot in ('portal-data-listing-sorted', 'portal-data-listing-grouped', 'portal-data-listing-export',
+                     'portal-data-listing-column-menu', 'portal-data-listing-settings'):
+            self.assertIn(shot, (PORTAL / 'sites/listings.md').read_text())
+        for anchor in ('links-in-depth-one-to-one-lookups-and-speed', 'a-model-read-from-a-data-source'):
+            self.assertIn(f'id="{anchor}"', page('/portal/sites/data-models/'))
+        self.assertIn('id="options-from-a-model-a-data-source-or-a-web-service"', page('/portal/sites/forms/'))
+        developer = page('/portal/developer/data-sources/')
+        for anchor in ('a-data-sources-file', 'a-listing-over-a-model-or-a-source', 'a-fields-options', 'entities',
+                       'database-actions'):
+            self.assertIn(f'id="{anchor}"', developer)
 
     def test_portal_payments(self):
         doc = page('/portal/sites/payments/')
@@ -685,7 +765,7 @@ class Content(unittest.TestCase):
 
     def test_portal_jobs(self):
         doc = page('/portal/sites/jobs/')
-        for anchor in ('write-a-job', 'when-it-runs', 'when-records-change', 'when-people-come-and-go', 'when-the-portal-starts-fails-or-is-asked-for', 'when-mail-arrives', 'when-an-app-sends-an-event', 'send-mail', 'what-it-may-do', 'in-the-console'):
+        for anchor in ('write-a-job', 'when-it-runs', 'when-records-change', 'when-people-come-and-go', 'when-the-portal-starts-or-stops-a-run-fails-or-a-request-begins-or-ends', 'when-mail-arrives', 'when-an-app-sends-an-event', 'send-mail', 'what-it-may-do', 'in-the-console'):
             self.assertIn(f'id="{anchor}"', doc)
         # Jobs are made in the console.
         self.assertIn('id="make-or-change-a-job"', doc)

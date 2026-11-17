@@ -36,7 +36,8 @@ The link opens the invitation's page: who invites them, to which site, the messa
 
 - **Signed in as the person invited:** they press **Accept the invitation**. The page then says they joined the site, with a link to it.
 - **With an account, not signed in:** they press **Sign in to accept** and sign in, by password or with the portal's sign-in providers. Then they come back to the page and accept.
-- **Without an account:** they write their name and a password, and press **Make my account and accept**. They are signed in at once and the page says they joined; when the portal asks for a second sign-in step, they are sent to sign in, which says their account is made.
+- **Without an account:** they write their name and a password (which must keep the [password rules](/portal/console/sign-in-policy/#password-rules)), and press **Make my account and accept**. They are signed in at once and the page says they joined; when the portal asks for a second sign-in step, they are sent to sign in, which says their account is made.
+- **On a portal that sends no mail,** the link was passed on by hand, so nothing proves the address is theirs. Their account is made **Unconfirmed**: they join the site, but cannot sign in until an administrator sends them an activation link, once the portal can send mail. See [Users](/portal/console/users/#an-account-waiting-to-be-activated).
 - **Signed in as someone else:** the page says so, without saying whom it is for, and offers **Sign out**.
 
 An invitation already accepted, withdrawn or expired says so and opens nothing. A link replaced by sending again no longer works, and its page says to use the latest email. An invitation for a disabled account cannot be used, nor one whose sender may no longer invite: disabled, no longer an editor of the site, or on a site that stopped letting its editors invite. Of the groups an editor named, the person joins only those the site still lets its editors give.

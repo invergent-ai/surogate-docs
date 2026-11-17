@@ -232,6 +232,36 @@ folder: INBOX         # IMAP only; INBOX when left out
 - **Port:** 993 for IMAP and 995 for POP3 when left out.
 - **Security:** `tls` by default. IMAP also takes `starttls`. The mail server needs a certificate the portal trusts, and `none` works only for a server on your own network when the portal allows that.
 
+## A SQL database's file
+
+In `connectors/<id>.yaml`:
+
+```yaml
+name: { ro: Baza SIUI, en: SIUI database }
+kind: sql
+engine: postgres       # postgres, sqlserver, mysql or oracle
+host: db.primaria.ro
+port: 5432             # the engine's usual port when left out
+database: siui         # for Oracle, the service name
+schema: public         # optional: the default schema
+security: tls          # or none, for a server of your own network
+caCertificate: |       # optional: only for your own authority's certificate
+  -----BEGIN CERTIFICATE-----
+  ...
+  -----END CERTIFICATE-----
+allowWrites: false     # true lets actions and sources change data
+maxRows: 1000          # 1 to 10,000; 1,000 when left out
+timeoutMs: 10000       # milliseconds, at most 60,000; 10,000 when left out
+```
+
+- `engine`, `host`, `database`: required. `port` is 5432 for `postgres`, 1433 for `sqlserver`, 3306 for `mysql` (which also reaches MariaDB) and 1521 for `oracle`.
+- `schema`: a default schema of letters, digits and `_ $ . -`, up to 128 characters. The same holds for `database`.
+- `security`: `tls` by default. `none` only for a server on your own network, where the portal allows that.
+- `caCertificate`: PEM text, one or more certificates.
+- `allowWrites`: `false` by default. A [source's](/portal/developer/data-sources/#a-sql-source) add and remove queries, and a [database action](/portal/developer/data-sources/#database-actions) in `write` mode, need it `true`.
+- **Credentials:** `username` and `password`, set in the console under **Connectors**. They are never written in the file.
+- A connector that each person connects themselves is not used for a source: sources read as the portal.
+
 ## A bucket's file
 
 In `connectors/<id>.yaml`:

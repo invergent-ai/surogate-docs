@@ -23,11 +23,12 @@ The console opens on **Users**. An install administrator lands on **Tenants** in
 
 1. On **Users**, press **New user**.
 2. Type their **Email** and **Name**.
-3. Type a **Password** of at least 12 characters, or leave it empty if they will sign in with your organisation's account.
-4. Fill in any other fields your portal asks for. Fields marked **Required** must be filled in.
-5. Press **Create user**.
+3. Under **How they sign in**, keep **A local account**: the portal emails them a link, and they choose their own password there. Choose another way only if they sign in with your organisation's account.
+4. Under **Roles**, keep **User** ticked.
+5. Fill in any other fields your portal asks for. Fields marked **Required** must be filled in.
+6. Press **Create user**.
 
-![The New user dialog: Email, Name and Password (optional).](../../../assets/screenshots/portal-user-new.png)
+![The New user dialog: Email, Name, how they sign in and the Roles.](../../../assets/screenshots/portal-user-new.png)
 
 The console opens the new user's page.
 
@@ -36,7 +37,7 @@ The console opens the new user's page.
 1. On the user's page, under **Roles**, tick **Administrator**.
 2. Press **Save roles**. The console says **Roles saved.**
 
-They can now sign in to the console and manage the portal's people and sign-in.
+Once they open the link the portal mailed them and choose their password, they can sign in to the console and manage the portal's people and sign-in. As administrators, they set up a second step (an authenticator app or a passkey) at their first sign-in.
 
 ## 4. Create a token for yourself
 

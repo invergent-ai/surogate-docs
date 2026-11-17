@@ -463,3 +463,20 @@ When you open **Review and publish** from a process, the page's link back reads 
 | Read the process's figures | Yes | Yes | Yes |
 | **Move running instances to v3** (an older version's, to the current one) | No | Yes | Yes |
 | Set, replace and delete a connection's credential | No | Yes | Yes |
+
+## Clone a process
+
+**Clone**, at the end of each process's row on **Processes**, makes a new process from an existing one. It is for editors and owners.
+
+1. Press **Clone** on the row.
+2. Give the copy a **Name**. The **Key** starts as the original's with `-copy`; change it if you like. It must be free, as for **New process**: "A process has this key already."
+3. Choose the **Draft** the copy is saved in: a new one, or one that is open.
+4. Press **Clone**. The builder saves a copy in the draft, and opens it there.
+
+A published process is copied as the version published now. A process that only a draft holds has **Clone** too, and is copied as the draft's file holds it. The copy has the original's scenarios and connections; a connection's credentials are not copied, so set them on the copy.
+
+Nothing published changes. The copy is published on its own, from version 1, and changing it never changes the original. Only the process's name differs in the file; its messages and signals are the same as the original's, so the copy waits for what the original waits for.
+
+When you test or publish, the check warns about each message that two processes wait for: "the message … is also awaited by the process …: rename it in one of them if both should not receive it". It is a warning, so you may publish: rename the message in the copy if only one process should take it.
+
+Opened from the portal's console, the dialog adds that who changes, starts and sees the workflow in the portal is copied too. See [Workflows](/portal/console/workflows/#cloning-a-workflow).

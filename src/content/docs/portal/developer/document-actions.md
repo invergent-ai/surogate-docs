@@ -129,6 +129,10 @@ Reading gives a list of maps, the first row naming the columns:
 | `excelSheets` | `folder`, `name`, `into`: the sheets' names |
 | `readCsv` | `folder` and `name`, or `text` (an expression holding CSV); `separator`; `into` |
 
+## A map
+
+`mapSnapshot` makes a PNG or a PDF of a place on the portal's own base maps and layers: see [Maps](/portal/developer/maps/#the-action).
+
 ## A barcode
 
 `barcode` makes an image of a value. `format` is `code128` (when left out), `ean13`, `ean8`, `upca`, `code39`, `itf14`, `qrcode`, `datamatrix` or `pdf417`. The image is a PNG.
@@ -144,3 +148,21 @@ Reading gives a list of maps, the first row naming the columns:
 - `value`: an expression giving what the code holds.
 - `format`: the kind of code, here a QR code.
 - `toFolder` and `toName`: where the PNG is kept.
+
+## An image in a PDF
+
+```yaml
+- type: pdfImage   # an image of more than 25 million pixels is refused before it is decoded
+  folder: fise
+  name: "'fisa-usp-123.pdf'"
+  imageFolder: fise
+  image: "'qr-123.png'"
+  pages: "'first'"          # all | first | last | 1-3,5
+  corner: top-right         # top-left | top-right | bottom-left | bottom-right
+  x: "10"                   # millimetres from the corner
+  y: "10"
+  width: "25"               # or height, or both
+  opacity: "100"            # 0 to 100
+  toFolder: fise
+  toName: "'fisa-usp-123-qr.pdf'"
+```

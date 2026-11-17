@@ -63,6 +63,10 @@ Empty rows are left out. A column with no title is `column1`, `column2` and so o
 
 An action can make an image of a value. The kinds of code are Code 128 (when left out), EAN-13, EAN-8, UPC-A, Code 39, ITF-14, QR code, Data Matrix and PDF417. The image is a PNG. A value the format cannot hold, such as letters in an EAN-13, fails and says why.
 
+## Save a map
+
+**Save a map** makes a picture (PNG) or an A4 PDF of the map of a record's place, or of a place the action is given, with the base map and layers you name, a scale, a north arrow, the coordinates, the sources, the date and the portal's name. It answers where the file is and which layers could not be read, and a layer or base map that does not answer is left out and said on the map. See [Maps](/portal/sites/maps/#the-action-save-a-map).
+
 ## Who may do what
 
 Document actions keep to the folders' [permissions](/portal/sites/permissions/), as the file actions do. Someone who edits a folder reads its files and makes or replaces them. Anyone else, a visitor too, only makes new files, and never in a public folder. Every folder is checked before any work is done.
@@ -80,3 +84,17 @@ An action that makes a file changes the portal, so a GET or public [endpoint](/p
 - What an action keeps for later actions is 1 MB at most.
 - Converting HTML takes about two seconds; a form's run has ten. Make long documents in a [job](/portal/sites/jobs/), which has more time.
 - A flow's tests make no documents: a document action fails the test.
+
+## Put an image in a PDF
+
+**Put an image in a PDF** (under **Documents**) draws a PNG or JPEG of at most 2 MB on the pages of a PDF: a saved signature, a barcode from **Make a barcode**, a map. It takes:
+
+- the **folder and name of the PDF**, and the **folder and name of the image**;
+- **Pages:** `all`, `first`, `last`, or a list such as `1-3,5`; all when left out. A page the PDF does not have fails with "The PDF has N pages."
+- **Measured from the corner** (top left, top right, bottom left or bottom right) and the place in millimetres, **Across** and **Down or up**;
+- the **width** in millimetres (the height keeps the image's proportion), the **height**, or both;
+- **Opacity**, 0 to 100;
+- the **folder and name** the new PDF is written to.
+
+An image of more than 25 million pixels (as its header says, however small its file) is refused before it is read: a 30,000 by 30,000 picture is a few hundred bytes that take gigabytes to draw. What goes past a page's edge is cut by the edge, not refused. The usual limits and rules of document actions apply: a PDF of at most 10 MB and 500 pages, a PDF with a password is refused, and the folders' permissions decide who may read and make files.
+

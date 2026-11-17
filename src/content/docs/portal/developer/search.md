@@ -45,7 +45,7 @@ synonyms:
   ro: ["primărie, consiliu local"]
 pinned:
   - { query: taxe, paths: [/taxe, /plata-online] }
-exclude: { paths: [/intern/*], types: [memo] }
+exclude: { paths: [/intern/*], types: [memo], roles: [{ role: user_viz, paths: [/ghid], types: [files], folders: [acte] }] }
 fuzzy: true
 wildcard: false
 ```
@@ -53,7 +53,7 @@ wildcard: false
 - `weights`: how much a word found in a title counts against one found in the text, each from 1 to 10; the portal's own are 3 and 1.
 - `synonyms`: for each language, groups of words or phrases that mean the same, separated by commas.
 - `pinned`: for a search (`query`), up to five addresses (`paths`) shown first, in that order.
-- `exclude`: `paths` to leave out, where `/intern/*` leaves out `/intern` and everything under it, and content `types` search never finds.
+- `exclude`: `paths` to leave out, where `/intern/*` leaves out `/intern` and everything under it, and content `types` search never finds. `roles` leaves out, for the people of a role (its code), more pages, `types` (`files` for all files) and `folders` of files; a person with several roles finds what any of them finds, and the role `user` counts for visitors and people with no other role.
 - `fuzzy`: a word with a typo counts; on by default.
 - `wildcard`: a word ending in `*` finds every word it starts, with three letters at least; off by default.
 

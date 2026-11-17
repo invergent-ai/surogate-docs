@@ -54,7 +54,7 @@ Whole numbers are integers, the others decimals; the two mix in arithmetic, so `
 
 ## The actions
 
-Extensions add more: the [document actions](/portal/developer/document-actions/) make and read PDF, Word, Excel and CSV files and barcode images, and the [file management actions](/portal/developer/file-management/) copy, move and rename files and make and unpack ZIP archives.
+Extensions add more: the [script and program actions](/portal/developer/executor/), the [portal administration actions](/portal/developer/portal-actions/), the [document actions](/portal/developer/document-actions/) make and read PDF, Word, Excel and CSV files and barcode images, and the [file management actions](/portal/developer/file-management/) copy, move and rename files and make and unpack ZIP archives.
 
 | Type | What it does | Takes |
 |---|---|---|
@@ -68,6 +68,8 @@ Extensions add more: the [document actions](/portal/developer/document-actions/)
 | `wait` | Waits up to 5 seconds | `ms` |
 | `parseJson` | Reads JSON text into a value | `from`, `into` |
 | `toJson` | Writes a value as JSON text | `from`, `into` |
+| `parseXml` | Reads XML into a value, refusing a DTD or an entity | `from` (an expression), or `folder` and `name` (a file); `into` |
+| `runJs` | Runs the body of a JavaScript function on the server, in a sandbox | `code`, `input` (names to expressions), `timeoutMs` (100 to 5000), `into` |
 | `message` | Tells the person something, and ends the run; `{{ vars.name }}` puts in a value an action set | `text`, in each language |
 | `redirect` | Sends the person to another page, and ends the run | `to` |
 | `callFlow` | Runs a [logic flow](/portal/sites/flows/#call-a-flow) and keeps its outputs | `flow`, or `contract` and `pick`; `inputs`, `into` |
@@ -164,6 +166,15 @@ A form's actions can tell the page what to do once everything else is done. Thes
 | `notify` | Shows a notice above the thanks; `{{ vars.name }}` puts in a value an action set | `text`, in each language; `tone`: `info`, `success` or `warning` |
 | `startGuide` | Starts a [user guide](/portal/sites/guides/) that applies to this page | `guide` |
 | `reload` | Reloads the page after a moment | |
+| `closeFormPopup` | Closes the [pop-up window](/portal/developer/layouts/#a-pop-up-window) of the form that ran it | `reload`: `none` (the default), `page` or `listing` |
+| `closePopup` | Closes the pop-up window the form is in | `popup`: the id of a pop-up window block, none for the window the form is in; `reload` as above |
+
+A close action closes its window once the run ends. `reload` then reloads nothing (`none`), the page (`page`), or the listings on the page (`listing`: they ask their rows again, with no page load).
+
+- The form tells the page which window it is in when it is sent: `popup: "window:<id>"` for a form in a pop-up window block, and `popup: "form:<id>"` for a form in a window of its own (opened by its own button, or by a listing's Add or Edit). A form sent from anywhere else has none.
+- In a form that is in no such window, both actions do nothing, say so in the run's log, and leave the page's answer without them. `closePopup` with a `popup` that is not the window the form is in closes nothing.
+- A `popup` that no page of a site that offers the form has as a pop-up window block is refused (`unknown_popup`).
+- Like the other UI actions, they do not end the run, count among the 10, and are refused in flows. A `redirect` wins over them.
 
 ## When something fails
 

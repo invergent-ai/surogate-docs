@@ -8,7 +8,9 @@ title: My account
 
 ## Password
 
-Type your **Current password** and a **New password**, then press **Change password**. The page says how long a password must be here. A password cannot contain your email. Your other sessions end.
+Type your **Current password** and a **New password**, then press **Change password**. Under the new password, the page lists the rules of your portal and ticks each as you meet it: its length, perhaps capitals, digits or symbols, no part of your email or name, and perhaps not one of your last passwords. The portal checks them again and says what the password still needs. Your other sessions end.
+
+When your portal makes passwords expire, a banner says how many days are left and brings you here.
 
 People who sign in through a directory change their password there.
 
@@ -37,7 +39,7 @@ Shown when a site of the portal remembers the pages signed-in people visit (see 
 
 After your password, the portal can ask for a second step: a code from an app on your phone, or a passkey.
 
-Before any change here, the console asks for your password, or for a code from your app or a recovery code. If you sign in only through your organisation's account and have no second step yet, it asks for nothing within 10 minutes of signing in.
+Before any change here, the console asks for your password, or for a code from your app or a recovery code. If you sign in only through your organisation's account and have no second step yet, it asks for nothing within the minutes your portal sets for [confirming who you are](/portal/console/sign-in-policy/#confirming-it-is-you-again) (10 at first) after you signed in or confirmed.
 
 - **Authenticator app:** press **Set up**, scan the code with the app (or type the key shown under it), then type the code the app shows and press **Confirm**. **Remove** takes it away.
 - **Passkeys:** press **Add a passkey**, give it a name such as "Laptop", and confirm on your device. A passkey works on the address you added it on. **Remove** beside one takes it away.
