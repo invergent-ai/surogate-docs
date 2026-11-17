@@ -15,7 +15,15 @@ The sign-in page is titled **Portal administration**: "Sign in to manage the por
 
 ![The sign-in page with Email or username, when the portal has a directory.](../../../../assets/screenshots/portal-sign-in-username.png)
 
-If the login or the password is wrong, the page says **The login or the password is not right.** After 10 wrong attempts within 15 minutes, sign-in to that account is refused for a while, with the same message, even with the right password. When the portal knows where visitors connect from (the team that runs it sets this up), the 10 attempts count per network, so someone guessing from elsewhere does not lock you out. Wait 15 minutes, or set a new password with **Forgot your password?**, which lets you in at once.
+If the login or the password is wrong, the page says **The login or the password is not right.** After too many wrong attempts in a short while (10 in 15 minutes at first; your portal sets the numbers), the account refuses sign-in for a while, with the same message, even with the right password. When the portal knows where visitors connect from (the team that runs it sets this up), the attempts count per network, so someone guessing from elsewhere does not lock you out. The lock ends by itself after the minutes the [sign-in policy](/portal/console/sign-in-policy/#wrong-tries) sets, and an administrator can lift it at once on your [user page](/portal/console/users/#locked-out) or by [setting a new password](/portal/console/users/#password). You can also set a new password yourself with **Forgot your password?**, which lets you in at once. The same message answers an email the portal does not know, so it never tells which ones it knows.
+
+After a few wrong attempts, or on every attempt when the portal says so, the button reads **Checking…** for a moment: the page runs the [anti-robot check](/portal/console/sign-in-policy/#anti-robot-check) in your browser. There is nothing to read or click. It needs JavaScript. If it fails, the page says **The anti-robot check did not succeed; try again.**
+
+### When your password has expired
+
+Your portal can make passwords expire after a number of days. A banner on the console says **Your password expires in** some days, with **Change password**. When it has expired, or no longer keeps the portal's rules, signing in takes you only to a page, **Choose a new password**, with the rules ticked off as you type. Your other sessions end. Until you choose, every other page of the console and of the portal's sites sends you back there. Press **Sign out** to leave without changing it.
+
+![The page that comes after signing in with an expired password: Choose a new password, with the rules.](../../../../assets/screenshots/portal-auth-password-change.png)
 
 ## When you forgot your password, or have no account
 
@@ -33,6 +41,8 @@ When your portal asks for one, signing in has a second step after your password.
 
 After five wrong codes, the sign-in starts again from the password. A passkey works only on the address you added it on: on another of the portal's addresses, use your app or a recovery code. If you have no way left in, ask an administrator to [reset your two-step sign-in](/portal/console/users/#two-step-sign-in).
 
+Administrators always need a second step: the Administrator and Install administrator roles ask for it whatever the policy says, where the portal can keep its secret.
+
 ### The first time
 
 If your portal requires a second step and you have none yet, the first sign-in sets one up:
@@ -41,7 +51,7 @@ If your portal requires a second step and you have none yet, the first sign-in s
 2. Type the code the app shows and press **Confirm**.
 3. The page shows ten **recovery codes**, once. Copy them and keep them somewhere safe, then press **I have saved them**.
 
-You can set it up this way on your first sign-in, within 7 days after an administrator resets yours, or within 14 days after the portal begins to require it. Otherwise the page says the portal needs two-step sign-in and an administrator must reset yours. You manage it later on [My account](/portal/console/account/).
+You can set it up this way on your first sign-in, within 7 days after an administrator resets yours, or within 14 days after the portal begins to require it, or after you are given a role that needs one. Otherwise the page says the portal needs two-step sign-in and an administrator must reset yours. You manage it later on [My account](/portal/console/account/).
 
 ## With a certificate
 
@@ -62,6 +72,14 @@ If it does not work, the page says one of these:
 |---|---|
 | **Sign-in did not work. Try again.** | The sign-in was interrupted or took too long. Start again from the button. |
 | **This account has no access to this portal.** | Your organisation account is not a user of this portal, or the account is disabled. Ask an administrator to add you. |
+
+## When the console asks it is you
+
+Before a change that decides who can get in, the console may open **Confirm it is you** and ask for your password again, then the code of your second step if you have one. See [Confirming it is you again](/portal/console/sign-in-policy/#confirming-it-is-you-again). Signing in counts: you are asked only when you signed in a while ago (10 minutes at first). What you had filled in is kept, and the change goes on once you confirm.
+
+## When you have an account to activate
+
+An administrator may make an account for you. You get an email with **Activate your account**: open its link, choose a password that keeps the rules the page lists, and press **Activate account**. The link works once, for a few days. If it says **The link has expired; ask the administrator for a new one.** or **This link has already been used.**, ask your administrator to send a new one.
 
 ## Who sees what
 

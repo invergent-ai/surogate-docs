@@ -150,6 +150,39 @@ offline: true
 
 - `offline: true` lets the browser fill the form in without a connection; the form must be public.
 
+## Confirm who sends it
+
+```yaml
+public: false
+reauth: true
+```
+
+- `reauth: true` asks a person signed in to prove who they are again before the form is sent, if they have not within the sign-in policy's minutes; the server answers `403` with `reauth_required` and the page asks and sends again. A public form, and a form bound to a model (`model:`), cannot take it: a bound form's moves ask with `reauth: true` on the transition in the model's `states`.
+
+```yaml
+states:
+  field: stare
+  initial: draft
+  list: {…}
+  transitions:
+    - id: send
+      label: { ro: Transmite, en: Send }
+      from: [draft]
+      to: sent
+      by: [group:staff]
+      reauth: true
+```
+
+## Keep robots out
+
+```yaml
+public: true
+captcha: true
+```
+
+- `captcha: true` makes a visitor send, with the form, a solution of a challenge asked of `/_portal/api/auth/captcha?form=form` and solved with the worker the portal serves at `/_portal/captcha/worker.js`: `{ "data": {…}, "captcha": { "challenge": "…", "nonce": "…" } }`. A missing or wrong solution is answered `400`, `captcha_required` or `captcha_failed`, and nothing is kept. The form must be public and cannot be offline.
+- The actions `checkCredentials` and `registerPerson` take an optional `captcha` expression (a map of `challenge` and `nonce`), solved for the form `check` or `register`. A visitor's run of `registerPerson` needs it unless the form it runs for has `captcha: true`.
+
 ## A record field
 
 Among a form's `components`:
