@@ -68,6 +68,8 @@ Administrators bind a form on [Forms](/portal/console/forms/#build-a-form). **Ne
 
    The condition belongs to the fields in the section, so it holds wherever they are written: in another form, in a listing's dialog, through the API. Two forms cannot put one field under different conditions, and a form that shows the field outside the section does not fit one that puts it under a condition (the condition would hide the field there): put the same condition on both. A model's own form follows the model as it is. A step of a step-by-step form cannot have a condition (put it on a section inside the step). A condition that cannot be worked out counts as false.
 
+   A **File** field of the model is a **Files** field of the form, with the limits of the model's field: the extensions, the number of files, the largest file and the way with names that are taken are written once, on the model. The form's own settings for the field do not change them, and a form is not saved with a Files field for a field that is not a File field, nor with another kind of field for a File field. See [Files in records](/portal/sites/data-models/#files-in-records).
+
 A form has one grid, and a form bound to a model is not filled in offline and keeps no drafts of its own: the record is saved as a draft record instead.
 
 A bound form can go step by step: each panel at the top is a step, what was written on one step is kept on the next, and **Save** and the model's moves are the form's own buttons, below the steps, as for any bound form.
@@ -80,13 +82,14 @@ A [listing](/portal/sites/listings/) can name a form bound to its model. **Add**
 
 ![A listing of monthly sheets with Add above, and Open and Edit on each row: May as a draft, April submitted, March as a draft.](../../../../assets/screenshots/portal-forms-model-listing.png)
 
-A listing without a form keeps its small dialog for **Add** and **Edit**. For a model that calculates, checks or has states, the dialog works as the form does:
+A listing without a form keeps its small dialog for **Add** and **Edit**. For a model that calculates, checks or has states, or has a File field, the dialog works as the form does:
 
 ![The Add dialog of an orders listing. Quantity of 150 shows the message At most 100 pieces in one order. Total, calculated, is grey. Management approval, asked for because the total is over 1000, has a star.](../../../../assets/screenshots/portal-forms-model-dialog.png)
 
 ## Who sees and does what
 
 - A person signed in saves with the form's own buttons, and the record is written as they are. A visitor, where the form is open to everyone, sends it as any form is sent, with the rows written in the grid; the record is made by the form's **Create a record** action, with the same checks, and the visitor does not see the record again. A model's own form makes the record and carries the rows. A form open to everyone that is bound to a model must have that action, or the portal refuses it.
+- The files of a File field go up as they are chosen and wait for the record, a day at most. A signed-in person who opens a record sees the files it holds as downloads, and **Remove** takes one off when they save. A visitor of a form open to everyone adds files only where the model lets everyone add records; the files are kept with the record the form's **Create a record** action makes.
 - What a person may change in a record, field by field, comes from the model: its permissions, the rights set on a field, the state the record is in and its lock.
 - The portal checks everything again when the record is saved, however it is sent: the form, a listing's dialog, the API or an action. The form is the first look, not the check.
 - What the portal calculates is never sent by the form; a value taken from another record is sent only when the person wrote it themselves.
