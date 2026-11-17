@@ -128,6 +128,25 @@ A record field picks a record of one of the portal's [data models](/portal/sites
 
 The list shows only the records the person may see, and the record the form makes checks the pick again. A required record field must hold at least one. A form with a record field cannot be filled in offline. In the form builder, **Record** is among **More fields**.
 
+## Options from a model, a data source or a web service
+
+A **Select**, **Radio** or **Select boxes** field can take its options from somewhere other than the list written in the field. In the form builder, open the field and choose **Options come from**:
+
+![The form builder with the field Waste code open: its options table, and below it Options come from set to A data model, with the model coduri, the field that is the value (cod) and the field that is the label.](../../../../assets/screenshots/portal-data-form-builder-options.png)
+
+- **The list written here:** the options typed in the field.
+- **A data model:** the records of a [data model](/portal/sites/data-models/). **Field that is the value** (the record's id when left empty), **Field that is the label** (the model's title when left empty), **Order by (field)** (a `-` before it orders from the last), and a **Filter** that a record meets to be offered, such as only the values that are active, or only those of the county chosen in another field.
+- **A data source:** one of the portal's [data sources](/portal/sites/data-sources/), whose columns **value** and **label** give the options.
+- **A web service (JSON):** a **Web connector**, a **Path**, a **Query string** whose values are expressions over the form, the person and what was typed, **Where the list is in the answer**, the **Path of the value** and **Path of the label** in each item, and how long to **Keep the answer**.
+
+![A form Waste report with the field Waste code: the option "Deseuri infectioase" is shown, taken from the model of waste codes.](../../../../assets/screenshots/portal-data-form-options.png)
+
+- The portal asks for the options, never the person's browser, and only for what that person may see: the model's permissions, or the source's **Who may use this source**, apply.
+- A field offers at most 1,000 options at once; a longer list is chosen from by searching. The choice is checked again when the form is sent, by itself, however long the list has grown: a value the source does not offer that person is refused. The label of the choice is kept with the value.
+- A field can depend on another: when the county changes, the list of units is asked for again.
+- A form that anyone may send, signed in or not, cannot take options that depend on the person, or from a source only some may use.
+- When the options cannot be had, the field says "The options cannot be had right now."
+
 ## Fields from apps
 
 An approved app can add field types and option lists ([Build an app](/portal/developer/build-an-app/#form-fields-and-options)). A form uses them like its other fields.

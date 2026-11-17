@@ -13,6 +13,7 @@ description: Setting, removing and testing the credentials of the portal's conne
 
 - **A web service:** its address, how it **Signs in** (nothing, a token, a user and password, or a header and its name), whether **Each person connects their own account**, a **Connection test** path, and how long a call waits.
 - **A secret:** a value actions sign or check with; whether each person has their own.
+- **A SQL database:** the engine (PostgreSQL, Microsoft SQL Server, MySQL or MariaDB, or Oracle), the server, its **Port** (the engine's usual port when left empty), the **Database** (for Oracle, the service name), a **Default schema**, how the connection is secured (**CA certificate** for a server your own authority signed), **Allow changes**, and the **Most rows a query reads**. A connected one has **Tables**, which lists what its account can read.
 - **A mailbox:** IMAP or POP3, the server, its **Security** and **Port** (the usual port when left empty), and for IMAP the folder read.
 - **An app's connector:** the app and the connector type it defines.
 - **A bucket (S3):** the endpoint, the bucket, its region (`auto` when left empty), and whether the bucket is addressed as a host of its own.
@@ -35,3 +36,5 @@ Credentials hold to the connector as it was when they were set. If its address o
 ## Test
 
 **Test** calls the connector's test path with its credentials, and says what it answered and how long it took. A connector can be tested once every 2 seconds.
+
+For a SQL database, **Test** connects and asks the database a trivial question, and says how long it answered in. **Tables** lists the tables and views the account can read, with each column and its type.

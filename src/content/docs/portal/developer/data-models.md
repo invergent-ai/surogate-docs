@@ -341,3 +341,7 @@ mutation {
 ```
 
 A request may nest 6 levels, ask for 10 things at its top and name 500 fields in all. One that would read more than 2000 records stops with a single `too_costly` error and no data. A refused value names its field in `extensions.field`. Every change is in the [audit log](/portal/console/audit/), one entry each.
+
+## Links in depth
+
+`unique`, `lookup` and a model read from a data source (`source`) are in [Developer: Data sources](/portal/developer/data-sources/#entities).

@@ -59,6 +59,27 @@ Developers: see [Developer: Data models](/portal/developer/data-models/#fields).
 
 A field can be calculated by the portal, required only when it applies, taken from another record, changeable by some people only, and checked against other fields. A model can have lines, states with moves between them, and a lock after a date. See [Calculated fields and checks](/portal/sites/model-logic/) and [Lines, values from other records and states](/portal/sites/model-lines-states/).
 
+## Links in depth: one to one, lookups and speed
+
+A **Link** field points at one record of another model. The portal keeps every link fast to follow and to filter on, with no setting to make: a link column is looked up quickly, and so are the pairs of a **Links** field.
+
+- **One to one:** on a Link field, tick **One to one: each record is linked from at most one record**. A record of the other model can then be chosen by only one record of this one. The portal refuses to turn it on while two records already point at the same one, and lists them. Use it for a record that has one detail record, such as a person and their ID card.
+- **Lookup:** a model that is a list of values people pick from, such as a list of waste codes, can be a **lookup**. On the model's **Lookup and where the records are kept** section, tick **Lookup: its values can be turned off**. The model then has the field **Active**. A value turned off is no longer offered when a record picks a value, but it stays where it was already chosen, and shows, and may be saved again there. A value that a record uses is never removed: deleting it is refused and says by how many records it is used, so you turn it off instead. This holds when a record is made that chooses the value in the same instant: the value is held while it is counted.
+
+![The model editor's section Lookup and where the records are kept: Lookup: its values can be turned off, ticked, with its explanation, and Where its records are kept set to A table in the portal's database.](../../../../assets/screenshots/portal-data-model-lookup.png)
+
+## A model read from a data source
+
+A model's records need not be in the portal's database. A model can read them from a [data source](/portal/sites/data-sources/): a SQL query, the portal's own data or a JSON web service. The register stays where it is; the portal makes no table for it. It is the model's **Where its records are kept**.
+
+![The model editor of Operators from the register: Where its records are kept is the data source operatori, Column that identifies a record is cui, and each field has the column it reads.](../../../../assets/screenshots/portal-data-model-source.png)
+
+- **Where its records are kept:** a table in the portal's database (the usual), or a data source. With a source, the model asks for **Column that identifies a record**, which must differ for every record, and **Column of each field**; left empty, a field reads the column of the same name.
+- It is read only: no add, edit or delete, and no **Lookup**, no history, and no links to or from other models. A model like that answers the API, listings, exports and a form's options as any other model does: the portal filters, sorts, searches and groups the rows it reads. It is not offered to GraphQL, to the record actions or to the [data console](/portal/console/data-console/), which work on the portal's own tables; read it through a listing or the API.
+- Its rows are no one's own, so they are read whole or not at all: someone who may read only their own records of it reads none.
+- The source decides who may use it. The model's permissions say who may view the records.
+- A source whose rows are forms' submissions cannot be a model.
+
 ## Who may do what
 
 A model says, for each role, whether it may view, edit and delete **all** records or only its **own**, and who may **add** records. People and roles are named as everywhere in the portal: everyone, people signed in, administrators, one person, a group, an organization. Administrators may always do everything; a model that says nothing is open to them alone.

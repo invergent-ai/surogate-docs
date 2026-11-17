@@ -3,7 +3,7 @@ title: Listings
 description: A data model's records on a page, searchable, filterable and sortable, with add, edit and delete in place.
 ---
 
-A listing shows the records of a [data model](/portal/sites/data-models/) on a page, as a table. People see the records they may see, search and filter them, open one, and, where they may, add, edit and delete them in place.
+A listing shows the records of a [data model](/portal/sites/data-models/), or the rows of a [data source](/portal/sites/data-sources/), on a page, as a table. People see the records they may see, sort, filter, search and group them, export them, open one, and, where they may, add, edit and delete them in place.
 
 ## What people see
 
@@ -21,20 +21,73 @@ A listing is a table of the model's records, with a search box and, for people w
 
 ## Place a listing
 
-A listing is one of the portal's widgets, placed on a page. It shows the records of one model, with the columns and filters the page chooses: at most 8 columns, none of them a link (left out, the title and up to 3 more fields), and filters on filterable fields, by exact value. Whether it offers **Add**, **Edit** and **Delete** is the page's choice too, but the model's [permissions](/portal/sites/data-models/#who-may-do-what) still decide who may: someone who may only edit their own records sees **Edit** only on theirs.
+A listing is one of the portal's widgets, placed on a page. It shows the records of one model, or the rows of one data source, with the columns, sorting, grouping and export the page chooses. Whether it offers **Add**, **Edit**, **Delete** and **Archive** is the page's choice too, but the model's [permissions](/portal/sites/data-models/#who-may-do-what) still decide who may: someone who may only edit their own records sees **Edit** only on theirs.
 
 On [Pages](/portal/console/pages/#the-portals-widgets), add **Listing** with **Add a widget…**, then set its settings in its row:
 
-- **Data model**: the model whose records it shows. It is required.
-- **Columns**: the fields to show, at most 8, none of them a link. None ticked: the title field, then the first fields that are not links, four in all.
-- **Filters**: the fields people may filter by. It lists only the fields the model marks filterable.
-- **People may add records**, **People may change records** and **People may remove records**: whether the listing offers **Add**, **Edit** and **Delete**.
+![The page Monthly reports open in the page editor, its Listing widget open: Where the rows come from (Data model, Monthly reports), then Columns, each with its field, its label in each language, Sortable, Filterable, Searchable and its width.](../../../../assets/screenshots/portal-data-listing-settings.png)
+
+- **Where the rows come from:** **Data model**, or **Data source**. It is required. A source that nobody named for this person's use shows nothing.
+- **Columns:** the columns to show, in order, at most 20. For each: its field (or the source's column), its label in each language (the field's own when left empty), whether it is **Sortable**, **Filterable** and **Searchable** (only text can be searched), and its **Width in pixels**. Until you add a column, a listing of a source shows every column it answers, and a listing of a model shows its title and its first fields.
+- **Default sort:** at most 3 columns, each ascending or descending.
+- **Rows per page:** 20, 50 or 100. People can change it.
+- **Grouping:** the columns people may **group on**, at most 2 grouped by default, the **Totals of a group** (sum, average, smallest or largest of a column of numbers), and whether dates are grouped by **day, month or year**. Only text, links, yes or no and dates can be grouped.
+- **Export:** for each of Excel (xlsx), CSV and PDF, who can export. Nobody, until you name someone.
+- **Row operations:** **People can add**, **People can edit**, **People can delete** and **People can archive**. A source's rows can only be added and removed, and only when the source says how.
 - **Form that adds and opens records**: a [form bound to the model](/portal/sites/model-forms/). With one, **Add** opens the form, and **Open** and **Edit** open it on the record, in place of the details below the list and the small dialog. It lists the forms bound to the model you chose, the model's own among them.
 - **Show the map too**: for a model with a location, a [map](/portal/sites/maps/#a-map-on-a-page) above the table that follows its search and filters.
 
-Developers: see [Developer: Listings](/portal/developer/listings/#a-listing-on-a-page).
+Developers: see [Developer: Data sources](/portal/developer/data-sources/#a-listing-over-a-model-or-a-source) and [Developer: Listings](/portal/developer/listings/#a-listing-on-a-page).
 
-A search box shows when the model has searchable fields. Sortable columns sort when their heading is clicked. A listing shows 20 records, and **Load more** brings the next ones.
+A search box shows when the model has searchable fields, or the listing has searchable columns. A listing shows the rows a page at a time, with **Previous**, **Next** and the page numbers, and **Total: n rows** under it.
+
+## Sort, filter and search
+
+Each column heading is a link: a click sorts by that column, and a second click reverses it. Under the heading, the **…** opens the column's menu:
+
+![The listing Monthly reports with the menu of the column Quantity (kg) open: Sort ascending, Sort descending, Add to sort, a choice of how to compare, a box for the value and Apply.](../../../../assets/screenshots/portal-data-listing-column-menu.png)
+
+- **Sort ascending**, **Sort descending** and **Add to sort**. A listing sorts by up to 3 columns: the first sorted shows 1, the next 2, and so on. Shift and click on a heading adds it to the sort too.
+- **A filter**, by how the column's values compare. Text: contains, is, starts with, is empty, is not empty. Numbers, dates and times of the day: =, ≠, <, ≤, >, ≥, between two values, is empty, is not empty. Yes or no: is yes or is no. A link: one of the records, chosen from those the person may read. A time of day only says empty or not.
+- A column that can be searched has a search of its own.
+
+![The listing Monthly reports sorted by County then by Period, filtered to a quantity of at least 100: the line "Quantity (kg): ≥ 100" with Clear filters, and the rows under it.](../../../../assets/screenshots/portal-data-listing-sorted.png)
+
+What is filtered shows as a line above the table, one entry for each filter, with **Clear filters**. The address of the page keeps the sort, the filters, the search and the page, so that a view can be shared or bookmarked. An address that names a column alone sorts on it going up, and a minus before it, going down.
+
+## Group
+
+**Group by** groups the rows by up to 2 columns, **then by** a second. Each group is a line with its name, how many rows it holds and its totals (such as the sum of a quantity). A click on a group opens its rows, and a second click closes it.
+
+![The listing Monthly reports grouped by County: a line for each county with its number of rows and the sum of the quantity (Alba 2 rows, Bihor 2 rows, Cluj 3 rows, Iași 3 rows, Timiș 2 rows), Cluj open with its three rows, and Total: 12 rows.](../../../../assets/screenshots/portal-data-listing-grouped.png)
+
+Dates are grouped by the day, the month or the year the listing says. A page shows 20 groups, and an open group shows its first 50 rows.
+
+## Export
+
+People the listing names can **Export** what they see: **Excel (XLSX)**, **CSV** or **PDF**, each only for those named for it. The file holds what the listing shows with its current filters, sorting and search, in the order shown, with the columns' labels in the person's language; the PDF also says which filters apply, who exported it and when.
+
+![The listing Monthly reports with Export open: Excel (XLSX), CSV and PDF.](../../../../assets/screenshots/portal-data-listing-export.png)
+
+- An Excel or CSV file holds at most 50,000 rows, and a PDF at most 5,000. Past that, the export is refused and says how many rows there are, so the filters can be narrowed: nothing is cut off.
+- A person exports one file at a time.
+- An export is written to the [audit log](/portal/console/audit/) as **listing.export**, with who, the listing, the format, which columns were filtered and how many rows.
+- A cell that starts with `=`, `+`, `-` or `@` is written as text, so that a spreadsheet never runs what a visitor typed.
+
+## A listing of a data source
+
+A listing can show a [data source](/portal/sites/data-sources/) instead of a model: a SQL query, the portal's own data, a JSON web service or a form's submissions. Everything above works the same: columns, sorting, filtering, searching, grouping and export.
+
+![The listing Health units over a SQL data source: Search, Export and Add above a table of six units with their code, name, county, beds and kind, and a Delete button on each row.](../../../../assets/screenshots/portal-data-listing-source.png)
+
+- The source's own **Who may use this source** decides who sees the listing.
+- A source's rows are read, not edited. A SQL or web service source can offer **Add** and **Delete** when it says how: see [Add, remove and open a row](/portal/sites/data-sources/#add-remove-and-open-a-row).
+- When the source cannot answer, the listing says so in one sentence, with **Try again**.
+- A source with many rows is filtered, sorted and grouped by the portal, after reading as many as the source allows.
+
+## Archive
+
+For a model that keeps its history and archives what is deleted, the button that removes a row says **Archive**, asks for a reason where the model wants one, and takes the row out of the list. The record is kept, with its history. People the model names see **Archived** next to **Active**, and can **Restore** an archived row. An archived row cannot be changed, only restored.
 
 ## What each person sees
 

@@ -238,3 +238,7 @@ actions:
 - `actions.submitted`: the [actions](/portal/sites/actions/) that run once the form is sent and kept.
 
 The keys of an action list are in [Developer: Actions](/portal/developer/actions/).
+
+## Options from a model, a data source or a web service
+
+A choice field's `optionsFrom` is in [Developer: Data sources](/portal/developer/data-sources/#a-fields-options).

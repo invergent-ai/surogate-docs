@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # The portal's site pages written UI first, with screenshots of what people see.
 UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'assistants.md', 'blogs.md', 'calendar.md',
-                  'comments.md', 'connectors.md', 'content-types.md', 'data-models.md', 'endpoints.md', 'environments.md',
+                  'comments.md', 'connectors.md', 'content-types.md', 'data-models.md', 'data-sources.md', 'database-actions.md', 'endpoints.md', 'environments.md',
                   'flows.md', 'form-fields.md', 'forms.md', 'forums.md', 'guides.md', 'jobs.md', 'kpis.md', 'layouts.md', 'listings.md',
                   'model-forms.md', 'model-lines-states.md', 'model-logic.md',
                   'notifications.md', 'permissions.md', 'polls.md', 'search.md', 'seo.md', 'values.md', 'wiki.md')
@@ -475,7 +475,7 @@ class Content(unittest.TestCase):
         self.assertIn('href="/portal/sites/connectors/#call-a-service"', page('/portal/sites/actions/'))
         for path in ('sites/connectors.md', 'console/connectors.md'):
             source = (ROOT / 'src/content/docs/portal' / path).read_text()
-            for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres', 'index', 'repositor', 'store', 'Vault'):
+            for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'Hub', 'worker', 'Postgres(?!QL)', 'index', 'repositor', 'store', 'Vault'):
                 self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
 
     def test_portal_file_actions(self):
@@ -535,6 +535,34 @@ class Content(unittest.TestCase):
         for name in ('build-an-app', 'develop-locally', 'check-a-site', 'previews', 'design', 'agents'):
             self.assertFalse((PORTAL / 'sites' / f'{name}.md').exists(), name)
             self.assertIn(f'/portal/developer/{name}/', page(f'/portal/sites/{name}/'), name)
+
+    def test_portal_data_sources(self):
+        sources = page('/portal/sites/data-sources/')
+        for anchor in ('what-people-see', 'the-kinds-of-source', 'make-or-change-a-data-source', 'try-it',
+                       'add-remove-and-open-a-row', 'who-reads-what'):
+            self.assertIn(f'id="{anchor}"', sources)
+        for shot in ('portal-data-sources-list', 'portal-data-source-try', 'portal-data-source-operations'):
+            self.assertIn(shot, (PORTAL / 'sites/data-sources.md').read_text())
+        actions = page('/portal/sites/database-actions/')
+        for anchor in ('run-a-sql-query', 'changing-data', 'load-records-from-a-list'):
+            self.assertIn(f'id="{anchor}"', actions)
+        self.assertIn('portal-data-action-runsql', (PORTAL / 'sites/database-actions.md').read_text())
+        self.assertIn('href="/portal/sites/database-actions/"', page('/portal/sites/actions/'))
+        self.assertIn('id="sql-databases"', page('/portal/sites/connectors/'))
+        self.assertIn('id="a-sql-databases-file"', page('/portal/developer/connectors/'))
+        listings = page('/portal/sites/listings/')
+        for anchor in ('sort-filter-and-search', 'group', 'export', 'a-listing-of-a-data-source', 'archive'):
+            self.assertIn(f'id="{anchor}"', listings)
+        for shot in ('portal-data-listing-sorted', 'portal-data-listing-grouped', 'portal-data-listing-export',
+                     'portal-data-listing-column-menu', 'portal-data-listing-settings'):
+            self.assertIn(shot, (PORTAL / 'sites/listings.md').read_text())
+        for anchor in ('links-in-depth-one-to-one-lookups-and-speed', 'a-model-read-from-a-data-source'):
+            self.assertIn(f'id="{anchor}"', page('/portal/sites/data-models/'))
+        self.assertIn('id="options-from-a-model-a-data-source-or-a-web-service"', page('/portal/sites/forms/'))
+        developer = page('/portal/developer/data-sources/')
+        for anchor in ('a-data-sources-file', 'a-listing-over-a-model-or-a-source', 'a-fields-options', 'entities',
+                       'database-actions'):
+            self.assertIn(f'id="{anchor}"', developer)
 
     def test_portal_payments(self):
         doc = page('/portal/sites/payments/')
