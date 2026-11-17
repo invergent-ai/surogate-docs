@@ -29,6 +29,7 @@ On [Pages](/portal/console/pages/#the-portals-widgets), add **Listing** with **A
 - **Columns**: the fields to show, at most 8, none of them a link. None ticked: the title field, then the first fields that are not links, four in all.
 - **Filters**: the fields people may filter by. It lists only the fields the model marks filterable.
 - **People may add records**, **People may change records** and **People may remove records**: whether the listing offers **Add**, **Edit** and **Delete**.
+- **Form that adds and opens records**: a [form bound to the model](/portal/sites/model-forms/). With one, **Add** opens the form, and **Open** and **Edit** open it on the record, in place of the details below the list and the small dialog. It lists the forms bound to the model you chose, the model's own among them.
 
 Developers: see [Developer: Listings](/portal/developer/listings/#a-listing-on-a-page).
 
@@ -39,11 +40,16 @@ A search box shows when the model has searchable fields. Sortable columns sort w
 - Everyone sees only the records they may see: their own, where that is all they may see.
 - Someone who may neither see the records nor add any sees nothing of the listing.
 - Adding, editing and deleting are offered only to people signed in, never to visitors.
+- A row that the model's [lock](/portal/sites/data-models/) holds closed, such as a sheet of a year that has ended, has **Open** only: also the rows a search, a sort or **Load more** brings in later, which the page asks the portal about.
 - Values show as text; dates and times in the person's own time; web addresses as links only when they are http, https or mailto.
 
 **Open** shows a record's details below the list, with the title of the records it links to when the person may see them. Its address can be shared: `?p_<placement id>_record=<record id>`. Search engines are told not to keep such addresses.
 
 **Add** and **Edit** open a small form with the model's fields. A link is chosen with **Choose**, from a list of the linked model's records, as a form's [record field](/portal/sites/forms/#pick-a-record) does. A change sends only what was changed. A value the model refuses is shown with its field.
+
+For a model that calculates figures, checks its records, hides fields on a condition or has states, the dialog runs the model's own logic as the person types, as a [form for records](/portal/sites/model-forms/) does: what the portal calculates shows grey, what is asked for has a star, each message shows at its field, and the state's moves are buttons beside **Save**:
+
+![The Add dialog of an orders listing. Quantity of 150 shows the message At most 100 pieces in one order. Total, calculated, is grey. Management approval, asked for because the total is over 1000, has a star.](../../../../assets/screenshots/portal-forms-model-dialog.png)
 
 ## Archiving and the history
 
@@ -61,4 +67,4 @@ People who may see archived records have an **Archived** filter next to the sear
 
 A model can make its own page on a site, with a listing that offers everything. The page's title is the model's name unless the model gives one. A path that a page already has is refused. Add it on the model's **Pages** tab: see [On pages](/portal/sites/data-models/#on-pages). Developers: see [Developer: Listings](/portal/developer/listings/#a-models-own-page).
 
-Each model also has its own form, `model-<id>` (an `_` in the id becomes `-`), to place like any [form](/portal/sites/forms/): one field for each of the model's fields, links as [record fields](/portal/sites/forms/#pick-a-record), sent to a new record. Who may send it is who may add records: when everyone may add records, visitors too, even where the form is placed on no page. The record holds what was sent; the form keeps its own copy for a day only.
+Each model also has its own form, `model-<id>` (an `_` in the id becomes `-`), to place like any [form](/portal/sites/forms/): one field for each of the model's fields, links as [record fields](/portal/sites/forms/#pick-a-record), sent to a new record. It is bound to the model, so it also opens records to edit and shows what the model calculates: see [Forms for records](/portal/sites/model-forms/). Who may send it is who may add records: when everyone may add records, visitors too, even where the form is placed on no page. The record holds what was sent; the form keeps its own copy for a day only.

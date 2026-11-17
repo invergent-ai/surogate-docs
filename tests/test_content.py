@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parent.parent
 UI_FIRST_PAGES = ('actions.md', 'activity.md', 'announcements.md', 'apps.md', 'assistants.md', 'blogs.md', 'calendar.md',
                   'comments.md', 'connectors.md', 'content-types.md', 'data-models.md', 'endpoints.md', 'environments.md',
                   'flows.md', 'form-fields.md', 'forms.md', 'forums.md', 'guides.md', 'jobs.md', 'kpis.md', 'layouts.md', 'listings.md',
-                  'model-lines-states.md', 'model-logic.md',
+                  'model-forms.md', 'model-lines-states.md', 'model-logic.md',
                   'notifications.md', 'permissions.md', 'polls.md', 'search.md', 'seo.md', 'values.md', 'wiki.md')
 
 # The console pages written the same way.
@@ -397,6 +397,29 @@ class Content(unittest.TestCase):
             source = (ROOT / path).read_text()
             for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'MongoDB', 'Postgres', 'SMTP', 'outbox', 'IndexedDB', 'service worker'):
                 self.assertIsNone(re.search(rf'\b{word}', source), (path, word))
+
+    def test_portal_forms_for_records(self):
+        guide = page('/portal/sites/model-forms/')
+        for anchor in ('what-people-see', 'save-and-move-between-states', 'make-a-form-for-a-model', 'open-a-record',
+                       'who-sees-and-does-what'):
+            self.assertIn(f'id="{anchor}"', guide)
+        # The other pages send people to it, and its developer part is in Developer: Forms.
+        for route in ('/portal/sites/forms/', '/portal/sites/listings/', '/portal/console/forms/'):
+            self.assertIn('href="/portal/sites/model-forms/', page(route), route)
+        self.assertIn('id="a-form-bound-to-a-model"', page('/portal/developer/forms/'))
+        self.assertIn('href="/portal/developer/forms/#a-form-bound-to-a-model"', guide)
+        # What a form bound to a model sends to every browser, and what a form open to everyone must do.
+        developer = page('/portal/developer/forms/')
+        for text in ('Everything the model says is in the page', 'public_no_record', 'public_no_lines'):
+            self.assertIn(text, developer, text)
+        # What the guide shows is the portal's own screens, one picture each.
+        source = (PORTAL / 'sites/model-forms.md').read_text()
+        for shot in ('forms-model-setting', 'forms-model-builder', 'forms-model-lines-edit', 'forms-model-sheet',
+                     'forms-model-problems', 'forms-model-comment', 'forms-model-submitted', 'forms-model-listing',
+                     'forms-model-dialog', 'forms-model-section', 'forms-model-section-edit'):
+            self.assertIn(f'portal-{shot}.png', source, shot)
+        for word in ('kubectl', 'helm', 'PORTAL_', 'git', 'Git', 'commit', 'branch', 'repositor', 'Hub', 'Postgres'):
+            self.assertIsNone(re.search(rf'\b{word}', source), word)
 
     def test_portal_actions(self):
         doc = page('/portal/sites/actions/')
