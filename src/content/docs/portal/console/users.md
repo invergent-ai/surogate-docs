@@ -10,6 +10,10 @@ Type part of a name or an email in **Search by name or email**. The list follows
 
 ![The Users page: the search field and the list of users, each with their email.](../../../../assets/screenshots/portal-users.png)
 
+**People** and **Deleted people** switch the list between the people who can sign in and those an automation job deleted. A deleted person keeps their records and their name in history, and cannot sign in. Open one and press **Restore** to bring the account back.
+
+![The Users page with Deleted people chosen: Fost Angajat, marked Deleted.](../../../../assets/screenshots/portal-users-deleted.png)
+
 The list shows 50 users at a time. Use **Previous** and **Next** to move between pages. A disabled account carries the label **Disabled**.
 
 ## Add a user
