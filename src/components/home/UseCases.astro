@@ -1,9 +1,10 @@
 ---
-// Twenty real tasks, five per product, each linking to the guide that does it.
+// Twenty-five real tasks, five per product, each linking to the guide that does it.
 import AgentsMark from '../brand/AgentsMark.astro';
 import DmsMark from '../brand/DmsMark.astro';
 import KeelMark from '../brand/KeelMark.astro';
 import PortalMark from '../brand/PortalMark.astro';
+import SuperstarMark from '../brand/SuperstarMark.astro';
 
 const columns = [
   {
@@ -50,6 +51,17 @@ const columns = [
       ['Give a new tenant its first administrator', 'Console', '/portal/console/tenants/'],
     ],
   },
+  {
+    product: 'superstar',
+    name: 'Superstar',
+    tasks: [
+      ['Set up a sales desk your agents route by', 'Quickstart', '/superstar/quickstart/'],
+      ['Answer every inbound lead within the hour', 'Playbook', '/superstar/playbooks/inbound-leads/'],
+      ['Find a sourced reason to write to an account now', 'Playbook', '/superstar/playbooks/signals/'],
+      ['Run a cold sequence that stops when they reply', 'Playbook', '/superstar/playbooks/cold-outbound/'],
+      ['Turn call notes into the follow-up and the next step', 'Playbook', '/superstar/playbooks/follow-ups/'],
+    ],
+  },
 ] as const;
 ---
 
@@ -64,7 +76,7 @@ const columns = [
         columns.map((column) => (
           <div class="column">
             <div class="head">
-              {column.product === 'agents' ? <AgentsMark size={28} /> : column.product === 'keel' ? <KeelMark size={28} /> : column.product === 'dms' ? <DmsMark size={28} /> : <PortalMark size={28} />}
+              {column.product === 'agents' ? <AgentsMark size={28} /> : column.product === 'keel' ? <KeelMark size={28} /> : column.product === 'dms' ? <DmsMark size={28} /> : column.product === 'portal' ? <PortalMark size={28} /> : <SuperstarMark size={28} />}
               <p>{column.name}</p>
             </div>
             {column.tasks.map(([title, where, href]) => (

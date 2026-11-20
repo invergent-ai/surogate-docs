@@ -5,6 +5,7 @@ import starlightLlmsTxt from 'starlight-llms-txt';
 import starlightSidebarTopics from 'starlight-sidebar-topics';
 import rehypeFigure from './src/plugins/rehype-figure.mjs';
 import rehypeLead from './src/plugins/rehype-lead.mjs';
+import { PLAYBOOKS } from './src/data/superstar-playbooks.mjs';
 
 // Expressive Code shows a header strip only on titled blocks. Title every block
 // with its fence language (blank when it has none) so all of them get the strip.
@@ -145,7 +146,7 @@ export default defineConfig({
       plugins: [
         starlightLinksValidator(),
         starlightLlmsTxt(),
-        // One sidebar per track. Work and Develop are Surogate Agents; Surogate Keel, Surogate DMS and Surogate Portal are their own products.
+        // One sidebar per track. Work and Develop are Surogate Agents; Surogate Keel, Surogate DMS, Surogate Portal and Superstar are their own products.
         // Each topic's items are the track's former sidebar group, unchanged and in order.
         starlightSidebarTopics([
         {
@@ -543,6 +544,23 @@ export default defineConfig({
               collapsed: true,
               items: ['portal/developer', 'portal/developer/develop-locally', 'portal/developer/check-a-site', 'portal/developer/previews', 'portal/developer/agents', 'portal/developer/command-line', 'portal/developer/build-an-app', 'portal/developer/apps', 'portal/developer/design', 'portal/developer/permissions', 'portal/developer/layouts', 'portal/developer/content-types', 'portal/developer/seo', 'portal/developer/search', 'portal/developer/forms', 'portal/developer/form-fields', 'portal/developer/actions', 'portal/developer/document-actions', 'portal/developer/file-management', 'portal/developer/payments', 'portal/developer/marketing', 'portal/developer/crm', 'portal/developer/security', 'portal/developer/people-actions', 'portal/developer/portal-actions', 'portal/developer/executor', 'portal/developer/web-pages', 'portal/developer/google-drive', 'portal/developer/microsoft-365', 'portal/developer/personalization', 'portal/developer/experiments', 'portal/developer/flows', 'portal/developer/values', 'portal/developer/connectors', 'portal/developer/guides', 'portal/developer/data-models', 'portal/developer/data-sources', 'portal/developer/listings', 'portal/developer/maps', 'portal/developer/kpis', 'portal/developer/keel', 'portal/developer/embedded-content', 'portal/developer/documents', 'portal/developer/assistants', 'portal/developer/notifications', 'portal/developer/comments', 'portal/developer/activity', 'portal/developer/blogs', 'portal/developer/forums', 'portal/developer/wiki', 'portal/developer/calendar', 'portal/developer/announcements', 'portal/developer/polls', 'portal/developer/endpoints', 'portal/developer/jobs', 'portal/developer/environments', 'portal/developer/files', 'portal/developer/invitations', 'portal/developer/data-console'],
             },
+          ],
+        },
+        {
+          id: 'superstar',
+          label: 'Superstar',
+          link: '/superstar/',
+          items: [
+            'superstar',
+            'superstar/quickstart',
+            'superstar/how-it-works',
+            'superstar/crew',
+            ...['Sales', 'Marketing', 'Content', 'Growth ops'].map((grp) => ({
+              label: `${grp} playbooks`,
+              items: PLAYBOOKS.filter((p) => p.grp === grp).map((p) => `superstar/playbooks/${p.id}`),
+            })),
+            'superstar/prompts',
+            'superstar/outreach-rules',
           ],
         },
       ]),

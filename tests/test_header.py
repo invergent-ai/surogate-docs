@@ -6,13 +6,14 @@ from docsite import DIST, page, section
 
 class Header(unittest.TestCase):
     def test_sign_in_and_products_on_every_kind_of_page(self):
-        for route in ('/', '/work/quickstart/', '/keel/', '/dms/', '/portal/'):
+        for route in ('/', '/work/quickstart/', '/keel/', '/dms/', '/portal/', '/superstar/'):
             head = section(page(route), 'header')
             self.assertIn('href="https://ops.surogate.ai"', head)
             self.assertIn('Surogate Agents', head)
             self.assertIn('Surogate Keel', head)
             self.assertIn('Surogate DMS', head)
             self.assertIn('Surogate Portal', head)
+            self.assertIn('href="/superstar/"', head)
             self.assertIn('data-docs="theme-toggle"', head)
 
     def test_current_product(self):
@@ -29,6 +30,9 @@ class Header(unittest.TestCase):
         portal = section(page('/portal/console/users/'), 'header')
         self.assertRegex(portal, r'aria-current="page"[^>]*>\s*Surogate Portal')
         self.assertEqual(portal.count('aria-current="page"'), 1)
+        superstar = section(page('/superstar/playbooks/signals/'), 'header')
+        self.assertRegex(superstar, r'aria-current="page"[^>]*>\s*Superstar')
+        self.assertEqual(superstar.count('aria-current="page"'), 1)
         self.assertNotIn('aria-current', section(page('/'), 'header'))
 
     def test_no_social_icons(self):

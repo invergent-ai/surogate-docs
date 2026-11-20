@@ -36,6 +36,11 @@ class Sidebar(unittest.TestCase):
         self.assertIn('Surogate Portal', section(doc, 'product-head'))
         self.assertNotIn('data-docs="track-switch"', doc)
 
+    def test_superstar_has_head_and_no_switch(self):
+        doc = page('/superstar/crew/')
+        self.assertIn('Superstar', section(doc, 'product-head'))
+        self.assertNotIn('data-docs="track-switch"', doc)
+
 
 if __name__ == '__main__':
     unittest.main()
