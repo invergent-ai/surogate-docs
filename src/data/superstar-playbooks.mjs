@@ -1,4 +1,4 @@
-// A copy of superstar/public/playbooks.js (commit 899c122), the catalogue Superstar's in-app Help shows. The playbook
+// A copy of superstar/public/playbooks.js (commit c685ae3), the catalogue Superstar's in-app Help shows. The playbook
 // pages and the prompt library are written from it, and superstar-playbooks.test.mjs fails when a page drifts from it.
 // To update: copy the file again with 'const PLAYBOOKS' made 'export const PLAYBOOKS', then fix what the test names.
 export const PLAYBOOKS = [
@@ -6,7 +6,7 @@ export const PLAYBOOKS = [
   { id: "sales-desk", grp: "Sales", t: "Set up a sales desk", ic: "building", time: "15 min", tpl: "ws-sales-desk", video: "sales-desk", next: "inbound-leads",
     lead: "A workspace with the CRM, the plays and the rules, where every lead, signal and deal reaches its owner.",
     crew: ["Superstar", "Inbound qualifier", "Signal scout", "Relationships", "Follow-up keeper"],
-    steps: [["Use the template", "Sidebar → <b>Templates</b> → <b>Sales desk</b>. Fill your segment, the company type and the role you sell to, then <b>Use template</b>. You get <b>How we work</b>, the CRM (Deals, Companies, People, Signals, Paths in, Inbound leads, Do not contact) and three plays."],
+    steps: [["Use the template", "Sidebar → <b>Templates</b> → <b>Workspaces</b> → <b>Sales desk</b>. Fill your segment, the company type and the role you sell to, then <b>Use template</b>. You get <b>How we work</b>, the CRM (Deals, Companies, People, Signals, Paths in, Inbound leads, Do not contact) and three plays."],
       ["Name the owners", "On <b>How we work</b>, put one person on each row of <b>Owners</b>. Agents route by this table: a lead for a role nobody owns waits where nobody looks."],
       ["Read the rules together", "The <b>Rules</b> list is what every agent keeps: research and draft, never send; check Do not contact first; every deal has the buyer's next action and a date. Change a rule there and the crew follows it."],
       ["Bring what you have", "Paste your current deals and accounts into <b>Deals</b> and <b>Companies</b> (one row per line), or ask Superstar to import a CSV from <b>Storage</b>."]],
@@ -206,7 +206,7 @@ export const PLAYBOOKS = [
     lead: "What each competitor changed this week, with sources, and what it means for your deals.",
     crew: ["Signal scout", "Strategist"],
     steps: [["List them", "<b>Templates</b> → <b>Competitive intel</b>: one row per competitor in <b>Competitors</b>."],
-      ["Weekly check", "Ask <b>@Signal scout</b> every Friday for changes: pricing, releases, hires, customers, messaging. Each goes to <b>Change log</b> with its source."],
+      ["Weekly check", "<b>@Signal scout</b> checks every Monday for changes: pricing, releases, hires, customers, messaging. Each goes to <b>Change log</b> with its source."],
       ["So what", "Ask <b>@Strategist</b> what it means for open deals and your messaging."]],
     prompts: ["@Signal scout What changed at our three competitors this week: pricing, releases, hires, customers? With sources, into Change log.",
       "@Strategist Which open deals does this pricing change affect, and what should each owner say?"],
