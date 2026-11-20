@@ -44,7 +44,8 @@ class Content(unittest.TestCase):
         videos = ROOT / 'public/videos/superstar'
         if not (videos / 'cold-outbound.mp4').exists():
             self.assertNotIn('data-docs="tutorial"', doc)
-        self.assertNotIn('data-docs="tutorial"', page('/superstar/playbooks/meeting-brief/'))
+        if (videos / 'meeting-brief.mp4').exists():
+            self.assertIn('data-docs="tutorial"', page('/superstar/playbooks/meeting-brief/'))
 
     def test_dms_quickstart_caption_and_lead(self):
         doc = page('/dms/quickstart/')
