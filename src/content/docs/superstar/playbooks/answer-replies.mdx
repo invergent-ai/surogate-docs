@@ -1,0 +1,86 @@
+---
+title: "Answer everyone who replied to your posts"
+description: "Every reply, mention and quote of your posts in one table, with an answer drafted for each and validated by a person within two hours."
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+import Tutorial from '../../../../components/Tutorial.astro';
+import PlaybookMeta from '../../../../components/superstar/PlaybookMeta.astro';
+
+Every reply, mention and quote of your posts in one table, with an answer drafted for each and validated by a person within two hours.
+
+<PlaybookMeta id="answer-replies" template="Mentions and replies" />
+
+<Tutorial id="answer-replies" />
+
+## Before you start
+
+- Your profiles under **Setup** → **Identities**, each signed in through a saved browser login that Studio shares with the Comment scout.
+- Someone who validates answers twice a weekday, after 09:00 and 15:00.
+- The [rules](/superstar/how-it-works/#the-rules) every agent keeps.
+
+## Steps
+
+<Steps>
+
+1. **Use the template**
+
+   **Templates** → **Mentions and replies**. **@Comment scout** reads each profile's notifications at 09:00 and 15:00 on weekdays and adds a **Mentions** row per reply, mention, quote or comment.
+
+2. **Answers keep the conversation**
+
+   For each one worth answering, it reads the whole thread and drafts the answer as a reply post that carries the conversation it answers. The row turns **Drafted**.
+
+3. **Validate**
+
+   Read, fix, **Validate**. The Publisher posts it under the reply and the row turns **Answered**. Mark a row **Ignored** to leave it.
+
+4. **Leads**
+
+   Someone who asks about a pilot, a price or a demo: add them to **People** and give the owner a to-do.
+
+</Steps>
+
+## The template
+
+**Mentions and replies** is a page. Open it from **Templates** in the sidebar. It makes a **Mentions** board by Status (New, Drafted, Answered, Ignored) with When, Profile, From, Said, Kind (reply, mention, quote, comment), In reply to, Link and Reply, and sets the Comment scout's two weekday rounds as repeats. A link already in the table is skipped, so nothing is answered twice.
+
+## Prompts
+
+Copy one and change the names. A prompt that starts with an @name goes in a block on the page; the others go in **Ask** (**Ctrl J**).
+
+```text title="A block that starts with @Comment scout"
+@Comment scout Read our profiles' notifications and draft an answer to each reply we owe since this morning.
+```
+
+```text title="Ask (Ctrl J)"
+Which mentions from this week are still New or Drafted?
+```
+
+## What good looks like
+
+"Good question: the 37 rules run before the nightly load, so a bad record never reaches the report. Happy to share the list." It answers what they asked, where they asked it.
+
+A row that went through:
+
+| When | Profile | From | Kind | Said | Status |
+|---|---|---|---|---|---|
+| 2026-11-19 | Halcyon Data on X | Priya Raman | reply | "Do the rules run before or after the load?" | Answered |
+
+The answer shows under Priya's reply, with the thread above it, so she and everyone reading see what it answers.
+
+## Watch for
+
+- Only people who wrote to you first. Never reply to posts found by search.
+- One answer per person per conversation.
+
+## What to count
+
+- Replies answered within two hours
+- Conversations that became leads
+
+The **Mentions** board shows what is still New or Drafted. Compare **When** with the time each answer went out, and count the People rows whose source is a reply.
+
+## Next
+
+[Plan a week on LinkedIn](/superstar/playbooks/linkedin-week/): three posts in your voice from real material, comments where you add something, nothing posted unvalidated.
