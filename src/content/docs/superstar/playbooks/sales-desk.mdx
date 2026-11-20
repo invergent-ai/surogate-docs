@@ -24,9 +24,9 @@ A workspace with the CRM, the plays and the rules, where every lead, signal and 
 
 <Steps>
 
-1. **Use the template**
+1. **Pick the template**
 
-   Sidebar → **Templates** → **Workspaces** → **Sales desk**. Fill your segment, the company type and the role you sell to, then **Use template**. You get **How we work**, the CRM (Deals, Companies, People, Signals, Paths in, Inbound leads, Do not contact) and three plays.
+   **Templates** (sidebar footer) → **Workspace** → **Sales desk**. Fill your segment, the company type and the role you sell to, then **Use template**. You get **How we work**, the CRM (Deals, Companies, People, Signals, Paths in, Inbound leads, Do not contact) and three plays.
 
    ![The Sales desk template before use: How we work with its rules, the Deals table, the agents it uses and the fields to fill](../../../../assets/screenshots/superstar-template-sales-desk.png)
 
@@ -83,11 +83,14 @@ The empty row is what the [weekly review](/superstar/playbooks/pipeline-review/)
 
 - An empty owner is the most common reason an agent's work goes unseen.
 - Keep select options (Stage, Tier, Status) as they are: agents only use values that exist.
+- Before the first email, the mailbox's domain needs SPF, DKIM and DMARC. Gmail rejects mail that fails them since November 2025, and Outlook sends it to Junk.
+- Know each person's country. Romania, Germany and Poland need consent before a commercial email, even to a company address. France allows it when it's about their job.
 
 ## What to count
 
 - Open deals with a buyer action and a future date (aim for all of them)
 - Leads with an owner within five minutes
+- People in Do not contact, and when each was added: a list that never grows means opt-outs aren't logged
 
 Open **Deals** and add a filter on **Next action date**. The Strategist counts both in its Monday review.
 

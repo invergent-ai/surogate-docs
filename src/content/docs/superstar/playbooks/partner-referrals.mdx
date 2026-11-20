@@ -1,0 +1,84 @@
+---
+title: "Get deals from partners"
+description: "Partners who know your buyers: screened, mapped to the accounts they can open, and asked with a note they can forward."
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+import Tutorial from '../../../../components/Tutorial.astro';
+import PlaybookMeta from '../../../../components/superstar/PlaybookMeta.astro';
+
+Partners who know your buyers: screened, mapped to the accounts they can open, and asked with a note they can forward.
+
+<PlaybookMeta id="partner-referrals" template="Sales CRM" />
+
+<Tutorial id="partner-referrals" />
+
+## Before you start
+
+- The **Sales CRM** tables (or the Sales desk), with your target accounts in **Companies**.
+- A partners owner named on How we work, and any partner terms written there.
+- The [rules](/superstar/how-it-works/#the-rules) every agent keeps.
+
+## Steps
+
+<Steps>
+
+1. **Keep a Partners table**
+
+   Add a page **Partners** with a table: Partner, Track (Referral, Co-sell, Reseller), Stage, Contact, Owner. Name the partners owner on **How we work**.
+
+2. **Applications**
+
+   Give a partner's application to **@Inbound qualifier**: it researches them, recommends Referral, Co-sell or Reseller, adds them to **Partners** and drafts the invite to a screening call.
+
+3. **Paths**
+
+   Ask **@Relationships** which partner knows someone at your target accounts. Each path goes to **Paths in**.
+
+4. **Ask**
+
+   The request goes to the partner, never to their client, with a note they can forward. A deal they bring gets Source **Partner** on **Deals**.
+
+</Steps>
+
+## The template
+
+**Sales CRM** is a section. Open it from **Templates** in the sidebar. It makes **Deals** (with a **Source** that includes Partner), **Companies**, **People**, **Signals**, **Paths in** (a path's connector can be a partner), **Inbound leads** and **Do not contact**. The **Partners** page is yours to add: the agents find it by that name.
+
+## Prompts
+
+Copy one and change the names. A prompt that starts with an @name goes in a block on the page; the others go in **Ask** (**Ctrl J**).
+
+```text title="A block that starts with @Inbound qualifier"
+@Inbound qualifier Brightline Analytics applied to partner with us. Research them, recommend a track and draft the screening invite.
+```
+
+```text title="A block that starts with @Relationships"
+@Relationships Which of our partners know someone at our Tier 1 accounts? Map them in Paths in and draft the ask for the strongest one.
+```
+
+## What good looks like
+
+"You know the risk data team at Castell Bank well. Would you introduce us to Elena Varga? Here is a note you can forward as it is." One account, one person, an easy no.
+
+An application handled well: Brightline Analytics in **Partners** at Stage **Applied**, Track **Referral**, with one paragraph on why, three questions for the screening call on its row's page, and the invite drafted from the partners owner.
+
+## Watch for
+
+- Never quote commission or terms that aren't on How we work.
+- Write to the partner, never around them to their client.
+
+## What to count
+
+- Deals sourced by partners
+- Win rate of partner deals against outbound
+
+Filter **Deals** by **Source**: Partner against Outbound, and compare how many reach **Won**.
+
+<Aside type="note" title="What the numbers say">
+In the Ebsta and Pavilion 2025 benchmark (655,000 opportunities), partner referrals were the most efficient channel: win rate times deal size over cycle length came to 1.3 times the average, against 1.05 for outbound ([Ebsta](https://benchmarks.ebsta.com/hubfs/V3%202025%20Benchmark%20Report/gtm_benchmarks_digital_report.pdf)).
+</Aside>
+
+## Next
+
+[Ask for a warm intro](/superstar/playbooks/warm-intros/): who can introduce you, how sure that is, and a request the connector can forward as it is.

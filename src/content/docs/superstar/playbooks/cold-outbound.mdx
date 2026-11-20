@@ -1,13 +1,13 @@
 ---
 title: "Run a cold sequence that stops on reply"
-description: "Four short emails over two weeks to people with a real reason to hear from you, and none after they write back."
+description: "Four short emails over two weeks to people with a real reason to hear from you, and none after they write back. Most replies come by the third email; the fourth only closes the loop."
 ---
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 import Tutorial from '../../../../components/Tutorial.astro';
 import PlaybookMeta from '../../../../components/superstar/PlaybookMeta.astro';
 
-Four short emails over two weeks to people with a real reason to hear from you, and none after they write back.
+Four short emails over two weeks to people with a real reason to hear from you, and none after they write back. Most replies come by the third email; the fourth only closes the loop.
 
 <PlaybookMeta id="cold-outbound" template="Outbound sequence" />
 
@@ -18,7 +18,7 @@ Four short emails over two weeks to people with a real reason to hear from you, 
 - Your mailbox connected. Each email goes from the person who sends it.
 - **Do not contact** filled in. Every draft is checked against it.
 - A segment you can describe in one line, and a reason each person in it would care now.
-- If you write to people in Romania, read [Outreach rules](/superstar/outreach-rules/) first.
+- If you write to people in Romania, Germany or Poland, read [Outreach rules](/superstar/outreach-rules/) first.
 - The [rules](/superstar/how-it-works/#the-rules) every agent keeps.
 
 ## Steps
@@ -39,11 +39,11 @@ Four short emails over two weeks to people with a real reason to hear from you, 
 
 3. **Write short**
 
-   Day 0: the trigger, the problem, an interest question, under 80 words, a line to say no. Day 3: one proof. Day 7: something useful. Day 14: a polite close.
+   Day 0: the trigger, the problem, an interest question, under 80 words (under 50 does best), a line to say no. Day 3: one proof. Day 7: something useful. Day 14: a polite close.
 
 4. **Schedule from your mailbox**
 
-   A person reads each draft and schedules it. When the prospect writes back, every follow-up still scheduled to them is **held**, with who wrote and why.
+   A person reads each draft and schedules it. When the prospect writes back, every follow-up still scheduled to that address is **held**, with who wrote and why. An out-of-office holds them too: schedule them again after the date they give.
 
    ![The day-3 email to Hannah Moser, held because she wrote back, with the reason on the email](../../../../assets/screenshots/superstar-sequence-held.png)
 
@@ -107,18 +107,21 @@ Tom got one inbox notice per held email.
 ![Tom's inbox after Hannah replied: one line for her three held follow-ups, with what to do next](../../../../assets/screenshots/superstar-inbox-held.png)
 
 <Aside type="note" title="What the numbers say">
-Instantly's 2026 benchmark (emails sent 1 January to 18 December 2025) found the best first emails run under 80 words, and that 58% of replies came from the first email and 42% from follow-ups ([Instantly](https://instantly.ai/cold-email-benchmark-report-2026)). In Gong's analysis of 304,174 cold emails, an interest question ("Worth a look?") did best as the ask ([Gong](https://www.gong.io/blog/this-surprising-cold-email-cta-will-help-you-book-a-lot-more-meetings)), and generic "did you see my email?" follow-ups were 15 times less likely to book a meeting ([Gong](https://www.gong.io/blog/7-tips-for-writing-the-perfect-follow-up-sales-email-according-to-science)). These are vendors measuring their own users: read them as direction, not promises.
+Instantly's 2026 benchmark (emails sent 1 January to 18 December 2025) found the best first emails run under 80 words, and that 58% of replies came from the first email and 42% from follow-ups ([Instantly](https://instantly.ai/cold-email-benchmark-report-2026)). In Gong's analysis of 304,174 cold emails, an interest question ("Worth a look?") did best as the ask ([Gong](https://www.gong.io/blog/this-surprising-cold-email-cta-will-help-you-book-a-lot-more-meetings)), and generic "did you see my email?" follow-ups were 15 times less likely to book a meeting ([Gong](https://www.gong.io/blog/7-tips-for-writing-the-perfect-follow-up-sales-email-according-to-science)). Hunter's 2026 report (31 million emails sent in 2025) found replies drop when three or more people at one company get the same sequence, and that emails sent with open tracking off got more replies ([Hunter](https://hunter.io/the-state-of-cold-email)). Gmail asks senders to keep spam complaints under 0.1% and never reach 0.3% ([Google](https://support.google.com/a/answer/14229414)). The vendors here measure their own users: read them as direction, not promises.
 </Aside>
 
 ## Watch for
 
-- Romania: cold commercial email to company addresses needs prior consent (Law 506/2004 art. 12). Use a warm intro, inbound or LinkedIn there.
+- Romania, Germany and Poland: cold commercial email needs prior consent, also to company addresses (RO Law 506/2004 art. 12, DE UWG §7, PL art. 398). Use a warm intro or inbound there. France allows it when it's about the person's job.
+- Write to one or two people per company, not the whole team. Replies drop when three or more get the same sequence.
+- Count replies, not opens. Tracking pixels cut replies, and Apple Mail opens most emails on its own.
+- Keep spam complaints under 1 in 1,000. Gmail's line is 0.1%; at 0.3% it stops helping you.
 - Every opt-out goes to Do not contact the same day.
 - Never "did you see my email?": add a reason or stop.
 
 ## What to count
 
-- Positive reply rate (not opens)
+- Positive reply rate per person written to (compare with your own last month, not with vendor reports)
 - Meetings per 100 prospects
 - Opt-out and complaint rate
 
