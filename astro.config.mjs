@@ -555,6 +555,8 @@ export default defineConfig({
             'superstar/quickstart',
             'superstar/how-it-works',
             'superstar/crew',
+            'superstar/playbooks',
+            'superstar/tutorials',
             ...['Sales', 'Marketing', 'Content', 'Growth ops'].map((grp) => ({
               label: `${grp} playbooks`,
               items: PLAYBOOKS.filter((p) => p.grp === grp).map((p) => `superstar/playbooks/${p.id}`),
