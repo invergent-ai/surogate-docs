@@ -1,25 +1,28 @@
 ---
-// The four products, two by two, each with its mark, its line, a small drawing
+// The five products, two by two, each with its mark, its line, a small drawing
 // and the way in.
 import AgentsMark from '../brand/AgentsMark.astro';
 import DmsMark from '../brand/DmsMark.astro';
 import KeelMark from '../brand/KeelMark.astro';
 import PortalMark from '../brand/PortalMark.astro';
+import SuperstarMark from '../brand/SuperstarMark.astro';
 import MiniAgents from './MiniAgents.astro';
 import MiniDms from './MiniDms.astro';
 import MiniKeel from './MiniKeel.astro';
 import MiniPortal from './MiniPortal.astro';
+import MiniSuperstar from './MiniSuperstar.astro';
 ---
 
 <section class="band not-content">
   <div class="inner">
     <div class="intro">
-      <h2>Four products, built to work together.</h2>
+      <h2>Five products, built to work together.</h2>
       <p>
         Surogate Agents is where you build and run agents: each one has its own computer, browser and files, and works
         with your skills and knowledge. Surogate Keel runs your business processes, with agents, people and systems each doing
         their step. Surogate DMS keeps an institution's documents: filing, finding, signing, retention and handover to
         the archive. Surogate Portal runs an institution's websites and portals, with the people and the access behind them.
+        Superstar is where a sales and marketing team works with its agents: they research and draft, and a person sends.
       </p>
     </div>
     <div class="cards">
@@ -57,6 +60,15 @@ import MiniPortal from './MiniPortal.astro';
         <div class="actions">
           <a class="button" href="/portal/">Open the Portal docs</a>
           <a class="link" href="/portal/quickstart/">Quickstart</a>
+        </div>
+      </article>
+      <article class="card" data-docs="product-card">
+        <div class="head"><SuperstarMark size={48} /><h3>Superstar</h3></div>
+        <p>Sell and market with a crew of agents that research and draft, while your team sends.</p>
+        <div class="drawing"><MiniSuperstar /></div>
+        <div class="actions">
+          <a class="button" href="/superstar/">Open the Superstar docs</a>
+          <a class="link" href="/superstar/quickstart/">Quickstart</a>
         </div>
       </article>
     </div>

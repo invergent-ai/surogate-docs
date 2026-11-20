@@ -57,6 +57,22 @@ class Topics(unittest.TestCase):
         for route in ('/keel/', '/dms/', '/work/quickstart/', '/develop/'):
             self.assertFalse([l for l in self.sidebar_links(route) if l.startswith('/portal/')], route)
 
+    def test_superstar_sidebar_has_only_superstar_pages(self):
+        links = self.sidebar_links('/superstar/')
+        for route in ('/superstar/', '/superstar/quickstart/', '/superstar/crew/', '/superstar/playbooks/sales-desk/',
+                      '/superstar/playbooks/growth-review/', '/superstar/prompts/', '/superstar/outreach-rules/'):
+            self.assertIn(route, links)
+        self.assertFalse([l for l in links if not l.startswith('/superstar/')])
+
+    def test_superstar_playbooks_are_grouped(self):
+        pane = section(page('/superstar/'), '#starlight__sidebar')
+        for group in ('Sales playbooks', 'Marketing playbooks', 'Content playbooks', 'Growth ops playbooks'):
+            self.assertIn(group, pane)
+
+    def test_other_sidebars_have_no_superstar_pages(self):
+        for route in ('/keel/', '/dms/', '/portal/', '/work/quickstart/', '/develop/'):
+            self.assertFalse([l for l in self.sidebar_links(route) if l.startswith('/superstar/')], route)
+
     def test_work_sidebar_has_only_work_pages(self):
         links = self.sidebar_links('/work/quickstart/')
         self.assertIn('/work/channels/slack/', links)
@@ -74,6 +90,8 @@ class Topics(unittest.TestCase):
         self.assertNotIn('rel="next"', page('/dms/reference/faq/'))
         self.assertNotIn('rel="prev"', page('/portal/'))
         self.assertNotIn('rel="next"', page('/portal/developer/data-console/'))
+        self.assertNotIn('rel="prev"', page('/superstar/'))
+        self.assertNotIn('rel="next"', page('/superstar/outreach-rules/'))
 
 
 if __name__ == '__main__':

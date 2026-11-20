@@ -25,3 +25,9 @@ test('dms', () => {
   assert.equal(productFor('dms'), 'dms');
   assert.equal(productFor('dms/work/search'), 'dms');
 });
+
+test('superstar', () => {
+  assert.equal(trackFor('superstar'), 'superstar');
+  assert.equal(trackFor('superstar/playbooks/signals'), 'superstar');
+  assert.equal(productFor('superstar/crew'), 'superstar');
+});

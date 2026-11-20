@@ -1,0 +1,56 @@
+---
+// A playbook's tutorial: the `video` its catalogue entry names, from public/videos/superstar/<video>.mp4 with its
+// .jpg poster. Every playbook page carries this tag; it renders only when the entry has a video and the file is in
+// public/, so no visitor meets a player that cannot play. Adding a video: set `video` in the catalogue, add the files.
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { PLAYBOOKS } from '../data/superstar-playbooks.mjs';
+
+interface Props {
+  id: string;
+  length?: string;
+}
+const { id, length } = Astro.props;
+const playbook = PLAYBOOKS.find((p) => p.id === id);
+const slug = playbook?.video;
+const src = `/videos/superstar/${slug}.mp4`;
+const ready = Boolean(slug) && existsSync(join(process.cwd(), 'public', src));
+const title = playbook?.t;
+---
+
+{
+  ready && (
+    <figure class="tutorial not-content" data-docs="tutorial">
+      <video controls preload="none" playsinline poster={`/videos/superstar/${slug}.jpg`} src={src}></video>
+      <figcaption>
+        <span>Tutorial: {title}</span>
+        {length && <span class="length">{length}</span>}
+      </figcaption>
+    </figure>
+  )
+}
+
+<style>
+  .tutorial {
+    margin: 1.5rem 0 2rem;
+  }
+  video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--d-codebg);
+    border: 1px solid var(--d-line);
+  }
+  figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.88rem;
+    color: var(--d-text);
+  }
+  .length {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+</style>

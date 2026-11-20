@@ -24,6 +24,11 @@ TASKS = [
     ('Build your organisation chart', '/portal/console/organizations/'),
     ('Create a token for the command line', '/portal/console/tokens/'),
     ('Give a new tenant its first administrator', '/portal/console/tenants/'),
+    ('Set up a sales desk your agents route by', '/superstar/quickstart/'),
+    ('Answer every inbound lead within the hour', '/superstar/playbooks/inbound-leads/'),
+    ('Find a sourced reason to write to an account now', '/superstar/playbooks/signals/'),
+    ('Run a cold sequence that stops when they reply', '/superstar/playbooks/cold-outbound/'),
+    ('Turn call notes into the follow-up and the next step', '/superstar/playbooks/follow-ups/'),
 ]
 
 
@@ -36,10 +41,10 @@ class Home(unittest.TestCase):
         self.assertIn('Guides, tutorials and reference for Surogate Agents, Surogate Keel, Surogate DMS and Surogate Portal.', self.doc)
 
     def test_product_cards(self):
-        self.assertEqual(self.doc.count('data-docs="product-card"'), 4)
-        self.assertIn('Four products, built to work together.', self.doc)
+        self.assertEqual(self.doc.count('data-docs="product-card"'), 5)
+        self.assertIn('Five products, built to work together.', self.doc)
         for href in ('href="/work/"', 'href="/work/quickstart/"', 'href="/keel/"', 'href="/keel/quickstart/"', 'href="/dms/"', 'href="/dms/quickstart/"',
-                     'href="/portal/"', 'href="/portal/quickstart/"'):
+                     'href="/portal/"', 'href="/portal/quickstart/"', 'href="/superstar/"', 'href="/superstar/quickstart/"'):
             self.assertIn(href, self.doc)
 
     def test_tasks_link_to_real_sections(self):
