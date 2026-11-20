@@ -1,4 +1,4 @@
-// A copy of superstar/public/playbooks.js (commit 899c122), the catalogue Superstar's in-app Help shows. The playbook
+// A copy of superstar/public/playbooks.js (commit e2b6914), the catalogue Superstar's in-app Help shows. The playbook
 // pages and the prompt library are written from it, and superstar-playbooks.test.mjs fails when a page drifts from it.
 // To update: copy the file again with 'const PLAYBOOKS' made 'export const PLAYBOOKS', then fix what the test names.
 export const PLAYBOOKS = [
@@ -6,7 +6,7 @@ export const PLAYBOOKS = [
   { id: "sales-desk", grp: "Sales", t: "Set up a sales desk", ic: "building", time: "15 min", tpl: "ws-sales-desk", video: "sales-desk", next: "inbound-leads",
     lead: "A workspace with the CRM, the plays and the rules, where every lead, signal and deal reaches its owner.",
     crew: ["Superstar", "Inbound qualifier", "Signal scout", "Relationships", "Follow-up keeper"],
-    steps: [["Use the template", "Sidebar → <b>Templates</b> → <b>Sales desk</b>. Fill your segment, the company type and the role you sell to, then <b>Use template</b>. You get <b>How we work</b>, the CRM (Deals, Companies, People, Signals, Paths in, Inbound leads, Do not contact) and three plays."],
+    steps: [["Use the template", "Sidebar → <b>Templates</b> → <b>Workspaces</b> → <b>Sales desk</b>. Fill your segment, the company type and the role you sell to, then <b>Use template</b>. You get <b>How we work</b>, the CRM (Deals, Companies, People, Signals, Paths in, Inbound leads, Do not contact) and three plays."],
       ["Name the owners", "On <b>How we work</b>, put one person on each row of <b>Owners</b>. Agents route by this table: a lead for a role nobody owns waits where nobody looks."],
       ["Read the rules together", "The <b>Rules</b> list is what every agent keeps: research and draft, never send; check Do not contact first; every deal has the buyer's next action and a date. Change a rule there and the crew follows it."],
       ["Bring what you have", "Paste your current deals and accounts into <b>Deals</b> and <b>Companies</b> (one row per line), or ask Superstar to import a CSV from <b>Storage</b>."]],
@@ -141,7 +141,7 @@ export const PLAYBOOKS = [
     watch: ["Only people who agreed to hear from you. A scanned badge is not consent to a newsletter."],
     measure: ["Follow-ups sent within two days", "Meetings booked from the event"] },
   // ---------- Marketing ----------
-  { id: "product-launch", grp: "Marketing", t: "Launch a feature", ic: "rocket", time: "1 h to plan", tpl: "feature-launch", next: "x-launch",
+  { id: "product-launch", grp: "Marketing", t: "Launch a feature", ic: "rocket", time: "1 h to plan", tpl: "feature-launch", video: "product-launch", next: "x-launch",
     lead: "Posts, emails and an article placed around one launch day; move the day and everything moves with it.",
     crew: ["Content producer", "Visual maker", "Publisher"],
     steps: [["Use the kit", "<b>Templates</b> → <b>Feature launch</b> (or <b>Model launch</b>). Fill the feature and the launch day."],
@@ -154,7 +154,7 @@ export const PLAYBOOKS = [
     good: "Every piece says one concrete thing the feature does, with the product on screen. None of them says \"excited to announce\".",
     watch: ["Validate the numbers before the copy.", "Posts on one profile go out its gap apart; plan launch-day posts on different profiles or minutes."],
     measure: ["Clicks to the launch page per channel", "Sign-ups or demo requests in launch week", "Replies answered the same day"] },
-  { id: "x-launch", grp: "Marketing", t: "Run a launch on X and LinkedIn", ic: "megaphone", time: "1 h to plan", tpl: "x-thread", next: "content-engine",
+  { id: "x-launch", grp: "Marketing", t: "Run a launch on X and LinkedIn", ic: "megaphone", time: "1 h to plan", tpl: "x-thread", video: "x-launch", next: "content-engine",
     lead: "A thread on X, a post on LinkedIn and answers to every reply, each written for its platform.",
     crew: ["Content producer", "Comment scout", "Publisher"],
     steps: [["Write per platform", "<b>Templates</b> → <b>X thread</b>. Ask <b>@Content producer</b> for the thread and a LinkedIn version: short and sharp on X, a story on LinkedIn."],
@@ -179,7 +179,7 @@ export const PLAYBOOKS = [
     good: "\"Kestrel's claims team spent the first pilot week not on dashboards but on 37 rules. Each one is a sentence a claims handler said out loud.\"",
     watch: ["Name a customer only with their permission: keep it in Logo permissions (the Customer proof section template).", "One idea per post."],
     measure: ["Posts a week", "Comments received per post", "Profile visits to conversations"] },
-  { id: "webinar", grp: "Marketing", t: "Run a webinar", ic: "video", time: "2 h over three weeks", tpl: "webinar", next: "case-study",
+  { id: "webinar", grp: "Marketing", t: "Run a webinar", ic: "video", time: "2 h over three weeks", tpl: "webinar", video: "webinar", next: "case-study",
     lead: "Invites, reminders, the replay and the follow-up placed around the live day.",
     crew: ["Content producer", "Visual maker", "Follow-up keeper"],
     steps: [["Use the kit", "<b>Templates</b> → <b>Webinar or live build</b>: the topic and the date. The invite posts, the invite email, the reminder and the replay are already placed."],
@@ -190,7 +190,7 @@ export const PLAYBOOKS = [
     good: "The replay email leads with the one answer people asked about most, then the link.",
     watch: ["Send the replay to registrants only, not to your whole list."],
     measure: ["Registrations", "Attendance", "Meetings from attendees"] },
-  { id: "case-study", grp: "Marketing", t: "Turn a customer win into proof", ic: "trophy", time: "1 h", tpl: "case-study", next: "linkedin-week",
+  { id: "case-study", grp: "Marketing", t: "Turn a customer win into proof", ic: "trophy", time: "1 h", tpl: "case-study", video: "case-study", next: "linkedin-week",
     lead: "One customer story with a real number, then posts, an email and a sales one-pager from it.",
     crew: ["Content producer", "Visual maker"],
     steps: [["Get permission first", "What you may say and name, in writing. <b>Templates</b> → <b>Customer proof</b> gives you <b>Logo permissions</b> to keep it, next to <b>Case studies</b>."],
@@ -202,11 +202,11 @@ export const PLAYBOOKS = [
     good: "\"412 records failed on day one. 380 were fixed by Friday.\" A number the customer agreed to, with its time frame.",
     watch: ["Never a number the customer didn't approve.", "One story, one number: more dilutes it."],
     measure: ["Deals where it was sent", "Replies to the industry email"] },
-  { id: "competitive-intel", grp: "Marketing", t: "Keep up with competitors", ic: "compass", time: "10 min a week", tpl: "sec-competitive", next: "positioning",
+  { id: "competitive-intel", grp: "Marketing", t: "Keep up with competitors", ic: "compass", time: "10 min a week", tpl: "sec-competitive", video: "competitive-intel", next: "positioning",
     lead: "What each competitor changed this week, with sources, and what it means for your deals.",
     crew: ["Signal scout", "Strategist"],
     steps: [["List them", "<b>Templates</b> → <b>Competitive intel</b>: one row per competitor in <b>Competitors</b>."],
-      ["Weekly check", "Ask <b>@Signal scout</b> every Friday for changes: pricing, releases, hires, customers, messaging. Each goes to <b>Change log</b> with its source."],
+      ["Weekly check", "<b>@Signal scout</b> checks every Monday for changes: pricing, releases, hires, customers, messaging. Each goes to <b>Change log</b> with its source."],
       ["So what", "Ask <b>@Strategist</b> what it means for open deals and your messaging."]],
     prompts: ["@Signal scout What changed at our three competitors this week: pricing, releases, hires, customers? With sources, into Change log.",
       "@Strategist Which open deals does this pricing change affect, and what should each owner say?"],
@@ -225,7 +225,7 @@ export const PLAYBOOKS = [
     watch: ["Write it from real deals, not from who you wish you sold to."],
     measure: ["Win rate inside the ICP vs outside it"] },
   // ---------- Content ----------
-  { id: "content-engine", grp: "Content", t: "Turn one source into many pieces", ic: "seedling", time: "1 h a week", tpl: "sec-content-engine", next: "newsletter",
+  { id: "content-engine", grp: "Content", t: "Turn one source into many pieces", ic: "seedling", time: "1 h a week", tpl: "sec-content-engine", video: "content-engine", next: "newsletter",
     lead: "One talk, customer story or release becomes posts, a newsletter section and an article, each written for where it goes.",
     crew: ["Content producer", "Visual maker", "Video producer"],
     steps: [["Set it up", "<b>Templates</b> → <b>Content engine</b>: Ideas, Content, Calendar and Voice."],
