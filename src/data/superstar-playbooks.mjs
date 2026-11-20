@@ -1,4 +1,4 @@
-// A copy of superstar/public/playbooks.js (commit 80a1b91), the catalogue Superstar's in-app Help shows. The playbook
+// A copy of superstar/public/playbooks.js (commit 86d21ce), the catalogue Superstar's in-app Help shows. The playbook
 // pages and the prompt library are written from it, and superstar-playbooks.test.mjs fails when a page drifts from it.
 // To update: copy the file again with 'const PLAYBOOKS' made 'export const PLAYBOOKS', then fix what the test names.
 export const PLAYBOOKS = [
@@ -72,7 +72,7 @@ export const PLAYBOOKS = [
     lead: "Who can introduce you, how sure that is, and a request the connector can forward as it is.",
     crew: ["Relationships"],
     steps: [["Tell it who you know", "On <b>Paths in</b>, ask <b>@Relationships</b> for a route to a person. Mention the people you know there or near there."],
-      ["Check the path", "Each path has a connector, how they know each other, the team member and a confidence: <b>Confirmed</b>, <b>Likely</b> or <b>Inferred</b>. Confirm an inferred one before anyone writes."],
+      ["Check the path", "Each path has a connector, how they know each other, the team member and a confidence: <b>Confirmed</b> or <b>Inferred</b>. Confirm an inferred one before anyone writes."],
       ["Ask the connector", "The request is drafted to the connector, never to the target, with a short note they can forward. They decide."],
       ["Thank them", "Whatever happens, tell the connector how it went."]],
     prompts: ["@Relationships Find a warm path to Elena Varga at Castell Bank. I worked with Daniel Ruiz at Northwind; he was on her team. Draft the intro request to Daniel.",
@@ -177,7 +177,7 @@ export const PLAYBOOKS = [
     prompts: ["@Content producer Three LinkedIn posts for this week from the Kestrel kickoff and our anomaly alerts, in Maya's voice. One a day, Tue to Thu.",
       "@Content producer Rewrite this post shorter, with the number first and no hashtags."],
     good: "\"Kestrel's claims team spent the first pilot week not on dashboards but on 37 rules. Each one is a sentence a claims handler said out loud.\"",
-    watch: ["Name a customer only with their permission (Logo permissions).", "One idea per post."],
+    watch: ["Name a customer only with their permission: keep it in Logo permissions (the Customer proof section template).", "One idea per post."],
     measure: ["Posts a week", "Comments received per post", "Profile visits to conversations"] },
   { id: "webinar", grp: "Marketing", t: "Run a webinar", ic: "video", time: "2 h over three weeks", tpl: "webinar", next: "case-study",
     lead: "Invites, reminders, the replay and the follow-up placed around the live day.",
@@ -193,7 +193,7 @@ export const PLAYBOOKS = [
   { id: "case-study", grp: "Marketing", t: "Turn a customer win into proof", ic: "trophy", time: "1 h", tpl: "case-study", next: "linkedin-week",
     lead: "One customer story with a real number, then posts, an email and a sales one-pager from it.",
     crew: ["Content producer", "Visual maker"],
-    steps: [["Get permission first", "Check <b>Logo permissions</b>: what you may say and name."],
+    steps: [["Get permission first", "What you may say and name, in writing. <b>Templates</b> → <b>Customer proof</b> gives you <b>Logo permissions</b> to keep it, next to <b>Case studies</b>."],
       ["Write the story", "<b>Templates</b> → <b>Case study</b>. Give <b>@Content producer</b> the call notes and the numbers. Problem, what changed, the result with its number."],
       ["Spread it", "The kit places the posts, the email to prospects in the same industry and the article."],
       ["Give it to sales", "Ask for a one-page version for deal rooms."]],
@@ -275,14 +275,14 @@ export const PLAYBOOKS = [
   { id: "growth-review", grp: "Growth ops", t: "Run the weekly growth review", ic: "chart", time: "30 min a week", tpl: "weekly-review", next: "pipeline-review",
     lead: "The week's numbers, what worked, what didn't, and next week's plan, on one page.",
     crew: ["Strategist"],
-    steps: [["Monday morning", "<b>@Strategist</b> adds this week's row to <b>Scorecard</b>, then writes the plan on a <b>Weekly growth review</b> page."],
+    steps: [["Monday morning", "<b>Templates</b> → <b>Weekly growth review</b>. <b>@Strategist</b> fills <b>Numbers</b> (this week and last), then writes the wins, the misses and the plan."],
       ["Read it together", "What moved and why. Keep, stop, try."],
-      ["Experiments", "Each try gets a row in <b>Experiments</b>: what, the expected result, the owner, the end date."]],
-    prompts: ["@Strategist Write this week's growth review: the Scorecard, what worked, what didn't, and three things to try.",
-      "@Strategist Which experiments ended this month and what did each show?"],
+      ["Tries", "Each try is a to-do with an owner and an end date, and the result it should move. Next week's review says what it showed."]],
+    prompts: ["@Strategist Write this week's growth review: fill Numbers, then what worked, what didn't, and three things to try.",
+      "@Strategist Which tries from last month's reviews ended, and what did each show?"],
     good: "\"LinkedIn question posts got 3 times the comments of announcements this month: two more next week.\"",
     watch: ["Numbers from the source, not memory: the strategist links each."],
-    measure: ["Experiments started and finished", "The one number you grow this quarter"] },
+    measure: ["Tries started and finished", "The one number you grow this quarter"] },
   { id: "content-calendar", grp: "Growth ops", t: "Plan a month of content", ic: "calendar", time: "1 h a month", tpl: "content-calendar", next: "content-engine",
     lead: "A month on the calendar: themes per week, pieces per platform, owners and dates.",
     crew: ["Strategist", "Content producer"],
