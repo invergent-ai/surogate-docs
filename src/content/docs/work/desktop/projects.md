@@ -48,6 +48,8 @@ Each thread is a full chat, with its own sandbox, working on one piece of the pr
 
 A thread's copy leaves out `.env` files, `node_modules/`, `.venv/`, build output and caches, and none of them comes back from the thread. For work that needs them, use a chat on the folder.
 
+A thread can't work with [files outside its folders](/work/desktop/overview/#files-outside-the-chats-folder). Ask the coordinator for that, or use a chat on the folder.
+
 A thread saves the files it makes under `threads/<title>/`. They appear in the project's **Library**.
 
 A thread cannot start deep research, auto research or experiments yet. Ask for those outside a project.

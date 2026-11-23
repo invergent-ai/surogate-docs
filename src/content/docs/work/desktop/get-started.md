@@ -41,7 +41,7 @@ Your computer now belongs to that agent's list of computers. You can see it, and
 5. Under **How it works in this folder**, choose **Work freely** or **Ask every time**. For a first try, choose **Ask every time**: you then see each command and each file change before it happens.
 6. Press **Use this folder**.
 
-The agent reads the folder and works on it. Its commands run in a sandbox on your computer, and the agent sees no other folder of yours. Some folders are refused, such as your home folder or a credentials folder (see [Folders that are refused](/work/desktop/overview/#folders-that-are-refused)).
+The agent reads the folder and works on it. Its commands run in a sandbox on your computer. The agent sees no other folder of yours unless you let it read one (see [Files outside the chat's folder](/work/desktop/overview/#files-outside-the-chats-folder)). Some folders are refused, such as your home folder or a credentials folder (see [Folders that are refused](/work/desktop/overview/#folders-that-are-refused)).
 
 ## 4. Answer its requests
 

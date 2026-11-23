@@ -11,6 +11,8 @@ New to it? [Get started](/work/desktop/get-started/) walks you through a first c
 ## What you can do with it
 
 - **Work on your real files.** Point a chat at a folder, and the agent reads, writes and organizes what is in it: documents, spreadsheets, code or data. No uploads and no syncing. The work happens where your files already are. See [Working on a folder](#working-on-a-folder).
+
+- **Reach files outside the chat's folder.** Ask for something on your Desktop, in Downloads or in another folder, and the agent asks you to let it read that folder. It copies, moves, puts back and deletes files there only through windows where you confirm each step. See [Files outside the chat's folder](#files-outside-the-chats-folder).
 - **Let it run commands, safely.** Builds, scripts, data processing, file conversions. The agent runs them in a sandbox on your computer, not on your computer itself.
 - **Browse with your own browser.** The agent drives Chrome, Edge, Brave or Vivaldi, already installed on your computer, in a profile of its own. Downloads land in the chat's folder. Take the browser over at any moment, and hand it back when you are done. See [Your browser](#your-browser).
 - **Preview what it builds.** When the agent starts a web app in its sandbox, it can open it in the browser for you to see, once you allow it.
@@ -19,7 +21,7 @@ New to it? [Get started](/work/desktop/get-started/) walks you through a first c
 ## Safe by design
 
 - **Nothing runs directly on your computer.** Every command runs in a lightweight virtual machine that Surogate Desktop starts for you. A chat's folder joins it only while that chat is working, and files you protect stay read-only there.
-- **The agent sees only what you give it.** The file tools see the chat's folder and nothing else of yours.
+- **The agent sees only what you give it.** The file tools see the chat's folder, and another folder only after you let the agent read it. Every copy, move, change or deletion outside the chat's folder asks you first, even in a chat that works freely, and an original it replaces goes to the Recycle Bin (see [Files outside the chat's folder](#files-outside-the-chats-folder)). Commands see the chat's folder alone.
 - **You decide what reaches the network.** Commands reach the package registries they need, and your computer's own services stay out of reach of both the commands and the browser. For any other site, your local network included, the agent asks you first. A chat can also be set to work freely (see [Approvals](#approvals)).
 - **You stay in control of the browser.** In a chat that asks every time, you approve each download and each file the agent gives a page. Taking the browser over pauses the agent until you hand it back.
 - **Signed updates.** Every release is signed, and your computer installs only releases signed by Surogate's key.
@@ -169,7 +171,7 @@ When you send the first message, Surogate shows a sheet, **Work in** the folder,
 2. Choose how it works: **Work freely** or **Ask every time** (see [Approvals](#approvals)).
 3. Press **Use this folder**.
 
-The agent sees only this folder, and its commands run in the sandbox (see [Safe by design](#safe-by-design)). The sheet also says that the files the agent reads and what its commands print go to the agent in the cloud and can stay in the conversation.
+The agent works in this folder, and its commands run in the sandbox (see [Safe by design](#safe-by-design)). The sheet also says that the files the agent reads and what its commands print go to the agent in the cloud and can stay in the conversation.
 
 ### Folders that are refused
 
@@ -182,6 +184,23 @@ Surogate refuses a folder, and says why, when it:
 - has `*`, `?`, `[` or `]` in its path.
 
 A folder that is missing, or is not a folder, is refused too.
+
+### Files outside the chat's folder
+
+Ask for something that is not in the chat's folder, for example "look on the Desktop for this month's invoices", and the agent can still reach it. Each step outside the chat's folder opens a window from Surogate Desktop, and the step waits for your answer. These windows show in both modes, and none of them offers to stop asking.
+
+- **Read a folder.** The window asks to **Allow** the agent to read the folder you named, such as Desktop, Downloads or a path. Choose how long: **For the rest of this chat**, or **Just this request**, which ends when the agent finishes the task. The agent then lists and reads files there, but changes nothing without asking again. A folder already allowed, or one inside it, does not ask a second time. The folders refused as a chat's folder are refused here too (see [Folders that are refused](#folders-that-are-refused)).
+- **Copy files.** The window lists the files, each with a box ticked, and where they go. Untick a file to leave it out; the agent tells you it was not copied. A name already taken in the new folder gets a number added, such as `report (1).xlsx`, so nothing is overwritten.
+- **Move files.** The same list. Each file is copied to the new folder, then its original goes to the Recycle Bin (the Trash on a Mac). An original in the chat's own folder is removed from it instead.
+- **Change a file.** The agent copies the file into the chat's folder, changes the copy, then asks to put it back. **Put back** sends the original to the Recycle Bin and puts the edited copy in its place. **Keep only the copy** leaves the original as it was and the edited copy in the chat's folder. If the file is open in another program, such as Excel, the agent asks you to save and close it first.
+- **Delete files.** **Move to the Recycle Bin**, or **Keep it** (**Keep them** for several). Nothing outside the chat's folder is deleted for good: restore it from the Recycle Bin if you need it.
+- **Make a new file there.** The agent makes it in the chat's folder, then moves it with the same window.
+
+Only the file tools reach these folders. The agent's commands, and the sandbox they run in, see the chat's folder alone.
+
+What the agent reads goes to it in the cloud, as with the chat's folder. To end a read before the chat does, use **Remove access** in Settings (see [Around the app](#around-the-app)). A project's threads can't work outside their folders; ask the coordinator, or a chat on the folder.
+
+An older Surogate Desktop answers "The Surogate app on this computer cannot work outside the chat's folder yet": update it (see [Updates](#updates)).
 
 ## Approvals
 
@@ -198,6 +217,7 @@ Two things ask in both modes:
 
 - **Network access.** Any site beyond the package registries, your local network included, asks (see [Safe by design](#safe-by-design)). **Allow** covers the connections waiting now; later ones ask again. **Allow all its ports for this chat** lets that site through on every port for the rest of the chat. In the browser's prompt, **Allow for this chat** does the same for the browser.
 - **The browser.** The first time a chat uses your browser, and each time it would open a port of the chat's own web app in it.
+- **Files outside the chat's folder.** Reading another folder, and each copy, move, put back or deletion there (see [Files outside the chat's folder](#files-outside-the-chats-folder)). **Allow and stop asking** does not cover them.
 
 In **Ask every time**, every action the agent takes on a page asks too: opening an address, running a script, clicking, typing, dragging, uploading a file, and downloads. Reading the page does not.
 
@@ -234,5 +254,5 @@ When a computer is added or reauthorized, a banner in the web app says "`<comput
 
   If another app already holds the shortcut, Settings says so, and you open quick entry from Surogate's icon.
 - **Notifications.** When Surogate's window is hidden or behind another app, it notifies you of new items in your inbox, of a chat that finished, and when it needs an answer ("Surogate is asking you something"). Clicking one opens that chat. A flood of them becomes one notice that opens the inbox.
-- **Settings.** Appearance, **Start at login**, **Keep running when the window is closed**, **Developer mode**, your account, **This computer** (name, connection, sandbox), **Browser** and **Folders and permissions**. **Folders and permissions** lists each folder chats work on and each chat on it, with its mode, the sites it may reach, its use of the browser, the ports of its own servers the browser may open and its background processes. **Take back** withdraws an allowance and **Stop** ends a process.
+- **Settings.** Appearance, **Start at login**, **Keep running when the window is closed**, **Developer mode**, your account, **This computer** (name, connection, sandbox), **Browser** and **Folders and permissions**. **Folders and permissions** lists each folder chats work on and each chat on it, with its mode, the sites it may reach, its use of the browser, the ports of its own servers the browser may open, the folders outside its own it may read ("Reads Desktop", with ", for this task" when it lasts one request) and its background processes. **Take back** withdraws an allowance, **Remove access** ends a read and **Stop** ends a process.
 - **Uninstall.** See [Remove Surogate Desktop](#remove-surogate-desktop).
