@@ -18,17 +18,22 @@ Optimization is started from the **Optimize** dialog for a skill. It asks for:
 | **Workload source** | How tasks are produced. Currently **Teacher-generated synthetic tasks** (synthetic). |
 | **Optimizer / task-generator model** | Model that generates tasks and proposes candidate edits. Defaults to the platform **Surogate** model when available. |
 | **Judge model** | Model that scores rollouts. Also defaults to the **Surogate** model. |
-| **Task count** | Number of synthetic tasks to generate (default 50). |
-| **Epochs** | Optimization epochs (default 4). |
-| **Batch size** | Tasks per batch (default 8). |
+| **Task count** | Number of synthetic tasks to generate (default 10, at least 4). |
+| **Epochs** | Optimization epochs (default 2). |
+| **Batch size** | Tasks per batch (default 5). |
 | **Edit budget** | Max edits per step (default 4). |
-| **Validation holdout** | Fraction of tasks held out for validation (default 0.2). |
+| **Validation holdout** | Fraction of tasks held out to check each edit (default 0.2). At least 3 tasks are always held back, and at least 1 is left to train on. |
 | **Slow update** | Toggle (on by default). |
 | **Meta skill** | Toggle (on by default). |
+| **Use the agent's soul and knowledge base** | Off by default. When ticked, the task writer, the judge and the optimiser see the agent's soul and the most relevant knowledge base excerpts, so tasks fit the team and the judge grades against the team's rules. Tick it when the agent's soul has rules the skill must follow. The skill's own stated scope (for example "chat only, no connected accounts") always wins over the soul's general rules. |
 
-Click **START OPTIMIZATION**. The gate used to accept candidates is strict hard-score improvement. If the skill isn't actually attached to the chosen agent the run is rejected and the error is surfaced.
+The defaults come from the server (`GET /api/skill-optimizations/defaults`); the dialog starts from them.
 
-Runs are listed in the optimization runs table, showing **Status**, **Baseline** score, **Best** score, and **Δ hard**. The list polls while any run is non-terminal. Click a row to open the run page.
+The tasks are written the way a real user would ask, without restating the skill's rules, and about a third are edge cases: missing information, an unclear request, another language, or something just outside the skill where the right move is to ask or say no.
+
+Click **START OPTIMIZATION**. An edit is accepted when it passes more of the held-back tasks than the current skill, or passes the same ones with a clearly better quality score (at least 0.05 higher on average). An edit that fails a held-back task the current skill passes is never accepted. If the skill isn't actually attached to the chosen agent the run is rejected and the error is surfaced.
+
+Runs are listed in the optimization runs table, showing **Status**, **Baseline** score, **Best** score, and **Δ hard**. Small tags next to the status show how a run was set up: **Soul+KB** when it used the soul and knowledge base, and one tag per account (for example **OneDrive**). The list polls while any run is non-terminal. Click a row to open the run page.
 
 ## Run page
 
@@ -46,11 +51,11 @@ Terminal states are `completed`, `failed`, and `cancelled`.
 
 ### Header
 
-Shows the current status, the score summary **baseline → best**, and the **delta**. The **APPLY BEST CANDIDATE** button is enabled only once the run is `completed` and a best candidate exists.
+Shows the current status, the score summary **baseline → best**, and the **delta**. The **Config** button opens how the run was set up: agent, skill version, soul and knowledge base, models, accounts and test folder, tasks and how many were held back, and the training settings. Values that differ from the defaults are shown in orange with "default: X". **Run again with this config** opens the Optimize dialog filled in with them. The **APPLY BEST CANDIDATE** button is enabled only once the run is `completed` and a best candidate exists.
 
 ### Candidate list (left)
 
-Every candidate: **Baseline** (iteration 0) then **Step 1**, **Step 2**, … each with its hard score. Accepted steps are marked **accepted**; rejected ones show the rejection reason. Select any candidate to inspect it.
+Every candidate: **Baseline** (iteration 0) then **Step 1**, **Step 2**, … each with its hard score. Accepted steps are marked **accepted**; rejected ones show the rejection reason and the edit they tried. Select any candidate to inspect it.
 
 ### Detail (right)
 
@@ -73,7 +78,8 @@ Confirm to write the skill and republish dependent agents; otherwise nothing abo
 |---|---|---|
 | `POST` | `/api/skill-optimizations/runs` | Start a run |
 | `GET` | `/api/skill-optimizations/runs?project_id=&skill_id=` | List runs |
-| `GET` | `/api/skill-optimizations/runs/{runId}` | Run detail |
+| `GET` | `/api/skill-optimizations/runs/{runId}` | Run detail, including its settings (`run_config`, models, folder) |
+| `GET` | `/api/skill-optimizations/defaults` | The defaults a new run starts from |
 | `GET` | `/api/skill-optimizations/runs/{runId}/candidates` | Candidates |
 | `GET` | `/api/skill-optimizations/runs/{runId}/rollouts` | Rollouts |
 | `POST` | `/api/skill-optimizations/runs/{runId}/cancel` | Cancel |
